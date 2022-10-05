@@ -26,13 +26,16 @@ class ReceiveSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
-            title: AppLocalization.of(context)!.receive,
+            title: localizations.receive,
             widgetRight: Container(
               width: 60,
               height: 50,
@@ -45,16 +48,16 @@ class ReceiveSheet extends StatelessWidget {
                       );
                   Clipboard.setData(ClipboardData(text: address));
                   UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.addressCopied,
+                    localizations.addressCopied,
                     context,
-                    StateContainer.of(context).curTheme.text!,
-                    StateContainer.of(context).curTheme.snackBarShadow!,
+                    theme.text!,
+                    theme.snackBarShadow!,
                   );
                 },
                 child: FaIcon(
                   FontAwesomeIcons.paste,
                   size: 24,
-                  color: StateContainer.of(context).curTheme.text,
+                  color: theme.text,
                 ),
               ),
             ),
@@ -75,10 +78,10 @@ class ReceiveSheet extends StatelessWidget {
                             );
                         Clipboard.setData(ClipboardData(text: address));
                         UIUtil.showSnackbar(
-                          AppLocalization.of(context)!.addressCopied,
+                          localizations.addressCopied,
                           context,
-                          StateContainer.of(context).curTheme.text!,
-                          StateContainer.of(context).curTheme.snackBarShadow!,
+                          theme.text!,
+                          theme.snackBarShadow!,
                         );
                       },
                       child: DecoratedBox(
@@ -100,8 +103,7 @@ class ReceiveSheet extends StatelessWidget {
                                         width: 200,
                                         margin: const EdgeInsets.all(8),
                                         child: AutoSizeText(
-                                          AppLocalization.of(context)!
-                                              .addressInfos,
+                                          localizations.addressInfos,
                                           style: AppStyles
                                               .textStyleSize16W700Primary(
                                             context,
@@ -118,10 +120,7 @@ class ReceiveSheet extends StatelessWidget {
                                               BorderRadius.circular(8),
                                         ),
                                         child: QrImage(
-                                          foregroundColor:
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .text,
+                                          foregroundColor: theme.text,
                                           data: address!,
                                           size: 150,
                                           gapless: false,
@@ -207,11 +206,11 @@ class ReceiveSheet extends StatelessWidget {
                     const Key('viewExplorer'),
                     context,
                     AppButtonType.primary,
-                    AppLocalization.of(context)!.viewExplorer,
+                    localizations.viewExplorer,
                     Dimens.buttonTopDimens,
                     icon: Icon(
                       Icons.more_horiz,
-                      color: StateContainer.of(context).curTheme.text,
+                      color: theme.text,
                     ),
                     onPressed: () async {
                       UIUtil.showWebview(
@@ -229,11 +228,11 @@ class ReceiveSheet extends StatelessWidget {
                     const Key('share'),
                     context,
                     AppButtonType.primary,
-                    AppLocalization.of(context)!.share,
+                    localizations.share,
                     Dimens.buttonBottomDimens,
                     icon: Icon(
                       Icons.share,
-                      color: StateContainer.of(context).curTheme.text,
+                      color: theme.text,
                     ),
                     onPressed: () {
                       final box = context.findRenderObject() as RenderBox?;

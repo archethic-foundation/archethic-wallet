@@ -84,23 +84,23 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background2Small!,
+              theme.background2Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: LayoutBuilder(
@@ -128,7 +128,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: StateContainer.of(context).curTheme.text,
+                                color: theme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -214,7 +214,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           ),
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
-                            AppLocalization.of(context)!.importSecretPhrase,
+                            localizations.importSecretPhrase,
                             style:
                                 AppStyles.textStyleSize28W700Primary(context),
                             maxLines: 1,
@@ -229,7 +229,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           ),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            AppLocalization.of(context)!.importSecretPhraseHint,
+                            localizations.importSecretPhraseHint,
                             style:
                                 AppStyles.textStyleSize16W600Primary(context),
                             textAlign: TextAlign.start,
@@ -408,7 +408,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         const Key('ok'),
                         context,
                         AppButtonType.primaryOutline,
-                        AppLocalization.of(context)!.ok,
+                        localizations.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () {},
                       )
@@ -417,7 +417,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         const Key('ok'),
                         context,
                         AppButtonType.primary,
-                        AppLocalization.of(context)!.ok,
+                        localizations.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
                           _showSendingAnimation(context);
@@ -430,8 +430,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           for (final word in phrase) {
                             if (word.trim() == '') {
                               _mnemonicIsValid = false;
-                              _mnemonicError = AppLocalization.of(context)!
-                                  .mnemonicSizeError;
+                              _mnemonicError = localizations.mnemonicSizeError;
                             } else {
                               if (AppMnemomics.isValidWord(
                                     word,
@@ -439,7 +438,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   ) ==
                                   false) {
                                 _mnemonicIsValid = false;
-                                _mnemonicError = AppLocalization.of(context)!
+                                _mnemonicError = localizations
                                     .mnemonicInvalidWord
                                     .replaceAll('%1', word);
                               }
@@ -484,9 +483,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   _mnemonicIsValid = false;
                                 });
                                 UIUtil.showSnackbar(
-                                  AppLocalization.of(context)!.noKeychain,
+                                  localizations.noKeychain,
                                   context,
-                                  StateContainer.of(context).curTheme.text!,
+                                  theme.text!,
                                   StateContainer.of(context)
                                       .curTheme
                                       .snackBarShadow!,
@@ -511,9 +510,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 _mnemonicIsValid = false;
                               });
                               UIUtil.showSnackbar(
-                                AppLocalization.of(context)!.noKeychain,
+                                localizations.noKeychain,
                                 context,
-                                StateContainer.of(context).curTheme.text!,
+                                theme.text!,
                                 StateContainer.of(context)
                                     .curTheme
                                     .snackBarShadow!,
@@ -538,6 +537,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
+    final theme = StateContainer.of(context).curTheme;
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
@@ -545,7 +545,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
         AuthenticationMethod(AuthMethod.pin).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.pin),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.pin,
         true,
       ),
@@ -555,7 +555,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         AuthenticationMethod(AuthMethod.password).getDisplayName(context),
         AuthenticationMethod(AuthMethod.password).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.password),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.password,
         true,
       ),
@@ -566,7 +566,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
           AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
-          StateContainer.of(context).curTheme.pickerItemIconEnabled,
+          theme.pickerItemIconEnabled,
           AuthMethod.biometrics,
           true,
         ),
@@ -579,7 +579,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         AuthenticationMethod(AuthMethod.biometricsUniris)
             .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
         false,
       ),
@@ -591,7 +591,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
             .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,
         true,
       ),
@@ -613,6 +613,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<void> _accountsDialog(List<Account> accounts) async {
+    final theme = StateContainer.of(context).curTheme;
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final account in accounts) {
       pickerItemsList
@@ -623,6 +624,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
+        final localizations = AppLocalization.of(context)!;
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -630,7 +632,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalization.of(context)!.keychainHeader,
+                  localizations.keychainHeader,
                   style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
                 ),
                 const SizedBox(
@@ -638,12 +640,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 ),
                 if (accounts.length > 1)
                   Text(
-                    AppLocalization.of(context)!.selectAccountDescSeveral,
+                    localizations.selectAccountDescSeveral,
                     style: AppStyles.textStyleSize12W100Primary(context),
                   )
                 else
                   Text(
-                    AppLocalization.of(context)!.selectAccountDescOne,
+                    localizations.selectAccountDescOne,
                     style: AppStyles.textStyleSize12W100Primary(context),
                   ),
               ],
@@ -652,7 +654,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: SingleChildScrollView(
@@ -676,11 +678,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   void _showSendingAnimation(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,
-        StateContainer.of(context).curTheme.animationOverlayStrong!,
-        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        theme.animationOverlayStrong!,
+        theme.animationOverlayMedium!,
       ),
     );
   }

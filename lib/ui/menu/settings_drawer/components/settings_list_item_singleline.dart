@@ -7,7 +7,6 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
     this.onPressed,
     this.icon,
     this.iconColor,
-    super.key,
   });
 
   final String heading;
@@ -34,7 +33,12 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget.build(context, icon!, 30, 30, color: iconColor),
+              child: IconWidget(
+                icon: icon!,
+                width: 30,
+                height: 30,
+                color: iconColor,
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +77,6 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
 
 class _SettingsListItemSingleLine extends _SettingsListItem {
   const _SettingsListItemSingleLine({
-    super.key,
     required this.heading,
     required this.headingStyle,
     required this.icon,
@@ -106,14 +109,11 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: Container(
-                child: IconWidget.build(
-                  context,
-                  icon,
-                  30,
-                  30,
-                  color: iconColor,
-                ),
+              child: IconWidget(
+                icon: icon,
+                width: 30,
+                height: 30,
+                color: iconColor,
               ),
             ),
             SizedBox(

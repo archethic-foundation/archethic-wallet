@@ -15,12 +15,17 @@ class AccountsListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
         Expanded(
           /// REFRESH
           child: RefreshIndicator(
-            backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
+            backgroundColor: theme.backgroundDark,
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
@@ -31,23 +36,9 @@ class AccountsListTab extends StatelessWidget {
                 StateContainer.of(context).appWallet,
                 await StateContainer.of(context).getSeed(),
                 StateContainer.of(context).curCurrency.currency.name,
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .balance!
-                    .nativeTokenName!,
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .balance!
-                    .tokenPrice!,
-                currentName: StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .name,
+                accountSelected.balance!.nativeTokenName!,
+                accountSelected.balance!.tokenPrice!,
+                currentName: accountSelected.name,
               );
             }),
             child: ScrollConfiguration(
@@ -65,7 +56,7 @@ class AccountsListTab extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          StateContainer.of(context).curTheme.background1Small!,
+                          theme.background1Small!,
                         ),
                         fit: BoxFit.fitHeight,
                         opacity: 0.7,

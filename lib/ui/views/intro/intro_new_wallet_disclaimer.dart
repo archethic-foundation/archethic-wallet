@@ -16,23 +16,23 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background1Small!,
+              theme.background1Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: LayoutBuilder(
@@ -58,7 +58,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: StateContainer.of(context).curTheme.text,
+                                color: theme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -66,21 +66,18 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Container(
-                          child: IconWidget.build(
-                            context,
-                            'assets/icons/warning.png',
-                            90,
-                            90,
-                            color: StateContainer.of(context).curTheme.warning,
-                          ),
+                        IconWidget(
+                          icon: 'assets/icons/warning.png',
+                          width: 90,
+                          height: 90,
+                          color: theme.warning,
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
                             top: 10,
                           ),
                           child: AutoSizeText(
-                            AppLocalization.of(context)!.warning,
+                            localizations.warning,
                             style:
                                 AppStyles.textStyleSize28W700Warning(context),
                           ),
@@ -96,18 +93,17 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel1,
+                                localizations.backupSafetyLabel1,
                                 style: AppStyles.textStyleSize16W600Primary(
                                   context,
                                 ),
                               ),
                               Divider(
                                 height: 30,
-                                color:
-                                    StateContainer.of(context).curTheme.text60,
+                                color: theme.text60,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel2,
+                                localizations.backupSafetyLabel2,
                                 style: AppStyles.textStyleSize16W600Primary(
                                   context,
                                 ),
@@ -116,7 +112,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                                 height: 30,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel3,
+                                localizations.backupSafetyLabel3,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
                                 ),
@@ -124,11 +120,10 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               ),
                               Divider(
                                 height: 30,
-                                color:
-                                    StateContainer.of(context).curTheme.text60,
+                                color: theme.text60,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel4,
+                                localizations.backupSafetyLabel4,
                                 style: AppStyles.textStyleSize16W600Primary(
                                   context,
                                 ),
@@ -137,7 +132,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                                 height: 30,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel5,
+                                localizations.backupSafetyLabel5,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
                                 ),
@@ -145,11 +140,10 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               ),
                               Divider(
                                 height: 30,
-                                color:
-                                    StateContainer.of(context).curTheme.text60,
+                                color: theme.text60,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel6,
+                                localizations.backupSafetyLabel6,
                                 style: AppStyles.textStyleSize16W600Primary(
                                   context,
                                 ),
@@ -158,7 +152,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                                 height: 30,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!.backupSafetyLabel7,
+                                localizations.backupSafetyLabel7,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
                                 ),
@@ -183,7 +177,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                       const Key('understandButton'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.understandButton,
+                      localizations.understandButton,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
                         Navigator.of(context)

@@ -15,6 +15,8 @@ class MainBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 22),
       child: ClipRRect(
@@ -33,51 +35,31 @@ class MainBottomBar extends StatelessWidget {
             items: <BottomBarItem>[
               BottomBarItem(
                 icon: const FaIcon(FontAwesomeIcons.keycdn),
-                backgroundColorOpacity: StateContainer.of(context)
-                    .curTheme
-                    .bottomBarBackgroundColorOpacity!,
-                activeIconColor: StateContainer.of(context)
-                    .curTheme
-                    .bottomBarActiveIconColor,
-                activeTitleColor: StateContainer.of(context)
-                    .curTheme
-                    .bottomBarActiveTitleColor,
-                activeColor:
-                    StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                inactiveColor:
-                    StateContainer.of(context).curTheme.bottomBarInactiveIcon,
+                backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
+                activeIconColor: theme.bottomBarActiveIconColor,
+                activeTitleColor: theme.bottomBarActiveTitleColor,
+                activeColor: theme.bottomBarActiveColor!,
+                inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
                 icon: const Icon(Icons.account_circle),
-                backgroundColorOpacity: StateContainer.of(context)
-                    .curTheme
-                    .bottomBarBackgroundColorOpacity!,
-                activeIconColor: StateContainer.of(context)
-                    .curTheme
-                    .bottomBarActiveIconColor,
-                activeTitleColor: StateContainer.of(context)
-                    .curTheme
-                    .bottomBarActiveTitleColor,
-                activeColor:
-                    StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                inactiveColor:
-                    StateContainer.of(context).curTheme.bottomBarInactiveIcon,
+                backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
+                activeIconColor: theme.bottomBarActiveIconColor,
+                activeTitleColor: theme.bottomBarActiveTitleColor,
+                activeColor: theme.bottomBarActiveColor!,
+                inactiveColor: theme.bottomBarInactiveIcon,
               ),
               /*BottomBarItem(
                   icon: const Icon(Icons.collections_bookmark),
-                  backgroundColorOpacity: StateContainer.of(context)
-                      .curTheme
+                  backgroundColorOpacity: theme
                       .bottomBarBackgroundColorOpacity!,
-                  activeIconColor: StateContainer.of(context)
-                      .curTheme
+                  activeIconColor: theme
                       .bottomBarActiveIconColor!,
-                  activeTitleColor: StateContainer.of(context)
-                      .curTheme
+                  activeTitleColor: theme
                       .bottomBarActiveTitleColor!,
                   activeColor:
-                      StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                  inactiveColor: StateContainer.of(context)
-                      .curTheme
+                      theme.bottomBarActiveColor!,
+                  inactiveColor: theme
                       .bottomBarInactiveIcon!),*/
             ],
           ),

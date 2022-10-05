@@ -3,15 +3,23 @@
 import 'package:aewallet/appstate_container.dart';
 import 'package:flutter/material.dart';
 
-class IconWidget {
-  // TODO(Chralu): convert to [Widget] subclass
-  static Widget build(
-    BuildContext context,
-    String icon,
-    double width,
-    double height, {
-    Color? color,
-  }) {
+class IconWidget extends StatelessWidget {
+  const IconWidget({
+    required this.icon,
+    required this.width,
+    required this.height,
+    this.color,
+    super.key,
+  });
+
+  final String icon;
+  final double width;
+  final double height;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Container(
       width: width,
       height: height,
@@ -19,7 +27,7 @@ class IconWidget {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: StateContainer.of(context).curTheme.iconDrawerBackground!,
+            color: theme.iconDrawerBackground!,
           ),
         ],
       ),
@@ -27,64 +35,111 @@ class IconWidget {
       child: SizedBox(
         child: Image.asset(
           icon,
-          color: color ?? StateContainer.of(context).curTheme.iconDrawer,
+          color: color ?? theme.iconDrawer,
         ),
       ),
     );
   }
+}
 
-  // TODO(Chralu): convert to [Widget] subclass
-  static Widget buildIconDataWidget(
-    BuildContext context,
-    IconData icon,
-    double width,
-    double height, {
-    bool enabled = true,
-  }) {
+class IconDataWidget extends StatelessWidget {
+  const IconDataWidget({
+    required this.icon,
+    required this.width,
+    required this.height,
+    this.enabled = true,
+    super.key,
+  });
+
+  final IconData icon;
+  final double width;
+  final double height;
+  final bool enabled;
+
+  @override
+  Widget build(BuildContext context) {
     return enabled
-        ? Container(
+        ? _IconDataWidgetEnabled(
             width: width,
             height: height,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: StateContainer.of(context)
-                      .curTheme
-                      .iconDataWidgetIconBackground!,
-                ),
-              ],
-            ),
-            alignment: AlignmentDirectional.center,
-            child: ShaderMask(
-              child: SizedBox(
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: width,
-                ),
-              ),
-              shaderCallback: (Rect bounds) {
-                final rect = Rect.fromLTRB(0, 0, width, width);
-                return StateContainer.of(context)
-                    .curTheme
-                    .gradient!
-                    .createShader(rect);
-              },
-            ),
+            icon: icon,
           )
-        : Container(
+        : _IconDataWidgetDisabled(
             width: width,
             height: height,
-            alignment: AlignmentDirectional.center,
-            child: SizedBox(
-              child: Icon(
-                icon,
-                color:
-                    StateContainer.of(context).curTheme.text!.withOpacity(0.3),
-                size: width,
-              ),
-            ),
+            icon: icon,
           );
+  }
+}
+
+class _IconDataWidgetEnabled extends StatelessWidget {
+  const _IconDataWidgetEnabled({
+    required this.icon,
+    required this.width,
+    required this.height,
+  });
+
+  final IconData icon;
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: theme.iconDataWidgetIconBackground!,
+          ),
+        ],
+      ),
+      alignment: AlignmentDirectional.center,
+      child: ShaderMask(
+        child: SizedBox(
+          child: Icon(
+            icon,
+            color: Colors.white,
+            size: width,
+          ),
+        ),
+        shaderCallback: (Rect bounds) {
+          final rect = Rect.fromLTRB(0, 0, width, width);
+          return theme.gradient!.createShader(rect);
+        },
+      ),
+    );
+  }
+}
+
+class _IconDataWidgetDisabled extends StatelessWidget {
+  const _IconDataWidgetDisabled({
+    required this.icon,
+    required this.width,
+    required this.height,
+  });
+
+  final IconData icon;
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      alignment: AlignmentDirectional.center,
+      child: SizedBox(
+        child: Icon(
+          icon,
+          color: StateContainer.of(context).curTheme.text!.withOpacity(0.3),
+          size: width,
+        ),
+      ),
+    );
   }
 }

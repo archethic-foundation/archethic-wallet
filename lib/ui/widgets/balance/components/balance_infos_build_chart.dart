@@ -2,8 +2,8 @@
 
 part of '../balance_infos.dart';
 
-class BalanceInfosBuildChart extends StatelessWidget {
-  const BalanceInfosBuildChart({super.key});
+class BalanceInfosChart extends StatelessWidget {
+  const BalanceInfosChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,40 +29,9 @@ class BalanceInfosBuildChart extends StatelessWidget {
           OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
           OptionChart('all', ChartInfos.getChartOptionLabel(context, 'all')),
         ];
-        final OptionChart? optionChart;
-        final idChartOption = StateContainer.of(context).idChartOption!;
-        switch (idChartOption) {
-          case '1h':
-            optionChart = optionChartList[0];
-            break;
-          case '24h':
-            optionChart = optionChartList[1];
-            break;
-          case '7d':
-            optionChart = optionChartList[2];
-            break;
-          case '14d':
-            optionChart = optionChartList[3];
-            break;
-          case '30d':
-            optionChart = optionChartList[4];
-            break;
-          case '60d':
-            optionChart = optionChartList[5];
-            break;
-          case '200d':
-            optionChart = optionChartList[6];
-            break;
-          case '1y':
-            optionChart = optionChartList[7];
-            break;
-          case 'all':
-            optionChart = optionChartList[8];
-            break;
-          default:
-            optionChart = optionChartList[0];
-            break;
-        }
+        final optionChart =
+            _getOptionChart(context, StateContainer.of(context).idChartOption!);
+
         Sheets.showAppHeightNineSheet(
           context: context,
           widget: ChartSheet(
@@ -88,11 +57,10 @@ class BalanceInfosBuildChart extends StatelessWidget {
                         context,
                       ),
                     ),
-                    IconWidget.buildIconDataWidget(
-                      context,
-                      Icons.arrow_circle_right_outlined,
-                      20,
-                      20,
+                    const IconDataWidget(
+                      icon: Icons.arrow_circle_right_outlined,
+                      width: 20,
+                      height: 20,
                     ),
                   ],
                 ),
@@ -139,5 +107,48 @@ class BalanceInfosBuildChart extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  OptionChart _getOptionChart(BuildContext context, String idChartOption) {
+    switch (idChartOption) {
+      case '1h':
+        return OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h'));
+      case '24h':
+        return OptionChart(
+          '24h',
+          ChartInfos.getChartOptionLabel(context, '24h'),
+        );
+      case '7d':
+        return OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d'));
+      case '14d':
+        return OptionChart(
+          '14d',
+          ChartInfos.getChartOptionLabel(context, '14d'),
+        );
+      case '30d':
+        return OptionChart(
+          '30d',
+          ChartInfos.getChartOptionLabel(context, '30d'),
+        );
+      case '60d':
+        return OptionChart(
+          '60d',
+          ChartInfos.getChartOptionLabel(context, '60d'),
+        );
+      case '200d':
+        return OptionChart(
+          '200d',
+          ChartInfos.getChartOptionLabel(context, '200d'),
+        );
+      case '1y':
+        return OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y'));
+      case 'all':
+        return OptionChart(
+          'all',
+          ChartInfos.getChartOptionLabel(context, 'all'),
+        );
+      default:
+        return OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h'));
+    }
   }
 }

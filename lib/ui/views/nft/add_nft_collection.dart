@@ -1,35 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/nft_file_add_event.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/service/token_informations_service.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/add_nft_collection_confirm.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AddNFTCollection extends StatefulWidget {
   const AddNFTCollection({
@@ -104,7 +82,14 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO(reddwarf03): refacto code with Riverpod
+    return const SizedBox();
+  }
+}
+   /* 
     final bottom = MediaQuery.of(context).viewInsets.bottom;
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -113,7 +98,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             SheetHeader(
-              title: AppLocalization.of(context)!.createNFTCollection,
+              title: localizations.createNFTCollection,
               widgetBeforeTitle: BalanceIndicatorWidget(
                 primaryCurrency: widget.primaryCurrency,
                 displaySwitchButton: false,
@@ -126,13 +111,15 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      collectionInfos(context, bottom),
-                      getNFTListPreview(context),
+                      _AddNFTCollectionInfos(bottom: bottom),
+                      _AddNFTCollectionNFTListPreview(
+                        token: token!,
+                      ),
                       if (feeEstimation > 0)
                         Padding(
                           padding: const EdgeInsets.only(left: 30, right: 30),
                           child: Text(
-                            '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                            '${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                             style: AppStyles.textStyleSize14W100Primary(
                               context,
                             ),
@@ -143,8 +130,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                         Padding(
                           padding: const EdgeInsets.only(left: 30, right: 30),
                           child: Text(
-                            AppLocalization.of(context)!
-                                .estimatedFeesAddTokenNote,
+                            localizations.estimatedFeesAddTokenNote,
                             style: AppStyles.textStyleSize14W100Primary(
                               context,
                             ),
@@ -168,7 +154,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                         const Key('createNFTCollection'),
                         context,
                         AppButtonType.primaryOutline,
-                        AppLocalization.of(context)!.createNFTCollection,
+                        localizations.createNFTCollection,
                         Dimens.buttonTopDimens,
                         onPressed: () {},
                       )
@@ -177,7 +163,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                         const Key('createNFTCollection'),
                         context,
                         AppButtonType.primary,
-                        AppLocalization.of(context)!.createNFTCollection,
+                        localizations.createNFTCollection,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
                           setState(() {
@@ -222,7 +208,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                         const Key('saveNFTCollectionInLocal'),
                         context,
                         AppButtonType.primaryOutline,
-                        AppLocalization.of(context)!.saveNFTCollectionInLocal,
+                        localizations.saveNFTCollectionInLocal,
                         Dimens.buttonBottomDimens,
                         onPressed: () {},
                       )
@@ -231,7 +217,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                         const Key('saveNFTCollectionInLocal'),
                         context,
                         AppButtonType.primary,
-                        AppLocalization.of(context)!.saveNFTCollectionInLocal,
+                        localizations.saveNFTCollectionInLocal,
                         Dimens.buttonBottomDimens,
                         onPressed: () async {
                           setState(() {
@@ -275,7 +261,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                             UIUtil.showSnackbar(
                               'Saved',
                               context,
-                              StateContainer.of(context).curTheme.text!,
+                              theme.text!,
                               StateContainer.of(context)
                                   .curTheme
                                   .snackBarShadow!,
@@ -297,110 +283,8 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     );
   }
 
-  // TODO(Chralu): transform to [Widget] subclass
-  Widget collectionInfos(BuildContext context, double bottom) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: bottom + 80),
-            child: Column(
-              children: <Widget>[
-                AppTextField(
-                  focusNode: collectionNameFocusNode,
-                  controller: collectionNameController,
-                  cursorColor: StateContainer.of(context).curTheme.text,
-                  textInputAction: TextInputAction.next,
-                  labelText: AppLocalization.of(context)!.tokenNameHint,
-                  autocorrect: false,
-                  keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: <LengthLimitingTextInputFormatter>[
-                    LengthLimitingTextInputFormatter(40),
-                  ],
-                  onChanged: (String text) async {
-                    final fee = await getFee(context);
-                    // Always reset the error message to be less annoying
-                    setState(() {
-                      feeEstimation = fee;
-                      token!.name = text;
-                    });
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(
-                    collectionNameValidationText!,
-                    style: AppStyles.textStyleSize14W600Primary(context),
-                  ),
-                ),
-                AppTextField(
-                  focusNode: collectionSymbolFocusNode,
-                  controller: collectionSymbolController,
-                  cursorColor: StateContainer.of(context).curTheme.text,
-                  textInputAction: TextInputAction.next,
-                  labelText: AppLocalization.of(context)!.tokenSymbolHint,
-                  autocorrect: false,
-                  keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: [
-                    UpperCaseTextFormatter(),
-                    LengthLimitingTextInputFormatter(4),
-                  ],
-                  onChanged: (String text) async {
-                    final fee = await getFee(context);
-                    // Always reset the error message to be less annoying
-                    setState(() {
-                      feeEstimation = fee;
-                      token!.symbol = text;
-                    });
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(
-                    collectionSymbolValidationText!,
-                    style: AppStyles.textStyleSize14W600Primary(context),
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    if (collectionNameController!.text.isNotEmpty &&
-                        collectionSymbolController!.text.isNotEmpty)
-                      AppButton.buildAppButtonTiny(
-                        const Key('addNFT'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.addNFTFile,
-                        Dimens.buttonBottomDimens,
-                        onPressed: () {
-                          /* Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: const AddNFTFile(
-                                    process: AddNFTFileProcess.collection));*/
-                        },
-                      )
-                    else
-                      AppButton.buildAppButtonTiny(
-                        const Key('addNFT'),
-                        context,
-                        AppButtonType.primaryOutline,
-                        AppLocalization.of(context)!.addNFTFile,
-                        Dimens.buttonBottomDimens,
-                        onPressed: () {},
-                      )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Future<bool> _validateRequest(BuildContext context) async {
+    final localizations = AppLocalization.of(context)!;
     var isValid = true;
     setState(() {
       collectionNameValidationText = '';
@@ -409,15 +293,13 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     if (collectionNameController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        collectionNameValidationText =
-            AppLocalization.of(context)!.tokenNameMissing;
+        collectionNameValidationText = localizations.tokenNameMissing;
       });
     }
     if (collectionSymbolController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        collectionSymbolValidationText =
-            AppLocalization.of(context)!.tokenSymbolMissing;
+        collectionSymbolValidationText = localizations.tokenSymbolMissing;
       });
     }
 
@@ -450,14 +332,132 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     }
     return fee;
   }
+}
 
-  // TODO(Chralu): implement [NFTListPreview] [Widget]
-  Widget getNFTListPreview(BuildContext context) {
+class _AddNFTCollectionInfos extends StatelessWidget {
+  const _AddNFTCollectionInfos({required this.bottom, super.key});
+
+  final double bottom;
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: bottom + 80),
+            child: Column(
+              children: <Widget>[
+                AppTextField(
+                  focusNode: collectionNameFocusNode,
+                  controller: collectionNameController,
+                  cursorColor: theme.text,
+                  textInputAction: TextInputAction.next,
+                  labelText: localizations.tokenNameHint,
+                  autocorrect: false,
+                  keyboardType: TextInputType.text,
+                  style: AppStyles.textStyleSize16W600Primary(context),
+                  inputFormatters: <LengthLimitingTextInputFormatter>[
+                    LengthLimitingTextInputFormatter(40),
+                  ],
+                  onChanged: (String text) async {
+                    final fee = await getFee(context);
+                    // Always reset the error message to be less annoying
+                    setState(() {
+                      feeEstimation = fee;
+                      token!.name = text;
+                    });
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    collectionNameValidationText!,
+                    style: AppStyles.textStyleSize14W600Primary(context),
+                  ),
+                ),
+                AppTextField(
+                  focusNode: collectionSymbolFocusNode,
+                  controller: collectionSymbolController,
+                  cursorColor: theme.text,
+                  textInputAction: TextInputAction.next,
+                  labelText: localizations.tokenSymbolHint,
+                  autocorrect: false,
+                  keyboardType: TextInputType.text,
+                  style: AppStyles.textStyleSize16W600Primary(context),
+                  inputFormatters: [
+                    UpperCaseTextFormatter(),
+                    LengthLimitingTextInputFormatter(4),
+                  ],
+                  onChanged: (String text) async {
+                    final fee = await getFee(context);
+                    // Always reset the error message to be less annoying
+                    setState(() {
+                      feeEstimation = fee;
+                      token!.symbol = text;
+                    });
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    collectionSymbolValidationText!,
+                    style: AppStyles.textStyleSize14W600Primary(context),
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    if (collectionNameController!.text.isNotEmpty &&
+                        collectionSymbolController!.text.isNotEmpty)
+                      AppButton.buildAppButtonTiny(
+                        const Key('addNFT'),
+                        context,
+                        AppButtonType.primary,
+                        localizations.addNFTFile,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () {
+                          /* Sheets.showAppHeightNineSheet(
+                                context: context,
+                                widget: const AddNFTFile(
+                                    process: AddNFTFileProcess.collection));*/
+                        },
+                      )
+                    else
+                      AppButton.buildAppButtonTiny(
+                        const Key('addNFT'),
+                        context,
+                        AppButtonType.primaryOutline,
+                        localizations.addNFTFile,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () {},
+                      )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AddNFTCollectionNFTListPreview extends StatelessWidget {
+  const _AddNFTCollectionNFTListPreview({required this.token, super.key});
+
+  final Token token;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         // Settings items
         ListView.separated(
-          itemCount: token!.tokenProperties!.length,
+          itemCount: token.tokenProperties!.length,
           physics: const NeverScrollableScrollPhysics(),
           separatorBuilder: (BuildContext context, int index) {
             return const SizedBox(height: 10);
@@ -506,3 +506,5 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     );
   }
 }
+*/
+  

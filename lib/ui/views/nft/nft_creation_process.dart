@@ -1,60 +1,23 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
-import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/nft/add_public_key.dart';
-import 'package:aewallet/ui/views/nft/get_public_key.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/mime_util.dart';
-import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/user_data_util.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:filesize/filesize.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mime_dart/mime_dart.dart';
-import 'package:path/path.dart' as path;
-import 'package:pdfx/pdfx.dart';
 
+part 'nft_creation_process_confirmation_tab.dart';
 part 'nft_creation_process_import_tab.dart';
 part 'nft_creation_process_infos_tab.dart';
 part 'nft_creation_process_properties_tab.dart';
-part 'nft_creation_process_confirmation_tab.dart';
 
 enum NFTCreationProcessType { single, collection }
 
@@ -80,7 +43,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
   //
   File? file;
-  int importSelection = 0;
   Uint8List? fileDecodedForPreview;
   Uint8List? fileDecoded;
   String typeMime = '';
@@ -126,7 +88,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   FocusNode nftPropertyCompositorFocusNode = FocusNode();
   TextEditingController nftPropertyCompositorController =
       TextEditingController();
-
+/*
   @override
   void initState() {
     _registerBus();
@@ -175,7 +137,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      _doAdd();
+       _doAdd();
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
@@ -241,9 +203,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       }
     });
   }
-
+*/
   @override
   Widget build(BuildContext context) {
+    //TODO(reddwarf03): refacto code with Riverpod
+    return const SizedBox();
+  }
+}
+    /*
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
@@ -633,64 +600,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         ),
       ),
     );
-  }
-
-  Future<void> setFileProperties(File file, {bool copyNFTName = false}) async {
-    fileDecoded = File(file.path).readAsBytesSync();
-    file64 = base64Encode(fileDecoded!);
-    sizeFile = fileDecoded!.length;
-
-    tokenPropertyWithAccessInfosList
-        .removeWhere((element) => element.tokenProperty!.keys.first == 'file');
-    tokenPropertyWithAccessInfosList.add(
-      TokenPropertyWithAccessInfos(
-        tokenProperty: <String, String>{'file': file64},
-      ),
-    );
-
-    try {
-      typeMime = Mime.getTypesFromExtension(
-        path.extension(file.path).replaceAll('.', ''),
-      )![0];
-
-      tokenPropertyWithAccessInfosList.removeWhere(
-        (element) => element.tokenProperty!.keys.first == 'type/mime',
-      );
-      tokenPropertyWithAccessInfosList.add(
-        TokenPropertyWithAccessInfos(
-          tokenProperty: <String, String>{'type/mime': typeMime},
-        ),
-      );
-    } catch (e) {}
-
-    if (MimeUtil.isImage(typeMime) == true) {
-      fileDecodedForPreview = fileDecoded;
-
-      /*final data = await readExifFromBytes(fileDecoded!);
-
-      for (final entry in data.entries) {
-        tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-            tokenProperty:
-                TokenProperty(name: entry.key, value: entry.value.printable)));
-        tokenPropertyWithAccessInfosList.sort(
-            (TokenPropertyWithAccessInfos a, TokenPropertyWithAccessInfos b) =>
-                a.tokenProperty!.name!
-                    .toLowerCase()
-                    .compareTo(b.tokenProperty!.name!.toLowerCase()));
-      }*/
-    } else {
-      if (MimeUtil.isPdf(typeMime) == true) {
-        final pdfDocument = await PdfDocument.openData(
-          File(file.path).readAsBytesSync(),
-        );
-        final pdfPage = await pdfDocument.getPage(1);
-
-        final pdfPageImage =
-            await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
-        fileDecodedForPreview = pdfPageImage!.bytes;
-      }
-    }
-    setState(() {});
   }
 
   bool validateAddNFTProperty() {
@@ -1181,3 +1090,4 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     );
   }
 }
+*/

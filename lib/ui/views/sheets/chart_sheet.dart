@@ -72,6 +72,8 @@ class _ChartSheetState extends State<ChartSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -90,26 +92,19 @@ class _ChartSheetState extends State<ChartSheet> {
                       intervals: StateContainer.of(context).chartInfos!.data!,
                       gradientColors: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context).curTheme.text20!,
-                          StateContainer.of(context).curTheme.text!,
+                          theme.text20!,
+                          theme.text!,
                         ],
                       ),
                       gradientColorsBar: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context)
-                              .curTheme
-                              .text!
-                              .withOpacity(0.9),
-                          StateContainer.of(context)
-                              .curTheme
-                              .text!
-                              .withOpacity(0),
+                          theme.text!.withOpacity(0.9),
+                          theme.text!.withOpacity(0),
                         ],
                         begin: Alignment.center,
                         end: Alignment.bottomCenter,
                       ),
-                      tooltipBg:
-                          StateContainer.of(context).curTheme.backgroundDark!,
+                      tooltipBg: theme.backgroundDark!,
                       tooltipText:
                           AppStyles.textStyleSize12W100Primary(context),
                       axisTextStyle:
@@ -160,26 +155,19 @@ class _ChartSheetState extends State<ChartSheet> {
                     ChartInfos.getChartOptionLabel(context, optionChart.id),
                     style: AppStyles.textStyleSize12W100Primary(context),
                   ),
-                  backgroundColorOpacity: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarBackgroundColorOpacity!,
-                  activeIconColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarActiveIconColor,
-                  activeTitleColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarActiveTitleColor,
-                  activeColor:
-                      StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                  inactiveColor:
-                      StateContainer.of(context).curTheme.bottomBarInactiveIcon,
+                  backgroundColorOpacity:
+                      theme.bottomBarBackgroundColorOpacity!,
+                  activeIconColor: theme.bottomBarActiveIconColor,
+                  activeTitleColor: theme.bottomBarActiveTitleColor,
+                  activeColor: theme.bottomBarActiveColor!,
+                  inactiveColor: theme.bottomBarInactiveIcon,
                 );
               }).toList(),
             ),
           ],
         ),
         if (StateContainer.of(context).chartInfos != null)
-          const BalanceInfosBuildKpi()
+          const BalanceInfosKpi()
         else
           const SizedBox(),
       ],

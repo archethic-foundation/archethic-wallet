@@ -97,6 +97,9 @@ class _AddContactSheetState extends State<AddContactSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -104,13 +107,13 @@ class _AddContactSheetState extends State<AddContactSheet> {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: AppLocalization.of(context)!.addContact,
+              title: localizations.addContact,
             ),
             const SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.only(left: 30, right: 30),
               child: AutoSizeText(
-                AppLocalization.of(context)!.addressBookDesc,
+                localizations.addressBookDesc,
                 style: AppStyles.textStyleSize16W200Primary(context),
                 textAlign: TextAlign.center,
                 maxLines: 1,
@@ -127,7 +130,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     textInputAction: widget.address != null
                         ? TextInputAction.done
                         : TextInputAction.next,
-                    labelText: AppLocalization.of(context)!.contactNameHint,
+                    labelText: localizations.contactNameHint,
                     keyboardType: TextInputType.text,
                     style: AppStyles.textStyleSize16W600Primary(context),
                     inputFormatters: <TextInputFormatter>[
@@ -173,7 +176,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     textInputAction: TextInputAction.done,
                     maxLines: null,
                     autocorrect: false,
-                    labelText: AppLocalization.of(context)!.addressHint,
+                    labelText: localizations.addressHint,
                     prefixButton: kIsWeb == false &&
                             (Platform.isIOS || Platform.isAndroid)
                         ? TextFieldButton(
@@ -303,7 +306,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       const Key('addContact'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.addContact,
+                      localizations.addContact,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         if (await validateForm()) {
@@ -318,12 +321,11 @@ class _AddContactSheetState extends State<AddContactSheet> {
                           EventTaxiImpl.singleton()
                               .fire(ContactAddedEvent(contact: newContact));
                           UIUtil.showSnackbar(
-                            AppLocalization.of(context)!
-                                .contactAdded
+                            localizations.contactAdded
                                 .replaceAll('%1', newContact.name!),
                             context,
-                            StateContainer.of(context).curTheme.text!,
-                            StateContainer.of(context).curTheme.snackBarShadow!,
+                            theme.text!,
+                            theme.snackBarShadow!,
                           );
 
                           Navigator.of(context).pop();
@@ -341,6 +343,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
   }
 
   Future<bool> validateForm() async {
+    final localizations = AppLocalization.of(context)!;
     var isValid = true;
     _nameValidationText = '';
     _addressValidationText = '';
@@ -350,12 +353,12 @@ class _AddContactSheetState extends State<AddContactSheet> {
       if (_addressController!.text.isEmpty) {
         isValid = false;
         setState(() {
-          _addressValidationText = AppLocalization.of(context)!.addressMissing;
+          _addressValidationText = localizations.addressMissing;
         });
       } else if (!Address(_addressController!.text).isValid()) {
         isValid = false;
         setState(() {
-          _addressValidationText = AppLocalization.of(context)!.invalidAddress;
+          _addressValidationText = localizations.invalidAddress;
         });
       } else {
         _addressFocusNode!.unfocus();
@@ -365,8 +368,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
         if (addressExists) {
           setState(() {
             isValid = false;
-            _addressValidationText =
-                AppLocalization.of(context)!.contactExistsAddress;
+            _addressValidationText = localizations.contactExistsAddress;
           });
         }
       }
@@ -375,7 +377,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
     if (_nameController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        _nameValidationText = AppLocalization.of(context)!.contactNameMissing;
+        _nameValidationText = localizations.contactNameMissing;
       });
     } else {
       final nameExists =
@@ -383,7 +385,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
       if (nameExists) {
         setState(() {
           isValid = false;
-          _nameValidationText = AppLocalization.of(context)!.contactExistsName;
+          _nameValidationText = localizations.contactExistsName;
         });
       }
     }

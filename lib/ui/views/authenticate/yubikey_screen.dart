@@ -247,11 +247,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          IconWidget.build(
-                            context,
-                            'assets/icons/digital-key.png',
-                            90,
-                            90,
+                          const IconWidget(
+                            icon: 'assets/icons/digital-key.png',
+                            width: 90,
+                            height: 90,
                           ),
                           const SizedBox(
                             height: 30,

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-// ignore: avoid_classes_with_only_static_members
 class AppDialogs {
   static void showConfirmDialog(
     BuildContext context,
@@ -41,14 +40,8 @@ class AppDialogs {
             style: AppStyles.textStyleSize16W400Primary(context),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 100),
-                child: Text(
-                  cancelText!,
-                  style: AppStyles.textStyleSize12W600Primary(context),
-                ),
-              ),
+            _AppDialogsButton(
+              textButton: cancelText!,
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
@@ -60,14 +53,8 @@ class AppDialogs {
                 }
               },
             ),
-            TextButton(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 100),
-                child: Text(
-                  buttonText,
-                  style: AppStyles.textStyleSize12W600Primary(context),
-                ),
-              ),
+            _AppDialogsButton(
+              textButton: buttonText,
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
@@ -130,6 +117,30 @@ class AppDialogs {
   }
 }
 
+class _AppDialogsButton extends StatelessWidget {
+  const _AppDialogsButton({
+    required this.textButton,
+    required this.onPressed,
+  });
+
+  final VoidCallback onPressed;
+  final String textButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 100),
+        child: Text(
+          textButton,
+          style: AppStyles.textStyleSize12W600Primary(context),
+        ),
+      ),
+    );
+  }
+}
+
 enum AnimationType {
   send,
 }
@@ -186,36 +197,11 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     return Material(
       type: MaterialType.transparency,
       child: SafeArea(
-        child: _buildOverlayContent(context),
-      ),
-    );
-  }
-
-// TODO(chralu): Create a Widget subclass
-  Widget _getAnimation(BuildContext context) {
-    switch (type) {
-      case AnimationType.send:
-        return PulsatingCircleLogo(
-          title: title,
-        );
-    }
-  }
-
-// TODO(chralu): Create a Widget subclass
-  Widget _buildOverlayContent(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          margin: type == AnimationType.send
-              ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
-              : EdgeInsets.zero,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 2,
-          child: _getAnimation(context),
+        child: _AnimationLoadingOverlayContent(
+          type: type,
+          title: title!,
         ),
-      ],
+      ),
     );
   }
 
@@ -309,6 +295,54 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
           textAlign: TextAlign.center,
           style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
         )
+      ],
+    );
+  }
+}
+
+class _AnimationLoadingOverlayGetAnimation extends StatelessWidget {
+  const _AnimationLoadingOverlayGetAnimation({
+    required this.type,
+    required this.title,
+  });
+
+  final AnimationType type;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (type) {
+      case AnimationType.send:
+        return PulsatingCircleLogo(
+          title: title,
+        );
+    }
+  }
+}
+
+class _AnimationLoadingOverlayContent extends StatelessWidget {
+  const _AnimationLoadingOverlayContent({
+    required this.type,
+    required this.title,
+  });
+
+  final AnimationType type;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: type == AnimationType.send
+              ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
+              : EdgeInsets.zero,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 2,
+          child: _AnimationLoadingOverlayGetAnimation(type: type, title: title),
+        ),
       ],
     );
   }

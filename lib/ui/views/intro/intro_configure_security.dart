@@ -45,23 +45,23 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background2Small!,
+              theme.background2Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: LayoutBuilder(
@@ -85,7 +85,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: StateContainer.of(context).curTheme.text,
+                                color: theme.text,
                                 onPressed: () {
                                   Navigator.pop(context, false);
                                 },
@@ -93,13 +93,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                             ),
                           ],
                         ),
-                        Container(
-                          child: IconWidget.build(
-                            context,
-                            'assets/icons/finger-print.png',
-                            90,
-                            90,
-                          ),
+                        const IconWidget(
+                          icon: 'assets/icons/finger-print.png',
+                          width: 90,
+                          height: 90,
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
@@ -109,7 +106,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                           ),
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
-                            AppLocalization.of(context)!.configureSecurityIntro,
+                            localizations.configureSecurityIntro,
                             style:
                                 AppStyles.textStyleSize20W700Warning(context),
                           ),
@@ -121,8 +118,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                             top: 15,
                           ),
                           child: AutoSizeText(
-                            AppLocalization.of(context)!
-                                .configureSecurityExplanation,
+                            localizations.configureSecurityExplanation,
                             style:
                                 AppStyles.textStyleSize16W600Primary(context),
                             textAlign: TextAlign.justify,
@@ -155,8 +151,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                         .get<BiometricUtil>()
                                         .authenticateWithBiometrics(
                                           context,
-                                          AppLocalization.of(context)!
-                                              .unlockBiometrics,
+                                          localizations.unlockBiometrics,
                                         );
                                     break;
                                   case AuthMethod.password:
@@ -165,8 +160,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SetPassword(
-                                            header: AppLocalization.of(context)!
-                                                .setPasswordHeader,
+                                            header:
+                                                localizations.setPasswordHeader,
                                             description: AppLocalization.of(
                                               context,
                                             )!
@@ -196,11 +191,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SetYubikey(
-                                            header: AppLocalization.of(context)!
-                                                .seYubicloudHeader,
-                                            description:
-                                                AppLocalization.of(context)!
-                                                    .seYubicloudDescription,
+                                            header:
+                                                localizations.seYubicloudHeader,
+                                            description: localizations
+                                                .seYubicloudDescription,
                                           );
                                         },
                                       ),

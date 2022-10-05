@@ -101,11 +101,10 @@ class _LedgerScreenState extends State<LedgerScreen> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          IconWidget.build(
-                            context,
-                            'assets/icons/key-ring.png',
-                            90,
-                            90,
+                          const IconWidget(
+                            icon: 'assets/icons/key-ring.png',
+                            width: 90,
+                            height: 90,
                           ),
                           const SizedBox(
                             height: 30,

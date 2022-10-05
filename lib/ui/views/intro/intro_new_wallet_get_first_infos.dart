@@ -29,23 +29,23 @@ class _IntroNewWalletDisclaimerState
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background2Small!,
+              theme.background2Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: LayoutBuilder(
@@ -71,7 +71,7 @@ class _IntroNewWalletDisclaimerState
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: StateContainer.of(context).curTheme.text,
+                                color: theme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -93,7 +93,7 @@ class _IntroNewWalletDisclaimerState
                                 height: 30,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!
+                                localizations
                                     .introNewWalletGetFirstInfosWelcome,
                                 style: AppStyles.textStyleSize20W700Primary(
                                   context,
@@ -104,7 +104,7 @@ class _IntroNewWalletDisclaimerState
                                 height: 30,
                               ),
                               AutoSizeText(
-                                AppLocalization.of(context)!
+                                localizations
                                     .introNewWalletGetFirstInfosNameRequest,
                                 style: AppStyles.textStyleSize16W600Primary(
                                   context,
@@ -141,7 +141,7 @@ class _IntroNewWalletDisclaimerState
                                   height: 40,
                                 ),
                               AutoSizeText(
-                                AppLocalization.of(context)!
+                                localizations
                                     .introNewWalletGetFirstInfosNameInfos,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
@@ -158,8 +158,6 @@ class _IntroNewWalletDisclaimerState
                     ),
                   ),
                 ),
-
-                // Next Screen Button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -167,31 +165,30 @@ class _IntroNewWalletDisclaimerState
                       const Key('okButton'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.ok,
+                      localizations.ok,
                       Dimens.buttonBottomDimens,
                       onPressed: () async {
                         nameError = '';
                         if (nameController.text.isEmpty) {
                           setState(() {
-                            nameError = AppLocalization.of(context)!
+                            nameError = localizations
                                 .introNewWalletGetFirstInfosNameBlank;
                             FocusScope.of(context).requestFocus(nameFocusNode);
                           });
                         } else {
                           AppDialogs.showConfirmDialog(
                             context,
-                            AppLocalization.of(context)!.newAccount,
-                            AppLocalization.of(context)!
-                                .newAccountConfirmation
+                            localizations.newAccount,
+                            localizations.newAccountConfirmation
                                 .replaceAll('%1', nameController.text),
-                            AppLocalization.of(context)!.yes,
+                            localizations.yes,
                             () async {
                               Navigator.of(context).pushNamed(
                                 '/intro_backup_safety',
                                 arguments: nameController.text,
                               );
                             },
-                            cancelText: AppLocalization.of(context)!.no,
+                            cancelText: localizations.no,
                           );
                         }
                       },

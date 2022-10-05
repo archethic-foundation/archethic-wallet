@@ -111,13 +111,10 @@ class _SetPasswordState extends State<SetPassword> {
                             ),
                           ],
                         ),
-                        Container(
-                          child: IconWidget.build(
-                            context,
-                            'assets/icons/password.png',
-                            90,
-                            90,
-                          ),
+                        const IconWidget(
+                          icon: 'assets/icons/password.png',
+                          width: 90,
+                          height: 90,
                         ),
                         Expanded(
                           child: SingleChildScrollView(

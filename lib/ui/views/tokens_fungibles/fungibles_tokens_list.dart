@@ -57,7 +57,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
 }
 
 class _FungiblesTokensLine extends StatelessWidget {
-  const _FungiblesTokensLine({required this.num, super.key});
+  const _FungiblesTokensLine({required this.num});
 
   final int num;
 
@@ -103,8 +103,9 @@ class _FungiblesTokensLine extends StatelessWidget {
 }
 
 class _FungiblesTokensDetailTransfer extends StatelessWidget {
-  const _FungiblesTokensDetailTransfer(
-      {required this.accountFungibleToken, super.key});
+  const _FungiblesTokensDetailTransfer({
+    required this.accountFungibleToken,
+  });
 
   final AccountToken accountFungibleToken;
 

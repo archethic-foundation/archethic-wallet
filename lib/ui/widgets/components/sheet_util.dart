@@ -67,32 +67,6 @@ class Sheets {
 
     return Navigator.push<T>(context, route);
   }
-
-  //App Height Eigth Sheet
-  static Future<T?> showAppHeightEightSheet<T>({
-    required BuildContext context,
-    required WidgetBuilder builder,
-    Color? color,
-    double radius = 25.0,
-    Color? bgColor,
-    int animationDurationMs = 225,
-  }) {
-    assert(radius > 0.0);
-    color ??= StateContainer.of(context).curTheme.backgroundDark;
-    bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
-    return Navigator.push<T>(
-      context,
-      _AppHeightEightModalRoute<T>(
-        builder: builder,
-        color: color,
-        radius: radius,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        bgColor: bgColor,
-        animationDurationMs: animationDurationMs,
-      ),
-    );
-  }
 }
 
 class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {

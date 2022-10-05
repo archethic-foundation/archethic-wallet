@@ -140,7 +140,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
 }
 
 class _TransactionBuildInfos extends StatelessWidget {
-  const _TransactionBuildInfos({required this.transactionInfo, super.key});
+  const _TransactionBuildInfos({required this.transactionInfo});
 
   final TransactionInfos transactionInfo;
 
@@ -163,11 +163,11 @@ class _TransactionBuildInfos extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10, top: 20),
                         width: 50,
                         height: 50,
-                        child: IconWidget.build(
-                          context,
-                          'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
-                          50,
-                          50,
+                        child: IconWidget(
+                          icon:
+                              'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
+                          width: 50,
+                          height: 50,
                         ),
                       ),
                     if (transactionInfo.titleInfo == '')
