@@ -4,7 +4,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/balance_infos.dart';
+import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -179,7 +179,7 @@ class _ChartSheetState extends State<ChartSheet> {
           ],
         ),
         if (StateContainer.of(context).chartInfos != null)
-          BalanceInfosWidget().buildKPI(context)
+          const BalanceInfosBuildKpi()
         else
           const SizedBox(),
       ],
