@@ -113,9 +113,7 @@ class _NFTTabState extends State<NFTTab> {
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.center,
                                       colors: <Color>[
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .background!,
+                                        theme.background!,
                                         Colors.transparent
                                       ],
                                     ),

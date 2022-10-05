@@ -130,20 +130,14 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                         checkedValue = newValue!;
                                       });
                                     },
-                                    checkColor: StateContainer.of(context)
-                                        .curTheme
-                                        .background,
-                                    activeColor: StateContainer.of(context)
-                                        .curTheme
-                                        .text,
+                                    checkColor: theme.background,
+                                    activeColor: theme.text,
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     secondary: IconButton(
                                       icon: const Icon(Icons.read_more),
                                       iconSize: 30,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .backgroundDarkest,
+                                      color: theme.backgroundDarkest,
                                       onPressed: () {
                                         UIUtil.showWebview(
                                           context,

@@ -30,6 +30,7 @@ class ContactsDialog {
     return showDialog<Contact>(
       context: context,
       builder: (BuildContext context) {
+        final theme = StateContainer.of(context).curTheme;
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
@@ -79,7 +80,7 @@ class ContactsDialog {
               shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 side: BorderSide(
-                  color: StateContainer.of(context).curTheme.text45!,
+                  color: theme.text45!,
                 ),
               ),
               content: SingleChildScrollView(

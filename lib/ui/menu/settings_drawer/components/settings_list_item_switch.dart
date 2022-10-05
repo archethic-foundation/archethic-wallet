@@ -17,6 +17,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
@@ -55,11 +56,9 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                     );
                 onChanged?.call(value);
               },
-              inactiveTrackColor:
-                  StateContainer.of(context).curTheme.inactiveTrackColorSwitch,
-              activeTrackColor:
-                  StateContainer.of(context).curTheme.activeTrackColorSwitch,
-              activeColor: StateContainer.of(context).curTheme.backgroundDark,
+              inactiveTrackColor: theme.inactiveTrackColorSwitch,
+              activeTrackColor: theme.activeTrackColorSwitch,
+              activeColor: theme.backgroundDark,
             )
           ],
         ),

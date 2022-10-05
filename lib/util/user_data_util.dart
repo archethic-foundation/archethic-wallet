@@ -77,20 +77,21 @@ class UserDataUtil {
       }
       return _parseData(data, type);
     } on PlatformException catch (e) {
+      final theme = StateContainer.of(context).curTheme;
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.qrInvalidPermissions,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         return QRScanErrs.permissionDenied;
       } else {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.qrUnknownError,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         return QRScanErrs.unknownError;
       }

@@ -27,6 +27,7 @@ class NFTCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
       children: <Widget>[
@@ -50,7 +51,7 @@ class NFTCard extends StatelessWidget {
             elevation: 5,
             shadowColor: Colors.black,
             margin: const EdgeInsets.only(left: 8, right: 8),
-            color: StateContainer.of(context).curTheme.backgroundDark,
+            color: theme.backgroundDark,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
               side: const BorderSide(color: Colors.white10),
@@ -71,7 +72,7 @@ class NFTCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               border: Border.all(),
                             ),
                             child: Image.memory(

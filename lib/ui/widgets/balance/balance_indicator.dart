@@ -46,6 +46,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return StateContainer.of(context).showBalance
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +80,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
                 IconButton(
                   icon: const Icon(Icons.change_circle),
                   alignment: Alignment.centerRight,
-                  color: StateContainer.of(context).curTheme.textFieldIcon,
+                  color: theme.textFieldIcon,
                   onPressed: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,

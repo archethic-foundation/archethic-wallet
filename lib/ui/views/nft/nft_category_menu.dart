@@ -17,6 +17,7 @@ class NftCategoryMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final expandedKey = GlobalKey();
+    final theme = StateContainer.of(context).curTheme;
 
     return SliverPadding(
       key: expandedKey,
@@ -57,9 +58,7 @@ class NftCategoryMenu extends StatelessWidget {
                         child: Card(
                           elevation: 5,
                           shadowColor: Colors.black,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDark,
+                          color: theme.backgroundDark,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                             side: const BorderSide(

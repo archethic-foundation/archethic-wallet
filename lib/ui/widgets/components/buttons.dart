@@ -24,13 +24,14 @@ class AppButton {
     bool disabled = false,
     Icon? icon,
   }) {
+    final theme = StateContainer.of(context).curTheme;
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton,
+              gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
@@ -113,7 +114,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton,
+              gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
             ),
             height: 55,
@@ -155,7 +156,7 @@ class AppButton {
                 : TextButton.icon(
                     key: key,
                     style: TextButton.styleFrom(
-                      foregroundColor: StateContainer.of(context).curTheme.text,
+                      foregroundColor: theme.text,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -197,13 +198,14 @@ class AppButton {
     bool disabled = false,
     Icon? icon,
   }) {
+    final theme = StateContainer.of(context).curTheme;
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton,
+              gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
@@ -253,7 +255,7 @@ class AppButton {
                 : TextButton.icon(
                     key: key,
                     style: TextButton.styleFrom(
-                      foregroundColor: StateContainer.of(context).curTheme.text,
+                      foregroundColor: theme.text,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -287,7 +289,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton,
+              gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
             ),
             height: 35,

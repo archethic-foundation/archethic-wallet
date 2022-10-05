@@ -182,6 +182,7 @@ class SlidingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
@@ -189,7 +190,7 @@ class SlidingCard extends StatelessWidget {
         elevation: 5,
         shadowColor: Colors.black,
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-        color: StateContainer.of(context).curTheme.backgroundDark,
+        color: theme.backgroundDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
           side: const BorderSide(color: Colors.white10),

@@ -24,6 +24,7 @@ class SheetHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: <Widget>[
         Row(
@@ -44,7 +45,7 @@ class SheetHeader extends StatelessWidget {
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.text60,
+                    color: theme.text60,
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),

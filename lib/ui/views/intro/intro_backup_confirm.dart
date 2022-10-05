@@ -414,9 +414,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     localizations.confirmSecretPhraseKo,
                                     context,
                                     theme.text!,
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .snackBarShadow!,
+                                    theme.snackBarShadow!,
                                   );
                                 });
                               } else {
