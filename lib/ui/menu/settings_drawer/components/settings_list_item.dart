@@ -35,7 +35,7 @@ abstract class _SettingsListItem extends StatelessWidget {
     required String icon,
     required Color iconColor,
     required Function onPressed,
-    bool disabled,
+    required bool disabled,
   }) = _SettingsListItemWithDefaultValueWithInfos;
 
   const factory _SettingsListItem.singleLineWithInfos({

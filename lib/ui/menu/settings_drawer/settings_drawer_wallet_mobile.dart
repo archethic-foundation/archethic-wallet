@@ -640,6 +640,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         icon: 'assets/icons/money-currency.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: _currencyDialog,
+                        disabled: false,
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
