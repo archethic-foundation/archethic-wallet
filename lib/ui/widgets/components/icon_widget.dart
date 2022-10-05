@@ -129,6 +129,7 @@ class _IconDataWidgetDisabled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Container(
       width: width,
       height: height,
@@ -136,7 +137,7 @@ class _IconDataWidgetDisabled extends StatelessWidget {
       child: SizedBox(
         child: Icon(
           icon,
-          color: StateContainer.of(context).curTheme.text!.withOpacity(0.3),
+          color: theme.text!.withOpacity(0.3),
           size: width,
         ),
       ),

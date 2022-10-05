@@ -682,12 +682,13 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   Widget getEnterAmountContainer() {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
         AppTextField(
           focusNode: _sendAmountFocusNode,
           controller: _sendAmountController,
-          cursorColor: StateContainer.of(context).curTheme.text,
+          cursorColor: theme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: [
             LengthLimitingTextInputFormatter(16),
@@ -879,13 +880,14 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   AppTextField getEnterAddressContainer() {
+    final theme = StateContainer.of(context).curTheme;
     return AppTextField(
       padding: _addressValidAndUnfocused
           ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
           : EdgeInsets.zero,
       focusNode: _sendAddressFocusNode,
       controller: _sendAddressController,
-      cursorColor: StateContainer.of(context).curTheme.text,
+      cursorColor: theme.text,
       inputFormatters: <LengthLimitingTextInputFormatter>[
         if (_isContact)
           LengthLimitingTextInputFormatter(20)
@@ -935,15 +937,15 @@ class _TransferSheetState extends State<TransferSheet> {
                   UIUtil.showSnackbar(
                     AppLocalization.of(context)!.qrInvalidAddress,
                     context,
-                    StateContainer.of(context).curTheme.text!,
-                    StateContainer.of(context).curTheme.snackBarShadow!,
+                    theme.text!,
+                    theme.snackBarShadow!,
                   );
                 } else if (QRScanErrs.errorList.contains(scanResult)) {
                   UIUtil.showSnackbar(
                     scanResult,
                     context,
-                    StateContainer.of(context).curTheme.text!,
-                    StateContainer.of(context).curTheme.snackBarShadow!,
+                    theme.text!,
+                    theme.snackBarShadow!,
                   );
                   return;
                 } else {

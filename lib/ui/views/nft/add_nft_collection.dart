@@ -262,8 +262,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                               'Saved',
                               context,
                               theme.text!,
-                              StateContainer.of(context)
-                                  .curTheme
+                            theme
                                   .snackBarShadow!,
                             );
                             Navigator.of(context).pop();

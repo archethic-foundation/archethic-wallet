@@ -156,26 +156,24 @@ class _AppLockScreenState extends State<AppLockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: StateContainer.of(context).curTheme.backgroundDarkest,
+      backgroundColor: theme.backgroundDarkest,
       body: Stack(
         children: <Widget>[
           DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  StateContainer.of(context).curTheme.background3Small!,
+                  theme.background3Small!,
                 ),
                 fit: BoxFit.fitHeight,
               ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark!,
-                  StateContainer.of(context).curTheme.background!
-                ],
+                colors: <Color>[theme.backgroundDark!, theme.background!],
               ),
             ),
           ),

@@ -26,12 +26,13 @@ class Sheets {
     Function? onDisposed,
   }) {
     assert(radius > 0.0);
-    color ??= StateContainer.of(context).curTheme.backgroundDark;
-    bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
+    final theme = StateContainer.of(context).curTheme;
+    color ??= theme.backgroundDark;
+    bgColor ??= theme.sheetBackground;
     final route = _AppHeightNineModalRoute<T>(
       builder: (BuildContext context) {
         return DecoratedBox(
-          decoration: StateContainer.of(context).curTheme.getDecorationSheet(),
+          decoration: theme.getDecorationSheet(),
           child: TweenAnimationBuilder(
             tween: Tween<double>(begin: 0, end: 1),
             duration: const Duration(milliseconds: 500),

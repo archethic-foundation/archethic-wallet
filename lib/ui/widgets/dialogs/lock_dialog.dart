@@ -31,6 +31,7 @@ class LockDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
+        final theme = StateContainer.of(context).curTheme;
         return AlertDialog(
           title: Text(
             AppLocalization.of(context)!.lockAppSetting,
@@ -39,7 +40,7 @@ class LockDialog {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: SingleChildScrollView(

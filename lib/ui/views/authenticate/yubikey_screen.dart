@@ -77,6 +77,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
+    final theme = StateContainer.of(context).curTheme;
     final preferences = await Preferences.getInstance();
     final vault = await Vault.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
@@ -88,8 +89,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_BAD_OTP,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -97,8 +98,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -106,8 +107,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -115,8 +116,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -124,8 +125,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -133,8 +134,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -142,8 +143,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -151,8 +152,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -160,8 +161,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -169,8 +170,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.yubikeyError_RESPONSE_KO,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -178,8 +179,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           verificationResponse.status,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         preferences.resetLockAttempts();
         Navigator.of(context).pop(true);
@@ -188,8 +189,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           verificationResponse.status,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
         break;
@@ -199,6 +200,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -207,17 +209,14 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  StateContainer.of(context).curTheme.background5Small!,
+                  theme.background5Small!,
                 ),
                 fit: BoxFit.fitHeight,
               ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark!,
-                  StateContainer.of(context).curTheme.background!
-                ],
+                colors: <Color>[theme.backgroundDark!, theme.background!],
               ),
             ),
           ),
@@ -237,7 +236,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                     width: 50,
                     child: BackButton(
                       key: const Key('back'),
-                      color: StateContainer.of(context).curTheme.text,
+                      color: theme.text,
                       onPressed: () {
                         Navigator.pop(context, false);
                       },

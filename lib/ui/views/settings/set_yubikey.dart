@@ -60,23 +60,21 @@ class _SetYubikeyState extends State<SetYubikey> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background3Small!,
+              theme.background3Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: TapOutsideUnfocus(
@@ -217,13 +215,14 @@ class _SetYubikeyState extends State<SetYubikey> {
   }
 
   Column getClientIDContainer() {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: <Widget>[
         AppTextField(
           topMargin: 30,
           focusNode: _clientIDFocusNode,
           controller: _clientIDController,
-          cursorColor: StateContainer.of(context).curTheme.text,
+          cursorColor: theme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(10)
@@ -248,13 +247,14 @@ class _SetYubikeyState extends State<SetYubikey> {
   }
 
   Column getClientAPIKeyContainer() {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: <Widget>[
         AppTextField(
           topMargin: 10,
           focusNode: _clientAPIKeyFocusNode,
           controller: _clientAPIKeyController,
-          cursorColor: StateContainer.of(context).curTheme.text,
+          cursorColor: theme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(40)

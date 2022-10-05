@@ -208,15 +208,13 @@ class _NFTCreationProcessImportTabState
                                 width: 2,
                               )
                             : BorderSide(
-                                color: StateContainer.of(context)
-                                    .curTheme
+                                color: theme
                                     .backgroundAccountsListCardSelected!,
                               ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       elevation: 0,
-                      color: StateContainer.of(context)
-                          .curTheme
+                      color: theme
                           .backgroundAccountsListCardSelected,
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -335,13 +333,11 @@ class _NFTCreationProcessImportTabState
                                     width: 40,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: StateContainer.of(context)
-                                          .curTheme
+                                      color: theme
                                           .backgroundDark!
                                           .withOpacity(0.3),
                                       border: Border.all(
-                                        color: StateContainer.of(context)
-                                            .curTheme
+                                        color: theme
                                             .backgroundDarkest!
                                             .withOpacity(0.2),
                                         width: 2,
@@ -350,8 +346,7 @@ class _NFTCreationProcessImportTabState
                                     child: IconButton(
                                       icon: Icon(
                                         Icons.key,
-                                        color: StateContainer.of(context)
-                                            .curTheme
+                                        color: theme
                                             .backgroundDarkest,
                                         size: 21,
                                       ),
@@ -389,13 +384,11 @@ class _NFTCreationProcessImportTabState
                                     width: 40,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: StateContainer.of(context)
-                                          .curTheme
+                                      color: theme
                                           .backgroundDark!
                                           .withOpacity(0.3),
                                       border: Border.all(
-                                        color: StateContainer.of(context)
-                                            .curTheme
+                                        color: theme
                                             .backgroundDarkest!
                                             .withOpacity(0.2),
                                         width: 2,
@@ -404,8 +397,7 @@ class _NFTCreationProcessImportTabState
                                     child: IconButton(
                                       icon: Icon(
                                         Icons.close,
-                                        color: StateContainer.of(context)
-                                            .curTheme
+                                        color: theme
                                             .backgroundDarkest,
                                         size: 21,
                                       ),

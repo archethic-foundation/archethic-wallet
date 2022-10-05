@@ -202,14 +202,15 @@ class _PinScreenState extends State<PinScreen>
   }
 
   Widget _buildPinScreenButton(String buttonText, BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return SizedBox(
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
       child: InkWell(
         key: Key('pinButton$buttonText'),
         borderRadius: BorderRadius.circular(200),
-        highlightColor: StateContainer.of(context).curTheme.text15,
-        splashColor: StateContainer.of(context).curTheme.text30,
+        highlightColor: theme.text15,
+        splashColor: theme.text30,
         onTap: () {},
         onTapDown: (TapDownDetails details) {
           sl.get<HapticUtil>().feedback(
@@ -271,7 +272,7 @@ class _PinScreenState extends State<PinScreen>
             shape: BoxShape.circle,
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: StateContainer.of(context).curTheme.background40!,
+                color: theme.background40!,
                 blurRadius: 15,
                 spreadRadius: -15,
               ),
@@ -289,12 +290,13 @@ class _PinScreenState extends State<PinScreen>
   }
 
   List<Widget> _buildPinDots() {
+    final theme = StateContainer.of(context).curTheme;
     final ret = List<Widget>.empty(growable: true);
     for (var i = 0; i < _pinLength; i++) {
       ret.add(
         FaIcon(
           _dotStates[i],
-          color: StateContainer.of(context).curTheme.text,
+          color: theme.text,
           size: 15,
         ),
       );
@@ -304,6 +306,7 @@ class _PinScreenState extends State<PinScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     if (pinEnterTitle.isEmpty) {
       setState(() {
         pinEnterTitle = AppLocalization.of(context)!.pinEnterTitle;
@@ -327,17 +330,14 @@ class _PinScreenState extends State<PinScreen>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background3Small!,
+              theme.background3Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: Material(
@@ -358,7 +358,7 @@ class _PinScreenState extends State<PinScreen>
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: StateContainer.of(context).curTheme.text,
+                            color: theme.text,
                             onPressed: () {
                               Navigator.pop(context, false);
                             },
@@ -533,10 +533,8 @@ class _PinScreenState extends State<PinScreen>
                                   : buttonSize,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(200),
-                                highlightColor:
-                                    StateContainer.of(context).curTheme.text15,
-                                splashColor:
-                                    StateContainer.of(context).curTheme.text30,
+                                highlightColor: theme.text15,
+                                splashColor: theme.text30,
                                 onTap: () {},
                                 onTapDown: (TapDownDetails details) {
                                   sl.get<HapticUtil>().feedback(
@@ -551,9 +549,7 @@ class _PinScreenState extends State<PinScreen>
                                     shape: BoxShape.circle,
                                     boxShadow: <BoxShadow>[
                                       BoxShadow(
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .background40!,
+                                        color: theme.background40!,
                                         blurRadius: 15,
                                         spreadRadius: -15,
                                       ),
@@ -562,9 +558,7 @@ class _PinScreenState extends State<PinScreen>
                                   alignment: AlignmentDirectional.center,
                                   child: FaIcon(
                                     Icons.backspace,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .text,
+                                    color: theme.text,
                                     size: 20,
                                   ),
                                 ),

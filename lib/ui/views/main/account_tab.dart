@@ -88,10 +88,7 @@ class AccountTab extends StatelessWidget {
 
                             Divider(
                               height: 1,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!
-                                  .withOpacity(0.1),
+                              color: theme.backgroundDarkest!.withOpacity(0.1),
                             ),
                             const SizedBox(
                               height: 15,
@@ -104,10 +101,7 @@ class AccountTab extends StatelessWidget {
                             ),
                             Divider(
                               height: 1,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!
-                                  .withOpacity(0.1),
+                              color: theme.backgroundDarkest!.withOpacity(0.1),
                             ),
                             const ExpandablePageView(
                               children: [

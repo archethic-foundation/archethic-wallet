@@ -71,6 +71,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -111,8 +112,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             AppTextField(
                               focusNode: _nameFocusNode,
                               controller: _nameController,
-                              cursorColor:
-                                  StateContainer.of(context).curTheme.text,
+                              cursorColor: theme.text,
                               textInputAction: TextInputAction.next,
                               labelText:
                                   AppLocalization.of(context)!.tokenNameHint,
@@ -144,8 +144,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             AppTextField(
                               focusNode: _symbolFocusNode,
                               controller: _symbolController,
-                              cursorColor:
-                                  StateContainer.of(context).curTheme.text,
+                              cursorColor: theme.text,
                               textInputAction: TextInputAction.next,
                               labelText:
                                   AppLocalization.of(context)!.tokenSymbolHint,
@@ -192,8 +191,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             AppTextField(
                               focusNode: _initialSupplyFocusNode,
                               controller: _initialSupplyController,
-                              cursorColor:
-                                  StateContainer.of(context).curTheme.text,
+                              cursorColor: theme.text,
                               textInputAction: TextInputAction.next,
                               labelText: AppLocalization.of(context)!
                                   .tokenInitialSupplyHint,

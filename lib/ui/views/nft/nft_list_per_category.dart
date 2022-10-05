@@ -12,6 +12,7 @@ class NFTListPerCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     final nftCategories = StateContainer.of(context)
         .appWallet!
         .appKeychain!
@@ -23,17 +24,14 @@ class NFTListPerCategory extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background2Small!,
+              theme.background2Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: LayoutBuilder(
@@ -54,7 +52,7 @@ class NFTListPerCategory extends StatelessWidget {
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: StateContainer.of(context).curTheme.text,
+                            color: theme.text,
                             onPressed: () {
                               Navigator.pop(context);
                             },

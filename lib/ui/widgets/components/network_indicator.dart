@@ -11,10 +11,11 @@ class NetworkIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
         SvgPicture.asset(
-          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+          '${theme.assetsFolder!}${theme.logoAlone!}.svg',
           height: 30,
         ),
         Text(

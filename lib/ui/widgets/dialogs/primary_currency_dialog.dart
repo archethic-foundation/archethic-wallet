@@ -31,6 +31,7 @@ class PrimaryCurrencyDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
+        final theme = StateContainer.of(context).curTheme;
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -42,7 +43,7 @@ class PrimaryCurrencyDialog {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: PickerWidget(

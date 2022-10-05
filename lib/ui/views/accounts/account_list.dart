@@ -70,6 +70,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Container(
       key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
@@ -130,9 +131,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                   Radius.circular(16),
                                 ),
                                 side: BorderSide(
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .text45!,
+                                  color: theme.text45!,
                                 ),
                               ),
                               content: Column(
@@ -287,14 +286,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                       )!
                                                           .noConnection,
                                                       context,
-                                                      StateContainer.of(
-                                                        context,
-                                                      ).curTheme.text!,
-                                                      StateContainer.of(
-                                                        context,
-                                                      )
-                                                          .curTheme
-                                                          .snackBarShadow!,
+                                                      theme.text!,
+                                                      theme.snackBarShadow!,
                                                       duration: const Duration(
                                                         seconds: 5,
                                                       ),
@@ -306,14 +299,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                       )!
                                                           .keychainNotExistWarning,
                                                       context,
-                                                      StateContainer.of(
-                                                        context,
-                                                      ).curTheme.text!,
-                                                      StateContainer.of(
-                                                        context,
-                                                      )
-                                                          .curTheme
-                                                          .snackBarShadow!,
+                                                      theme.text!,
+                                                      theme.snackBarShadow!,
                                                       duration: const Duration(
                                                         seconds: 5,
                                                       ),
@@ -369,6 +356,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     Account account,
     StateSetter setState,
   ) {
+    final theme = StateContainer.of(context).curTheme;
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
       child: GestureDetector(
@@ -414,25 +402,17 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: StateContainer.of(context)
-                  .curTheme
-                  .backgroundAccountsListCardSelected!,
+              color: theme.backgroundAccountsListCardSelected!,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: StateContainer.of(context)
-              .curTheme
-              .backgroundAccountsListCardSelected,
+          color: theme.backgroundAccountsListCardSelected,
           child: Container(
             height: 80,
             color: account.selected!
-                ? StateContainer.of(context)
-                    .curTheme
-                    .backgroundAccountsListCardSelected
-                : StateContainer.of(context)
-                    .curTheme
-                    .backgroundAccountsListCard,
+                ? theme.backgroundAccountsListCardSelected
+                : theme.backgroundAccountsListCard,
             child: Column(
               children: [
                 Row(
@@ -659,12 +639,13 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
   }
 
   void _showSendingAnimation(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,
-        StateContainer.of(context).curTheme.animationOverlayStrong!,
-        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        theme.animationOverlayStrong!,
+        theme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false,
       ),
     );

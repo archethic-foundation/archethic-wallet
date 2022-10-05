@@ -253,6 +253,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -260,7 +261,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       bottomNavigationBar: MainBottomBar(),
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
-      backgroundColor: StateContainer.of(context).curTheme.background,
+      backgroundColor: theme.background,
       drawer: SizedBox(
         width: Responsive.drawerWidth(context),
         child: const Drawer(
@@ -333,6 +334,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
         Container(
@@ -342,8 +344,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
           height: 80,
           child: ContainedTabBarView(
             tabBarProperties: TabBarProperties(
-              indicatorColor:
-                  StateContainer.of(context).curTheme.backgroundDarkest,
+              indicatorColor: theme.backgroundDarkest,
             ),
             tabs: [
               Text(

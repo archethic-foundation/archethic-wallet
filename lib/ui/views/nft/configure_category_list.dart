@@ -80,6 +80,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     nftCategoryToHidden = NftCategory.getListByDefault(context);
     nftCategoryToSort = widget.nftCategory;
     for (final nftCategory in nftCategoryToSort!) {
@@ -134,8 +135,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                           leading: nftCategory.id != 0
                               ? IconButton(
                                   icon: const Icon(Icons.remove_circle),
-                                  hoverColor:
-                                      StateContainer.of(context).curTheme.text,
+                                  hoverColor: theme.text,
                                   onPressed: () async {
                                     nftCategoryToSort!.removeWhere(
                                       (element) => element.id == nftCategory.id,

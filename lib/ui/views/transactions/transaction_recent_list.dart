@@ -97,6 +97,7 @@ class _TxListLine extends StatelessWidget {
     BuildContext context,
     RecentTransaction transaction,
   ) {
+    final theme = StateContainer.of(context).curTheme;
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;
@@ -130,31 +131,19 @@ class _TxListLine extends StatelessWidget {
             shape: RoundedRectangleBorder(
               side: BorderSide(
                 color: transaction.typeTx == RecentTransaction.transferOutput
-                    ? StateContainer.of(context)
-                        .curTheme
-                        .backgroundRecentTxListCardTransferOutput!
+                    ? theme.backgroundRecentTxListCardTransferOutput!
                     : transaction.typeTx! == RecentTransaction.tokenCreation
-                        ? StateContainer.of(context)
-                            .curTheme
-                            .backgroundRecentTxListCardTokenCreation!
-                        : StateContainer.of(context)
-                            .curTheme
-                            .backgroundRecentTxListCardTransferInput!,
+                        ? theme.backgroundRecentTxListCardTokenCreation!
+                        : theme.backgroundRecentTxListCardTransferInput!,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
             color: transaction.typeTx == RecentTransaction.transferOutput
-                ? StateContainer.of(context)
-                    .curTheme
-                    .backgroundRecentTxListCardTransferOutput
+                ? theme.backgroundRecentTxListCardTransferOutput
                 : transaction.typeTx! == RecentTransaction.tokenCreation
-                    ? StateContainer.of(context)
-                        .curTheme
-                        .backgroundRecentTxListCardTokenCreation
-                    : StateContainer.of(context)
-                        .curTheme
-                        .backgroundRecentTxListCardTransferInput,
+                    ? theme.backgroundRecentTxListCardTokenCreation
+                    : theme.backgroundRecentTxListCardTransferInput,
             child: Container(
               padding: const EdgeInsets.all(9.5),
               width: MediaQuery.of(context).size.width,

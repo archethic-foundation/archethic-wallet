@@ -35,6 +35,7 @@ class NFTPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     final description =
         TokenUtil.getPropertyValue(tokenInformations, 'description');
     final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
@@ -64,7 +65,7 @@ class NFTPreviewWidget extends StatelessWidget {
                     if (snapshot.hasData) {
                       return DecoratedBox(
                         decoration: BoxDecoration(
-                          color: StateContainer.of(context).curTheme.text,
+                          color: theme.text,
                           border: Border.all(),
                         ),
                         child: Image.memory(
@@ -81,7 +82,7 @@ class NFTPreviewWidget extends StatelessWidget {
               else
                 DecoratedBox(
                   decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.text,
+                    color: theme.text,
                     border: Border.all(),
                   ),
                   child: Image.memory(
@@ -133,6 +134,7 @@ class NFTPreviewWidget extends StatelessWidget {
     BuildContext context,
     TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos,
   ) {
+    final theme = StateContainer.of(context).curTheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -144,16 +146,12 @@ class NFTPreviewWidget extends StatelessWidget {
                     tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty
                 ? const BorderSide(color: Colors.redAccent, width: 2)
                 : BorderSide(
-                    color: StateContainer.of(context)
-                        .curTheme
-                        .backgroundAccountsListCardSelected!,
+                    color: theme.backgroundAccountsListCardSelected!,
                   ),
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: StateContainer.of(context)
-              .curTheme
-              .backgroundAccountsListCardSelected,
+          color: theme.backgroundAccountsListCardSelected,
           child: Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5),
             child: Row(

@@ -62,6 +62,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) {
+      final theme = StateContainer.of(context).curTheme;
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -71,8 +72,8 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
         UIUtil.showSnackbar(
           event.response!,
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
         );
         Navigator.of(context).pop();
@@ -93,8 +94,8 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                     .replaceAll('%1', event.nbConfirmations.toString())
                     .replaceAll('%2', event.maxConfirmations.toString()),
             context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!,
+            theme.text!,
+            theme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000),
           );
           setState(() {
@@ -105,8 +106,8 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
           UIUtil.showSnackbar(
             AppLocalization.of(context)!.notEnoughConfirmations,
             context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!,
+            theme.text!,
+            theme.snackBarShadow!,
           );
           Navigator.of(context).pop();
         }
@@ -138,12 +139,13 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
   }
 
   void _showSendingAnimation(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,
-        StateContainer.of(context).curTheme.animationOverlayStrong!,
-        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        theme.animationOverlayStrong!,
+        theme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false,
       ),
     );

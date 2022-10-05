@@ -84,22 +84,22 @@ class _AppState extends State<App> {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     SystemChrome.setSystemUIOverlayStyle(
-      StateContainer.of(context).curTheme.statusBar!,
+      theme.statusBar!,
     );
     return OKToast(
       textStyle: AppStyles.textStyleSize14W700Background(context),
-      backgroundColor: StateContainer.of(context).curTheme.background,
+      backgroundColor: theme.background,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Archethic Wallet',
         theme: ThemeData(
-          dialogBackgroundColor:
-              StateContainer.of(context).curTheme.backgroundDark,
-          primaryColor: StateContainer.of(context).curTheme.text,
-          backgroundColor: StateContainer.of(context).curTheme.background,
-          fontFamily: StateContainer.of(context).curTheme.secondaryFont,
-          brightness: StateContainer.of(context).curTheme.brightness,
+          dialogBackgroundColor: theme.backgroundDark,
+          primaryColor: theme.text,
+          backgroundColor: theme.background,
+          fontFamily: theme.secondaryFont,
+          brightness: theme.brightness,
         ),
         // ignore: always_specify_types
         localizationsDelegates: [

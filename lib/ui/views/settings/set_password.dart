@@ -62,23 +62,21 @@ class _SetPasswordState extends State<SetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background1Small!,
+              theme.background1Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: TapOutsideUnfocus(
@@ -103,7 +101,7 @@ class _SetPasswordState extends State<SetPassword> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: StateContainer.of(context).curTheme.text,
+                                color: theme.text,
                                 onPressed: () {
                                   Navigator.pop(context, false);
                                 },
@@ -162,8 +160,7 @@ class _SetPasswordState extends State<SetPassword> {
                                   ),
                                 AppTextField(
                                   topMargin: 30,
-                                  cursorColor:
-                                      StateContainer.of(context).curTheme.text,
+                                  cursorColor: theme.text,
                                   focusNode: setPasswordFocusNode,
                                   controller: setPasswordController,
                                   textInputAction: TextInputAction.next,

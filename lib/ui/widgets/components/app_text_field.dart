@@ -16,6 +16,7 @@ class TextFieldButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return SizedBox(
       height: 48,
       width: 48,
@@ -26,7 +27,7 @@ class TextFieldButton extends StatelessWidget {
         child: FaIcon(
           icon,
           size: 20,
-          color: StateContainer.of(context).curTheme.textFieldIcon,
+          color: theme.textFieldIcon,
         ),
       ),
     );
@@ -105,6 +106,7 @@ class AppTextField extends StatefulWidget {
 class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Container(
       margin: EdgeInsets.only(
         left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,
@@ -124,8 +126,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 maxLines: widget.maxLines,
                 focusNode: widget.focusNode,
                 controller: widget.controller,
-                cursorColor: widget.cursorColor ??
-                    StateContainer.of(context).curTheme.text,
+                cursorColor: widget.cursorColor ?? theme.text,
                 inputFormatters: widget.inputFormatters,
                 textInputAction: widget.textInputAction,
                 keyboardType: widget.keyboardType,
@@ -187,7 +188,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   height: 1,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    gradient: StateContainer.of(context).curTheme.gradient,
+                    gradient: theme.gradient,
                   ),
                 ),
               ),

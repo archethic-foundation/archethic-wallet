@@ -123,9 +123,8 @@ class _NFTCreationProcessConfirmationTabState
                                 UIUtil.showSnackbar(
                                   addNFTMessage,
                                   context,
-                                  StateContainer.of(context).curTheme.text!,
-                                  StateContainer.of(context)
-                                      .curTheme
+                                  theme.text!,
+                                  theme
                                       .snackBarShadow!,
                                 );
 
@@ -155,15 +154,13 @@ class _NFTCreationProcessConfirmationTabState
                                 width: 2,
                               )
                             : BorderSide(
-                                color: StateContainer.of(context)
-                                    .curTheme
+                                color: theme
                                     .backgroundAccountsListCardSelected!,
                               ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       elevation: 0,
-                      color: StateContainer.of(context)
-                          .curTheme
+                      color: theme
                           .backgroundAccountsListCardSelected,
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -276,7 +273,7 @@ class _NFTCreationProcessConfirmationTabState
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text,
+                      color: theme.text,
                       border: Border.all(),
                     ),
                     child: Image.memory(

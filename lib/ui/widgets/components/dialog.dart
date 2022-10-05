@@ -20,6 +20,7 @@ class AppDialogs {
     String? cancelText,
     Function? cancelAction,
   }) {
+    final theme = StateContainer.of(context).curTheme;
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
@@ -32,7 +33,7 @@ class AppDialogs {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: Text(
@@ -78,6 +79,7 @@ class AppDialogs {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final theme = StateContainer.of(context).curTheme;
         return AlertDialog(
           title: Text(
             title,
@@ -86,7 +88,7 @@ class AppDialogs {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: Text(
@@ -250,6 +252,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
         InkWell(
@@ -260,14 +263,12 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
               return Ink(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: StateContainer.of(context).curTheme.iconDrawer,
+                  color: theme.iconDrawer,
                   shape: BoxShape.circle,
                   boxShadow: [
                     for (int i = 1; i <= 2; i++)
                       BoxShadow(
-                        color: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawer!
+                        color: theme.iconDrawer!
                             .withOpacity(_animationController!.value / 2),
                         spreadRadius: _animation.value * i,
                       )
@@ -276,7 +277,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
                 child: Column(
                   children: [
                     SvgPicture.asset(
-                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+                      '${theme.assetsFolder!}${theme.logoAlone!}.svg',
                       height: 30,
                     ),
                   ],

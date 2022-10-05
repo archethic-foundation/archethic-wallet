@@ -377,10 +377,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                             .size
                                                             .width,
                                                     decoration: BoxDecoration(
-                                                      gradient:
-                                                          StateContainer.of(
-                                                        context,
-                                                      ).curTheme.gradient,
+                                                      gradient: theme.gradient,
                                                     ),
                                                   ),
                                                 )
@@ -486,9 +483,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   localizations.noKeychain,
                                   context,
                                   theme.text!,
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .snackBarShadow!,
+                                  theme.snackBarShadow!,
                                 );
                                 Navigator.of(context).pop();
                               } else {
@@ -513,9 +508,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 localizations.noKeychain,
                                 context,
                                 theme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!,
+                                theme.snackBarShadow!,
                               );
                               Navigator.of(context).pop();
                             }

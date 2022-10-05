@@ -52,6 +52,7 @@ class _PickerWidgetState extends State<PickerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return SizedBox(
       width: double.maxFinite,
       child: ListView.builder(
@@ -84,9 +85,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                 decoration: BoxDecoration(
                   image: pickerItem.decorationImageItem,
                   border: Border.all(
-                    color: isItemSelected
-                        ? Colors.green
-                        : StateContainer.of(context).curTheme.text30!,
+                    color: isItemSelected ? Colors.green : theme.text30!,
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
@@ -112,9 +111,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                                       pickerItem.icon!,
                                       color: widget.pickerItems![index].enabled
                                           ? widget.pickerItems![index].iconColor
-                                          : StateContainer.of(context)
-                                              .curTheme
-                                              .pickerItemIconDisabled,
+                                          : theme.pickerItemIconDisabled,
                                     ),
                             ),
                           const SizedBox(width: 10),

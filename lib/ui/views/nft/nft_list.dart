@@ -29,6 +29,7 @@ final GlobalKey expandedKey = GlobalKey();
 class _NFTListState extends State<NFTList> {
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     final accountTokenList = StateContainer.of(context)
         .appWallet!
         .appKeychain!
@@ -68,8 +69,7 @@ class _NFTListState extends State<NFTList> {
                                 Radius.circular(16),
                               ),
                               side: BorderSide(
-                                color:
-                                    StateContainer.of(context).curTheme.text45!,
+                                color: theme.text45!,
                               ),
                             ),
                             content: SingleChildScrollView(

@@ -19,6 +19,7 @@ class AuthentificationMethodDialog {
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
+    final theme = StateContainer.of(context).curTheme;
     final preferences = await Preferences.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
@@ -34,7 +35,7 @@ class AuthentificationMethodDialog {
           AuthenticationMethod(value).getDisplayName(context),
           AuthenticationMethod(value).getDescription(context),
           AuthenticationMethod.getIcon(value),
-          StateContainer.of(context).curTheme.pickerItemIconEnabled,
+          theme.pickerItemIconEnabled,
           value,
           value != AuthMethod.biometricsUniris,
           displayed: displayed,
@@ -52,7 +53,7 @@ class AuthentificationMethodDialog {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: SingleChildScrollView(

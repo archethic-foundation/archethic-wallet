@@ -20,6 +20,7 @@ class NetworkDialog {
     BuildContext context,
     NetworksSetting curNetworksSetting,
   ) async {
+    final theme = StateContainer.of(context).curTheme;
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
     String? endpointError;
@@ -31,7 +32,7 @@ class NetworkDialog {
         PickerItem(
           NetworksSetting(value).getDisplayName(context),
           await NetworksSetting(value).getLink(),
-          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
+          '${theme.assetsFolder!}${theme.logoAlone!}.png',
           null,
           value,
           true,
@@ -43,6 +44,7 @@ class NetworkDialog {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        final theme = StateContainer.of(context).curTheme;
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -54,7 +56,7 @@ class NetworkDialog {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: StateContainer.of(context).curTheme.text45!,
+              color: theme.text45!,
             ),
           ),
           content: PickerWidget(
@@ -84,7 +86,7 @@ class NetworkDialog {
                             child: Column(
                               children: [
                                 SvgPicture.asset(
-                                  '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+                                  '${theme.assetsFolder!}${theme.logoAlone!}.svg',
                                   height: 30,
                                 ),
                                 Text(
@@ -113,8 +115,7 @@ class NetworkDialog {
                               Radius.circular(16),
                             ),
                             side: BorderSide(
-                              color:
-                                  StateContainer.of(context).curTheme.text45!,
+                              color: theme.text45!,
                             ),
                           ),
                           content: Column(

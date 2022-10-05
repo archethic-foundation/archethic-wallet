@@ -72,6 +72,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -81,10 +82,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark!,
-                  StateContainer.of(context).curTheme.background!
-                ],
+                colors: <Color>[theme.backgroundDark!, theme.background!],
               ),
             ),
           ),
