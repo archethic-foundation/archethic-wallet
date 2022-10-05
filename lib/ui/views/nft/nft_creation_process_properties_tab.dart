@@ -6,7 +6,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO(reddwarf03): refacto code with Riverpod
+    // TODO(reddwarf03): refacto code with Riverpod
     return const SizedBox();
   }
 }

@@ -59,6 +59,10 @@ class CurrencyDialog {
               pickerItems: pickerItemsList,
               selectedIndex: StateContainer.of(context).curCurrency.getIndex(),
               onSelected: (value) async {
+                final accountSelected = StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!;
                 preferences.setCurrency(
                   AvailableCurrency(value.value as AvailableCurrencyEnum),
                 );
@@ -68,24 +72,14 @@ class CurrencyDialog {
                 final tokenPrice = await Price.getCurrency(
                   StateContainer.of(context).curCurrency.currency.name,
                 );
-                await StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .updateBalance(
-                      StateContainer.of(context)
-                          .curNetwork
-                          .getNetworkCryptoCurrencyLabel(),
-                      StateContainer.of(context).curCurrency.currency.name,
-                      tokenPrice,
-                    );
-
-                StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .fiatCurrencyCode =
+                await accountSelected.updateBalance(
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel(),
+                  StateContainer.of(context).curCurrency.currency.name,
+                  tokenPrice,
+                );
+                accountSelected.balance!.fiatCurrencyCode =
                     AvailableCurrency(value.value as AvailableCurrencyEnum)
                         .currency
                         .name;

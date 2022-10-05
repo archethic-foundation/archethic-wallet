@@ -4,6 +4,7 @@ import 'dart:async';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -73,6 +74,10 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -125,7 +130,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 LengthLimitingTextInputFormatter(40),
                               ],
                               onChanged: (_) async {
-                                final fee = await getFee();
+                                final fee = await getFee(
+                                  accountSelected.name!,
+                                );
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -156,7 +163,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 LengthLimitingTextInputFormatter(4),
                               ],
                               onChanged: (_) async {
-                                final fee = await getFee();
+                                final fee = await getFee(
+                                  accountSelected.name!,
+                                );
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -202,7 +211,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 ),
                               ],
                               onChanged: (_) async {
-                                final fee = await getFee();
+                                final fee = await getFee(
+                                  accountSelected.name!,
+                                );
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -279,7 +290,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             _isPressed = true;
                           });
 
-                          validRequest = await _validateRequest();
+                          validRequest =
+                              await _validateRequest(accountSelected);
                           if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                               onDisposed: () {
@@ -317,7 +329,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     );
   }
 
-  Future<bool> _validateRequest() async {
+  Future<bool> _validateRequest(Account accountSelected) async {
     final localizations = AppLocalization.of(context)!;
     var isValid = true;
     setState(() {
@@ -368,15 +380,11 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
       }
     }
     // Estimation of fees
-    feeEstimation = await getFee();
+    feeEstimation = await getFee(
+      accountSelected.name!,
+    );
 
-    if (feeEstimation >
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .balance!
-            .nativeTokenValue!) {
+    if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
       isValid = false;
       setState(() {
         _initialSupplyValidationText =
@@ -390,7 +398,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     return isValid;
   }
 
-  Future<double> getFee() async {
+  Future<double> getFee(String accountName) async {
     var fee = 0.0;
     if (_initialSupplyController!.text.isEmpty ||
         _symbolController!.text.isEmpty ||
@@ -414,11 +422,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
             originPrivateKey,
             seed!,
             token,
-            StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .name!,
+            accountName,
           );
     } catch (e) {
       fee = 0;

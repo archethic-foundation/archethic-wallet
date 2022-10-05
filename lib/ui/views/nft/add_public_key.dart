@@ -368,7 +368,7 @@ class _AddPublicKeyLine extends StatelessWidget {
                                               );
                                           AppDialogs.showConfirmDialog(
                                             context,
-                                            'Delete public key', //TODO(reddwarf03): to internationalize
+                                            'Delete public key', // TODO(reddwarf03): to internationalize
                                             'Are you sure ?',
                                             localizations.deleteOption,
                                             () {

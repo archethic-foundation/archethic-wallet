@@ -93,7 +93,9 @@ class NFTCard extends StatelessWidget {
             ),
           ),
         ),
-        NFTCardBottom(tokenInformations: tokenInformations),
+        NFTCardBottom(
+          tokenInformations: tokenInformations,
+        ),
       ],
     );
   }
@@ -114,11 +116,13 @@ class NFTCardBottom extends StatefulWidget {
 class _NFTCardBottomState extends State<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
-    final nftInfosOffChain = StateContainer.of(context)
+    final accountSelected = StateContainer.of(context)
         .appWallet!
         .appKeychain!
-        .getAccountSelected()!
-        .getftInfosOffChain(widget.tokenInformations.id);
+        .getAccountSelected()!;
+    final nftInfosOffChain =
+        accountSelected.getftInfosOffChain(widget.tokenInformations.id);
+
     return Column(
       children: <Widget>[
         Padding(
@@ -132,10 +136,7 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                   onTap: (() async {
                     sl.get<HapticUtil>().feedback(FeedbackType.light,
                         StateContainer.of(context).activeVibrations);
-                    await StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
+                    await accountSelected
                         .updateNftInfosOffChain(
                             tokenAddress: widget.tokenInformations.address,
                             favorite: false);
@@ -156,13 +157,9 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                           StateContainer.of(context).activeVibrations,
                         );
 
-                    StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .updateNftInfosOffChainFavorite(
-                          widget.tokenInformations.id,
-                        );
+                    await accountSelected.updateNftInfosOffChainFavorite(
+                      widget.tokenInformations.id,
+                    );
                     setState(() {});
                   },
                   child: nftInfosOffChain == null ||

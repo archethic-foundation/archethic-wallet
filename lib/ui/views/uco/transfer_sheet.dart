@@ -6,6 +6,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/available_currency.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -202,6 +203,10 @@ class _TransferSheetState extends State<TransferSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -253,7 +258,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                         widget.accountToken!.tokenInformations!
                                                 .type ==
                                             'fungible'))
-                                  getEnterAmountContainer(),
+                                  getEnterAmountContainer(accountSelected),
                                 Container(
                                   alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(top: 3),
@@ -270,7 +275,8 @@ class _TransferSheetState extends State<TransferSheet> {
                               children: <Widget>[
                                 Container(
                                   alignment: Alignment.topCenter,
-                                  child: getEnterAddressContainer(),
+                                  child:
+                                      getEnterAddressContainer(accountSelected),
                                 ),
                                 Container(
                                   alignment: AlignmentDirectional.center,
@@ -313,7 +319,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   ),
                                   child: feeEstimation > 0
                                       ? Text(
-                                          '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
+                                          '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
                                           style: AppStyles
                                               .textStyleSize14W100Primary(
                                             context,
@@ -322,7 +328,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                       : const SizedBox(),
                                 ),
                                 const SizedBox(height: 10),
-                                getEnterMessage(),
+                                getEnterMessage(accountSelected),
                                 Container(
                                   alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(
@@ -371,7 +377,8 @@ class _TransferSheetState extends State<TransferSheet> {
                           setState(() {
                             _isPressed = true;
                           });
-                          validRequest = await _validateRequest();
+                          validRequest =
+                              await _validateRequest(accountSelected);
                           if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                               onDisposed: () {
@@ -383,11 +390,7 @@ class _TransferSheetState extends State<TransferSheet> {
                               },
                               context: context,
                               widget: TransferConfirmSheet(
-                                lastAddress: StateContainer.of(context)
-                                    .appWallet!
-                                    .appKeychain!
-                                    .getAccountSelected()!
-                                    .lastAddress,
+                                lastAddress: accountSelected.lastAddress,
                                 ucoTransferList: ucoTransferList,
                                 tokenTransferList: tokenTransferList,
                                 title: widget.title,
@@ -420,7 +423,10 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   // Determine if this is a max send or not by comparing balances
-  bool _isMaxSend() {
+  bool _isMaxSend(
+    double? nativeTokenValue,
+    double? fiatCurrencyValue,
+  ) {
     if (_sendAmountController!.text.isEmpty) {
       return false;
     }
@@ -428,12 +434,7 @@ class _TransferSheetState extends State<TransferSheet> {
       final amount = _rawAmount == null
           ? _sendAmountController!.text
           : NumberUtil.getRawAsUsableString(_rawAmount!);
-      final balanceRaw = StateContainer.of(context)
-          .appWallet!
-          .appKeychain!
-          .getAccountSelected()!
-          .balance!
-          .nativeTokenValue!;
+      final balanceRaw = nativeTokenValue;
       if (primaryCurrencySelected == PrimaryCurrency.native) {
         if (double.tryParse(amount)! + feeEstimation == balanceRaw) {
           return true;
@@ -441,13 +442,7 @@ class _TransferSheetState extends State<TransferSheet> {
           return false;
         }
       } else {
-        if (priceConverted + feeEstimation ==
-            StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .balance!
-                .fiatCurrencyValue) {
+        if (priceConverted + feeEstimation == fiatCurrencyValue) {
           return true;
         } else {
           return false;
@@ -460,7 +455,7 @@ class _TransferSheetState extends State<TransferSheet> {
 
   /// Validate form data to see if valid
   /// @returns true if valid, false otherwise
-  Future<bool> _validateRequest() async {
+  Future<bool> _validateRequest(Account accountSelected) async {
     final localizations = AppLocalization.of(context)!;
     var isValid = true;
     final ucoTransfer = UCOTransferWallet();
@@ -486,7 +481,7 @@ class _TransferSheetState extends State<TransferSheet> {
         });
       } else {
         // Estimation of fees
-        feeEstimation = await getFee();
+        feeEstimation = await getFee(accountSelected);
 
         final amount = _rawAmount == null
             ? _sendAmountController!.text
@@ -494,12 +489,7 @@ class _TransferSheetState extends State<TransferSheet> {
         var balanceRaw = 0.0;
         var sendAmount = 0.0;
         if (widget.accountToken == null) {
-          balanceRaw = StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .balance!
-              .nativeTokenValue!;
+          balanceRaw = accountSelected.balance!.nativeTokenValue!;
 
           if (primaryCurrencySelected == PrimaryCurrency.native) {
             sendAmount = double.tryParse(amount)!;
@@ -533,13 +523,7 @@ class _TransferSheetState extends State<TransferSheet> {
               );
             });
           } else {
-            if (feeEstimation >
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .balance!
-                    .nativeTokenValue!) {
+            if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
               isValid = false;
               setState(() {
                 _amountValidationText =
@@ -635,12 +619,7 @@ class _TransferSheetState extends State<TransferSheet> {
         }
       }
 
-      if (lastAddressRecipient ==
-          StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .lastAddress!) {
+      if (lastAddressRecipient == accountSelected.lastAddress!) {
         isValid = false;
         if (widget.accountToken == null) {
           _addressValidationText = localizations.sendToMeError.replaceAll(
@@ -678,7 +657,7 @@ class _TransferSheetState extends State<TransferSheet> {
     return isValid;
   }
 
-  Widget getEnterAmountContainer() {
+  Widget getEnterAmountContainer(Account accountSelected) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Column(
@@ -707,7 +686,7 @@ class _TransferSheetState extends State<TransferSheet> {
           onChanged: (String text) async {
             final amount = double.tryParse(text);
             if (amount != null && amount > 0) {
-              final fee = await getFee();
+              final fee = await getFee(accountSelected);
               // Always reset the error message to be less annoying
               setState(() {
                 feeEstimation = fee;
@@ -739,33 +718,16 @@ class _TransferSheetState extends State<TransferSheet> {
                     FeedbackType.light,
                     StateContainer.of(context).activeVibrations,
                   );
-              final fee = await getFee(maxSend: true);
+              final fee = await getFee(accountSelected, maxSend: true);
 
               var sendAmount = 0.0;
               if (primaryCurrencySelected == PrimaryCurrency.native) {
-                sendAmount = StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .nativeTokenValue! -
-                    fee;
+                sendAmount = accountSelected.balance!.nativeTokenValue! - fee;
                 _sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
-                final selectedCurrencyFee = StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .tokenPrice!
-                        .amount! *
-                    fee;
-                sendAmount = StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .fiatCurrencyValue! -
+                final selectedCurrencyFee =
+                    accountSelected.balance!.tokenPrice!.amount! * fee;
+                sendAmount = accountSelected.balance!.fiatCurrencyValue! -
                     selectedCurrencyFee;
                 _sendAmountController!.text = sendAmount
                     .toStringAsFixed(_localCurrencyFormat.decimalDigits!);
@@ -777,19 +739,25 @@ class _TransferSheetState extends State<TransferSheet> {
                 // Reset the raw amount
                 _rawAmount = null;
               });
-              if (_isMaxSend()) {
+              if (_isMaxSend(
+                accountSelected.balance!.nativeTokenValue,
+                accountSelected.balance!.fiatCurrencyValue,
+              )) {
                 return;
               }
 
-              feeEstimation = await getFee();
+              feeEstimation = await getFee(accountSelected);
               _sendAddressController!.selection = TextSelection.fromPosition(
                 TextPosition(offset: _sendAddressController!.text.length),
               );
             },
           ),
           fadeSuffixOnCondition: true,
-          suffixShowFirstCondition:
-              widget.accountToken == null && !_isMaxSend(),
+          suffixShowFirstCondition: widget.accountToken == null &&
+              !_isMaxSend(
+                accountSelected.balance!.nativeTokenValue,
+                accountSelected.balance!.fiatCurrencyValue,
+              ),
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
             decimal: true,
@@ -809,7 +777,7 @@ class _TransferSheetState extends State<TransferSheet> {
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
+                  '1 ${accountSelected.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
                   style: AppStyles.textStyleSize14W100Primary(context),
                 ),
               ),
@@ -819,14 +787,14 @@ class _TransferSheetState extends State<TransferSheet> {
                   alignment: Alignment.centerRight,
                   child: primaryCurrencySelected == PrimaryCurrency.native
                       ? Text(
-                          '= ${_convertNetworkCurrencyToSelectedCurrency()}',
+                          '= ${_convertNetworkCurrencyToSelectedCurrency(accountSelected.balance!.tokenPrice!.amount)}',
                           textAlign: TextAlign.right,
                           style: AppStyles.textStyleSize14W100Primary(
                             context,
                           ),
                         )
                       : Text(
-                          '= ${_convertSelectedCurrencyToNetworkCurrency()}',
+                          '= ${_convertSelectedCurrencyToNetworkCurrency(accountSelected.balance!.tokenPrice!.amount)}',
                           textAlign: TextAlign.right,
                           style: AppStyles.textStyleSize14W100Primary(
                             context,
@@ -855,7 +823,7 @@ class _TransferSheetState extends State<TransferSheet> {
     );
   }
 
-  AppTextField getEnterMessage() {
+  AppTextField getEnterMessage(Account accountSelected) {
     return AppTextField(
       focusNode: _messageFocusNode,
       controller: _messageController,
@@ -863,7 +831,7 @@ class _TransferSheetState extends State<TransferSheet> {
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${_messageController!.text.length}/200)',
       onChanged: (String text) async {
-        final fee = await getFee();
+        final fee = await getFee(accountSelected);
         setState(() {
           feeEstimation = fee;
         });
@@ -877,7 +845,7 @@ class _TransferSheetState extends State<TransferSheet> {
     );
   }
 
-  AppTextField getEnterAddressContainer() {
+  AppTextField getEnterAddressContainer(Account accountSelected) {
     final theme = StateContainer.of(context).curTheme;
     return AppTextField(
       padding: _addressValidAndUnfocused
@@ -908,7 +876,7 @@ class _TransferSheetState extends State<TransferSheet> {
           if (contact != null && contact.name != null) {
             _sendAddressController!.text = contact.name!;
             _sendAddressStyle = AddressStyle.text90;
-            final fee = await getFee();
+            final fee = await getFee(accountSelected);
             setState(() {
               feeEstimation = fee;
             });
@@ -991,7 +959,7 @@ class _TransferSheetState extends State<TransferSheet> {
               ? AppStyles.textStyleSize14W700Primary(context)
               : AppStyles.textStyleSize14W700Primary(context),
       onChanged: (String text) async {
-        final fee = await getFee();
+        final fee = await getFee(accountSelected);
         if (text.isNotEmpty) {
           setState(() {
             feeEstimation = fee;
@@ -1067,7 +1035,7 @@ class _TransferSheetState extends State<TransferSheet> {
     );
   }
 
-  Future<double> getFee({bool maxSend = false}) async {
+  Future<double> getFee(Account accountSelected, {bool maxSend = false}) async {
     var fee = 0.0;
     if (double.tryParse(_sendAmountController!.text) == null ||
         double.tryParse(_sendAmountController!.text)! <= 0) {
@@ -1108,12 +1076,7 @@ class _TransferSheetState extends State<TransferSheet> {
           UCOTransferWallet(
             amount: maxSend
                 ? toBigInt(
-                    StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .nativeTokenValue,
+                    accountSelected.balance!.nativeTokenValue,
                   )
                 : toBigInt(double.tryParse(_sendAmountController!.text)),
             to: recipientAddress,
@@ -1135,19 +1098,11 @@ class _TransferSheetState extends State<TransferSheet> {
       fee = await sl.get<AppService>().getFeesEstimation(
             originPrivateKey,
             seed!,
-            StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .lastAddress!,
+            accountSelected.lastAddress!,
             ucoTransferListForFee,
             tokenTransferListForFee,
             _messageController!.text,
-            StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .name!,
+            accountSelected.name!,
           );
     } catch (e) {
       fee = 0;
@@ -1155,7 +1110,7 @@ class _TransferSheetState extends State<TransferSheet> {
     return fee;
   }
 
-  String _convertSelectedCurrencyToNetworkCurrency() {
+  String _convertSelectedCurrencyToNetworkCurrency(double? amount) {
     var convertedAmt = _sendAmountController!.text.replaceAll(',', '.');
     convertedAmt = NumberUtil.sanitizeNumber(convertedAmt);
     if (convertedAmt.isEmpty || double.tryParse(convertedAmt) == 0) {
@@ -1163,20 +1118,13 @@ class _TransferSheetState extends State<TransferSheet> {
     }
     priceConverted = (Decimal.parse(convertedAmt) /
             Decimal.parse(
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .balance!
-                  .tokenPrice!
-                  .amount!
-                  .toString(),
+              amount.toString(),
             ))
         .toDouble();
     return '${priceConverted.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}';
   }
 
-  String _convertNetworkCurrencyToSelectedCurrency() {
+  String _convertNetworkCurrencyToSelectedCurrency(double? amount) {
     final convertedAmt = NumberUtil.sanitizeNumber(
       _sendAmountController!.text,
       maxDecimalDigits: _localCurrencyFormat.decimalDigits!,
@@ -1185,14 +1133,7 @@ class _TransferSheetState extends State<TransferSheet> {
       return '';
     }
     priceConverted = (Decimal.parse(
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .balance!
-                  .tokenPrice!
-                  .amount!
-                  .toString(),
+              amount.toString(),
             ) *
             Decimal.parse(convertedAmt))
         .toDouble();

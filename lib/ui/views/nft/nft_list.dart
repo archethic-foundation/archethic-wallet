@@ -31,11 +31,12 @@ class _NFTListState extends State<NFTList> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
-    final accountTokenList = StateContainer.of(context)
+    final accountSelected = StateContainer.of(context)
         .appWallet!
         .appKeychain!
-        .getAccountSelected()!
-        .getAccountNFTFiltered(widget.currentNftCategoryIndex!);
+        .getAccountSelected()!;
+    final accountTokenList =
+        accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
     return SizedBox(
       key: expandedKey,
       width: double.infinity,
@@ -101,12 +102,8 @@ class _NFTListState extends State<NFTList> {
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
                                             widget: TransferSheet(
-                                              accountToken:
-                                                  StateContainer.of(context)
-                                                      .appWallet!
-                                                      .appKeychain!
-                                                      .getAccountSelected()!
-                                                      .accountNFT![index],
+                                              accountToken: accountSelected
+                                                  .accountNFT![index],
                                               primaryCurrency:
                                                   StateContainer.of(context)
                                                       .curPrimaryCurrency,

@@ -83,6 +83,10 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     nftCategoryToHidden = NftCategory.getListByDefault(context);
     nftCategoryToSort = widget.nftCategory;
     for (final nftCategory in nftCategoryToSort!) {
@@ -117,10 +121,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                     final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
                     nftCategoryToSort!.insert(newIndex, nftCategory);
                   });
-                  await StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
+                  await accountSelected
                       .updateNftCategoryList(nftCategoryToSort!);
                 },
                 children: [
@@ -143,13 +144,9 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                       (element) => element.id == nftCategory.id,
                                     );
                                     setState(() {});
-                                    await StateContainer.of(context)
-                                        .appWallet!
-                                        .appKeychain!
-                                        .getAccountSelected()!
-                                        .updateNftCategoryList(
-                                          nftCategoryToSort!,
-                                        );
+                                    await accountSelected.updateNftCategoryList(
+                                      nftCategoryToSort!,
+                                    );
                                   },
                                   color:
                                       Colors.redAccent[400]!.withOpacity(0.5),
@@ -203,13 +200,9 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                 nftCategoryToSort!.add(nftCategory);
 
                                 setState(() {});
-                                await StateContainer.of(context)
-                                    .appWallet!
-                                    .appKeychain!
-                                    .getAccountSelected()!
-                                    .updateNftCategoryList(
-                                      nftCategoryToSort!,
-                                    );
+                                await accountSelected.updateNftCategoryList(
+                                  nftCategoryToSort!,
+                                );
                               },
                               color: Colors.greenAccent[400]!.withOpacity(0.5),
                             ),

@@ -19,7 +19,7 @@ class _NFTCreationProcessImportTabState
     extends State<_NFTCreationProcessImportTab> {
   @override
   Widget build(BuildContext context) {
-    //TODO(reddwarf03): refacto code with Riverpod
+    // TODO(reddwarf03): refacto code with Riverpod
     return const SizedBox();
   }
 }

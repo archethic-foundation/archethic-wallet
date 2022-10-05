@@ -111,19 +111,15 @@ class BalanceInfos extends StatelessWidget {
       ),
       onTapDown: (details) {
         if (accountSelectedBalance!.fiatCurrencyValue! > 0) {
-          showPopUpMenuAtPosition(context, details);
+          showPopUpMenuAtPosition(context, details, accountSelectedBalance);
         }
       },
     );
   }
 
-  void showPopUpMenuAtPosition(BuildContext context, TapDownDetails details) {
+  void showPopUpMenuAtPosition(BuildContext context, TapDownDetails details,
+      AccountBalance accountSelectedBalance,) {
     final theme = StateContainer.of(context).curTheme;
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .balance;
 
     showMenu(
       color: theme.backgroundDark,
@@ -151,7 +147,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
-                    accountSelectedBalance!.nativeTokenValueToString(),
+                    accountSelectedBalance.nativeTokenValueToString(),
                   );
                 },
                 child: Column(
@@ -168,7 +164,7 @@ class BalanceInfos extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          accountSelectedBalance!.nativeTokenValueToString(),
+                          accountSelectedBalance.nativeTokenValueToString(),
                           style: AppStyles.textStyleSize12W100Primary(context),
                         ),
                       ],
@@ -213,7 +209,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
-                    accountSelectedBalance!.fiatCurrencyValue!.toString(),
+                    accountSelectedBalance.fiatCurrencyValue!.toString(),
                   );
                 },
                 child: Column(
@@ -230,7 +226,7 @@ class BalanceInfos extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          accountSelectedBalance!.fiatCurrencyValue!.toString(),
+                          accountSelectedBalance.fiatCurrencyValue!.toString(),
                           style: AppStyles.textStyleSize12W100Primary(context),
                         ),
                       ],
@@ -243,12 +239,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
-                    StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .nativeTokenValueToString(),
+                    accountSelectedBalance.nativeTokenValueToString(),
                   );
                 },
                 child: Column(
@@ -265,12 +256,7 @@ class BalanceInfos extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .balance!
-                              .nativeTokenValueToString(),
+                          accountSelectedBalance.nativeTokenValueToString(),
                           style: AppStyles.textStyleSize12W100Primary(context),
                         ),
                       ],
