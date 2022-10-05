@@ -11,7 +11,7 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/add_token_confirm.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';

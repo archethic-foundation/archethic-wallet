@@ -3,7 +3,7 @@
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
-import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:flutter/material.dart';
 
 class NFTListPerCategory extends StatelessWidget {
