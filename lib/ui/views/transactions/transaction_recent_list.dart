@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:intl/intl.dart';
 
-class TxListWidget extends StatelessWidget {
-  const TxListWidget({super.key});
+class TxList extends StatelessWidget {
+  const TxList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,55 +45,48 @@ class TxListWidget extends StatelessWidget {
               ),
             ),
           ),
-        getLign(context, 0),
-        getLign(context, 1),
-        getLign(context, 2),
-        getLign(context, 3),
-        getLign(context, 4),
-        getLign(context, 5),
-        getLign(context, 6),
-        getLign(context, 7),
-        getLign(context, 8),
-        getLign(context, 9),
+        const _TxListLine(num: 0),
+        const _TxListLine(num: 1),
+        const _TxListLine(num: 2),
+        const _TxListLine(num: 3),
+        const _TxListLine(num: 4),
+        const _TxListLine(num: 5),
+        const _TxListLine(num: 6),
+        const _TxListLine(num: 7),
+        const _TxListLine(num: 8),
+        const _TxListLine(num: 9)
       ],
     );
   }
+}
 
-// TODO(chralu): Create a Widget subclass
-  Container getLign(BuildContext context, int num) {
+class _TxListLine extends StatelessWidget {
+  const _TxListLine({
+    required this.num,
+  });
+
+  final int num;
+
+  @override
+  Widget build(BuildContext context) {
+    final recentTransactions = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .recentTransactions!;
+
     return Container(
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-        child: (StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .recentTransactions!
-                        .isNotEmpty &&
-                    StateContainer.of(context)
-                            .appWallet!
-                            .appKeychain!
-                            .getAccountSelected()!
-                            .recentTransactions!
-                            .length >
-                        num) ||
+        child: (recentTransactions.isNotEmpty &&
+                    recentTransactions.length > num) ||
                 (StateContainer.of(context).recentTransactionsLoading == true &&
-                    StateContainer.of(context)
-                            .appWallet!
-                            .appKeychain!
-                            .getAccountSelected()!
-                            .recentTransactions!
-                            .length >
-                        num)
+                    recentTransactions.length > num)
             ? displayTxDetailTransfer(
                 context,
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .recentTransactions![num],
+                recentTransactions[num],
               )
             : const SizedBox(),
       ),

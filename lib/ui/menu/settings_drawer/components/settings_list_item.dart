@@ -2,12 +2,11 @@
 part of '../settings_drawer_wallet_mobile.dart';
 
 abstract class _SettingsListItem extends StatelessWidget {
-  const _SettingsListItem({super.key});
+  const _SettingsListItem();
 
-  const factory _SettingsListItem.spacer({Key? key}) = _SettingsListSpacer;
+  const factory _SettingsListItem.spacer() = _SettingsListSpacer;
   const factory _SettingsListItem.title({
     required String text,
-    Key? key,
   }) = _SettingsListTitle;
 
   /// Settings item without any dropdown option but rather a direct functionality
@@ -17,7 +16,6 @@ abstract class _SettingsListItem extends StatelessWidget {
     required String icon,
     required Color iconColor,
     VoidCallback? onPressed,
-    Key? key,
   }) = _SettingsListItemSingleLine;
 
   /// Settings item with a dropdown option
@@ -28,7 +26,6 @@ abstract class _SettingsListItem extends StatelessWidget {
     required Color iconColor,
     required Function onPressed,
     bool disabled,
-    Key? key,
   }) = _SettingsListItemWithDefaultValue;
 
   const factory _SettingsListItem.withDefaultValueWithInfos({
@@ -39,7 +36,6 @@ abstract class _SettingsListItem extends StatelessWidget {
     required Color iconColor,
     required Function onPressed,
     bool disabled,
-    Key? key,
   }) = _SettingsListItemWithDefaultValueWithInfos;
 
   const factory _SettingsListItem.singleLineWithInfos({
@@ -48,7 +44,6 @@ abstract class _SettingsListItem extends StatelessWidget {
     Function? onPressed,
     String? icon,
     Color? iconColor,
-    Key? key,
   }) = _SettingsListItemSingleLineWithInfos;
 
   const factory _SettingsListItem.withSwitch({
@@ -57,12 +52,11 @@ abstract class _SettingsListItem extends StatelessWidget {
     required Color iconColor,
     required bool isSwitched,
     Function? onChanged,
-    Key? key,
   }) = _SettingsListItemSwitch;
 }
 
 class _SettingsListSpacer extends _SettingsListItem {
-  const _SettingsListSpacer({super.key});
+  const _SettingsListSpacer();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +70,6 @@ class _SettingsListSpacer extends _SettingsListItem {
 class _SettingsListTitle extends _SettingsListItem {
   const _SettingsListTitle({
     required this.text,
-    super.key,
   });
 
   final String text;

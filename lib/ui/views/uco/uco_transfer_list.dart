@@ -107,7 +107,7 @@ class UCOTransferListWidget extends StatelessWidget {
 }
 
 class _UCOTransferDetail extends StatelessWidget {
-  const _UCOTransferDetail({required this.ucoTransfer, super.key});
+  const _UCOTransferDetail({required this.ucoTransfer});
 
   final UCOTransferWallet ucoTransfer;
 

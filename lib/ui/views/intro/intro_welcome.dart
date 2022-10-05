@@ -26,6 +26,9 @@ class _IntroWelcomeState extends State<IntroWelcome> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -35,17 +38,14 @@ class _IntroWelcomeState extends State<IntroWelcome> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark!,
-                  StateContainer.of(context).curTheme.background!
-                ],
+                colors: <Color>[theme.backgroundDark!, theme.background!],
               ),
             ),
             child: DecoratedBox(
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    StateContainer.of(context).curTheme.background4Small!,
+                    theme.background4Small!,
                   ),
                   fit: BoxFit.fitHeight,
                   opacity: 0.8,
@@ -79,7 +79,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                 child: AspectRatio(
                                   aspectRatio: 3 / 1,
                                   child: Image.asset(
-                                    '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
+                                    '${theme.assetsFolder!}${theme.logo!}.png',
                                     height: 200,
                                   ),
                                 ),
@@ -93,7 +93,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                               left: 20,
                             ),
                             child: AutoSizeText(
-                              AppLocalization.of(context)!.welcomeText,
+                              localizations.welcomeText,
                               maxLines: 5,
                               style:
                                   AppStyles.textStyleSize20W700Primary(context),
@@ -118,8 +118,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                   ),
                                   child: CheckboxListTile(
                                     title: Text(
-                                      AppLocalization.of(context)!
-                                          .welcomeDisclaimerChoice,
+                                      localizations.welcomeDisclaimerChoice,
                                       style:
                                           AppStyles.textStyleSize14W600Primary(
                                         context,
@@ -149,8 +148,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                         UIUtil.showWebview(
                                           context,
                                           'https://archethic.net',
-                                          AppLocalization.of(context)!
-                                              .welcomeDisclaimerLink,
+                                          localizations.welcomeDisclaimerLink,
                                         );
                                       },
                                     ),
@@ -172,11 +170,12 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             checkedValue
                                 ? AppButtonType.primary
                                 : AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.newWallet,
+                            localizations.newWallet,
                             Dimens.buttonTopDimens,
                             onPressed: () async {
                               if (checkedValue) {
                                 await _networkDialog();
+                                // TODO(reddwarf03): to implement, https://github.com/archethic-foundation/archethic-wallet/issues/144
                                 /* setState(() {
                                   _curNetworksSetting = NetworksSetting(
                                       AvailableNetworks.archethicTestNet);
@@ -200,10 +199,11 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             checkedValue
                                 ? AppButtonType.primary
                                 : AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.importWallet,
+                            localizations.importWallet,
                             Dimens.buttonBottomDimens,
                             onPressed: () async {
                               if (checkedValue) {
+                                // TODO(reddwarf03): to implement, https://github.com/archethic-foundation/archethic-wallet/issues/144
                                 /*setState(() {
                                   _curNetworksSetting = NetworksSetting(
                                       AvailableNetworks.archethicTestNet);

@@ -113,12 +113,14 @@ class _ContactsListState extends State<ContactsList> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: StateContainer.of(context).curTheme.drawerBackground,
+        color: theme.drawerBackground,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: StateContainer.of(context).curTheme.overlay30!,
+            color: theme.overlay30!,
             offset: const Offset(-5, 0),
             blurRadius: 20,
           ),
@@ -142,7 +144,7 @@ class _ContactsListState extends State<ContactsList> {
                     margin: const EdgeInsets.only(right: 10, left: 10),
                     child: BackButton(
                       key: const Key('back'),
-                      color: StateContainer.of(context).curTheme.text,
+                      color: theme.text,
                       onPressed: () {
                         setState(() {
                           widget.contactsOpen = false;
@@ -199,7 +201,7 @@ class _ContactsListState extends State<ContactsList> {
                     itemCount: contactsToDisplay!.length,
                     itemBuilder: (BuildContext context, int index) {
                       // Build contact
-                      return _SignleContact(
+                      return _SingleContact(
                         contact: contactsToDisplay![index],
                       );
                     },
@@ -213,12 +215,8 @@ class _ContactsListState extends State<ContactsList> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: <Color>[
-                            StateContainer.of(context)
-                                .curTheme
-                                .drawerBackground!,
-                            StateContainer.of(context)
-                                .curTheme
-                                .backgroundDark00!
+                            theme.drawerBackground!,
+                            theme.backgroundDark00!
                           ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
@@ -235,12 +233,8 @@ class _ContactsListState extends State<ContactsList> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: <Color>[
-                            StateContainer.of(context)
-                                .curTheme
-                                .backgroundDark00!,
-                            StateContainer.of(context)
-                                .curTheme
-                                .drawerBackground!,
+                            theme.backgroundDark00!,
+                            theme.drawerBackground!,
                           ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
@@ -278,8 +272,8 @@ class _ContactsListState extends State<ContactsList> {
   }
 }
 
-class _SignleContact extends StatelessWidget {
-  const _SignleContact({required this.contact, super.key});
+class _SingleContact extends StatelessWidget {
+  const _SingleContact({required this.contact});
 
   final Contact contact;
 
@@ -289,7 +283,12 @@ class _SignleContact extends StatelessWidget {
 
     return TextButton(
       onPressed: () {
-        ContactDetailsSheet(contact).mainBottomSheet(context);
+        Sheets.showAppHeightNineSheet(
+          context: context,
+          widget: ContactDetail(
+            contact: contact,
+          ),
+        );
       },
       child: Column(
         children: <Widget>[
@@ -315,9 +314,7 @@ class _SignleContact extends StatelessWidget {
                             if (contact.type == 'keychainService')
                               FaIcon(
                                 FontAwesomeIcons.keycdn,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .iconDrawer,
+                                color: theme.iconDrawer,
                                 size: 16,
                               )
                             else

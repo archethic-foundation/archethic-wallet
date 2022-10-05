@@ -252,15 +252,15 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: _AddPublicKeyLine(
-                                        publicKey: entry.value,
-                                        onRemovePublicKey: () {
-                                          setState(() {
-                                            publicKeys!.removeWhere(
-                                              (element) =>
-                                                  element == entry.value,
-                                            );
-                                          });
-                                        }),
+                                      publicKey: entry.value,
+                                      onRemovePublicKey: () {
+                                        setState(() {
+                                          publicKeys!.removeWhere(
+                                            (element) => element == entry.value,
+                                          );
+                                        });
+                                      },
+                                    ),
                                   );
                                 }).toList(),
                               ),
@@ -280,11 +280,13 @@ class _AddPublicKeyState extends State<AddPublicKey> {
 }
 
 class _AddPublicKeyLine extends StatelessWidget {
-  const _AddPublicKeyLine(
-      {required this.publicKey, required this.onRemovePublicKey, super.key});
+  const _AddPublicKeyLine({
+    required this.publicKey,
+    required this.onRemovePublicKey,
+  });
 
   final String publicKey;
-  final Function onRemovePublicKey;
+  final VoidCallback onRemovePublicKey;
 
   @override
   Widget build(BuildContext context) {

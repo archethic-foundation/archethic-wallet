@@ -7,7 +7,6 @@ class _SettingsListItemSwitch extends _SettingsListItem {
     required this.iconColor,
     required this.isSwitched,
     this.onChanged,
-    super.key,
   });
 
   final String heading;
@@ -32,7 +31,12 @@ class _SettingsListItemSwitch extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget.build(context, icon, 30, 30, color: iconColor),
+              child: IconWidget(
+                icon: icon,
+                width: 30,
+                height: 30,
+                color: iconColor,
+              ),
             ),
             SizedBox(
               width: Responsive.drawerWidth(context) - 130,
@@ -51,8 +55,10 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                     );
                 onChanged?.call(value);
               },
-              inactiveTrackColor: StateContainer.of(context).curTheme.inactiveTrackColorSwitch,
-              activeTrackColor: StateContainer.of(context).curTheme.activeTrackColorSwitch,
+              inactiveTrackColor:
+                  StateContainer.of(context).curTheme.inactiveTrackColorSwitch,
+              activeTrackColor:
+                  StateContainer.of(context).curTheme.activeTrackColorSwitch,
               activeColor: StateContainer.of(context).curTheme.backgroundDark,
             )
           ],

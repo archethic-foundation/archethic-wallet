@@ -144,7 +144,6 @@ class MenuWidgetWallet extends StatelessWidget {
 class _ActionButton extends StatelessWidget {
   const _ActionButton({
     this.onTap,
-    super.key,
     required this.text,
     required this.icon,
   });
@@ -161,11 +160,10 @@ class _ActionButton extends StatelessWidget {
         onTap: onTap,
         child: Column(
           children: <Widget>[
-            IconWidget.buildIconDataWidget(
-              context,
-              icon,
-              40,
-              40,
+            IconDataWidget(
+              icon: icon,
+              width: 40,
+              height: 40,
               enabled: onTap != null,
             ),
             const SizedBox(height: 5),

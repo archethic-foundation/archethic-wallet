@@ -52,12 +52,14 @@ class _NFTTabState extends State<NFTTab> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return Column(
       children: [
         Expanded(
           /// REFRESH
           child: RefreshIndicator(
-            backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
+            backgroundColor: theme.backgroundDark,
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
@@ -83,7 +85,7 @@ class _NFTTabState extends State<NFTTab> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          StateContainer.of(context).curTheme.background3Small!,
+                          theme.background3Small!,
                         ),
                         fit: BoxFit.fitHeight,
                         opacity: 0.7,

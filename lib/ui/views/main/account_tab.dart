@@ -19,12 +19,14 @@ class AccountTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return Column(
       children: [
         Expanded(
           /// REFRESH
           child: RefreshIndicator(
-            backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
+            backgroundColor: theme.backgroundDark,
             onRefresh: () => Future<void>.sync(() {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
@@ -47,7 +49,7 @@ class AccountTab extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          StateContainer.of(context).curTheme.background2Small!,
+                          theme.background2Small!,
                         ),
                         fit: BoxFit.fitHeight,
                         opacity: 0.7,
@@ -72,7 +74,7 @@ class AccountTab extends StatelessWidget {
                             if (StateContainer.of(context).showPriceChart)
                               Stack(
                                 children: const <Widget>[
-                                  BalanceInfosBuildChart(),
+                                  BalanceInfosChart(),
                                 ],
                               )
                             else
@@ -80,7 +82,7 @@ class AccountTab extends StatelessWidget {
 
                             /// KPI
                             if (StateContainer.of(context).showPriceChart)
-                              const BalanceInfosBuildKpi()
+                              const BalanceInfosKpi()
                             else
                               const SizedBox(),
 
@@ -109,13 +111,13 @@ class AccountTab extends StatelessWidget {
                             ),
                             const ExpandablePageView(
                               children: [
-                                TxListWidget(),
+                                TxList(),
                                 FungiblesTokensListWidget(),
                               ],
                             ),
 
                             /// BLOG
-                            const LastArticlesWidget(),
+                            const LastArticles(),
                             const SizedBox(
                               height: 30,
                             ),

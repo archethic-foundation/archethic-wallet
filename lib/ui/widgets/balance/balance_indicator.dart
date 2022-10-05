@@ -104,7 +104,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
 }
 
 class _BalanceIndicatorFiat extends StatelessWidget {
-  const _BalanceIndicatorFiat({required this.primary, super.key});
+  const _BalanceIndicatorFiat({required this.primary});
 
   final bool primary;
 
@@ -150,7 +150,7 @@ class _BalanceIndicatorFiat extends StatelessWidget {
 }
 
 class _BalanceIndicatorNative extends StatelessWidget {
-  const _BalanceIndicatorNative({required this.primary, super.key});
+  const _BalanceIndicatorNative({required this.primary});
 
   final bool primary;
 

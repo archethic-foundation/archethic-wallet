@@ -44,26 +44,26 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: StateContainer.of(context).curTheme.backgroundDarkest,
+      backgroundColor: theme.backgroundDarkest,
       body: Stack(
         children: <Widget>[
           DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  StateContainer.of(context).curTheme.background4Small!,
+                  theme.background4Small!,
                 ),
                 fit: BoxFit.fitHeight,
               ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark!,
-                  StateContainer.of(context).curTheme.background!
-                ],
+                colors: <Color>[theme.backgroundDark!, theme.background!],
               ),
             ),
           ),
@@ -89,7 +89,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: StateContainer.of(context).curTheme.text,
+                                color: theme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -174,20 +174,17 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                             )
                           ],
                         ),
-                        Container(
-                          child: IconWidget.build(
-                            context,
-                            'assets/icons/key-word.png',
-                            90,
-                            90,
-                          ),
+                        const IconWidget(
+                          icon: 'assets/icons/key-word.png',
+                          width: 90,
+                          height: 90,
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
                             top: 10,
                           ),
                           child: AutoSizeText(
-                            AppLocalization.of(context)!.recoveryPhrase,
+                            localizations.recoveryPhrase,
                             style:
                                 AppStyles.textStyleSize20W700Primary(context),
                           ),
@@ -211,7 +208,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           const Key('iveBackedItUp'),
                           context,
                           AppButtonType.primaryOutline,
-                          AppLocalization.of(context)!.iveBackedItUp,
+                          localizations.iveBackedItUp,
                           Dimens.buttonBottomDimens,
                           onPressed: () {},
                         )
@@ -220,7 +217,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           const Key('iveBackedItUp'),
                           context,
                           AppButtonType.primary,
-                          AppLocalization.of(context)!.iveBackedItUp,
+                          localizations.iveBackedItUp,
                           Dimens.buttonBottomDimens,
                           onPressed: () async {
                             Navigator.of(context).pushNamed(

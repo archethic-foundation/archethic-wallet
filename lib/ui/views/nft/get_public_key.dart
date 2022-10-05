@@ -82,7 +82,8 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: _GetPublicKeyLine(
-                                        publicKey: entry.value),
+                                      publicKey: entry.value,
+                                    ),
                                   );
                                 }).toList(),
                               ),
@@ -102,7 +103,7 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
 }
 
 class _GetPublicKeyLine extends StatelessWidget {
-  const _GetPublicKeyLine({required this.publicKey, super.key});
+  const _GetPublicKeyLine({required this.publicKey});
 
   final String publicKey;
 

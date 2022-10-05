@@ -61,12 +61,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
+      final localizations = AppLocalization.of(context)!;
+      final theme = StateContainer.of(context).curTheme;
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         UIUtil.showSnackbar(
-          '${AppLocalization.of(context)!.sendError} (${event.response!})',
+          '${localizations.sendError} (${event.response!})',
           context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
+          theme.text!,
+          theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
       } else {
@@ -79,17 +81,15 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
             case TransactionSendEventType.keychain:
               UIUtil.showSnackbar(
                 event.nbConfirmations == 1
-                    ? AppLocalization.of(context)!
-                        .keychainCreationTransactionConfirmed1
+                    ? localizations.keychainCreationTransactionConfirmed1
                         .replaceAll('%1', event.nbConfirmations.toString())
                         .replaceAll('%2', event.maxConfirmations.toString())
-                    : AppLocalization.of(context)!
-                        .keychainCreationTransactionConfirmed
+                    : localizations.keychainCreationTransactionConfirmed
                         .replaceAll('%1', event.nbConfirmations.toString())
                         .replaceAll('%2', event.maxConfirmations.toString()),
                 context,
-                StateContainer.of(context).curTheme.text!,
-                StateContainer.of(context).curTheme.snackBarShadow!,
+                theme.text!,
+                theme.snackBarShadow!,
                 duration: const Duration(milliseconds: 5000),
               );
 
@@ -111,17 +111,15 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
             case TransactionSendEventType.keychainAccess:
               UIUtil.showSnackbar(
                 event.nbConfirmations == 1
-                    ? AppLocalization.of(context)!
-                        .keychainAccessCreationTransactionConfirmed1
+                    ? localizations.keychainAccessCreationTransactionConfirmed1
                         .replaceAll('%1', event.nbConfirmations.toString())
                         .replaceAll('%2', event.maxConfirmations.toString())
-                    : AppLocalization.of(context)!
-                        .keychainAccessCreationTransactionConfirmed
+                    : localizations.keychainAccessCreationTransactionConfirmed
                         .replaceAll('%1', event.nbConfirmations.toString())
                         .replaceAll('%2', event.maxConfirmations.toString()),
                 context,
-                StateContainer.of(context).curTheme.text!,
-                StateContainer.of(context).curTheme.snackBarShadow!,
+                theme.text!,
+                theme.snackBarShadow!,
                 duration: const Duration(milliseconds: 5000),
               );
 
@@ -136,17 +134,17 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
               } catch (e) {
                 error = true;
                 UIUtil.showSnackbar(
-                  '${AppLocalization.of(context)!.sendError} ($e)',
+                  '${localizations.sendError} ($e)',
                   context,
-                  StateContainer.of(context).curTheme.text!,
-                  StateContainer.of(context).curTheme.snackBarShadow!,
+                  theme.text!,
+                  theme.snackBarShadow!,
                 );
               }
               if (error == false) {
                 await StateContainer.of(context).requestUpdate();
 
                 StateContainer.of(context).checkTransactionInputs(
-                  AppLocalization.of(context)!.transactionInputNotification,
+                  localizations.transactionInputNotification,
                 );
                 final preferences = await Preferences.getInstance();
                 StateContainer.of(context).bottomBarCurrentPage =
@@ -170,10 +168,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           }
         } else {
           UIUtil.showSnackbar(
-            AppLocalization.of(context)!.notEnoughConfirmations,
+            localizations.notEnoughConfirmations,
             context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!,
+            theme.text!,
+            theme.snackBarShadow!,
           );
           Navigator.of(context).pop();
         }
@@ -215,6 +213,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -222,17 +223,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              StateContainer.of(context).curTheme.background3Small!,
+              theme.background3Small!,
             ),
             fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+            colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
         child: LayoutBuilder(
@@ -252,7 +250,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                       width: 50,
                       child: BackButton(
                         key: const Key('back'),
-                        color: StateContainer.of(context).curTheme.text,
+                        color: theme.text,
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -273,7 +271,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
-                            AppLocalization.of(context)!.confirmSecretPhrase,
+                            localizations.confirmSecretPhrase,
                             style:
                                 AppStyles.textStyleSize20W700Warning(context),
                           ),
@@ -285,8 +283,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             top: 15,
                           ),
                           child: AutoSizeText(
-                            AppLocalization.of(context)!
-                                .confirmSecretPhraseExplanation,
+                            localizations.confirmSecretPhraseExplanation,
                             style:
                                 AppStyles.textStyleSize16W600Primary(context),
                             textAlign: TextAlign.justify,
@@ -339,7 +336,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         ),
                         Divider(
                           height: 15,
-                          color: StateContainer.of(context).curTheme.text60,
+                          color: theme.text60,
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
@@ -389,7 +386,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             const Key('confirm'),
                             context,
                             AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.confirm,
+                            localizations.confirm,
                             Dimens.buttonTopDimens,
                             onPressed: () {},
                           )
@@ -398,7 +395,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             const Key('confirm'),
                             context,
                             AppButtonType.primary,
-                            AppLocalization.of(context)!.confirm,
+                            localizations.confirm,
                             Dimens.buttonTopDimens,
                             onPressed: () async {
                               var orderOk = true;
@@ -414,10 +411,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                               if (orderOk == false) {
                                 setState(() {
                                   UIUtil.showSnackbar(
-                                    AppLocalization.of(context)!
-                                        .confirmSecretPhraseKo,
+                                    localizations.confirmSecretPhraseKo,
                                     context,
-                                    StateContainer.of(context).curTheme.text!,
+                                    theme.text!,
                                     StateContainer.of(context)
                                         .curTheme
                                         .snackBarShadow!,
@@ -439,16 +435,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           const Key('pass'),
                           context,
                           AppButtonType.primary,
-                          AppLocalization.of(context)!.pass,
+                          localizations.pass,
                           Dimens.buttonBottomDimens,
                           onPressed: () {
                             AppDialogs.showConfirmDialog(
                                 context,
-                                AppLocalization.of(context)!
-                                    .passBackupConfirmationDisclaimer,
-                                AppLocalization.of(context)!
-                                    .passBackupConfirmationMessage,
-                                AppLocalization.of(context)!.yes, () async {
+                                localizations.passBackupConfirmationDisclaimer,
+                                localizations.passBackupConfirmationMessage,
+                                localizations.yes, () async {
                               await _launchSecurityConfiguration(
                                 widget.name!,
                                 widget.seed!,
@@ -469,6 +463,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
+    final theme = StateContainer.of(context).curTheme;
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
@@ -476,7 +471,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
         AuthenticationMethod(AuthMethod.pin).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.pin),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.pin,
         true,
       ),
@@ -486,7 +481,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         AuthenticationMethod(AuthMethod.password).getDisplayName(context),
         AuthenticationMethod(AuthMethod.password).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.password),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.password,
         true,
       ),
@@ -497,7 +492,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
           AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
-          StateContainer.of(context).curTheme.pickerItemIconEnabled,
+          theme.pickerItemIconEnabled,
           AuthMethod.biometrics,
           true,
         ),
@@ -510,7 +505,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         AuthenticationMethod(AuthMethod.biometricsUniris)
             .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
         false,
       ),
@@ -522,7 +517,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
             .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
-        StateContainer.of(context).curTheme.pickerItemIconEnabled,
+        theme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,
         true,
       ),
@@ -544,12 +539,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   void _showSendingAnimation(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,
-        StateContainer.of(context).curTheme.animationOverlayStrong!,
-        StateContainer.of(context).curTheme.animationOverlayMedium!,
-        title: AppLocalization.of(context)!.appWalletInitInProgress,
+        theme.animationOverlayStrong!,
+        theme.animationOverlayMedium!,
+        title: localizations.appWalletInitInProgress,
       ),
     );
   }
@@ -582,11 +579,13 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       );
     } catch (e) {
       error = true;
+      final localizations = AppLocalization.of(context)!;
+      final theme = StateContainer.of(context).curTheme;
       UIUtil.showSnackbar(
-        '${AppLocalization.of(context)!.sendError} ($e)',
+        '${localizations.sendError} ($e)',
         context,
-        StateContainer.of(context).curTheme.text!,
-        StateContainer.of(context).curTheme.snackBarShadow!,
+        theme.text!,
+        theme.snackBarShadow!,
       );
     }
 

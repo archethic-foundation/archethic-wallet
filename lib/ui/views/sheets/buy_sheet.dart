@@ -13,6 +13,7 @@ class BuySheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Column(
       children: <Widget>[
         SheetHeader(title: AppLocalization.of(context)!.transactionBuyHeader),
@@ -40,7 +41,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Rubic.svg',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -55,7 +56,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: Image.asset(
                               'assets/buy/Quickswap.png',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -70,7 +71,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: Image.asset(
                               'assets/buy/Probit.png',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -85,7 +86,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: Image.asset(
                               'assets/buy/Bithumb.png',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -100,7 +101,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Uniswap.svg',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -115,7 +116,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Zebitex.svg',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -130,7 +131,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: Image.asset(
                               'assets/buy/Pancake.png',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),
@@ -145,7 +146,7 @@ class BuySheet extends StatelessWidget {
                             },
                             child: Image.asset(
                               'assets/buy/Zamio.png',
-                              color: StateContainer.of(context).curTheme.text,
+                              color: theme.text,
                               height: 40,
                             ),
                           ),

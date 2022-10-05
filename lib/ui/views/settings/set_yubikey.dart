@@ -107,13 +107,10 @@ class _SetYubikeyState extends State<SetYubikey> {
                             ),
                           ],
                         ),
-                        Container(
-                          child: IconWidget.build(
-                            context,
-                            'assets/icons/digital-key.png',
-                            90,
-                            90,
-                          ),
+                        const IconWidget(
+                          icon: 'assets/icons/digital-key.png',
+                          width: 90,
+                          height: 90,
                         ),
                         Expanded(
                           child: SingleChildScrollView(

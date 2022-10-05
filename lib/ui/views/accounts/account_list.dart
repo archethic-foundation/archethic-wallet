@@ -207,7 +207,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           if (nameController.text.isEmpty) {
                                             setState(() {
                                               nameError = AppLocalization.of(
-                                                      context)!
+                                                context,
+                                              )!
                                                   .introNewWalletGetFirstInfosNameBlank;
                                               FocusScope.of(context)
                                                   .requestFocus(

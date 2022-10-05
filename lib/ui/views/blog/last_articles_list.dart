@@ -13,14 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:ghost/ghost.dart';
 import 'package:intl/intl.dart';
 
-class LastArticlesWidget extends StatefulWidget {
-  const LastArticlesWidget({super.key});
+class LastArticles extends StatefulWidget {
+  const LastArticles({super.key});
 
   @override
-  LastArticlesWidgetState createState() => LastArticlesWidgetState();
+  LastArticlesState createState() => LastArticlesState();
 }
 
-class LastArticlesWidgetState extends State<LastArticlesWidget> {
+class LastArticlesState extends State<LastArticles> {
   PageController? pageController;
   double pageOffset = 0;
 
@@ -56,104 +56,112 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (StateContainer.of(context).showBlog == true) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 50,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalization.of(context)!.blogHeader,
-                    style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      UIUtil.showWebview(context, blogUrl, '');
-                    },
-                    child: IconWidget.buildIconDataWidget(
-                      context,
-                      Icons.arrow_circle_right_outlined,
-                      20,
-                      20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          FutureBuilder<List<GhostPost>>(
-            future: api.posts.browse(
-              limit: 5,
-              include: <String>['tags', 'authors'],
-            ),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return SizedBox(
-                  height: 280,
-                  child: PageView.builder(
-                    controller: pageController,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          UIUtil.showWebview(
-                            context,
-                            snapshot.data![index].url!,
-                            '',
-                          );
-                        },
-                        child: Center(
-                          child: SlidingCard(
-                            name: snapshot.data![index].title,
-                            date: DateFormat.yMMMEd(
-                              Localizations.localeOf(context).languageCode,
-                            ).format(
-                              snapshot.data![index].publishedAt!.toLocal(),
-                            ),
-                            author: snapshot.data![index].authors![0].name,
-                            assetName: snapshot.data![index].featureImage,
-                            offset: pageOffset - index,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    SizedBox(
-                      height: 250,
-                    )
-                  ],
-                );
-              }
-            },
-          )
-        ],
-      );
-    } else {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SizedBox(
-            height: 50,
-          ),
-          SizedBox(
-            height: 250,
-          )
-        ],
-      );
+    if (StateContainer.of(context).showBlog == false) {
+      return const _LastArticlesNotShowed();
     }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 50,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalization.of(context)!.blogHeader,
+                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
+                ),
+                InkWell(
+                  onTap: () {
+                    UIUtil.showWebview(context, blogUrl, '');
+                  },
+                  child: const IconDataWidget(
+                    icon: Icons.arrow_circle_right_outlined,
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        FutureBuilder<List<GhostPost>>(
+          future: api.posts.browse(
+            limit: 5,
+            include: <String>['tags', 'authors'],
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SizedBox(
+                height: 280,
+                child: PageView.builder(
+                  controller: pageController,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        UIUtil.showWebview(
+                          context,
+                          snapshot.data![index].url!,
+                          '',
+                        );
+                      },
+                      child: Center(
+                        child: SlidingCard(
+                          name: snapshot.data![index].title,
+                          date: DateFormat.yMMMEd(
+                            Localizations.localeOf(context).languageCode,
+                          ).format(
+                            snapshot.data![index].publishedAt!.toLocal(),
+                          ),
+                          author: snapshot.data![index].authors![0].name,
+                          assetName: snapshot.data![index].featureImage,
+                          offset: pageOffset - index,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    height: 50,
+                  ),
+                  SizedBox(
+                    height: 250,
+                  )
+                ],
+              );
+            }
+          },
+        )
+      ],
+    );
+  }
+}
+
+class _LastArticlesNotShowed extends StatelessWidget {
+  const _LastArticlesNotShowed();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        SizedBox(
+          height: 50,
+        ),
+        SizedBox(
+          height: 250,
+        )
+      ],
+    );
   }
 }
 

@@ -4,6 +4,7 @@
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/chart_infos.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -74,55 +75,11 @@ class BalanceInfos extends StatelessWidget {
                               ),
                             ),
                             if (StateContainer.of(context).showBalance)
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    accountSelectedBalance!
-                                        .nativeTokenValueToString(),
-                                    style: AppStyles
-                                        .textStyleSize25W900EquinoxPrimary(
-                                      context,
-                                    ),
-                                  ),
-                                  AutoSizeText(
-                                    CurrencyUtil.getConvertedAmount(
-                                      StateContainer.of(context)
-                                          .curCurrency
-                                          .currency
-                                          .name,
-                                      accountSelectedBalance.fiatCurrencyValue!,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    style: AppStyles.textStyleSize12W600Primary(
-                                      context,
-                                    ),
-                                  ),
-                                ],
+                              _BalanceInfosNativeShowed(
+                                accountSelectedBalance: accountSelectedBalance!,
                               )
                             else
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    '···········',
-                                    style: AppStyles
-                                        .textStyleSize25W900EquinoxPrimary60(
-                                      context,
-                                    ),
-                                  ),
-                                  AutoSizeText(
-                                    '···········',
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        AppStyles.textStyleSize12W600Primary60(
-                                      context,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              const _BalanceInfosNotShowed()
                           ],
                         )
                       : Row(
@@ -139,54 +96,11 @@ class BalanceInfos extends StatelessWidget {
                               ),
                             ),
                             if (StateContainer.of(context).showBalance)
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    CurrencyUtil.getConvertedAmount(
-                                      StateContainer.of(context)
-                                          .curCurrency
-                                          .currency
-                                          .name,
-                                      accountSelectedBalance.fiatCurrencyValue!,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    style: AppStyles
-                                        .textStyleSize25W900EquinoxPrimary(
-                                      context,
-                                    ),
-                                  ),
-                                  AutoSizeText(
-                                    '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
-                                    style: AppStyles.textStyleSize12W600Primary(
-                                      context,
-                                    ),
-                                  ),
-                                ],
+                              _BalanceInfosNFiatShowed(
+                                accountSelectedBalance: accountSelectedBalance,
                               )
                             else
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    '···········',
-                                    style: AppStyles
-                                        .textStyleSize25W900EquinoxPrimary60(
-                                      context,
-                                    ),
-                                  ),
-                                  AutoSizeText(
-                                    '···········',
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        AppStyles.textStyleSize12W600Primary60(
-                                      context,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              const _BalanceInfosNotShowed()
                           ],
                         ),
                 ),
@@ -377,6 +291,99 @@ class BalanceInfos extends StatelessWidget {
       context,
       theme.text!,
       theme.snackBarShadow!,
+    );
+  }
+}
+
+class _BalanceInfosNativeShowed extends StatelessWidget {
+  const _BalanceInfosNativeShowed({
+    required this.accountSelectedBalance,
+  });
+  final AccountBalance accountSelectedBalance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        AutoSizeText(
+          accountSelectedBalance.nativeTokenValueToString(),
+          style: AppStyles.textStyleSize25W900EquinoxPrimary(
+            context,
+          ),
+        ),
+        AutoSizeText(
+          CurrencyUtil.getConvertedAmount(
+            StateContainer.of(context).curCurrency.currency.name,
+            accountSelectedBalance.fiatCurrencyValue!,
+          ),
+          textAlign: TextAlign.center,
+          style: AppStyles.textStyleSize12W600Primary(
+            context,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BalanceInfosNFiatShowed extends StatelessWidget {
+  const _BalanceInfosNFiatShowed({
+    required this.accountSelectedBalance,
+  });
+  final AccountBalance accountSelectedBalance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        AutoSizeText(
+          CurrencyUtil.getConvertedAmount(
+            StateContainer.of(context).curCurrency.currency.name,
+            accountSelectedBalance.fiatCurrencyValue!,
+          ),
+          textAlign: TextAlign.center,
+          style: AppStyles.textStyleSize25W900EquinoxPrimary(
+            context,
+          ),
+        ),
+        AutoSizeText(
+          '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
+          style: AppStyles.textStyleSize12W600Primary(
+            context,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BalanceInfosNotShowed extends StatelessWidget {
+  const _BalanceInfosNotShowed();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        AutoSizeText(
+          '···········',
+          style: AppStyles.textStyleSize25W900EquinoxPrimary60(
+            context,
+          ),
+        ),
+        AutoSizeText(
+          '···········',
+          textAlign: TextAlign.center,
+          style: AppStyles.textStyleSize12W600Primary60(
+            context,
+          ),
+        ),
+      ],
     );
   }
 }

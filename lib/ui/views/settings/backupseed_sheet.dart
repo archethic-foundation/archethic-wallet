@@ -13,6 +13,8 @@ class AppSeedBackupSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+
     return TapOutsideUnfocus(
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
@@ -22,7 +24,7 @@ class AppSeedBackupSheet extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SheetHeader(
-                title: AppLocalization.of(context)!.recoveryPhrase,
+                title: localizations.recoveryPhrase,
               ),
               Expanded(
                 child: Column(
