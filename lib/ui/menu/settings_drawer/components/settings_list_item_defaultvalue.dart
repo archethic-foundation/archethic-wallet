@@ -87,7 +87,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
     required this.icon,
     required this.iconColor,
     required this.onPressed,
-    this.disabled = false,
+    required this.disabled,
   });
 
   final String heading;
