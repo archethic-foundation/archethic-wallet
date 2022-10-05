@@ -15,50 +15,48 @@ class TransactionInfos {
   String valueInfo = '';
 
   static String getDisplayName(BuildContext context, String label) {
+    final localizations = AppLocalization.of(context)!;
     switch (label) {
       case 'Address':
-        return AppLocalization.of(context)!.transactionInfosKeyAddress;
+        return localizations.transactionInfosKeyAddress;
       case 'Amount':
-        return AppLocalization.of(context)!.transactionInfosKeyAmount;
+        return localizations.transactionInfosKeyAmount;
       case 'Code':
-        return AppLocalization.of(context)!.transactionInfosKeyCode;
+        return localizations.transactionInfosKeyCode;
       case 'Content':
-        return AppLocalization.of(context)!.transactionInfosKeyContent;
+        return localizations.transactionInfosKeyContent;
       case 'CrossValidationStamps':
-        return AppLocalization.of(context)!
-            .transactionInfosKeyCrossValidationStamps;
+        return localizations.transactionInfosKeyCrossValidationStamps;
       case 'Data':
-        return AppLocalization.of(context)!.transactionInfosKeyData;
+        return localizations.transactionInfosKeyData;
       case 'TokenLedger':
-        return AppLocalization.of(context)!.transactionInfosKeyTokenLedger;
+        return localizations.transactionInfosKeyTokenLedger;
       case 'Token':
-        return AppLocalization.of(context)!.transactionInfosKeyToken;
+        return localizations.transactionInfosKeyToken;
       case 'OriginSignature':
-        return AppLocalization.of(context)!.transactionInfosKeyOriginSignature;
+        return localizations.transactionInfosKeyOriginSignature;
       case 'PreviousPublicKey':
-        return AppLocalization.of(context)!
-            .transactionInfosKeyPreviousPublicKey;
+        return localizations.transactionInfosKeyPreviousPublicKey;
       case 'PreviousSignature':
-        return AppLocalization.of(context)!
-            .transactionInfosKeyPreviousSignature;
+        return localizations.transactionInfosKeyPreviousSignature;
       case 'ProofOfIntegrity':
-        return AppLocalization.of(context)!.transactionInfosKeyProofOfIntegrity;
+        return localizations.transactionInfosKeyProofOfIntegrity;
       case 'ProofOfWork':
-        return AppLocalization.of(context)!.transactionInfosKeyProofOfWork;
+        return localizations.transactionInfosKeyProofOfWork;
       case 'Signature':
-        return AppLocalization.of(context)!.transactionInfosKeySignature;
+        return localizations.transactionInfosKeySignature;
       case 'TimeStamp':
-        return AppLocalization.of(context)!.transactionInfosKeyTimeStamp;
+        return localizations.transactionInfosKeyTimeStamp;
       case 'To':
-        return AppLocalization.of(context)!.transactionInfosKeyTo;
+        return localizations.transactionInfosKeyTo;
       case 'Type':
-        return AppLocalization.of(context)!.transactionInfosKeyType;
+        return localizations.transactionInfosKeyType;
       case 'UCOLedger':
-        return AppLocalization.of(context)!.transactionInfosKeyUCOLedger;
+        return localizations.transactionInfosKeyUCOLedger;
       case 'ValidationStamp':
-        return AppLocalization.of(context)!.transactionInfosKeyValidationStamp;
+        return localizations.transactionInfosKeyValidationStamp;
       case 'Version':
-        return AppLocalization.of(context)!.transactionInfosKeyVersion;
+        return localizations.transactionInfosKeyVersion;
       default:
         return '';
     }

@@ -14,19 +14,20 @@ class LockTimeoutSetting extends SettingSelectionItem {
 
   @override
   String getDisplayName(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     switch (setting) {
       case LockTimeoutOption.zero:
-        return AppLocalization.of(context)!.instantly;
+        return localizations.instantly;
       case LockTimeoutOption.one:
-        return AppLocalization.of(context)!.xMinute.replaceAll('%1', '1');
+        return localizations.xMinute.replaceAll('%1', '1');
       case LockTimeoutOption.five:
-        return AppLocalization.of(context)!.xMinutes.replaceAll('%1', '5');
+        return localizations.xMinutes.replaceAll('%1', '5');
       case LockTimeoutOption.fifteen:
-        return AppLocalization.of(context)!.xMinutes.replaceAll('%1', '15');
+        return localizations.xMinutes.replaceAll('%1', '15');
       case LockTimeoutOption.thirty:
-        return AppLocalization.of(context)!.xMinutes.replaceAll('%1', '30');
+        return localizations.xMinutes.replaceAll('%1', '30');
       case LockTimeoutOption.sixty:
-        return AppLocalization.of(context)!.xMinutes.replaceAll('%1', '60');
+        return localizations.xMinutes.replaceAll('%1', '60');
     }
   }
 

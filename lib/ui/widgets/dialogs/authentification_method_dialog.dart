@@ -45,9 +45,10 @@ class AuthentificationMethodDialog {
     await showDialog<AuthMethod>(
       context: context,
       builder: (BuildContext context) {
+        final localizations = AppLocalization.of(context)!;
         return AlertDialog(
           title: Text(
-            AppLocalization.of(context)!.authMethod,
+            localizations.authMethod,
             style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
@@ -67,7 +68,7 @@ class AuthentificationMethodDialog {
                         .get<BiometricUtil>()
                         .authenticateWithBiometrics(
                           context,
-                          AppLocalization.of(context)!.unlockBiometrics,
+                          localizations.unlockBiometrics,
                         );
                     if (auth) {
                       preferences.setAuthMethod(

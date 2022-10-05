@@ -24,6 +24,7 @@ class MenuWidgetWallet extends StatelessWidget {
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (context, setState) {
+        final localizations = AppLocalization.of(context)!;
         return Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -43,7 +44,7 @@ class MenuWidgetWallet extends StatelessWidget {
                     .balance!
                     .isNativeTokenValuePositive())
                   _ActionButton(
-                    text: AppLocalization.of(context)!.send,
+                    text: localizations.send,
                     icon: Icons.arrow_circle_up_outlined,
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
@@ -55,14 +56,12 @@ class MenuWidgetWallet extends StatelessWidget {
                         widget: TransferSheet(
                           primaryCurrency:
                               StateContainer.of(context).curPrimaryCurrency,
-                          title: AppLocalization.of(context)!
-                              .transferTokens
-                              .replaceAll(
-                                '%1',
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel(),
-                              ),
+                          title: localizations.transferTokens.replaceAll(
+                            '%1',
+                            StateContainer.of(context)
+                                .curNetwork
+                                .getNetworkCryptoCurrencyLabel(),
+                          ),
                           localCurrency: StateContainer.of(context).curCurrency,
                         ),
                       );
@@ -70,11 +69,11 @@ class MenuWidgetWallet extends StatelessWidget {
                   )
                 else
                   _ActionButton(
-                    text: AppLocalization.of(context)!.send,
+                    text: localizations.send,
                     icon: Icons.arrow_circle_up_outlined,
                   ),
                 _ActionButton(
-                  text: AppLocalization.of(context)!.receive,
+                  text: localizations.receive,
                   icon: Icons.arrow_circle_down_outlined,
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
@@ -100,7 +99,7 @@ class MenuWidgetWallet extends StatelessWidget {
                   },
                 ),
                 _ActionButton(
-                  text: AppLocalization.of(context)!.buy,
+                  text: localizations.buy,
                   icon: Icons.add_circle_outline_outlined,
                   onTap: () {
                     sl.get<HapticUtil>().feedback(

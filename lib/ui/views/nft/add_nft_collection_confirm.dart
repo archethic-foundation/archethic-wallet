@@ -153,28 +153,28 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
-            title: AppLocalization.of(context)!.createNFTCollection,
+            title: localizations.createNFTCollection,
           ),
           Expanded(
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 20),
                 Text(
-                  '${AppLocalization.of(context)!.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                  '${localizations.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                   style: AppStyles.textStyleSize14W100Primary(context),
                 ),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
-                    AppLocalization.of(context)!
-                        .addNFTCollectionConfirmationMessage,
+                    localizations.addNFTCollectionConfirmationMessage,
                     style: AppStyles.textStyleSize14W600Primary(context),
                   ),
                 ),
@@ -186,7 +186,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        AppLocalization.of(context)!.tokenName,
+                        localizations.tokenName,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       ),
                       Text(
@@ -201,7 +201,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        AppLocalization.of(context)!.tokenSymbol,
+                        localizations.tokenSymbol,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       ),
                       Text(
@@ -224,7 +224,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                       const Key('confirm'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.confirm,
+                      localizations.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         // Authenticate
@@ -249,7 +249,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                       const Key('cancel'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.cancel,
+                      localizations.cancel,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
                         Navigator.of(context).pop();

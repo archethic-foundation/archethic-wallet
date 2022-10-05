@@ -183,13 +183,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
-            title: widget.title ?? AppLocalization.of(context)!.transfering,
+            title: widget.title ?? localizations.transfering,
           ),
           Expanded(
             child: Column(
@@ -224,7 +225,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          AppLocalization.of(context)!.sendMessageConfirmHeader,
+                          localizations.sendMessageConfirmHeader,
                           style: AppStyles.textStyleSize14W600Primary(context),
                         ),
                         const SizedBox(
@@ -250,7 +251,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       const Key('confirm'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.confirm,
+                      localizations.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         final preferences = await Preferences.getInstance();
@@ -275,7 +276,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       const Key('cancel'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.cancel,
+                      localizations.cancel,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
                         Navigator.of(context).pop();

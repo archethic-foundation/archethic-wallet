@@ -156,6 +156,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -202,25 +203,20 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                   AppDialogs.showConfirmDialog(
                                       context,
                                       CaseChange.toUpperCase(
-                                        AppLocalization.of(context)!.warning,
+                                        localizations.warning,
                                         StateContainer.of(context)
                                             .curLanguage
                                             .getLocaleString(),
                                       ),
-                                      AppLocalization.of(context)!
-                                          .removeWalletDetail,
-                                      AppLocalization.of(context)!
-                                          .removeWalletAction
+                                      localizations.removeWalletDetail,
+                                      localizations.removeWalletAction
                                           .toUpperCase(), () {
                                     // Show another confirm dialog
                                     AppDialogs.showConfirmDialog(
                                         context,
-                                        AppLocalization.of(context)!
-                                            .removeWalletAreYouSure,
-                                        AppLocalization.of(context)!
-                                            .removeWalletReassurance,
-                                        AppLocalization.of(context)!.yes,
-                                        () async {
+                                        localizations.removeWalletAreYouSure,
+                                        localizations.removeWalletReassurance,
+                                        localizations.yes, () async {
                                       await StateContainer.of(context).logOut();
                                       StateContainer.of(context).curTheme =
                                           DarkTheme();
@@ -246,8 +242,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                         start: 4,
                                       ),
                                       child: Text(
-                                        AppLocalization.of(context)!
-                                            .removeWallet,
+                                        localizations.removeWallet,
                                         style: AppStyles
                                             .textStyleSize14W600Primary(
                                           context,
@@ -264,7 +259,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                           Container(
                             margin: const EdgeInsets.only(top: 10),
                             child: Text(
-                              AppLocalization.of(context)!.locked,
+                              localizations.locked,
                               style:
                                   AppStyles.textStyleSize24W700EquinoxPrimary(
                                 context,
@@ -279,8 +274,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                               vertical: 20,
                             ),
                             child: Text(
-                              AppLocalization.of(context)!
-                                  .tooManyFailedAttempts,
+                              localizations.tooManyFailedAttempts,
                               style:
                                   AppStyles.textStyleSize14W600Primary(context),
                               textAlign: TextAlign.center,
@@ -298,9 +292,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                         const Key('unlock'),
                         context,
                         AppButtonType.primary,
-                        _lockedOut
-                            ? _countDownTxt
-                            : AppLocalization.of(context)!.unlock,
+                        _lockedOut ? _countDownTxt : localizations.unlock,
                         Dimens.buttonBottomDimens,
                         onPressed: () {
                           if (!_lockedOut) {

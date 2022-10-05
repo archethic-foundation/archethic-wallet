@@ -21,39 +21,38 @@ class AuthenticationMethod extends SettingSelectionItem {
 
   @override
   String getDisplayName(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     switch (method) {
       case AuthMethod.biometrics:
-        return AppLocalization.of(context)!.biometricsMethod;
+        return localizations.biometricsMethod;
       case AuthMethod.biometricsUniris:
-        return AppLocalization.of(context)!.biometricsUnirisMethod;
+        return localizations.biometricsUnirisMethod;
       case AuthMethod.pin:
-        return AppLocalization.of(context)!.pinMethod;
+        return localizations.pinMethod;
       case AuthMethod.yubikeyWithYubicloud:
-        return AppLocalization.of(context)!.yubikeyWithYubiCloudMethod;
+        return localizations.yubikeyWithYubiCloudMethod;
       case AuthMethod.ledger:
-        return AppLocalization.of(context)!.ledgerMethod;
+        return localizations.ledgerMethod;
       case AuthMethod.password:
-        return AppLocalization.of(context)!.passwordMethod;
+        return localizations.passwordMethod;
     }
   }
 
   String getDescription(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     switch (method) {
       case AuthMethod.biometrics:
-        return AppLocalization.of(context)!
-            .configureSecurityExplanationBiometrics;
+        return localizations.configureSecurityExplanationBiometrics;
       case AuthMethod.biometricsUniris:
-        return AppLocalization.of(context)!
-            .configureSecurityExplanationUnirisBiometrics;
+        return localizations.configureSecurityExplanationUnirisBiometrics;
       case AuthMethod.pin:
-        return AppLocalization.of(context)!.configureSecurityExplanationPIN;
+        return localizations.configureSecurityExplanationPIN;
       case AuthMethod.yubikeyWithYubicloud:
-        return AppLocalization.of(context)!.configureSecurityExplanationYubikey;
+        return localizations.configureSecurityExplanationYubikey;
       case AuthMethod.ledger:
         return '';
       case AuthMethod.password:
-        return AppLocalization.of(context)!
-            .configureSecurityExplanationPassword;
+        return localizations.configureSecurityExplanationPassword;
     }
   }
 

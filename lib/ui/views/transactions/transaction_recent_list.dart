@@ -97,6 +97,7 @@ class _TxListLine extends StatelessWidget {
     BuildContext context,
     RecentTransaction transaction,
   ) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
@@ -390,14 +391,14 @@ class _TxListLine extends StatelessWidget {
                             if (transaction.tokenInformations!.type ==
                                 'fungible')
                               AutoSizeText(
-                                '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
+                                '${localizations.tokenCreated}: ${transaction.tokenInformations!.name}',
                                 style: AppStyles.textStyleSize12W400Primary(
                                   context,
                                 ),
                               )
                             else
                               AutoSizeText(
-                                '${AppLocalization.of(context)!.nftCreated}: ${transaction.tokenInformations!.name}',
+                                '${localizations.nftCreated}: ${transaction.tokenInformations!.name}',
                                 style: AppStyles.textStyleSize12W400Primary(
                                   context,
                                 ),
@@ -415,7 +416,7 @@ class _TxListLine extends StatelessWidget {
                               const Text('')
                             else
                               Text(
-                                AppLocalization.of(context)!.txListFrom +
+                                localizations.txListFrom +
                                     Address(
                                       transaction.contactInformations == null
                                           ? transaction.from!
@@ -440,7 +441,7 @@ class _TxListLine extends StatelessWidget {
                               const Text('')
                             else
                               Text(
-                                AppLocalization.of(context)!.txListTo +
+                                localizations.txListTo +
                                     Address(
                                       transaction.contactInformations == null
                                           ? transaction.recipient!
@@ -482,14 +483,14 @@ class _TxListLine extends StatelessWidget {
                                         AvailablePrimaryCurrency.native,
                                       ).primaryCurrency.name
                                   ? Text(
-                                      '${AppLocalization.of(context)!.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                      '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
                                         context,
                                       ),
                                     )
                                   : Text(
-                                      '${AppLocalization.of(context)!.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
                                         context,
@@ -511,7 +512,7 @@ class _TxListLine extends StatelessWidget {
                               transaction.decryptedSecret != null &&
                               transaction.decryptedSecret!.isNotEmpty)
                             AutoSizeText(
-                              AppLocalization.of(context)!.messageInTxTransfer,
+                              localizations.messageInTxTransfer,
                               style: AppStyles.textStyleSize12W400Primary(
                                 context,
                               ),

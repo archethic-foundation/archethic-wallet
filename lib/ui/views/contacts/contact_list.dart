@@ -113,6 +113,7 @@ class _ContactsListState extends State<ContactsList> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
     return DecoratedBox(
@@ -155,7 +156,7 @@ class _ContactsListState extends State<ContactsList> {
                   ),
                   Expanded(
                     child: AutoSizeText(
-                      AppLocalization.of(context)!.addressBookHeader,
+                      localizations.addressBookHeader,
                       style: AppStyles.textStyleSize24W700EquinoxPrimary(
                         context,
                       ),
@@ -170,7 +171,7 @@ class _ContactsListState extends State<ContactsList> {
               child: AppTextField(
                 controller: searchNameController,
                 autocorrect: false,
-                labelText: AppLocalization.of(context)!.searchField,
+                labelText: localizations.searchField,
                 keyboardType: TextInputType.text,
                 style: AppStyles.textStyleSize16W600Primary(context),
                 onChanged: (text) async {
@@ -253,7 +254,7 @@ class _ContactsListState extends State<ContactsList> {
                     const Key('addContact'),
                     context,
                     AppButtonType.primary,
-                    AppLocalization.of(context)!.addContact,
+                    localizations.addContact,
                     Dimens.buttonBottomDimens,
                     onPressed: () {
                       Sheets.showAppHeightNineSheet(

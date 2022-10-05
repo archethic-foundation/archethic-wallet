@@ -14,11 +14,12 @@ class UnlockSetting extends SettingSelectionItem {
 
   @override
   String getDisplayName(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     switch (setting) {
       case UnlockOption.yes:
-        return AppLocalization.of(context)!.yes;
+        return localizations.yes;
       case UnlockOption.no:
-        return AppLocalization.of(context)!.no;
+        return localizations.no;
     }
   }
 

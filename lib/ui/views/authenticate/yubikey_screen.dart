@@ -77,6 +77,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     final preferences = await Preferences.getInstance();
     final vault = await Vault.getInstance();
@@ -87,7 +88,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     switch (verificationResponse.status) {
       case 'BAD_OTP':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_BAD_OTP,
+          localizations.yubikeyError_BAD_OTP,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -96,7 +97,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'BACKEND_ERROR':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR,
+          localizations.yubikeyError_BACKEND_ERROR,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -105,7 +106,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'BAD_SIGNATURE':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE,
+          localizations.yubikeyError_BAD_SIGNATURE,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -114,7 +115,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'MISSING_PARAMETER':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
+          localizations.yubikeyError_MISSING_PARAMETER,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -123,7 +124,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'NOT_ENOUGH_ANSWERS':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
+          localizations.yubikeyError_NOT_ENOUGH_ANSWERS,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -132,7 +133,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'NO_SUCH_CLIENT':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
+          localizations.yubikeyError_NO_SUCH_CLIENT,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -141,7 +142,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'OPERATION_NOT_ALLOWED':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
+          localizations.yubikeyError_OPERATION_NOT_ALLOWED,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -150,7 +151,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'REPLAYED_OTP':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP,
+          localizations.yubikeyError_REPLAYED_OTP,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -159,7 +160,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'REPLAYED_REQUEST':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
+          localizations.yubikeyError_REPLAYED_REQUEST,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -168,7 +169,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         break;
       case 'RESPONSE_KO':
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.yubikeyError_RESPONSE_KO,
+          localizations.yubikeyError_RESPONSE_KO,
           context,
           theme.text!,
           theme.snackBarShadow!,
@@ -200,6 +201,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -280,7 +282,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                           .activeVibrations,
                                     );
                                 setState(() {
-                                  buttonNFCLabel = AppLocalization.of(context)!
+                                  buttonNFCLabel = localizations
                                       .yubikeyConnectHoldNearDevice;
                                 });
                                 await _tagRead();
@@ -293,8 +295,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                 vertical: 10,
                               ),
                               child: AutoSizeText(
-                                AppLocalization.of(context)!
-                                    .yubikeyConnectInvite,
+                                localizations.yubikeyConnectInvite,
                                 style: AppStyles.textStyleSize16W200Primary(
                                   context,
                                 ),

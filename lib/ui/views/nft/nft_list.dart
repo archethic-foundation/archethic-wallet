@@ -29,6 +29,7 @@ final GlobalKey expandedKey = GlobalKey();
 class _NFTListState extends State<NFTList> {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     final accountTokenList = StateContainer.of(context)
         .appWallet!
@@ -89,7 +90,7 @@ class _NFTListState extends State<NFTList> {
                                         const Key('sendNFT'),
                                         context,
                                         AppButtonType.primary,
-                                        AppLocalization.of(context)!.send,
+                                        localizations.send,
                                         Dimens.buttonTopDimens,
                                         onPressed: () async {
                                           sl.get<HapticUtil>().feedback(
@@ -109,9 +110,7 @@ class _NFTListState extends State<NFTList> {
                                               primaryCurrency:
                                                   StateContainer.of(context)
                                                       .curPrimaryCurrency,
-                                              title:
-                                                  AppLocalization.of(context)!
-                                                      .transferNFT,
+                                              title: localizations.transferNFT,
                                               localCurrency:
                                                   StateContainer.of(context)
                                                       .curCurrency,
@@ -127,8 +126,7 @@ class _NFTListState extends State<NFTList> {
                                         const Key('viewExplorer'),
                                         context,
                                         AppButtonType.primary,
-                                        AppLocalization.of(context)!
-                                            .viewExplorer,
+                                        localizations.viewExplorer,
                                         Dimens.buttonTopDimens,
                                         icon: Icon(
                                           Icons.more_horiz,
@@ -164,7 +162,7 @@ class _NFTListState extends State<NFTList> {
                 const Key('createNFT'),
                 context,
                 AppButtonType.primary,
-                AppLocalization.of(context)!.createNFT,
+                localizations.createNFT,
                 Dimens.buttonBottomDimens,
                 onPressed: () async {
                   /* Sheets.showAppHeightNineSheet(
@@ -199,7 +197,7 @@ class _NFTListState extends State<NFTList> {
                   const Key('createNFTCollection'),
                   context,
                   AppButtonType.primary,
-                  AppLocalization.of(context)!.createNFTCollection,
+                  localizations.createNFTCollection,
                   Dimens.buttonBottomDimens, onPressed: () {
                 Sheets.showAppHeightNineSheet(
                     context: context,

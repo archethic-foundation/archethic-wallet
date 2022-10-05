@@ -63,27 +63,28 @@ class ChartInfos {
   }
 
   static String getChartOptionLabel(BuildContext context, String duration) {
+    final localizations = AppLocalization.of(context)!;
     switch (duration) {
       case '1h':
-        return AppLocalization.of(context)!.chartOptionLabel1h;
+        return localizations.chartOptionLabel1h;
       case '24h':
-        return AppLocalization.of(context)!.chartOptionLabel24h;
+        return localizations.chartOptionLabel24h;
       case '14d':
-        return AppLocalization.of(context)!.chartOptionLabel14d;
+        return localizations.chartOptionLabel14d;
       case '1y':
-        return AppLocalization.of(context)!.chartOptionLabel1y;
+        return localizations.chartOptionLabel1y;
       case '200d':
-        return AppLocalization.of(context)!.chartOptionLabel200d;
+        return localizations.chartOptionLabel200d;
       case '30d':
-        return AppLocalization.of(context)!.chartOptionLabel30d;
+        return localizations.chartOptionLabel30d;
       case '60d':
-        return AppLocalization.of(context)!.chartOptionLabel60d;
+        return localizations.chartOptionLabel60d;
       case '7d':
-        return AppLocalization.of(context)!.chartOptionLabel7d;
+        return localizations.chartOptionLabel7d;
       case 'all':
-        return AppLocalization.of(context)!.chartOptionLabelAll;
+        return localizations.chartOptionLabelAll;
       default:
-        return AppLocalization.of(context)!.chartOptionLabel1h;
+        return localizations.chartOptionLabel1h;
     }
   }
 

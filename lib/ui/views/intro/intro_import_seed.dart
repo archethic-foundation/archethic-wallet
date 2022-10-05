@@ -303,15 +303,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                             )) {
                                               setState(() {
                                                 _mnemonicIsValid = false;
-                                                _mnemonicError =
-                                                    AppLocalization.of(
-                                                  context,
-                                                )!
-                                                        .mnemonicInvalidWord
-                                                        .replaceAll(
-                                                          '%1',
-                                                          selection,
-                                                        );
+                                                _mnemonicError = localizations
+                                                    .mnemonicInvalidWord
+                                                    .replaceAll(
+                                                  '%1',
+                                                  selection,
+                                                );
                                               });
                                             } else {
                                               phrase[index] = selection;
@@ -350,14 +347,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                         _mnemonicIsValid =
                                                             false;
                                                         _mnemonicError =
-                                                            AppLocalization.of(
-                                                          context,
-                                                        )!
+                                                            localizations
                                                                 .mnemonicInvalidWord
                                                                 .replaceAll(
-                                                                  '%1',
-                                                                  value,
-                                                                );
+                                                          '%1',
+                                                          value,
+                                                        );
                                                       });
                                                     } else {
                                                       phrase[index] = value;

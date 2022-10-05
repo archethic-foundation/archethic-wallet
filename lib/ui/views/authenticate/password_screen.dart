@@ -81,6 +81,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -131,7 +132,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         vertical: 10,
                       ),
                       child: Text(
-                        AppLocalization.of(context)!.passwordMethod,
+                        localizations.passwordMethod,
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
                           context,
                         ),
@@ -159,7 +160,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       onSubmitted: (value) async {
                         FocusScope.of(context).unfocus();
                       },
-                      labelText: AppLocalization.of(context)!.enterPasswordHint,
+                      labelText: localizations.enterPasswordHint,
                       keyboardType: TextInputType.text,
                       obscureText: !enterPasswordVisible!,
                       style: AppStyles.textStyleSize16W700Primary(context),
@@ -181,7 +182,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           vertical: 10,
                         ),
                         child: AutoSizeText(
-                          '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
+                          '${localizations.attempt}$_failedAttempts/$maxAttempts',
                           style: AppStyles.textStyleSize14W200Primary(
                             context,
                           ),
@@ -214,7 +215,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             const Key('confirm'),
                             context,
                             AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.confirm,
+                            localizations.confirm,
                             Dimens.buttonTopDimens,
                             onPressed: () async {},
                           )
@@ -223,7 +224,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             const Key('confirm'),
                             context,
                             AppButtonType.primary,
-                            AppLocalization.of(context)!.confirm,
+                            localizations.confirm,
                             Dimens.buttonTopDimens,
                             onPressed: () async {
                               await _verifyPassword();
