@@ -199,7 +199,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       child: SafeArea(
         child: _AnimationLoadingOverlayContent(
           type: type,
-          title: title!,
+          title: title,
         ),
       ),
     );
@@ -303,11 +303,11 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
 class _AnimationLoadingOverlayGetAnimation extends StatelessWidget {
   const _AnimationLoadingOverlayGetAnimation({
     required this.type,
-    required this.title,
+    this.title,
   });
 
   final AnimationType type;
-  final String title;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -323,11 +323,11 @@ class _AnimationLoadingOverlayGetAnimation extends StatelessWidget {
 class _AnimationLoadingOverlayContent extends StatelessWidget {
   const _AnimationLoadingOverlayContent({
     required this.type,
-    required this.title,
+    this.title,
   });
 
   final AnimationType type;
-  final String title;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
