@@ -55,7 +55,8 @@ class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({super.key});
 
   @override
-  State<SettingsSheetWalletMobile> createState() => _SettingsSheetWalletMobileState();
+  State<SettingsSheetWalletMobile> createState() =>
+      _SettingsSheetWalletMobileState();
 }
 
 class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
@@ -74,9 +75,11 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool _hasBiometrics = false;
   AuthenticationMethod _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
   UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.yes);
-  LockTimeoutSetting _curTimeoutSetting = LockTimeoutSetting(LockTimeoutOption.one);
+  LockTimeoutSetting _curTimeoutSetting =
+      LockTimeoutSetting(LockTimeoutOption.one);
   ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.dark);
-  NetworksSetting _curNetworksSetting = NetworksSetting(AvailableNetworks.archethicMainNet);
+  NetworksSetting _curNetworksSetting =
+      NetworksSetting(AvailableNetworks.archethicMainNet);
 
   late bool _securityOpen;
   late bool _customOpen;
@@ -116,7 +119,9 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         _notificationsActive = preferences.getActiveNotifications();
         _showPriceChartActive = preferences.getShowPriceChart();
         _curAuthMethod = preferences.getAuthMethod();
-        _curUnlockSetting = preferences.getLock() ? UnlockSetting(UnlockOption.yes) : UnlockSetting(UnlockOption.no);
+        _curUnlockSetting = preferences.getLock()
+            ? UnlockSetting(UnlockOption.yes)
+            : UnlockSetting(UnlockOption.no);
         _curThemeSetting = preferences.getTheme();
         _curNetworksSetting = preferences.getNetwork();
         _curTimeoutSetting = preferences.getLockTimeout();
@@ -139,10 +144,18 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _contactsOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_contactsController);
-    _securityOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_securityController);
-    _customOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_customController);
-    _aboutOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_aboutController);
+    _contactsOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_contactsController);
+    _securityOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_securityController);
+    _customOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_customController);
+    _aboutOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_aboutController);
 
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
@@ -189,7 +202,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _lockDialog() async {
-    _curUnlockSetting = (await LockDialog.getDialog(context, _curUnlockSetting))!;
+    _curUnlockSetting =
+        (await LockDialog.getDialog(context, _curUnlockSetting))!;
   }
 
   Future<void> _currencyDialog() async {
@@ -215,11 +229,13 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _lockTimeoutDialog() async {
-    _curTimeoutSetting = (await LockTimeoutDialog.getDialog(context, _curTimeoutSetting))!;
+    _curTimeoutSetting =
+        (await LockTimeoutDialog.getDialog(context, _curTimeoutSetting))!;
   }
 
   Future<void> _themeDialog() async {
-    _curThemeSetting = (await ThemeDialog.getDialog(context, _curThemeSetting))!;
+    _curThemeSetting =
+        (await ThemeDialog.getDialog(context, _curThemeSetting))!;
   }
 
   Future<bool> _onBackButtonPressed() async {
@@ -434,22 +450,26 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           const _SettingsListItem.spacer(),
                           _SettingsListItem.singleLine(
                             heading: localizations.backupSecretPhrase,
-                            headingStyle: AppStyles.textStyleSize16W600EquinoxPrimary(
+                            headingStyle:
+                                AppStyles.textStyleSize16W600EquinoxPrimary(
                               context,
                             ),
                             icon: 'assets/icons/key-word.png',
                             iconColor: theme.iconDrawer!,
                             onPressed: () async {
-                              final preferences = await Preferences.getInstance();
+                              final preferences =
+                                  await Preferences.getInstance();
                               final authMethod = preferences.getAuthMethod();
 
                               final auth = await AuthFactory.authenticate(
                                 context,
                                 authMethod,
-                                activeVibrations: StateContainer.of(context).activeVibrations,
+                                activeVibrations:
+                                    StateContainer.of(context).activeVibrations,
                               );
                               if (auth) {
-                                final seed = await StateContainer.of(context).getSeed();
+                                final seed =
+                                    await StateContainer.of(context).getSeed();
                                 final mnemonic = AppMnemomics.seedToMnemonic(
                                   seed!,
                                   languageCode: preferences.getLanguageSeed(),
@@ -464,7 +484,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           ),
                         ],
                       ),
-                      if (_curAuthMethod.method == AuthMethod.pin) const _SettingsListItem.spacer(),
+                      if (_curAuthMethod.method == AuthMethod.pin)
+                        const _SettingsListItem.spacer(),
                       if (_curAuthMethod.method == AuthMethod.pin)
                         _SettingsListItem.withSwitch(
                           heading: localizations.pinPadShuffle,
@@ -483,7 +504,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.removeWallet,
-                        headingStyle: AppStyles.textStyleSize16W600EquinoxRed(context),
+                        headingStyle:
+                            AppStyles.textStyleSize16W600EquinoxRed(context),
                         icon: 'assets/icons/rubbish.png',
                         iconColor: Colors.red,
                         onPressed: () {
@@ -491,13 +513,19 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                               context,
                               CaseChange.toUpperCase(
                                 localizations.warning,
-                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                StateContainer.of(context)
+                                    .curLanguage
+                                    .getLocaleString(),
                               ),
                               localizations.removeWalletDetail,
-                              localizations.removeWalletAction.toUpperCase(), () {
+                              localizations.removeWalletAction.toUpperCase(),
+                              () {
                             // Show another confirm dialog
-                            AppDialogs.showConfirmDialog(context, localizations.removeWalletAreYouSure,
-                                localizations.removeWalletReassurance, localizations.yes, () async {
+                            AppDialogs.showConfirmDialog(
+                                context,
+                                localizations.removeWalletAreYouSure,
+                                localizations.removeWalletReassurance,
+                                localizations.yes, () async {
                               await StateContainer.of(context).logOut();
                               StateContainer.of(context).curTheme = DarkTheme();
                               Navigator.of(context).pushNamedAndRemoveUntil(
@@ -604,7 +632,9 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         heading: localizations.changeCurrencyHeader,
                         info: localizations.changeCurrencyDesc.replaceAll(
                           '%1',
-                          StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel(),
                         ),
                         defaultMethod: StateContainer.of(context).curCurrency,
                         icon: 'assets/icons/money-currency.png',
@@ -614,7 +644,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
-                        defaultMethod: StateContainer.of(context).curPrimaryCurrency,
+                        defaultMethod:
+                            StateContainer.of(context).curPrimaryCurrency,
                         icon: 'assets/icons/exchange.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: _primaryCurrencyDialog,
@@ -627,7 +658,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         iconColor: theme.iconDrawer!,
                         onPressed: _languageDialog,
                       ),
-                      const _SettingsListItem.spacer(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.themeHeader,
@@ -646,7 +676,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           final preferences = await Preferences.getInstance();
                           setState(() {
                             _showBalancesActive = isSwitched;
-                            StateContainer.of(context).showBalance = _showBalancesActive;
+                            StateContainer.of(context).showBalance =
+                                _showBalancesActive;
                             preferences.setShowBalances(_showBalancesActive);
                             StateContainer.of(context).setState(() {});
                           });
@@ -662,7 +693,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           final preferences = await Preferences.getInstance();
                           setState(() {
                             _showBlogActive = isSwitched;
-                            StateContainer.of(context).showBlog = _showBlogActive;
+                            StateContainer.of(context).showBlog =
+                                _showBlogActive;
                             preferences.setShowBlog(_showBlogActive);
                             StateContainer.of(context).setState(() {});
                           });
@@ -678,15 +710,23 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           final preferences = await Preferences.getInstance();
                           setState(() {
                             _showPriceChartActive = isSwitched;
-                            StateContainer.of(context).showPriceChart = _showPriceChartActive;
-                            preferences.setShowPriceChart(_showPriceChartActive);
+                            StateContainer.of(context).showPriceChart =
+                                _showPriceChartActive;
+                            preferences
+                                .setShowPriceChart(_showPriceChartActive);
                             StateContainer.of(context).setState(() {});
                           });
                         },
                       ),
-                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         const _SettingsListItem.spacer(),
-                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         _SettingsListItem.withSwitch(
                           heading: localizations.activateNotifications,
                           icon: 'assets/icons/notification-bell.png',
@@ -696,16 +736,23 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             final preferences = await Preferences.getInstance();
                             setState(() {
                               _notificationsActive = isSwitched;
-                              StateContainer.of(context).activeNotifications = _notificationsActive;
-                              if (StateContainer.of(context).timerCheckTransactionInputs != null) {
-                                StateContainer.of(context).timerCheckTransactionInputs!.cancel();
+                              StateContainer.of(context).activeNotifications =
+                                  _notificationsActive;
+                              if (StateContainer.of(context)
+                                      .timerCheckTransactionInputs !=
+                                  null) {
+                                StateContainer.of(context)
+                                    .timerCheckTransactionInputs!
+                                    .cancel();
                               }
                               if (_notificationsActive) {
-                                StateContainer.of(context).checkTransactionInputs(
+                                StateContainer.of(context)
+                                    .checkTransactionInputs(
                                   localizations.transactionInputNotification,
                                 );
                               }
-                              preferences.setActiveNotifications(_notificationsActive);
+                              preferences
+                                  .setActiveNotifications(_notificationsActive);
                             });
                           },
                         ),
@@ -719,7 +766,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           final preferences = await Preferences.getInstance();
                           setState(() {
                             _vibrationActive = isSwitched;
-                            StateContainer.of(context).activeVibrations = _vibrationActive;
+                            StateContainer.of(context).activeVibrations =
+                                _vibrationActive;
                             preferences.setActiveVibrations(_vibrationActive);
                           });
                         },
@@ -735,7 +783,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
+                          colors: <Color>[
+                            theme.drawerBackground!,
+                            theme.backgroundDark00!
+                          ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
                         ),
@@ -795,7 +846,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   Expanded(
                     child: AutoSizeText(
                       localizations.aboutHeader,
-                      style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                      style:
+                          AppStyles.textStyleSize24W700EquinoxPrimary(context),
                       maxLines: 2,
                     ),
                   ),
@@ -824,7 +876,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutGeneralTermsAndConditions,
-                        headingStyle: AppStyles.textStyleSize16W600Primary(context),
+                        headingStyle:
+                            AppStyles.textStyleSize16W600Primary(context),
                         icon: 'assets/icons/terms-and-conditions.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {
@@ -838,7 +891,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutWalletServiceTerms,
-                        headingStyle: AppStyles.textStyleSize16W600Primary(context),
+                        headingStyle:
+                            AppStyles.textStyleSize16W600Primary(context),
                         icon: 'assets/icons/walletServiceTerms.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {
@@ -852,7 +906,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutPrivacyPolicy,
-                        headingStyle: AppStyles.textStyleSize16W600Primary(context),
+                        headingStyle:
+                            AppStyles.textStyleSize16W600Primary(context),
                         icon: 'assets/icons/privacyPolicy.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {
@@ -873,7 +928,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
+                          colors: <Color>[
+                            theme.drawerBackground!,
+                            theme.backgroundDark00!
+                          ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
                         ),
