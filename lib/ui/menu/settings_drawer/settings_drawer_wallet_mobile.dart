@@ -50,7 +50,7 @@ part 'components/settings_list_item_switch.dart';
 part 'components/settings_list_item_singleline.dart';
 part 'components/settings_list_item_defaultvalue.dart';
 
-//TODO(reddwarf03): This drawer seems to be used on desktop too. Should we rename it `SettingsSheetWallet` ?
+// TODO(reddwarf03): This drawer seems to be used on desktop too. Should we rename it `SettingsSheetWallet` ?
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({super.key});
 

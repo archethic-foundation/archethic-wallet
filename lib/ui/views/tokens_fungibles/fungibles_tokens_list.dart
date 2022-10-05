@@ -19,16 +19,16 @@ class FungiblesTokensListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
+    final accountTokens = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .accountTokens;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .accountTokens!
-            .isEmpty)
+        if (accountTokens!.isEmpty)
           Container(
             alignment: Alignment.center,
             color: Colors.transparent,
@@ -41,25 +41,21 @@ class FungiblesTokensListWidget extends StatelessWidget {
               ),
             ),
           ),
-        for (int i = 0;
-            i <
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .accountTokens!
-                    .length;
-            i++)
-          _FungiblesTokensLine(num: i)
+        for (int i = 0; i < accountTokens.length; i++)
+          _FungiblesTokensLine(
+            num: i,
+            accountTokens: accountTokens,
+          )
       ],
     );
   }
 }
 
 class _FungiblesTokensLine extends StatelessWidget {
-  const _FungiblesTokensLine({required this.num});
+  const _FungiblesTokensLine({required this.num, required this.accountTokens});
 
   final int num;
+  final List<AccountToken> accountTokens;
 
   @override
   Widget build(BuildContext context) {
@@ -68,33 +64,11 @@ class _FungiblesTokensLine extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-        child: (StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .accountTokens!
-                        .isNotEmpty &&
-                    StateContainer.of(context)
-                            .appWallet!
-                            .appKeychain!
-                            .getAccountSelected()!
-                            .accountTokens!
-                            .length >
-                        num) ||
+        child: (accountTokens.isNotEmpty && accountTokens.length > num) ||
                 (StateContainer.of(context).recentTransactionsLoading == true &&
-                    StateContainer.of(context)
-                            .appWallet!
-                            .appKeychain!
-                            .getAccountSelected()!
-                            .accountTokens!
-                            .length >
-                        num)
+                    accountTokens.length > num)
             ? _FungiblesTokensDetailTransfer(
-                accountFungibleToken: StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .accountTokens![num],
+                accountFungibleToken: accountTokens[num],
               )
             : const SizedBox(),
       ),

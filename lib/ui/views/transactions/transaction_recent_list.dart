@@ -3,6 +3,7 @@
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -24,15 +25,15 @@ class TxList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .recentTransactions!
-            .isEmpty)
+        if (accountSelected.recentTransactions!.isEmpty)
           Container(
             alignment: Alignment.center,
             color: Colors.transparent,
@@ -45,16 +46,16 @@ class TxList extends StatelessWidget {
               ),
             ),
           ),
-        const _TxListLine(num: 0),
-        const _TxListLine(num: 1),
-        const _TxListLine(num: 2),
-        const _TxListLine(num: 3),
-        const _TxListLine(num: 4),
-        const _TxListLine(num: 5),
-        const _TxListLine(num: 6),
-        const _TxListLine(num: 7),
-        const _TxListLine(num: 8),
-        const _TxListLine(num: 9)
+        _TxListLine(num: 0, accountSelected: accountSelected),
+        _TxListLine(num: 1, accountSelected: accountSelected),
+        _TxListLine(num: 2, accountSelected: accountSelected),
+        _TxListLine(num: 3, accountSelected: accountSelected),
+        _TxListLine(num: 4, accountSelected: accountSelected),
+        _TxListLine(num: 5, accountSelected: accountSelected),
+        _TxListLine(num: 6, accountSelected: accountSelected),
+        _TxListLine(num: 7, accountSelected: accountSelected),
+        _TxListLine(num: 8, accountSelected: accountSelected),
+        _TxListLine(num: 9, accountSelected: accountSelected)
       ],
     );
   }
@@ -63,30 +64,26 @@ class TxList extends StatelessWidget {
 class _TxListLine extends StatelessWidget {
   const _TxListLine({
     required this.num,
+    required this.accountSelected,
   });
 
   final int num;
+  final Account accountSelected;
 
   @override
   Widget build(BuildContext context) {
-    final recentTransactions = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .recentTransactions!;
-
     return Container(
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-        child: (recentTransactions.isNotEmpty &&
-                    recentTransactions.length > num) ||
+        child: (accountSelected.recentTransactions!.isNotEmpty &&
+                    accountSelected.recentTransactions!.length > num) ||
                 (StateContainer.of(context).recentTransactionsLoading == true &&
-                    recentTransactions.length > num)
+                    accountSelected.recentTransactions!.length > num)
             ? displayTxDetailTransfer(
                 context,
-                recentTransactions[num],
+                accountSelected.recentTransactions![num],
               )
             : const SizedBox(),
       ),
@@ -270,13 +267,8 @@ class _TxListLine extends StatelessWidget {
                                               .curCurrency
                                               .currency
                                               .name,
-                                          StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .balance!
-                                              .tokenPrice!
-                                              .amount!,
+                                          accountSelected
+                                              .balance!.tokenPrice!.amount!,
                                           transaction.amount!,
                                         ),
                                         style: AppStyles
@@ -309,13 +301,8 @@ class _TxListLine extends StatelessWidget {
                                               .curCurrency
                                               .currency
                                               .name,
-                                          StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .balance!
-                                              .tokenPrice!
-                                              .amount!,
+                                          accountSelected
+                                              .balance!.tokenPrice!.amount!,
                                           transaction.amount!,
                                         ),
                                         style: AppStyles
@@ -483,14 +470,14 @@ class _TxListLine extends StatelessWidget {
                                         AvailablePrimaryCurrency.native,
                                       ).primaryCurrency.name
                                   ? Text(
-                                      '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                      '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
                                         context,
                                       ),
                                     )
                                   : Text(
-                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
                                         context,

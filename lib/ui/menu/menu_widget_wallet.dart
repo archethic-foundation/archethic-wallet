@@ -16,12 +16,17 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-//TODO(reddwarf03): This Widget is not part of the Drawer menu. Should we move it in `views/main` directory ?
+// TODO(reddwarf03): This Widget is not part of the Drawer menu. Should we move it in `views/main` directory ?
 class MenuWidgetWallet extends StatelessWidget {
   const MenuWidgetWallet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
+
     return StatefulBuilder(
       builder: (context, setState) {
         final localizations = AppLocalization.of(context)!;
@@ -37,12 +42,7 @@ class MenuWidgetWallet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .balance!
-                    .isNativeTokenValuePositive())
+                if (accountSelected.balance!.isNativeTokenValuePositive())
                   _ActionButton(
                     text: localizations.send,
                     icon: Icons.arrow_circle_up_outlined,
@@ -83,11 +83,7 @@ class MenuWidgetWallet extends StatelessWidget {
                     Sheets.showAppHeightNineSheet(
                       context: context,
                       widget: ReceiveSheet(
-                        address: StateContainer.of(context)
-                            .appWallet!
-                            .appKeychain!
-                            .getAccountSelected()!
-                            .lastAddress,
+                        address: accountSelected.lastAddress,
                       ),
                       onDisposed: () {
                         setState(() {

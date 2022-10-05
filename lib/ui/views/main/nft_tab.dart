@@ -53,7 +53,10 @@ class _NFTTabState extends State<NFTTab> {
   @override
   Widget build(BuildContext context) {
     final theme = StateContainer.of(context).curTheme;
-
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     return Column(
       children: [
         Expanded(
@@ -65,11 +68,7 @@ class _NFTTabState extends State<NFTTab> {
                     FeedbackType.light,
                     StateContainer.of(context).activeVibrations,
                   );
-              await StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .updateNFT();
+              await accountSelected.updateNFT();
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
@@ -142,11 +141,8 @@ class _NFTTabState extends State<NFTTab> {
                           ),
                         ),
                         NftCategoryMenu(
-                          nftCategories: StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .getListNftCategory(context),
+                          nftCategories:
+                              accountSelected.getListNftCategory(context),
                         ),
                       ],
                     ),
