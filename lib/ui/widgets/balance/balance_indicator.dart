@@ -52,16 +52,24 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
             children: [
               if (primaryCurrency == PrimaryCurrency.native)
                 Column(
-                  children: [
-                    _balanceNative(context, true),
-                    _balanceFiat(context, false),
+                  children: const [
+                    _BalanceIndicatorNative(
+                      primary: true,
+                    ),
+                    _BalanceIndicatorFiat(
+                      primary: false,
+                    ),
                   ],
                 )
               else
                 Column(
-                  children: [
-                    _balanceFiat(context, true),
-                    _balanceNative(context, false),
+                  children: const [
+                    _BalanceIndicatorFiat(
+                      primary: true,
+                    ),
+                    _BalanceIndicatorNative(
+                      primary: false,
+                    ),
                   ],
                 ),
               const SizedBox(
@@ -93,9 +101,21 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
           )
         : const SizedBox();
   }
+}
 
-// TODO(chralu): Create a Widget subclass
-  Widget _balanceNative(BuildContext context, bool primary) {
+class _BalanceIndicatorFiat extends StatelessWidget {
+  const _BalanceIndicatorFiat({required this.primary, super.key});
+
+  final bool primary;
+
+  @override
+  Widget build(BuildContext context) {
+    final accountSelectedBalance = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .balance;
+
     return RichText(
       text: TextSpan(
         text: '',
@@ -108,8 +128,10 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
                   : AppStyles.textStyleSize14W100Primary(context),
             ),
           TextSpan(
-            text:
-                '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+            text: CurrencyUtil.getConvertedAmount(
+              StateContainer.of(context).curCurrency.currency.name,
+              accountSelectedBalance!.fiatCurrencyValue!,
+            ),
             style: primary
                 ? AppStyles.textStyleSize16W700Primary(context)
                 : AppStyles.textStyleSize14W700Primary(context),
@@ -125,9 +147,21 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
       ),
     );
   }
+}
 
-// TODO(chralu): Create a Widget subclass
-  Widget _balanceFiat(BuildContext context, bool primary) {
+class _BalanceIndicatorNative extends StatelessWidget {
+  const _BalanceIndicatorNative({required this.primary, super.key});
+
+  final bool primary;
+
+  @override
+  Widget build(BuildContext context) {
+    final accountSelectedBalance = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .balance;
+
     return RichText(
       text: TextSpan(
         text: '',
@@ -140,15 +174,8 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
                   : AppStyles.textStyleSize14W100Primary(context),
             ),
           TextSpan(
-            text: CurrencyUtil.getConvertedAmount(
-              StateContainer.of(context).curCurrency.currency.name,
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .balance!
-                  .fiatCurrencyValue!,
-            ),
+            text:
+                '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
             style: primary
                 ? AppStyles.textStyleSize16W700Primary(context)
                 : AppStyles.textStyleSize14W700Primary(context),

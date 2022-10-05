@@ -18,7 +18,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/add_nft_collection_confirm.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
