@@ -6,7 +6,7 @@ import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/fungibles_tokens_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
-import 'package:aewallet/ui/widgets/balance_infos.dart';
+import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
@@ -63,7 +63,7 @@ class AccountTab extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             /// BALANCE
-                            BalanceInfosWidget().getBalance(context),
+                            const BalanceInfos(),
                             const SizedBox(
                               height: 10,
                             ),
@@ -71,8 +71,8 @@ class AccountTab extends StatelessWidget {
                             /// PRICE CHART
                             if (StateContainer.of(context).showPriceChart)
                               Stack(
-                                children: <Widget>[
-                                  BalanceInfosWidget().buildInfos(context),
+                                children: const <Widget>[
+                                  BalanceInfosBuildChart(),
                                 ],
                               )
                             else
@@ -80,7 +80,7 @@ class AccountTab extends StatelessWidget {
 
                             /// KPI
                             if (StateContainer.of(context).showPriceChart)
-                              BalanceInfosWidget().buildKPI(context)
+                              const BalanceInfosBuildKpi()
                             else
                               const SizedBox(),
 
