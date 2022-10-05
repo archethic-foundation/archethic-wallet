@@ -29,6 +29,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     final bottomBarCurrentPage =
         StateContainer.of(context).bottomBarCurrentPage;
@@ -83,14 +84,14 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       );
                       UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.addressCopied,
+                        localizations.addressCopied,
                         context,
                         theme.text!,
                         theme.snackBarShadow!,
                       );
                     },
                     child: AutoSizeText(
-                      AppLocalization.of(context)!.keychainHeader,
+                      localizations.keychainHeader,
                       style:
                           AppStyles.textStyleSize24W700EquinoxPrimary(context),
                     ),

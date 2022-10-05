@@ -44,12 +44,13 @@ class NetworkDialog {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        final localizations = AppLocalization.of(context)!;
         final theme = StateContainer.of(context).curTheme;
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              AppLocalization.of(context)!.networksHeader,
+              localizations.networksHeader,
               style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
             ),
           ),
@@ -101,8 +102,7 @@ class NetworkDialog {
                                   height: 20,
                                 ),
                                 Text(
-                                  AppLocalization.of(context)!
-                                      .enterEndpointHeader,
+                                  localizations.enterEndpointHeader,
                                   style: AppStyles.textStyleSize16W400Primary(
                                     context,
                                   ),
@@ -130,8 +130,7 @@ class NetworkDialog {
                                     rightMargin: 0,
                                     focusNode: endpointFocusNode,
                                     controller: endpointController,
-                                    labelText: AppLocalization.of(context)!
-                                        .enterEndpoint,
+                                    labelText: localizations.enterEndpoint,
                                     keyboardType: TextInputType.text,
                                     style: AppStyles.textStyleSize14W600Primary(
                                       context,
@@ -173,15 +172,14 @@ class NetworkDialog {
                                     const Key('addEndpoint'),
                                     context,
                                     AppButtonType.primary,
-                                    AppLocalization.of(context)!.ok,
+                                    localizations.ok,
                                     Dimens.buttonTopDimens,
                                     onPressed: () async {
                                       endpointError = '';
                                       if (endpointController.text.isEmpty) {
                                         setState(() {
                                           endpointError =
-                                              AppLocalization.of(context)!
-                                                  .enterEndpointBlank;
+                                              localizations.enterEndpointBlank;
                                           FocusScope.of(context).requestFocus(
                                             endpointFocusNode,
                                           );
@@ -192,9 +190,8 @@ class NetworkDialog {
                                             ).isAbsolute ==
                                             false) {
                                           setState(() {
-                                            endpointError =
-                                                AppLocalization.of(context)!
-                                                    .enterEndpointNotValid;
+                                            endpointError = localizations
+                                                .enterEndpointNotValid;
                                             FocusScope.of(context).requestFocus(
                                               endpointFocusNode,
                                             );

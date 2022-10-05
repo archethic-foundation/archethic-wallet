@@ -71,6 +71,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
@@ -80,7 +81,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: AppLocalization.of(context)!.createFungibleToken,
+              title: localizations.createFungibleToken,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: BalanceIndicatorWidget(
                 primaryCurrency: widget.primaryCurrency,
@@ -114,8 +115,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               controller: _nameController,
                               cursorColor: theme.text,
                               textInputAction: TextInputAction.next,
-                              labelText:
-                                  AppLocalization.of(context)!.tokenNameHint,
+                              labelText: localizations.tokenNameHint,
                               autocorrect: false,
                               keyboardType: TextInputType.text,
                               style:
@@ -146,8 +146,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               controller: _symbolController,
                               cursorColor: theme.text,
                               textInputAction: TextInputAction.next,
-                              labelText:
-                                  AppLocalization.of(context)!.tokenSymbolHint,
+                              labelText: localizations.tokenSymbolHint,
                               autocorrect: false,
                               keyboardType: TextInputType.text,
                               style:
@@ -172,8 +171,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 bottom: 5,
                               ),
                               child: Text(
-                                AppLocalization.of(context)!
-                                    .tokenSymbolMaxNumberCharacter,
+                                localizations.tokenSymbolMaxNumberCharacter,
                                 style: AppStyles.textStyleSize10W100Primary(
                                   context,
                                 ),
@@ -193,8 +191,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               controller: _initialSupplyController,
                               cursorColor: theme.text,
                               textInputAction: TextInputAction.next,
-                              labelText: AppLocalization.of(context)!
-                                  .tokenInitialSupplyHint,
+                              labelText: localizations.tokenInitialSupplyHint,
                               keyboardType: TextInputType.number,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
@@ -228,7 +225,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                   right: 30,
                                 ),
                                 child: Text(
-                                  '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                  '${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                   style: AppStyles.textStyleSize14W100Primary(
                                     context,
                                   ),
@@ -242,8 +239,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                   right: 30,
                                 ),
                                 child: Text(
-                                  AppLocalization.of(context)!
-                                      .estimatedFeesAddTokenNote,
+                                  localizations.estimatedFeesAddTokenNote,
                                   style: AppStyles.textStyleSize14W100Primary(
                                     context,
                                   ),
@@ -267,7 +263,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                         const Key('createToken'),
                         context,
                         AppButtonType.primaryOutline,
-                        AppLocalization.of(context)!.createToken,
+                        localizations.createToken,
                         Dimens.buttonTopDimens,
                         onPressed: () {},
                       )
@@ -276,7 +272,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                         const Key('createToken'),
                         context,
                         AppButtonType.primary,
-                        AppLocalization.of(context)!.createToken,
+                        localizations.createToken,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
                           setState(() {
@@ -322,6 +318,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   }
 
   Future<bool> _validateRequest() async {
+    final localizations = AppLocalization.of(context)!;
     var isValid = true;
     setState(() {
       _nameValidationText = '';
@@ -331,20 +328,19 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     if (_nameController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        _nameValidationText = AppLocalization.of(context)!.tokenNameMissing;
+        _nameValidationText = localizations.tokenNameMissing;
       });
     }
     if (_symbolController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        _symbolValidationText = AppLocalization.of(context)!.tokenSymbolMissing;
+        _symbolValidationText = localizations.tokenSymbolMissing;
       });
     }
     if (_initialSupplyController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        _initialSupplyValidationText =
-            AppLocalization.of(context)!.tokenInitialSupplyMissing;
+        _initialSupplyValidationText = localizations.tokenInitialSupplyMissing;
       });
     } else {
       if (double.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) ==
@@ -356,7 +352,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
         isValid = false;
         setState(() {
           _initialSupplyValidationText =
-              AppLocalization.of(context)!.tokenInitialSupplyPositive;
+              localizations.tokenInitialSupplyPositive;
         });
       } else {
         if (double.tryParse(
@@ -366,7 +362,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
           isValid = false;
           setState(() {
             _initialSupplyValidationText =
-                AppLocalization.of(context)!.tokenInitialSupplyTooHigh;
+                localizations.tokenInitialSupplyTooHigh;
           });
         }
       }
@@ -384,12 +380,10 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
       isValid = false;
       setState(() {
         _initialSupplyValidationText =
-            AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                  '%1',
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
-                );
+            localizations.insufficientBalance.replaceAll(
+          '%1',
+          StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+        );
       });
     }
 

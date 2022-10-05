@@ -60,6 +60,7 @@ class _SetYubikeyState extends State<SetYubikey> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -195,7 +196,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                             const Key('confirm'),
                             context,
                             AppButtonType.primary,
-                            AppLocalization.of(context)!.confirm,
+                            localizations.confirm,
                             Dimens.buttonTopDimens,
                             onPressed: () async {
                               await validate();

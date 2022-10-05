@@ -62,6 +62,7 @@ class _SetPasswordState extends State<SetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -190,8 +191,7 @@ class _SetPasswordState extends State<SetPassword> {
                                       }
                                     }
                                   },
-                                  labelText: AppLocalization.of(context)!
-                                      .createPasswordHint,
+                                  labelText: localizations.createPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !setPasswordVisible!,
                                   style: AppStyles.textStyleSize16W700Primary(
@@ -264,8 +264,7 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                         if (passwordStrength <= 0.25)
                                           Text(
-                                            AppLocalization.of(context)!
-                                                .passwordStrengthWeak,
+                                            localizations.passwordStrengthWeak,
                                             textAlign: TextAlign.end,
                                             style: AppStyles
                                                 .textStyleSize12W100Primary(
@@ -275,7 +274,7 @@ class _SetPasswordState extends State<SetPassword> {
                                         else
                                           passwordStrength <= 0.8
                                               ? Text(
-                                                  AppLocalization.of(context)!
+                                                  localizations
                                                       .passwordStrengthAlright,
                                                   textAlign: TextAlign.end,
                                                   style: AppStyles
@@ -284,7 +283,7 @@ class _SetPasswordState extends State<SetPassword> {
                                                   ),
                                                 )
                                               : Text(
-                                                  AppLocalization.of(context)!
+                                                  localizations
                                                       .passwordStrengthStrong,
                                                   textAlign: TextAlign.end,
                                                   style: AppStyles
@@ -323,8 +322,7 @@ class _SetPasswordState extends State<SetPassword> {
                                       }
                                     }
                                   },
-                                  labelText: AppLocalization.of(context)!
-                                      .confirmPasswordHint,
+                                  labelText: localizations.confirmPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !confirmPasswordVisible!,
                                   style: AppStyles.textStyleSize16W700Primary(
@@ -375,7 +373,7 @@ class _SetPasswordState extends State<SetPassword> {
                             const Key('confirm'),
                             context,
                             AppButtonType.primary,
-                            AppLocalization.of(context)!.confirm,
+                            localizations.confirm,
                             Dimens.buttonTopDimens,
                             onPressed: () async {
                               await _validateRequest();

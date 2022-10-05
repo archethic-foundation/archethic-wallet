@@ -158,13 +158,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
-            title: AppLocalization.of(context)!.createToken,
+            title: localizations.createToken,
             widgetBeforeTitle: const NetworkIndicator(),
           ),
           Expanded(
@@ -172,14 +173,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 Text(
-                  '${AppLocalization.of(context)!.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                  '${localizations.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                   style: AppStyles.textStyleSize14W100Primary(context),
                 ),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
-                    AppLocalization.of(context)!.addTokenConfirmationMessage,
+                    localizations.addTokenConfirmationMessage,
                     style: AppStyles.textStyleSize14W600Primary(context),
                   ),
                 ),
@@ -191,7 +192,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        AppLocalization.of(context)!.tokenName,
+                        localizations.tokenName,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       ),
                       Text(
@@ -206,7 +207,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        AppLocalization.of(context)!.tokenSymbol,
+                        localizations.tokenSymbol,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       ),
                       Text(
@@ -221,7 +222,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        AppLocalization.of(context)!.tokenInitialSupply,
+                        localizations.tokenInitialSupply,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       ),
                       Text(
@@ -246,7 +247,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                       const Key('confirm'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.confirm,
+                      localizations.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         // Authenticate
@@ -271,7 +272,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                       const Key('cancel'),
                       context,
                       AppButtonType.primary,
-                      AppLocalization.of(context)!.cancel,
+                      localizations.cancel,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
                         Navigator.of(context).pop();

@@ -30,6 +30,7 @@ class ContactsDialog {
     return showDialog<Contact>(
       context: context,
       builder: (BuildContext context) {
+        final localizations = AppLocalization.of(context)!;
         final theme = StateContainer.of(context).curTheme;
         return StatefulBuilder(
           builder: (context, setState) {
@@ -39,7 +40,7 @@ class ContactsDialog {
               title: Column(
                 children: [
                   Text(
-                    AppLocalization.of(context)!.addressBookHeader,
+                    localizations.addressBookHeader,
                     style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
                   ),
                   AppTextField(
@@ -47,7 +48,7 @@ class ContactsDialog {
                     controller: searchNameController,
                     autofocus: true,
                     autocorrect: false,
-                    labelText: AppLocalization.of(context)!.searchField,
+                    labelText: localizations.searchField,
                     keyboardType: TextInputType.text,
                     style: AppStyles.textStyleSize16W600Primary(context),
                     onChanged: (text) async {

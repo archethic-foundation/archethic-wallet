@@ -25,6 +25,7 @@ class TokenTransferListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     listTokenTransfer!.sort(
       (TokenTransferWallet a, TokenTransferWallet b) => a.to!.compareTo(b.to!),
     );
@@ -51,7 +52,7 @@ class TokenTransferListWidget extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      '+ ${AppLocalization.of(context)!.estimatedFees}',
+                      '+ ${localizations.estimatedFees}',
                       style: AppStyles.textStyleSize14W600Primary(context),
                     ),
                   ],

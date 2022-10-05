@@ -200,6 +200,7 @@ class _TransferSheetState extends State<TransferSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     // The main column that holds everything
     return TapOutsideUnfocus(
@@ -209,7 +210,7 @@ class _TransferSheetState extends State<TransferSheet> {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: widget.title ?? AppLocalization.of(context)!.send,
+              title: widget.title ?? localizations.send,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: BalanceIndicatorWidget(
                 primaryCurrency: widget.primaryCurrency,
@@ -292,15 +293,14 @@ class _TransferSheetState extends State<TransferSheet> {
                                   ),
                                   child: feeEstimation > 0
                                       ? Text(
-                                          '+ ${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                          '+ ${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                           style: AppStyles
                                               .textStyleSize14W100Primary(
                                             context,
                                           ),
                                         )
                                       : Text(
-                                          AppLocalization.of(context)!
-                                              .estimatedFeesNote,
+                                          localizations.estimatedFeesNote,
                                           style: AppStyles
                                               .textStyleSize14W100Primary(
                                             context,
@@ -356,8 +356,7 @@ class _TransferSheetState extends State<TransferSheet> {
                         const Key('send'),
                         context,
                         AppButtonType.primaryOutline,
-                        widget.actionButtonTitle ??
-                            AppLocalization.of(context)!.send,
+                        widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
                         onPressed: () {},
                       )
@@ -366,8 +365,7 @@ class _TransferSheetState extends State<TransferSheet> {
                         const Key('send'),
                         context,
                         AppButtonType.primary,
-                        widget.actionButtonTitle ??
-                            AppLocalization.of(context)!.send,
+                        widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
                           setState(() {
@@ -463,6 +461,7 @@ class _TransferSheetState extends State<TransferSheet> {
   /// Validate form data to see if valid
   /// @returns true if valid, false otherwise
   Future<bool> _validateRequest() async {
+    final localizations = AppLocalization.of(context)!;
     var isValid = true;
     final ucoTransfer = UCOTransferWallet();
     final tokenTransfer = TokenTransferWallet();
@@ -477,13 +476,13 @@ class _TransferSheetState extends State<TransferSheet> {
     if (_sendAmountController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
-        _amountValidationText = AppLocalization.of(context)!.amountMissing;
+        _amountValidationText = localizations.amountMissing;
       });
     } else {
       if (double.tryParse(_sendAmountController!.text)! <= 0) {
         isValid = false;
         setState(() {
-          _amountValidationText = AppLocalization.of(context)!.amountZero;
+          _amountValidationText = localizations.amountZero;
         });
       } else {
         // Estimation of fees
@@ -511,12 +510,12 @@ class _TransferSheetState extends State<TransferSheet> {
             isValid = false;
             setState(() {
               _amountValidationText =
-                  AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                        '%1',
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel(),
-                      );
+                  localizations.insufficientBalance.replaceAll(
+                '%1',
+                StateContainer.of(context)
+                    .curNetwork
+                    .getNetworkCryptoCurrencyLabel(),
+              );
             });
           } else {
             ucoTransfer.amount = toBigInt(sendAmount);
@@ -528,10 +527,10 @@ class _TransferSheetState extends State<TransferSheet> {
             isValid = false;
             setState(() {
               _amountValidationText =
-                  AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                        '%1',
-                        widget.accountToken!.tokenInformations!.symbol!,
-                      );
+                  localizations.insufficientBalance.replaceAll(
+                '%1',
+                widget.accountToken!.tokenInformations!.symbol!,
+              );
             });
           } else {
             if (feeEstimation >
@@ -544,12 +543,12 @@ class _TransferSheetState extends State<TransferSheet> {
               isValid = false;
               setState(() {
                 _amountValidationText =
-                    AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                          '%1',
-                          StateContainer.of(context)
-                              .curNetwork
-                              .getNetworkCryptoCurrencyLabel(),
-                        );
+                    localizations.insufficientBalance.replaceAll(
+                  '%1',
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel(),
+                );
               });
             } else {
               tokenTransfer.amount = toBigInt(sendAmount);
@@ -564,13 +563,13 @@ class _TransferSheetState extends State<TransferSheet> {
     if (_sendAddressController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
-        _addressValidationText = AppLocalization.of(context)!.addressMissing;
+        _addressValidationText = localizations.addressMissing;
         _qrCodeButtonVisible = true;
       });
     } else if (!isContact && !Address(_sendAddressController!.text).isValid()) {
       isValid = false;
       setState(() {
-        _addressValidationText = AppLocalization.of(context)!.invalidAddress;
+        _addressValidationText = localizations.invalidAddress;
         _qrCodeButtonVisible = true;
       });
     } else if (!isContact) {
@@ -595,7 +594,7 @@ class _TransferSheetState extends State<TransferSheet> {
       } catch (e) {
         isValid = false;
         setState(() {
-          _addressValidationText = AppLocalization.of(context)!.contactInvalid;
+          _addressValidationText = localizations.contactInvalid;
           _qrCodeButtonVisible = true;
         });
       }
@@ -644,19 +643,17 @@ class _TransferSheetState extends State<TransferSheet> {
               .lastAddress!) {
         isValid = false;
         if (widget.accountToken == null) {
-          _addressValidationText =
-              AppLocalization.of(context)!.sendToMeError.replaceAll(
-                    '%1',
-                    StateContainer.of(context)
-                        .curNetwork
-                        .getNetworkCryptoCurrencyLabel(),
-                  );
+          _addressValidationText = localizations.sendToMeError.replaceAll(
+            '%1',
+            StateContainer.of(context)
+                .curNetwork
+                .getNetworkCryptoCurrencyLabel(),
+          );
         } else {
-          _addressValidationText =
-              AppLocalization.of(context)!.sendToMeError.replaceAll(
-                    '%1',
-                    widget.accountToken!.tokenInformations!.symbol!,
-                  );
+          _addressValidationText = localizations.sendToMeError.replaceAll(
+            '%1',
+            widget.accountToken!.tokenInformations!.symbol!,
+          );
         }
         setState(() {
           _qrCodeButtonVisible = true;
@@ -682,6 +679,7 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   Widget getEnterAmountContainer() {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
@@ -731,9 +729,9 @@ class _TransferSheetState extends State<TransferSheet> {
           autocorrect: false,
           labelText: widget.accountToken == null
               ? primaryCurrencySelected == PrimaryCurrency.native
-                  ? '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
-                  : '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})'
-              : '${AppLocalization.of(context)!.enterAmount} (${widget.accountToken!.tokenInformations!.symbol})',
+                  ? '${localizations.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
+                  : '${localizations.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})'
+              : '${localizations.enterAmount} (${widget.accountToken!.tokenInformations!.symbol})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {

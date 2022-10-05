@@ -306,10 +306,11 @@ class _PinScreenState extends State<PinScreen>
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     if (pinEnterTitle.isEmpty) {
       setState(() {
-        pinEnterTitle = AppLocalization.of(context)!.pinEnterTitle;
+        pinEnterTitle = localizations.pinEnterTitle;
         if (widget.type == PinOverlayType.enterPin) {
           _header = pinEnterTitle;
         }
@@ -317,7 +318,7 @@ class _PinScreenState extends State<PinScreen>
     }
     if (pinCreateTitle.isEmpty) {
       setState(() {
-        pinCreateTitle = AppLocalization.of(context)!.pinCreateTitle;
+        pinCreateTitle = localizations.pinCreateTitle;
         if (widget.type == PinOverlayType.newPin) {
           _header = pinCreateTitle;
         }
@@ -416,7 +417,7 @@ class _PinScreenState extends State<PinScreen>
                           vertical: 10,
                         ),
                         child: AutoSizeText(
-                          '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
+                          '${localizations.attempt}$_failedAttempts/$maxAttempts',
                           style: AppStyles.textStyleSize16W200Primary(context),
                           textAlign: TextAlign.center,
                           maxLines: 1,

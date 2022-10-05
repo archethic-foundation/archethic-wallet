@@ -96,8 +96,6 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                           style: AppStyles.textStyleSize14W600Primary(context),
                         ),
                 )
-              else
-                const SizedBox(),
             ],
           ),
         ),

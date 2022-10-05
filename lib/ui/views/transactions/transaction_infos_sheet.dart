@@ -31,6 +31,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
     return SafeArea(
@@ -57,7 +58,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
           return Column(
             children: <Widget>[
               SheetHeader(
-                title: AppLocalization.of(context)!.transactionInfosHeader,
+                title: localizations.transactionInfosHeader,
               ),
               Expanded(
                 child: Center(
@@ -107,7 +108,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                     const Key('viewExplorer'),
                                     context,
                                     AppButtonType.primary,
-                                    AppLocalization.of(context)!.viewExplorer,
+                                    localizations.viewExplorer,
                                     Dimens.buttonBottomDimens,
                                     icon: Icon(
                                       Icons.more_horiz,

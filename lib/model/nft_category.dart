@@ -11,40 +11,41 @@ class NftCategory {
   String? image;
 
   static List<NftCategory> getListByDefault(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     return [
       NftCategory(
         id: 0,
-        name: AppLocalization.of(context)!.nftWithoutCategory,
+        name: localizations.nftWithoutCategory,
         image: 'assets/images/category_nft_without.jpg',
       ),
       NftCategory(
         id: 1,
-        name: AppLocalization.of(context)!.nftCategoryArt,
+        name: localizations.nftCategoryArt,
         image: 'assets/images/category_nft_art.jpg',
       ),
       NftCategory(
         id: 2,
-        name: AppLocalization.of(context)!.nftCategoryAccess,
+        name: localizations.nftCategoryAccess,
         image: 'assets/images/category_nft_access.jpg',
       ),
       NftCategory(
         id: 3,
-        name: AppLocalization.of(context)!.nftCategoryCollectibles,
+        name: localizations.nftCategoryCollectibles,
         image: 'assets/images/category_nft_collectibles.jpg',
       ),
       NftCategory(
         id: 4,
-        name: AppLocalization.of(context)!.nftCategoryMusic,
+        name: localizations.nftCategoryMusic,
         image: 'assets/images/category_nft_music.jpg',
       ),
       NftCategory(
         id: 5,
-        name: AppLocalization.of(context)!.nftCategoryDoc,
+        name: localizations.nftCategoryDoc,
         image: 'assets/images/category_nft_doc.jpg',
       ),
       NftCategory(
         id: 6,
-        name: AppLocalization.of(context)!.nftCategoryLoyaltyCard,
+        name: localizations.nftCategoryLoyaltyCard,
         image: 'assets/images/category_nft_loyalty_card.jpg',
       )
     ];

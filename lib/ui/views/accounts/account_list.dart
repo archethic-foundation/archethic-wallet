@@ -70,6 +70,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Container(
       key: expandedKey,
@@ -79,7 +80,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           Padding(
             padding: const EdgeInsets.only(left: 36, right: 36, bottom: 20),
             child: Text(
-              AppLocalization.of(context)!.accountsListDescription,
+              localizations.accountsListDescription,
               textAlign: TextAlign.justify,
               style: AppStyles.textStyleSize12W400Primary(context),
             ),
@@ -99,7 +100,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                   const Key('addAccount'),
                   context,
                   AppButtonType.primary,
-                  AppLocalization.of(context)!.addAccount,
+                  localizations.addAccount,
                   Dimens.buttonBottomDimens,
                   onPressed: () async {
                     final nameFocusNode = FocusNode();
@@ -116,7 +117,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      AppLocalization.of(context)!
+                                      localizations
                                           .introNewWalletGetFirstInfosNameRequest,
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
@@ -175,7 +176,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           height: 40,
                                         ),
                                       Text(
-                                        AppLocalization.of(context)!
+                                        localizations
                                             .introNewWalletGetFirstInfosNameInfos,
                                         style: AppStyles
                                             .textStyleSize12W600Primary(
@@ -196,7 +197,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                         isPressed == false
                                             ? AppButtonType.primary
                                             : AppButtonType.primaryOutline,
-                                        AppLocalization.of(context)!.ok,
+                                        localizations.ok,
                                         Dimens.buttonBottomDimens,
                                         onPressed: () async {
                                           if (isPressed == true) {
@@ -205,9 +206,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           nameError = '';
                                           if (nameController.text.isEmpty) {
                                             setState(() {
-                                              nameError = AppLocalization.of(
-                                                context,
-                                              )!
+                                              nameError = localizations
                                                   .introNewWalletGetFirstInfosNameBlank;
                                               FocusScope.of(context)
                                                   .requestFocus(
@@ -225,9 +224,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                             }
                                             if (accountExists == true) {
                                               setState(() {
-                                                nameError = AppLocalization.of(
-                                                  context,
-                                                )!
+                                                nameError = localizations
                                                     .addAccountExists;
                                                 FocusScope.of(context)
                                                     .requestFocus(
@@ -240,22 +237,14 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                               });
                                               AppDialogs.showConfirmDialog(
                                                 context,
-                                                AppLocalization.of(
-                                                  context,
-                                                )!
-                                                    .addAccount,
-                                                AppLocalization.of(
-                                                  context,
-                                                )!
+                                                localizations.addAccount,
+                                                localizations
                                                     .addAccountConfirmation
                                                     .replaceAll(
-                                                      '%1',
-                                                      nameController.text,
-                                                    ),
-                                                AppLocalization.of(
-                                                  context,
-                                                )!
-                                                    .yes,
+                                                  '%1',
+                                                  nameController.text,
+                                                ),
+                                                localizations.yes,
                                                 () async {
                                                   try {
                                                     await KeychainUtil()
@@ -281,9 +270,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     );
                                                   } on ArchethicConnectionException {
                                                     UIUtil.showSnackbar(
-                                                      AppLocalization.of(
-                                                        context,
-                                                      )!
+                                                      localizations
                                                           .noConnection,
                                                       context,
                                                       theme.text!,
@@ -294,9 +281,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     );
                                                   } on Exception {
                                                     UIUtil.showSnackbar(
-                                                      AppLocalization.of(
-                                                        context,
-                                                      )!
+                                                      localizations
                                                           .keychainNotExistWarning,
                                                       context,
                                                       theme.text!,
@@ -315,10 +300,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     true,
                                                   );
                                                 },
-                                                cancelText: AppLocalization.of(
-                                                  context,
-                                                )!
-                                                    .no,
+                                                cancelText: localizations.no,
                                                 cancelAction: () {
                                                   setState(() {
                                                     isPressed = false;
@@ -356,6 +338,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     Account account,
     StateSetter setState,
   ) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
@@ -512,8 +495,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.accountTokens!
                                                                       .length >
                                                                   1
-                                                              ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
-                                                              : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
+                                                              ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                                              : '${account.accountTokens!.length} ${localizations.token}',
                                                           style: AppStyles
                                                               .textStyleSize12W400Primary(
                                                             context,
@@ -524,7 +507,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.accountNFT!
                                                               .isNotEmpty)
                                                         AutoSizeText(
-                                                          '${account.accountNFT!.length} ${AppLocalization.of(context)!.nft}',
+                                                          '${account.accountNFT!.length} ${localizations.nft}',
                                                           style: AppStyles
                                                               .textStyleSize12W400Primary(
                                                             context,
@@ -575,8 +558,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.accountTokens!
                                                                       .length >
                                                                   1
-                                                              ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
-                                                              : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
+                                                              ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                                              : '${account.accountTokens!.length} ${localizations.token}',
                                                           style: AppStyles
                                                               .textStyleSize12W400Primary(
                                                             context,

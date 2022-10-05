@@ -32,10 +32,11 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     return Column(
       children: <Widget>[
         SheetHeader(
-          title: AppLocalization.of(context)!.customizeCategoryListHeader,
+          title: localizations.customizeCategoryListHeader,
         ),
         Expanded(
           child: Center(
@@ -80,6 +81,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     nftCategoryToHidden = NftCategory.getListByDefault(context);
     nftCategoryToSort = widget.nftCategory;
@@ -228,7 +230,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                     const Key('addNftNewCategory'),
                     context,
                     AppButtonType.primaryOutline,
-                    AppLocalization.of(context)!.addNftNewCategory,
+                    localizations.addNftNewCategory,
                     Dimens.buttonBottomDimens,
                     onPressed: () {},
                   ),

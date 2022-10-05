@@ -334,6 +334,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     return Column(
       children: [
@@ -348,12 +349,12 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
             ),
             tabs: [
               Text(
-                AppLocalization.of(context)!.recentTransactionsHeader,
+                localizations.recentTransactionsHeader,
                 style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
                 textAlign: TextAlign.center,
               ),
               Text(
-                AppLocalization.of(context)!.tokensHeader,
+                localizations.tokensHeader,
                 style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
                 textAlign: TextAlign.center,
               ),
@@ -397,7 +398,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
                   const Key('createTokenFungible'),
                   context,
                   AppButtonType.primary,
-                  AppLocalization.of(context)!.createFungibleToken,
+                  localizations.createFungibleToken,
                   Dimens.buttonBottomDimens,
                   onPressed: () {
                     Sheets.showAppHeightNineSheet(
