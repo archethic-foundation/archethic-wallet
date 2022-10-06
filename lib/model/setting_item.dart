@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 
 /// Models that are used in settings dialogs/dropdowns
+@immutable
 abstract class SettingSelectionItem {
+  const SettingSelectionItem();
   String getDisplayName(BuildContext context);
 }

@@ -33,11 +33,7 @@ class BalanceInfos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = StateContainer.of(context).curTheme;
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 
     return GestureDetector(
       child: SizedBox(
@@ -52,11 +48,8 @@ class BalanceInfos extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
-                  child: StateContainer.of(context)
-                              .curPrimaryCurrency
-                              .primaryCurrency
-                              .name ==
-                          PrimaryCurrencySetting(
+                  child: StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
+                          const PrimaryCurrencySetting(
                             AvailablePrimaryCurrency.native,
                           ).primaryCurrency.name
                       ? Row(
@@ -65,11 +58,8 @@ class BalanceInfos extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel(),
-                                style:
-                                    AppStyles.textStyleSize35W900EquinoxPrimary(
+                                StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                                style: AppStyles.textStyleSize35W900EquinoxPrimary(
                                   context,
                                 ),
                               ),
@@ -89,8 +79,7 @@ class BalanceInfos extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
                                 accountSelectedBalance!.fiatCurrencyCode!,
-                                style:
-                                    AppStyles.textStyleSize35W900EquinoxPrimary(
+                                style: AppStyles.textStyleSize35W900EquinoxPrimary(
                                   context,
                                 ),
                               ),
@@ -117,8 +106,11 @@ class BalanceInfos extends StatelessWidget {
     );
   }
 
-  void showPopUpMenuAtPosition(BuildContext context, TapDownDetails details,
-      AccountBalance accountSelectedBalance,) {
+  void showPopUpMenuAtPosition(
+    BuildContext context,
+    TapDownDetails details,
+    AccountBalance accountSelectedBalance,
+  ) {
     final theme = StateContainer.of(context).curTheme;
 
     showMenu(
@@ -134,13 +126,8 @@ class BalanceInfos extends StatelessWidget {
         details.globalPosition.dx,
         details.globalPosition.dy,
       ),
-      items: StateContainer.of(context)
-                  .curPrimaryCurrency
-                  .primaryCurrency
-                  .name ==
-              PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-                  .primaryCurrency
-                  .name
+      items: StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
+              const PrimaryCurrencySetting(AvailablePrimaryCurrency.native).primaryCurrency.name
           ? [
               PopupMenuItem(
                 value: '1',

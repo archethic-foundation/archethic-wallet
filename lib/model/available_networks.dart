@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 
 enum AvailableNetworks { archethicMainNet, archethicTestNet, archethicDevNet }
 
+@immutable
 class NetworksSetting extends SettingSelectionItem {
-  NetworksSetting(this.network);
+  const NetworksSetting(this.network);
 
-  AvailableNetworks network;
+  final AvailableNetworks network;
 
   @override
   String getDisplayName(BuildContext context) {

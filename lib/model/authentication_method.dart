@@ -4,20 +4,14 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
 
-enum AuthMethod {
-  pin,
-  biometrics,
-  biometricsUniris,
-  yubikeyWithYubicloud,
-  ledger,
-  password
-}
+enum AuthMethod { pin, biometrics, biometricsUniris, yubikeyWithYubicloud, ledger, password }
 
 /// Represent the available authentication methods our app supports
+@immutable
 class AuthenticationMethod extends SettingSelectionItem {
-  AuthenticationMethod(this.method);
+  const AuthenticationMethod(this.method);
 
-  AuthMethod method;
+  final AuthMethod method;
 
   @override
   String getDisplayName(BuildContext context) {

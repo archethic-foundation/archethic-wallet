@@ -1,7 +1,8 @@
-part of 'settings_drawer_wallet_mobile.dart';
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+part of 'settings_drawer.dart';
 
-class MainSettingsView extends StatelessWidget {
-  const MainSettingsView({
+class MainMenuView extends StatelessWidget {
+  const MainMenuView({
     required this.showContacts,
     required this.showSecurity,
     required this.showCustom,

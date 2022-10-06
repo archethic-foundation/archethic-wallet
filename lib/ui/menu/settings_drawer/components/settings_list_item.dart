@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../settings_drawer_wallet_mobile.dart';
+part of '../settings_drawer.dart';
 
 abstract class _SettingsListItem extends StatelessWidget {
   const _SettingsListItem();

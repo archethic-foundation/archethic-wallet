@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 enum AvailablePrimaryCurrency { native, fiat }
 
 /// Represent the available languages our app supports
+@immutable
 class PrimaryCurrencySetting extends SettingSelectionItem {
-  PrimaryCurrencySetting(this.primaryCurrency);
+  const PrimaryCurrencySetting(this.primaryCurrency);
 
-  AvailablePrimaryCurrency primaryCurrency;
+  final AvailablePrimaryCurrency primaryCurrency;
 
   @override
   String getDisplayName(BuildContext context) {

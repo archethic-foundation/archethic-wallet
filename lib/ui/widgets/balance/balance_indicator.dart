@@ -35,9 +35,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
   void initState() {
     super.initState();
     if (widget.primaryCurrency!.primaryCurrency.name ==
-        PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-            .primaryCurrency
-            .name) {
+        const PrimaryCurrencySetting(AvailablePrimaryCurrency.native).primaryCurrency.name) {
       primaryCurrency = PrimaryCurrency.native;
     } else {
       primaryCurrency = PrimaryCurrency.fiat;
@@ -111,11 +109,7 @@ class _BalanceIndicatorFiat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 
     return RichText(
       text: TextSpan(
@@ -133,9 +127,8 @@ class _BalanceIndicatorFiat extends StatelessWidget {
               StateContainer.of(context).curCurrency.currency.name,
               accountSelectedBalance!.fiatCurrencyValue!,
             ),
-            style: primary
-                ? AppStyles.textStyleSize16W700Primary(context)
-                : AppStyles.textStyleSize14W700Primary(context),
+            style:
+                primary ? AppStyles.textStyleSize16W700Primary(context) : AppStyles.textStyleSize14W700Primary(context),
           ),
           if (primary == false)
             TextSpan(
@@ -157,11 +150,7 @@ class _BalanceIndicatorNative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 
     return RichText(
       text: TextSpan(
@@ -175,11 +164,9 @@ class _BalanceIndicatorNative extends StatelessWidget {
                   : AppStyles.textStyleSize14W100Primary(context),
             ),
           TextSpan(
-            text:
-                '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
-            style: primary
-                ? AppStyles.textStyleSize16W700Primary(context)
-                : AppStyles.textStyleSize14W700Primary(context),
+            text: '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
+            style:
+                primary ? AppStyles.textStyleSize16W700Primary(context) : AppStyles.textStyleSize14W700Primary(context),
           ),
           if (primary == false)
             TextSpan(

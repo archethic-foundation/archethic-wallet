@@ -21,8 +21,7 @@ class IntroWelcome extends StatefulWidget {
 
 class _IntroWelcomeState extends State<IntroWelcome> {
   bool checkedValue = false;
-  NetworksSetting _curNetworksSetting =
-      NetworksSetting(AvailableNetworks.archethicMainNet);
+  NetworksSetting _curNetworksSetting = const NetworksSetting(AvailableNetworks.archethicMainNet);
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +41,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -83,8 +81,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                           child: AutoSizeText(
                             localizations.welcomeText,
                             maxLines: 5,
-                            style:
-                                AppStyles.textStyleSize20W700Primary(context),
+                            style: AppStyles.textStyleSize20W700Primary(context),
                           ),
                         ),
                       ],
@@ -119,8 +116,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                   },
                                   checkColor: theme.background,
                                   activeColor: theme.text,
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
+                                  controlAffinity: ListTileControlAffinity.leading,
                                   secondary: IconButton(
                                     icon: const Icon(Icons.read_more),
                                     iconSize: 30,
@@ -148,9 +144,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                         AppButton.buildAppButton(
                           const Key('newWallet'),
                           context,
-                          checkedValue
-                              ? AppButtonType.primary
-                              : AppButtonType.primaryOutline,
+                          checkedValue ? AppButtonType.primary : AppButtonType.primaryOutline,
                           localizations.newWallet,
                           Dimens.buttonTopDimens,
                           onPressed: () async {
@@ -177,9 +171,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                         AppButton.buildAppButton(
                           const Key('importWallet'),
                           context,
-                          checkedValue
-                              ? AppButtonType.primary
-                              : AppButtonType.primaryOutline,
+                          checkedValue ? AppButtonType.primary : AppButtonType.primaryOutline,
                           localizations.importWallet,
                           Dimens.buttonBottomDimens,
                           onPressed: () async {
@@ -209,8 +201,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
   }
 
   Future<void> _networkDialog() async {
-    _curNetworksSetting =
-        (await NetworkDialog.getDialog(context, _curNetworksSetting))!;
+    _curNetworksSetting = (await NetworkDialog.getDialog(context, _curNetworksSetting))!;
     setState(() {});
   }
 }

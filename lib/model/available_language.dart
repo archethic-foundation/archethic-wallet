@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 enum AvailableLanguage { systemDefault, english, french }
 
 /// Represent the available languages our app supports
+@immutable
 class LanguageSetting extends SettingSelectionItem {
-  LanguageSetting(this.language);
+  const LanguageSetting(this.language);
 
-  AvailableLanguage language;
+  final AvailableLanguage language;
 
   @override
   String getDisplayName(BuildContext context) {

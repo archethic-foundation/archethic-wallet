@@ -50,8 +50,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     isPressed = false;
     animationOpen = false;
     appWalletLive = widget.appWallet;
-    appWalletLive!.appKeychain!.accounts!
-        .sort((a, b) => a.name!.compareTo(b.name!));
+    appWalletLive!.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
   }
 
   Future<void> _changeAccount(Account account, StateSetter setState) async {
@@ -117,10 +116,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      localizations
-                                          .introNewWalletGetFirstInfosNameRequest,
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
+                                      localizations.introNewWalletGetFirstInfosNameRequest,
+                                      style: AppStyles.textStyleSize12W400Primary(
                                         context,
                                       ),
                                     ),
@@ -139,8 +136,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       AppTextField(
                                         leftMargin: 0,
@@ -149,8 +145,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                         autocorrect: false,
                                         controller: nameController,
                                         keyboardType: TextInputType.text,
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary(
+                                        style: AppStyles.textStyleSize12W600Primary(
                                           context,
                                         ),
                                         inputFormatters: <TextInputFormatter>[
@@ -165,8 +160,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           height: 40,
                                           child: Text(
                                             nameError!,
-                                            style: AppStyles
-                                                .textStyleSize12W600Primary(
+                                            style: AppStyles.textStyleSize12W600Primary(
                                               context,
                                             ),
                                           ),
@@ -176,10 +170,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           height: 40,
                                         ),
                                       Text(
-                                        localizations
-                                            .introNewWalletGetFirstInfosNameInfos,
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary(
+                                        localizations.introNewWalletGetFirstInfosNameInfos,
+                                        style: AppStyles.textStyleSize12W600Primary(
                                           context,
                                         ),
                                         textAlign: TextAlign.justify,
@@ -194,9 +186,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                       AppButton.buildAppButtonTiny(
                                         const Key('addName'),
                                         context,
-                                        isPressed == false
-                                            ? AppButtonType.primary
-                                            : AppButtonType.primaryOutline,
+                                        isPressed == false ? AppButtonType.primary : AppButtonType.primaryOutline,
                                         localizations.ok,
                                         Dimens.buttonBottomDimens,
                                         onPressed: () async {
@@ -206,28 +196,22 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           nameError = '';
                                           if (nameController.text.isEmpty) {
                                             setState(() {
-                                              nameError = localizations
-                                                  .introNewWalletGetFirstInfosNameBlank;
-                                              FocusScope.of(context)
-                                                  .requestFocus(
+                                              nameError = localizations.introNewWalletGetFirstInfosNameBlank;
+                                              FocusScope.of(context).requestFocus(
                                                 nameFocusNode,
                                               );
                                             });
                                           } else {
                                             var accountExists = false;
-                                            for (final account in appWalletLive!
-                                                .appKeychain!.accounts!) {
-                                              if (account.name ==
-                                                  nameController.text) {
+                                            for (final account in appWalletLive!.appKeychain!.accounts!) {
+                                              if (account.name == nameController.text) {
                                                 accountExists = true;
                                               }
                                             }
                                             if (accountExists == true) {
                                               setState(() {
-                                                nameError = localizations
-                                                    .addAccountExists;
-                                                FocusScope.of(context)
-                                                    .requestFocus(
+                                                nameError = localizations.addAccountExists;
+                                                FocusScope.of(context).requestFocus(
                                                   nameFocusNode,
                                                 );
                                               });
@@ -238,17 +222,14 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                               AppDialogs.showConfirmDialog(
                                                 context,
                                                 localizations.addAccount,
-                                                localizations
-                                                    .addAccountConfirmation
-                                                    .replaceAll(
+                                                localizations.addAccountConfirmation.replaceAll(
                                                   '%1',
                                                   nameController.text,
                                                 ),
                                                 localizations.yes,
                                                 () async {
                                                   try {
-                                                    await KeychainUtil()
-                                                        .addAccountInKeyChain(
+                                                    await KeychainUtil().addAccountInKeyChain(
                                                       StateContainer.of(
                                                         context,
                                                       ).appWallet,
@@ -258,20 +239,14 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                       nameController.text,
                                                       StateContainer.of(
                                                         context,
-                                                      )
-                                                          .curCurrency
-                                                          .currency
-                                                          .name,
+                                                      ).curCurrency.currency.name,
                                                       StateContainer.of(
                                                         context,
-                                                      )
-                                                          .curNetwork
-                                                          .getNetworkCryptoCurrencyLabel(),
+                                                      ).curNetwork.getNetworkCryptoCurrencyLabel(),
                                                     );
                                                   } on ArchethicConnectionException {
                                                     UIUtil.showSnackbar(
-                                                      localizations
-                                                          .noConnection,
+                                                      localizations.noConnection,
                                                       context,
                                                       theme.text!,
                                                       theme.snackBarShadow!,
@@ -281,8 +256,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     );
                                                   } on Exception {
                                                     UIUtil.showSnackbar(
-                                                      localizations
-                                                          .keychainNotExistWarning,
+                                                      localizations.keychainNotExistWarning,
                                                       context,
                                                       theme.text!,
                                                       theme.snackBarShadow!,
@@ -321,8 +295,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                       },
                     );
                     setState(() {
-                      appWalletLive!.appKeychain!.accounts!
-                          .sort((a, b) => a.name!.compareTo(b.name!));
+                      appWalletLive!.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
                     });
                   },
                 ),
@@ -351,10 +324,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           _showSendingAnimation(context);
           if (!account.selected!) {
             _changeAccount(account, setState);
-            StateContainer.of(context).appWallet =
-                await sl.get<DBHelper>().changeAccount(account);
-            await StateContainer.of(context)
-                .requestUpdate(forceUpdateChart: false);
+            StateContainer.of(context).appWallet = await sl.get<DBHelper>().changeAccount(account);
+            await StateContainer.of(context).requestUpdate(forceUpdateChart: false);
           }
           StateContainer.of(context).bottomBarCurrentPage = 1;
           StateContainer.of(context)
@@ -376,8 +347,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             widget: ReceiveSheet(address: account.lastAddress),
             onDisposed: () {
               setState(() {
-                StateContainer.of(context)
-                    .requestUpdate(forceUpdateChart: false);
+                StateContainer.of(context).requestUpdate(forceUpdateChart: false);
               });
             },
           );
@@ -393,17 +363,14 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           color: theme.backgroundAccountsListCardSelected,
           child: Container(
             height: 80,
-            color: account.selected!
-                ? theme.backgroundAccountsListCardSelected
-                : theme.backgroundAccountsListCard,
+            color: account.selected! ? theme.backgroundAccountsListCardSelected : theme.backgroundAccountsListCard,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      margin:
-                          const EdgeInsetsDirectional.only(bottom: 10, top: 10),
+                      margin: const EdgeInsetsDirectional.only(bottom: 10, top: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -413,20 +380,15 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                               Row(
                                 children: <Widget>[
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width - 80,
+                                    width: MediaQuery.of(context).size.width - 80,
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Padding(
                                                 padding: const EdgeInsets.only(
@@ -434,8 +396,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                 ),
                                                 child: AutoSizeText(
                                                   account.name!,
-                                                  style: AppStyles
-                                                      .textStyleSize12W400Primary(
+                                                  style: AppStyles.textStyleSize12W400Primary(
                                                     context,
                                                   ),
                                                 ),
@@ -443,73 +404,48 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                             ],
                                           ),
                                         ),
-                                        if (StateContainer.of(context)
-                                            .showBalance)
-                                          StateContainer.of(context)
-                                                      .curPrimaryCurrency
-                                                      .primaryCurrency
-                                                      .name ==
-                                                  PrimaryCurrencySetting(
-                                                    AvailablePrimaryCurrency
-                                                        .native,
+                                        if (StateContainer.of(context).showBalance)
+                                          StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
+                                                  const PrimaryCurrencySetting(
+                                                    AvailablePrimaryCurrency.native,
                                                   ).primaryCurrency.name
                                               ? Expanded(
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
                                                     children: <Widget>[
                                                       AutoSizeText(
                                                         '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                        style: AppStyles
-                                                            .textStyleSize12W400Primary(
+                                                        style: AppStyles.textStyleSize12W400Primary(
                                                           context,
                                                         ),
                                                       ),
                                                       AutoSizeText(
-                                                        CurrencyUtil
-                                                            .getConvertedAmount(
+                                                        CurrencyUtil.getConvertedAmount(
                                                           StateContainer.of(
                                                             context,
-                                                          )
-                                                              .curCurrency
-                                                              .currency
-                                                              .name,
-                                                          account.balance!
-                                                              .fiatCurrencyValue!,
+                                                          ).curCurrency.currency.name,
+                                                          account.balance!.fiatCurrencyValue!,
                                                         ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: AppStyles
-                                                            .textStyleSize12W400Primary(
+                                                        textAlign: TextAlign.center,
+                                                        style: AppStyles.textStyleSize12W400Primary(
                                                           context,
                                                         ),
                                                       ),
-                                                      if (account.accountTokens !=
-                                                              null &&
-                                                          account.accountTokens!
-                                                              .isNotEmpty)
+                                                      if (account.accountTokens != null &&
+                                                          account.accountTokens!.isNotEmpty)
                                                         AutoSizeText(
-                                                          account.accountTokens!
-                                                                      .length >
-                                                                  1
+                                                          account.accountTokens!.length > 1
                                                               ? '${account.accountTokens!.length} ${localizations.tokens}'
                                                               : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
+                                                          style: AppStyles.textStyleSize12W400Primary(
                                                             context,
                                                           ),
                                                         ),
-                                                      if (account.accountNFT !=
-                                                              null &&
-                                                          account.accountNFT!
-                                                              .isNotEmpty)
+                                                      if (account.accountNFT != null && account.accountNFT!.isNotEmpty)
                                                         AutoSizeText(
                                                           '${account.accountNFT!.length} ${localizations.nft}',
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
+                                                          style: AppStyles.textStyleSize12W400Primary(
                                                             context,
                                                           ),
                                                         ),
@@ -518,50 +454,34 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                 )
                                               : Expanded(
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
                                                     children: <Widget>[
                                                       AutoSizeText(
-                                                        CurrencyUtil
-                                                            .getConvertedAmount(
+                                                        CurrencyUtil.getConvertedAmount(
                                                           StateContainer.of(
                                                             context,
-                                                          )
-                                                              .curCurrency
-                                                              .currency
-                                                              .name,
-                                                          account.balance!
-                                                              .fiatCurrencyValue!,
+                                                          ).curCurrency.currency.name,
+                                                          account.balance!.fiatCurrencyValue!,
                                                         ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: AppStyles
-                                                            .textStyleSize12W400Primary(
+                                                        textAlign: TextAlign.center,
+                                                        style: AppStyles.textStyleSize12W400Primary(
                                                           context,
                                                         ),
                                                       ),
                                                       AutoSizeText(
                                                         '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                        style: AppStyles
-                                                            .textStyleSize12W400Primary(
+                                                        style: AppStyles.textStyleSize12W400Primary(
                                                           context,
                                                         ),
                                                       ),
-                                                      if (account.accountTokens !=
-                                                              null &&
-                                                          account.accountTokens!
-                                                              .isNotEmpty)
+                                                      if (account.accountTokens != null &&
+                                                          account.accountTokens!.isNotEmpty)
                                                         AutoSizeText(
-                                                          account.accountTokens!
-                                                                      .length >
-                                                                  1
+                                                          account.accountTokens!.length > 1
                                                               ? '${account.accountTokens!.length} ${localizations.tokens}'
                                                               : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
+                                                          style: AppStyles.textStyleSize12W400Primary(
                                                             context,
                                                           ),
                                                         ),
@@ -571,30 +491,25 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                         else
                                           Expanded(
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.end,
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   '···········',
                                                   textAlign: TextAlign.center,
-                                                  style: AppStyles
-                                                      .textStyleSize12W600Primary60(
+                                                  style: AppStyles.textStyleSize12W600Primary60(
                                                     context,
                                                   ),
                                                 ),
                                                 AutoSizeText(
                                                   '···········',
-                                                  style: AppStyles
-                                                      .textStyleSize12W600Primary60(
+                                                  style: AppStyles.textStyleSize12W600Primary60(
                                                     context,
                                                   ),
                                                 ),
                                                 AutoSizeText(
                                                   '···········',
-                                                  style: AppStyles
-                                                      .textStyleSize12W600Primary60(
+                                                  style: AppStyles.textStyleSize12W600Primary60(
                                                     context,
                                                   ),
                                                 ),
