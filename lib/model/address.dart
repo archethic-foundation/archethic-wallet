@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show addressFormatControl;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show addressFormatControl;
 
 // Object to represent an account address or address URI,
 // and provide useful utilities
@@ -11,11 +12,8 @@ class Address {
   }
 
   String? _address; // TODO(Chralu): should not be nullable
-  late String _amount;
 
   String get address => _address!;
-
-  String get amount => _amount;
 
   String getShortString() {
     if (_address == null) {
