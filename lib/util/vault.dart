@@ -6,6 +6,7 @@ import 'dart:developer' as dev;
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/model/data/secured_settings.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
@@ -64,7 +65,7 @@ class Vault {
 
   Future<void> setSeed(String v) => _setValue(_seed, v);
 
-  String? getSeed() => _getValue(_seed);
+  String getSeed() => _getValue(_seed);
 
   Future<void> deleteSeed() async {
     return _removeValue(_seed);
@@ -99,4 +100,12 @@ class Vault {
   Future<void> clearAll() async {
     await _box.clear();
   }
+
+  SecuredSettings toModel() => SecuredSettings(
+        seed: getSeed(),
+        password: getPassword(),
+        pin: getPin(),
+        yubikeyClientAPIKey: getYubikeyClientAPIKey(),
+        yubikeyClientID: getYubikeyClientID(),
+      );
 }
