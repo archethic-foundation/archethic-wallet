@@ -45,8 +45,9 @@ enum AvailableCurrencyEnum {
 }
 
 /// Represent the available authentication methods our app supports
+@immutable
 class AvailableCurrency extends SettingSelectionItem {
-  AvailableCurrency(this.currency);
+  const AvailableCurrency(this.currency);
 
   // Get best currency for a given locale
   // Default to usd
@@ -76,20 +77,18 @@ class AvailableCurrency extends SettingSelectionItem {
           'SI',
           'ES'
         ].contains(locale.countryCode)) {
-          return AvailableCurrency(AvailableCurrencyEnum.eur);
-        } else if (CurrencyUtil.getLocale(currency.toString())
-                .countryCode!
-                .toUpperCase() ==
+          return const AvailableCurrency(AvailableCurrencyEnum.eur);
+        } else if (CurrencyUtil.getLocale(currency.toString()).countryCode!.toUpperCase() ==
             locale.countryCode!.toUpperCase()) {
           return currency;
         }
       }
     }
 
-    return AvailableCurrency(AvailableCurrencyEnum.usd);
+    return const AvailableCurrency(AvailableCurrencyEnum.usd);
   }
 
-  AvailableCurrencyEnum currency;
+  final AvailableCurrencyEnum currency;
 
   @override
   String getDisplayName(BuildContext context) {

@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -33,6 +34,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -59,14 +61,21 @@ Future<void> main() async {
     });
   }
 
+  final localPreferencesRepository = await Preferences.getInstance();
+
   // Run app
   SystemChrome.setPreferredOrientations(
     <DeviceOrientation>[DeviceOrientation.portraitUp],
   ).then((_) {
     runApp(
-      const RestartWidget(
-        child: StateContainer(
-          child: App(),
+      RestartWidget(
+        child: ProviderScope(
+          overrides: [
+            localPreferencesRepositoryProvider.overrideWithValue(localPreferencesRepository),
+          ],
+          child: const StateContainer(
+            child: App(),
+          ),
         ),
       ),
     );
@@ -108,8 +117,7 @@ class _AppState extends State<App> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        locale: StateContainer.of(context).curLanguage.language ==
-                AvailableLanguage.systemDefault
+        locale: StateContainer.of(context).curLanguage.language == AvailableLanguage.systemDefault
             ? null
             : StateContainer.of(context).curLanguage.getLocale(),
         supportedLocales: const <Locale>[
@@ -254,15 +262,10 @@ class _AppState extends State<App> {
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
                   currentNftCategoryIndex:
-                      args['currentNftCategoryIndex'] == null
-                          ? null
-                          : args['currentNftCategoryIndex'] as int,
-                  process: args['process'] == null
-                      ? null
-                      : args['process'] as NFTCreationProcessType,
-                  primaryCurrency: args['primaryCurrency'] == null
-                      ? null
-                      : args['primaryCurrency'] as PrimaryCurrencySetting,
+                      args['currentNftCategoryIndex'] == null ? null : args['currentNftCategoryIndex'] as int,
+                  process: args['process'] == null ? null : args['process'] as NFTCreationProcessType,
+                  primaryCurrency:
+                      args['primaryCurrency'] == null ? null : args['primaryCurrency'] as PrimaryCurrencySetting,
                 ),
                 settings: settings,
               );
@@ -345,12 +348,11 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
 
       if (isLoggedIn) {
-        StateContainer.of(context).appWallet =
-            await sl.get<DBHelper>().getAppWallet();
+        StateContainer.of(context).appWallet = await sl.get<DBHelper>().getAppWallet();
         if (StateContainer.of(context).appWallet == null) {
           await StateContainer.of(context).logOut();
           StateContainer.of(context).curTheme = DarkTheme();
-          preferences.setTheme(ThemeSetting(ThemeOptions.dark));
+          preferences.setTheme(const ThemeSetting(ThemeOptions.dark));
           Navigator.of(context).pushReplacementNamed('/intro_welcome');
         }
         StateContainer.of(context).checkTransactionInputs(
@@ -365,14 +367,14 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         }
       } else {
         StateContainer.of(context).curTheme = DarkTheme();
-        preferences.setTheme(ThemeSetting(ThemeOptions.dark));
+        preferences.setTheme(const ThemeSetting(ThemeOptions.dark));
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
       dev.log(e.toString());
       await StateContainer.of(context).logOut();
       StateContainer.of(context).curTheme = DarkTheme();
-      preferences.setTheme(ThemeSetting(ThemeOptions.dark));
+      preferences.setTheme(const ThemeSetting(ThemeOptions.dark));
       Navigator.of(context).pushReplacementNamed('/intro_welcome');
     }
     FlutterNativeSplash.remove();
@@ -383,8 +385,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _hasCheckedLoggedIn = false;
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
+    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks) {
       SchedulerBinding.instance.addPostFrameCallback((_) => checkLoggedIn());
     }
   }
@@ -431,8 +432,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     setLanguage();
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
-        StateContainer.of(context).curCurrency =
-            preferences.getCurrency(StateContainer.of(context).deviceLocale);
+        StateContainer.of(context).curCurrency = preferences.getCurrency(StateContainer.of(context).deviceLocale);
       });
     });
     return Scaffold(

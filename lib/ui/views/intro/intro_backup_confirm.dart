@@ -52,15 +52,12 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   SubscriptionChannel subscriptionChannel2 = SubscriptionChannel();
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) async {
+    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) async {
       await createKeychain();
     });
 
-    _sendTxSub = EventTaxiImpl.singleton()
-        .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) async {
+    _sendTxSub =
+        EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) async {
       final localizations = AppLocalization.of(context)!;
       final theme = StateContainer.of(context).curTheme;
       if (event.response != 'ok' && event.nbConfirmations == 0) {
@@ -125,8 +122,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
               var error = false;
               try {
-                StateContainer.of(context).appWallet =
-                    await AppWallet().createNewAppWallet(
+                StateContainer.of(context).appWallet = await AppWallet().createNewAppWallet(
                   event.params!['keychainAddress']! as String,
                   event.params!['keychain']! as Keychain,
                   widget.name,
@@ -147,10 +143,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                   localizations.transactionInputNotification,
                 );
                 final preferences = await Preferences.getInstance();
-                StateContainer.of(context).bottomBarCurrentPage =
-                    preferences.getMainScreenCurrentPage();
-                StateContainer.of(context).bottomBarPageController =
-                    PageController(
+                StateContainer.of(context).bottomBarCurrentPage = preferences.getMainScreenCurrentPage();
+                StateContainer.of(context).bottomBarPageController = PageController(
                   initialPage: StateContainer.of(context).bottomBarCurrentPage,
                 );
                 Navigator.of(context).pushNamedAndRemoveUntil(
@@ -234,8 +228,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -272,8 +265,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             localizations.confirmSecretPhrase,
-                            style:
-                                AppStyles.textStyleSize20W700Warning(context),
+                            style: AppStyles.textStyleSize20W700Warning(context),
                           ),
                         ),
                         Container(
@@ -284,8 +276,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           child: AutoSizeText(
                             localizations.confirmSecretPhraseExplanation,
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
+                            style: AppStyles.textStyleSize16W600Primary(context),
                             textAlign: TextAlign.justify,
                             maxLines: 6,
                             stepGranularity: 0.5,
@@ -299,10 +290,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           child: Wrap(
                             spacing: 10,
-                            children: wordListSelected
-                                .asMap()
-                                .entries
-                                .map((MapEntry entry) {
+                            children: wordListSelected.asMap().entries.map((MapEntry entry) {
                               return SizedBox(
                                 height: 35,
                                 child: Chip(
@@ -310,8 +298,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     backgroundColor: Colors.grey.shade800,
                                     child: Text(
                                       (entry.key + 1).toString(),
-                                      style: AppStyles
-                                          .textStyleSize12W100Primary60(
+                                      style: AppStyles.textStyleSize12W100Primary60(
                                         context,
                                       ),
                                     ),
@@ -346,10 +333,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           child: Wrap(
                             spacing: 10,
-                            children: wordListToSelect
-                                .asMap()
-                                .entries
-                                .map((MapEntry entry) {
+                            children: wordListToSelect.asMap().entries.map((MapEntry entry) {
                               return SizedBox(
                                 height: 35,
                                 child: GestureDetector(
@@ -361,8 +345,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   child: Chip(
                                     label: Text(
                                       entry.value,
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
+                                      style: AppStyles.textStyleSize12W400Primary(
                                         context,
                                       ),
                                     ),
@@ -400,11 +383,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             onPressed: () async {
                               var orderOk = true;
 
-                              for (var i = 0;
-                                  i < originalWordsList.length;
-                                  i++) {
-                                if (originalWordsList[i] !=
-                                    wordListSelected[i]) {
+                              for (var i = 0; i < originalWordsList.length; i++) {
+                                if (originalWordsList[i] != wordListSelected[i]) {
                                   orderOk = false;
                                 }
                               }
@@ -436,11 +416,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           localizations.pass,
                           Dimens.buttonBottomDimens,
                           onPressed: () {
-                            AppDialogs.showConfirmDialog(
-                                context,
-                                localizations.passBackupConfirmationDisclaimer,
-                                localizations.passBackupConfirmationMessage,
-                                localizations.yes, () async {
+                            AppDialogs.showConfirmDialog(context, localizations.passBackupConfirmationDisclaimer,
+                                localizations.passBackupConfirmationMessage, localizations.yes, () async {
                               await _launchSecurityConfiguration(
                                 widget.name!,
                                 widget.seed!,
@@ -466,8 +443,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     final accessModes = <PickerItem>[];
     accessModes.add(
       PickerItem(
-        AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
-        AuthenticationMethod(AuthMethod.pin).getDescription(context),
+        const AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.pin).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.pin),
         theme.pickerItemIconEnabled,
         AuthMethod.pin,
@@ -476,8 +453,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     );
     accessModes.add(
       PickerItem(
-        AuthenticationMethod(AuthMethod.password).getDisplayName(context),
-        AuthenticationMethod(AuthMethod.password).getDescription(context),
+        const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.password).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.password),
         theme.pickerItemIconEnabled,
         AuthMethod.password,
@@ -487,8 +464,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     if (biometricsAvalaible) {
       accessModes.add(
         PickerItem(
-          AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
-          AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
+          const AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
+          const AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
           theme.pickerItemIconEnabled,
           AuthMethod.biometrics,
@@ -498,10 +475,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     }
     accessModes.add(
       PickerItem(
-        AuthenticationMethod(AuthMethod.biometricsUniris)
-            .getDisplayName(context),
-        AuthenticationMethod(AuthMethod.biometricsUniris)
-            .getDescription(context),
+        const AuthenticationMethod(AuthMethod.biometricsUniris).getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.biometricsUniris).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
         theme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
@@ -510,10 +485,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     );
     accessModes.add(
       PickerItem(
-        AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-            .getDisplayName(context),
-        AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-            .getDescription(context),
+        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud).getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
         theme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,

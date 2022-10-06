@@ -46,10 +46,11 @@ enum ThemeOptions {
 }
 
 /// Represent notification on/off setting
+@immutable
 class ThemeSetting extends SettingSelectionItem {
-  ThemeSetting(this.theme);
+  const ThemeSetting(this.theme);
 
-  ThemeOptions theme;
+  final ThemeOptions theme;
 
   @override
   String getDisplayName(BuildContext context) {

@@ -40,8 +40,7 @@ class DBHelper {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     contactsList.sort(
-      (Contact a, Contact b) =>
-          a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+      (Contact a, Contact b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
     );
     return contactsList;
   }
@@ -61,31 +60,25 @@ class DBHelper {
 
   // TODO(redDwarf03): review this method's goal.
   Future<Contact?> getContactWithAddress(String address) async {
-    var lastAddress = (await sl
-            .get<ApiService>()
-            .getLastTransaction(address, request: 'address'))
-        .address;
+    var lastAddress = (await sl.get<ApiService>().getLastTransaction(address, request: 'address')).address;
     if (lastAddress == null || lastAddress == '') {
       lastAddress = address;
     }
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
-
     Contact? contactSelected;
     for (final contact in contactsList) {
-      var lastAddressContact = (await sl
-              .get<ApiService>()
-              .getLastTransaction(contact.address!, request: 'address'))
-          .address;
+      var lastAddressContact =
+          (await sl.get<ApiService>().getLastTransaction(contact.address!, request: 'address')).address;
 
-      if (lastAddressContact == null || lastAddressContact == '') {
-        lastAddressContact = contact.address!;
+      if (lastAddressContact == null || lastAddressContact.isEmpty) {
+        lastAddressContact = contact.address;
       } else {
         final contactToUpdate = contact;
         contactToUpdate.address = lastAddressContact;
         await sl.get<DBHelper>().saveContact(contactToUpdate);
       }
-      if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {
+      if (lastAddressContact?.toLowerCase() == lastAddress.toLowerCase()) {
         contactSelected = contact;
       }
     }
@@ -123,10 +116,7 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithAddress(String address) async {
-    var lastAddress = (await sl
-            .get<ApiService>()
-            .getLastTransaction(address, request: 'address'))
-        .address;
+    var lastAddress = (await sl.get<ApiService>().getLastTransaction(address, request: 'address')).address;
     if (lastAddress == null || lastAddress == '') {
       lastAddress = address;
     }
@@ -135,16 +125,12 @@ class DBHelper {
     final contactsList = box.values.toList();
     var contactExists = false;
     for (final contact in contactsList) {
-      var lastAddressContact = (await sl
-              .get<ApiService>()
-              .getLastTransaction(contact.address!, request: 'address'))
-          .address!;
+      var lastAddressContact =
+          (await sl.get<ApiService>().getLastTransaction(contact.address!, request: 'address')).address!;
       if (lastAddressContact == '') {
         lastAddressContact = contact.address!;
       }
-      if (lastAddressContact
-          .toLowerCase()
-          .contains(lastAddress.toLowerCase())) {
+      if (lastAddressContact.toLowerCase().contains(lastAddress.toLowerCase())) {
         contactExists = true;
       }
     }
@@ -239,8 +225,7 @@ class DBHelper {
   Future<AppWallet> createAppWallet(String seed, String keyChainAddress) async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<AppWallet>(appWalletTable);
-    final appKeychain =
-        AppKeychain(address: keyChainAddress, accounts: <Account>[]);
+    final appKeychain = AppKeychain(address: keyChainAddress, accounts: <Account>[]);
     final appWallet = AppWallet(seed: seed, appKeychain: appKeychain);
     await box.add(appWallet);
     return appWallet;

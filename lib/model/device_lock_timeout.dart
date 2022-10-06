@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 enum LockTimeoutOption { zero, one, five, fifteen, thirty, sixty }
 
 /// Represent auto-lock delay when requiring auth to open
+@immutable
 class LockTimeoutSetting extends SettingSelectionItem {
-  LockTimeoutSetting(this.setting);
+  const LockTimeoutSetting(this.setting);
 
-  LockTimeoutOption setting;
+  final LockTimeoutOption setting;
 
   @override
   String getDisplayName(BuildContext context) {

@@ -30,7 +30,6 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   String? collectionSymbolValidationText;
 
   double feeEstimation = 0;
-  bool? _isPressed;
   bool validRequest = true;
 
   int? supply;
@@ -45,9 +44,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   StreamSubscription<NftFileAddEvent>? _nftFileAddEventSub;
 
   void _registerBus() {
-    _nftFileAddEventSub = EventTaxiImpl.singleton()
-        .registerTo<NftFileAddEvent>()
-        .listen((NftFileAddEvent event) {
+    _nftFileAddEventSub = EventTaxiImpl.singleton().registerTo<NftFileAddEvent>().listen((NftFileAddEvent event) {
       token!.tokenProperties!.addAll(event.tokenProperties!);
       setState(() {});
     });
@@ -63,7 +60,6 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
     super.initState();
 
-    _isPressed = false;
     collectionNameFocusNode = FocusNode();
     collectionSymbolFocusNode = FocusNode();
     collectionNameController = TextEditingController();
@@ -82,7 +78,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO(reddwarf03): refacto code with Riverpod
+    // TODO(reddwarf03): refacto code with Riverpod
     return const SizedBox();
   }
 }
@@ -506,4 +502,3 @@ class _AddNFTCollectionNFTListPreview extends StatelessWidget {
   }
 }
 */
-  

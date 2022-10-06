@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 enum UnlockOption { yes, no }
 
 /// Represent authenticate to open setting
+@immutable
 class UnlockSetting extends SettingSelectionItem {
-  UnlockSetting(this.setting);
+  const UnlockSetting(this.setting);
 
-  UnlockOption setting;
+  final UnlockOption setting;
 
   @override
   String getDisplayName(BuildContext context) {

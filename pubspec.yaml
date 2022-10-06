@@ -86,6 +86,9 @@ dependencies:
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
   flutter_native_splash: ^2.2.10+1
   
+  # State management
+  flutter_riverpod: ^2.0.2
+
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
   flutter_secure_storage: ^6.0.0
 
@@ -99,6 +102,7 @@ dependencies:
   font_awesome_flutter: ^10.2.1
 
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
+  freezed_annotation: ^2.1.0
   get_it: ^7.2.0
 
   # Ghost CMS API client that closely follows the official implementation
@@ -126,6 +130,7 @@ dependencies:
   intl: ^0.17.0
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
+  json_annotation: ^4.7.0
   ledger_dart_lib: ^0.1.2
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
@@ -196,6 +201,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_lints: ^2.0.1
   # A build system for Dart code generation and modular compilation
+  freezed: ^2.1.0+1
   hive_generator: ^1.1.3
   # Integration Tests
   #integration_test:

@@ -11,12 +11,10 @@ class _NFTCreationProcessImportTab extends StatefulWidget {
   final int currentNftCategoryIndex;
 
   @override
-  State<_NFTCreationProcessImportTab> createState() =>
-      _NFTCreationProcessImportTabState();
+  State<_NFTCreationProcessImportTab> createState() => _NFTCreationProcessImportTabState();
 }
 
-class _NFTCreationProcessImportTabState
-    extends State<_NFTCreationProcessImportTab> {
+class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportTab> {
   @override
   Widget build(BuildContext context) {
     // TODO(reddwarf03): refacto code with Riverpod
