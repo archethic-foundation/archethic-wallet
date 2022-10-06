@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
+// TODO(reddwarf03): WIP, https://github.com/archethic-foundation/archethic-wallet/issues/46
 class LedgerScreen extends StatefulWidget {
   const LedgerScreen(this.ucoTransferList, {super.key});
 
@@ -42,7 +43,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
       case 'signTxn':
         log(
           hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase(),
-        ); // TODO(Chralu): is this useful ?
+        );
         break;
       default:
     }
@@ -146,7 +147,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                         ),
                                         onPressed: () async {
                                           const addressIndex = '';
-                                          // TODO(redDwarf03): To review
+
                                           /*String addressIndex =
                                                 StateContainer.of(context)
                                                     .selectedAccount
@@ -198,7 +199,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             hashType,
                                             int.tryParse(addressIndex)!,
                                           );
-                                          log('signTxn:${uint8ListToHex(signTxn)}'); // TODO(Chralu): is this useful ?
+                                          log('signTxn:${uint8ListToHex(signTxn)}');
                                           await sl
                                               .get<LedgerNanoSImpl>()
                                               .connectLedger(signTxn);
