@@ -17,53 +17,12 @@ class ThemeDialog {
     ThemeSetting curThemeSetting,
   ) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (final value in ThemeOptions.values) {
-      value == ThemeOptions.flat ||
-              value == ThemeOptions.byzantineVioletFlat ||
-              value == ThemeOptions.darkFlat ||
-              value == ThemeOptions.emeraldGreenFlat ||
-              value == ThemeOptions.honeyOrangeFlat ||
-              value == ThemeOptions.navyBlueFlat ||
-              value == ThemeOptions.pearlGreyFlat ||
-              value == ThemeOptions.fireRedFlat ||
-              value == ThemeOptions.sapphireBlueFlat ||
-              value == ThemeOptions.seaGreenFlat
-          ? pickerItemsList.add(
-              PickerItem(
-                ThemeSetting(value).getDisplayName(context),
-                null,
-                null,
-                null,
-                value,
-                true,
-                decorationImageItem: DecorationImage(
-                  image: AssetImage(
-                    ThemeSetting(value).getTheme().background1Small!,
-                  ),
-                  opacity: 0.5,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            )
-          : pickerItemsList.add(
-              PickerItem(
-                ThemeSetting(value).getDisplayName(context),
-                null,
-                null,
-                null,
-                value,
-                true,
-                decorationImageItem: DecorationImage(
-                  image: AssetImage(
-                    'assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-1100.jpg',
-                  ),
-                  opacity: 0.5,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            );
-    }
+    final pickerItemsList = ThemeOptions.values
+        .map(
+          (theme) => ThemePickerItemExt.fromThemeOption(context, theme),
+        )
+        .toList();
+
     return showDialog<ThemeSetting>(
       barrierDismissible: false,
       context: context,
@@ -88,12 +47,10 @@ class ThemeDialog {
               pickerItems: pickerItemsList,
               selectedIndex: curThemeSetting.getIndex(),
               onSelected: (value) async {
-                final selectedThemeSettings =
-                    ThemeSetting(value.value as ThemeOptions);
+                final selectedThemeSettings = ThemeSetting(value.value as ThemeOptions);
                 if (curThemeSetting != selectedThemeSettings) {
                   preferences.setTheme(selectedThemeSettings);
-                  await StateContainer.of(context)
-                      .updateTheme(selectedThemeSettings);
+                  await StateContainer.of(context).updateTheme(selectedThemeSettings);
                 }
                 Navigator.pop(context, selectedThemeSettings);
               },
@@ -101,6 +58,54 @@ class ThemeDialog {
           ),
         );
       },
+    );
+  }
+}
+
+extension ThemePickerItemExt on PickerItem {
+  static PickerItem fromThemeOption(BuildContext context, ThemeOptions themeOption) {
+    final themeSetting = ThemeSetting(themeOption);
+    if (themeOption == ThemeOptions.flat ||
+        themeOption == ThemeOptions.byzantineVioletFlat ||
+        themeOption == ThemeOptions.darkFlat ||
+        themeOption == ThemeOptions.emeraldGreenFlat ||
+        themeOption == ThemeOptions.honeyOrangeFlat ||
+        themeOption == ThemeOptions.navyBlueFlat ||
+        themeOption == ThemeOptions.pearlGreyFlat ||
+        themeOption == ThemeOptions.fireRedFlat ||
+        themeOption == ThemeOptions.sapphireBlueFlat ||
+        themeOption == ThemeOptions.seaGreenFlat) {
+      return PickerItem(
+        themeSetting.getDisplayName(context),
+        null,
+        null,
+        null,
+        themeOption,
+        true,
+        decorationImageItem: DecorationImage(
+          image: AssetImage(
+            themeSetting.getTheme().background1Small!,
+          ),
+          opacity: 0.5,
+          fit: BoxFit.fitWidth,
+        ),
+      );
+    }
+
+    return PickerItem(
+      themeSetting.getDisplayName(context),
+      null,
+      null,
+      null,
+      themeOption,
+      true,
+      decorationImageItem: DecorationImage(
+        image: AssetImage(
+          '${themeSetting.getTheme().assetsFolder}/v0${Random().nextInt(4) + 1}-waves-1100.jpg',
+        ),
+        opacity: 0.5,
+        fit: BoxFit.fitWidth,
+      ),
     );
   }
 }
