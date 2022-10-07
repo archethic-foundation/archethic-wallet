@@ -45,7 +45,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-part 'settings_drawer_wallet_mobile.dart';
+part 'settings_drawer_wallet.dart';
 part 'main_settings_view.dart';
 part 'security_menu_view.dart';
 part 'about_menu_view.dart';

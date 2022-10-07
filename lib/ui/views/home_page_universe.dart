@@ -266,7 +266,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       drawer: SizedBox(
         width: Responsive.drawerWidth(context),
         child: const Drawer(
-          child: SettingsSheetWalletMobile(),
+          child: SettingsSheetWallet(),
         ),
       ),
       body: PageView(
