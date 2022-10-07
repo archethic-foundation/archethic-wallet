@@ -4,40 +4,34 @@ import 'dart:math' as math;
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/repository/blog_repository.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghost/ghost.dart';
 import 'package:intl/intl.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class LastArticles extends StatefulWidget {
+part 'last_articles_list.g.dart';
+
+@riverpod
+Future<List<GhostPost>> fetchArticles(FetchArticlesRef ref) async {
+  return ref.watch(blogRepositoryProvider).getArticles();
+}
+
+class LastArticles extends ConsumerStatefulWidget {
   const LastArticles({super.key});
 
   @override
-  LastArticlesState createState() => LastArticlesState();
+  ConsumerState<LastArticles> createState() => LastArticlesState();
 }
 
-class LastArticlesState extends State<LastArticles> {
+class LastArticlesState extends ConsumerState<LastArticles> {
   PageController? pageController;
   double pageOffset = 0;
-
-  String blogUrl = 'https://blog.archethic.net';
-
-  /// API KEY Hard coded
-  /// From official doc: https://ghost.org/docs/content-api/
-  /// "Content API keys are provided via a query parameter in the URL.
-  /// These keys are safe for use in browsers and other insecure environments,
-  /// as they only ever provide access to public data.
-  /// Sites in private mode should consider
-  /// where they share any keys they create."
-  final GhostContentAPI api = GhostContentAPI(
-    url: 'https://blog.archethic.net',
-    key: 'aeec92562cfcb3f27993205631',
-    version: 'v3',
-  );
 
   @override
   void initState() {
@@ -59,6 +53,8 @@ class LastArticlesState extends State<LastArticles> {
     if (StateContainer.of(context).showBlog == false) {
       return const _LastArticlesNotShowed();
     }
+    final asyncArticlesList = ref.watch(fetchArticlesProvider);
+    const blogUrl = 'https://blog.archethic.net';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,59 +84,63 @@ class LastArticlesState extends State<LastArticles> {
             ),
           ),
         ),
-        FutureBuilder<List<GhostPost>>(
-          future: api.posts.browse(
-            limit: 5,
-            include: <String>['tags', 'authors'],
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return SizedBox(
-                height: 280,
-                child: PageView.builder(
-                  controller: pageController,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        UIUtil.showWebview(
-                          context,
-                          snapshot.data![index].url!,
-                          '',
-                        );
-                      },
-                      child: Center(
-                        child: SlidingCard(
-                          name: snapshot.data![index].title,
-                          date: DateFormat.yMMMEd(
-                            Localizations.localeOf(context).languageCode,
-                          ).format(
-                            snapshot.data![index].publishedAt!.toLocal(),
-                          ),
-                          author: snapshot.data![index].authors![0].name,
-                          assetName: snapshot.data![index].featureImage,
-                          offset: pageOffset - index,
+        asyncArticlesList.map(
+          data: (data) {
+            return SizedBox(
+              height: 280,
+              child: PageView.builder(
+                controller: pageController,
+                itemCount: data.value.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      UIUtil.showWebview(
+                        context,
+                        data.value[index].url!,
+                        '',
+                      );
+                    },
+                    child: Center(
+                      child: SlidingCard(
+                        name: data.value[index].title,
+                        date: DateFormat.yMMMEd(
+                          Localizations.localeOf(context).languageCode,
+                        ).format(
+                          data.value[index].publishedAt!.toLocal(),
                         ),
+                        author: data.value[index].authors![0].name,
+                        assetName: data.value[index].featureImage,
+                        offset: pageOffset - index,
                       ),
-                    );
-                  },
-                ),
-              );
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    height: 250,
-                  )
-                ],
-              );
-            }
+                    ),
+                  );
+                },
+              ),
+            );
           },
-        )
+          error: (error) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                height: 250,
+              )
+            ],
+          ),
+          loading: (loading) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                height: 250,
+              )
+            ],
+          ),
+        ),
       ],
     );
   }
