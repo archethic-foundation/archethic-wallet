@@ -2,6 +2,7 @@
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class IconWidget extends StatelessWidget {
   const IconWidget({
@@ -33,10 +34,17 @@ class IconWidget extends StatelessWidget {
       ),
       alignment: AlignmentDirectional.center,
       child: SizedBox(
-        child: Image.asset(
-          icon,
-          color: color ?? theme.iconDrawer,
-        ),
+        child: icon.endsWith('svg')
+            ? SvgPicture.asset(
+                icon,
+                color: color ?? theme.iconDrawer,
+                height: height,
+                width: width,
+              )
+            : Image.asset(
+                icon,
+                color: color ?? theme.iconDrawer,
+              ),
       ),
     );
   }

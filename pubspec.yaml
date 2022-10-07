@@ -123,6 +123,9 @@ dependencies:
   # A composable, multi-platform, Future-based API for HTTP requests
   http: ^0.13.5
 
+  # Convert all *.svg icons from dir to icon-font (.ttf) and generates flutter compatible dart class
+  icon_font_generator: ^3.2.0
+
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
   image_picker: ^0.8.5+3
 
@@ -172,6 +175,9 @@ dependencies:
   # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
   quiver: ^3.1.0
 
+  # A package exposing annotations for riverpod_generator
+  riverpod_annotation: ^1.0.2
+
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
   rxdart: ^0.27.5
 
@@ -197,7 +203,7 @@ dependencies:
   yubidart: ^1.0.4
 
 dev_dependencies:
-  build_runner: ^2.2.0
+  build_runner: ^2.2.1
   flutter_launcher_icons: ^0.10.0
   flutter_lints: ^2.0.1
   # A build system for Dart code generation and modular compilation
@@ -212,6 +218,8 @@ dev_dependencies:
   json_serializable: ^6.3.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.6.3
+  # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
+  riverpod_generator: ^1.0.2
 
 flutter_icons:
   android: true
@@ -240,6 +248,7 @@ flutter:
     - assets/icons/
     - assets/icons/currency/
     - assets/icons/languages/
+    - assets/icons/menu/
     - assets/icons/txInfos/
     - assets/buy/
     - assets/images/
@@ -300,7 +309,9 @@ flutter:
         - asset: assets/fonts/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans-SemiBold.ttf
         - asset: assets/fonts/OpenSans-SemiBoldItalic.ttf
-
+    - family: UiIcons
+      fonts:
+        - asset: assets/fonts/ui_icons.ttf
 
 
   # The following line ensures that the Material Icons font is
