@@ -111,21 +111,28 @@ class SecurityMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.removeWallet,
-                        headingStyle: AppStyles.textStyleSize16W600EquinoxRed(context),
-                        icon: 'assets/icons/rubbish.png',
+                        headingStyle:
+                            AppStyles.textStyleSize16W600EquinoxRed(context),
+                        icon: 'assets/icons/menu/remove-wallet.svg',
                         iconColor: Colors.red,
                         onPressed: () {
                           AppDialogs.showConfirmDialog(
                               context,
                               CaseChange.toUpperCase(
                                 localizations.warning,
-                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                StateContainer.of(context)
+                                    .curLanguage
+                                    .getLocaleString(),
                               ),
                               localizations.removeWalletDetail,
-                              localizations.removeWalletAction.toUpperCase(), () {
+                              localizations.removeWalletAction.toUpperCase(),
+                              () {
                             // Show another confirm dialog
-                            AppDialogs.showConfirmDialog(context, localizations.removeWalletAreYouSure,
-                                localizations.removeWalletReassurance, localizations.yes, () async {
+                            AppDialogs.showConfirmDialog(
+                                context,
+                                localizations.removeWalletAreYouSure,
+                                localizations.removeWalletReassurance,
+                                localizations.yes, () async {
                               await StateContainer.of(context).logOut();
                               StateContainer.of(context).curTheme = DarkTheme();
                               Navigator.of(context).pushNamedAndRemoveUntil(
@@ -157,13 +164,15 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final authenticationMethod = ref.watch(preferenceProvider.select((settings) => settings.authenticationMethod));
+    final authenticationMethod = ref.watch(
+      preferenceProvider.select((settings) => settings.authenticationMethod),
+    );
     final asyncHasBiometrics = ref.watch(DeviceAbilities.hasBiometricsProvider);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.authMethod,
       defaultMethod: AuthenticationMethod(authenticationMethod),
-      icon: 'assets/icons/authentLaunch.png',
+      icon: 'assets/icons/menu/authent.svg',
       iconColor: theme.iconDrawer!,
       onPressed: asyncHasBiometrics.maybeWhen(
         data: (hasBiometrics) => () => AuthentificationMethodDialog.getDialog(
@@ -185,13 +194,14 @@ class _LockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
+    final lock =
+        ref.watch(preferenceProvider.select((settings) => settings.lock));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.lockAppSetting,
       defaultMethod: UnlockSetting(lock),
-      icon: 'assets/icons/authentication.png',
+      icon: 'assets/icons/menu/authent-at-launch.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
         final unlockSetting = await LockDialog.getDialog(
@@ -213,14 +223,16 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
-    final lockTimeout = ref.watch(preferenceProvider.select((settings) => settings.lockTimeout));
+    final lock =
+        ref.watch(preferenceProvider.select((settings) => settings.lock));
+    final lockTimeout = ref
+        .watch(preferenceProvider.select((settings) => settings.lockTimeout));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.autoLockHeader,
       defaultMethod: LockTimeoutSetting(lockTimeout),
-      icon: 'assets/icons/autoLock.png',
+      icon: 'assets/icons/menu/auto-lock.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
         final lockTimeoutSetting = await LockTimeoutDialog.getDialog(
@@ -243,8 +255,11 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final pinPadShuffle = ref.watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
-    final authenticationMethod = ref.watch(preferenceProvider.select((settings) => settings.authenticationMethod));
+    final pinPadShuffle = ref
+        .watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
+    final authenticationMethod = ref.watch(
+      preferenceProvider.select((settings) => settings.authenticationMethod),
+    );
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     if (authenticationMethod != AuthMethod.pin) return const SizedBox();
@@ -253,7 +268,7 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
         const _SettingsListItem.spacer(),
         _SettingsListItem.withSwitch(
           heading: localizations.pinPadShuffle,
-          icon: 'assets/icons/shuffle.png',
+          icon: 'assets/icons/menu/pin-swap.svg',
           iconColor: theme.iconDrawer!,
           isSwitched: pinPadShuffle,
           onChanged: (bool isSwitched) {
@@ -278,7 +293,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       headingStyle: AppStyles.textStyleSize16W600EquinoxPrimary(
         context,
       ),
-      icon: 'assets/icons/key-word.png',
+      icon: 'assets/icons/menu/vault.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
         final preferences = ref.watch(preferenceProvider);

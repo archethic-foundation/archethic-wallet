@@ -18,6 +18,7 @@ import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
 import 'package:aewallet/ui/views/main/main_appbar.dart';
 import 'package:aewallet/ui/views/main/main_bottombar.dart';
+import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/add_token.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -72,7 +73,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _placeholderCardAnimationController.addListener(_animationControllerListener);
+    _placeholderCardAnimationController
+        .addListener(_animationControllerListener);
     _opacityAnimation = Tween<double>(begin: 1, end: 0.4).animate(
       CurvedAnimation(
         parent: _placeholderCardAnimationController,
@@ -113,7 +115,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   void _startAnimation() {
     if (_animationDisposed) {
       _animationDisposed = false;
-      _placeholderCardAnimationController.addListener(_animationControllerListener);
+      _placeholderCardAnimationController
+          .addListener(_animationControllerListener);
       _opacityAnimation.addStatusListener(_animationStatusListener);
       _placeholderCardAnimationController.forward();
     }
@@ -123,7 +126,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     if (!_animationDisposed) {
       _animationDisposed = true;
       _opacityAnimation.removeStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController.removeListener(_animationControllerListener);
+      _placeholderCardAnimationController
+          .removeListener(_animationControllerListener);
       _placeholderCardAnimationController.stop();
     }
   }
@@ -134,15 +138,18 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   void _registerBus() {
     // Hackish event to block auto-lock functionality
-    _disableLockSub =
-        EventTaxiImpl.singleton().registerTo<DisableLockTimeoutEvent>().listen((DisableLockTimeoutEvent event) {
+    _disableLockSub = EventTaxiImpl.singleton()
+        .registerTo<DisableLockTimeoutEvent>()
+        .listen((DisableLockTimeoutEvent event) {
       if (event.disable!) {
         cancelLockEvent();
       }
       _lockDisabled = event.disable!;
     });
     // User changed account
-    _switchAccountSub = EventTaxiImpl.singleton().registerTo<AccountChangedEvent>().listen((AccountChangedEvent event) {
+    _switchAccountSub = EventTaxiImpl.singleton()
+        .registerTo<AccountChangedEvent>()
+        .listen((AccountChangedEvent event) {
       setState(() {
         StateContainer.of(context).recentTransactionsLoading = true;
 
@@ -163,8 +170,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       }
     });
 
-    _notificationsSub =
-        EventTaxiImpl.singleton().registerTo<NotificationsEvent>().listen((NotificationsEvent event) async {
+    _notificationsSub = EventTaxiImpl.singleton()
+        .registerTo<NotificationsEvent>()
+        .listen((NotificationsEvent event) async {
       StateContainer.of(context).recentTransactionsLoading = true;
 
       await StateContainer.of(context).requestUpdate();
@@ -226,12 +234,14 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       if (lockStreamListener != null) {
         lockStreamListener!.cancel();
       }
-      final Future<dynamic> delayed = Future<void>.delayed((preferences.getLockTimeout()).getDuration());
+      final Future<dynamic> delayed =
+          Future<void>.delayed((preferences.getLockTimeout()).getDuration());
       delayed.then((_) {
         return true;
       });
       lockStreamListener = delayed.asStream().listen((_) {
-        Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
       });
     }
   }
@@ -262,8 +272,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: StateContainer.of(context).bottomBarPageController,
-        //children: const [AccountsListTab(), AccountTab(), NFTTab()],
-        children: const [AccountsListTab(), AccountTab()],
+        children: const [AccountsListTab(), AccountTab(), NFTTab()],
+        //children: const [AccountsListTab(), AccountTab()],
         onPageChanged: (index) {
           setState(
             () => StateContainer.of(context).bottomBarCurrentPage = index,
@@ -296,7 +306,8 @@ class ExpandablePageView extends StatefulWidget {
   State<ExpandablePageView> createState() => _ExpandablePageViewState();
 }
 
-class _ExpandablePageViewState extends State<ExpandablePageView> with TickerProviderStateMixin {
+class _ExpandablePageViewState extends State<ExpandablePageView>
+    with TickerProviderStateMixin {
   PageController? _pageController;
   late List<double> _heights;
   int _currentPage = 0;
@@ -367,7 +378,8 @@ class _ExpandablePageViewState extends State<ExpandablePageView> with TickerProv
           curve: Curves.easeInOutCubic,
           duration: const Duration(milliseconds: 100),
           tween: Tween<double>(begin: _heights[0], end: _currentHeight),
-          builder: (context, value, child) => SizedBox(height: value, child: child),
+          builder: (context, value, child) =>
+              SizedBox(height: value, child: child),
           child: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
@@ -393,7 +405,8 @@ class _ExpandablePageViewState extends State<ExpandablePageView> with TickerProv
                     Sheets.showAppHeightNineSheet(
                       context: context,
                       widget: AddTokenSheet(
-                        primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                        primaryCurrency:
+                            StateContainer.of(context).curPrimaryCurrency,
                       ),
                     );
                   },
@@ -415,7 +428,8 @@ class _ExpandablePageViewState extends State<ExpandablePageView> with TickerProv
             maxHeight: double.infinity,
             alignment: Alignment.topCenter,
             child: SizeReportingWidget(
-              onSizeChange: (size) => setState(() => _heights[index] = size.height),
+              onSizeChange: (size) =>
+                  setState(() => _heights[index] = size.height),
               child: Align(child: child),
             ),
           ),

@@ -3,12 +3,12 @@ import 'dart:ui';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/preferences.dart';
 // Package imports:
 import 'package:bottom_bar/bottom_bar.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainBottomBar extends StatelessWidget {
   const MainBottomBar({super.key});
@@ -34,7 +34,10 @@ class MainBottomBar extends StatelessWidget {
             },
             items: <BottomBarItem>[
               BottomBarItem(
-                icon: const FaIcon(FontAwesomeIcons.keycdn),
+                icon: const Icon(
+                  UiIcons.keychain,
+                  size: 30,
+                ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
                 activeTitleColor: theme.bottomBarActiveTitleColor,
@@ -42,25 +45,27 @@ class MainBottomBar extends StatelessWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
-                icon: const Icon(Icons.account_circle),
+                icon: const Icon(
+                  UiIcons.main,
+                  size: 30,
+                ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
                 activeTitleColor: theme.bottomBarActiveTitleColor,
                 activeColor: theme.bottomBarActiveColor!,
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
-              /*BottomBarItem(
-                  icon: const Icon(Icons.collections_bookmark),
-                  backgroundColorOpacity: theme
-                      .bottomBarBackgroundColorOpacity!,
-                  activeIconColor: theme
-                      .bottomBarActiveIconColor!,
-                  activeTitleColor: theme
-                      .bottomBarActiveTitleColor!,
-                  activeColor:
-                      theme.bottomBarActiveColor!,
-                  inactiveColor: theme
-                      .bottomBarInactiveIcon!),*/
+              BottomBarItem(
+                icon: const Icon(
+                  UiIcons.nft,
+                  size: 30,
+                ),
+                backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
+                activeIconColor: theme.bottomBarActiveIconColor,
+                activeTitleColor: theme.bottomBarActiveTitleColor,
+                activeColor: theme.bottomBarActiveColor!,
+                inactiveColor: theme.bottomBarInactiveIcon,
+              ),
             ],
           ),
         ),

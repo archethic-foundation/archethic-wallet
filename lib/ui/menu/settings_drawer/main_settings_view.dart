@@ -90,7 +90,7 @@ class MainMenuView extends StatelessWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.addressBookHeader,
                         info: localizations.addressBookDesc,
-                        icon: 'assets/icons/address-book.png',
+                        icon: 'assets/icons/menu/address-book.svg',
                         iconColor: theme.iconDrawer,
                         onPressed: showContacts,
                       ),
@@ -100,7 +100,10 @@ class MainMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
-                        headingStyle: AppStyles.textStyleSize16W600EquinoxPrimary(context),
+                        headingStyle:
+                            AppStyles.textStyleSize16W600EquinoxPrimary(
+                          context,
+                        ),
                         icon: 'assets/icons/encrypted.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: showSecurity,
@@ -108,8 +111,11 @@ class MainMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
-                        headingStyle: AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                        icon: 'assets/icons/brush.png',
+                        headingStyle:
+                            AppStyles.textStyleSize16W600EquinoxPrimary(
+                          context,
+                        ),
+                        icon: 'assets/icons/menu/theme.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: showCustom,
                       ),
@@ -147,7 +153,10 @@ class MainMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
-                        headingStyle: AppStyles.textStyleSize16W600EquinoxPrimary(context),
+                        headingStyle:
+                            AppStyles.textStyleSize16W600EquinoxPrimary(
+                          context,
+                        ),
                         icon: 'assets/icons/help.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: showAbout,

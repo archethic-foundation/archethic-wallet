@@ -8,6 +8,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/configure_category_list.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -133,7 +134,7 @@ class MainAppBarIconBalanceShowed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const FaIcon(FontAwesomeIcons.eye),
+      icon: const Icon(UiIcons.eye),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -155,7 +156,7 @@ class MainAppBarIconBalanceNotShowed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
+      icon: const Icon(UiIcons.eye_hidden),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -177,7 +178,7 @@ class MainAppBarIconNotificationEnabled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.notifications_active_outlined),
+      icon: const Icon(UiIcons.notification_enabled),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -200,7 +201,7 @@ class MainAppBarIconNotificationDisabled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.notifications_off_outlined),
+      icon: const Icon(UiIcons.notification_disabled),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,

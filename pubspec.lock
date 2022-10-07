@@ -788,6 +788,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  icon_font_generator:
+    dependency: "direct main"
+    description:
+      name: icon_font_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   image:
     dependency: transitive
     description:
@@ -1278,6 +1285,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   riverpod:
     dependency: transitive
     description:
@@ -1285,6 +1299,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  riverpod_annotation:
+    dependency: "direct main"
+    description:
+      name: riverpod_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
+  riverpod_generator:
+    dependency: "direct dev"
+    description:
+      name: riverpod_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   rxdart:
     dependency: "direct main"
     description:

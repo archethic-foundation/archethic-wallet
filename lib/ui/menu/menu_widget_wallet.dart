@@ -8,7 +8,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -45,7 +45,7 @@ class MenuWidgetWallet extends StatelessWidget {
                 if (accountSelected.balance!.isNativeTokenValuePositive())
                   _ActionButton(
                     text: localizations.send,
-                    icon: Icons.arrow_circle_up_outlined,
+                    icon: UiIcons.send,
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
@@ -70,11 +70,11 @@ class MenuWidgetWallet extends StatelessWidget {
                 else
                   _ActionButton(
                     text: localizations.send,
-                    icon: Icons.arrow_circle_up_outlined,
+                    icon: UiIcons.send,
                   ),
                 _ActionButton(
                   text: localizations.receive,
-                  icon: Icons.arrow_circle_down_outlined,
+                  icon: UiIcons.receive,
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
@@ -96,7 +96,7 @@ class MenuWidgetWallet extends StatelessWidget {
                 ),
                 _ActionButton(
                   text: localizations.buy,
-                  icon: Icons.add_circle_outline_outlined,
+                  icon: UiIcons.buy,
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
@@ -149,28 +149,61 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          children: <Widget>[
-            IconDataWidget(
-              icon: icon,
-              width: 40,
-              height: 40,
-              enabled: onTap != null,
-            ),
-            const SizedBox(height: 5),
-            Text(
-              text,
-              style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                context,
+      child: onTap != null
+          ? InkWell(
+              onTap: onTap,
+              child: Column(
+                children: <Widget>[
+                  ShaderMask(
+                    child: SizedBox(
+                      child: Icon(
+                        icon,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
+                    shaderCallback: (Rect bounds) {
+                      const rect = Rect.fromLTRB(0, 0, 40, 40);
+                      return theme.gradient!.createShader(rect);
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    text,
+                    style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                      context,
+                    ),
+                  ),
+                ],
               ),
+            )
+          : Column(
+              children: <Widget>[
+                ShaderMask(
+                  child: SizedBox(
+                    child: Icon(
+                      icon,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                  shaderCallback: (Rect bounds) {
+                    const rect = Rect.fromLTRB(0, 0, 40, 40);
+                    return theme.gradient!.createShader(rect);
+                  },
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  text,
+                  style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                    context,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
     );
   }
 }

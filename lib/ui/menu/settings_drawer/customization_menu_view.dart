@@ -89,10 +89,12 @@ class CustomizationMenuView extends StatelessWidget {
                         heading: localizations.changeCurrencyHeader,
                         info: localizations.changeCurrencyDesc.replaceAll(
                           '%1',
-                          StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel(),
                         ),
                         defaultMethod: StateContainer.of(context).curCurrency,
-                        icon: 'assets/icons/money-currency.png',
+                        icon: 'assets/icons/menu/currency.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: () => CurrencyDialog.getDialog(context),
                         disabled: false,
@@ -100,16 +102,18 @@ class CustomizationMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
-                        defaultMethod: StateContainer.of(context).curPrimaryCurrency,
-                        icon: 'assets/icons/exchange.png',
+                        defaultMethod:
+                            StateContainer.of(context).curPrimaryCurrency,
+                        icon: 'assets/icons/menu/primary-currency.svg',
                         iconColor: theme.iconDrawer!,
-                        onPressed: () => PrimaryCurrencyDialog.getDialog(context),
+                        onPressed: () =>
+                            PrimaryCurrencyDialog.getDialog(context),
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.language,
                         defaultMethod: StateContainer.of(context).curLanguage,
-                        icon: 'assets/icons/languages.png',
+                        icon: 'assets/icons/menu/language.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: () => LanguageDialog.getDialog(context),
                       ),
@@ -122,9 +126,15 @@ class CustomizationMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       // TODO(Chralu): mettre cette expression booleenne dans un provider DeviceCapabilities.notifications
-                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         const _SettingsListItem.spacer(),
-                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         const _ActiveNotificationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ActiveVibrationsSettingsListItem(),
@@ -139,7 +149,10 @@ class CustomizationMenuView extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
+                          colors: <Color>[
+                            theme.drawerBackground!,
+                            theme.backgroundDark00!
+                          ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
                         ),
@@ -164,15 +177,17 @@ class _ThemeSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final themeSetting = ref.watch(preferenceProvider.select((settings) => settings.theme));
+    final themeSetting =
+        ref.watch(preferenceProvider.select((settings) => settings.theme));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
     return _SettingsListItem.withDefaultValue(
       heading: localizations.themeHeader,
       defaultMethod: ThemeSetting(themeSetting),
-      icon: 'assets/icons/themes.png',
+      icon: 'assets/icons/menu/theme.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
-        final pickedTheme = await ThemeDialog.getDialog(context, ThemeSetting(themeSetting));
+        final pickedTheme =
+            await ThemeDialog.getDialog(context, ThemeSetting(themeSetting));
         if (pickedTheme == null) return;
         await preferencesNotifier.setTheme(pickedTheme);
       },
@@ -187,11 +202,12 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
-    final showBalancesSetting = ref.watch(preferenceProvider.select((settings) => settings.showBalances));
+    final showBalancesSetting = ref
+        .watch(preferenceProvider.select((settings) => settings.showBalances));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
     return _SettingsListItem.withSwitch(
       heading: localizations.showBalances,
-      icon: 'assets/icons/shy.png',
+      icon: 'assets/icons/menu/show-balance.svg',
       iconColor: theme.iconDrawer!,
       isSwitched: showBalancesSetting,
       onChanged: (showBalances) async {
@@ -210,12 +226,13 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final showBlogSetting = ref.watch(preferenceProvider.select((settings) => settings.showBlog));
+    final showBlogSetting =
+        ref.watch(preferenceProvider.select((settings) => settings.showBlog));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showBlog,
-      icon: 'assets/icons/blog.png',
+      icon: 'assets/icons/menu/show-blog.svg',
       iconColor: theme.iconDrawer!,
       isSwitched: showBlogSetting,
       onChanged: (showBlog) async {
@@ -234,12 +251,14 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final showPriceChart = ref.watch(preferenceProvider.select((settings) => settings.showPriceChart));
+    final showPriceChart = ref.watch(
+      preferenceProvider.select((settings) => settings.showPriceChart),
+    );
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showPriceChart,
-      icon: 'assets/icons/statistics.png',
+      icon: 'assets/icons/menu/show-chart.svg',
       iconColor: theme.iconDrawer!,
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
@@ -258,12 +277,14 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final activeNotifications = ref.watch(preferenceProvider.select((settings) => settings.activeNotifications));
+    final activeNotifications = ref.watch(
+      preferenceProvider.select((settings) => settings.activeNotifications),
+    );
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateNotifications,
-      icon: 'assets/icons/notification-bell.png',
+      icon: 'assets/icons/menu/notification.svg',
       iconColor: theme.iconDrawer!,
       isSwitched: activeNotifications,
       onChanged: (bool isSwitched) async {
@@ -291,12 +312,14 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
-    final activeVibrations = ref.watch(preferenceProvider.select((settings) => settings.activeVibrations));
+    final activeVibrations = ref.watch(
+      preferenceProvider.select((settings) => settings.activeVibrations),
+    );
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateVibrations,
-      icon: 'assets/icons/vibrate.png',
+      icon: 'assets/icons/menu/vibration.svg',
       iconColor: theme.iconDrawer!,
       isSwitched: activeVibrations,
       onChanged: (bool isSwitched) async {
