@@ -1,15 +1,11 @@
-// ignore_for_file: cancel_subscriptions, must_be_immutable
-
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/bus/contact_added_event.dart';
-import 'package:aewallet/bus/contact_removed_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/repository/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/add_contact.dart';
@@ -17,105 +13,46 @@ import 'package:aewallet/ui/views/contacts/contact_details.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class ContactsList extends StatefulWidget {
+part 'contact_list.g.dart';
+
+@riverpod
+Future<List<Contact>> fetchContacts(
+  FetchContactsRef ref, {
+  String search = '',
+}) async {
+  if (search.isEmpty) {
+    return ref.watch(contactRepositoryProvider).getAllContacts();
+  }
+  final searchedContacts =
+      await ref.watch(contactRepositoryProvider).searchContacts(search: search);
+  return searchedContacts;
+}
+
+class ContactsList extends ConsumerWidget {
   ContactsList(this.contactsController, this.contactsOpen, {super.key});
 
   final AnimationController contactsController;
   bool contactsOpen;
 
-  @override
-  State<ContactsList> createState() => _ContactsListState();
-}
-
-class _ContactsListState extends State<ContactsList> {
-  List<Contact>? contacts;
-  List<Contact>? contactsToDisplay = List<Contact>.empty(growable: true);
   TextEditingController? searchNameController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    contacts = List<Contact>.empty(growable: true);
-    _registerBus();
-    // Initial contacts list
-    _updateContacts();
-  }
-
-  @override
-  void dispose() {
-    if (contactAddedSub != null) {
-      contactAddedSub!.cancel();
-    }
-    if (contactRemovedSub != null) {
-      contactRemovedSub!.cancel();
-    }
-    super.dispose();
-  }
-
-  StreamSubscription<ContactAddedEvent>? contactAddedSub;
-  StreamSubscription<ContactRemovedEvent>? contactRemovedSub;
-
-  void _registerBus() {
-    // Contact added bus event
-    contactAddedSub = EventTaxiImpl.singleton()
-        .registerTo<ContactAddedEvent>()
-        .listen((ContactAddedEvent event) {
-      setState(() {
-        contacts!.add(event.contact!);
-        //Sort by name
-        contacts!.sort(
-          (Contact a, Contact b) =>
-              a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
-        );
-      });
-      // Full update
-      _updateContacts();
-    });
-    // Contact removed bus event
-    contactRemovedSub = EventTaxiImpl.singleton()
-        .registerTo<ContactRemovedEvent>()
-        .listen((ContactRemovedEvent event) {
-      setState(() {
-        contacts!.remove(event.contact);
-      });
-      // Full update
-      _updateContacts();
-    });
-  }
-
-  void _updateContacts() {
-    sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
-      for (final c in contacts) {
-        if (!contacts.contains(c)) {
-          setState(() {
-            contacts.add(c);
-          });
-        }
-      }
-      // Re-sort list
-      setState(() {
-        contacts.sort(
-          (Contact a, Contact b) =>
-              a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
-        );
-        contactsToDisplay = contacts;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
-
+    final contactsList = ref.watch(
+      FetchContactsProvider(
+        search: searchNameController!.text,
+      ),
+    );
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.drawerBackground,
@@ -147,10 +84,8 @@ class _ContactsListState extends State<ContactsList> {
                       key: const Key('back'),
                       color: theme.text,
                       onPressed: () {
-                        setState(() {
-                          widget.contactsOpen = false;
-                        });
-                        widget.contactsController.reverse();
+                        contactsOpen = false;
+                        contactsController.reverse();
                       },
                     ),
                   ),
@@ -173,77 +108,24 @@ class _ContactsListState extends State<ContactsList> {
                 autocorrect: false,
                 labelText: localizations.searchField,
                 keyboardType: TextInputType.text,
-                style: AppStyles.textStyleSize16W600Primary(context),
-                onChanged: (text) async {
-                  text = text.toLowerCase();
-                  contactsToDisplay =
-                      await StateContainer.of(context).getContacts();
-                  setState(() {
-                    contactsToDisplay =
-                        contactsToDisplay!.where((Contact contact) {
-                      final contactName = contact.name!.toLowerCase();
-                      return contactName.contains(text);
-                    }).toList();
-                  });
+                onChanged: (text) {
+                  ref.watch(
+                    FetchContactsProvider(
+                      search: text,
+                    ),
+                  );
                 },
+                style: AppStyles.textStyleSize16W600Primary(context),
               ),
             ),
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  // Contacts list
-                  ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    itemCount: contactsToDisplay!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      // Build contact
-                      return _SingleContact(
-                        contact: contactsToDisplay![index],
-                      );
-                    },
-                  ),
-                  //List Top Gradient End
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      height: 20,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: <Color>[
-                            theme.drawerBackground!,
-                            theme.backgroundDark00!
-                          ],
-                          begin: const AlignmentDirectional(0.5, -1),
-                          end: const AlignmentDirectional(0.5, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  //List Bottom Gradient End
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 15,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: <Color>[
-                            theme.backgroundDark00!,
-                            theme.drawerBackground!,
-                          ],
-                          begin: const AlignmentDirectional(0.5, -1),
-                          end: const AlignmentDirectional(0.5, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            contactsList.map(
+              data: (data) {
+                return _ContactList(contactsList: data.value);
+              },
+              error: (error) => const SizedBox(),
+              loading: (loading) => const SizedBox(
+                height: 50,
+                child: CircularProgressIndicator(),
               ),
             ),
             Container(
@@ -268,6 +150,75 @@ class _ContactsListState extends State<ContactsList> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ContactList extends ConsumerWidget {
+  const _ContactList({required this.contactsList});
+
+  final List<Contact> contactsList;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = StateContainer.of(context).curTheme;
+
+    return Expanded(
+      child: Stack(
+        children: <Widget>[
+          ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(
+              left: 15,
+              top: 15,
+              bottom: 15,
+            ),
+            itemCount: contactsList.length,
+            itemBuilder: (BuildContext context, int index) {
+              // Build contact
+              return _SingleContact(
+                contact: contactsList[index],
+              );
+            },
+          ),
+          //List Top Gradient End
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              height: 20,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[
+                    theme.drawerBackground!,
+                    theme.backgroundDark00!
+                  ],
+                  begin: const AlignmentDirectional(0.5, -1),
+                  end: const AlignmentDirectional(0.5, 1),
+                ),
+              ),
+            ),
+          ),
+          //List Bottom Gradient End
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 15,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[
+                    theme.backgroundDark00!,
+                    theme.drawerBackground!,
+                  ],
+                  begin: const AlignmentDirectional(0.5, -1),
+                  end: const AlignmentDirectional(0.5, 1),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
