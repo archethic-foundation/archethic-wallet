@@ -3,11 +3,11 @@ import 'dart:io';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/bus/contact_added_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/repository/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -21,24 +21,24 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AddContactSheet extends StatefulWidget {
+class AddContactSheet extends ConsumerStatefulWidget {
   const AddContactSheet({super.key, this.address});
 
   final String? address;
 
   @override
-  State<AddContactSheet> createState() => _AddContactSheetState();
+  ConsumerState<AddContactSheet> createState() => _AddContactSheetState();
 }
 
-class _AddContactSheetState extends State<AddContactSheet> {
+class _AddContactSheetState extends ConsumerState<AddContactSheet> {
   FocusNode? _nameFocusNode;
   FocusNode? _addressFocusNode;
   TextEditingController? _nameController;
@@ -318,8 +318,6 @@ class _AddContactSheetState extends State<AddContactSheet> {
                           await sl.get<DBHelper>().saveContact(newContact);
                           StateContainer.of(context)
                               .requestUpdate(forceUpdateChart: false);
-                          EventTaxiImpl.singleton()
-                              .fire(ContactAddedEvent(contact: newContact));
                           UIUtil.showSnackbar(
                             localizations.contactAdded
                                 .replaceAll('%1', newContact.name!),
@@ -327,7 +325,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                             theme.text!,
                             theme.snackBarShadow!,
                           );
-
+                          ref.invalidate(contactRepositoryProvider);
                           Navigator.of(context).pop();
                         }
                       },

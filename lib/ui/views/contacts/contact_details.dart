@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/bus/contact_removed_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/repository/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -16,19 +16,19 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ContactDetail extends StatelessWidget {
+class ContactDetail extends ConsumerWidget {
   const ContactDetail({required this.contact, super.key});
 
   final Contact contact;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
 
@@ -63,9 +63,6 @@ class ContactDetail extends StatelessWidget {
                       localizations.yes,
                       () {
                         sl.get<DBHelper>().deleteContact(contact).then((_) {
-                          EventTaxiImpl.singleton().fire(
-                            ContactRemovedEvent(contact: contact),
-                          );
                           StateContainer.of(context)
                               .requestUpdate(forceUpdateChart: false);
                           UIUtil.showSnackbar(
@@ -75,6 +72,7 @@ class ContactDetail extends StatelessWidget {
                             theme.text!,
                             theme.snackBarShadow!,
                           );
+                          ref.invalidate(contactRepositoryProvider);
                           Navigator.of(context).pop();
                         });
                       },
