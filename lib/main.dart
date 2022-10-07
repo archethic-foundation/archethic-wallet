@@ -71,6 +71,7 @@ Future<void> main() async {
       RestartWidget(
         child: ProviderScope(
           overrides: [
+            // TODO(reddwarf03): Meaning ?
             localPreferencesRepositoryProvider
                 .overrideWithValue(localPreferencesRepository),
           ],

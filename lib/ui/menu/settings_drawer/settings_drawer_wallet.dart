@@ -1,15 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'settings_drawer.dart';
 
-// TODO(reddwarf03): This drawer seems to be used on desktop too. Should we rename it `SettingsSheetWallet` ?
-class SettingsSheetWalletMobile extends StatefulWidget {
-  const SettingsSheetWalletMobile({super.key});
+class SettingsSheetWallet extends StatefulWidget {
+  const SettingsSheetWallet({super.key});
 
   @override
-  State<SettingsSheetWalletMobile> createState() => _SettingsSheetWalletMobileState();
+  State<SettingsSheetWallet> createState() => _SettingsSheetWalletMobileState();
 }
 
-class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
+class _SettingsSheetWalletMobileState extends State<SettingsSheetWallet>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   late AnimationController _contactsController;
   late Animation<Offset> _contactsOffsetFloat;
@@ -20,7 +19,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   late AnimationController _aboutController;
   late Animation<Offset> _aboutOffsetFloat;
 
-  NetworksSetting _curNetworksSetting = const NetworksSetting(AvailableNetworks.archethicMainNet);
+  NetworksSetting _curNetworksSetting =
+      const NetworksSetting(AvailableNetworks.archethicMainNet);
 
   late bool _securityOpen;
   late bool _customOpen;
@@ -53,10 +53,18 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _contactsOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_contactsController);
-    _securityOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_securityController);
-    _customOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_customController);
-    _aboutOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_aboutController);
+    _contactsOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_contactsController);
+    _securityOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_securityController);
+    _customOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_customController);
+    _aboutOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_aboutController);
   }
 
   @override
