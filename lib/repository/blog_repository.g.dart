@@ -40,3 +40,13 @@ final blogRepositoryProvider = AutoDisposeProvider<BlogRepository>(
       : $blogRepositoryHash,
 );
 typedef BlogRepositoryRef = AutoDisposeProviderRef<BlogRepository>;
+String $fetchArticlesHash() => r'a2acc2ca8f3c34eb68966a1fb369343439d5f091';
+
+/// See also [fetchArticles].
+final fetchArticlesProvider = AutoDisposeFutureProvider<List<GhostPost>>(
+  fetchArticles,
+  name: r'fetchArticlesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : $fetchArticlesHash,
+);
+typedef FetchArticlesRef = AutoDisposeFutureProviderRef<List<GhostPost>>;

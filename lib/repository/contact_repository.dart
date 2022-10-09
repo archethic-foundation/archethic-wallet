@@ -11,6 +11,19 @@ part 'contact_repository.g.dart';
 ContactRepository contactRepository(ContactRepositoryRef ref) =>
     ContactRepository();
 
+@riverpod
+Future<List<Contact>> fetchContacts(
+  FetchContactsRef ref, {
+  String search = '',
+}) async {
+  if (search.isEmpty) {
+    return ref.watch(contactRepositoryProvider).getAllContacts();
+  }
+  final searchedContacts =
+      await ref.watch(contactRepositoryProvider).searchContacts(search: search);
+  return searchedContacts;
+}
+
 class ContactRepository {
   Future<List<Contact>> getAllContacts() async {
     return sl.get<DBHelper>().getContacts();

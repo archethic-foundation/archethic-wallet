@@ -8,6 +8,11 @@ part 'blog_repository.g.dart';
 @riverpod
 BlogRepository blogRepository(BlogRepositoryRef ref) => BlogRepository();
 
+@riverpod
+Future<List<GhostPost>> fetchArticles(FetchArticlesRef ref) async {
+  return ref.watch(blogRepositoryProvider).getArticles();
+}
+
 class BlogRepository {
   Future<List<GhostPost>> getArticles() async {
     /// API KEY Hard coded
