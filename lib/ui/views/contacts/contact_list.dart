@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -19,22 +18,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'contact_list.g.dart';
-
-@riverpod
-Future<List<Contact>> fetchContacts(
-  FetchContactsRef ref, {
-  String search = '',
-}) async {
-  if (search.isEmpty) {
-    return ref.watch(contactRepositoryProvider).getAllContacts();
-  }
-  final searchedContacts =
-      await ref.watch(contactRepositoryProvider).searchContacts(search: search);
-  return searchedContacts;
-}
 
 class ContactsList extends ConsumerWidget {
   ContactsList(this.contactsController, this.contactsOpen, {super.key});
@@ -49,7 +32,7 @@ class ContactsList extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     final contactsList = ref.watch(
-      FetchContactsProvider(
+      fetchContactsProvider(
         search: searchNameController!.text,
       ),
     );
