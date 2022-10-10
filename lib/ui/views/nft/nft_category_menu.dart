@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
+import 'package:aewallet/application/nft_category_repository.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -8,14 +8,15 @@ import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NftCategoryMenu extends StatelessWidget {
+class NftCategoryMenu extends ConsumerWidget {
   const NftCategoryMenu({super.key, required this.nftCategories});
   final List<NftCategory> nftCategories;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
     final theme = StateContainer.of(context).curTheme;
 
@@ -31,13 +32,15 @@ class NftCategoryMenu extends StatelessWidget {
           childCount: nftCategories.length,
           (context, index) {
             var count = 0;
-
-            count = StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .getNbNFTInCategory(index);
-
+            count = ref.read(
+              GetNbNFTInCategoryProvider(
+                account: StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!,
+                categoryNftIndex: index,
+              ),
+            );
             return InkWell(
               onTap: () {
                 sl.get<HapticUtil>().feedback(
@@ -67,7 +70,7 @@ class NftCategoryMenu extends StatelessWidget {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(nftCategories[index].image!),
+                            child: Image.asset(nftCategories[index].image),
                           ),
                         ),
                       ),

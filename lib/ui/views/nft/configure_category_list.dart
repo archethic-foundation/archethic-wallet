@@ -1,38 +1,41 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/nft_category_repository.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/bus/refresh_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-// Package imports:
-import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ConfigureCategoryList extends StatefulWidget {
+class ConfigureCategoryList extends ConsumerStatefulWidget {
   const ConfigureCategoryList({super.key});
 
   @override
-  State<ConfigureCategoryList> createState() => _ConfigureCategoryListState();
+  ConsumerState<ConfigureCategoryList> createState() =>
+      _ConfigureCategoryListState();
 }
 
-class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
-  @override
-  void dispose() {
-    EventTaxiImpl.singleton().fire(RefreshEvent());
-    super.dispose();
-  }
-
+class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
+    final listNftCategory = ref.read(
+      FetchNftCategoryProvider(
+        context,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!,
+      ),
+    );
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -47,13 +50,7 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
                   bottom: MediaQuery.of(context).size.height * 0.035,
                   top: 20,
                 ),
-                child: ReorderableWidget(
-                  nftCategory: StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .getListNftCategory(context),
-                ),
+                child: ReorderableWidget(nftCategory: listNftCategory),
               ),
             ),
           ),
@@ -63,16 +60,16 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
   }
 }
 
-class ReorderableWidget extends StatefulWidget {
+class ReorderableWidget extends ConsumerStatefulWidget {
   const ReorderableWidget({super.key, required this.nftCategory});
 
   final List<NftCategory> nftCategory;
 
   @override
-  State<ReorderableWidget> createState() => _ReorderableWidgetState();
+  ConsumerState<ReorderableWidget> createState() => _ReorderableWidgetState();
 }
 
-class _ReorderableWidgetState extends State<ReorderableWidget> {
+class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
   List<NftCategory>? nftCategoryToHidden =
       List<NftCategory>.empty(growable: true);
 
@@ -87,7 +84,11 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
-    nftCategoryToHidden = NftCategory.getListByDefault(context);
+
+    nftCategoryToHidden = ref
+        .read(nftCategoryRepositoryProvider)
+        .getListNftCategory(context, accountSelected);
+
     nftCategoryToSort = widget.nftCategory;
     for (final nftCategory in nftCategoryToSort!) {
       nftCategoryToHidden!
@@ -121,8 +122,12 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                     final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
                     nftCategoryToSort!.insert(newIndex, nftCategory);
                   });
-                  await accountSelected
-                      .updateNftCategoryList(nftCategoryToSort!);
+                  ref
+                      .watch(nftCategoryRepositoryProvider)
+                      .updateNftCategoryList(
+                        nftCategoryToSort!,
+                        accountSelected,
+                      );
                 },
                 children: [
                   for (NftCategory nftCategory in nftCategoryToSort!)
@@ -144,9 +149,12 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                       (element) => element.id == nftCategory.id,
                                     );
                                     setState(() {});
-                                    await accountSelected.updateNftCategoryList(
-                                      nftCategoryToSort!,
-                                    );
+                                    ref
+                                        .watch(nftCategoryRepositoryProvider)
+                                        .updateNftCategoryList(
+                                          nftCategoryToSort!,
+                                          accountSelected,
+                                        );
                                   },
                                   color:
                                       Colors.redAccent[400]!.withOpacity(0.5),
@@ -200,9 +208,12 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                 nftCategoryToSort!.add(nftCategory);
 
                                 setState(() {});
-                                await accountSelected.updateNftCategoryList(
-                                  nftCategoryToSort!,
-                                );
+                                ref
+                                    .watch(nftCategoryRepositoryProvider)
+                                    .updateNftCategoryList(
+                                      nftCategoryToSort!,
+                                      accountSelected,
+                                    );
                               },
                               color: Colors.greenAccent[400]!.withOpacity(0.5),
                             ),

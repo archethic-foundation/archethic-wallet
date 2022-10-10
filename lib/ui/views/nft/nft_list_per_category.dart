@@ -1,23 +1,29 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
+import 'package:aewallet/application/nft_category_repository.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTListPerCategory extends StatelessWidget {
+class NFTListPerCategory extends ConsumerWidget {
   const NFTListPerCategory({super.key, this.currentNftCategoryIndex});
   final int? currentNftCategoryIndex;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = StateContainer.of(context).curTheme;
-    final nftCategories = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .getListNftCategory(context);
+    final nftCategories = ref.read(
+      FetchNftCategoryProvider(
+        context,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!,
+      ),
+    );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
@@ -87,8 +93,7 @@ class NFTListPerCategory extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
-                                  nftCategories[currentNftCategoryIndex!]
-                                      .image!,
+                                  nftCategories[currentNftCategoryIndex!].image,
                                   width: 50,
                                 ),
                               ),
