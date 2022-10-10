@@ -12,7 +12,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
 }
 /*
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     if (tabActiveIndex != 2) {
       return const SizedBox();
@@ -27,7 +27,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
                   'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.',
-                  style: AppStyles.textStyleSize12W100Primary(context),
+                  style: theme.textStyleSize12W100Primary,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -43,7 +43,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
                 onChanged: (_) {
                   setState(() {});
                 },
-                style: AppStyles.textStyleSize16W600Primary(context),
+                style: theme.textStyleSize16W600Primary,
                 inputFormatters: <LengthLimitingTextInputFormatter>[
                   LengthLimitingTextInputFormatter(20),
                 ],
@@ -101,7 +101,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
                 onChanged: (_) {
                   setState(() {});
                 },
-                style: AppStyles.textStyleSize16W600Primary(context),
+                style: theme.textStyleSize16W600Primary,
                 inputFormatters: <LengthLimitingTextInputFormatter>[
                   LengthLimitingTextInputFormatter(20),
                 ],
@@ -152,7 +152,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
                 child: Text(
                   addNFTPropertyMessage,
                   textAlign: TextAlign.center,
-                  style: AppStyles.textStyleSize12W100Primary(context),
+                  style: theme.textStyleSize12W100Primary,
                 ),
               ),
               Row(
@@ -213,7 +213,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
                   autocorrect: false,
                   labelText: AppLocalization.of(context)!.searchField,
                   keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
+                  style: theme.textStyleSize16W600Primary,
                   onChanged: (_) async {
                     setState(() {});
                   },

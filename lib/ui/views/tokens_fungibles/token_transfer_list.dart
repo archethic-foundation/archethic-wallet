@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -10,8 +11,9 @@ import 'package:aewallet/util/number_util.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TokenTransferListWidget extends StatelessWidget {
+class TokenTransferListWidget extends ConsumerWidget {
   TokenTransferListWidget({
     super.key,
     required this.listTokenTransfer,
@@ -24,7 +26,8 @@ class TokenTransferListWidget extends StatelessWidget {
   final String? symbol;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     final localizations = AppLocalization.of(context)!;
     listTokenTransfer!.sort(
       (TokenTransferWallet a, TokenTransferWallet b) => a.to!.compareTo(b.to!),
@@ -40,7 +43,11 @@ class TokenTransferListWidget extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: listTokenTransfer!.length,
               itemBuilder: (BuildContext context, int index) {
-                return displayTokenDetail(context, listTokenTransfer![index]);
+                return displayTokenDetail(
+                  context,
+                  ref,
+                  listTokenTransfer![index],
+                );
               },
             ),
           ),
@@ -53,13 +60,13 @@ class TokenTransferListWidget extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       '+ ${localizations.estimatedFees}',
-                      style: AppStyles.textStyleSize14W600Primary(context),
+                      style: theme.textStyleSize14W600Primary,
                     ),
                   ],
                 ),
                 Text(
                   '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                  style: AppStyles.textStyleSize14W600Primary(context),
+                  style: theme.textStyleSize14W600Primary,
                 ),
               ],
             ),
@@ -69,10 +76,13 @@ class TokenTransferListWidget extends StatelessWidget {
     );
   }
 
+  // TODO(Chralu): extract to a [Widget] subclass
   Widget displayTokenDetail(
     BuildContext context,
+    WidgetRef ref,
     TokenTransferWallet tokenTransfer,
   ) {
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -82,13 +92,13 @@ class TokenTransferListWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               AppLocalization.of(context)!.txListTo,
-              style: AppStyles.textStyleSize14W600Primary(context),
+              style: theme.textStyleSize14W600Primary,
             ),
             Text(
               tokenTransfer.toContactName == null
                   ? Address(tokenTransfer.to!).getShortString()
                   : '${tokenTransfer.toContactName!}\n${Address(tokenTransfer.to!).getShortString()}',
-              style: AppStyles.textStyleSize14W600Primary(context),
+              style: theme.textStyleSize14W600Primary,
             ),
           ],
         ),
@@ -97,7 +107,7 @@ class TokenTransferListWidget extends StatelessWidget {
         ),
         Text(
           '${NumberUtil.formatThousands(fromBigInt(tokenTransfer.amount))} $symbol',
-          style: AppStyles.textStyleSize14W600Primary(context),
+          style: theme.textStyleSize14W600Primary,
         ),
       ],
     );

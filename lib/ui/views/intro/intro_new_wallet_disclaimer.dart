@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -9,15 +9,16 @@ import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroNewWalletDisclaimer extends StatelessWidget {
+class IntroNewWalletDisclaimer extends ConsumerWidget {
   const IntroNewWalletDisclaimer({super.key, this.name});
   final String? name;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -36,8 +37,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -78,8 +78,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                           ),
                           child: AutoSizeText(
                             localizations.warning,
-                            style:
-                                AppStyles.textStyleSize28W700Warning(context),
+                            style: theme.textStyleSize28W700Warning,
                           ),
                         ),
                         Container(
@@ -94,9 +93,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                             children: <Widget>[
                               AutoSizeText(
                                 localizations.backupSafetyLabel1,
-                                style: AppStyles.textStyleSize16W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize16W600Primary,
                               ),
                               Divider(
                                 height: 30,
@@ -104,18 +101,14 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               ),
                               AutoSizeText(
                                 localizations.backupSafetyLabel2,
-                                style: AppStyles.textStyleSize16W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize16W600Primary,
                               ),
                               const SizedBox(
                                 height: 30,
                               ),
                               AutoSizeText(
                                 localizations.backupSafetyLabel3,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.justify,
                               ),
                               Divider(
@@ -124,18 +117,14 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               ),
                               AutoSizeText(
                                 localizations.backupSafetyLabel4,
-                                style: AppStyles.textStyleSize16W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize16W600Primary,
                               ),
                               const SizedBox(
                                 height: 30,
                               ),
                               AutoSizeText(
                                 localizations.backupSafetyLabel5,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.justify,
                               ),
                               Divider(
@@ -144,18 +133,14 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               ),
                               AutoSizeText(
                                 localizations.backupSafetyLabel6,
-                                style: AppStyles.textStyleSize16W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize16W600Primary,
                               ),
                               const SizedBox(
                                 height: 30,
                               ),
                               AutoSizeText(
                                 localizations.backupSafetyLabel7,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
@@ -176,12 +161,12 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                     AppButton.buildAppButton(
                       const Key('understandButton'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.understandButton,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed('/intro_backup', arguments: name);
+                        Navigator.of(context).pushNamed('/intro_backup', arguments: name);
                       },
                     ),
                   ],

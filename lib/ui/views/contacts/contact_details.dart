@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -29,7 +30,7 @@ class ContactDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return SafeArea(
       minimum: EdgeInsets.only(
@@ -56,18 +57,17 @@ class ContactDetail extends ConsumerWidget {
                         );
                     AppDialogs.showConfirmDialog(
                       context,
+                      ref,
                       localizations.removeContact,
-                      localizations.removeContactConfirmation
-                          .replaceAll('%1', contact.name!),
+                      localizations.removeContactConfirmation.replaceAll('%1', contact.name!),
                       localizations.yes,
                       () async {
                         ContactProviders.deleteContact(contact: contact);
-                        StateContainer.of(context)
-                            .requestUpdate(forceUpdateChart: false);
+                        StateContainer.of(context).requestUpdate(forceUpdateChart: false);
                         UIUtil.showSnackbar(
-                          localizations.contactRemoved
-                              .replaceAll('%1', contact.name!),
+                          localizations.contactRemoved.replaceAll('%1', contact.name!),
                           context,
+                          ref,
                           theme.text!,
                           theme.snackBarShadow!,
                         );
@@ -92,9 +92,7 @@ class ContactDetail extends ConsumerWidget {
                   children: <Widget>[
                     AutoSizeText(
                       localizations.contactHeader,
-                      style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                        context,
-                      ),
+                      style: theme.textStyleSize24W700EquinoxPrimary,
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       stepGranularity: 0.1,
@@ -121,6 +119,7 @@ class ContactDetail extends ConsumerWidget {
                     UIUtil.showSnackbar(
                       localizations.addressCopied,
                       context,
+                      ref,
                       theme.text!,
                       theme.snackBarShadow!,
                     );
@@ -146,9 +145,7 @@ class ContactDetail extends ConsumerWidget {
                   Text(
                     contact.name!,
                     textAlign: TextAlign.center,
-                    style: AppStyles.textStyleSize16W600Primary(
-                      context,
-                    ),
+                    style: theme.textStyleSize16W600Primary,
                   ),
                   const SizedBox(height: 5),
                   Container(
@@ -179,12 +176,14 @@ class ContactDetail extends ConsumerWidget {
                       UIUtil.showSnackbar(
                         localizations.addressCopied,
                         context,
+                        ref,
                         theme.text!,
                         theme.snackBarShadow!,
                       );
                     },
                     child: UIUtil.threeLinetextStyleSmallestW400Text(
                       context,
+                      ref,
                       contact.address!,
                     ),
                   ),
@@ -222,6 +221,7 @@ class ContactDetail extends ConsumerWidget {
                     AppButton.buildAppButton(
                       const Key('send'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.send,
                       Dimens.buttonTopDimens,
@@ -229,11 +229,10 @@ class ContactDetail extends ConsumerWidget {
                         Navigator.of(context).pop();
                         Sheets.showAppHeightNineSheet(
                           context: context,
+                          ref: ref,
                           widget: TransferSheet(
-                            primaryCurrency:
-                                StateContainer.of(context).curPrimaryCurrency,
-                            localCurrency:
-                                StateContainer.of(context).curCurrency,
+                            primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                            localCurrency: StateContainer.of(context).curCurrency,
                             contact: contact,
                           ),
                         );

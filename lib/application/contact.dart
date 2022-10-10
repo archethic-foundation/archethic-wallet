@@ -7,8 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'contact.g.dart';
 
 @riverpod
-ContactRepository _contactRepository(_ContactRepositoryRef ref) =>
-    ContactRepository();
+ContactRepository _contactRepository(_ContactRepositoryRef ref) => ContactRepository();
 
 @riverpod
 Future<List<Contact>> _fetchContacts(
@@ -18,9 +17,7 @@ Future<List<Contact>> _fetchContacts(
   if (search.isEmpty) {
     return ref.watch(_contactRepositoryProvider).getAllContacts();
   }
-  final searchedContacts = await ref
-      .watch(_contactRepositoryProvider)
-      .searchContacts(search: search);
+  final searchedContacts = await ref.watch(_contactRepositoryProvider).searchContacts(search: search);
   return searchedContacts;
 }
 
@@ -57,8 +54,7 @@ class ContactRepository {
     final contacts = await sl.get<DBHelper>().getContacts();
     return contacts
         .where(
-          (contact) =>
-              contact.name!.toLowerCase().contains(search.toLowerCase()),
+          (contact) => contact.name!.toLowerCase().contains(search.toLowerCase()),
         )
         .toList();
   }

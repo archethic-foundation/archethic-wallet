@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -27,11 +28,12 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 
-class AddTokenConfirm extends StatefulWidget {
+class AddTokenConfirm extends ConsumerStatefulWidget {
   const AddTokenConfirm({
     super.key,
     this.tokenName,
@@ -46,10 +48,10 @@ class AddTokenConfirm extends StatefulWidget {
   final double? feeEstimation;
 
   @override
-  State<AddTokenConfirm> createState() => _AddTokenConfirmState();
+  ConsumerState<AddTokenConfirm> createState() => _AddTokenConfirmState();
 }
 
-class _AddTokenConfirmState extends State<AddTokenConfirm> {
+class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
   bool? animationOpen;
 
   SubscriptionChannel subscriptionChannel = SubscriptionChannel();
@@ -58,16 +60,12 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
+    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) {
       _doAdd();
     });
 
-    _sendTxSub = EventTaxiImpl.singleton()
-        .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) {
-      final theme = StateContainer.of(context).curTheme;
+    _sendTxSub = EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) {
+      final theme = ref.read(ThemeProviders.theme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -77,6 +75,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
         UIUtil.showSnackbar(
           event.response!,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
@@ -99,6 +98,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     .replaceAll('%1', event.nbConfirmations.toString())
                     .replaceAll('%2', event.maxConfirmations.toString()),
             context,
+            ref,
             theme.text!,
             theme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000),
@@ -111,6 +111,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           UIUtil.showSnackbar(
             AppLocalization.of(context)!.notEnoughConfirmations,
             context,
+            ref,
             theme.text!,
             theme.snackBarShadow!,
           );
@@ -144,7 +145,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
@@ -159,9 +160,9 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
+    final theme = ref.read(ThemeProviders.theme);
     return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -174,14 +175,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                 const SizedBox(height: 20),
                 Text(
                   '${localizations.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                  style: AppStyles.textStyleSize14W100Primary(context),
+                  style: theme.textStyleSize14W100Primary,
                 ),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
                     localizations.addTokenConfirmationMessage,
-                    style: AppStyles.textStyleSize14W600Primary(context),
+                    style: theme.textStyleSize14W600Primary,
                   ),
                 ),
                 const SizedBox(
@@ -193,11 +194,11 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     children: <Widget>[
                       Text(
                         localizations.tokenName,
-                        style: AppStyles.textStyleSize14W600Primary(context),
+                        style: theme.textStyleSize14W600Primary,
                       ),
                       Text(
                         widget.tokenName!,
-                        style: AppStyles.textStyleSize14W100Primary(context),
+                        style: theme.textStyleSize14W100Primary,
                       ),
                     ],
                   ),
@@ -208,11 +209,11 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     children: <Widget>[
                       Text(
                         localizations.tokenSymbol,
-                        style: AppStyles.textStyleSize14W600Primary(context),
+                        style: theme.textStyleSize14W600Primary,
                       ),
                       Text(
                         widget.tokenSymbol!,
-                        style: AppStyles.textStyleSize14W100Primary(context),
+                        style: theme.textStyleSize14W100Primary,
                       ),
                     ],
                   ),
@@ -223,13 +224,13 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     children: <Widget>[
                       Text(
                         localizations.tokenInitialSupply,
-                        style: AppStyles.textStyleSize14W600Primary(context),
+                        style: theme.textStyleSize14W600Primary,
                       ),
                       Text(
                         NumberUtil.formatThousands(
                           widget.tokenInitialSupply!,
                         ),
-                        style: AppStyles.textStyleSize14W100Primary(context),
+                        style: theme.textStyleSize14W100Primary,
                       ),
                     ],
                   ),
@@ -246,6 +247,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     AppButton.buildAppButton(
                       const Key('confirm'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.confirm,
                       Dimens.buttonTopDimens,
@@ -256,8 +258,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
-                          activeVibrations:
-                              StateContainer.of(context).activeVibrations,
+                          activeVibrations: StateContainer.of(context).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
@@ -271,6 +272,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     AppButton.buildAppButton(
                       const Key('cancel'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.cancel,
                       Dimens.buttonBottomDimens,
@@ -295,11 +297,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
       final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .name!,
+        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
       );
       final service = 'archethic-wallet-$nameEncoded';
       final index = (await sl.get<ApiService>().getTransactionIndex(
@@ -307,8 +305,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
               ))
           .chainLength!;
 
-      final transaction =
-          Transaction(type: 'token', data: Transaction.initData());
+      final transaction = Transaction(type: 'token', data: Transaction.initData());
       final content = tokenToJsonForTxDataContent(
         Token(
           name: widget.tokenName,
@@ -319,9 +316,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
         ),
       );
       transaction.setContent(content);
-      final signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
+      final signedTx = keychain.buildTransaction(transaction, service, index).originSign(originPrivateKey);
 
       var transactionStatus = TransactionStatus();
 
@@ -388,12 +383,10 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
     var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations =
-            event.data!['transactionConfirmed']['nbConfirmations'];
+        nbConfirmations = event.data!['transactionConfirmed']['nbConfirmations'];
       }
       if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations =
-            event.data!['transactionConfirmed']['maxConfirmations'];
+        maxConfirmations = event.data!['transactionConfirmed']['maxConfirmations'];
       }
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(

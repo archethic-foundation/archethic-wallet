@@ -1,16 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LockDialog {
   static Future<UnlockSetting?> getDialog(
     BuildContext context,
+    WidgetRef ref,
     UnlockSetting curUnlockSetting,
   ) async {
     final preferences = await Preferences.getInstance();
@@ -31,11 +33,11 @@ class LockDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return AlertDialog(
           title: Text(
             AppLocalization.of(context)!.lockAppSetting,
-            style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
+            style: theme.textStyleSize24W700EquinoxPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),

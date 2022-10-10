@@ -2,7 +2,7 @@
 import 'dart:math';
 
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -16,9 +16,10 @@ import 'package:aewallet/util/vault.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:password_strength/password_strength.dart';
 
-class SetPassword extends StatefulWidget {
+class SetPassword extends ConsumerStatefulWidget {
   const SetPassword({
     super.key,
     this.header,
@@ -31,10 +32,10 @@ class SetPassword extends StatefulWidget {
   final String? name;
   final String? seed;
   @override
-  State<SetPassword> createState() => _SetPasswordState();
+  ConsumerState<SetPassword> createState() => _SetPasswordState();
 }
 
-class _SetPasswordState extends State<SetPassword> {
+class _SetPasswordState extends ConsumerState<SetPassword> {
   FocusNode? setPasswordFocusNode;
   TextEditingController? setPasswordController;
   FocusNode? confirmPasswordFocusNode;
@@ -63,7 +64,7 @@ class _SetPasswordState extends State<SetPassword> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
@@ -82,8 +83,7 @@ class _SetPasswordState extends State<SetPassword> {
         ),
         child: TapOutsideUnfocus(
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075,
@@ -96,8 +96,7 @@ class _SetPasswordState extends State<SetPassword> {
                         Row(
                           children: <Widget>[
                             Container(
-                              margin:
-                                  const EdgeInsetsDirectional.only(start: 15),
+                              margin: const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -130,30 +129,22 @@ class _SetPasswordState extends State<SetPassword> {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
-                                      style:
-                                          AppStyles.textStyleSize20W700Warning(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize20W700Warning,
                                     ),
                                   ),
                                 if (widget.description != null)
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
+                                        margin: const EdgeInsetsDirectional.only(
                                           start: 20,
                                           end: 20,
                                           top: 15,
                                         ),
                                         child: Text(
                                           widget.description!,
-                                          style: AppStyles
-                                              .textStyleSize16W600Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize16W600Primary,
                                           textAlign: TextAlign.justify,
                                         ),
                                       ),
@@ -176,8 +167,7 @@ class _SetPasswordState extends State<SetPassword> {
                                       });
                                     }
 
-                                    if (confirmPasswordController!.text ==
-                                        setPasswordController!.text) {
+                                    if (confirmPasswordController!.text == setPasswordController!.text) {
                                       if (mounted) {
                                         setState(() {
                                           passwordsMatch = true;
@@ -194,9 +184,7 @@ class _SetPasswordState extends State<SetPassword> {
                                   labelText: localizations.createPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !setPasswordVisible!,
-                                  style: AppStyles.textStyleSize16W700Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize16W700Primary,
                                   onSubmitted: (text) {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
@@ -204,37 +192,30 @@ class _SetPasswordState extends State<SetPassword> {
                                     icon: Icons.shuffle_sharp,
                                     onPressed: () {
                                       setPasswordController!.text = '';
-                                      final passwordLength =
-                                          Random().nextInt(8) + 5;
+                                      final passwordLength = Random().nextInt(8) + 5;
 
                                       const allowedChars =
                                           r'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#=+!£$%&?[](){}';
                                       var i = 0;
                                       while (i < passwordLength) {
-                                        final random = Random.secure()
-                                            .nextInt(allowedChars.length);
-                                        setPasswordController!.text +=
-                                            allowedChars[random];
+                                        final random = Random.secure().nextInt(allowedChars.length);
+                                        setPasswordController!.text += allowedChars[random];
                                         i++;
                                       }
 
                                       setState(() {
                                         setPasswordVisible = true;
-                                        passwordStrength =
-                                            estimatePasswordStrength(
+                                        passwordStrength = estimatePasswordStrength(
                                           setPasswordController!.text,
                                         );
                                       });
                                     },
                                   ),
                                   suffixButton: TextFieldButton(
-                                    icon: setPasswordVisible!
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                    icon: setPasswordVisible! ? Icons.visibility : Icons.visibility_off,
                                     onPressed: () {
                                       setState(() {
-                                        setPasswordVisible =
-                                            !setPasswordVisible!;
+                                        setPasswordVisible = !setPasswordVisible!;
                                       });
                                     },
                                   ),
@@ -244,8 +225,7 @@ class _SetPasswordState extends State<SetPassword> {
                                   child: Container(
                                     padding: EdgeInsets.only(
                                       top: 10,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.105,
+                                      right: MediaQuery.of(context).size.width * 0.105,
                                     ),
                                     width: 150,
                                     child: Column(
@@ -266,30 +246,19 @@ class _SetPasswordState extends State<SetPassword> {
                                           Text(
                                             localizations.passwordStrengthWeak,
                                             textAlign: TextAlign.end,
-                                            style: AppStyles
-                                                .textStyleSize12W100Primary(
-                                              context,
-                                            ),
+                                            style: theme.textStyleSize12W100Primary,
                                           )
                                         else
                                           passwordStrength <= 0.8
                                               ? Text(
-                                                  localizations
-                                                      .passwordStrengthAlright,
+                                                  localizations.passwordStrengthAlright,
                                                   textAlign: TextAlign.end,
-                                                  style: AppStyles
-                                                      .textStyleSize12W100Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W100Primary,
                                                 )
                                               : Text(
-                                                  localizations
-                                                      .passwordStrengthStrong,
+                                                  localizations.passwordStrengthStrong,
                                                   textAlign: TextAlign.end,
-                                                  style: AppStyles
-                                                      .textStyleSize12W100Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W100Primary,
                                                 ),
                                       ],
                                     ),
@@ -307,8 +276,7 @@ class _SetPasswordState extends State<SetPassword> {
                                         passwordError = null;
                                       });
                                     }
-                                    if (confirmPasswordController!.text ==
-                                        setPasswordController!.text) {
+                                    if (confirmPasswordController!.text == setPasswordController!.text) {
                                       if (mounted) {
                                         setState(() {
                                           passwordsMatch = true;
@@ -325,17 +293,12 @@ class _SetPasswordState extends State<SetPassword> {
                                   labelText: localizations.confirmPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !confirmPasswordVisible!,
-                                  style: AppStyles.textStyleSize16W700Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize16W700Primary,
                                   suffixButton: TextFieldButton(
-                                    icon: confirmPasswordVisible!
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                    icon: confirmPasswordVisible! ? Icons.visibility : Icons.visibility_off,
                                     onPressed: () {
                                       setState(() {
-                                        confirmPasswordVisible =
-                                            !confirmPasswordVisible!;
+                                        confirmPasswordVisible = !confirmPasswordVisible!;
                                       });
                                     },
                                   ),
@@ -347,9 +310,7 @@ class _SetPasswordState extends State<SetPassword> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     passwordError == null ? '' : passwordError!,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                                 const SizedBox(
@@ -372,6 +333,7 @@ class _SetPasswordState extends State<SetPassword> {
                           AppButton.buildAppButton(
                             const Key('confirm'),
                             context,
+                            ref,
                             AppButtonType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
@@ -393,8 +355,7 @@ class _SetPasswordState extends State<SetPassword> {
   }
 
   Future<void> _validateRequest() async {
-    if (setPasswordController!.text.isEmpty ||
-        confirmPasswordController!.text.isEmpty) {
+    if (setPasswordController!.text.isEmpty || confirmPasswordController!.text.isEmpty) {
       if (mounted) {
         setState(() {
           passwordError = AppLocalization.of(context)!.passwordBlank;

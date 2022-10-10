@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -12,15 +13,17 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NetworkDialog {
   static Future<NetworksSetting?> getDialog(
     BuildContext context,
+    WidgetRef ref,
     NetworksSetting curNetworksSetting,
   ) async {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
     String? endpointError;
@@ -45,13 +48,13 @@ class NetworkDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         final localizations = AppLocalization.of(context)!;
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               localizations.networksHeader,
-              style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+              style: theme.textStyleSize24W700EquinoxPrimary,
             ),
           ),
           shape: RoundedRectangleBorder(
@@ -68,12 +71,10 @@ class NetworkDialog {
                 NetworksSetting(value.value as AvailableNetworks),
               );
 
-              final selectedNetworkSettings =
-                  NetworksSetting(value.value as AvailableNetworks);
+              final selectedNetworkSettings = NetworksSetting(value.value as AvailableNetworks);
               StateContainer.of(context).curNetwork = selectedNetworkSettings;
 
-              if (value.value as AvailableNetworks ==
-                  AvailableNetworks.archethicDevNet) {
+              if (value.value as AvailableNetworks == AvailableNetworks.archethicDevNet) {
                 endpointController.text = preferences.getNetworkDevEndpoint();
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
@@ -91,21 +92,15 @@ class NetworkDialog {
                                   height: 30,
                                 ),
                                 Text(
-                                  StateContainer.of(context)
-                                      .curNetwork
-                                      .getDisplayName(context),
-                                  style: AppStyles.textStyleSize10W100Primary(
-                                    context,
-                                  ),
+                                  StateContainer.of(context).curNetwork.getDisplayName(context),
+                                  style: theme.textStyleSize10W100Primary,
                                 ),
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
                                   localizations.enterEndpointHeader,
-                                  style: AppStyles.textStyleSize16W400Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize16W400Primary,
                                 ),
                               ],
                             ),
@@ -122,8 +117,7 @@ class NetworkDialog {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   AppTextField(
                                     leftMargin: 0,
@@ -132,18 +126,14 @@ class NetworkDialog {
                                     controller: endpointController,
                                     labelText: localizations.enterEndpoint,
                                     keyboardType: TextInputType.text,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                     inputFormatters: <TextInputFormatter>[
                                       LengthLimitingTextInputFormatter(28),
                                     ],
                                   ),
                                   Text(
                                     'http://xxx.xxx.xxx.xxx:xxxx',
-                                    style: AppStyles.textStyleSize12W400Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize12W400Primary,
                                   ),
                                   if (endpointError != null)
                                     Container(
@@ -153,10 +143,7 @@ class NetworkDialog {
                                       ),
                                       child: Text(
                                         endpointError!,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize14W600Primary,
                                       ),
                                     )
                                   else
@@ -171,6 +158,7 @@ class NetworkDialog {
                                   AppButton.buildAppButtonTiny(
                                     const Key('addEndpoint'),
                                     context,
+                                    ref,
                                     AppButtonType.primary,
                                     localizations.ok,
                                     Dimens.buttonTopDimens,
@@ -178,8 +166,7 @@ class NetworkDialog {
                                       endpointError = '';
                                       if (endpointController.text.isEmpty) {
                                         setState(() {
-                                          endpointError =
-                                              localizations.enterEndpointBlank;
+                                          endpointError = localizations.enterEndpointBlank;
                                           FocusScope.of(context).requestFocus(
                                             endpointFocusNode,
                                           );
@@ -190,8 +177,7 @@ class NetworkDialog {
                                             ).isAbsolute ==
                                             false) {
                                           setState(() {
-                                            endpointError = localizations
-                                                .enterEndpointNotValid;
+                                            endpointError = localizations.enterEndpointNotValid;
                                             FocusScope.of(context).requestFocus(
                                               endpointFocusNode,
                                             );

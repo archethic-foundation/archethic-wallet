@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -17,8 +17,9 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroConfigureSecurity extends StatefulWidget {
+class IntroConfigureSecurity extends ConsumerStatefulWidget {
   const IntroConfigureSecurity({
     super.key,
     this.accessModes,
@@ -30,10 +31,10 @@ class IntroConfigureSecurity extends StatefulWidget {
   final String? seed;
 
   @override
-  State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
+  ConsumerState<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
 }
 
-class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
+class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity> {
   PickerItem? _accessModesSelected;
   bool? animationOpen;
 
@@ -46,7 +47,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -65,8 +66,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.075,
             ),
@@ -79,8 +79,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                         Row(
                           children: <Widget>[
                             Container(
-                              margin:
-                                  const EdgeInsetsDirectional.only(start: 15),
+                              margin: const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -107,8 +106,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             localizations.configureSecurityIntro,
-                            style:
-                                AppStyles.textStyleSize20W700Warning(context),
+                            style: theme.textStyleSize20W700Warning,
                           ),
                         ),
                         Container(
@@ -119,8 +117,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                           ),
                           child: AutoSizeText(
                             localizations.configureSecurityExplanation,
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
+                            style: theme.textStyleSize16W600Primary,
                             textAlign: TextAlign.justify,
                             maxLines: 6,
                             stepGranularity: 0.5,
@@ -142,26 +139,21 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   _accessModesSelected = value;
                                 });
                                 if (_accessModesSelected == null) return;
-                                final authMethod =
-                                    _accessModesSelected!.value as AuthMethod;
+                                final authMethod = _accessModesSelected!.value as AuthMethod;
                                 var authenticated = false;
                                 switch (authMethod) {
                                   case AuthMethod.biometrics:
-                                    authenticated = await sl
-                                        .get<BiometricUtil>()
-                                        .authenticateWithBiometrics(
+                                    authenticated = await sl.get<BiometricUtil>().authenticateWithBiometrics(
                                           context,
                                           localizations.unlockBiometrics,
                                         );
                                     break;
                                   case AuthMethod.password:
-                                    authenticated =
-                                        await Navigator.of(context).push(
+                                    authenticated = await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SetPassword(
-                                            header:
-                                                localizations.setPasswordHeader,
+                                            header: localizations.setPasswordHeader,
                                             description: AppLocalization.of(
                                               context,
                                             )!
@@ -174,8 +166,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     );
                                     break;
                                   case AuthMethod.pin:
-                                    authenticated =
-                                        await Navigator.of(context).push(
+                                    authenticated = await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return const PinScreen(
@@ -186,15 +177,12 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     );
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:
-                                    authenticated =
-                                        await Navigator.of(context).push(
+                                    authenticated = await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SetYubikey(
-                                            header:
-                                                localizations.seYubicloudHeader,
-                                            description: localizations
-                                                .seYubicloudDescription,
+                                            header: localizations.seYubicloudHeader,
+                                            description: localizations.seYubicloudDescription,
                                           );
                                         },
                                       ),
@@ -209,8 +197,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   await Preferences.initWallet(
                                     AuthenticationMethod(authMethod),
                                   );
-                                  EventTaxiImpl.singleton()
-                                      .fire(AuthenticatedEvent());
+                                  EventTaxiImpl.singleton().fire(AuthenticatedEvent());
                                 }
                               },
                             ),

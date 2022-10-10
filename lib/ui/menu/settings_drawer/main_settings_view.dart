@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'settings_drawer.dart';
 
-class MainMenuView extends StatelessWidget {
+class MainMenuView extends ConsumerWidget {
   const MainMenuView({
     required this.showContacts,
     required this.showSecurity,
@@ -16,9 +16,9 @@ class MainMenuView extends StatelessWidget {
   final VoidCallback showAbout;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -100,10 +100,7 @@ class MainMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
-                        headingStyle:
-                            AppStyles.textStyleSize16W600EquinoxPrimary(
-                          context,
-                        ),
+                        headingStyle: theme.textStyleSize16W600EquinoxPrimary,
                         icon: 'assets/icons/encrypted.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: showSecurity,
@@ -111,10 +108,7 @@ class MainMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
-                        headingStyle:
-                            AppStyles.textStyleSize16W600EquinoxPrimary(
-                          context,
-                        ),
+                        headingStyle: theme.textStyleSize16W600EquinoxPrimary,
                         icon: 'assets/icons/menu/theme.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: showCustom,
@@ -153,10 +147,7 @@ class MainMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
-                        headingStyle:
-                            AppStyles.textStyleSize16W600EquinoxPrimary(
-                          context,
-                        ),
+                        headingStyle: theme.textStyleSize16W600EquinoxPrimary,
                         icon: 'assets/icons/help.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: showAbout,

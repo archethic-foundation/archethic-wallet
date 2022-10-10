@@ -23,7 +23,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
 }
   /*
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     File? file;
     var importSelection = 0;
 
@@ -50,7 +50,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
                     context,
                     widget.currentNftCategoryIndex!,
                   ),
-                  style: AppStyles.textStyleSize12W100Primary(context),
+                  style: theme.textStyleSize12W100Primary,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -89,9 +89,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
                             ),
                             Text(
                               localizations.nftAddImportPhoto,
-                              style: AppStyles.textStyleSize12W400Primary(
-                                context,
-                              ),
+                              style: theme.textStyleSize12W400Primary,
                             ),
                             const SizedBox(
                               width: 30,
@@ -168,9 +166,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
                             ),
                             Text(
                               'Take a photo',
-                              style: AppStyles.textStyleSize12W400Primary(
-                                context,
-                              ),
+                              style: theme.textStyleSize12W400Primary,
                             ),
                             const SizedBox(
                               width: 30,
@@ -462,7 +458,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
                   child: Align(
                     child: Text(
                       'Format: $typeMime',
-                      style: AppStyles.textStyleSize12W400Primary(context),
+                      style: theme.textStyleSize12W400Primary,
                     ),
                   ),
                 ),
@@ -472,7 +468,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
                   child: Align(
                     child: Text(
                       '${localizations.nftAddFileSize} ${filesize(sizeFile)}',
-                      style: AppStyles.textStyleSize12W400Primary(context),
+                      style: theme.textStyleSize12W400Primary,
                     ),
                   ),
                 ),
@@ -550,7 +546,7 @@ class _NFTCreationProcessImportTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
 return 
 Column(children: [
@@ -584,7 +580,7 @@ SizedBox(
                       ),
                       Text(
                         localizations.nftAddImportFile,
-                        style: AppStyles.textStyleSize12W400Primary(context),
+                        style: theme.textStyleSize12W400Primary,
                       ),
                       const SizedBox(
                         width: 30,

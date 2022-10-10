@@ -2,14 +2,14 @@
 
 part of '../balance_infos.dart';
 
-class BalanceInfosChart extends StatelessWidget {
+class BalanceInfosChart extends ConsumerWidget {
   const BalanceInfosChart({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var optionChartList = List<OptionChart>.empty(growable: true);
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final chartInfos = StateContainer.of(context).chartInfos;
 
     return InkWell(
@@ -29,11 +29,11 @@ class BalanceInfosChart extends StatelessWidget {
           OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
           OptionChart('all', ChartInfos.getChartOptionLabel(context, 'all')),
         ];
-        final optionChart =
-            _getOptionChart(context, StateContainer.of(context).idChartOption!);
+        final optionChart = _getOptionChart(context, StateContainer.of(context).idChartOption!);
 
         Sheets.showAppHeightNineSheet(
           context: context,
+          ref: ref,
           widget: ChartSheet(
             optionChartList: optionChartList,
             optionChart: optionChart,
@@ -53,9 +53,7 @@ class BalanceInfosChart extends StatelessWidget {
                   children: [
                     Text(
                       localizations.priceChartHeader,
-                      style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                        context,
-                      ),
+                      style: theme.textStyleSize14W600EquinoxPrimary,
                     ),
                     const IconDataWidget(
                       icon: Icons.arrow_circle_right_outlined,
@@ -87,16 +85,10 @@ class BalanceInfosChart extends StatelessWidget {
                             end: Alignment.bottomCenter,
                           ),
                           tooltipBg: theme.backgroundDark!,
-                          tooltipText:
-                              AppStyles.textStyleSize12W100Primary(context),
-                          axisTextStyle:
-                              AppStyles.textStyleSize12W100Primary(context),
-                          optionChartSelected:
-                              StateContainer.of(context).idChartOption!,
-                          currency: StateContainer.of(context)
-                              .curCurrency
-                              .currency
-                              .name,
+                          tooltipText: theme.textStyleSize12W100Primary,
+                          axisTextStyle: theme.textStyleSize12W100Primary,
+                          optionChartSelected: StateContainer.of(context).idChartOption!,
+                          currency: StateContainer.of(context).curCurrency.currency.name,
                           completeChart: false,
                         )
                       : const SizedBox(),

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -7,10 +8,11 @@ import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class BalanceIndicatorWidget extends StatefulWidget {
+class BalanceIndicatorWidget extends ConsumerStatefulWidget {
   const BalanceIndicatorWidget({
     super.key,
     this.primaryCurrency,
@@ -23,12 +25,12 @@ class BalanceIndicatorWidget extends StatefulWidget {
   final bool displaySwitchButton;
 
   @override
-  State<BalanceIndicatorWidget> createState() => _BalanceIndicatorWidgetState();
+  ConsumerState<BalanceIndicatorWidget> createState() => _BalanceIndicatorWidgetState();
 }
 
 enum PrimaryCurrency { fiat, native }
 
-class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
+class _BalanceIndicatorWidgetState extends ConsumerState<BalanceIndicatorWidget> {
   PrimaryCurrency primaryCurrency = PrimaryCurrency.native;
 
   @override
@@ -44,7 +46,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return StateContainer.of(context).showBalance
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -102,15 +104,15 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
   }
 }
 
-class _BalanceIndicatorFiat extends StatelessWidget {
+class _BalanceIndicatorFiat extends ConsumerWidget {
   const _BalanceIndicatorFiat({required this.primary});
 
   final bool primary;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
-
+    final theme = ref.read(ThemeProviders.theme);
     return RichText(
       text: TextSpan(
         text: '',
@@ -118,24 +120,19 @@ class _BalanceIndicatorFiat extends StatelessWidget {
           if (primary == false)
             TextSpan(
               text: '(',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
+              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
             ),
           TextSpan(
             text: CurrencyUtil.getConvertedAmount(
               StateContainer.of(context).curCurrency.currency.name,
               accountSelectedBalance!.fiatCurrencyValue!,
             ),
-            style:
-                primary ? AppStyles.textStyleSize16W700Primary(context) : AppStyles.textStyleSize14W700Primary(context),
+            style: primary ? theme.textStyleSize16W700Primary : theme.textStyleSize14W700Primary,
           ),
           if (primary == false)
             TextSpan(
               text: ')',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
+              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
             ),
         ],
       ),
@@ -143,14 +140,15 @@ class _BalanceIndicatorFiat extends StatelessWidget {
   }
 }
 
-class _BalanceIndicatorNative extends StatelessWidget {
+class _BalanceIndicatorNative extends ConsumerWidget {
   const _BalanceIndicatorNative({required this.primary});
 
   final bool primary;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
+    final theme = ref.read(ThemeProviders.theme);
 
     return RichText(
       text: TextSpan(
@@ -159,21 +157,16 @@ class _BalanceIndicatorNative extends StatelessWidget {
           if (primary == false)
             TextSpan(
               text: '(',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
+              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
             ),
           TextSpan(
             text: '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
-            style:
-                primary ? AppStyles.textStyleSize16W700Primary(context) : AppStyles.textStyleSize14W700Primary(context),
+            style: primary ? theme.textStyleSize16W700Primary : theme.textStyleSize14W700Primary,
           ),
           if (primary == false)
             TextSpan(
               text: ')',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
+              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
             ),
         ],
       ),

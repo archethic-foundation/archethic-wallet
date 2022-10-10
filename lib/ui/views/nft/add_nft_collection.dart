@@ -85,7 +85,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
    /* 
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -116,9 +116,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                           padding: const EdgeInsets.only(left: 30, right: 30),
                           child: Text(
                             '${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                            style: AppStyles.textStyleSize14W100Primary(
-                              context,
-                            ),
+                            style: theme.textStyleSize14W100Primary,
                             textAlign: TextAlign.justify,
                           ),
                         )
@@ -127,9 +125,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                           padding: const EdgeInsets.only(left: 30, right: 30),
                           child: Text(
                             localizations.estimatedFeesAddTokenNote,
-                            style: AppStyles.textStyleSize14W100Primary(
-                              context,
-                            ),
+                            style: theme.textStyleSize14W100Primary,
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -337,7 +333,7 @@ class _AddNFTCollectionInfos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
@@ -355,7 +351,7 @@ class _AddNFTCollectionInfos extends StatelessWidget {
                   labelText: localizations.tokenNameHint,
                   autocorrect: false,
                   keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
+                  style: theme.textStyleSize16W600Primary,
                   inputFormatters: <LengthLimitingTextInputFormatter>[
                     LengthLimitingTextInputFormatter(40),
                   ],
@@ -372,7 +368,7 @@ class _AddNFTCollectionInfos extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(
                     collectionNameValidationText!,
-                    style: AppStyles.textStyleSize14W600Primary(context),
+                    style: theme.textStyleSize14W600Primary,
                   ),
                 ),
                 AppTextField(
@@ -383,7 +379,7 @@ class _AddNFTCollectionInfos extends StatelessWidget {
                   labelText: localizations.tokenSymbolHint,
                   autocorrect: false,
                   keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
+                  style: theme.textStyleSize16W600Primary,
                   inputFormatters: [
                     UpperCaseTextFormatter(),
                     LengthLimitingTextInputFormatter(4),
@@ -401,7 +397,7 @@ class _AddNFTCollectionInfos extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(
                     collectionSymbolValidationText!,
-                    style: AppStyles.textStyleSize14W600Primary(context),
+                    style: theme.textStyleSize14W600Primary,
                   ),
                 ),
                 Row(

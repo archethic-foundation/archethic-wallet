@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -7,9 +8,10 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactsDialog {
-  static Future<Contact?> getDialog(BuildContext context) async {
+  static Future<Contact?> getDialog(BuildContext context, WidgetRef ref) async {
     final searchNameFocusNode = FocusNode();
     final searchNameController = TextEditingController();
 
@@ -31,7 +33,7 @@ class ContactsDialog {
       context: context,
       builder: (BuildContext context) {
         final localizations = AppLocalization.of(context)!;
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
@@ -41,7 +43,7 @@ class ContactsDialog {
                 children: [
                   Text(
                     localizations.addressBookHeader,
-                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                    style: theme.textStyleSize24W700EquinoxPrimary,
                   ),
                   AppTextField(
                     focusNode: searchNameFocusNode,
@@ -50,7 +52,7 @@ class ContactsDialog {
                     autocorrect: false,
                     labelText: localizations.searchField,
                     keyboardType: TextInputType.text,
-                    style: AppStyles.textStyleSize16W600Primary(context),
+                    style: theme.textStyleSize16W600Primary,
                     onChanged: (text) async {
                       contacts = await StateContainer.of(context).getContacts();
                       setState(

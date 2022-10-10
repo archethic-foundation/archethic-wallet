@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -7,16 +8,19 @@ import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 enum AppButtonType { primary, primaryOutline }
 
 // ignore: avoid_classes_with_only_static_members
 class AppButton {
+  // TODO(Chralu): Extract to a [Widget] subclass
   // Primary button builder
   static Widget buildAppButton(
     Key key,
     BuildContext context,
+    WidgetRef ref,
     AppButtonType type,
     String buttonText,
     List<double> dimens, {
@@ -24,7 +28,7 @@ class AppButton {
     bool disabled = false,
     Icon? icon,
   }) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
@@ -60,10 +64,7 @@ class AppButton {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style:
-                          AppStyles.textStyleSize18W600EquinoxMainButtonLabel(
-                        context,
-                      ),
+                      style: theme.textStyleSize18W600EquinoxMainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -89,10 +90,7 @@ class AppButton {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style:
-                          AppStyles.textStyleSize18W600EquinoxMainButtonLabel(
-                        context,
-                      ),
+                      style: theme.textStyleSize18W600EquinoxMainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -135,10 +133,7 @@ class AppButton {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: AppStyles
-                          .textStyleSize18W600EquinoxMainButtonLabelDisabled(
-                        context,
-                      ),
+                      style: theme.textStyleSize18W600EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -165,10 +160,7 @@ class AppButton {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: AppStyles
-                          .textStyleSize18W600EquinoxMainButtonLabelDisabled(
-                        context,
-                      ),
+                      style: theme.textStyleSize18W600EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -191,6 +183,7 @@ class AppButton {
   static Widget buildAppButtonTiny(
     Key key,
     BuildContext context,
+    WidgetRef ref,
     AppButtonType type,
     String buttonText,
     List<double> dimens, {
@@ -198,7 +191,7 @@ class AppButton {
     bool disabled = false,
     Icon? icon,
   }) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
@@ -234,10 +227,7 @@ class AppButton {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style:
-                          AppStyles.textStyleSize12W400EquinoxMainButtonLabel(
-                        context,
-                      ),
+                      style: theme.textStyleSize12W400EquinoxMainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -264,10 +254,7 @@ class AppButton {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style:
-                          AppStyles.textStyleSize12W400EquinoxMainButtonLabel(
-                        context,
-                      ),
+                      style: theme.textStyleSize12W400EquinoxMainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -310,10 +297,7 @@ class AppButton {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: AppStyles
-                          .textStyleSize12W400EquinoxMainButtonLabelDisabled(
-                        context,
-                      ),
+                      style: theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -339,10 +323,7 @@ class AppButton {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: AppStyles
-                          .textStyleSize12W400EquinoxMainButtonLabelDisabled(
-                        context,
-                      ),
+                      style: theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),

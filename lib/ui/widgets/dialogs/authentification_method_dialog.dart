@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -12,14 +13,16 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthentificationMethodDialog {
   static Future<void> getDialog(
     BuildContext context,
+    WidgetRef ref,
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final preferences = await Preferences.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
@@ -48,7 +51,7 @@ class AuthentificationMethodDialog {
         return AlertDialog(
           title: Text(
             localizations.authMethod,
-            style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
+            style: theme.textStyleSize24W700EquinoxPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -77,7 +80,7 @@ class AuthentificationMethodDialog {
                       );
                     } else {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, hasBiometrics, curAuthMethod);
+                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
                     }
                     break;
                   case AuthMethod.pin:
@@ -92,7 +95,7 @@ class AuthentificationMethodDialog {
                     );
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, hasBiometrics, curAuthMethod);
+                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
                     } else {
                       preferences.setAuthMethod(const AuthenticationMethod(AuthMethod.pin));
                       Navigator.of(context).pushNamedAndRemoveUntil(
@@ -116,7 +119,7 @@ class AuthentificationMethodDialog {
 
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, hasBiometrics, curAuthMethod);
+                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
                     } else {
                       preferences.setAuthMethod(
                         const AuthenticationMethod(AuthMethod.password),
@@ -137,7 +140,7 @@ class AuthentificationMethodDialog {
                     );
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, hasBiometrics, curAuthMethod);
+                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
                     } else {
                       preferences.setAuthMethod(
                         const AuthenticationMethod(

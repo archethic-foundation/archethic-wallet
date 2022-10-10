@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
@@ -13,19 +14,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 // TODO(reddwarf03): WIP, https://github.com/archethic-foundation/archethic-wallet/issues/46
-class LedgerScreen extends StatefulWidget {
+class LedgerScreen extends ConsumerStatefulWidget {
   const LedgerScreen(this.ucoTransferList, {super.key});
 
   final List<UCOTransfer>? ucoTransferList;
 
   @override
-  State<LedgerScreen> createState() => _LedgerScreenState();
+  ConsumerState<LedgerScreen> createState() => _LedgerScreenState();
 }
 
-class _LedgerScreenState extends State<LedgerScreen> {
+class _LedgerScreenState extends ConsumerState<LedgerScreen> {
   String response = '';
   String labelResponse = '';
   String info = '';
@@ -35,8 +37,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
   Future<void> update() async {
     switch (method) {
       case 'getPubKey':
-        final responseHex =
-            hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
+        final responseHex = hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
         originPubKey = responseHex.substring(4, responseHex.length - 4);
         method = 'signTxn';
         break;
@@ -73,7 +74,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -88,8 +89,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.10,
@@ -112,8 +112,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 40),
                             child: AutoSizeText(
                               'Ledger',
-                              style:
-                                  AppStyles.textStyleSize16W400Primary(context),
+                              style: theme.textStyleSize16W400Primary,
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               stepGranularity: 0.1,
@@ -124,26 +123,18 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                 ? ElevatedButton(
                                     child: Text(
                                       'Ledger - Get Public Key',
-                                      style:
-                                          AppStyles.textStyleSize16W200Primary(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize16W200Primary,
                                     ),
                                     onPressed: () async {
                                       method = 'getPubKey';
-                                      await sl
-                                          .get<LedgerNanoSImpl>()
-                                          .connectLedger(getPubKeyAPDU());
+                                      await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());
                                     },
                                   )
                                 : method == 'signTxn'
                                     ? ElevatedButton(
                                         child: Text(
                                           'Ledger - Verify transaction',
-                                          style: AppStyles
-                                              .textStyleSize16W200Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize16W200Primary,
                                         ),
                                         onPressed: () async {
                                           const addressIndex = '';
@@ -158,39 +149,27 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             type: 'transfer',
                                             data: Transaction.initData(),
                                           );
-                                          for (final transfer
-                                              in widget.ucoTransferList!) {
+                                          for (final transfer in widget.ucoTransferList!) {
                                             transaction.addUCOTransfer(
                                               transfer.to,
                                               transfer.amount!,
                                             );
                                           }
-                                          final lastTransaction = await sl
-                                              .get<ApiService>()
-                                              .getLastTransaction(
+                                          final lastTransaction = await sl.get<ApiService>().getLastTransaction(
                                                 StateContainer.of(
                                                   context,
-                                                )
-                                                    .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
-                                                    .lastAddress!,
+                                                ).appWallet!.appKeychain!.getAccountSelected()!.lastAddress!,
                                                 request: 'chainLength',
                                               );
-                                          final transactionChainSeed =
-                                              await StateContainer.of(context)
-                                                  .getSeed();
-                                          final originPrivateKey = sl
-                                              .get<ApiService>()
-                                              .getOriginKey();
+                                          final transactionChainSeed = await StateContainer.of(context).getSeed();
+                                          final originPrivateKey = sl.get<ApiService>().getOriginKey();
                                           transaction
                                               .build(
                                                 transactionChainSeed!,
                                                 lastTransaction.chainLength!,
                                               )
                                               .originSign(originPrivateKey);
-                                          final onChainWalletData =
-                                              walletEncoder(originPubKey);
+                                          final onChainWalletData = walletEncoder(originPubKey);
 
                                           const hashType = 0;
                                           final signTxn = getSignTxnAPDU(
@@ -200,9 +179,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             int.tryParse(addressIndex)!,
                                           );
                                           log('signTxn:${uint8ListToHex(signTxn)}');
-                                          await sl
-                                              .get<LedgerNanoSImpl>()
-                                              .connectLedger(signTxn);
+                                          await sl.get<LedgerNanoSImpl>().connectLedger(signTxn);
                                         },
                                       )
                                     : const SizedBox()

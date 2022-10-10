@@ -2,6 +2,7 @@
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -13,19 +14,17 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // TODO(reddwarf03): This Widget is not part of the Drawer menu. Should we move it in `views/main` directory ?
-class MenuWidgetWallet extends StatelessWidget {
+class MenuWidgetWallet extends ConsumerWidget {
   const MenuWidgetWallet({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -53,14 +52,12 @@ class MenuWidgetWallet extends StatelessWidget {
                           );
                       Sheets.showAppHeightNineSheet(
                         context: context,
+                        ref: ref,
                         widget: TransferSheet(
-                          primaryCurrency:
-                              StateContainer.of(context).curPrimaryCurrency,
+                          primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
                           title: localizations.transferTokens.replaceAll(
                             '%1',
-                            StateContainer.of(context)
-                                .curNetwork
-                                .getNetworkCryptoCurrencyLabel(),
+                            StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
                           ),
                           localCurrency: StateContainer.of(context).curCurrency,
                         ),
@@ -82,13 +79,13 @@ class MenuWidgetWallet extends StatelessWidget {
                         );
                     Sheets.showAppHeightNineSheet(
                       context: context,
+                      ref: ref,
                       widget: ReceiveSheet(
                         address: accountSelected.lastAddress,
                       ),
                       onDisposed: () {
                         setState(() {
-                          StateContainer.of(context)
-                              .requestUpdate(forceUpdateChart: false);
+                          StateContainer.of(context).requestUpdate(forceUpdateChart: false);
                         });
                       },
                     );
@@ -104,6 +101,7 @@ class MenuWidgetWallet extends StatelessWidget {
                         );
                     Sheets.showAppHeightNineSheet(
                       context: context,
+                      ref: ref,
                       widget: const BuySheet(),
                     );
                   },
@@ -123,8 +121,7 @@ class MenuWidgetWallet extends StatelessWidget {
                               context, Icons.vpn_key_outlined, 40, 40),
                           const SizedBox(height: 5),
                           Text('Ledger',
-                              style: AppStyles.textStyleSize14W600Primary(
-                                  context)),
+                              style: theme.textStyleSize14W600Primary),
                         ],
                       )))*/
               ],
@@ -136,7 +133,7 @@ class MenuWidgetWallet extends StatelessWidget {
   }
 }
 
-class _ActionButton extends StatelessWidget {
+class _ActionButton extends ConsumerWidget {
   const _ActionButton({
     this.onTap,
     required this.text,
@@ -148,8 +145,8 @@ class _ActionButton extends StatelessWidget {
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: onTap != null
@@ -173,9 +170,7 @@ class _ActionButton extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     text,
-                    style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                      context,
-                    ),
+                    style: theme.textStyleSize14W600EquinoxPrimary,
                   ),
                 ],
               ),
@@ -198,9 +193,7 @@ class _ActionButton extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   text,
-                  style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                    context,
-                  ),
+                  style: theme.textStyleSize14W600EquinoxPrimary,
                 ),
               ],
             ),

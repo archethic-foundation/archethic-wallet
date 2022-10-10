@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/chart_infos.dart';
@@ -21,18 +22,19 @@ import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 part 'components/balance_infos_build_chart.dart';
 part 'components/balance_infos_build_kpi.dart';
 
-class BalanceInfos extends StatelessWidget {
+class BalanceInfos extends ConsumerWidget {
   const BalanceInfos({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 
     return GestureDetector(
@@ -59,9 +61,7 @@ class BalanceInfos extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
                                 StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
-                                style: AppStyles.textStyleSize35W900EquinoxPrimary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
                             if (StateContainer.of(context).showBalance)
@@ -79,9 +79,7 @@ class BalanceInfos extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
                                 accountSelectedBalance!.fiatCurrencyCode!,
-                                style: AppStyles.textStyleSize35W900EquinoxPrimary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
                             if (StateContainer.of(context).showBalance)
@@ -100,18 +98,25 @@ class BalanceInfos extends StatelessWidget {
       ),
       onTapDown: (details) {
         if (accountSelectedBalance!.fiatCurrencyValue! > 0) {
-          showPopUpMenuAtPosition(context, details, accountSelectedBalance);
+          showPopUpMenuAtPosition(
+            context,
+            ref,
+            details,
+            accountSelectedBalance,
+          );
         }
       },
     );
   }
 
+  // TODO(Chralu): Extract to [Widget] subclass
   void showPopUpMenuAtPosition(
     BuildContext context,
+    WidgetRef ref,
     TapDownDetails details,
     AccountBalance accountSelectedBalance,
   ) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     showMenu(
       color: theme.backgroundDark,
@@ -134,6 +139,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
+                    ref,
                     accountSelectedBalance.nativeTokenValueToString(),
                   );
                 },
@@ -152,7 +158,7 @@ class BalanceInfos extends StatelessWidget {
                         ),
                         Text(
                           accountSelectedBalance.nativeTokenValueToString(),
-                          style: AppStyles.textStyleSize12W100Primary(context),
+                          style: theme.textStyleSize12W100Primary,
                         ),
                       ],
                     ),
@@ -164,6 +170,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
+                    ref,
                     accountSelectedBalance.fiatCurrencyValue!.toString(),
                   );
                 },
@@ -182,7 +189,7 @@ class BalanceInfos extends StatelessWidget {
                         ),
                         Text(
                           accountSelectedBalance.fiatCurrencyValue!.toString(),
-                          style: AppStyles.textStyleSize12W100Primary(context),
+                          style: theme.textStyleSize12W100Primary,
                         ),
                       ],
                     ),
@@ -196,6 +203,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
+                    ref,
                     accountSelectedBalance.fiatCurrencyValue!.toString(),
                   );
                 },
@@ -214,7 +222,7 @@ class BalanceInfos extends StatelessWidget {
                         ),
                         Text(
                           accountSelectedBalance.fiatCurrencyValue!.toString(),
-                          style: AppStyles.textStyleSize12W100Primary(context),
+                          style: theme.textStyleSize12W100Primary,
                         ),
                       ],
                     ),
@@ -226,6 +234,7 @@ class BalanceInfos extends StatelessWidget {
                 onTap: () {
                   copyAmount(
                     context,
+                    ref,
                     accountSelectedBalance.nativeTokenValueToString(),
                   );
                 },
@@ -244,7 +253,7 @@ class BalanceInfos extends StatelessWidget {
                         ),
                         Text(
                           accountSelectedBalance.nativeTokenValueToString(),
-                          style: AppStyles.textStyleSize12W100Primary(context),
+                          style: theme.textStyleSize12W100Primary,
                         ),
                       ],
                     ),
@@ -255,36 +264,36 @@ class BalanceInfos extends StatelessWidget {
     );
   }
 
-  void copyAmount(BuildContext context, String amount) {
+  void copyAmount(BuildContext context, WidgetRef ref, String amount) {
     Clipboard.setData(ClipboardData(text: amount));
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     UIUtil.showSnackbar(
       localizations.amountCopied,
       context,
+      ref,
       theme.text!,
       theme.snackBarShadow!,
     );
   }
 }
 
-class _BalanceInfosNativeShowed extends StatelessWidget {
+class _BalanceInfosNativeShowed extends ConsumerWidget {
   const _BalanceInfosNativeShowed({
     required this.accountSelectedBalance,
   });
   final AccountBalance accountSelectedBalance;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
           accountSelectedBalance.nativeTokenValueToString(),
-          style: AppStyles.textStyleSize25W900EquinoxPrimary(
-            context,
-          ),
+          style: theme.textStyleSize25W900EquinoxPrimary,
         ),
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
@@ -292,23 +301,22 @@ class _BalanceInfosNativeShowed extends StatelessWidget {
             accountSelectedBalance.fiatCurrencyValue!,
           ),
           textAlign: TextAlign.center,
-          style: AppStyles.textStyleSize12W600Primary(
-            context,
-          ),
+          style: theme.textStyleSize12W600Primary,
         ),
       ],
     );
   }
 }
 
-class _BalanceInfosNFiatShowed extends StatelessWidget {
+class _BalanceInfosNFiatShowed extends ConsumerWidget {
   const _BalanceInfosNFiatShowed({
     required this.accountSelectedBalance,
   });
   final AccountBalance accountSelectedBalance;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -319,42 +327,35 @@ class _BalanceInfosNFiatShowed extends StatelessWidget {
             accountSelectedBalance.fiatCurrencyValue!,
           ),
           textAlign: TextAlign.center,
-          style: AppStyles.textStyleSize25W900EquinoxPrimary(
-            context,
-          ),
+          style: theme.textStyleSize25W900EquinoxPrimary,
         ),
         AutoSizeText(
           '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
-          style: AppStyles.textStyleSize12W600Primary(
-            context,
-          ),
+          style: theme.textStyleSize12W600Primary,
         ),
       ],
     );
   }
 }
 
-class _BalanceInfosNotShowed extends StatelessWidget {
+class _BalanceInfosNotShowed extends ConsumerWidget {
   const _BalanceInfosNotShowed();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
           '···········',
-          style: AppStyles.textStyleSize25W900EquinoxPrimary60(
-            context,
-          ),
+          style: theme.textStyleSize25W900EquinoxPrimary60,
         ),
         AutoSizeText(
           '···········',
           textAlign: TextAlign.center,
-          style: AppStyles.textStyleSize12W600Primary60(
-            context,
-          ),
+          style: theme.textStyleSize12W600Primary60,
         ),
       ],
     );

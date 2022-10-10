@@ -17,7 +17,8 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   final Color? iconColor;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return TextButton(
       onPressed: () {
         if (onPressed == null) return;
@@ -49,7 +50,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                   width: Responsive.drawerWidth(context) - 100,
                   child: Text(
                     heading,
-                    style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
+                    style: theme.textStyleSize16W600EquinoxPrimary,
                   ),
                 ),
                 SizedBox(
@@ -59,14 +60,14 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                     maxLines: 5,
                     stepGranularity: 0.1,
                     minFontSize: 8,
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                   ),
                 ),
               ],
             ),
             FaIcon(
               FontAwesomeIcons.chevronRight,
-              color: StateContainer.of(context).curTheme.iconDrawer,
+              color: ref.read(ThemeProviders.theme).iconDrawer,
               size: 15,
             ),
           ],
@@ -92,7 +93,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return TextButton(
       onPressed: () {
         if (onPressed == null) return;
@@ -126,7 +127,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
             ),
             FaIcon(
               FontAwesomeIcons.chevronRight,
-              color: StateContainer.of(context).curTheme.iconDrawer,
+              color: ref.read(ThemeProviders.theme).iconDrawer,
               size: 15,
             ),
           ],

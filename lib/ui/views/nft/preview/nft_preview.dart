@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
@@ -14,8 +14,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:filesize/filesize.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTPreviewWidget extends StatelessWidget {
+class NFTPreviewWidget extends ConsumerWidget {
   const NFTPreviewWidget({
     super.key,
     this.nftFile,
@@ -34,10 +35,9 @@ class NFTPreviewWidget extends StatelessWidget {
   final TokenInformations tokenInformations;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
-    final description =
-        TokenUtil.getPropertyValue(tokenInformations, 'description');
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
+    final description = TokenUtil.getPropertyValue(tokenInformations, 'description');
     final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
 
     return Padding(
@@ -48,13 +48,12 @@ class NFTPreviewWidget extends StatelessWidget {
           children: [
             Text(
               tokenInformations.name!,
-              style: AppStyles.textStyleSize18W600Primary(context),
+              style: theme.textStyleSize18W600Primary,
             ),
             const SizedBox(
               height: 10,
             ),
-            if (MimeUtil.isImage(typeMime) == true ||
-                MimeUtil.isPdf(typeMime) == true)
+            if (MimeUtil.isImage(typeMime) == true || MimeUtil.isPdf(typeMime) == true)
               if (tokenInformations.address != null)
                 FutureBuilder<Uint8List?>(
                   future: TokenUtil.getImageFromTokenAddress(
@@ -94,14 +93,14 @@ class NFTPreviewWidget extends StatelessWidget {
             if (nftSize > 0)
               Text(
                 '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(nftSize)}',
-                style: AppStyles.textStyleSize12W400Primary(context),
+                style: theme.textStyleSize12W400Primary,
               ),
             if (description != '')
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
                   description,
-                  style: AppStyles.textStyleSize14W600Primary(context),
+                  style: theme.textStyleSize14W600Primary,
                 ),
               ),
             if (tokenPropertyWithAccessInfos != null)
@@ -112,13 +111,12 @@ class NFTPreviewWidget extends StatelessWidget {
                     MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
                   ) {
                     return entry.value.tokenProperty!.keys.first != 'file' &&
-                            entry.value.tokenProperty!.keys.first !=
-                                'description' &&
+                            entry.value.tokenProperty!.keys.first != 'description' &&
                             entry.value.tokenProperty!.keys.first != 'name' &&
                             entry.value.tokenProperty!.keys.first != 'type/mime'
                         ? Padding(
                             padding: const EdgeInsets.all(5),
-                            child: _buildTokenProperty(context, entry.value),
+                            child: _buildTokenProperty(context, ref, entry.value),
                           )
                         : const SizedBox();
                   }).toList(),
@@ -130,11 +128,13 @@ class NFTPreviewWidget extends StatelessWidget {
     );
   }
 
+  // TODO(Chralu): Extract to a [Widget] subclass
   Widget _buildTokenProperty(
     BuildContext context,
+    WidgetRef ref,
     TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos,
   ) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -167,53 +167,35 @@ class NFTPreviewWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                tokenPropertyWithAccessInfos
-                                    .tokenProperty!.keys.first,
-                                style: AppStyles.textStyleSize12W600Primary(
-                                  context,
-                                ),
+                                tokenPropertyWithAccessInfos.tokenProperty!.keys.first,
+                                style: theme.textStyleSize12W600Primary,
                               ),
                             ),
                             Container(
                               width: 200,
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                tokenPropertyWithAccessInfos
-                                    .tokenProperty!.values.first,
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                tokenPropertyWithAccessInfos.tokenProperty!.values.first,
+                                style: theme.textStyleSize12W400Primary,
                               ),
                             ),
-                            if (tokenPropertyWithAccessInfos.publicKeysList !=
-                                    null &&
-                                tokenPropertyWithAccessInfos
-                                    .publicKeysList!.isNotEmpty)
-                              tokenPropertyWithAccessInfos
-                                          .publicKeysList!.length ==
-                                      1
+                            if (tokenPropertyWithAccessInfos.publicKeysList != null &&
+                                tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty)
+                              tokenPropertyWithAccessInfos.publicKeysList!.length == 1
                                   ? Container(
-                                      width: MediaQuery.of(context).size.width -
-                                          100,
+                                      width: MediaQuery.of(context).size.width - 100,
                                       padding: const EdgeInsets.only(left: 20),
                                       child: AutoSizeText(
                                         'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
-                                        style: AppStyles
-                                            .textStyleSize12W400Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W400Primary,
                                       ),
                                     )
                                   : Container(
-                                      width: MediaQuery.of(context).size.width -
-                                          100,
+                                      width: MediaQuery.of(context).size.width - 100,
                                       padding: const EdgeInsets.only(left: 20),
                                       child: AutoSizeText(
                                         'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
-                                        style: AppStyles
-                                            .textStyleSize12W400Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W400Primary,
                                       ),
                                     )
                             else
@@ -222,9 +204,7 @@ class NFTPreviewWidget extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 20),
                                 child: AutoSizeText(
                                   'This property is accessible for everyone',
-                                  style: AppStyles.textStyleSize12W400Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize12W400Primary,
                                 ),
                               ),
                           ],

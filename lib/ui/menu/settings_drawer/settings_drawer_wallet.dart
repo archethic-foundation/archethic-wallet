@@ -1,14 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'settings_drawer.dart';
 
-class SettingsSheetWallet extends StatefulWidget {
+class SettingsSheetWallet extends ConsumerStatefulWidget {
   const SettingsSheetWallet({super.key});
 
   @override
-  State<SettingsSheetWallet> createState() => _SettingsSheetWalletMobileState();
+  ConsumerState<SettingsSheetWallet> createState() => _SettingsSheetWalletMobileState();
 }
 
-class _SettingsSheetWalletMobileState extends State<SettingsSheetWallet>
+class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   late AnimationController _contactsController;
   late Animation<Offset> _contactsOffsetFloat;
@@ -19,8 +19,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWallet>
   late AnimationController _aboutController;
   late Animation<Offset> _aboutOffsetFloat;
 
-  NetworksSetting _curNetworksSetting =
-      const NetworksSetting(AvailableNetworks.archethicMainNet);
+  NetworksSetting _curNetworksSetting = const NetworksSetting(AvailableNetworks.archethicMainNet);
 
   late bool _securityOpen;
   late bool _customOpen;
@@ -53,18 +52,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWallet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _contactsOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
-            .animate(_contactsController);
-    _securityOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
-            .animate(_securityController);
-    _customOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
-            .animate(_customController);
-    _aboutOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
-            .animate(_aboutController);
+    _contactsOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_contactsController);
+    _securityOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_securityController);
+    _customOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_customController);
+    _aboutOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_aboutController);
   }
 
   @override
@@ -97,7 +88,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWallet>
   // TODO(Chralu): is this useful ?
   // ignore: unused_element
   Future<void> _networkDialog() async {
-    final ns = await NetworkDialog.getDialog(context, _curNetworksSetting);
+    final ns = await NetworkDialog.getDialog(context, ref, _curNetworksSetting);
     if (ns != null) {
       _curNetworksSetting = ns;
       await StateContainer.of(context).requestUpdate();
@@ -147,7 +138,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWallet>
 
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return WillPopScope(
       onWillPop: _onBackButtonPressed,

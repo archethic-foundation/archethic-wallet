@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class IconWidget extends StatelessWidget {
+class IconWidget extends ConsumerWidget {
   const IconWidget({
     required this.icon,
     required this.width,
@@ -19,8 +20,8 @@ class IconWidget extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Container(
       width: width,
       height: height,
@@ -80,7 +81,7 @@ class IconDataWidget extends StatelessWidget {
   }
 }
 
-class _IconDataWidgetEnabled extends StatelessWidget {
+class _IconDataWidgetEnabled extends ConsumerWidget {
   const _IconDataWidgetEnabled({
     required this.icon,
     required this.width,
@@ -92,8 +93,8 @@ class _IconDataWidgetEnabled extends StatelessWidget {
   final double height;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
 
     return Container(
       width: width,
@@ -124,7 +125,7 @@ class _IconDataWidgetEnabled extends StatelessWidget {
   }
 }
 
-class _IconDataWidgetDisabled extends StatelessWidget {
+class _IconDataWidgetDisabled extends ConsumerWidget {
   const _IconDataWidgetDisabled({
     required this.icon,
     required this.width,
@@ -136,8 +137,8 @@ class _IconDataWidgetDisabled extends StatelessWidget {
   final double height;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Container(
       width: width,
       height: height,

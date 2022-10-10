@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
@@ -14,31 +15,29 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AppLockScreen extends StatefulWidget {
+class AppLockScreen extends ConsumerStatefulWidget {
   const AppLockScreen({super.key});
 
   @override
-  State<AppLockScreen> createState() => _AppLockScreenState();
+  ConsumerState<AppLockScreen> createState() => _AppLockScreenState();
 }
 
-class _AppLockScreenState extends State<AppLockScreen> {
+class _AppLockScreenState extends ConsumerState<AppLockScreen> {
   bool _lockedOut = true;
   String _countDownTxt = '';
 
   Future<void> _goHome() async {
-    StateContainer.of(context).appWallet =
-        await sl.get<DBHelper>().getAppWallet();
+    StateContainer.of(context).appWallet = await sl.get<DBHelper>().getAppWallet();
     if (StateContainer.of(context).appWallet == null) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
     }
     final preferences = await Preferences.getInstance();
-    StateContainer.of(context).bottomBarCurrentPage =
-        preferences.getMainScreenCurrentPage();
+    StateContainer.of(context).bottomBarCurrentPage = preferences.getMainScreenCurrentPage();
     StateContainer.of(context).bottomBarPageController = PageController(
       initialPage: StateContainer.of(context).bottomBarCurrentPage,
     );
@@ -157,7 +156,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.backgroundDarkest,
@@ -179,8 +178,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075,
@@ -202,30 +200,32 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                 onPressed: () {
                                   AppDialogs.showConfirmDialog(
                                       context,
+                                      ref,
                                       CaseChange.toUpperCase(
                                         localizations.warning,
-                                        StateContainer.of(context)
-                                            .curLanguage
-                                            .getLocaleString(),
+                                        StateContainer.of(context).curLanguage.getLocaleString(),
                                       ),
                                       localizations.removeWalletDetail,
-                                      localizations.removeWalletAction
-                                          .toUpperCase(), () {
+                                      localizations.removeWalletAction.toUpperCase(), () {
                                     // Show another confirm dialog
                                     AppDialogs.showConfirmDialog(
-                                        context,
-                                        localizations.removeWalletAreYouSure,
-                                        localizations.removeWalletReassurance,
-                                        localizations.yes, () async {
-                                      await StateContainer.of(context).logOut();
-                                      StateContainer.of(context).curTheme =
-                                          DarkTheme();
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil(
-                                        '/',
-                                        (Route<dynamic> route) => false,
-                                      );
-                                    });
+                                      context,
+                                      ref,
+                                      localizations.removeWalletAreYouSure,
+                                      localizations.removeWalletReassurance,
+                                      localizations.yes,
+                                      () async {
+                                        await StateContainer.of(context).logOut();
+                                        // TODO(Chralu): move that behavior to `logOut` usecase.
+                                        await ref.read(
+                                          ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+                                        );
+                                        Navigator.of(context).pushNamedAndRemoveUntil(
+                                          '/',
+                                          (Route<dynamic> route) => false,
+                                        );
+                                      },
+                                    );
                                   });
                                 },
                                 child: Row(
@@ -233,9 +233,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                     FaIcon(
                                       FontAwesomeIcons.rightFromBracket,
                                       size: 16,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .text,
+                                      color: theme.text,
                                     ),
                                     Container(
                                       margin: const EdgeInsetsDirectional.only(
@@ -243,10 +241,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                       ),
                                       child: Text(
                                         localizations.removeWallet,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize14W600Primary,
                                       ),
                                     ),
                                   ],
@@ -260,10 +255,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                             margin: const EdgeInsets.only(top: 10),
                             child: Text(
                               localizations.locked,
-                              style:
-                                  AppStyles.textStyleSize24W700EquinoxPrimary(
-                                context,
-                              ),
+                              style: theme.textStyleSize24W700EquinoxPrimary,
                             ),
                           ),
                         if (_lockedOut)
@@ -275,8 +267,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                             ),
                             child: Text(
                               localizations.tooManyFailedAttempts,
-                              style:
-                                  AppStyles.textStyleSize14W600Primary(context),
+                              style: theme.textStyleSize14W600Primary,
                               textAlign: TextAlign.center,
                             ),
                           )
@@ -291,6 +282,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                       AppButton.buildAppButton(
                         const Key('unlock'),
                         context,
+                        ref,
                         AppButtonType.primary,
                         _lockedOut ? _countDownTxt : localizations.unlock,
                         Dimens.buttonBottomDimens,

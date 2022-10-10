@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -8,10 +9,11 @@ import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 /// A widget for displaying a mnemonic phrase
-class MnemonicDisplay extends StatefulWidget {
+class MnemonicDisplay extends ConsumerStatefulWidget {
   const MnemonicDisplay({
     super.key,
     required this.wordList,
@@ -22,10 +24,10 @@ class MnemonicDisplay extends StatefulWidget {
   final bool obscureSeed;
 
   @override
-  State<MnemonicDisplay> createState() => _MnemonicDisplayState();
+  ConsumerState<MnemonicDisplay> createState() => _MnemonicDisplayState();
 }
 
-class _MnemonicDisplayState extends State<MnemonicDisplay> {
+class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
   late bool _seedObscured;
   int curWord = 0;
 
@@ -38,6 +40,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: <Widget>[
         GestureDetector(
@@ -62,21 +65,15 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                     padding: const EdgeInsets.all(5),
                     child: Chip(
                       avatar: CircleAvatar(
-                        backgroundColor: StateContainer.of(context)
-                            .curTheme
-                            .numMnemonicBackground,
+                        backgroundColor: theme.numMnemonicBackground,
                         child: Text(
                           (entry.key + 1).toString(),
-                          style: AppStyles.textStyleSize12W100Primary60(
-                            context,
-                          ),
+                          style: theme.textStyleSize12W100Primary60,
                         ),
                       ),
                       label: Text(
-                        _seedObscured && widget.obscureSeed
-                            ? '•' * 6
-                            : entry.value,
-                        style: AppStyles.textStyleSize12W400Primary(context),
+                        _seedObscured && widget.obscureSeed ? '•' * 6 : entry.value,
+                        style: theme.textStyleSize12W400Primary,
                       ),
                     ),
                   );
@@ -89,11 +86,11 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                   child: _seedObscured
                       ? AutoSizeText(
                           AppLocalization.of(context)!.tapToReveal,
-                          style: AppStyles.textStyleSize14W600Primary(context),
+                          style: theme.textStyleSize14W600Primary,
                         )
                       : Text(
                           AppLocalization.of(context)!.tapToHide,
-                          style: AppStyles.textStyleSize14W600Primary(context),
+                          style: theme.textStyleSize14W600Primary,
                         ),
                 )
             ],

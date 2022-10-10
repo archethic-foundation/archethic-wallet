@@ -17,8 +17,8 @@ class _SettingsListItemSwitch extends _SettingsListItem {
   final Function? onChanged;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
@@ -44,7 +44,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               width: Responsive.drawerWidth(context) - 130,
               child: Text(
                 heading,
-                style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
+                style: theme.textStyleSize16W600EquinoxPrimary,
               ),
             ),
             Switch(

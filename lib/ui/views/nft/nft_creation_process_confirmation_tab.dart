@@ -9,12 +9,10 @@ class _NFTCreationProcessConfirmationTab extends StatefulWidget {
   final int tabActiveIndex;
 
   @override
-  State<_NFTCreationProcessConfirmationTab> createState() =>
-      _NFTCreationProcessConfirmationTabState();
+  State<_NFTCreationProcessConfirmationTab> createState() => _NFTCreationProcessConfirmationTabState();
 }
 
-class _NFTCreationProcessConfirmationTabState
-    extends State<_NFTCreationProcessConfirmationTab> {
+class _NFTCreationProcessConfirmationTabState extends State<_NFTCreationProcessConfirmationTab> {
   @override
   Widget build(BuildContext context) {
     // TODO(reddwarf03): refacto code with Riverpod
@@ -23,7 +21,7 @@ class _NFTCreationProcessConfirmationTabState
 }
   /*
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     if (file != null && widget.tabActiveIndex == 3) {
       return SingleChildScrollView(
@@ -39,7 +37,7 @@ class _NFTCreationProcessConfirmationTabState
                   ),
                   child: Text(
                     '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                     textAlign: TextAlign.justify,
                   ),
                 )
@@ -52,7 +50,7 @@ class _NFTCreationProcessConfirmationTabState
                   ),
                   child: Text(
                     AppLocalization.of(context)!.estimatedFeesAddNFTNote,
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                     textAlign: TextAlign.justify,
                   ),
                 ),
@@ -255,7 +253,7 @@ class _NFTCreationProcessConfirmationTabState
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     token.name!,
-                    style: AppStyles.textStyleSize14W600Primary(context),
+                    style: theme.textStyleSize14W600Primary,
                   ),
                 ),
               if (nftDescriptionController!.text != '')
@@ -263,7 +261,7 @@ class _NFTCreationProcessConfirmationTabState
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     nftDescriptionController!.text,
-                    style: AppStyles.textStyleSize12W400Primary(context),
+                    style: theme.textStyleSize12W400Primary,
                   ),
                 ),
               if (file != null &&
@@ -289,7 +287,7 @@ class _NFTCreationProcessConfirmationTabState
                   child: Align(
                     child: Text(
                       'Format: $typeMime',
-                      style: AppStyles.textStyleSize12W400Primary(context),
+                      style: theme.textStyleSize12W400Primary,
                     ),
                   ),
                 ),
@@ -299,7 +297,7 @@ class _NFTCreationProcessConfirmationTabState
                   child: Align(
                     child: Text(
                       '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(sizeFile)}',
-                      style: AppStyles.textStyleSize12W400Primary(context),
+                      style: theme.textStyleSize12W400Primary,
                     ),
                   ),
                 ),

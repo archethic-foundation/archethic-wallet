@@ -5,7 +5,7 @@ part 'secured_settings.freezed.dart';
 @freezed
 class SecuredSettings with _$SecuredSettings {
   const factory SecuredSettings({
-    required String seed,
+    String? seed,
     String? pin,
     String? password,
     String? yubikeyClientID,

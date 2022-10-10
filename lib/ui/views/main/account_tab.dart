@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
@@ -11,15 +12,16 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountTab extends StatelessWidget {
+class AccountTab extends ConsumerWidget {
   const AccountTab({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
 
     return Column(
       children: [

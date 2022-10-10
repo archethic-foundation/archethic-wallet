@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -15,6 +15,7 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/strings.dart';
 import 'package:validators/validators.dart';
 
@@ -24,11 +25,7 @@ class QRScanErrs {
   static const String permissionDenied = 'qr_denied';
   static const String unknownError = 'qr_unknown';
   static const String cancelError = 'qr_cancel';
-  static const List<String> errorList = <String>[
-    permissionDenied,
-    unknownError,
-    cancelError
-  ];
+  static const List<String> errorList = <String>[permissionDenied, unknownError, cancelError];
 }
 
 // ignore: avoid_classes_with_only_static_members
@@ -67,7 +64,7 @@ class UserDataUtil {
     return _parseData(data.text!, type);
   }
 
-  static Future<String?> getQRData(DataType type, BuildContext context) async {
+  static Future<String?> getQRData(DataType type, BuildContext context, WidgetRef ref) async {
     UIUtil.cancelLockEvent();
     try {
       final scanResult = await BarcodeScanner.scan();
@@ -77,11 +74,12 @@ class UserDataUtil {
       }
       return _parseData(data, type);
     } on PlatformException catch (e) {
-      final theme = StateContainer.of(context).curTheme;
+      final theme = ref.read(ThemeProviders.theme);
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.qrInvalidPermissions,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -90,6 +88,7 @@ class UserDataUtil {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.qrUnknownError,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -10,21 +11,18 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class FungiblesTokensListWidget extends StatelessWidget {
+class FungiblesTokensListWidget extends ConsumerWidget {
   const FungiblesTokensListWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final accountTokens = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .accountTokens;
-
+    final accountTokens = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.accountTokens;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -37,7 +35,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 26),
               child: Text(
                 localizations.fungiblesTokensListNoTokenYet,
-                style: AppStyles.textStyleSize14W600Primary(context),
+                style: theme.textStyleSize14W600Primary,
               ),
             ),
           ),
@@ -65,8 +63,7 @@ class _FungiblesTokensLine extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
         child: (accountTokens.isNotEmpty && accountTokens.length > num) ||
-                (StateContainer.of(context).recentTransactionsLoading == true &&
-                    accountTokens.length > num)
+                (StateContainer.of(context).recentTransactionsLoading == true && accountTokens.length > num)
             ? _FungiblesTokensDetailTransfer(
                 accountFungibleToken: accountTokens[num],
               )
@@ -76,7 +73,7 @@ class _FungiblesTokensLine extends StatelessWidget {
   }
 }
 
-class _FungiblesTokensDetailTransfer extends StatelessWidget {
+class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   const _FungiblesTokensDetailTransfer({
     required this.accountFungibleToken,
   });
@@ -84,9 +81,9 @@ class _FungiblesTokensDetailTransfer extends StatelessWidget {
   final AccountToken accountFungibleToken;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return InkWell(
       onTap: () {
@@ -139,17 +136,15 @@ class _FungiblesTokensDetailTransfer extends StatelessWidget {
                                 );
                             Sheets.showAppHeightNineSheet(
                               context: context,
+                              ref: ref,
                               widget: TransferSheet(
                                 accountToken: accountFungibleToken,
-                                primaryCurrency: StateContainer.of(context)
-                                    .curPrimaryCurrency,
+                                primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
                                 title: localizations.transferTokens.replaceAll(
                                   '%1',
-                                  accountFungibleToken
-                                      .tokenInformations!.symbol!,
+                                  accountFungibleToken.tokenInformations!.symbol!,
                                 ),
-                                localCurrency:
-                                    StateContainer.of(context).curCurrency,
+                                localCurrency: StateContainer.of(context).curCurrency,
                               ),
                             );
                           },
@@ -160,7 +155,7 @@ class _FungiblesTokensDetailTransfer extends StatelessWidget {
                       ),
                       Text(
                         accountFungibleToken.tokenInformations!.name!,
-                        style: AppStyles.textStyleSize12W600Primary(context),
+                        style: theme.textStyleSize12W600Primary,
                       ),
                     ],
                   ),
@@ -173,15 +168,11 @@ class _FungiblesTokensDetailTransfer extends StatelessWidget {
                           NumberUtil.formatThousands(
                             accountFungibleToken.amount!,
                           ),
-                          style: AppStyles.textStyleSize12W400Primary(
-                            context,
-                          ),
+                          style: theme.textStyleSize12W400Primary,
                         ),
                         Text(
                           accountFungibleToken.tokenInformations!.symbol!,
-                          style: AppStyles.textStyleSize12W600Primary(
-                            context,
-                          ),
+                          style: theme.textStyleSize12W600Primary,
                         ),
                       ],
                     )
@@ -192,15 +183,11 @@ class _FungiblesTokensDetailTransfer extends StatelessWidget {
                       children: [
                         Text(
                           '···········',
-                          style: AppStyles.textStyleSize12W600Primary60(
-                            context,
-                          ),
+                          style: theme.textStyleSize12W600Primary60,
                         ),
                         Text(
                           accountFungibleToken.tokenInformations!.symbol!,
-                          style: AppStyles.textStyleSize12W600Primary(
-                            context,
-                          ),
+                          style: theme.textStyleSize12W600Primary,
                         ),
                       ],
                     )

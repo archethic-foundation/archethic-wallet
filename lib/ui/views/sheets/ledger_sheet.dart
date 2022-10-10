@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -17,6 +18,7 @@ import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 /*final getArchAddress = transport(
@@ -36,14 +38,14 @@ import 'package:ledger_dart_lib/ledger_dart_lib.dart';
         'C600000000020019CA33A6CA9E69B5C29E6E8497CC5AC9675952F847347709AD39C92C1B1B5313000000038407B7000401EC530D1BBDF3B1B3E18C6E2330E5CFD1BFD88EB6D84102184CB39EC271793578B469ACBD8EB4F684C41B5DA87712A203AAA910B7964218794E3D3F343835843C44AFFE281D750E6CA526C6FC265167FE37DB9E47828BF80964DAC837E1072CA9954FF1852FF71865B9043BC117BC001C47D76A326A2A2F7CF6B16AB49E9E57F9D5E6D8E1D00D7F1B7E2F986C711DCA060005B2C8F485')));
 */
 
-class LedgerSheet extends StatefulWidget {
+class LedgerSheet extends ConsumerStatefulWidget {
   const LedgerSheet({super.key});
 
   @override
-  State<LedgerSheet> createState() => _LedgerSheetState();
+  ConsumerState<LedgerSheet> createState() => _LedgerSheetState();
 }
 
-class _LedgerSheetState extends State<LedgerSheet> {
+class _LedgerSheetState extends ConsumerState<LedgerSheet> {
   FocusNode? enterPayloadFocusNode;
   TextEditingController? enterPayloadController;
   String response = '';
@@ -57,12 +59,10 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
       switch (method) {
         case 'getPubKey':
-          response =
-              'Public Key : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
+          response = 'Public Key : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         case 'getArchAddress':
-          response =
-              'Address : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
+          response = 'Address : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         case 'signTxn':
           /*String responseHex = hex.encode(event.apdu!);
@@ -73,8 +73,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
             String originType = rawTxn.substring(offset, offset + 2);
             offset += 2;
             String pubKey = rawTxn.substring(offset, rawTxn.length);*/
-          response =
-              'Transaction : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
+          response = 'Transaction : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         default:
       }
@@ -104,9 +103,9 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ref.read(ThemeProviders.theme);
     return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           const SheetHeader(title: 'Ledger - Tests'),
@@ -122,7 +121,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     children: <Widget>[
                       Text(
                         'Payload',
-                        style: AppStyles.textStyleSize16W600Primary(context),
+                        style: theme.textStyleSize16W600Primary,
                         textAlign: TextAlign.center,
                       ),
                       AppTextField(
@@ -145,14 +144,14 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           LengthLimitingTextInputFormatter(500),
                         ],
                         keyboardType: TextInputType.text,
-                        style: AppStyles.textStyleSize16W600Primary(context),
+                        style: theme.textStyleSize16W600Primary,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         'Response',
-                        style: AppStyles.textStyleSize16W600Primary(context),
+                        style: theme.textStyleSize16W600Primary,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(
@@ -162,23 +161,23 @@ class _LedgerSheetState extends State<LedgerSheet> {
                         padding: const EdgeInsets.only(right: 10, left: 10),
                         child: SelectableText(
                           response,
-                          style: AppStyles.textStyleSize16W200Primary(context),
+                          style: theme.textStyleSize16W200Primary,
                           textAlign: TextAlign.center,
                         ),
                       ),
                       SelectableText(
                         'Info',
-                        style: AppStyles.textStyleSize16W600Primary(context),
+                        style: theme.textStyleSize16W600Primary,
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         info,
-                        style: AppStyles.textStyleSize16W200Primary(context),
+                        style: theme.textStyleSize16W200Primary,
                         textAlign: TextAlign.center,
                       ),
                       SelectableText(
                         labelResponse,
-                        style: AppStyles.textStyleSize16W200Primary(context),
+                        style: theme.textStyleSize16W200Primary,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(
@@ -198,6 +197,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     AppButton.buildAppButton(
                       const Key('getPubKey'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       'Get pubKey',
                       Dimens.buttonTopDimens,
@@ -206,14 +206,13 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           method = 'getPubKey';
                           info = '';
                         });
-                        await sl
-                            .get<LedgerNanoSImpl>()
-                            .connectLedger(getPubKeyAPDU());
+                        await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());
                       },
                     ),
                     AppButton.buildAppButton(
                       const Key('getArchAddress'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       'Get Arch Address',
                       Dimens.buttonTopDimens,
@@ -223,8 +222,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           info = '';
                           labelResponse = '';
                         });
-                        if (enterPayloadController!.text.trim() == '' ||
-                            isHex(enterPayloadController!.text) == false) {
+                        if (enterPayloadController!.text.trim() == '' || isHex(enterPayloadController!.text) == false) {
                           info = 'The payload is not valid.';
                         } else {
                           final getArchAddress = transport(
@@ -237,15 +235,14 @@ class _LedgerSheetState extends State<LedgerSheet> {
                             ),
                           );
                           log('getArchAddress: ${uint8ListToHex(getArchAddress)}');
-                          await sl
-                              .get<LedgerNanoSImpl>()
-                              .connectLedger(getArchAddress);
+                          await sl.get<LedgerNanoSImpl>().connectLedger(getArchAddress);
                         }
                       },
                     ),
                     AppButton.buildAppButton(
                       const Key('signTransaction'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       'Sign Transaction',
                       Dimens.buttonTopDimens,
@@ -255,8 +252,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           info = '';
                           labelResponse = '';
                         });
-                        if (enterPayloadController!.text.trim() == '' ||
-                            isHex(enterPayloadController!.text) == false) {
+                        if (enterPayloadController!.text.trim() == '' || isHex(enterPayloadController!.text) == false) {
                           info = 'The payload is not valid.';
                         } else {
                           final signTxn = transport(
@@ -268,9 +264,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                               hex.decode(enterPayloadController!.text),
                             ),
                           );
-                          await sl
-                              .get<LedgerNanoSImpl>()
-                              .connectLedger(signTxn);
+                          await sl.get<LedgerNanoSImpl>().connectLedger(signTxn);
                         }
                       },
                     ),

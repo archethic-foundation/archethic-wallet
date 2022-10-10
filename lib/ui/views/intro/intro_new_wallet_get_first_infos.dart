@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -12,17 +12,16 @@ import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroNewWalletGetFirstInfos extends StatefulWidget {
+class IntroNewWalletGetFirstInfos extends ConsumerStatefulWidget {
   const IntroNewWalletGetFirstInfos({super.key});
 
   @override
-  State<IntroNewWalletGetFirstInfos> createState() =>
-      _IntroNewWalletDisclaimerState();
+  ConsumerState<IntroNewWalletGetFirstInfos> createState() => _IntroNewWalletDisclaimerState();
 }
 
-class _IntroNewWalletDisclaimerState
-    extends State<IntroNewWalletGetFirstInfos> {
+class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirstInfos> {
   FocusNode nameFocusNode = FocusNode();
   TextEditingController nameController = TextEditingController();
   String? nameError;
@@ -30,7 +29,7 @@ class _IntroNewWalletDisclaimerState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -49,8 +48,7 @@ class _IntroNewWalletDisclaimerState
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -93,22 +91,16 @@ class _IntroNewWalletDisclaimerState
                                 height: 30,
                               ),
                               AutoSizeText(
-                                localizations
-                                    .introNewWalletGetFirstInfosWelcome,
-                                style: AppStyles.textStyleSize20W700Primary(
-                                  context,
-                                ),
+                                localizations.introNewWalletGetFirstInfosWelcome,
+                                style: theme.textStyleSize20W700Primary,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(
                                 height: 30,
                               ),
                               AutoSizeText(
-                                localizations
-                                    .introNewWalletGetFirstInfosNameRequest,
-                                style: AppStyles.textStyleSize16W600Primary(
-                                  context,
-                                ),
+                                localizations.introNewWalletGetFirstInfosNameRequest,
+                                style: theme.textStyleSize16W600Primary,
                                 textAlign: TextAlign.left,
                               ),
                               AppTextField(
@@ -118,9 +110,7 @@ class _IntroNewWalletDisclaimerState
                                 autocorrect: false,
                                 controller: nameController,
                                 keyboardType: TextInputType.text,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize14W600Primary,
                                 inputFormatters: <TextInputFormatter>[
                                   LengthLimitingTextInputFormatter(20),
                                   UpperCaseTextFormatter(),
@@ -131,9 +121,7 @@ class _IntroNewWalletDisclaimerState
                                   height: 40,
                                   child: Text(
                                     nameError!,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 )
                               else
@@ -141,11 +129,8 @@ class _IntroNewWalletDisclaimerState
                                   height: 40,
                                 ),
                               AutoSizeText(
-                                localizations
-                                    .introNewWalletGetFirstInfosNameInfos,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                  context,
-                                ),
+                                localizations.introNewWalletGetFirstInfosNameInfos,
+                                style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
@@ -164,6 +149,7 @@ class _IntroNewWalletDisclaimerState
                     AppButton.buildAppButton(
                       const Key('okButton'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.ok,
                       Dimens.buttonBottomDimens,
@@ -171,16 +157,15 @@ class _IntroNewWalletDisclaimerState
                         nameError = '';
                         if (nameController.text.isEmpty) {
                           setState(() {
-                            nameError = localizations
-                                .introNewWalletGetFirstInfosNameBlank;
+                            nameError = localizations.introNewWalletGetFirstInfosNameBlank;
                             FocusScope.of(context).requestFocus(nameFocusNode);
                           });
                         } else {
                           AppDialogs.showConfirmDialog(
                             context,
+                            ref,
                             localizations.newAccount,
-                            localizations.newAccountConfirmation
-                                .replaceAll('%1', nameController.text),
+                            localizations.newAccountConfirmation.replaceAll('%1', nameController.text),
                             localizations.yes,
                             () async {
                               Navigator.of(context).pushNamed(

@@ -1,11 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum AddressTextType { primary60, primary }
 
-class OneOrThreeLineAddressText extends StatelessWidget {
+class OneOrThreeLineAddressText extends ConsumerWidget {
   const OneOrThreeLineAddressText({
     super.key,
     @required this.address,
@@ -18,7 +20,8 @@ class OneOrThreeLineAddressText extends StatelessWidget {
   final AddressTextType? type;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     // One line for small displays
     if (MediaQuery.of(context).size.height < 667) {
       final stringPartOne = address!.substring(0, 12);
@@ -34,15 +37,15 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                   children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
-                      style: AppStyles.textStyleSize14W100Text60(context),
+                      style: theme.textStyleSize14W100Text60,
                     ),
                     TextSpan(
                       text: '...',
-                      style: AppStyles.textStyleSize14W100Text60(context),
+                      style: theme.textStyleSize14W100Text60,
                     ),
                     TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleSize14W100Text60(context),
+                      style: theme.textStyleSize14W100Text60,
                     ),
                   ],
                 ),
@@ -59,15 +62,15 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                   children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
-                      style: AppStyles.textStyleSize14W100Primary(context),
+                      style: theme.textStyleSize14W100Primary,
                     ),
                     TextSpan(
                       text: '...',
-                      style: AppStyles.textStyleSize14W100Primary(context),
+                      style: theme.textStyleSize14W100Primary,
                     ),
                     TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleSize14W100Primary(context),
+                      style: theme.textStyleSize14W100Primary,
                     ),
                   ],
                 ),
@@ -122,11 +125,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -138,7 +141,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -150,11 +153,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -167,7 +170,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: contactName,
-                  style: AppStyles.textStyleSize14W100Primary(context),
+                  style: theme.textStyleSize14W100Primary,
                 ),
               )
             : const SizedBox();
@@ -181,11 +184,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -197,7 +200,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -209,11 +212,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                 ],
               ),

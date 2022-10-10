@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/preferences.dart';
@@ -9,13 +10,14 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainBottomBar extends StatelessWidget {
+class MainBottomBar extends ConsumerWidget {
   const MainBottomBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 22),
@@ -25,9 +27,7 @@ class MainBottomBar extends StatelessWidget {
           child: BottomBar(
             selectedIndex: StateContainer.of(context).bottomBarCurrentPage,
             onTap: (int index) async {
-              StateContainer.of(context)
-                  .bottomBarPageController!
-                  .jumpToPage(index);
+              StateContainer.of(context).bottomBarPageController!.jumpToPage(index);
               final preferences = await Preferences.getInstance();
               preferences.setMainScreenCurrentPage(index);
               StateContainer.of(context).bottomBarCurrentPage = index;

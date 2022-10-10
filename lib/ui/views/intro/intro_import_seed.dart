@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
@@ -28,17 +29,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
-class IntroImportSeedPage extends StatefulWidget {
+class IntroImportSeedPage extends ConsumerStatefulWidget {
   const IntroImportSeedPage({super.key});
 
   @override
-  State<IntroImportSeedPage> createState() => _IntroImportSeedState();
+  ConsumerState<IntroImportSeedPage> createState() => _IntroImportSeedState();
 }
 
-class _IntroImportSeedState extends State<IntroImportSeedPage> {
+class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
@@ -82,7 +84,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -207,7 +209,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             localizations.importSecretPhrase,
-                            style: AppStyles.textStyleSize28W700Primary(context),
+                            style: theme.textStyleSize28W700Primary,
                             maxLines: 1,
                             stepGranularity: 0.1,
                           ),
@@ -221,7 +223,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             localizations.importSecretPhraseHint,
-                            style: AppStyles.textStyleSize16W600Primary(context),
+                            style: theme.textStyleSize16W600Primary,
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -233,9 +235,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             height: 40,
                             child: Text(
                               _mnemonicError,
-                              style: AppStyles.textStyleSize14W200Primary(
-                                context,
-                              ),
+                              style: theme.textStyleSize14W200Primary,
                             ),
                           )
                         else
@@ -262,9 +262,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                       children: [
                                         Text(
                                           (index + 1).toString(),
-                                          style: AppStyles.textStyleSize12W100Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize12W100Primary,
                                         ),
                                         Autocomplete<String>(
                                           optionsBuilder: (
@@ -315,9 +313,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 TextFormField(
                                                   controller: textEditingController,
                                                   focusNode: focusNode,
-                                                  style: AppStyles.textStyleSize12W400Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W400Primary,
                                                   autocorrect: false,
                                                   onChanged: (value) {
                                                     if (!AppMnemomics.isValidWord(
@@ -373,6 +369,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                       AppButton.buildAppButton(
                         const Key('ok'),
                         context,
+                        ref,
                         AppButtonType.primaryOutline,
                         localizations.ok,
                         Dimens.buttonTopDimens,
@@ -382,6 +379,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                       AppButton.buildAppButton(
                         const Key('ok'),
                         context,
+                        ref,
                         AppButtonType.primary,
                         localizations.ok,
                         Dimens.buttonTopDimens,
@@ -440,6 +438,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 UIUtil.showSnackbar(
                                   localizations.noKeychain,
                                   context,
+                                  ref,
                                   theme.text!,
                                   theme.snackBarShadow!,
                                 );
@@ -461,6 +460,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               UIUtil.showSnackbar(
                                 localizations.noKeychain,
                                 context,
+                                ref,
                                 theme.text!,
                                 theme.snackBarShadow!,
                               );
@@ -484,7 +484,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
@@ -556,7 +556,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<void> _accountsDialog(List<Account> accounts) async {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final account in accounts) {
       pickerItemsList.add(PickerItem(account.name!, null, null, null, account, true));
@@ -575,7 +575,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
               children: [
                 Text(
                   localizations.keychainHeader,
-                  style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                  style: theme.textStyleSize24W700EquinoxPrimary,
                 ),
                 const SizedBox(
                   height: 5,
@@ -583,12 +583,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 if (accounts.length > 1)
                   Text(
                     localizations.selectAccountDescSeveral,
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                   )
                 else
                   Text(
                     localizations.selectAccountDescOne,
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                   ),
               ],
             ),
@@ -617,7 +617,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,

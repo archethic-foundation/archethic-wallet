@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -11,10 +12,11 @@ import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTCard extends StatelessWidget {
+class NFTCard extends ConsumerWidget {
   const NFTCard({
     super.key,
     required this.onTap,
@@ -26,8 +28,8 @@ class NFTCard extends StatelessWidget {
   final TokenInformations tokenInformations;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
       children: <Widget>[
@@ -39,7 +41,7 @@ class NFTCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   tokenInformations.name!,
-                  style: AppStyles.textStyleSize12W400Primary(context),
+                  style: theme.textStyleSize12W400Primary,
                 ),
               ],
             ),
@@ -59,8 +61,7 @@ class NFTCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (MimeUtil.isImage(typeMime) == true ||
-                    MimeUtil.isPdf(typeMime) == true)
+                if (MimeUtil.isImage(typeMime) == true || MimeUtil.isPdf(typeMime) == true)
                   FutureBuilder<Uint8List?>(
                     future: TokenUtil.getImageFromTokenAddress(
                       tokenInformations.address!,
@@ -116,12 +117,8 @@ class NFTCardBottom extends StatefulWidget {
 class _NFTCardBottomState extends State<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
-    final nftInfosOffChain =
-        accountSelected.getftInfosOffChain(widget.tokenInformations.id);
+    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final nftInfosOffChain = accountSelected.getftInfosOffChain(widget.tokenInformations.id);
 
     return Column(
       children: <Widget>[
@@ -162,8 +159,7 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                     );
                     setState(() {});
                   },
-                  child: nftInfosOffChain == null ||
-                          nftInfosOffChain.favorite == false
+                  child: nftInfosOffChain == null || nftInfosOffChain.favorite == false
                       ? Icon(
                           Icons.favorite_border,
                           color: Colors.yellow[800],
