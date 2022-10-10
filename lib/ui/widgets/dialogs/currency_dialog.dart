@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_currency.dart';
@@ -8,9 +9,10 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CurrencyDialog {
-  static Future<AvailableCurrencyEnum?> getDialog(BuildContext context) async {
+  static Future<AvailableCurrencyEnum?> getDialog(BuildContext context, WidgetRef ref) async {
     final preferences = await Preferences.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
 
@@ -34,7 +36,7 @@ class CurrencyDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -43,7 +45,7 @@ class CurrencyDialog {
               children: [
                 Text(
                   AppLocalization.of(context)!.currency,
-                  style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                  style: theme.textStyleSize24W700EquinoxPrimary,
                 ),
               ],
             ),
@@ -59,30 +61,22 @@ class CurrencyDialog {
               pickerItems: pickerItemsList,
               selectedIndex: StateContainer.of(context).curCurrency.getIndex(),
               onSelected: (value) async {
-                final accountSelected = StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!;
+                final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
                 preferences.setCurrency(
                   AvailableCurrency(value.value as AvailableCurrencyEnum),
                 );
-                StateContainer.of(context).curCurrency =
-                    AvailableCurrency(value.value as AvailableCurrencyEnum);
+                StateContainer.of(context).curCurrency = AvailableCurrency(value.value as AvailableCurrencyEnum);
 
                 final tokenPrice = await Price.getCurrency(
                   StateContainer.of(context).curCurrency.currency.name,
                 );
                 await accountSelected.updateBalance(
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
                   StateContainer.of(context).curCurrency.currency.name,
                   tokenPrice,
                 );
                 accountSelected.balance!.fiatCurrencyCode =
-                    AvailableCurrency(value.value as AvailableCurrencyEnum)
-                        .currency
-                        .name;
+                    AvailableCurrency(value.value as AvailableCurrencyEnum).currency.name;
                 await StateContainer.of(context).updateCurrency(
                   AvailableCurrency(value.value as AvailableCurrencyEnum),
                 );

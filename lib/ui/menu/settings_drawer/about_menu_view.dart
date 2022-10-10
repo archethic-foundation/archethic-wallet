@@ -8,7 +8,7 @@ final versionStringProvider = FutureProvider.autoDispose.family<String, AppLocal
   },
 );
 
-class AboutMenuView extends StatelessWidget {
+class AboutMenuView extends ConsumerWidget {
   const AboutMenuView({
     required this.onClose,
     super.key,
@@ -16,9 +16,9 @@ class AboutMenuView extends StatelessWidget {
 
   final VoidCallback onClose;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -56,7 +56,7 @@ class AboutMenuView extends StatelessWidget {
                   Expanded(
                     child: AutoSizeText(
                       localizations.aboutHeader,
-                      style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                      style: theme.textStyleSize24W700EquinoxPrimary,
                       maxLines: 2,
                     ),
                   ),
@@ -81,9 +81,7 @@ class AboutMenuView extends StatelessWidget {
 
                                 return Text(
                                   asyncVersionString.asData?.value ?? '',
-                                  style: AppStyles.textStyleSize14W100Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize14W100Primary,
                                 );
                               },
                             ),
@@ -93,7 +91,7 @@ class AboutMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutGeneralTermsAndConditions,
-                        headingStyle: AppStyles.textStyleSize16W600Primary(context),
+                        headingStyle: theme.textStyleSize16W600Primary,
                         icon: 'assets/icons/terms-and-conditions.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {
@@ -107,7 +105,7 @@ class AboutMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutWalletServiceTerms,
-                        headingStyle: AppStyles.textStyleSize16W600Primary(context),
+                        headingStyle: theme.textStyleSize16W600Primary,
                         icon: 'assets/icons/walletServiceTerms.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {
@@ -121,7 +119,7 @@ class AboutMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutPrivacyPolicy,
-                        headingStyle: AppStyles.textStyleSize16W600Primary(context),
+                        headingStyle: theme.textStyleSize16W600Primary,
                         icon: 'assets/icons/privacyPolicy.png',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {

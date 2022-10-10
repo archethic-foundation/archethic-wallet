@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -41,11 +42,12 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-class TransferSheet extends StatefulWidget {
+class TransferSheet extends ConsumerStatefulWidget {
   const TransferSheet({
     @required this.localCurrency,
     this.contact,
@@ -68,12 +70,12 @@ class TransferSheet extends StatefulWidget {
   final PrimaryCurrencySetting? primaryCurrency;
 
   @override
-  State<TransferSheet> createState() => _TransferSheetState();
+  ConsumerState<TransferSheet> createState() => _TransferSheetState();
 }
 
 enum AddressStyle { text60, text90, primary }
 
-class _TransferSheetState extends State<TransferSheet> {
+class _TransferSheetState extends ConsumerState<TransferSheet> {
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;
   FocusNode? _sendAmountFocusNode;
@@ -192,6 +194,7 @@ class _TransferSheetState extends State<TransferSheet> {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final theme = ref.read(ThemeProviders.theme);
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -244,9 +247,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _amountValidationText,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                               ],
@@ -266,9 +267,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   ),
                                   child: Text(
                                     _addressValidationText,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -279,15 +278,11 @@ class _TransferSheetState extends State<TransferSheet> {
                                   child: feeEstimation > 0
                                       ? Text(
                                           '+ ${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                          style: AppStyles.textStyleSize14W100Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize14W100Primary,
                                         )
                                       : Text(
                                           localizations.estimatedFeesNote,
-                                          style: AppStyles.textStyleSize14W100Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize14W100Primary,
                                         ),
                                 ),
                                 Container(
@@ -297,9 +292,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   child: feeEstimation > 0
                                       ? Text(
                                           '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
-                                          style: AppStyles.textStyleSize14W100Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize14W100Primary,
                                         )
                                       : const SizedBox(),
                                 ),
@@ -314,9 +307,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   ),
                                   child: Text(
                                     _messageValidationText,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                               ],
@@ -337,6 +328,7 @@ class _TransferSheetState extends State<TransferSheet> {
                       AppButton.buildAppButton(
                         const Key('send'),
                         context,
+                        ref,
                         AppButtonType.primaryOutline,
                         widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
@@ -346,6 +338,7 @@ class _TransferSheetState extends State<TransferSheet> {
                       AppButton.buildAppButton(
                         const Key('send'),
                         context,
+                        ref,
                         AppButtonType.primary,
                         widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
@@ -364,6 +357,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                 }
                               },
                               context: context,
+                              ref: ref,
                               widget: TransferConfirmSheet(
                                 lastAddress: accountSelected.lastAddress,
                                 ucoTransferList: ucoTransferList,
@@ -609,14 +603,14 @@ class _TransferSheetState extends State<TransferSheet> {
 
   Widget getEnterAmountContainer(Account accountSelected) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: [
         AppTextField(
           focusNode: _sendAmountFocusNode,
           controller: _sendAmountController,
           cursorColor: theme.text,
-          style: AppStyles.textStyleSize16W700Primary(context),
+          style: theme.textStyleSize16W700Primary,
           inputFormatters: [
             LengthLimitingTextInputFormatter(16),
             CurrencyFormatter(
@@ -723,7 +717,7 @@ class _TransferSheetState extends State<TransferSheet> {
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
                   '1 ${accountSelected.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
-                  style: AppStyles.textStyleSize14W100Primary(context),
+                  style: theme.textStyleSize14W100Primary,
                 ),
               ),
               if (_sendAmountController!.text.isNotEmpty)
@@ -734,16 +728,12 @@ class _TransferSheetState extends State<TransferSheet> {
                       ? Text(
                           '= ${_convertNetworkCurrencyToSelectedCurrency(accountSelected.balance!.tokenPrice!.amount)}',
                           textAlign: TextAlign.right,
-                          style: AppStyles.textStyleSize14W100Primary(
-                            context,
-                          ),
+                          style: theme.textStyleSize14W100Primary,
                         )
                       : Text(
                           '= ${_convertSelectedCurrencyToNetworkCurrency(accountSelected.balance!.tokenPrice!.amount)}',
                           textAlign: TextAlign.right,
-                          style: AppStyles.textStyleSize14W100Primary(
-                            context,
-                          ),
+                          style: theme.textStyleSize14W100Primary,
                         ),
                 )
               else
@@ -759,7 +749,7 @@ class _TransferSheetState extends State<TransferSheet> {
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
                   '${NumberUtil.formatThousands(widget.accountToken!.amount!)} ${widget.accountToken!.tokenInformations!.symbol}',
-                  style: AppStyles.textStyleSize14W100Primary(context),
+                  style: theme.textStyleSize14W100Primary,
                 ),
               ),
             ],
@@ -768,7 +758,9 @@ class _TransferSheetState extends State<TransferSheet> {
     );
   }
 
+  // TODO(Chralu): extract to a [Widget] subclass.
   AppTextField getEnterMessage(Account accountSelected) {
+    final theme = ref.read(ThemeProviders.theme);
     return AppTextField(
       focusNode: _messageFocusNode,
       controller: _messageController,
@@ -782,15 +774,16 @@ class _TransferSheetState extends State<TransferSheet> {
       },
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
-      style: AppStyles.textStyleSize16W600Primary(context),
+      style: theme.textStyleSize16W600Primary,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(200),
       ],
     );
   }
 
+  // TODO(Chralu): extract to a [Widget] subclass.
   AppTextField getEnterAddressContainer(Account accountSelected) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return AppTextField(
       padding: _addressValidAndUnfocused ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15) : EdgeInsets.zero,
       focusNode: _sendAddressFocusNode,
@@ -811,7 +804,7 @@ class _TransferSheetState extends State<TransferSheet> {
                 StateContainer.of(context).activeVibrations,
               );
 
-          final contact = await ContactsDialog.getDialog(context);
+          final contact = await ContactsDialog.getDialog(context, ref);
           if (contact != null && contact.name != null) {
             _sendAddressController!.text = contact.name!;
             _sendAddressStyle = AddressStyle.text90;
@@ -836,11 +829,12 @@ class _TransferSheetState extends State<TransferSheet> {
                       StateContainer.of(context).activeVibrations,
                     );
                 UIUtil.cancelLockEvent();
-                final scanResult = await UserDataUtil.getQRData(DataType.address, context);
+                final scanResult = await UserDataUtil.getQRData(DataType.address, context, ref);
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
                     AppLocalization.of(context)!.qrInvalidAddress,
                     context,
+                    ref,
                     theme.text!,
                     theme.snackBarShadow!,
                   );
@@ -848,6 +842,7 @@ class _TransferSheetState extends State<TransferSheet> {
                   UIUtil.showSnackbar(
                     scanResult,
                     context,
+                    ref,
                     theme.text!,
                     theme.snackBarShadow!,
                   );
@@ -890,10 +885,10 @@ class _TransferSheetState extends State<TransferSheet> {
       fadeSuffixOnCondition: true,
       suffixShowFirstCondition: _qrCodeButtonVisible,
       style: _sendAddressStyle == AddressStyle.text60
-          ? AppStyles.textStyleSize14W700Text60(context)
+          ? theme.textStyleSize14W700Text60
           : _sendAddressStyle == AddressStyle.text90
-              ? AppStyles.textStyleSize14W700Primary(context)
-              : AppStyles.textStyleSize14W700Primary(context),
+              ? theme.textStyleSize14W700Primary
+              : theme.textStyleSize14W700Primary,
       onChanged: (String text) async {
         final fee = await getFee(accountSelected);
         if (text.isNotEmpty) {
@@ -961,6 +956,7 @@ class _TransferSheetState extends State<TransferSheet> {
               },
               child: UIUtil.threeLinetextStyleSmallestW400Text(
                 context,
+                ref,
                 _sendAddressController!.text,
               ),
             )

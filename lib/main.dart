@@ -5,13 +5,13 @@ import 'dart:io';
 
 // Project imports:
 import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
@@ -72,8 +72,7 @@ Future<void> main() async {
         child: ProviderScope(
           overrides: [
             // TODO(reddwarf03): Meaning ?
-            localPreferencesRepositoryProvider
-                .overrideWithValue(localPreferencesRepository),
+            SettingsProviders.localSettingsRepository.overrideWithValue(localPreferencesRepository),
           ],
           child: const StateContainer(
             child: App(),
@@ -84,23 +83,23 @@ Future<void> main() async {
   });
 }
 
-class App extends StatefulWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  State<App> createState() => _AppState();
+  ConsumerState<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends ConsumerState<App> {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     SystemChrome.setSystemUIOverlayStyle(
       theme.statusBar!,
     );
     return OKToast(
-      textStyle: AppStyles.textStyleSize14W700Background(context),
+      textStyle: theme.textStyleSize14W700Background,
       backgroundColor: theme.background,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -119,8 +118,7 @@ class _AppState extends State<App> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        locale: StateContainer.of(context).curLanguage.language ==
-                AvailableLanguage.systemDefault
+        locale: StateContainer.of(context).curLanguage.language == AvailableLanguage.systemDefault
             ? null
             : StateContainer.of(context).curLanguage.getLocale(),
         supportedLocales: const <Locale>[
@@ -265,15 +263,10 @@ class _AppState extends State<App> {
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
                   currentNftCategoryIndex:
-                      args['currentNftCategoryIndex'] == null
-                          ? null
-                          : args['currentNftCategoryIndex'] as int,
-                  process: args['process'] == null
-                      ? null
-                      : args['process'] as NFTCreationProcessType,
-                  primaryCurrency: args['primaryCurrency'] == null
-                      ? null
-                      : args['primaryCurrency'] as PrimaryCurrencySetting,
+                      args['currentNftCategoryIndex'] == null ? null : args['currentNftCategoryIndex'] as int,
+                  process: args['process'] == null ? null : args['process'] as NFTCreationProcessType,
+                  primaryCurrency:
+                      args['primaryCurrency'] == null ? null : args['primaryCurrency'] as PrimaryCurrencySetting,
                 ),
                 settings: settings,
               );
@@ -289,14 +282,14 @@ class _AppState extends State<App> {
 /// Splash
 /// Default page route that determines if user is logged in
 /// and routes them appropriately.
-class Splash extends StatefulWidget {
+class Splash extends ConsumerStatefulWidget {
   const Splash({super.key});
 
   @override
-  State<Splash> createState() => SplashState();
+  ConsumerState<Splash> createState() => SplashState();
 }
 
-class SplashState extends State<Splash> with WidgetsBindingObserver {
+class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   late bool _hasCheckedLoggedIn;
 
   Future<void> checkLoggedIn() async {
@@ -356,18 +349,18 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
 
       if (isLoggedIn) {
-        StateContainer.of(context).appWallet =
-            await sl.get<DBHelper>().getAppWallet();
+        StateContainer.of(context).appWallet = await sl.get<DBHelper>().getAppWallet();
         if (StateContainer.of(context).appWallet == null) {
           await StateContainer.of(context).logOut();
-          StateContainer.of(context).curTheme = DarkTheme();
-          preferences.setTheme(const ThemeSetting(ThemeOptions.dark));
+          // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
+          await ref.read(
+            ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+          );
           Navigator.of(context).pushReplacementNamed('/intro_welcome');
         }
         StateContainer.of(context).checkTransactionInputs(
           AppLocalization.of(context)!.transactionInputNotification,
         );
-        StateContainer.of(context).curTheme = preferences.getTheme().getTheme();
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
@@ -375,15 +368,18 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {
-        StateContainer.of(context).curTheme = DarkTheme();
-        preferences.setTheme(const ThemeSetting(ThemeOptions.dark));
+        await ref.read(
+          ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+        );
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
       dev.log(e.toString());
       await StateContainer.of(context).logOut();
-      StateContainer.of(context).curTheme = DarkTheme();
-      preferences.setTheme(const ThemeSetting(ThemeOptions.dark));
+      // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
+      await ref.read(
+        ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+      );
       Navigator.of(context).pushReplacementNamed('/intro_welcome');
     }
     FlutterNativeSplash.remove();
@@ -394,8 +390,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _hasCheckedLoggedIn = false;
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
+    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks) {
       SchedulerBinding.instance.addPostFrameCallback((_) => checkLoggedIn());
     }
   }
@@ -442,12 +437,11 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     setLanguage();
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
-        StateContainer.of(context).curCurrency =
-            preferences.getCurrency(StateContainer.of(context).deviceLocale);
+        StateContainer.of(context).curCurrency = preferences.getCurrency(StateContainer.of(context).deviceLocale);
       });
     });
     return Scaffold(
-      backgroundColor: StateContainer.of(context).curTheme.background,
+      backgroundColor: ref.read(ThemeProviders.theme).background,
     );
   }
 }

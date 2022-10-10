@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -26,18 +27,19 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListWidget extends StatefulWidget {
+class AccountsListWidget extends ConsumerStatefulWidget {
   const AccountsListWidget({super.key, this.currencyName, this.appWallet});
   final String? currencyName;
   final AppWallet? appWallet;
 
   @override
-  State<AccountsListWidget> createState() => _AccountsListWidgetState();
+  ConsumerState<AccountsListWidget> createState() => _AccountsListWidgetState();
 }
 
-class _AccountsListWidgetState extends State<AccountsListWidget> {
+class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
   static const int kMaxAccounts = 50;
   final GlobalKey expandedKey = GlobalKey();
   bool? isPressed;
@@ -70,7 +72,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Container(
       key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
@@ -81,7 +83,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             child: Text(
               localizations.accountsListDescription,
               textAlign: TextAlign.justify,
-              style: AppStyles.textStyleSize12W400Primary(context),
+              style: theme.textStyleSize12W400Primary,
             ),
           ),
           for (int i = 0; i < appWalletLive!.appKeychain!.accounts!.length; i++)
@@ -98,6 +100,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                 AppButton.buildAppButtonTiny(
                   const Key('addAccount'),
                   context,
+                  ref,
                   AppButtonType.primary,
                   localizations.addAccount,
                   Dimens.buttonBottomDimens,
@@ -117,9 +120,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                   children: [
                                     Text(
                                       localizations.introNewWalletGetFirstInfosNameRequest,
-                                      style: AppStyles.textStyleSize12W400Primary(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize12W400Primary,
                                     ),
                                   ],
                                 ),
@@ -145,9 +146,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                         autocorrect: false,
                                         controller: nameController,
                                         keyboardType: TextInputType.text,
-                                        style: AppStyles.textStyleSize12W600Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W600Primary,
                                         inputFormatters: <TextInputFormatter>[
                                           LengthLimitingTextInputFormatter(
                                             20,
@@ -160,9 +159,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                           height: 40,
                                           child: Text(
                                             nameError!,
-                                            style: AppStyles.textStyleSize12W600Primary(
-                                              context,
-                                            ),
+                                            style: theme.textStyleSize12W600Primary,
                                           ),
                                         )
                                       else
@@ -171,9 +168,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                         ),
                                       Text(
                                         localizations.introNewWalletGetFirstInfosNameInfos,
-                                        style: AppStyles.textStyleSize12W600Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W600Primary,
                                         textAlign: TextAlign.justify,
                                       ),
                                     ],
@@ -186,6 +181,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                       AppButton.buildAppButtonTiny(
                                         const Key('addName'),
                                         context,
+                                        ref,
                                         isPressed == false ? AppButtonType.primary : AppButtonType.primaryOutline,
                                         localizations.ok,
                                         Dimens.buttonBottomDimens,
@@ -221,6 +217,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                               });
                                               AppDialogs.showConfirmDialog(
                                                 context,
+                                                ref,
                                                 localizations.addAccount,
                                                 localizations.addAccountConfirmation.replaceAll(
                                                   '%1',
@@ -248,6 +245,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     UIUtil.showSnackbar(
                                                       localizations.noConnection,
                                                       context,
+                                                      ref,
                                                       theme.text!,
                                                       theme.snackBarShadow!,
                                                       duration: const Duration(
@@ -258,6 +256,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     UIUtil.showSnackbar(
                                                       localizations.keychainNotExistWarning,
                                                       context,
+                                                      ref,
                                                       theme.text!,
                                                       theme.snackBarShadow!,
                                                       duration: const Duration(
@@ -312,7 +311,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     StateSetter setState,
   ) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
       child: GestureDetector(
@@ -344,6 +343,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               );
           Sheets.showAppHeightNineSheet(
             context: context,
+            ref: ref,
             widget: ReceiveSheet(address: account.lastAddress),
             onDisposed: () {
               setState(() {
@@ -396,9 +396,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                 ),
                                                 child: AutoSizeText(
                                                   account.name!,
-                                                  style: AppStyles.textStyleSize12W400Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W400Primary,
                                                 ),
                                               ),
                                             ],
@@ -416,9 +414,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     children: <Widget>[
                                                       AutoSizeText(
                                                         '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                        style: AppStyles.textStyleSize12W400Primary(
-                                                          context,
-                                                        ),
+                                                        style: theme.textStyleSize12W400Primary,
                                                       ),
                                                       AutoSizeText(
                                                         CurrencyUtil.getConvertedAmount(
@@ -428,9 +424,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.balance!.fiatCurrencyValue!,
                                                         ),
                                                         textAlign: TextAlign.center,
-                                                        style: AppStyles.textStyleSize12W400Primary(
-                                                          context,
-                                                        ),
+                                                        style: theme.textStyleSize12W400Primary,
                                                       ),
                                                       if (account.accountTokens != null &&
                                                           account.accountTokens!.isNotEmpty)
@@ -438,16 +432,12 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.accountTokens!.length > 1
                                                               ? '${account.accountTokens!.length} ${localizations.tokens}'
                                                               : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: AppStyles.textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
+                                                          style: theme.textStyleSize12W400Primary,
                                                         ),
                                                       if (account.accountNFT != null && account.accountNFT!.isNotEmpty)
                                                         AutoSizeText(
                                                           '${account.accountNFT!.length} ${localizations.nft}',
-                                                          style: AppStyles.textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
+                                                          style: theme.textStyleSize12W400Primary,
                                                         ),
                                                     ],
                                                   ),
@@ -465,15 +455,11 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.balance!.fiatCurrencyValue!,
                                                         ),
                                                         textAlign: TextAlign.center,
-                                                        style: AppStyles.textStyleSize12W400Primary(
-                                                          context,
-                                                        ),
+                                                        style: theme.textStyleSize12W400Primary,
                                                       ),
                                                       AutoSizeText(
                                                         '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                        style: AppStyles.textStyleSize12W400Primary(
-                                                          context,
-                                                        ),
+                                                        style: theme.textStyleSize12W400Primary,
                                                       ),
                                                       if (account.accountTokens != null &&
                                                           account.accountTokens!.isNotEmpty)
@@ -481,9 +467,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           account.accountTokens!.length > 1
                                                               ? '${account.accountTokens!.length} ${localizations.tokens}'
                                                               : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: AppStyles.textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
+                                                          style: theme.textStyleSize12W400Primary,
                                                         ),
                                                     ],
                                                   ),
@@ -497,21 +481,15 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                 AutoSizeText(
                                                   '···········',
                                                   textAlign: TextAlign.center,
-                                                  style: AppStyles.textStyleSize12W600Primary60(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W600Primary60,
                                                 ),
                                                 AutoSizeText(
                                                   '···········',
-                                                  style: AppStyles.textStyleSize12W600Primary60(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W600Primary60,
                                                 ),
                                                 AutoSizeText(
                                                   '···········',
-                                                  style: AppStyles.textStyleSize12W600Primary60(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W600Primary60,
                                                 ),
                                               ],
                                             ),
@@ -537,7 +515,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(

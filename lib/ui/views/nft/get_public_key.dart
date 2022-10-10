@@ -1,6 +1,4 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -8,6 +6,7 @@ import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GetPublicKeys extends StatefulWidget {
   const GetPublicKeys({
@@ -60,12 +59,10 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!
-                                .keys.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!.keys.first,
                           ),
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!
-                                .values.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!.values.first,
                           ),
                           if (publicKeys != null)
                             Padding(
@@ -75,10 +72,7 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                 right: 10,
                               ),
                               child: Wrap(
-                                children: publicKeys!
-                                    .asMap()
-                                    .entries
-                                    .map((MapEntry<dynamic, String> entry) {
+                                children: publicKeys!.asMap().entries.map((MapEntry<dynamic, String> entry) {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: _GetPublicKeyLine(
@@ -102,14 +96,17 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
   }
 }
 
-class _GetPublicKeyLine extends StatelessWidget {
+class _GetPublicKeyLine extends ConsumerWidget {
   const _GetPublicKeyLine({required this.publicKey});
 
   final String publicKey;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final theme = ref.read(ThemeProviders.theme);
 
     return Container(
       padding: const EdgeInsets.only(bottom: 8),
@@ -145,9 +142,7 @@ class _GetPublicKeyLine extends StatelessWidget {
                               children: <Widget>[
                                 AutoSizeText(
                                   '${publicKey.substring(0, 15)}...${publicKey.substring(publicKey.length - 15)}',
-                                  style: AppStyles.textStyleSize12W600Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize12W600Primary,
                                 ),
                               ],
                             ),

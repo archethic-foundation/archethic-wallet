@@ -2,19 +2,15 @@
 
 part of '../balance_infos.dart';
 
-class BalanceInfosKpi extends StatelessWidget {
+class BalanceInfosKpi extends ConsumerWidget {
   const BalanceInfosKpi({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final chartInfos = StateContainer.of(context).chartInfos;
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 
     if (chartInfos?.data == null) {
       return const SizedBox(
@@ -34,21 +30,19 @@ class BalanceInfosKpi extends StatelessWidget {
             children: <Widget>[
               AutoSizeText(
                 '1 ${accountSelectedBalance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelectedBalance.fiatCurrencyCode!, accountSelectedBalance.tokenPrice!.amount!)}',
-                style: AppStyles.textStyleSize12W100Primary(context),
+                style: theme.textStyleSize12W100Primary,
               ),
               const SizedBox(
                 width: 10,
               ),
               AutoSizeText(
                 '${chartInfos!.getPriceChangePercentage(StateContainer.of(context).idChartOption!)!.toStringAsFixed(2)}%',
-                style: StateContainer.of(context)
-                            .chartInfos!
-                            .getPriceChangePercentage(
+                style: StateContainer.of(context).chartInfos!.getPriceChangePercentage(
                               StateContainer.of(context).idChartOption!,
                             )! >=
                         0
-                    ? AppStyles.textStyleSize12W100PositiveValue(context)
-                    : AppStyles.textStyleSize12W100NegativeValue(context),
+                    ? theme.textStyleSize12W100PositiveValue
+                    : theme.textStyleSize12W100NegativeValue,
               ),
               const SizedBox(width: 5),
               if (chartInfos.getPriceChangePercentage(
@@ -72,7 +66,7 @@ class BalanceInfosKpi extends StatelessWidget {
                   context,
                   StateContainer.of(context).idChartOption!,
                 ),
-                style: AppStyles.textStyleSize12W100Primary(context),
+                style: theme.textStyleSize12W100Primary,
               ),
               const SizedBox(
                 width: 10,
@@ -86,6 +80,7 @@ class BalanceInfosKpi extends StatelessWidget {
                         );
                     AppDialogs.showInfoDialog(
                       context,
+                      ref,
                       localizations.informations,
                       localizations.currencyOracleInfo,
                     );

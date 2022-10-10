@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -17,16 +18,17 @@ import 'package:aewallet/util/number_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:intl/intl.dart';
 
-class TxList extends StatelessWidget {
+class TxList extends ConsumerWidget {
   const TxList({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
-
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -39,7 +41,7 @@ class TxList extends StatelessWidget {
               padding: const EdgeInsets.only(top: 26),
               child: Text(
                 AppLocalization.of(context)!.recentTransactionsNoTransactionYet,
-                style: AppStyles.textStyleSize14W600Primary(context),
+                style: theme.textStyleSize14W600Primary,
               ),
             ),
           ),
@@ -58,7 +60,7 @@ class TxList extends StatelessWidget {
   }
 }
 
-class _TxListLine extends StatelessWidget {
+class _TxListLine extends ConsumerWidget {
   const _TxListLine({
     required this.num,
     required this.accountSelected,
@@ -68,7 +70,7 @@ class _TxListLine extends StatelessWidget {
   final Account accountSelected;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
@@ -79,6 +81,7 @@ class _TxListLine extends StatelessWidget {
                     accountSelected.recentTransactions!.length > num)
             ? displayTxDetailTransfer(
                 context,
+                ref,
                 accountSelected.recentTransactions![num],
               )
             : const SizedBox(),
@@ -86,12 +89,14 @@ class _TxListLine extends StatelessWidget {
     );
   }
 
+  // TODO(Chralu): Extract to a [Widget] subclass
   Widget displayTxDetailTransfer(
     BuildContext context,
+    WidgetRef ref,
     RecentTransaction transaction,
   ) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;
@@ -108,6 +113,7 @@ class _TxListLine extends StatelessWidget {
             );
         Sheets.showAppHeightNineSheet(
           context: context,
+          ref: ref,
           widget: TransactionInfosSheet(transaction.address!),
         );
       },
@@ -115,6 +121,7 @@ class _TxListLine extends StatelessWidget {
         if (transaction.contactInformations == null && contactAddress != null) {
           Sheets.showAppHeightNineSheet(
             context: context,
+            ref: ref,
             widget: AddContactSheet(address: contactAddress),
           );
         }
@@ -150,15 +157,11 @@ class _TxListLine extends StatelessWidget {
                         StateContainer.of(context).showBalance
                             ? AutoSizeText(
                                 '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W400Primary,
                               )
                             : AutoSizeText(
                                 '···········',
-                                style: AppStyles.textStyleSize12W600Primary60(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W600Primary60,
                               )
                       else
                         StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
@@ -176,64 +179,46 @@ class _TxListLine extends StatelessWidget {
                                           transaction.amount! > 1000000
                                               ? AutoSizeText(
                                                   '-${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                  style: AppStyles.textStyleSize12W400Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W400Primary,
                                                 )
                                               : AutoSizeText(
                                                   '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                  style: AppStyles.textStyleSize12W400Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W400Primary,
                                                 )
                                         else
                                           transaction.amount! > 1000000
                                               ? AutoSizeText(
                                                   '-${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
-                                                  style: AppStyles.textStyleSize12W400Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W400Primary,
                                                 )
                                               : AutoSizeText(
                                                   '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                  style: AppStyles.textStyleSize12W400Primary(
-                                                    context,
-                                                  ),
+                                                  style: theme.textStyleSize12W400Primary,
                                                 )
                                       else if (transaction.tokenInformations == null)
                                         transaction.amount! > 1000000
                                             ? AutoSizeText(
                                                 '${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                style: AppStyles.textStyleSize12W400Primary(
-                                                  context,
-                                                ),
+                                                style: theme.textStyleSize12W400Primary,
                                               )
                                             : AutoSizeText(
                                                 '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                style: AppStyles.textStyleSize12W400Primary(
-                                                  context,
-                                                ),
+                                                style: theme.textStyleSize12W400Primary,
                                               )
                                       else
                                         transaction.amount! > 1000000
                                             ? AutoSizeText(
                                                 '${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
-                                                style: AppStyles.textStyleSize12W400Primary(
-                                                  context,
-                                                ),
+                                                style: theme.textStyleSize12W400Primary,
                                               )
                                             : AutoSizeText(
                                                 '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                style: AppStyles.textStyleSize12W400Primary(
-                                                  context,
-                                                ),
+                                                style: theme.textStyleSize12W400Primary,
                                               )
                                     else
                                       AutoSizeText(
                                         '···········',
-                                        style: AppStyles.textStyleSize12W600Primary60(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W600Primary60,
                                       ),
                                   if (transaction.tokenInformations == null && transaction.amount != null)
                                     if (StateContainer.of(context).showBalance == true)
@@ -243,16 +228,12 @@ class _TxListLine extends StatelessWidget {
                                           accountSelected.balance!.tokenPrice!.amount!,
                                           transaction.amount!,
                                         ),
-                                        style: AppStyles.textStyleSize12W400Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W400Primary,
                                       )
                                     else
                                       AutoSizeText(
                                         '···········',
-                                        style: AppStyles.textStyleSize12W600Primary60(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W600Primary60,
                                       ),
                                 ],
                               )
@@ -268,16 +249,12 @@ class _TxListLine extends StatelessWidget {
                                           accountSelected.balance!.tokenPrice!.amount!,
                                           transaction.amount!,
                                         ),
-                                        style: AppStyles.textStyleSize12W400Primary(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W400Primary,
                                       )
                                     else
                                       AutoSizeText(
                                         '···········',
-                                        style: AppStyles.textStyleSize12W600Primary60(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W600Primary60,
                                       ),
                                   if (transaction.amount != null)
                                     if (StateContainer.of(context).showBalance == true)
@@ -285,37 +262,27 @@ class _TxListLine extends StatelessWidget {
                                         if (transaction.tokenInformations == null)
                                           AutoSizeText(
                                             '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                            style: AppStyles.textStyleSize12W400Primary(
-                                              context,
-                                            ),
+                                            style: theme.textStyleSize12W400Primary,
                                           )
                                         else
                                           AutoSizeText(
                                             '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                            style: AppStyles.textStyleSize12W400Primary(
-                                              context,
-                                            ),
+                                            style: theme.textStyleSize12W400Primary,
                                           )
                                       else if (transaction.tokenInformations == null)
                                         AutoSizeText(
                                           '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                          style: AppStyles.textStyleSize12W400Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize12W400Primary,
                                         )
                                       else
                                         AutoSizeText(
                                           '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                          style: AppStyles.textStyleSize12W400Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize12W400Primary,
                                         )
                                     else
                                       AutoSizeText(
                                         '···········',
-                                        style: AppStyles.textStyleSize12W600Primary60(
-                                          context,
-                                        ),
+                                        style: theme.textStyleSize12W600Primary60,
                                       ),
                                 ],
                               )
@@ -329,16 +296,12 @@ class _TxListLine extends StatelessWidget {
                             if (transaction.tokenInformations!.type == 'fungible')
                               AutoSizeText(
                                 '${localizations.tokenCreated}: ${transaction.tokenInformations!.name}',
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W400Primary,
                               )
                             else
                               AutoSizeText(
                                 '${localizations.nftCreated}: ${transaction.tokenInformations!.name}',
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W400Primary,
                               ),
                           ],
                         ),
@@ -358,9 +321,7 @@ class _TxListLine extends StatelessWidget {
                                           ? transaction.from!
                                           : transaction.contactInformations!.name!.replaceFirst('@', ''),
                                     ).getShortString4(),
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W400Primary,
                               )
                           ],
                         ),
@@ -380,9 +341,7 @@ class _TxListLine extends StatelessWidget {
                                           ? transaction.recipient!
                                           : transaction.contactInformations!.name!.replaceFirst('@', ''),
                                     ).getShortString4(),
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W400Primary,
                               )
                           ],
                         ),
@@ -396,9 +355,7 @@ class _TxListLine extends StatelessWidget {
                                     transaction.timestamp! * 1000,
                                   ).toLocal(),
                                 ),
-                            style: AppStyles.textStyleSize12W400Primary(
-                              context,
-                            ),
+                            style: theme.textStyleSize12W400Primary,
                           ),
                         ],
                       ),
@@ -412,22 +369,16 @@ class _TxListLine extends StatelessWidget {
                                       ).primaryCurrency.name
                                   ? Text(
                                       '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
-                                      style: AppStyles.textStyleSize12W400Primary(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize12W400Primary,
                                     )
                                   : Text(
                                       '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
-                                      style: AppStyles.textStyleSize12W400Primary(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize12W400Primary,
                                     )
                             else
                               Text(
                                 '···········',
-                                style: AppStyles.textStyleSize12W600Primary60(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W600Primary60,
                               )
                           ],
                         ),
@@ -438,9 +389,7 @@ class _TxListLine extends StatelessWidget {
                               transaction.decryptedSecret!.isNotEmpty)
                             AutoSizeText(
                               localizations.messageInTxTransfer,
-                              style: AppStyles.textStyleSize12W400Primary(
-                                context,
-                              ),
+                              style: theme.textStyleSize12W400Primary,
                             )
                         ],
                       )

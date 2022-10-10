@@ -1,6 +1,6 @@
 part of 'settings_drawer.dart';
 
-class CustomizationMenuView extends StatelessWidget {
+class CustomizationMenuView extends ConsumerWidget {
   const CustomizationMenuView({
     required this.onClose,
     super.key,
@@ -9,9 +9,9 @@ class CustomizationMenuView extends StatelessWidget {
   final VoidCallback onClose;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -51,9 +51,7 @@ class CustomizationMenuView extends StatelessWidget {
                       ),
                       Text(
                         localizations.customHeader,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                          context,
-                        ),
+                        style: theme.textStyleSize24W700EquinoxPrimary,
                       ),
                     ],
                   ),
@@ -78,9 +76,7 @@ class CustomizationMenuView extends StatelessWidget {
                           ),
                           child: Text(
                             localizations.preferences,
-                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context,
-                            ),
+                            style: theme.textStyleSize24W700EquinoxPrimary,
                           ),
                         ),
                       ),
@@ -89,25 +85,21 @@ class CustomizationMenuView extends StatelessWidget {
                         heading: localizations.changeCurrencyHeader,
                         info: localizations.changeCurrencyDesc.replaceAll(
                           '%1',
-                          StateContainer.of(context)
-                              .curNetwork
-                              .getNetworkCryptoCurrencyLabel(),
+                          StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
                         ),
                         defaultMethod: StateContainer.of(context).curCurrency,
                         icon: 'assets/icons/menu/currency.svg',
                         iconColor: theme.iconDrawer!,
-                        onPressed: () => CurrencyDialog.getDialog(context),
+                        onPressed: () => CurrencyDialog.getDialog(context, ref),
                         disabled: false,
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
-                        defaultMethod:
-                            StateContainer.of(context).curPrimaryCurrency,
+                        defaultMethod: StateContainer.of(context).curPrimaryCurrency,
                         icon: 'assets/icons/menu/primary-currency.svg',
                         iconColor: theme.iconDrawer!,
-                        onPressed: () =>
-                            PrimaryCurrencyDialog.getDialog(context),
+                        onPressed: () => PrimaryCurrencyDialog.getDialog(context, ref),
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
@@ -115,7 +107,7 @@ class CustomizationMenuView extends StatelessWidget {
                         defaultMethod: StateContainer.of(context).curLanguage,
                         icon: 'assets/icons/menu/language.svg',
                         iconColor: theme.iconDrawer!,
-                        onPressed: () => LanguageDialog.getDialog(context),
+                        onPressed: () => LanguageDialog.getDialog(context, ref),
                       ),
                       const _SettingsListItem.spacer(),
                       const _ThemeSettingsListItem(),
@@ -126,15 +118,9 @@ class CustomizationMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       // TODO(Chralu): mettre cette expression booleenne dans un provider DeviceCapabilities.notifications
-                      if (!kIsWeb &&
-                          (Platform.isIOS == true ||
-                              Platform.isAndroid == true ||
-                              Platform.isMacOS == true))
+                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
                         const _SettingsListItem.spacer(),
-                      if (!kIsWeb &&
-                          (Platform.isIOS == true ||
-                              Platform.isAndroid == true ||
-                              Platform.isMacOS == true))
+                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
                         const _ActiveNotificationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ActiveVibrationsSettingsListItem(),
@@ -149,10 +135,7 @@ class CustomizationMenuView extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: <Color>[
-                            theme.drawerBackground!,
-                            theme.backgroundDark00!
-                          ],
+                          colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
                         ),
@@ -175,21 +158,21 @@ class _ThemeSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
-    final themeSetting =
-        ref.watch(preferenceProvider.select((settings) => settings.theme));
-    final preferencesNotifier = ref.read(preferenceProvider.notifier);
+    final themeOption = ref.watch(ThemeProviders.themeOption);
     return _SettingsListItem.withDefaultValue(
       heading: localizations.themeHeader,
-      defaultMethod: ThemeSetting(themeSetting),
+      defaultMethod: ThemeSetting(themeOption),
       icon: 'assets/icons/menu/theme.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
-        final pickedTheme =
-            await ThemeDialog.getDialog(context, ThemeSetting(themeSetting));
+        final pickedTheme = await ThemeDialog.getDialog(context, ref, ThemeSetting(themeOption));
         if (pickedTheme == null) return;
-        await preferencesNotifier.setTheme(pickedTheme);
+
+        await ref.read(
+          ThemeProviders.selectTheme(theme: pickedTheme.theme).future,
+        );
       },
     );
   }
@@ -201,9 +184,8 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
-    final showBalancesSetting = ref
-        .watch(preferenceProvider.select((settings) => settings.showBalances));
+    final theme = ref.read(ThemeProviders.theme);
+    final showBalancesSetting = ref.watch(preferenceProvider.select((settings) => settings.showBalances));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
     return _SettingsListItem.withSwitch(
       heading: localizations.showBalances,
@@ -224,10 +206,9 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
-    final showBlogSetting =
-        ref.watch(preferenceProvider.select((settings) => settings.showBlog));
+    final showBlogSetting = ref.watch(preferenceProvider.select((settings) => settings.showBlog));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withSwitch(
@@ -249,7 +230,7 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     final showPriceChart = ref.watch(
       preferenceProvider.select((settings) => settings.showPriceChart),
@@ -275,7 +256,7 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     final activeNotifications = ref.watch(
       preferenceProvider.select((settings) => settings.activeNotifications),
@@ -310,7 +291,7 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     final activeVibrations = ref.watch(
       preferenceProvider.select((settings) => settings.activeVibrations),

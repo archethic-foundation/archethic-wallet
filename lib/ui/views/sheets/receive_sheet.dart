@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -14,24 +15,24 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ReceiveSheet extends StatelessWidget {
+class ReceiveSheet extends ConsumerWidget {
   const ReceiveSheet({this.address, super.key});
 
   final String? address;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -50,6 +51,7 @@ class ReceiveSheet extends StatelessWidget {
                   UIUtil.showSnackbar(
                     localizations.addressCopied,
                     context,
+                    ref,
                     theme.text!,
                     theme.snackBarShadow!,
                   );
@@ -80,6 +82,7 @@ class ReceiveSheet extends StatelessWidget {
                         UIUtil.showSnackbar(
                           localizations.addressCopied,
                           context,
+                          ref,
                           theme.text!,
                           theme.snackBarShadow!,
                         );
@@ -104,10 +107,7 @@ class ReceiveSheet extends StatelessWidget {
                                         margin: const EdgeInsets.all(8),
                                         child: AutoSizeText(
                                           localizations.addressInfos,
-                                          style: AppStyles
-                                              .textStyleSize16W700Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize16W700Primary,
                                         ),
                                       ),
                                       Container(
@@ -116,8 +116,7 @@ class ReceiveSheet extends StatelessWidget {
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: QrImage(
                                           foregroundColor: theme.text,
@@ -135,50 +134,30 @@ class ReceiveSheet extends StatelessWidget {
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(0, 16),
-                                                StateContainer.of(context)
-                                                    .curLanguage
-                                                    .getLocaleString(),
+                                                StateContainer.of(context).curLanguage.getLocaleString(),
                                               ),
-                                              style: AppStyles
-                                                  .textStyleSize12W100Primary(
-                                                context,
-                                              ),
+                                              style: theme.textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(16, 32),
-                                                StateContainer.of(context)
-                                                    .curLanguage
-                                                    .getLocaleString(),
+                                                StateContainer.of(context).curLanguage.getLocaleString(),
                                               ),
-                                              style: AppStyles
-                                                  .textStyleSize12W100Primary(
-                                                context,
-                                              ),
+                                              style: theme.textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(32, 48),
-                                                StateContainer.of(context)
-                                                    .curLanguage
-                                                    .getLocaleString(),
+                                                StateContainer.of(context).curLanguage.getLocaleString(),
                                               ),
-                                              style: AppStyles
-                                                  .textStyleSize12W100Primary(
-                                                context,
-                                              ),
+                                              style: theme.textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(48),
-                                                StateContainer.of(context)
-                                                    .curLanguage
-                                                    .getLocaleString(),
+                                                StateContainer.of(context).curLanguage.getLocaleString(),
                                               ),
-                                              style: AppStyles
-                                                  .textStyleSize12W100Primary(
-                                                context,
-                                              ),
+                                              style: theme.textStyleSize12W100Primary,
                                             ),
                                           ],
                                         ),
@@ -205,6 +184,7 @@ class ReceiveSheet extends StatelessWidget {
                   AppButton.buildAppButton(
                     const Key('viewExplorer'),
                     context,
+                    ref,
                     AppButtonType.primary,
                     localizations.viewExplorer,
                     Dimens.buttonTopDimens,
@@ -227,6 +207,7 @@ class ReceiveSheet extends StatelessWidget {
                   AppButton.buildAppButton(
                     const Key('share'),
                     context,
+                    ref,
                     AppButtonType.primary,
                     localizations.share,
                     Dimens.buttonBottomDimens,
@@ -239,8 +220,7 @@ class ReceiveSheet extends StatelessWidget {
                       final textToShare = address!.toUpperCase();
                       Share.share(
                         textToShare,
-                        sharePositionOrigin:
-                            box!.localToGlobal(Offset.zero) & box.size,
+                        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
                       );
                     },
                   ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -19,21 +20,21 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
 
   @override
   Size get preferredSize => AppBar().preferredSize;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
-    final bottomBarCurrentPage =
-        StateContainer.of(context).bottomBarCurrentPage;
+    final theme = ref.read(ThemeProviders.theme);
+    final bottomBarCurrentPage = StateContainer.of(context).bottomBarCurrentPage;
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
@@ -52,6 +53,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                         );
                     Sheets.showAppHeightNineSheet(
                       context: context,
+                      ref: ref,
                       widget: const ConfigureCategoryList(),
                     );
                   },
@@ -60,10 +62,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 StateContainer.of(context).showBalance
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
-              if (!kIsWeb &&
-                  (Platform.isIOS == true ||
-                      Platform.isAndroid == true ||
-                      Platform.isMacOS == true))
+              if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
                 StateContainer.of(context).activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
@@ -77,45 +76,33 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                           );
                       Clipboard.setData(
                         ClipboardData(
-                          text: StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .address!
-                              .toUpperCase(),
+                          text: StateContainer.of(context).appWallet!.appKeychain!.address!.toUpperCase(),
                         ),
                       );
                       UIUtil.showSnackbar(
                         localizations.addressCopied,
                         context,
+                        ref,
                         theme.text!,
                         theme.snackBarShadow!,
                       );
                     },
                     child: AutoSizeText(
                       localizations.keychainHeader,
-                      style:
-                          AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                      style: theme.textStyleSize24W700EquinoxPrimary,
                     ),
                   )
                 : bottomBarCurrentPage == 1
                     ? FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .name!,
-                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context,
-                          ),
+                          StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
+                          style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )
                     : AutoSizeText(
                         'NFT',
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                          context,
-                        ),
+                        style: theme.textStyleSize24W700EquinoxPrimary,
                       ),
             backgroundColor: Colors.transparent,
             elevation: 0,

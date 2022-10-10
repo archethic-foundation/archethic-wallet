@@ -4,12 +4,14 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/ui/util/styles.dart';
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,10 +23,13 @@ enum OneLineAddressTextType { primary60, primary, success }
 class UIUtil {
   static Widget threeLinetextStyleSmallestW400Text(
     BuildContext context,
+    WidgetRef ref,
     String address, {
     ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
     String? contactName,
   }) {
+    final theme = ref.read(ThemeProviders.theme);
+
     var stringPartOne = '';
     var stringPartTwo = '';
     var stringPartThree = '';
@@ -71,11 +76,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -87,7 +92,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -99,11 +104,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Text60(context),
+                    style: theme.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -116,7 +121,7 @@ class UIUtil {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: contactName,
-                  style: AppStyles.textStyleSize14W100Primary(context),
+                  style: theme.textStyleSize14W100Primary,
                 ),
               )
             : const SizedBox();
@@ -130,11 +135,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -146,7 +151,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -158,11 +163,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                    style: theme.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -174,11 +179,12 @@ class UIUtil {
 
   static Widget threeLineSeedText(
     BuildContext context,
+    WidgetRef ref,
     String address, {
     TextStyle? textStyle,
   }) {
-    final resolvedTextStyle =
-        textStyle ?? AppStyles.textStyleSize14W100Primary(context);
+    final theme = ref.read(ThemeProviders.theme);
+    final resolvedTextStyle = textStyle ?? theme.textStyleSize14W100Primary;
     final stringPartOne = address.substring(0, 22);
     final stringPartTwo = address.substring(22, 44);
     final stringPartThree = address.substring(44, 64);
@@ -203,10 +209,12 @@ class UIUtil {
   static void showSnackbar(
     String content,
     BuildContext context,
+    WidgetRef ref,
     Color boxDecorationColor,
     Color boxShadowColor, {
     Duration duration = const Duration(milliseconds: 3500),
   }) {
+    final theme = ref.read(ThemeProviders.theme);
     showToastWidget(
       Align(
         alignment: Alignment.topCenter,
@@ -231,7 +239,7 @@ class UIUtil {
           ),
           child: Text(
             content,
-            style: AppStyles.textStyleSize14W700Background(context),
+            style: theme.textStyleSize14W700Background,
             textAlign: TextAlign.start,
           ),
         ),
@@ -249,8 +257,7 @@ class UIUtil {
       _lockDisableSub!.cancel();
     }
     EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: true));
-    final Future<dynamic> delayed =
-        Future<void>.delayed(const Duration(seconds: 10));
+    final Future<dynamic> delayed = Future<void>.delayed(const Duration(seconds: 10));
     delayed.then((_) {
       return true;
     });

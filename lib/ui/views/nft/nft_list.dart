@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -13,30 +14,27 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTList extends StatefulWidget {
+class NFTList extends ConsumerStatefulWidget {
   const NFTList({super.key, this.currentNftCategoryIndex});
   final int? currentNftCategoryIndex;
 
   @override
-  State<NFTList> createState() => _NFTListState();
+  ConsumerState<NFTList> createState() => _NFTListState();
 }
 
 final GlobalKey expandedKey = GlobalKey();
 
-class _NFTListState extends State<NFTList> {
+class _NFTListState extends ConsumerState<NFTList> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
-    final accountTokenList =
-        accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
+    final theme = ref.read(ThemeProviders.theme);
+    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final accountTokenList = accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
     return SizedBox(
       key: expandedKey,
       width: double.infinity,
@@ -55,8 +53,7 @@ class _NFTListState extends State<NFTList> {
                 itemCount: accountTokenList.length,
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 itemBuilder: (context, index) {
-                  final tokenInformations =
-                      accountTokenList[index].tokenInformations!;
+                  final tokenInformations = accountTokenList[index].tokenInformations!;
 
                   return NFTCard(
                     tokenInformations: tokenInformations,
@@ -90,27 +87,23 @@ class _NFTListState extends State<NFTList> {
                                       AppButton.buildAppButtonTiny(
                                         const Key('sendNFT'),
                                         context,
+                                        ref,
                                         AppButtonType.primary,
                                         localizations.send,
                                         Dimens.buttonTopDimens,
                                         onPressed: () async {
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
-                                                StateContainer.of(context)
-                                                    .activeVibrations,
+                                                StateContainer.of(context).activeVibrations,
                                               );
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
+                                            ref: ref,
                                             widget: TransferSheet(
-                                              accountToken: accountSelected
-                                                  .accountNFT![index],
-                                              primaryCurrency:
-                                                  StateContainer.of(context)
-                                                      .curPrimaryCurrency,
+                                              accountToken: accountSelected.accountNFT![index],
+                                              primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
                                               title: localizations.transferNFT,
-                                              localCurrency:
-                                                  StateContainer.of(context)
-                                                      .curCurrency,
+                                              localCurrency: StateContainer.of(context).curCurrency,
                                             ),
                                           );
                                         },
@@ -122,14 +115,13 @@ class _NFTListState extends State<NFTList> {
                                       AppButton.buildAppButtonTiny(
                                         const Key('viewExplorer'),
                                         context,
+                                        ref,
                                         AppButtonType.primary,
                                         localizations.viewExplorer,
                                         Dimens.buttonTopDimens,
                                         icon: Icon(
                                           Icons.more_horiz,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .text,
+                                          color: theme.text,
                                         ),
                                         onPressed: () async {
                                           UIUtil.showWebview(
@@ -158,6 +150,7 @@ class _NFTListState extends State<NFTList> {
               AppButton.buildAppButton(
                 const Key('createNFT'),
                 context,
+                ref,
                 AppButtonType.primary,
                 localizations.createNFT,
                 Dimens.buttonBottomDimens,
@@ -177,11 +170,9 @@ class _NFTListState extends State<NFTList> {
                   Navigator.of(context).pushNamed(
                     '/nft_creation',
                     arguments: {
-                      'currentNftCategoryIndex':
-                          widget.currentNftCategoryIndex!,
+                      'currentNftCategoryIndex': widget.currentNftCategoryIndex!,
                       'process': NFTCreationProcessType.single,
-                      'primaryCurrency':
-                          StateContainer.of(context).curPrimaryCurrency
+                      'primaryCurrency': StateContainer.of(context).curPrimaryCurrency
                     },
                   );
                 },

@@ -1,10 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -32,7 +34,7 @@ class PickerItem {
 }
 
 // TODO(Chralu): specify [PickerItem.value] types (thanks to Generics)
-class PickerWidget extends StatefulWidget {
+class PickerWidget extends ConsumerStatefulWidget {
   const PickerWidget({
     super.key,
     this.pickerItems,
@@ -44,15 +46,15 @@ class PickerWidget extends StatefulWidget {
   final int selectedIndex;
 
   @override
-  State<PickerWidget> createState() => _PickerWidgetState();
+  ConsumerState<PickerWidget> createState() => _PickerWidgetState();
 }
 
-class _PickerWidgetState extends State<PickerWidget> {
+class _PickerWidgetState extends ConsumerState<PickerWidget> {
   int selectedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return SizedBox(
       width: double.maxFinite,
       child: ListView.builder(
@@ -104,8 +106,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                           else
                             SizedBox(
                               height: 24,
-                              child: widget.pickerItems![index].iconColor ==
-                                      null
+                              child: widget.pickerItems![index].iconColor == null
                                   ? Image.asset(pickerItem.icon!)
                                   : Image.asset(
                                       pickerItem.icon!,
@@ -123,13 +124,8 @@ class _PickerWidgetState extends State<PickerWidget> {
                                   child: Text(
                                     pickerItem.label,
                                     style: widget.pickerItems![index].enabled
-                                        ? AppStyles.textStyleSize14W600Primary(
-                                            context,
-                                          )
-                                        : AppStyles
-                                            .textStyleSize14W600PrimaryDisabled(
-                                            context,
-                                          ),
+                                        ? theme.textStyleSize14W600Primary
+                                        : theme.textStyleSize14W600PrimaryDisabled,
                                   ),
                                 ),
                                 if (widget.pickerItems![index].subLabel != null)
@@ -138,14 +134,8 @@ class _PickerWidgetState extends State<PickerWidget> {
                                     child: Text(
                                       widget.pickerItems![index].subLabel!,
                                       style: widget.pickerItems![index].enabled
-                                          ? AppStyles
-                                              .textStyleSize12W400Primary(
-                                              context,
-                                            )
-                                          : AppStyles
-                                              .textStyleSize12W400PrimaryDisabled(
-                                              context,
-                                            ),
+                                          ? theme.textStyleSize12W400Primary
+                                          : theme.textStyleSize12W400PrimaryDisabled,
                                     ),
                                   )
                                 else
@@ -163,12 +153,11 @@ class _PickerWidgetState extends State<PickerWidget> {
                             Container(),
                         ],
                       ),
-                      if (pickerItem.description != null)
-                        const SizedBox(height: 5),
+                      if (pickerItem.description != null) const SizedBox(height: 5),
                       if (pickerItem.description != null)
                         Text(
                           pickerItem.description!,
-                          style: AppStyles.textStyleSize12W100Primary(context),
+                          style: theme.textStyleSize12W100Primary,
                         ),
                     ],
                   ),

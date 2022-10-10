@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SecuredSettings {
-  String get seed => throw _privateConstructorUsedError;
+  String? get seed => throw _privateConstructorUsedError;
   String? get pin => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
   String? get yubikeyClientID => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $SecuredSettingsCopyWith<$Res> {
           SecuredSettings value, $Res Function(SecuredSettings) then) =
       _$SecuredSettingsCopyWithImpl<$Res>;
   $Res call(
-      {String seed,
+      {String? seed,
       String? pin,
       String? password,
       String? yubikeyClientID,
@@ -61,7 +61,7 @@ class _$SecuredSettingsCopyWithImpl<$Res>
       seed: seed == freezed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pin: pin == freezed
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$_SecuredSettingsCopyWith<$Res>
       __$$_SecuredSettingsCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String seed,
+      {String? seed,
       String? pin,
       String? password,
       String? yubikeyClientID,
@@ -120,7 +120,7 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
       seed: seed == freezed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pin: pin == freezed
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -145,7 +145,7 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
 
 class _$_SecuredSettings extends _SecuredSettings {
   const _$_SecuredSettings(
-      {required this.seed,
+      {this.seed,
       this.pin,
       this.password,
       this.yubikeyClientID,
@@ -153,7 +153,7 @@ class _$_SecuredSettings extends _SecuredSettings {
       : super._();
 
   @override
-  final String seed;
+  final String? seed;
   @override
   final String? pin;
   @override
@@ -199,7 +199,7 @@ class _$_SecuredSettings extends _SecuredSettings {
 
 abstract class _SecuredSettings extends SecuredSettings {
   const factory _SecuredSettings(
-      {required final String seed,
+      {final String? seed,
       final String? pin,
       final String? password,
       final String? yubikeyClientID,
@@ -207,7 +207,7 @@ abstract class _SecuredSettings extends SecuredSettings {
   const _SecuredSettings._() : super._();
 
   @override
-  String get seed;
+  String? get seed;
   @override
   String? get pin;
   @override

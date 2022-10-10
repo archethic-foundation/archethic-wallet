@@ -36,8 +36,7 @@ class NFTCreationProcess extends StatefulWidget {
   State<NFTCreationProcess> createState() => _NFTCreationProcessState();
 }
 
-class _NFTCreationProcessState extends State<NFTCreationProcess>
-    with TickerProviderStateMixin {
+class _NFTCreationProcessState extends State<NFTCreationProcess> with TickerProviderStateMixin {
   PageController? pageController;
   int currentPage = 0;
 
@@ -75,19 +74,16 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   FocusNode nftPropertyNameStoreFocusNode = FocusNode();
-  TextEditingController nftPropertyNameStoreController =
-      TextEditingController();
+  TextEditingController nftPropertyNameStoreController = TextEditingController();
   FocusNode nftPropertyIdCardFocusNode = FocusNode();
   TextEditingController nftPropertyIdCardController = TextEditingController();
   FocusNode nftPropertyExpiryDateFocusNode = FocusNode();
-  TextEditingController nftPropertyxpiryDateController =
-      TextEditingController();
+  TextEditingController nftPropertyxpiryDateController = TextEditingController();
 
   FocusNode nftPropertyAuthorFocusNode = FocusNode();
   TextEditingController nftPropertyAuthorController = TextEditingController();
   FocusNode nftPropertyCompositorFocusNode = FocusNode();
-  TextEditingController nftPropertyCompositorController =
-      TextEditingController();
+  TextEditingController nftPropertyCompositorController = TextEditingController();
 /*
   @override
   void initState() {
@@ -206,7 +202,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 */
   @override
   Widget build(BuildContext context) {
-    //TODO(reddwarf03): refacto code with Riverpod
+    // TODO(reddwarf03): refacto code with Riverpod
     return const SizedBox();
   }
 }
@@ -310,7 +306,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       tabBarProperties: TabBarProperties(
                         labelColor: StateContainer.of(context).curTheme.text,
                         labelStyle:
-                            AppStyles.textStyleSize10W100Primary(context),
+                            theme.textStyleSize10W100Primary,
                         indicatorSize: TabBarIndicatorSize.label,
                         indicatorColor:
                             StateContainer.of(context).curTheme.text,
@@ -407,9 +403,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               child: AutoSizeText(
                                 tokenPropertyWithAccessInfos
                                     .tokenProperty!.keys.first,
-                                style: AppStyles.textStyleSize12W600Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W600Primary,
                               ),
                             ),
                             Container(
@@ -418,9 +412,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               child: AutoSizeText(
                                 tokenPropertyWithAccessInfos
                                     .tokenProperty!.values.first,
-                                style: AppStyles.textStyleSize12W400Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize12W400Primary,
                               ),
                             ),
                             if (tokenPropertyWithAccessInfos.publicKeysList !=
@@ -460,9 +452,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 padding: const EdgeInsets.only(left: 20),
                                 child: AutoSizeText(
                                   'This property is accessible by everyone',
-                                  style: AppStyles.textStyleSize12W400Primary(
-                                    context,
-                                  ),
+                                  style: theme.textStyleSize12W400Primary,
                                 ),
                               ),
                           ],
@@ -927,7 +917,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           children: [
             Text(
               'Properties required by the category:',
-              style: AppStyles.textStyleSize12W100Primary(context),
+              style: theme.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),
             getNftPropertyAppTextField(
@@ -953,7 +943,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 'Optional properties:',
-                style: AppStyles.textStyleSize12W100Primary(context),
+                style: theme.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -964,7 +954,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           children: [
             Text(
               'Properties required by the category:',
-              style: AppStyles.textStyleSize12W100Primary(context),
+              style: theme.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),
             getNftPropertyAppTextField(
@@ -996,7 +986,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 'Optional properties:',
-                style: AppStyles.textStyleSize12W100Primary(context),
+                style: theme.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -1022,7 +1012,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       labelText: hint,
       autocorrect: false,
       keyboardType: TextInputType.text,
-      style: AppStyles.textStyleSize16W600Primary(context),
+      style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
         LengthLimitingTextInputFormatter(30),
       ],

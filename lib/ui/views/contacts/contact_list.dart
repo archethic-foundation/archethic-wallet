@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -28,7 +28,7 @@ class ContactsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final contactsList = ref.watch(
       ContactProviders.fetchContacts(
         search: searchNameController!.text,
@@ -73,9 +73,7 @@ class ContactsList extends ConsumerWidget {
                   Expanded(
                     child: AutoSizeText(
                       localizations.addressBookHeader,
-                      style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                        context,
-                      ),
+                      style: theme.textStyleSize24W700EquinoxPrimary,
                       maxLines: 2,
                     ),
                   ),
@@ -96,7 +94,7 @@ class ContactsList extends ConsumerWidget {
                     ),
                   );
                 },
-                style: AppStyles.textStyleSize16W600Primary(context),
+                style: theme.textStyleSize16W600Primary,
               ),
             ),
             contactsList.map(
@@ -116,12 +114,14 @@ class ContactsList extends ConsumerWidget {
                   AppButton.buildAppButton(
                     const Key('addContact'),
                     context,
+                    ref,
                     AppButtonType.primary,
                     localizations.addContact,
                     Dimens.buttonBottomDimens,
                     onPressed: () {
                       Sheets.showAppHeightNineSheet(
                         context: context,
+                        ref: ref,
                         widget: const AddContactSheet(),
                       );
                     },
@@ -143,7 +143,7 @@ class _ContactList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Expanded(
       child: Stack(
@@ -171,10 +171,7 @@ class _ContactList extends ConsumerWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: <Color>[
-                    theme.drawerBackground!,
-                    theme.backgroundDark00!
-                  ],
+                  colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
                   begin: const AlignmentDirectional(0.5, -1),
                   end: const AlignmentDirectional(0.5, 1),
                 ),
@@ -205,19 +202,20 @@ class _ContactList extends ConsumerWidget {
   }
 }
 
-class _SingleContact extends StatelessWidget {
+class _SingleContact extends ConsumerWidget {
   const _SingleContact({required this.contact});
 
   final Contact contact;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
 
     return TextButton(
       onPressed: () {
         Sheets.showAppHeightNineSheet(
           context: context,
+          ref: ref,
           widget: ContactDetail(
             contact: contact,
           ),
@@ -261,9 +259,7 @@ class _SingleContact extends StatelessWidget {
                             ),
                             Text(
                               contact.name!.replaceFirst('@', ''),
-                              style: AppStyles.textStyleSize14W200Primary(
-                                context,
-                              ),
+                              style: theme.textStyleSize14W200Primary,
                             ),
                           ],
                         ),

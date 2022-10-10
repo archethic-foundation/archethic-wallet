@@ -1,11 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 class AppDialogs {
   static void showConfirmDialog(
     BuildContext context,
+    WidgetRef ref,
     String title,
     String content,
     String buttonText,
@@ -20,7 +23,7 @@ class AppDialogs {
     String? cancelText,
     Function? cancelAction,
   }) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
@@ -28,7 +31,7 @@ class AppDialogs {
         return AlertDialog(
           title: Text(
             title,
-            style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
+            style: theme.textStyleSize24W700EquinoxPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -38,7 +41,7 @@ class AppDialogs {
           ),
           content: Text(
             content,
-            style: AppStyles.textStyleSize16W400Primary(context),
+            style: theme.textStyleSize16W400Primary,
           ),
           actions: <Widget>[
             _AppDialogsButton(
@@ -73,17 +76,18 @@ class AppDialogs {
 
   static void showInfoDialog(
     BuildContext context,
+    WidgetRef ref,
     String title,
     String content,
   ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return AlertDialog(
           title: Text(
             title,
-            style: AppStyles.textStyleSize20W700Primary(context),
+            style: theme.textStyleSize20W700Primary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -93,7 +97,7 @@ class AppDialogs {
           ),
           content: Text(
             content,
-            style: AppStyles.textStyleSize16W400Primary(context),
+            style: theme.textStyleSize16W400Primary,
           ),
           actions: <Widget>[
             TextButton(
@@ -101,7 +105,7 @@ class AppDialogs {
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   AppLocalization.of(context)!.ok,
-                  style: AppStyles.textStyleSize12W600Primary(context),
+                  style: theme.textStyleSize12W600Primary,
                 ),
               ),
               onPressed: () {
@@ -119,7 +123,7 @@ class AppDialogs {
   }
 }
 
-class _AppDialogsButton extends StatelessWidget {
+class _AppDialogsButton extends ConsumerWidget {
   const _AppDialogsButton({
     required this.textButton,
     required this.onPressed,
@@ -129,14 +133,15 @@ class _AppDialogsButton extends StatelessWidget {
   final String textButton;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return TextButton(
       onPressed: onPressed,
       child: Container(
         constraints: const BoxConstraints(maxWidth: 100),
         child: Text(
           textButton,
-          style: AppStyles.textStyleSize12W600Primary(context),
+          style: theme.textStyleSize12W600Primary,
         ),
       ),
     );
@@ -218,23 +223,21 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   }
 }
 
-class PulsatingCircleLogo extends StatefulWidget {
+class PulsatingCircleLogo extends ConsumerStatefulWidget {
   const PulsatingCircleLogo({super.key, this.title});
   final String? title;
 
   @override
-  State<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
+  ConsumerState<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
 }
 
-class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
-    with SingleTickerProviderStateMixin {
+class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   late Animation<double> _animation;
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _animation = Tween<double>(begin: 0, end: 12).animate(
       CurvedAnimation(parent: _animationController!, curve: Curves.easeOut),
     );
@@ -252,7 +255,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
 
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: [
         InkWell(
@@ -268,8 +271,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
                   boxShadow: [
                     for (int i = 1; i <= 2; i++)
                       BoxShadow(
-                        color: theme.iconDrawer!
-                            .withOpacity(_animationController!.value / 2),
+                        color: theme.iconDrawer!.withOpacity(_animationController!.value / 2),
                         spreadRadius: _animation.value * i,
                       )
                   ],
@@ -290,11 +292,9 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
           height: 40,
         ),
         Text(
-          widget.title != null
-              ? widget.title!
-              : AppLocalization.of(context)!.pleaseWait,
+          widget.title != null ? widget.title! : AppLocalization.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
-          style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
+          style: theme.textStyleSize16W600EquinoxPrimary,
         )
       ],
     );
@@ -337,9 +337,7 @@ class _AnimationLoadingOverlayContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: type == AnimationType.send
-              ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
-              : EdgeInsets.zero,
+          margin: type == AnimationType.send ? const EdgeInsets.only(bottom: 10, left: 90, right: 90) : EdgeInsets.zero,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 2,
           child: _AnimationLoadingOverlayGetAnimation(type: type, title: title),

@@ -15,8 +15,6 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/ui/themes/theme_dark.dart';
-import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
@@ -64,7 +62,6 @@ class StateContainerState extends State<StateContainer> {
   LanguageSetting curLanguage = const LanguageSetting(AvailableLanguage.systemDefault);
   PrimaryCurrencySetting curPrimaryCurrency = const PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
   NetworksSetting curNetwork = const NetworksSetting(AvailableNetworks.archethicMainNet);
-  BaseTheme curTheme = DarkTheme();
 
   ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1h';
@@ -213,11 +210,6 @@ class StateContainerState extends State<StateContainer> {
   Future<void> updateTheme(ThemeSetting theme) async {
     if (showPriceChart && chartInfos != null) {
       await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
-    }
-    if (mounted) {
-      setState(() {
-        curTheme = theme.getTheme();
-      });
     }
   }
 

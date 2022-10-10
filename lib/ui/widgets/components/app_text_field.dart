@@ -1,22 +1,23 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// TextField button
-class TextFieldButton extends StatelessWidget {
+class TextFieldButton extends ConsumerWidget {
   const TextFieldButton({@required this.icon, this.onPressed, super.key});
 
   final IconData? icon;
   final Function? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return SizedBox(
       height: 48,
       width: 48,
@@ -35,7 +36,7 @@ class TextFieldButton extends StatelessWidget {
 }
 
 /// A widget for our custom textfields
-class AppTextField extends StatefulWidget {
+class AppTextField extends ConsumerStatefulWidget {
   const AppTextField({
     this.focusNode,
     this.controller,
@@ -100,13 +101,13 @@ class AppTextField extends StatefulWidget {
   final bool? autofocus;
 
   @override
-  State<AppTextField> createState() => _AppTextFieldState();
+  ConsumerState<AppTextField> createState() => _AppTextFieldState();
 }
 
-class _AppTextFieldState extends State<AppTextField> {
+class _AppTextFieldState extends ConsumerState<AppTextField> {
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Container(
       margin: EdgeInsets.only(
         left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,
@@ -139,47 +140,34 @@ class _AppTextFieldState extends State<AppTextField> {
                 },
                 onChanged: widget.onChanged,
                 style: widget.style,
-                decoration: widget.prefixButton == null &&
-                        widget.suffixButton == null
+                decoration: widget.prefixButton == null && widget.suffixButton == null
                     ? InputDecoration(
                         labelText: widget.labelText ?? '',
-                        labelStyle:
-                            AppStyles.textStyleSize16W400Primary60(context),
+                        labelStyle: theme.textStyleSize16W400Primary60,
                       )
                     : widget.prefixButton != null && widget.suffixButton == null
                         ? InputDecoration(
                             contentPadding: const EdgeInsets.only(right: 48),
                             labelText: widget.labelText ?? '',
-                            labelStyle:
-                                AppStyles.textStyleSize16W400Primary60(context),
+                            labelStyle: theme.textStyleSize16W400Primary60,
                             prefixIcon: const SizedBox(width: 48, height: 48),
                           )
-                        : widget.prefixButton == null &&
-                                widget.suffixButton != null
+                        : widget.prefixButton == null && widget.suffixButton != null
                             ? InputDecoration(
                                 contentPadding: const EdgeInsets.only(left: 48),
                                 labelText: widget.labelText ?? '',
-                                labelStyle:
-                                    AppStyles.textStyleSize16W400Primary60(
-                                  context,
-                                ),
-                                suffixIcon:
-                                    const SizedBox(width: 48, height: 48),
+                                labelStyle: theme.textStyleSize16W400Primary60,
+                                suffixIcon: const SizedBox(width: 48, height: 48),
                               )
                             : InputDecoration(
                                 labelText: widget.labelText ?? '',
-                                labelStyle:
-                                    AppStyles.textStyleSize16W400Primary60(
-                                  context,
-                                ),
+                                labelStyle: theme.textStyleSize16W400Primary60,
                                 prefixIconConstraints: const BoxConstraints(
                                   minWidth: 48,
                                   maxHeight: 48,
                                 ),
-                                prefixIcon:
-                                    const SizedBox(width: 48, height: 48),
-                                suffixIcon:
-                                    const SizedBox(width: 48, height: 48),
+                                prefixIcon: const SizedBox(width: 48, height: 48),
+                                suffixIcon: const SizedBox(width: 48, height: 48),
                               ),
               ),
               Positioned(
@@ -198,32 +186,28 @@ class _AppTextFieldState extends State<AppTextField> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      if (widget.fadePrefixOnCondition != null &&
-                          widget.prefixButton != null)
+                      if (widget.fadePrefixOnCondition != null && widget.prefixButton != null)
                         AnimatedCrossFade(
                           duration: Duration(
                             milliseconds: widget.buttonFadeDurationMs!,
                           ),
                           firstChild: widget.prefixButton!,
                           secondChild: const SizedBox(height: 48, width: 48),
-                          crossFadeState: widget.prefixShowFirstCondition!
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              widget.prefixShowFirstCondition! ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                         )
                       else
                         widget.prefixButton ?? const SizedBox(),
                       // Second (suffix) button
-                      if (widget.fadeSuffixOnCondition != null &&
-                          widget.suffixButton != null)
+                      if (widget.fadeSuffixOnCondition != null && widget.suffixButton != null)
                         AnimatedCrossFade(
                           duration: Duration(
                             milliseconds: widget.buttonFadeDurationMs!,
                           ),
                           firstChild: widget.suffixButton!,
                           secondChild: const SizedBox(height: 48, width: 48),
-                          crossFadeState: widget.suffixShowFirstCondition!
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              widget.suffixShowFirstCondition! ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                         )
                       else
                         widget.suffixButton ?? const SizedBox()

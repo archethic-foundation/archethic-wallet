@@ -5,6 +5,7 @@ import 'dart:io';
 // Project imports:
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -13,7 +14,6 @@ import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/setting_item.dart';
-import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';

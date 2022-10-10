@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -18,7 +19,7 @@ class NftCategoryMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return SliverPadding(
       key: expandedKey,
@@ -87,7 +88,7 @@ class NftCategoryMenu extends ConsumerWidget {
                   Text(
                     nftCategories[index].name!,
                     textAlign: TextAlign.center,
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                   ),
                 ],
               ),

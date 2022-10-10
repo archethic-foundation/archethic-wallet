@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/chart_infos.dart';
@@ -13,9 +14,10 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class ChartSheet extends StatefulWidget {
+class ChartSheet extends ConsumerStatefulWidget {
   const ChartSheet({
     super.key,
     required this.optionChartList,
@@ -25,10 +27,10 @@ class ChartSheet extends StatefulWidget {
   final List<OptionChart> optionChartList;
   final OptionChart? optionChart;
   @override
-  State<ChartSheet> createState() => _ChartSheetState();
+  ConsumerState<ChartSheet> createState() => _ChartSheetState();
 }
 
-class _ChartSheetState extends State<ChartSheet> {
+class _ChartSheetState extends ConsumerState<ChartSheet> {
   OptionChart? optionChartSelected;
 
   int bottomBarCurrentPage = 0;
@@ -72,7 +74,7 @@ class _ChartSheetState extends State<ChartSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Column(
       children: <Widget>[
@@ -86,36 +88,32 @@ class _ChartSheetState extends State<ChartSheet> {
             padding: const EdgeInsets.only(top: 20),
             child: Padding(
               padding: const EdgeInsets.only(right: 5, left: 5),
-              child: StateContainer.of(context).chartInfos != null &&
-                      StateContainer.of(context).chartInfos!.data != null
-                  ? HistoryChart(
-                      intervals: StateContainer.of(context).chartInfos!.data!,
-                      gradientColors: LinearGradient(
-                        colors: <Color>[
-                          theme.text20!,
-                          theme.text!,
-                        ],
-                      ),
-                      gradientColorsBar: LinearGradient(
-                        colors: <Color>[
-                          theme.text!.withOpacity(0.9),
-                          theme.text!.withOpacity(0),
-                        ],
-                        begin: Alignment.center,
-                        end: Alignment.bottomCenter,
-                      ),
-                      tooltipBg: theme.backgroundDark!,
-                      tooltipText:
-                          AppStyles.textStyleSize12W100Primary(context),
-                      axisTextStyle:
-                          AppStyles.textStyleSize12W100Primary(context),
-                      optionChartSelected:
-                          StateContainer.of(context).idChartOption!,
-                      currency:
-                          StateContainer.of(context).curCurrency.currency.name,
-                      completeChart: true,
-                    )
-                  : const SizedBox(),
+              child:
+                  StateContainer.of(context).chartInfos != null && StateContainer.of(context).chartInfos!.data != null
+                      ? HistoryChart(
+                          intervals: StateContainer.of(context).chartInfos!.data!,
+                          gradientColors: LinearGradient(
+                            colors: <Color>[
+                              theme.text20!,
+                              theme.text!,
+                            ],
+                          ),
+                          gradientColorsBar: LinearGradient(
+                            colors: <Color>[
+                              theme.text!.withOpacity(0.9),
+                              theme.text!.withOpacity(0),
+                            ],
+                            begin: Alignment.center,
+                            end: Alignment.bottomCenter,
+                          ),
+                          tooltipBg: theme.backgroundDark!,
+                          tooltipText: theme.textStyleSize12W100Primary,
+                          axisTextStyle: theme.textStyleSize12W100Primary,
+                          optionChartSelected: StateContainer.of(context).idChartOption!,
+                          currency: StateContainer.of(context).curCurrency.currency.name,
+                          completeChart: true,
+                        )
+                      : const SizedBox(),
             ),
           ),
         ),
@@ -142,8 +140,7 @@ class _ChartSheetState extends State<ChartSheet> {
 
                 setState(() {
                   optionChartSelected = widget.optionChartList[index];
-                  StateContainer.of(context).idChartOption =
-                      widget.optionChartList[index].id;
+                  StateContainer.of(context).idChartOption = widget.optionChartList[index].id;
 
                   bottomBarCurrentPage = index;
                 });
@@ -153,10 +150,9 @@ class _ChartSheetState extends State<ChartSheet> {
                 return BottomBarItem(
                   icon: Text(
                     ChartInfos.getChartOptionLabel(context, optionChart.id),
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                   ),
-                  backgroundColorOpacity:
-                      theme.bottomBarBackgroundColorOpacity!,
+                  backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                   activeIconColor: theme.bottomBarActiveIconColor,
                   activeTitleColor: theme.bottomBarActiveTitleColor,
                   activeColor: theme.bottomBarActiveColor!,
@@ -166,10 +162,7 @@ class _ChartSheetState extends State<ChartSheet> {
             ),
           ],
         ),
-        if (StateContainer.of(context).chartInfos != null)
-          const BalanceInfosKpi()
-        else
-          const SizedBox(),
+        if (StateContainer.of(context).chartInfos != null) const BalanceInfosKpi() else const SizedBox(),
       ],
     );
   }

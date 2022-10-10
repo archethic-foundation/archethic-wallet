@@ -1,14 +1,17 @@
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/settings.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final localPreferencesRepositoryProvider = Provider<Preferences>(
+final _localSettingsRepositoryProvider = Provider<Preferences>(
   (ref) => throw UnimplementedError(),
 );
+
+abstract class SettingsProviders {
+  static final localSettingsRepository = _localSettingsRepositoryProvider;
+}
 
 class SettingsNotifier extends StateNotifier<Settings> {
   SettingsNotifier(this.preferences, super.state);
@@ -33,11 +36,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> setPinPadShuffle(bool pinPadShuffle) async {
     await preferences.setPinPadShuffle(pinPadShuffle);
     state = state.copyWith(pinPadShuffle: pinPadShuffle);
-  }
-
-  Future<void> setTheme(ThemeSetting theme) async {
-    await preferences.setTheme(theme);
-    state = state.copyWith(theme: theme.theme);
   }
 
   Future<void> setShowBalances(bool showBalances) async {
@@ -66,9 +64,8 @@ class SettingsNotifier extends StateNotifier<Settings> {
   }
 }
 
-final preferenceProvider =
-    StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
-  final preferences = ref.read(localPreferencesRepositoryProvider);
+final preferenceProvider = StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
+  final preferences = ref.read(_localSettingsRepositoryProvider);
 
   return SettingsNotifier(
     preferences,

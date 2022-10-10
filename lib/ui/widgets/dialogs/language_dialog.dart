@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -7,9 +8,10 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LanguageDialog {
-  static Future<AvailableLanguage?> getDialog(BuildContext context) async {
+  static Future<AvailableLanguage?> getDialog(BuildContext context, WidgetRef ref) async {
     final preferences = await Preferences.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableLanguage.values) {
@@ -29,13 +31,13 @@ class LanguageDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalization.of(context)!.language,
-              style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+              style: theme.textStyleSize24W700EquinoxPrimary,
             ),
           ),
           shape: RoundedRectangleBorder(
@@ -46,14 +48,12 @@ class LanguageDialog {
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex:
-                StateContainer.of(context).curLanguage.language.index,
+            selectedIndex: StateContainer.of(context).curLanguage.language.index,
             onSelected: (value) {
               preferences.setLanguage(
                 LanguageSetting(value.value as AvailableLanguage),
               );
-              if (StateContainer.of(context).curLanguage.language !=
-                  value.value) {
+              if (StateContainer.of(context).curLanguage.language != value.value) {
                 StateContainer.of(context).updateLanguage(
                   LanguageSetting(value.value as AvailableLanguage),
                 );

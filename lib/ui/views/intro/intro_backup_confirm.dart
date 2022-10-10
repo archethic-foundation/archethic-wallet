@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -30,17 +31,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroBackupConfirm extends StatefulWidget {
+class IntroBackupConfirm extends ConsumerStatefulWidget {
   const IntroBackupConfirm({required this.name, required this.seed, super.key});
   final String? name;
   final String? seed;
 
   @override
-  State<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
+  ConsumerState<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
 
-class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
+class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
@@ -59,11 +61,12 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     _sendTxSub =
         EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) async {
       final localizations = AppLocalization.of(context)!;
-      final theme = StateContainer.of(context).curTheme;
+      final theme = ref.read(ThemeProviders.theme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         UIUtil.showSnackbar(
           '${localizations.sendError} (${event.response!})',
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -85,6 +88,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         .replaceAll('%1', event.nbConfirmations.toString())
                         .replaceAll('%2', event.maxConfirmations.toString()),
                 context,
+                ref,
                 theme.text!,
                 theme.snackBarShadow!,
                 duration: const Duration(milliseconds: 5000),
@@ -115,6 +119,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         .replaceAll('%1', event.nbConfirmations.toString())
                         .replaceAll('%2', event.maxConfirmations.toString()),
                 context,
+                ref,
                 theme.text!,
                 theme.snackBarShadow!,
                 duration: const Duration(milliseconds: 5000),
@@ -132,6 +137,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 UIUtil.showSnackbar(
                   '${localizations.sendError} ($e)',
                   context,
+                  ref,
                   theme.text!,
                   theme.snackBarShadow!,
                 );
@@ -164,6 +170,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           UIUtil.showSnackbar(
             localizations.notEnoughConfirmations,
             context,
+            ref,
             theme.text!,
             theme.snackBarShadow!,
           );
@@ -208,7 +215,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -265,7 +272,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             localizations.confirmSecretPhrase,
-                            style: AppStyles.textStyleSize20W700Warning(context),
+                            style: theme.textStyleSize20W700Warning,
                           ),
                         ),
                         Container(
@@ -276,7 +283,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           child: AutoSizeText(
                             localizations.confirmSecretPhraseExplanation,
-                            style: AppStyles.textStyleSize16W600Primary(context),
+                            style: theme.textStyleSize16W600Primary,
                             textAlign: TextAlign.justify,
                             maxLines: 6,
                             stepGranularity: 0.5,
@@ -298,16 +305,12 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     backgroundColor: Colors.grey.shade800,
                                     child: Text(
                                       (entry.key + 1).toString(),
-                                      style: AppStyles.textStyleSize12W100Primary60(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize12W100Primary60,
                                     ),
                                   ),
                                   label: Text(
                                     entry.value,
-                                    style: AppStyles.textStyleSize12W400Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize12W400Primary,
                                   ),
                                   onDeleted: () {
                                     setState(() {
@@ -345,9 +348,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   child: Chip(
                                     label: Text(
                                       entry.value,
-                                      style: AppStyles.textStyleSize12W400Primary(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize12W400Primary,
                                     ),
                                   ),
                                 ),
@@ -368,6 +369,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           AppButton.buildAppButton(
                             const Key('confirm'),
                             context,
+                            ref,
                             AppButtonType.primaryOutline,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
@@ -377,6 +379,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           AppButton.buildAppButton(
                             const Key('confirm'),
                             context,
+                            ref,
                             AppButtonType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
@@ -393,6 +396,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   UIUtil.showSnackbar(
                                     localizations.confirmSecretPhraseKo,
                                     context,
+                                    ref,
                                     theme.text!,
                                     theme.snackBarShadow!,
                                   );
@@ -412,17 +416,24 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         AppButton.buildAppButton(
                           const Key('pass'),
                           context,
+                          ref,
                           AppButtonType.primary,
                           localizations.pass,
                           Dimens.buttonBottomDimens,
                           onPressed: () {
-                            AppDialogs.showConfirmDialog(context, localizations.passBackupConfirmationDisclaimer,
-                                localizations.passBackupConfirmationMessage, localizations.yes, () async {
-                              await _launchSecurityConfiguration(
-                                widget.name!,
-                                widget.seed!,
-                              );
-                            });
+                            AppDialogs.showConfirmDialog(
+                              context,
+                              ref,
+                              localizations.passBackupConfirmationDisclaimer,
+                              localizations.passBackupConfirmationMessage,
+                              localizations.yes,
+                              () async {
+                                await _launchSecurityConfiguration(
+                                  widget.name!,
+                                  widget.seed!,
+                                );
+                              },
+                            );
                           },
                         )
                       ],
@@ -438,7 +449,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
@@ -511,7 +522,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
   void _showSendingAnimation(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,
@@ -551,10 +562,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     } catch (e) {
       error = true;
       final localizations = AppLocalization.of(context)!;
-      final theme = StateContainer.of(context).curTheme;
+      final theme = ref.read(ThemeProviders.theme);
       UIUtil.showSnackbar(
         '${localizations.sendError} ($e)',
         context,
+        ref,
         theme.text!,
         theme.snackBarShadow!,
       );

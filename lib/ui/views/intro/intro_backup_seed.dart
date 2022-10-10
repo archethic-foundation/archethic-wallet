@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -15,17 +16,18 @@ import 'package:aewallet/util/seeds.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class IntroBackupSeedPage extends StatefulWidget {
+class IntroBackupSeedPage extends ConsumerStatefulWidget {
   const IntroBackupSeedPage({super.key, this.name});
   final String? name;
 
   @override
-  State<IntroBackupSeedPage> createState() => _IntroBackupSeedState();
+  ConsumerState<IntroBackupSeedPage> createState() => _IntroBackupSeedState();
 }
 
-class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
+class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   String? seed;
   List<String>? mnemonic;
   bool? isPressed;
@@ -38,14 +40,13 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
-    Preferences.getInstance()
-        .then((Preferences preferences) => preferences.setLanguageSeed('en'));
+    Preferences.getInstance().then((Preferences preferences) => preferences.setLanguageSeed('en'));
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -65,8 +66,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -103,15 +103,13 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                          StateContainer.of(context).activeVibrations,
                                         );
                                     seed = AppSeeds.generateSeed();
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                     );
-                                    final preferences =
-                                        await Preferences.getInstance();
+                                    final preferences = await Preferences.getInstance();
                                     preferences.setLanguageSeed('en');
                                     setState(() {
                                       language = 'en';
@@ -139,16 +137,14 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                          StateContainer.of(context).activeVibrations,
                                         );
                                     seed = AppSeeds.generateSeed();
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                       languageCode: 'fr',
                                     );
-                                    final preferences =
-                                        await Preferences.getInstance();
+                                    final preferences = await Preferences.getInstance();
                                     preferences.setLanguageSeed('fr');
                                     setState(() {
                                       language = 'fr';
@@ -181,7 +177,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                         ),
                         child: AutoSizeText(
                           localizations.recoveryPhrase,
-                          style: AppStyles.textStyleSize20W700Primary(context),
+                          style: theme.textStyleSize20W700Primary,
                         ),
                       ),
                       if (mnemonic != null)
@@ -202,6 +198,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                       AppButton.buildAppButton(
                         const Key('iveBackedItUp'),
                         context,
+                        ref,
                         AppButtonType.primaryOutline,
                         localizations.iveBackedItUp,
                         Dimens.buttonBottomDimens,
@@ -211,6 +208,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                       AppButton.buildAppButton(
                         const Key('iveBackedItUp'),
                         context,
+                        ref,
                         AppButtonType.primary,
                         localizations.iveBackedItUp,
                         Dimens.buttonBottomDimens,

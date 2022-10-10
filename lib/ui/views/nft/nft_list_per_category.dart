@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
@@ -13,14 +14,11 @@ class NFTListPerCategory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = StateContainer.of(context).curTheme;
-    final nftCategories = ref.read(NftCategoryProviders.fetchNftCategory
-     (
+    final theme = ref.read(ThemeProviders.theme);
+    final nftCategories = ref.read(
+      NftCategoryProviders.fetchNftCategory(
         context,
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!,
+        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!,
       ),
     );
 
@@ -41,8 +39,7 @@ class NFTListPerCategory extends ConsumerWidget {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             child: Column(
               children: <Widget>[
                 Row(
@@ -67,8 +64,7 @@ class NFTListPerCategory extends ConsumerWidget {
                       ],
                     ),
                     BalanceIndicatorWidget(
-                      primaryCurrency:
-                          StateContainer.of(context).curPrimaryCurrency,
+                      primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
                       displaySwitchButton: false,
                     ),
                     Padding(
@@ -76,14 +72,11 @@ class NFTListPerCategory extends ConsumerWidget {
                       child: Column(
                         children: [
                           Hero(
-                            tag:
-                                'nftCategory${nftCategories[currentNftCategoryIndex!].name!}',
+                            tag: 'nftCategory${nftCategories[currentNftCategoryIndex!].name!}',
                             child: Card(
                               elevation: 5,
                               shadowColor: Colors.black,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDark,
+                              color: theme.backgroundDark,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 side: const BorderSide(
@@ -102,8 +95,7 @@ class NFTListPerCategory extends ConsumerWidget {
                           Text(
                             nftCategories[currentNftCategoryIndex!].name!,
                             textAlign: TextAlign.center,
-                            style:
-                                AppStyles.textStyleSize12W100Primary(context),
+                            style: theme.textStyleSize12W100Primary,
                           ),
                         ],
                       ),

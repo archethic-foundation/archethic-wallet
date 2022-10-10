@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of '../settings_drawer.dart';
 
-abstract class _SettingsListItem extends StatelessWidget {
+abstract class _SettingsListItem extends ConsumerWidget {
   const _SettingsListItem();
 
   const factory _SettingsListItem.spacer() = _SettingsListSpacer;
@@ -59,10 +59,10 @@ class _SettingsListSpacer extends _SettingsListItem {
   const _SettingsListSpacer();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Divider(
       height: 2,
-      color: StateContainer.of(context).curTheme.text15,
+      color: ref.read(ThemeProviders.theme).text15,
     );
   }
 }
@@ -75,10 +75,11 @@ class _SettingsListTitle extends _SettingsListItem {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: StateContainer.of(context).curTheme.text05,
+        color: theme.text05,
       ),
       child: Container(
         alignment: Alignment.center,
@@ -88,9 +89,7 @@ class _SettingsListTitle extends _SettingsListItem {
         ),
         child: Text(
           text,
-          style: AppStyles.textStyleSize20W700EquinoxPrimary(
-            context,
-          ),
+          style: theme.textStyleSize20W700EquinoxPrimary,
         ),
       ),
     );

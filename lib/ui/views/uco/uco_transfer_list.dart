@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -10,8 +11,9 @@ import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UCOTransferListWidget extends StatelessWidget {
+class UCOTransferListWidget extends ConsumerWidget {
   const UCOTransferListWidget({
     super.key,
     required this.listUcoTransfer,
@@ -22,9 +24,9 @@ class UCOTransferListWidget extends StatelessWidget {
   final double? feeEstimation;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     listUcoTransfer!.sort(
       (UCOTransferWallet a, UCOTransferWallet b) => a.to!.compareTo(b.to!),
@@ -53,13 +55,13 @@ class UCOTransferListWidget extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       '+ ${localizations.estimatedFees}',
-                      style: AppStyles.textStyleSize14W600Primary(context),
+                      style: theme.textStyleSize14W600Primary,
                     ),
                   ],
                 ),
                 Text(
                   '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                  style: AppStyles.textStyleSize14W600Primary(context),
+                  style: theme.textStyleSize14W600Primary,
                 ),
               ],
             ),
@@ -74,13 +76,13 @@ class UCOTransferListWidget extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       localizations.total,
-                      style: AppStyles.textStyleSize14W600Primary(context),
+                      style: theme.textStyleSize14W600Primary,
                     ),
                   ],
                 ),
                 Text(
                   '${NumberUtil.formatThousands(_getTotal())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                  style: AppStyles.textStyleSize14W600Primary(context),
+                  style: theme.textStyleSize14W600Primary,
                 ),
               ],
             ),
@@ -93,27 +95,22 @@ class UCOTransferListWidget extends StatelessWidget {
   double _getTotal() {
     var totalAmount = 0.0;
     for (var i = 0; i < listUcoTransfer!.length; i++) {
-      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
-              Decimal.parse('100000000'))
-          .toDouble();
-      totalAmount = (Decimal.parse(totalAmount.toString()) +
-              Decimal.parse(amount.toString()))
-          .toDouble();
+      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) / Decimal.parse('100000000')).toDouble();
+      totalAmount = (Decimal.parse(totalAmount.toString()) + Decimal.parse(amount.toString())).toDouble();
     }
-    return (Decimal.parse(totalAmount.toString()) +
-            Decimal.parse(feeEstimation!.toString()))
-        .toDouble();
+    return (Decimal.parse(totalAmount.toString()) + Decimal.parse(feeEstimation!.toString())).toDouble();
   }
 }
 
-class _UCOTransferDetail extends StatelessWidget {
+class _UCOTransferDetail extends ConsumerWidget {
   const _UCOTransferDetail({required this.ucoTransfer});
 
   final UCOTransferWallet ucoTransfer;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -123,13 +120,13 @@ class _UCOTransferDetail extends StatelessWidget {
           children: [
             Text(
               localizations.txListTo,
-              style: AppStyles.textStyleSize14W600Primary(context),
+              style: theme.textStyleSize14W600Primary,
             ),
             Text(
               ucoTransfer.toContactName == null
                   ? Address(ucoTransfer.to!).getShortString()
                   : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
-              style: AppStyles.textStyleSize14W600Primary(context),
+              style: theme.textStyleSize14W600Primary,
             ),
           ],
         ),
@@ -138,7 +135,7 @@ class _UCOTransferDetail extends StatelessWidget {
         ),
         Text(
           '${NumberUtil.formatThousands(fromBigInt(ucoTransfer.amount))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-          style: AppStyles.textStyleSize14W600Primary(context),
+          style: theme.textStyleSize14W600Primary,
         ),
       ],
     );

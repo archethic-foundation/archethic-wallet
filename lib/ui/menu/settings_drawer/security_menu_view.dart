@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'settings_drawer.dart';
 
-class SecurityMenuView extends StatelessWidget {
+class SecurityMenuView extends ConsumerWidget {
   const SecurityMenuView({
     required this.close,
     super.key,
@@ -10,8 +10,8 @@ class SecurityMenuView extends StatelessWidget {
   final VoidCallback close;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     final localizations = AppLocalization.of(context)!;
 
     return DecoratedBox(
@@ -52,12 +52,7 @@ class SecurityMenuView extends StatelessWidget {
                         ),
                       ),
                       //Security Header Text
-                      Text(
-                        localizations.securityHeader,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                          context,
-                        ),
-                      ),
+                      Text(localizations.securityHeader, style: theme.textStyleSize24W700EquinoxPrimary),
                     ],
                   ),
                 ],
@@ -80,12 +75,7 @@ class SecurityMenuView extends StatelessWidget {
                             top: 15,
                             bottom: 15,
                           ),
-                          child: Text(
-                            localizations.preferences,
-                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context,
-                            ),
-                          ),
+                          child: Text(localizations.preferences, style: theme.textStyleSize20W700EquinoxPrimary),
                         ),
                       ),
                       /* const _SettingsListItem.spacer(),
@@ -111,35 +101,38 @@ class SecurityMenuView extends StatelessWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.removeWallet,
-                        headingStyle:
-                            AppStyles.textStyleSize16W600EquinoxRed(context),
+                        headingStyle: theme.textStyleSize16W600EquinoxRed,
                         icon: 'assets/icons/menu/remove-wallet.svg',
                         iconColor: Colors.red,
                         onPressed: () {
                           AppDialogs.showConfirmDialog(
                               context,
+                              ref,
                               CaseChange.toUpperCase(
                                 localizations.warning,
-                                StateContainer.of(context)
-                                    .curLanguage
-                                    .getLocaleString(),
+                                StateContainer.of(context).curLanguage.getLocaleString(),
                               ),
                               localizations.removeWalletDetail,
-                              localizations.removeWalletAction.toUpperCase(),
-                              () {
+                              localizations.removeWalletAction.toUpperCase(), () {
                             // Show another confirm dialog
                             AppDialogs.showConfirmDialog(
-                                context,
-                                localizations.removeWalletAreYouSure,
-                                localizations.removeWalletReassurance,
-                                localizations.yes, () async {
-                              await StateContainer.of(context).logOut();
-                              StateContainer.of(context).curTheme = DarkTheme();
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/',
-                                (Route<dynamic> route) => false,
-                              );
-                            });
+                              context,
+                              ref,
+                              localizations.removeWalletAreYouSure,
+                              localizations.removeWalletReassurance,
+                              localizations.yes,
+                              () async {
+                                await StateContainer.of(context).logOut();
+                                // TODO(Chralu): Déplacer la selection du theme par défaut dans le UseCase `logout`
+                                await ref.read(
+                                  ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+                                );
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/',
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                            );
                           });
                         },
                       ),
@@ -162,7 +155,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     final authenticationMethod = ref.watch(
       preferenceProvider.select((settings) => settings.authenticationMethod),
@@ -177,6 +170,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
       onPressed: asyncHasBiometrics.maybeWhen(
         data: (hasBiometrics) => () => AuthentificationMethodDialog.getDialog(
               context,
+              ref,
               hasBiometrics,
               AuthenticationMethod(authenticationMethod),
             ),
@@ -192,10 +186,9 @@ class _LockSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
-    final lock =
-        ref.watch(preferenceProvider.select((settings) => settings.lock));
+    final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withDefaultValue(
@@ -206,6 +199,7 @@ class _LockSettingsListItem extends ConsumerWidget {
       onPressed: () async {
         final unlockSetting = await LockDialog.getDialog(
           context,
+          ref,
           UnlockSetting(lock),
         );
         if (unlockSetting == null) return;
@@ -221,12 +215,10 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
-    final lock =
-        ref.watch(preferenceProvider.select((settings) => settings.lock));
-    final lockTimeout = ref
-        .watch(preferenceProvider.select((settings) => settings.lockTimeout));
+    final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
+    final lockTimeout = ref.watch(preferenceProvider.select((settings) => settings.lockTimeout));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withDefaultValue(
@@ -237,6 +229,7 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
       onPressed: () async {
         final lockTimeoutSetting = await LockTimeoutDialog.getDialog(
           context,
+          ref,
           LockTimeoutSetting(lockTimeout),
         );
         if (lockTimeoutSetting == null) return;
@@ -253,10 +246,9 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
-    final pinPadShuffle = ref
-        .watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
+    final pinPadShuffle = ref.watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
     final authenticationMethod = ref.watch(
       preferenceProvider.select((settings) => settings.authenticationMethod),
     );
@@ -286,13 +278,11 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return _SettingsListItem.singleLine(
       heading: localizations.backupSecretPhrase,
-      headingStyle: AppStyles.textStyleSize16W600EquinoxPrimary(
-        context,
-      ),
+      headingStyle: theme.textStyleSize16W600EquinoxPrimary,
       icon: 'assets/icons/menu/vault.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
@@ -312,6 +302,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
 
           Sheets.showAppHeightNineSheet(
             context: context,
+            ref: ref,
             widget: AppSeedBackupSheet(mnemonic),
           );
         }

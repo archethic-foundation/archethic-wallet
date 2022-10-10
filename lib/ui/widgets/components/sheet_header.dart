@@ -1,12 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SheetHeader extends StatelessWidget {
+class SheetHeader extends ConsumerWidget {
   const SheetHeader({
     super.key,
     required this.title,
@@ -23,8 +24,8 @@ class SheetHeader extends StatelessWidget {
   final Widget? widgetAfterTitle;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: <Widget>[
         Row(
@@ -63,9 +64,7 @@ class SheetHeader extends StatelessWidget {
                         ),
                       AutoSizeText(
                         title,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                          context,
-                        ),
+                        style: theme.textStyleSize24W700EquinoxPrimary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

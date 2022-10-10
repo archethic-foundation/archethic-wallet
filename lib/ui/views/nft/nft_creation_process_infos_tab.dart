@@ -12,7 +12,7 @@ class _NFTCreationProcessInfosTab extends StatelessWidget {
 }
   /*
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     if (tabActiveIndex != 1) {
       return const SizedBox();
@@ -27,7 +27,7 @@ class _NFTCreationProcessInfosTab extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 20),
               child: Text(
                 'Add to your NFT a name and a human readable description.',
-                style: AppStyles.textStyleSize12W100Primary(context),
+                style: theme.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -39,7 +39,7 @@ class _NFTCreationProcessInfosTab extends StatelessWidget {
               labelText: AppLocalization.of(context)!.nftNameHint,
               autocorrect: false,
               keyboardType: TextInputType.text,
-              style: AppStyles.textStyleSize16W600Primary(context),
+              style: theme.textStyleSize16W600Primary,
               inputFormatters: <LengthLimitingTextInputFormatter>[
                 LengthLimitingTextInputFormatter(30),
               ],
@@ -99,7 +99,7 @@ class _NFTCreationProcessInfosTab extends StatelessWidget {
               labelText: AppLocalization.of(context)!.nftDescriptionHint,
               autocorrect: false,
               keyboardType: TextInputType.text,
-              style: AppStyles.textStyleSize16W600Primary(context),
+              style: theme.textStyleSize16W600Primary,
               inputFormatters: <LengthLimitingTextInputFormatter>[
                 LengthLimitingTextInputFormatter(40),
               ],

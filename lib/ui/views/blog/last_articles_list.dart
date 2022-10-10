@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 
 import 'package:aewallet/application/blog.dart';
+import 'package:aewallet/application/theme.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -45,6 +46,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
       return const _LastArticlesNotShowed();
     }
     final asyncArticlesList = ref.watch(BlogProviders.fetchArticles);
+    final theme = ref.read(ThemeProviders.theme);
     const blogUrl = 'https://blog.archethic.net';
 
     return Column(
@@ -59,7 +61,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               children: [
                 Text(
                   AppLocalization.of(context)!.blogHeader,
-                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
+                  style: theme.textStyleSize14W600EquinoxPrimary,
                 ),
                 InkWell(
                   onTap: () {
@@ -156,7 +158,7 @@ class _LastArticlesNotShowed extends StatelessWidget {
   }
 }
 
-class SlidingCard extends StatelessWidget {
+class SlidingCard extends ConsumerWidget {
   const SlidingCard({
     super.key,
     @required this.name,
@@ -172,8 +174,8 @@ class SlidingCard extends StatelessWidget {
   final String? author;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
@@ -190,8 +192,7 @@ class SlidingCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(15)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
               child: assetName == null
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width,
@@ -220,7 +221,7 @@ class SlidingCard extends StatelessWidget {
   }
 }
 
-class CardContent extends StatelessWidget {
+class CardContent extends ConsumerWidget {
   const CardContent({
     super.key,
     @required this.name,
@@ -234,7 +235,8 @@ class CardContent extends StatelessWidget {
   final String? author;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -244,7 +246,7 @@ class CardContent extends StatelessWidget {
             offset: Offset(8 * offset!, 0),
             child: Text(
               name!,
-              style: AppStyles.textStyleSize14W600Primary(context),
+              style: theme.textStyleSize14W600Primary,
             ),
           ),
           const SizedBox(height: 5),
@@ -252,7 +254,7 @@ class CardContent extends StatelessWidget {
             offset: Offset(32 * offset!, 0),
             child: Text(
               '${date!} by ${author!}',
-              style: AppStyles.textStyleSize12W400Primary(context),
+              style: theme.textStyleSize12W400Primary,
             ),
           ),
         ],

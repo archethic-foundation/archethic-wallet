@@ -19,7 +19,8 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
   final bool disabled;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return IgnorePointer(
       ignoring: disabled,
       child: TextButton(
@@ -53,19 +54,13 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                     child: Text(
                       heading,
                       style: disabled
-                          ? AppStyles.textStyleSize16W600EquinoxPrimary30(
-                              context,
-                            )
-                          : AppStyles.textStyleSize16W600EquinoxPrimary(
-                              context,
-                            ),
+                          ? theme.textStyleSize16W600EquinoxPrimary30
+                          : theme.textStyleSize16W600EquinoxPrimary,
                     ),
                   ),
                   AutoSizeText(
                     defaultMethod.getDisplayName(context),
-                    style: disabled
-                        ? AppStyles.textStyleSize12W100Primary30(context)
-                        : AppStyles.textStyleSize12W100Primary(context),
+                    style: disabled ? theme.textStyleSize12W100Primary30 : theme.textStyleSize12W100Primary,
                     maxLines: 1,
                     stepGranularity: 0.1,
                     minFontSize: 8,
@@ -100,7 +95,8 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
   final bool disabled;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
@@ -134,15 +130,11 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                     children: <Widget>[
                       Text(
                         heading,
-                        style: AppStyles.textStyleSize16W600EquinoxPrimary(
-                          context,
-                        ),
+                        style: theme.textStyleSize16W600EquinoxPrimary,
                       ),
                       Text(
                         defaultMethod.getDisplayName(context),
-                        style: disabled
-                            ? AppStyles.textStyleSize12W100Primary30(context)
-                            : AppStyles.textStyleSize12W100Primary(context),
+                        style: disabled ? theme.textStyleSize12W100Primary30 : theme.textStyleSize12W100Primary,
                       ),
                     ],
                   ),
@@ -154,7 +146,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                     maxLines: 5,
                     stepGranularity: 0.1,
                     minFontSize: 8,
-                    style: AppStyles.textStyleSize12W100Primary(context),
+                    style: theme.textStyleSize12W100Primary,
                   ),
                 ),
               ],

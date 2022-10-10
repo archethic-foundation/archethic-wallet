@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -25,11 +26,12 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 
-class AddNFTCollectionConfirm extends StatefulWidget {
+class AddNFTCollectionConfirm extends ConsumerStatefulWidget {
   const AddNFTCollectionConfirm({
     super.key,
     required this.token,
@@ -40,11 +42,10 @@ class AddNFTCollectionConfirm extends StatefulWidget {
   final double? feeEstimation;
 
   @override
-  State<AddNFTCollectionConfirm> createState() =>
-      _AddNFTCollectionConfirmState();
+  ConsumerState<AddNFTCollectionConfirm> createState() => _AddNFTCollectionConfirmState();
 }
 
-class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
+class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfirm> {
   bool? animationOpen;
 
   SubscriptionChannel subscriptionChannel = SubscriptionChannel();
@@ -53,16 +54,12 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
+    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) {
       _doAdd();
     });
 
-    _sendTxSub = EventTaxiImpl.singleton()
-        .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) {
-      final theme = StateContainer.of(context).curTheme;
+    _sendTxSub = EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) {
+      final theme = ref.read(ThemeProviders.theme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -72,6 +69,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
         UIUtil.showSnackbar(
           event.response!,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
@@ -94,6 +92,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                     .replaceAll('%1', event.nbConfirmations.toString())
                     .replaceAll('%2', event.maxConfirmations.toString()),
             context,
+            ref,
             theme.text!,
             theme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000),
@@ -106,6 +105,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
           UIUtil.showSnackbar(
             AppLocalization.of(context)!.notEnoughConfirmations,
             context,
+            ref,
             theme.text!,
             theme.snackBarShadow!,
           );
@@ -139,7 +139,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
@@ -154,9 +154,9 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
+    final theme = ref.read(ThemeProviders.theme);
     return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -168,14 +168,14 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                 const SizedBox(height: 20),
                 Text(
                   '${localizations.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                  style: AppStyles.textStyleSize14W100Primary(context),
+                  style: theme.textStyleSize14W100Primary,
                 ),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
                     localizations.addNFTCollectionConfirmationMessage,
-                    style: AppStyles.textStyleSize14W600Primary(context),
+                    style: theme.textStyleSize14W600Primary,
                   ),
                 ),
                 const SizedBox(
@@ -187,11 +187,11 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                     children: <Widget>[
                       Text(
                         localizations.tokenName,
-                        style: AppStyles.textStyleSize14W600Primary(context),
+                        style: theme.textStyleSize14W600Primary,
                       ),
                       Text(
                         widget.token!.name!,
-                        style: AppStyles.textStyleSize14W100Primary(context),
+                        style: theme.textStyleSize14W100Primary,
                       ),
                     ],
                   ),
@@ -202,11 +202,11 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                     children: <Widget>[
                       Text(
                         localizations.tokenSymbol,
-                        style: AppStyles.textStyleSize14W600Primary(context),
+                        style: theme.textStyleSize14W600Primary,
                       ),
                       Text(
                         widget.token!.symbol!,
-                        style: AppStyles.textStyleSize14W100Primary(context),
+                        style: theme.textStyleSize14W100Primary,
                       ),
                     ],
                   ),
@@ -223,6 +223,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                     AppButton.buildAppButton(
                       const Key('confirm'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.confirm,
                       Dimens.buttonTopDimens,
@@ -233,8 +234,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
-                          activeVibrations:
-                              StateContainer.of(context).activeVibrations,
+                          activeVibrations: StateContainer.of(context).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
@@ -248,6 +248,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                     AppButton.buildAppButton(
                       const Key('cancel'),
                       context,
+                      ref,
                       AppButtonType.primary,
                       localizations.cancel,
                       Dimens.buttonBottomDimens,
@@ -272,11 +273,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
       final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .name!,
+        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
       );
       final service = 'archethic-wallet-$nameEncoded';
       final index = (await sl.get<ApiService>().getTransactionIndex(
@@ -284,8 +281,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
               ))
           .chainLength!;
 
-      final transaction =
-          Transaction(type: 'token', data: Transaction.initData());
+      final transaction = Transaction(type: 'token', data: Transaction.initData());
       final content = tokenToJsonForTxDataContent(
         Token(
           name: widget.token!.name,
@@ -297,9 +293,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
       );
       transaction.setContent(content);
 
-      final signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
+      final signedTx = keychain.buildTransaction(transaction, service, index).originSign(originPrivateKey);
 
       var transactionStatus = TransactionStatus();
 
@@ -354,12 +348,10 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
     var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations =
-            event.data!['transactionConfirmed']['nbConfirmations'];
+        nbConfirmations = event.data!['transactionConfirmed']['nbConfirmations'];
       }
       if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations =
-            event.data!['transactionConfirmed']['maxConfirmations'];
+        maxConfirmations = event.data!['transactionConfirmed']['maxConfirmations'];
       }
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(

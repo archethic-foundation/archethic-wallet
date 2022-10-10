@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/localization.dart';
@@ -20,18 +21,19 @@ import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yubidart/yubidart.dart';
 
-class YubikeyScreen extends StatefulWidget {
+class YubikeyScreen extends ConsumerStatefulWidget {
   const YubikeyScreen({super.key});
 
   @override
-  State<YubikeyScreen> createState() => _YubikeyScreenState();
+  ConsumerState<YubikeyScreen> createState() => _YubikeyScreenState();
 }
 
-class _YubikeyScreenState extends State<YubikeyScreen> {
+class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   StreamSubscription<OTPReceiveEvent>? _otpReceiveSub;
 
   double buttonSize = 100;
@@ -59,9 +61,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   }
 
   void _registerBus() {
-    _otpReceiveSub = EventTaxiImpl.singleton()
-        .registerTo<OTPReceiveEvent>()
-        .listen((OTPReceiveEvent event) {
+    _otpReceiveSub = EventTaxiImpl.singleton().registerTo<OTPReceiveEvent>().listen((OTPReceiveEvent event) {
       setState(() {
         buttonNFCLabel = 'get my OTP via NFC';
       });
@@ -78,18 +78,18 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   Future<void> _verifyOTP(String otp) async {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final preferences = await Preferences.getInstance();
     final vault = await Vault.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
     final yubikeyClientID = vault.getYubikeyClientID();
-    verificationResponse = await YubicoService()
-        .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
+    verificationResponse = await YubicoService().verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
     switch (verificationResponse.status) {
       case 'BAD_OTP':
         UIUtil.showSnackbar(
           localizations.yubikeyError_BAD_OTP,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -99,6 +99,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_BACKEND_ERROR,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -108,6 +109,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_BAD_SIGNATURE,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -117,6 +119,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_MISSING_PARAMETER,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -126,6 +129,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_NOT_ENOUGH_ANSWERS,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -135,6 +139,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_NO_SUCH_CLIENT,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -144,6 +149,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_OPERATION_NOT_ALLOWED,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -153,6 +159,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_REPLAYED_OTP,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -162,6 +169,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_REPLAYED_REQUEST,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -171,6 +179,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           localizations.yubikeyError_RESPONSE_KO,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -180,6 +189,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           verificationResponse.status,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -190,6 +200,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
           verificationResponse.status,
           context,
+          ref,
           theme.text!,
           theme.snackBarShadow!,
         );
@@ -202,7 +213,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -223,8 +234,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.10,
@@ -260,8 +270,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 40),
                             child: AutoSizeText(
                               'OTP',
-                              style:
-                                  AppStyles.textStyleSize16W400Primary(context),
+                              style: theme.textStyleSize16W400Primary,
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               stepGranularity: 0.1,
@@ -271,19 +280,15 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                             ElevatedButton(
                               child: Text(
                                 buttonNFCLabel,
-                                style: AppStyles.textStyleSize16W200Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize16W200Primary,
                               ),
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations,
+                                      StateContainer.of(context).activeVibrations,
                                     );
                                 setState(() {
-                                  buttonNFCLabel = localizations
-                                      .yubikeyConnectHoldNearDevice;
+                                  buttonNFCLabel = localizations.yubikeyConnectHoldNearDevice;
                                 });
                                 await _tagRead();
                               },
@@ -296,9 +301,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               ),
                               child: AutoSizeText(
                                 localizations.yubikeyConnectInvite,
-                                style: AppStyles.textStyleSize16W200Primary(
-                                  context,
-                                ),
+                                style: theme.textStyleSize16W200Primary,
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 stepGranularity: 0.1,
@@ -325,27 +328,22 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               },
                               onChanged: (String value) async {
                                 if (value.trim().length == 44) {
-                                  EventTaxiImpl.singleton()
-                                      .fire(OTPReceiveEvent(otp: value));
+                                  EventTaxiImpl.singleton().fire(OTPReceiveEvent(otp: value));
                                 }
                               },
-                              inputFormatters: <
-                                  LengthLimitingTextInputFormatter>[
+                              inputFormatters: <LengthLimitingTextInputFormatter>[
                                 LengthLimitingTextInputFormatter(45),
                               ],
                               keyboardType: TextInputType.text,
-                              style:
-                                  AppStyles.textStyleSize16W600Primary(context),
+                              style: theme.textStyleSize16W600Primary,
                               suffixButton: TextFieldButton(
                                 icon: FontAwesomeIcons.paste,
                                 onPressed: () {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
-                                        StateContainer.of(context)
-                                            .activeVibrations,
+                                        StateContainer.of(context).activeVibrations,
                                       );
-                                  Clipboard.getData('text/plain')
-                                      .then((ClipboardData? data) async {
+                                  Clipboard.getData('text/plain').then((ClipboardData? data) async {
                                     if (data == null || data.text == null) {
                                       return;
                                     }

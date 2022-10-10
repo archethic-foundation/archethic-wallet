@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -7,19 +8,17 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListTab extends StatelessWidget {
+class AccountsListTab extends ConsumerWidget {
   const AccountsListTab({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: [
         Expanded(
@@ -31,8 +30,7 @@ class AccountsListTab extends StatelessWidget {
                     FeedbackType.light,
                     StateContainer.of(context).activeVibrations,
                   );
-              StateContainer.of(context).appWallet =
-                  await KeychainUtil().getListAccountsFromKeychain(
+              StateContainer.of(context).appWallet = await KeychainUtil().getListAccountsFromKeychain(
                 StateContainer.of(context).appWallet,
                 await StateContainer.of(context).getSeed(),
                 StateContainer.of(context).curCurrency.currency.name,
@@ -74,10 +72,7 @@ class AccountsListTab extends StatelessWidget {
                             /// ACCOUNTS LIST
                             AccountsListWidget(
                               appWallet: StateContainer.of(context).appWallet,
-                              currencyName: StateContainer.of(context)
-                                  .curCurrency
-                                  .currency
-                                  .name,
+                              currencyName: StateContainer.of(context).curCurrency.currency.name,
                             )
                           ],
                         ),

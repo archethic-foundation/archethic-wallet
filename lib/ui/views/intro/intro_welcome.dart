@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -11,22 +11,23 @@ import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroWelcome extends StatefulWidget {
+class IntroWelcome extends ConsumerStatefulWidget {
   const IntroWelcome({super.key});
 
   @override
-  State<IntroWelcome> createState() => _IntroWelcomeState();
+  ConsumerState<IntroWelcome> createState() => _IntroWelcomeState();
 }
 
-class _IntroWelcomeState extends State<IntroWelcome> {
+class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
   bool checkedValue = false;
   NetworksSetting _curNetworksSetting = const NetworksSetting(AvailableNetworks.archethicMainNet);
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -81,7 +82,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                           child: AutoSizeText(
                             localizations.welcomeText,
                             maxLines: 5,
-                            style: AppStyles.textStyleSize20W700Primary(context),
+                            style: theme.textStyleSize20W700Primary,
                           ),
                         ),
                       ],
@@ -104,9 +105,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                 child: CheckboxListTile(
                                   title: Text(
                                     localizations.welcomeDisclaimerChoice,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                   value: checkedValue,
                                   onChanged: (newValue) {
@@ -144,6 +143,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                         AppButton.buildAppButton(
                           const Key('newWallet'),
                           context,
+                          ref,
                           checkedValue ? AppButtonType.primary : AppButtonType.primaryOutline,
                           localizations.newWallet,
                           Dimens.buttonTopDimens,
@@ -171,6 +171,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                         AppButton.buildAppButton(
                           const Key('importWallet'),
                           context,
+                          ref,
                           checkedValue ? AppButtonType.primary : AppButtonType.primaryOutline,
                           localizations.importWallet,
                           Dimens.buttonBottomDimens,
@@ -201,7 +202,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
   }
 
   Future<void> _networkDialog() async {
-    _curNetworksSetting = (await NetworkDialog.getDialog(context, _curNetworksSetting))!;
+    _curNetworksSetting = (await NetworkDialog.getDialog(context, ref, _curNetworksSetting))!;
     setState(() {});
   }
 }

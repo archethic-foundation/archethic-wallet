@@ -1,12 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LockTimeoutDialog {
   static Future<LockTimeoutSetting> _updateLockTimeout(
@@ -27,6 +28,7 @@ class LockTimeoutDialog {
 
   static Future<LockTimeoutSetting?> getDialog(
     BuildContext context,
+    WidgetRef ref,
     LockTimeoutSetting curTimeoutSetting,
   ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
@@ -46,13 +48,13 @@ class LockTimeoutDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = StateContainer.of(context).curTheme;
+        final theme = ref.read(ThemeProviders.theme);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalization.of(context)!.autoLockHeader,
-              style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+              style: theme.textStyleSize24W700EquinoxPrimary,
             ),
           ),
           shape: RoundedRectangleBorder(

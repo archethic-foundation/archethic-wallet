@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -15,8 +16,9 @@ import 'package:aewallet/util/vault.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SetYubikey extends StatefulWidget {
+class SetYubikey extends ConsumerStatefulWidget {
   const SetYubikey({
     super.key,
     this.header,
@@ -30,10 +32,10 @@ class SetYubikey extends StatefulWidget {
   final String? clientID;
 
   @override
-  State<SetYubikey> createState() => _SetYubikeyState();
+  ConsumerState<SetYubikey> createState() => _SetYubikeyState();
 }
 
-class _SetYubikeyState extends State<SetYubikey> {
+class _SetYubikeyState extends ConsumerState<SetYubikey> {
   FocusNode? _clientIDFocusNode;
   TextEditingController? _clientIDController;
   FocusNode? _clientAPIKeyFocusNode;
@@ -61,7 +63,7 @@ class _SetYubikeyState extends State<SetYubikey> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
@@ -124,9 +126,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
-                                      style: AppStyles.textStyleSize20W700Warning(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize20W700Warning,
                                     ),
                                   ),
                                 if (widget.description != null)
@@ -138,9 +138,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                     ),
                                     child: Text(
                                       widget.description!,
-                                      style: AppStyles.textStyleSize16W600Primary(
-                                        context,
-                                      ),
+                                      style: theme.textStyleSize16W600Primary,
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
@@ -152,9 +150,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _clientIDValidationText,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                                 Container(
@@ -165,9 +161,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _clientAPIKeyValidationText,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                                 const SizedBox(
@@ -191,6 +185,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                           AppButton.buildAppButton(
                             const Key('confirm'),
                             context,
+                            ref,
                             AppButtonType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
@@ -212,7 +207,7 @@ class _SetYubikeyState extends State<SetYubikey> {
   }
 
   Column getClientIDContainer() {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: <Widget>[
         AppTextField(
@@ -220,7 +215,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           focusNode: _clientIDFocusNode,
           controller: _clientIDController,
           cursorColor: theme.text,
-          style: AppStyles.textStyleSize16W700Primary(context),
+          style: theme.textStyleSize16W700Primary,
           inputFormatters: <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(10)],
           onChanged: (String text) {
             setState(() {
@@ -242,7 +237,7 @@ class _SetYubikeyState extends State<SetYubikey> {
   }
 
   Column getClientAPIKeyContainer() {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Column(
       children: <Widget>[
         AppTextField(
@@ -250,7 +245,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           focusNode: _clientAPIKeyFocusNode,
           controller: _clientAPIKeyController,
           cursorColor: theme.text,
-          style: AppStyles.textStyleSize16W700Primary(context),
+          style: theme.textStyleSize16W700Primary,
           inputFormatters: <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(40)],
           onChanged: (String text) {
             setState(() {

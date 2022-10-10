@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -13,6 +14,7 @@ import 'package:aewallet/util/vault.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -26,7 +28,7 @@ class ShakeCurve extends Curve {
   }
 }
 
-class PinScreen extends StatefulWidget {
+class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
     this.type, {
     this.description = '',
@@ -41,11 +43,10 @@ class PinScreen extends StatefulWidget {
   final Color? pinScreenBackgroundColor;
 
   @override
-  State<PinScreen> createState() => _PinScreenState();
+  ConsumerState<PinScreen> createState() => _PinScreenState();
 }
 
-class _PinScreenState extends State<PinScreen>
-    with SingleTickerProviderStateMixin {
+class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProviderStateMixin {
   static const int maxAttempts = 5;
 
   int _pinLength = 6;
@@ -97,8 +98,7 @@ class _PinScreenState extends State<PinScreen>
         duration: const Duration(milliseconds: 350),
         vsync: this,
       );
-      final Animation<double> curve =
-          CurvedAnimation(parent: _controller, curve: ShakeCurve());
+      final Animation<double> curve = CurvedAnimation(parent: _controller, curve: ShakeCurve());
       _animation = Tween<double>(begin: 0, end: 25).animate(curve)
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
@@ -119,8 +119,7 @@ class _PinScreenState extends State<PinScreen>
                   setState(() {
                     _pin = '';
                     _header = AppLocalization.of(context)!.pinInvalid;
-                    _dotStates =
-                        List.filled(_pinLength, FontAwesomeIcons.minus);
+                    _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
                     _controller.value = 0;
                   });
                 }
@@ -182,8 +181,7 @@ class _PinScreenState extends State<PinScreen>
       var lastFilledIndex = 0;
       for (var i = 0; i < _dotStates.length; i++) {
         if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
-          if (i == _dotStates.length ||
-              _dotStates[i + 1] == FontAwesomeIcons.minus) {
+          if (i == _dotStates.length || _dotStates[i + 1] == FontAwesomeIcons.minus) {
             lastFilledIndex = i;
             break;
           }
@@ -192,8 +190,7 @@ class _PinScreenState extends State<PinScreen>
       setState(() {
         _dotStates[lastFilledIndex] = FontAwesomeIcons.minus;
         if (_awaitingConfirmation) {
-          _pinConfirmed =
-              _pinConfirmed!.substring(0, _pinConfirmed!.length - 1);
+          _pinConfirmed = _pinConfirmed!.substring(0, _pinConfirmed!.length - 1);
         } else {
           _pin = _pin!.substring(0, _pin!.length - 1);
         }
@@ -201,8 +198,12 @@ class _PinScreenState extends State<PinScreen>
     }
   }
 
-  Widget _buildPinScreenButton(String buttonText, BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  // TODO(Chralu): Convert to [Widget] subclass.
+  Widget _buildPinScreenButton(
+    String buttonText,
+    BuildContext context,
+  ) {
+    final theme = ref.read(ThemeProviders.theme);
     return SizedBox(
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
@@ -217,8 +218,7 @@ class _PinScreenState extends State<PinScreen>
                 FeedbackType.light,
                 StateContainer.of(context).activeVibrations,
               );
-          if (_controller.status == AnimationStatus.forward ||
-              _controller.status == AnimationStatus.reverse) {
+          if (_controller.status == AnimationStatus.forward || _controller.status == AnimationStatus.reverse) {
             return;
           }
           if (_setCharacter(buttonText)) {
@@ -282,7 +282,7 @@ class _PinScreenState extends State<PinScreen>
           child: Text(
             buttonText,
             textAlign: TextAlign.center,
-            style: AppStyles.textStyleSize20W700Primary(context),
+            style: theme.textStyleSize20W700Primary,
           ),
         ),
       ),
@@ -290,7 +290,7 @@ class _PinScreenState extends State<PinScreen>
   }
 
   List<Widget> _buildPinDots() {
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     final ret = List<Widget>.empty(growable: true);
     for (var i = 0; i < _pinLength; i++) {
       ret.add(
@@ -307,7 +307,7 @@ class _PinScreenState extends State<PinScreen>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     if (pinEnterTitle.isEmpty) {
       setState(() {
         pinEnterTitle = localizations.pinEnterTitle;
@@ -371,9 +371,7 @@ class _PinScreenState extends State<PinScreen>
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                          context,
-                        ),
+                        style: theme.textStyleSize24W700EquinoxPrimary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
@@ -387,7 +385,7 @@ class _PinScreenState extends State<PinScreen>
                         ),
                         child: AutoSizeText(
                           widget.description,
-                          style: AppStyles.textStyleSize16W200Primary(context),
+                          style: theme.textStyleSize16W200Primary,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           stepGranularity: 0.1,
@@ -397,12 +395,10 @@ class _PinScreenState extends State<PinScreen>
                       margin: EdgeInsetsDirectional.only(
                         start: _animation == null
                             ? MediaQuery.of(context).size.width * 0.25
-                            : MediaQuery.of(context).size.width * 0.25 +
-                                _animation!.value,
+                            : MediaQuery.of(context).size.width * 0.25 + _animation!.value,
                         end: _animation == null
                             ? MediaQuery.of(context).size.width * 0.25
-                            : MediaQuery.of(context).size.width * 0.25 -
-                                _animation!.value,
+                            : MediaQuery.of(context).size.width * 0.25 - _animation!.value,
                         top: MediaQuery.of(context).size.height * 0.05,
                       ),
                       child: Row(
@@ -418,7 +414,7 @@ class _PinScreenState extends State<PinScreen>
                         ),
                         child: AutoSizeText(
                           '${localizations.attempt}$_failedAttempts/$maxAttempts',
-                          style: AppStyles.textStyleSize16W200Primary(context),
+                          style: theme.textStyleSize16W200Primary,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           stepGranularity: 0.1,
@@ -514,24 +510,16 @@ class _PinScreenState extends State<PinScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             SizedBox(
-                              height: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
-                              width: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
+                              height: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                              width: smallScreen(context) ? buttonSize - 15 : buttonSize,
                             ),
                             _buildPinScreenButton(
                               _listPinNumber.elementAt(9).toString(),
                               context,
                             ),
                             SizedBox(
-                              height: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
-                              width: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
+                              height: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                              width: smallScreen(context) ? buttonSize - 15 : buttonSize,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(200),
                                 highlightColor: theme.text15,
@@ -540,8 +528,7 @@ class _PinScreenState extends State<PinScreen>
                                 onTapDown: (TapDownDetails details) {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
-                                        StateContainer.of(context)
-                                            .activeVibrations,
+                                        StateContainer.of(context).activeVibrations,
                                       );
                                   _backSpace();
                                 },

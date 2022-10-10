@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -15,15 +16,16 @@ import 'package:aewallet/util/vault.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PasswordScreen extends StatefulWidget {
+class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  ConsumerState<PasswordScreen> createState() => _PasswordScreenState();
 }
 
-class _PasswordScreenState extends State<PasswordScreen> {
+class _PasswordScreenState extends ConsumerState<PasswordScreen> {
   static const int maxAttempts = 5;
   int _failedAttempts = 0;
 
@@ -82,7 +84,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
@@ -133,9 +135,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       ),
                       child: Text(
                         localizations.passwordMethod,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                          context,
-                        ),
+                        style: theme.textStyleSize24W700EquinoxPrimary,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -163,11 +163,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       labelText: localizations.enterPasswordHint,
                       keyboardType: TextInputType.text,
                       obscureText: !enterPasswordVisible!,
-                      style: AppStyles.textStyleSize16W700Primary(context),
+                      style: theme.textStyleSize16W700Primary,
                       suffixButton: TextFieldButton(
-                        icon: enterPasswordVisible!
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                        icon: enterPasswordVisible! ? Icons.visibility : Icons.visibility_off,
                         onPressed: () {
                           setState(() {
                             enterPasswordVisible = !enterPasswordVisible!;
@@ -183,9 +181,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         ),
                         child: AutoSizeText(
                           '${localizations.attempt}$_failedAttempts/$maxAttempts',
-                          style: AppStyles.textStyleSize14W200Primary(
-                            context,
-                          ),
+                          style: theme.textStyleSize14W200Primary,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           stepGranularity: 0.1,
@@ -196,9 +192,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       margin: const EdgeInsets.only(top: 3),
                       child: Text(
                         passwordError == null ? '' : passwordError!,
-                        style: AppStyles.textStyleSize14W600Primary(
-                          context,
-                        ),
+                        style: theme.textStyleSize14W600Primary,
                       ),
                     ),
                   ],
@@ -214,6 +208,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           AppButton.buildAppButton(
                             const Key('confirm'),
                             context,
+                            ref,
                             AppButtonType.primaryOutline,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
@@ -223,6 +218,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           AppButton.buildAppButton(
                             const Key('confirm'),
                             context,
+                            ref,
                             AppButtonType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,

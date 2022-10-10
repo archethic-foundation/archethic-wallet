@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/transaction_infos.dart';
@@ -14,42 +15,35 @@ import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class TransactionInfosSheet extends StatefulWidget {
+class TransactionInfosSheet extends ConsumerStatefulWidget {
   const TransactionInfosSheet(this.txAddress, {super.key});
 
   final String txAddress;
 
   @override
-  State<TransactionInfosSheet> createState() => _TransactionInfosSheetState();
+  ConsumerState<TransactionInfosSheet> createState() => _TransactionInfosSheetState();
 }
 
-class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
-  List<TransactionInfos> transactionInfos =
-      List<TransactionInfos>.empty(growable: true);
+class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
+  List<TransactionInfos> transactionInfos = List<TransactionInfos>.empty(growable: true);
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: FutureBuilder<List<TransactionInfos>>(
         future: sl.get<AppService>().getTransactionAllInfos(
               widget.txAddress,
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-              StateContainer.of(context)
-                  .curNetwork
-                  .getNetworkCryptoCurrencyLabel(),
+              StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
               context,
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .name!,
+              StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
             ),
         builder: (
           BuildContext context,
@@ -78,15 +72,12 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                   children: <Widget>[
                                     //  list
                                     ListView.builder(
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
+                                      physics: const AlwaysScrollableScrollPhysics(),
                                       padding: const EdgeInsets.only(
                                         top: 15,
                                         bottom: 15,
                                       ),
-                                      itemCount: list.data == null
-                                          ? 0
-                                          : list.data!.length,
+                                      itemCount: list.data == null ? 0 : list.data!.length,
                                       itemBuilder: (
                                         BuildContext context,
                                         int index,
@@ -107,6 +98,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                   AppButton.buildAppButton(
                                     const Key('viewExplorer'),
                                     context,
+                                    ref,
                                     AppButtonType.primary,
                                     localizations.viewExplorer,
                                     Dimens.buttonBottomDimens,
@@ -140,18 +132,17 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
   }
 }
 
-class _TransactionBuildInfos extends StatelessWidget {
+class _TransactionBuildInfos extends ConsumerWidget {
   const _TransactionBuildInfos({required this.transactionInfo});
 
   final TransactionInfos transactionInfo;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = StateContainer.of(context).curTheme;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.read(ThemeProviders.theme);
 
     return (StateContainer.of(context).showBalance == true ||
-            (StateContainer.of(context).showBalance == false &&
-                transactionInfo.titleInfo != 'Amount'))
+            (StateContainer.of(context).showBalance == false && transactionInfo.titleInfo != 'Amount'))
         ? Row(
             children: <Widget>[
               Expanded(
@@ -165,8 +156,7 @@ class _TransactionBuildInfos extends StatelessWidget {
                         width: 50,
                         height: 50,
                         child: IconWidget(
-                          icon:
-                              'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
+                          icon: 'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
                           width: 50,
                           height: 50,
                         ),
@@ -189,25 +179,19 @@ class _TransactionBuildInfos extends StatelessWidget {
                                   children: <Widget>[
                                     Expanded(
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
                                               Row(
                                                 children: <Widget>[
                                                   AutoSizeText(
-                                                    TransactionInfos
-                                                        .getDisplayName(
+                                                    TransactionInfos.getDisplayName(
                                                       context,
                                                       transactionInfo.domain,
                                                     ),
-                                                    style: AppStyles
-                                                        .textStyleSize16W600Primary(
-                                                      context,
-                                                    ),
+                                                    style: theme.textStyleSize16W600Primary,
                                                   ),
                                                 ],
                                               ),
@@ -239,27 +223,19 @@ class _TransactionBuildInfos extends StatelessWidget {
                                 children: <Widget>[
                                   Expanded(
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         AutoSizeText(
                                           TransactionInfos.getDisplayName(
                                             context,
                                             transactionInfo.titleInfo,
                                           ),
-                                          style: AppStyles
-                                              .textStyleSize14W600Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize14W600Primary,
                                         ),
                                         SelectableText(
                                           transactionInfo.valueInfo,
-                                          style: AppStyles
-                                              .textStyleSize14W100Primary(
-                                            context,
-                                          ),
+                                          style: theme.textStyleSize14W100Primary,
                                         ),
                                       ],
                                     ),

@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
@@ -23,10 +24,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AddPublicKey extends StatefulWidget {
+class AddPublicKey extends ConsumerStatefulWidget {
   const AddPublicKey({
     super.key,
     required this.tokenPropertyWithAccessInfos,
@@ -37,10 +39,10 @@ class AddPublicKey extends StatefulWidget {
   final Function(List<String>)? returnPublicKeys;
 
   @override
-  State<AddPublicKey> createState() => _AddPublicKeyState();
+  ConsumerState<AddPublicKey> createState() => _AddPublicKeyState();
 }
 
-class _AddPublicKeyState extends State<AddPublicKey> {
+class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
   FocusNode? publicKeyAccessFocusNode;
   TextEditingController? publicKeyAccessController;
   List<String>? publicKeys;
@@ -69,7 +71,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Column(
       children: <Widget>[
@@ -89,19 +91,16 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!
-                                .keys.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!.keys.first,
                           ),
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!
-                                .values.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!.values.first,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Text(
                               'Add or remove public keys that can access this property.',
-                              style:
-                                  AppStyles.textStyleSize12W100Primary(context),
+                              style: theme.textStyleSize12W100Primary,
                               textAlign: TextAlign.justify,
                             ),
                           ),
@@ -114,8 +113,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                             autocorrect: false,
                             maxLines: 3,
                             keyboardType: TextInputType.text,
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
+                            style: theme.textStyleSize16W600Primary,
                             inputFormatters: <LengthLimitingTextInputFormatter>[
                               LengthLimitingTextInputFormatter(68),
                             ],
@@ -127,54 +125,49 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations,
+                                      StateContainer.of(context).activeVibrations,
                                     );
-                                final contact =
-                                    await ContactsDialog.getDialog(context);
+                                final contact = await ContactsDialog.getDialog(context, ref);
                                 if (contact != null && contact.name != null) {
-                                  publicKeyAccessController!.text =
-                                      contact.name!;
+                                  publicKeyAccessController!.text = contact.name!;
                                   setState(() {});
                                 }
                               },
                             ),
-                            suffixButton: kIsWeb == false &&
-                                    (Platform.isIOS || Platform.isAndroid)
+                            suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
                                 ? TextFieldButton(
                                     icon: FontAwesomeIcons.qrcode,
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations,
+                                            StateContainer.of(context).activeVibrations,
                                           );
                                       UIUtil.cancelLockEvent();
-                                      final scanResult =
-                                          await UserDataUtil.getQRData(
+                                      final scanResult = await UserDataUtil.getQRData(
                                         DataType.raw,
                                         context,
+                                        ref,
                                       );
                                       if (scanResult == null) {
                                         UIUtil.showSnackbar(
                                           localizations.qrInvalidAddress,
                                           context,
+                                          ref,
                                           theme.text!,
                                           theme.snackBarShadow!,
                                         );
-                                      } else if (QRScanErrs.errorList
-                                          .contains(scanResult)) {
+                                      } else if (QRScanErrs.errorList.contains(scanResult)) {
                                         UIUtil.showSnackbar(
                                           scanResult,
                                           context,
+                                          ref,
                                           theme.text!,
                                           theme.snackBarShadow!,
                                         );
                                         return;
                                       } else {
                                         setState(() {
-                                          publicKeyAccessController!.text =
-                                              scanResult;
+                                          publicKeyAccessController!.text = scanResult;
                                         });
                                       }
                                     },
@@ -191,23 +184,23 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                 AppButton.buildAppButtonTiny(
                                   const Key('addPublicKey'),
                                   context,
+                                  ref,
                                   AppButtonType.primary,
                                   localizations.addNFTProperty,
                                   Dimens.buttonBottomDimens,
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                          StateContainer.of(context).activeVibrations,
                                         );
-                                    if (publicKeyAccessController!.text.length <
-                                            68 ||
+                                    if (publicKeyAccessController!.text.length < 68 ||
                                         !isHex(
                                           publicKeyAccessController!.text,
                                         )) {
                                       UIUtil.showSnackbar(
                                         'The public key is not valid.',
                                         context,
+                                        ref,
                                         theme.text!,
                                         theme.snackBarShadow!,
                                       );
@@ -217,9 +210,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                           publicKeyAccessController!.text,
                                         );
                                         publicKeys!.sort(
-                                          (a, b) => a
-                                              .toLowerCase()
-                                              .compareTo(b.toLowerCase()),
+                                          (a, b) => a.toLowerCase().compareTo(b.toLowerCase()),
                                         );
                                         publicKeyAccessController!.text = '';
                                       });
@@ -230,6 +221,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                 AppButton.buildAppButtonTiny(
                                   const Key('addPublicKey'),
                                   context,
+                                  ref,
                                   AppButtonType.primaryOutline,
                                   localizations.addNFTProperty,
                                   Dimens.buttonBottomDimens,
@@ -245,10 +237,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                 right: 10,
                               ),
                               child: Wrap(
-                                children: publicKeys!
-                                    .asMap()
-                                    .entries
-                                    .map((MapEntry<dynamic, String> entry) {
+                                children: publicKeys!.asMap().entries.map((MapEntry<dynamic, String> entry) {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: _AddPublicKeyLine(
@@ -279,7 +268,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
   }
 }
 
-class _AddPublicKeyLine extends StatelessWidget {
+class _AddPublicKeyLine extends ConsumerWidget {
   const _AddPublicKeyLine({
     required this.publicKey,
     required this.onRemovePublicKey,
@@ -289,9 +278,9 @@ class _AddPublicKeyLine extends StatelessWidget {
   final VoidCallback onRemovePublicKey;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = StateContainer.of(context).curTheme;
+    final theme = ref.read(ThemeProviders.theme);
 
     return Container(
       padding: const EdgeInsets.only(bottom: 8),
@@ -330,9 +319,7 @@ class _AddPublicKeyLine extends StatelessWidget {
                                 children: <Widget>[
                                   AutoSizeText(
                                     '${publicKey.substring(0, 15)}...${publicKey.substring(publicKey.length - 15)}',
-                                    style: AppStyles.textStyleSize12W600Primary(
-                                      context,
-                                    ),
+                                    style: theme.textStyleSize12W600Primary,
                                   ),
                                 ],
                               ),
@@ -346,11 +333,9 @@ class _AddPublicKeyLine extends StatelessWidget {
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
-                                        color: theme.backgroundDark!
-                                            .withOpacity(0.3),
+                                        color: theme.backgroundDark!.withOpacity(0.3),
                                         border: Border.all(
-                                          color: theme.backgroundDarkest!
-                                              .withOpacity(0.2),
+                                          color: theme.backgroundDarkest!.withOpacity(0.2),
                                           width: 2,
                                         ),
                                       ),
@@ -363,19 +348,18 @@ class _AddPublicKeyLine extends StatelessWidget {
                                         onPressed: () {
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
-                                                StateContainer.of(context)
-                                                    .activeVibrations,
+                                                StateContainer.of(context).activeVibrations,
                                               );
                                           AppDialogs.showConfirmDialog(
                                             context,
+                                            ref,
                                             'Delete public key', // TODO(reddwarf03): to internationalize
                                             'Are you sure ?',
                                             localizations.deleteOption,
                                             () {
                                               sl.get<HapticUtil>().feedback(
                                                     FeedbackType.light,
-                                                    StateContainer.of(context)
-                                                        .activeVibrations,
+                                                    StateContainer.of(context).activeVibrations,
                                                   );
                                             },
                                           );
