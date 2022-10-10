@@ -2,17 +2,17 @@
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'contact_repository.g.dart';
+part 'contact.g.dart';
 
 @riverpod
-ContactRepository _contactRepository(WidgetRef ref) => ContactRepository();
+ContactRepository _contactRepository(_ContactRepositoryRef ref) =>
+    ContactRepository();
 
 @riverpod
 Future<List<Contact>> _fetchContacts(
-  WidgetRef ref, {
+  _FetchContactsRef ref, {
   String search = '',
 }) async {
   if (search.isEmpty) {
@@ -26,7 +26,7 @@ Future<List<Contact>> _fetchContacts(
 
 @riverpod
 Future<void> _saveContact(
-  WidgetRef ref, {
+  _SaveContactRef ref, {
   Contact? contact,
 }) async {
   if (contact == null) {
@@ -38,7 +38,7 @@ Future<void> _saveContact(
 
 @riverpod
 Future<void> _deleteContact(
-  WidgetRef ref, {
+  _DeleteContactRef ref, {
   Contact? contact,
 }) async {
   if (contact == null) {

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'contact_repository.dart';
+part of 'contact.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_contactRepositoryHash() => r'911881234193d224832f63bd8693081a50a4924a';
+String $_contactRepositoryHash() => r'cf712b6cccb80060dda6cf8b5e0115332d394211';
 
 /// See also [_contactRepository].
 final _contactRepositoryProvider = AutoDisposeProvider<ContactRepository>(
@@ -40,7 +40,7 @@ final _contactRepositoryProvider = AutoDisposeProvider<ContactRepository>(
       : $_contactRepositoryHash,
 );
 typedef _ContactRepositoryRef = AutoDisposeProviderRef<ContactRepository>;
-String $_fetchContactsHash() => r'6ddeaddbc14453d582e0d7ff8ba8a511b32dbae8';
+String $_fetchContactsHash() => r'e577c0c6beecb77d4217b611093c1e6f9e62b8e2';
 
 /// See also [_fetchContacts].
 class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
@@ -110,7 +110,7 @@ class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
   String? get name => r'_fetchContactsProvider';
 }
 
-String $_saveContactHash() => r'd2dc7fc499a28d128ac3d6d43d75608a844e7a6c';
+String $_saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
 
 /// See also [_saveContact].
 class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
@@ -180,7 +180,7 @@ class _SaveContactFamily extends Family<AsyncValue<void>> {
   String? get name => r'_saveContactProvider';
 }
 
-String $_deleteContactHash() => r'3fa0da98dae399adff64561b218041629bdb1521';
+String $_deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
 
 /// See also [_deleteContact].
 class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
