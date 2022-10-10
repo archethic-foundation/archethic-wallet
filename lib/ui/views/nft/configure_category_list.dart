@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
-import 'package:aewallet/application/nft_category_repository.dart';
+import 'package:aewallet/application/nft_category.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -28,7 +28,7 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final listNftCategory = ref.read(
-      FetchNftCategoryProvider(
+      NftCategoryProviders.fetchNftCategory(
         context,
         StateContainer.of(context)
             .appWallet!
@@ -36,6 +36,7 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
             .getAccountSelected()!,
       ),
     );
+
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -85,9 +86,9 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
         .appKeychain!
         .getAccountSelected()!;
 
-    nftCategoryToHidden = ref
-        .read(nftCategoryRepositoryProvider)
-        .getListNftCategory(context, accountSelected);
+    nftCategoryToHidden = ref.read(
+      NftCategoryProviders.fetchNftCategory(context, accountSelected),
+    );
 
     nftCategoryToSort = widget.nftCategory;
     for (final nftCategory in nftCategoryToSort!) {
@@ -122,12 +123,12 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                     final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
                     nftCategoryToSort!.insert(newIndex, nftCategory);
                   });
-                  ref
-                      .watch(nftCategoryRepositoryProvider)
-                      .updateNftCategoryList(
-                        nftCategoryToSort!,
-                        accountSelected,
-                      );
+                  ref.watch(
+                    NftCategoryProviders.updateNftCategoryList(
+                      nftCategoryListCustomized: nftCategoryToSort!,
+                      account: accountSelected,
+                    ),
+                  );
                 },
                 children: [
                   for (NftCategory nftCategory in nftCategoryToSort!)
@@ -149,12 +150,14 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                                       (element) => element.id == nftCategory.id,
                                     );
                                     setState(() {});
-                                    ref
-                                        .watch(nftCategoryRepositoryProvider)
-                                        .updateNftCategoryList(
-                                          nftCategoryToSort!,
-                                          accountSelected,
-                                        );
+                                    ref.watch(
+                                      NftCategoryProviders
+                                          .updateNftCategoryList(
+                                        nftCategoryListCustomized:
+                                            nftCategoryToSort!,
+                                        account: accountSelected,
+                                      ),
+                                    );
                                   },
                                   color:
                                       Colors.redAccent[400]!.withOpacity(0.5),
@@ -208,12 +211,13 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                                 nftCategoryToSort!.add(nftCategory);
 
                                 setState(() {});
-                                ref
-                                    .watch(nftCategoryRepositoryProvider)
-                                    .updateNftCategoryList(
-                                      nftCategoryToSort!,
-                                      accountSelected,
-                                    );
+                                ref.watch(
+                                  NftCategoryProviders.updateNftCategoryList(
+                                    nftCategoryListCustomized:
+                                        nftCategoryToSort!,
+                                    account: accountSelected,
+                                  ),
+                                );
                               },
                               color: Colors.greenAccent[400]!.withOpacity(0.5),
                             ),

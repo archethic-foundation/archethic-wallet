@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/nft_category_repository.dart';
+import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -33,7 +33,7 @@ class NftCategoryMenu extends ConsumerWidget {
           (context, index) {
             var count = 0;
             count = ref.read(
-              GetNbNFTInCategoryProvider(
+              NftCategoryProviders.getNbNFTInCategory(
                 account: StateContainer.of(context)
                     .appWallet!
                     .appKeychain!

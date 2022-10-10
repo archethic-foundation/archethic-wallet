@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aewallet/application/nft_category.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
-import 'package:aewallet/application/nft_category_repository.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_category_menu.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -28,14 +28,13 @@ List<NftCategory> fetchNftCategory(
 }) {
   final nftCategoryListCustomized = List<NftCategory>.empty(growable: true);
   if (account.nftCategoryList == null) {
-    return ref.read(nftCategoryRepositoryProvider).getListByDefault(context);
+    return ref.read(NftCategoryProviders.getListByDefault(context: context));
   }
 
   for (final nftCategoryId in account.nftCategoryList!) {
     nftCategoryListCustomized.add(
       ref
-          .read(nftCategoryRepositoryProvider)
-          .getListByDefault(context)
+          .read(NftCategoryProviders.getListByDefault(context: context))
           .elementAt(nftCategoryId),
     );
   }

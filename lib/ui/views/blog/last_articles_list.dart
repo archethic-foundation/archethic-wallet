@@ -1,7 +1,7 @@
 // Dart imports:
 import 'dart:math' as math;
 
-import 'package:aewallet/application/blog_repository.dart';
+import 'package:aewallet/application/blog.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -44,7 +44,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
     if (StateContainer.of(context).showBlog == false) {
       return const _LastArticlesNotShowed();
     }
-    final asyncArticlesList = ref.watch(fetchArticlesProvider);
+    final asyncArticlesList = ref.watch(BlogProviders.fetchArticles);
     const blogUrl = 'https://blog.archethic.net';
 
     return Column(

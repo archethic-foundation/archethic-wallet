@@ -1,16 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghost/ghost.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'blog_repository.g.dart';
+part 'blog.g.dart';
 
 @riverpod
-BlogRepository blogRepository(BlogRepositoryRef ref) => BlogRepository();
+BlogRepository _blogRepository(_BlogRepositoryRef ref) => BlogRepository();
 
 @riverpod
-Future<List<GhostPost>> fetchArticles(FetchArticlesRef ref) async {
-  return ref.watch(blogRepositoryProvider).getArticles();
+Future<List<GhostPost>> _fetchArticles(_FetchArticlesRef ref) async {
+  return ref.watch(_blogRepositoryProvider).getArticles();
 }
 
 class BlogRepository {
@@ -33,4 +32,8 @@ class BlogRepository {
       include: <String>['tags', 'authors'],
     );
   }
+}
+
+abstract class BlogProviders {
+  static final fetchArticles = _fetchArticlesProvider;
 }

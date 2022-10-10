@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $fetchNftCategoryHash() => r'3154ca2a6c117268b45fbdda322c1f8a26ab38bf';
+String $fetchNftCategoryHash() => r'a9bc717bbcb242e117699e53485a489df6eb7ff0';
 
 /// See also [fetchNftCategory].
 class FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {

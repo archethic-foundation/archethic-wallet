@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'blog_repository.dart';
+part of 'blog.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,24 +29,25 @@ class _SystemHash {
   }
 }
 
-String $blogRepositoryHash() => r'7cfb6c28100e391a4846ace035b3ad4d1efd94d6';
+String $_blogRepositoryHash() => r'489a3e6f726a3cab2476b8ea878f6d7c2dfd1c77';
 
-/// See also [blogRepository].
-final blogRepositoryProvider = AutoDisposeProvider<BlogRepository>(
-  blogRepository,
-  name: r'blogRepositoryProvider',
+/// See also [_blogRepository].
+final _blogRepositoryProvider = AutoDisposeProvider<BlogRepository>(
+  _blogRepository,
+  name: r'_blogRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $blogRepositoryHash,
+      : $_blogRepositoryHash,
 );
-typedef BlogRepositoryRef = AutoDisposeProviderRef<BlogRepository>;
-String $fetchArticlesHash() => r'a2acc2ca8f3c34eb68966a1fb369343439d5f091';
+typedef _BlogRepositoryRef = AutoDisposeProviderRef<BlogRepository>;
+String $_fetchArticlesHash() => r'e356594c7d452ce3a34f404240a4e7b4b4192fc5';
 
-/// See also [fetchArticles].
-final fetchArticlesProvider = AutoDisposeFutureProvider<List<GhostPost>>(
-  fetchArticles,
-  name: r'fetchArticlesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : $fetchArticlesHash,
+/// See also [_fetchArticles].
+final _fetchArticlesProvider = AutoDisposeFutureProvider<List<GhostPost>>(
+  _fetchArticles,
+  name: r'_fetchArticlesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_fetchArticlesHash,
 );
-typedef FetchArticlesRef = AutoDisposeFutureProviderRef<List<GhostPost>>;
+typedef _FetchArticlesRef = AutoDisposeFutureProviderRef<List<GhostPost>>;

@@ -1,10 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Project imports:
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/application/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/add_contact.dart';

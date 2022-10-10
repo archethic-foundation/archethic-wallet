@@ -4,34 +4,33 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'nft_category_repository.g.dart';
+part 'nft_category.g.dart';
 
 @riverpod
-NFTCategoryRepository nftCategoryRepository(NftCategoryRepositoryRef ref) =>
+NFTCategoryRepository _nftCategoryRepository(_NftCategoryRepositoryRef ref) =>
     NFTCategoryRepository();
 
 @riverpod
-List<NftCategory> fetchNftCategory(
-  FetchNftCategoryRef ref,
+List<NftCategory> _fetchNftCategory(
+  _FetchNftCategoryRef ref,
   BuildContext context,
   Account account,
 ) {
   final nftCategoryAccountSelectedList = ref
-      .read(nftCategoryRepositoryProvider)
+      .read(_nftCategoryRepositoryProvider)
       .getListNftCategory(context, account);
   if (nftCategoryAccountSelectedList.isNotEmpty) {
     return nftCategoryAccountSelectedList;
   }
 
-  return ref.read(nftCategoryRepositoryProvider).getListByDefault(context);
+  return ref.read(_nftCategoryRepositoryProvider).getListByDefault(context);
 }
 
 @riverpod
-int getNbNFTInCategory(
-  GetNbNFTInCategoryRef ref, {
+int _getNbNFTInCategory(
+  _GetNbNFTInCategoryRef ref, {
   required Account account,
   required int categoryNftIndex,
 }) {
@@ -52,6 +51,26 @@ int getNbNFTInCategory(
     }
   }
   return count;
+}
+
+@riverpod
+List<NftCategory> _getListByDefault(
+  _GetListByDefaultRef ref, {
+  required BuildContext context,
+}) {
+  return ref.read(_nftCategoryRepositoryProvider).getListByDefault(context);
+}
+
+@riverpod
+Future<void> _updateNftCategoryList(
+  _UpdateNftCategoryListRef ref, {
+  required List<NftCategory> nftCategoryListCustomized,
+  required Account account,
+}) async {
+  return ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
+        nftCategoryListCustomized,
+        account,
+      );
 }
 
 class NFTCategoryRepository {
@@ -149,4 +168,11 @@ class NFTCategoryRepository {
         return 'Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.';
     }
   }
+}
+
+abstract class NftCategoryProviders {
+  static final fetchNftCategory = _fetchNftCategoryProvider;
+  static final getNbNFTInCategory = _getNbNFTInCategoryProvider;
+  static final getListByDefault = _getListByDefaultProvider;
+  static final updateNftCategoryList = _updateNftCategoryListProvider;
 }
