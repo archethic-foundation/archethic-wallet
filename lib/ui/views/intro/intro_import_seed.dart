@@ -84,7 +84,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -484,7 +484,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
@@ -556,7 +556,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   }
 
   Future<void> _accountsDialog(List<Account> accounts) async {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final account in accounts) {
       pickerItemsList.add(PickerItem(account.name!, null, null, null, account, true));
@@ -617,7 +617,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,

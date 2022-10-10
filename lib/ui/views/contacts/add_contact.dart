@@ -99,7 +99,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return TapOutsideUnfocus(
       child: SafeArea(

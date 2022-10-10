@@ -28,7 +28,7 @@ class AppButton {
     bool disabled = false,
     Icon? icon,
   }) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
@@ -191,7 +191,7 @@ class AppButton {
     bool disabled = false,
     Icon? icon,
   }) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     switch (type) {
       case AppButtonType.primary:
         return Expanded(

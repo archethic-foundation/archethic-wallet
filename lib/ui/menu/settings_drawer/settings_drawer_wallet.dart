@@ -138,7 +138,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return WillPopScope(
       onWillPop: _onBackButtonPressed,

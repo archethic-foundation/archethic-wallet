@@ -33,7 +33,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final bottomBarCurrentPage = StateContainer.of(context).bottomBarCurrentPage;
 
     return PreferredSize(

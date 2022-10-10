@@ -29,7 +29,7 @@ class Sheets {
     Function? onDisposed,
   }) {
     assert(radius > 0.0);
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     color ??= theme.backgroundDark;
     bgColor ??= theme.sheetBackground;
     final route = _AppHeightNineModalRoute<T>(

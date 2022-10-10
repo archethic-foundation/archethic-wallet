@@ -21,7 +21,7 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     // One line for small displays
     if (MediaQuery.of(context).size.height < 667) {
       final stringPartOne = address!.substring(0, 12);

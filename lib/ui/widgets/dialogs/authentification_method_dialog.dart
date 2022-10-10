@@ -22,7 +22,7 @@ class AuthentificationMethodDialog {
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final preferences = await Preferences.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {

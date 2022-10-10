@@ -74,7 +74,7 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

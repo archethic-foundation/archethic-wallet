@@ -22,7 +22,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final accountTokens = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.accountTokens;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -83,7 +83,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return InkWell(
       onTap: () {

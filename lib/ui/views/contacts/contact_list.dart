@@ -28,7 +28,7 @@ class ContactsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final contactsList = ref.watch(
       ContactProviders.fetchContacts(
         search: searchNameController!.text,
@@ -143,7 +143,7 @@ class _ContactList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return Expanded(
       child: Stack(
@@ -209,7 +209,7 @@ class _SingleContact extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return TextButton(
       onPressed: () {

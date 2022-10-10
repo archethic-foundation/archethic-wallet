@@ -103,7 +103,7 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return SafeArea(
       minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(

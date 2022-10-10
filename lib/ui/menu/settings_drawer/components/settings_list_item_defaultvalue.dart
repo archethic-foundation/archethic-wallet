@@ -20,7 +20,7 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return IgnorePointer(
       ignoring: disabled,
       child: TextButton(
@@ -96,7 +96,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(

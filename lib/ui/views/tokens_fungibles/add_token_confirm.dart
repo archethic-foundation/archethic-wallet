@@ -65,7 +65,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
     });
 
     _sendTxSub = EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) {
-      final theme = ref.read(ThemeProviders.theme);
+      final theme = ref.watch(ThemeProviders.theme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -145,7 +145,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
@@ -160,7 +160,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return SafeArea(
       minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(

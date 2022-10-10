@@ -12,7 +12,7 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
 }
 /*
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     if (tabActiveIndex != 2) {
       return const SizedBox();

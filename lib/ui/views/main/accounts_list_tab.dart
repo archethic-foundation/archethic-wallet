@@ -18,7 +18,7 @@ class AccountsListTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return Column(
       children: [
         Expanded(
