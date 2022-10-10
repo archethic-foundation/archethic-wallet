@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/contact_repository.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/repository/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -61,20 +60,18 @@ class ContactDetail extends ConsumerWidget {
                       localizations.removeContactConfirmation
                           .replaceAll('%1', contact.name!),
                       localizations.yes,
-                      () {
-                        sl.get<DBHelper>().deleteContact(contact).then((_) {
-                          StateContainer.of(context)
-                              .requestUpdate(forceUpdateChart: false);
-                          UIUtil.showSnackbar(
-                            localizations.contactRemoved
-                                .replaceAll('%1', contact.name!),
-                            context,
-                            theme.text!,
-                            theme.snackBarShadow!,
-                          );
-                          ref.invalidate(contactRepositoryProvider);
-                          Navigator.of(context).pop();
-                        });
+                      () async {
+                        ContactProviders.deleteContact(contact: contact);
+                        StateContainer.of(context)
+                            .requestUpdate(forceUpdateChart: false);
+                        UIUtil.showSnackbar(
+                          localizations.contactRemoved
+                              .replaceAll('%1', contact.name!),
+                          context,
+                          theme.text!,
+                          theme.snackBarShadow!,
+                        );
+                        Navigator.of(context).pop();
                       },
                       cancelText: localizations.no,
                     );

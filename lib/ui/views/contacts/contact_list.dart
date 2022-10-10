@@ -4,7 +4,7 @@
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/repository/contact_repository.dart';
+import 'package:aewallet/application/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/add_contact.dart';
@@ -32,7 +32,7 @@ class ContactsList extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = StateContainer.of(context).curTheme;
     final contactsList = ref.watch(
-      fetchContactsProvider(
+      ContactProviders.fetchContacts(
         search: searchNameController!.text,
       ),
     );
@@ -93,7 +93,7 @@ class ContactsList extends ConsumerWidget {
                 keyboardType: TextInputType.text,
                 onChanged: (text) {
                   ref.watch(
-                    FetchContactsProvider(
+                    ContactProviders.fetchContacts(
                       search: text,
                     ),
                   );
