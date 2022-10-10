@@ -4,11 +4,11 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -94,7 +94,9 @@ class _AppState extends ConsumerState<App> {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
+    final language = ref.watch(LanguageProviders.selectedLanguage);
+
     SystemChrome.setSystemUIOverlayStyle(
       theme.statusBar!,
     );
@@ -113,78 +115,13 @@ class _AppState extends ConsumerState<App> {
         ),
         // ignore: always_specify_types
         localizationsDelegates: [
-          AppLocalizationsDelegate(StateContainer.of(context).curLanguage),
+          AppLocalizationsDelegate(language),
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        locale: StateContainer.of(context).curLanguage.language == AvailableLanguage.systemDefault
-            ? null
-            : StateContainer.of(context).curLanguage.getLocale(),
-        supportedLocales: const <Locale>[
-          Locale('en', 'US'), // English
-          // Currency-default requires country included
-          Locale('es', 'AR'),
-          Locale('en', 'AU'),
-          Locale('pt', 'BR'),
-          Locale('en', 'CA'),
-          Locale('de', 'CH'),
-          Locale('es', 'CL'),
-          Locale('zh', 'CN'),
-          Locale('cs', 'CZ'),
-          Locale('da', 'DK'),
-          Locale('fr', 'FR'),
-          Locale('ar', 'AE'),
-          Locale('en', 'GB'),
-          Locale('zh', 'HK'),
-          Locale('hu', 'HU'),
-          Locale('id', 'ID'),
-          Locale('he', 'IL'),
-          Locale('hi', 'IN'),
-          Locale('ja', 'JP'),
-          Locale('ko', 'KR'),
-          Locale('es', 'MX'),
-          Locale('ta', 'MY'),
-          Locale('en', 'NZ'),
-          Locale('tl', 'PH'),
-          Locale('ur', 'PK'),
-          Locale('pl', 'PL'),
-          Locale('ru', 'RU'),
-          Locale('sv', 'SE'),
-          Locale('zh', 'SG'),
-          Locale('th', 'TH'),
-          Locale('tr', 'TR'),
-          Locale('en', 'TW'),
-          Locale('es', 'VE'),
-          Locale('en', 'ZA'),
-          Locale('en', 'US'),
-          Locale('es', 'AR'),
-          Locale('de', 'AT'),
-          Locale('fr', 'BE'),
-          Locale('de', 'BE'),
-          Locale('nl', 'BE'),
-          Locale('tr', 'CY'),
-          Locale('et', 'EE'),
-          Locale('fi', 'FI'),
-          Locale('fr', 'FR'),
-          Locale('el', 'GR'),
-          Locale('es', 'AR'),
-          Locale('en', 'IE'),
-          Locale('it', 'IT'),
-          Locale('es', 'AR'),
-          Locale('lv', 'LV'),
-          Locale('lt', 'LT'),
-          Locale('fr', 'LU'),
-          Locale('en', 'MT'),
-          Locale('nl', 'NL'),
-          Locale('pt', 'PT'),
-          Locale('sk', 'SK'),
-          Locale('sl', 'SI'),
-          Locale('es', 'ES'),
-          Locale('ar', 'AE'),
-          Locale('ar', 'SA'),
-          Locale('ar', 'KW'),
-        ],
+        locale: language.getLocale(),
+        supportedLocales: ref.read(LanguageProviders.availableLocales),
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
@@ -409,7 +346,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         super.didChangeAppLifecycleState(state);
         break;
       case AppLifecycleState.resumed:
-        setLanguage();
+        updateDefaultLocale();
         super.didChangeAppLifecycleState(state);
         break;
       case AppLifecycleState.inactive:
@@ -421,25 +358,18 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     }
   }
 
-  void setLanguage() {
-    setState(() {
-      StateContainer.of(context).deviceLocale = Localizations.localeOf(context);
-    });
+  void updateDefaultLocale() {
+    ref.read(LanguageProviders.defaultLocale.state).update((state) => Localizations.localeOf(context));
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
-        StateContainer.of(context).curLanguage = preferences.getLanguage();
+        final locale = ref.read(LanguageProviders.selectedLocale);
+        StateContainer.of(context).curCurrency = preferences.getCurrency(locale);
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    setLanguage();
-    Preferences.getInstance().then((Preferences preferences) {
-      setState(() {
-        StateContainer.of(context).curCurrency = preferences.getCurrency(StateContainer.of(context).deviceLocale);
-      });
-    });
     return Scaffold(
       backgroundColor: ref.read(ThemeProviders.theme).background,
     );

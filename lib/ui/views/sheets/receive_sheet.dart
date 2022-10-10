@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -30,6 +31,7 @@ class ReceiveSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.read(ThemeProviders.theme);
+    final language = ref.watch(LanguageProviders.selectedLanguage);
 
     return SafeArea(
       minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -134,28 +136,28 @@ class ReceiveSheet extends ConsumerWidget {
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(0, 16),
-                                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                                language.getLocaleString(),
                                               ),
                                               style: theme.textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(16, 32),
-                                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                                language.getLocaleString(),
                                               ),
                                               style: theme.textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(32, 48),
-                                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                                language.getLocaleString(),
                                               ),
                                               style: theme.textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(48),
-                                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                                language.getLocaleString(),
                                               ),
                                               style: theme.textStyleSize12W100Primary,
                                             ),

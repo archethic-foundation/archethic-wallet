@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_selectedThemeHash() => r'ca863d5cab3d6f94aab5a7f01d3f0160bb466913';
+String $_selectedThemeHash() => r'9c5b1303dd00571d8330e43193f29fdea47a64e6';
 
 /// See also [_selectedTheme].
 final _selectedThemeProvider = AutoDisposeProvider<BaseTheme>(

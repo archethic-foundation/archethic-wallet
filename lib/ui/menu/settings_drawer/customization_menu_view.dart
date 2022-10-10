@@ -102,13 +102,7 @@ class CustomizationMenuView extends ConsumerWidget {
                         onPressed: () => PrimaryCurrencyDialog.getDialog(context, ref),
                       ),
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.withDefaultValue(
-                        heading: localizations.language,
-                        defaultMethod: StateContainer.of(context).curLanguage,
-                        icon: 'assets/icons/menu/language.svg',
-                        iconColor: theme.iconDrawer!,
-                        onPressed: () => LanguageDialog.getDialog(context, ref),
-                      ),
+                      const _LanguageSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ThemeSettingsListItem(),
                       const _SettingsListItem.spacer(),
@@ -148,6 +142,25 @@ class CustomizationMenuView extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _LanguageSettingsListItem extends ConsumerWidget {
+  const _LanguageSettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = ref.watch(ThemeProviders.theme);
+    final language = ref.watch(LanguageProviders.selectedLanguage);
+
+    return _SettingsListItem.withDefaultValue(
+      heading: localizations.language,
+      defaultMethod: language,
+      icon: 'assets/icons/menu/language.svg',
+      iconColor: theme.iconDrawer!,
+      onPressed: () => LanguageDialog.getDialog(context, ref),
     );
   }
 }

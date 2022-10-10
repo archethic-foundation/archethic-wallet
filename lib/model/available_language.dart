@@ -40,12 +40,15 @@ class LanguageSetting extends SettingSelectionItem {
     }
   }
 
-  Locale getLocale() {
-    final localeStr = getLocaleString();
-    if (localeStr == 'DEFAULT') {
-      return const Locale('en');
+  Locale? getLocale() {
+    switch (language) {
+      case AvailableLanguage.english:
+        return const Locale('en');
+      case AvailableLanguage.french:
+        return const Locale('fr');
+      case AvailableLanguage.systemDefault:
+        return null;
     }
-    return Locale(localeStr);
   }
 
   // For saving to shared prefs
