@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/contact_repository.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/repository/contact_repository.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -315,6 +315,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                             address: widget.address ?? _addressController!.text,
                             type: 'externalContact',
                           );
+                          ContactProviders.saveContact(contact: newContact);
                           await sl.get<DBHelper>().saveContact(newContact);
                           StateContainer.of(context)
                               .requestUpdate(forceUpdateChart: false);
@@ -325,7 +326,6 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                             theme.text!,
                             theme.snackBarShadow!,
                           );
-                          ref.invalidate(contactRepositoryProvider);
                           Navigator.of(context).pop();
                         }
                       },
@@ -340,6 +340,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
     );
   }
 
+  // TODO(reddwarf03): Error management + Move these controls in saveContacts use case
   Future<bool> validateForm() async {
     final localizations = AppLocalization.of(context)!;
     var isValid = true;

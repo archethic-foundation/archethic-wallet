@@ -1,26 +1,17 @@
 // Dart imports:
 import 'dart:math' as math;
 
+import 'package:aewallet/application/blog_repository.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/repository/blog_repository.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghost/ghost.dart';
 import 'package:intl/intl.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'last_articles_list.g.dart';
-
-@riverpod
-Future<List<GhostPost>> fetchArticles(FetchArticlesRef ref) async {
-  return ref.watch(blogRepositoryProvider).getArticles();
-}
 
 class LastArticles extends ConsumerStatefulWidget {
   const LastArticles({super.key});
