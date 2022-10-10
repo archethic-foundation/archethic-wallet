@@ -3,55 +3,50 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/bus/refresh_event.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/nft_category.dart';
+import 'package:aewallet/application/nft_category_repository.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_category_menu.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
-import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class NFTTab extends StatefulWidget {
+part 'nft_tab.g.dart';
+
+@riverpod
+List<NftCategory> fetchNftCategory(
+  FetchNftCategoryRef ref, {
+  required Account account,
+  required BuildContext context,
+}) {
+  final nftCategoryListCustomized = List<NftCategory>.empty(growable: true);
+  if (account.nftCategoryList == null) {
+    return ref.read(nftCategoryRepositoryProvider).getListByDefault(context);
+  }
+
+  for (final nftCategoryId in account.nftCategoryList!) {
+    nftCategoryListCustomized.add(
+      ref
+          .read(nftCategoryRepositoryProvider)
+          .getListByDefault(context)
+          .elementAt(nftCategoryId),
+    );
+  }
+  return nftCategoryListCustomized;
+}
+
+class NFTTab extends ConsumerWidget {
   const NFTTab({super.key});
 
   @override
-  State<NFTTab> createState() => _NFTTabState();
-}
-
-class _NFTTabState extends State<NFTTab> {
-  StreamSubscription<RefreshEvent>? _refreshSub;
-
-  @override
-  void initState() {
-    _registerBus();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _destroyBus();
-    super.dispose();
-  }
-
-  void _registerBus() {
-    _refreshSub = EventTaxiImpl.singleton()
-        .registerTo<RefreshEvent>()
-        .listen((RefreshEvent event) {
-      setState(() {});
-    });
-  }
-
-  void _destroyBus() {
-    _refreshSub?.cancel();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = StateContainer.of(context).curTheme;
     final accountSelected = StateContainer.of(context)
         .appWallet!
@@ -61,6 +56,7 @@ class _NFTTabState extends State<NFTTab> {
       children: [
         Expanded(
           /// REFRESH
+          // TODO(reddwarf03): Remove refresh feature
           child: RefreshIndicator(
             backgroundColor: theme.backgroundDark,
             onRefresh: () => Future<void>.sync(() async {
@@ -141,8 +137,12 @@ class _NFTTabState extends State<NFTTab> {
                           ),
                         ),
                         NftCategoryMenu(
-                          nftCategories:
-                              accountSelected.getListNftCategory(context),
+                          nftCategories: ref.watch(
+                            FetchNftCategoryProvider(
+                              account: accountSelected,
+                              context: context,
+                            ),
+                          ),
                         ),
                       ],
                     ),

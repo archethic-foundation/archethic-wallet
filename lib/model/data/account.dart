@@ -1,18 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'account.g.dart';
@@ -74,32 +71,6 @@ class Account extends HiveObject {
   /// List of NFT category
   @HiveField(11)
   List<int>? nftCategoryList;
-
-  List<NftCategory> getListNftCategory(BuildContext context) {
-    final nftCategoryListCustomized = List<NftCategory>.empty(growable: true);
-    if (nftCategoryList == null) {
-      return NftCategory.getListByDefault(context);
-    } else {
-      for (final nftCategoryId in nftCategoryList!) {
-        nftCategoryListCustomized.add(
-          NftCategory.getListByDefault(context).elementAt(nftCategoryId),
-        );
-      }
-      return nftCategoryListCustomized;
-    }
-  }
-
-  Future<void> updateNftCategoryList(
-    List<NftCategory> nftCategoryListCustomized,
-  ) async {
-    nftCategoryList ??= List<int>.empty(growable: true);
-    nftCategoryList!.clear();
-    for (final nftCategory in nftCategoryListCustomized) {
-      nftCategoryList!.add(nftCategory.id!);
-    }
-
-    await updateAccount();
-  }
 
   Future<void> updateLastAddress() async {
     final lastAddressFromAddress =
@@ -309,26 +280,5 @@ class Account extends HiveObject {
         return accountNFTFiltered;
       }
     }
-  }
-
-  int getNbNFTInCategory(int categoryNftIndex) {
-    var count = 0;
-    if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
-      return count;
-    } else {
-      for (final accountToken in accountNFT!) {
-        final nftInfosOffChain = nftInfosOffChainList!
-            .where(
-              (element) => element.id == accountToken.tokenInformations!.id,
-            )
-            .firstOrNull;
-        if (nftInfosOffChain != null &&
-            nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
-          count++;
-        }
-      }
-    }
-
-    return count;
   }
 }
