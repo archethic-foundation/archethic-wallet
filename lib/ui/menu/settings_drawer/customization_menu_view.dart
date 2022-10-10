@@ -11,7 +11,7 @@ class CustomizationMenuView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -171,7 +171,7 @@ class _ThemeSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final themeOption = ref.watch(ThemeProviders.themeOption);
     return _SettingsListItem.withDefaultValue(
@@ -197,7 +197,7 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final showBalancesSetting = ref.watch(preferenceProvider.select((settings) => settings.showBalances));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
     return _SettingsListItem.withSwitch(
@@ -219,7 +219,7 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final showBlogSetting = ref.watch(preferenceProvider.select((settings) => settings.showBlog));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
@@ -243,7 +243,7 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final showPriceChart = ref.watch(
       preferenceProvider.select((settings) => settings.showPriceChart),
@@ -269,7 +269,7 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final activeNotifications = ref.watch(
       preferenceProvider.select((settings) => settings.activeNotifications),
@@ -304,7 +304,7 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final activeVibrations = ref.watch(
       preferenceProvider.select((settings) => settings.activeVibrations),

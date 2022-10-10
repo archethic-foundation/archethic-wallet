@@ -28,7 +28,7 @@ class TxList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -96,7 +96,7 @@ class _TxListLine extends ConsumerWidget {
     RecentTransaction transaction,
   ) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;

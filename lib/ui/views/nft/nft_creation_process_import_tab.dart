@@ -23,7 +23,7 @@ class _NFTCreationProcessImportTabState extends State<_NFTCreationProcessImportT
 }
   /*
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     File? file;
     var importSelection = 0;
 
@@ -546,7 +546,7 @@ class _NFTCreationProcessImportTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
 return 
 Column(children: [

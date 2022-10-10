@@ -85,7 +85,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
    /* 
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -333,7 +333,7 @@ class _AddNFTCollectionInfos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),

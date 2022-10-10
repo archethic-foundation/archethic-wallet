@@ -46,7 +46,7 @@ class _BalanceIndicatorWidgetState extends ConsumerState<BalanceIndicatorWidget>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return StateContainer.of(context).showBalance
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +112,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return RichText(
       text: TextSpan(
         text: '',
@@ -148,7 +148,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return RichText(
       text: TextSpan(

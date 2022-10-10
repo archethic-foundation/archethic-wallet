@@ -21,7 +21,7 @@ class _NFTCreationProcessConfirmationTabState extends State<_NFTCreationProcessC
 }
   /*
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     if (file != null && widget.tabActiveIndex == 3) {
       return SingleChildScrollView(

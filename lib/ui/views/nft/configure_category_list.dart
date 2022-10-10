@@ -75,7 +75,7 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
 
     nftCategoryToHidden = ref.read(

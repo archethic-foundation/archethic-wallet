@@ -27,7 +27,7 @@ class TokenTransferListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final localizations = AppLocalization.of(context)!;
     listTokenTransfer!.sort(
       (TokenTransferWallet a, TokenTransferWallet b) => a.to!.compareTo(b.to!),
@@ -82,7 +82,7 @@ class TokenTransferListWidget extends ConsumerWidget {
     WidgetRef ref,
     TokenTransferWallet tokenTransfer,
   ) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,

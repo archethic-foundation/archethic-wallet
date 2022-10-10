@@ -14,7 +14,7 @@ class NFTListPerCategory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final nftCategories = ref.read(
       NftCategoryProviders.fetchNftCategory(
         context,

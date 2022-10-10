@@ -33,7 +33,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return SafeArea(
       minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -139,7 +139,7 @@ class _TransactionBuildInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return (StateContainer.of(context).showBalance == true ||
             (StateContainer.of(context).showBalance == false && transactionInfo.titleInfo != 'Amount'))

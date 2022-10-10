@@ -11,7 +11,7 @@ class SecurityMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final localizations = AppLocalization.of(context)!;
 
     return DecoratedBox(
@@ -157,7 +157,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final authenticationMethod = ref.watch(
       preferenceProvider.select((settings) => settings.authenticationMethod),
@@ -188,7 +188,7 @@ class _LockSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
@@ -217,7 +217,7 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
     final lockTimeout = ref.watch(preferenceProvider.select((settings) => settings.lockTimeout));
@@ -248,7 +248,7 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     final pinPadShuffle = ref.watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
     final authenticationMethod = ref.watch(
@@ -280,7 +280,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
 
     return _SettingsListItem.singleLine(
       heading: localizations.backupSecretPhrase,

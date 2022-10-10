@@ -29,7 +29,7 @@ class NFTCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
       children: <Widget>[

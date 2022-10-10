@@ -146,7 +146,7 @@ class _ActionButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: onTap != null

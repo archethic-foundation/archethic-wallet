@@ -30,7 +30,7 @@ class ReceiveSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.read(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.theme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
     return SafeArea(
