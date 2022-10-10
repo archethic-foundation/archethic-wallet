@@ -1305,14 +1305,14 @@ packages:
       name: riverpod_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.4"
   riverpod_generator:
     dependency: "direct dev"
     description:
       name: riverpod_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.4"
   rxdart:
     dependency: "direct main"
     description:

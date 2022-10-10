@@ -176,7 +176,7 @@ dependencies:
   quiver: ^3.1.0
 
   # A package exposing annotations for riverpod_generator
-  riverpod_annotation: ^1.0.2
+  riverpod_annotation: ^1.0.4
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
   rxdart: ^0.27.5
@@ -219,7 +219,7 @@ dev_dependencies:
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.6.3
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
-  riverpod_generator: ^1.0.2
+  riverpod_generator: ^1.0.4
 
 flutter_icons:
   android: true
