@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -32,6 +32,7 @@ class LanguageDialog {
       context: context,
       builder: (BuildContext context) {
         final theme = ref.read(ThemeProviders.theme);
+        final selectedLanguage = ref.read(LanguageProviders.selectedLanguage);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -48,16 +49,9 @@ class LanguageDialog {
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex: StateContainer.of(context).curLanguage.language.index,
+            selectedIndex: selectedLanguage.language.index,
             onSelected: (value) {
-              preferences.setLanguage(
-                LanguageSetting(value.value as AvailableLanguage),
-              );
-              if (StateContainer.of(context).curLanguage.language != value.value) {
-                StateContainer.of(context).updateLanguage(
-                  LanguageSetting(value.value as AvailableLanguage),
-                );
-              }
+              ref.read(LanguageProviders.selectLanguage(language: value.value as AvailableLanguage));
               Navigator.pop(context, value.value);
             },
           ),

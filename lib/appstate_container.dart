@@ -57,9 +57,7 @@ class StateContainerState extends State<StateContainer> {
   Timer? timerCheckTransactionInputs;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
-  Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = const AvailableCurrency(AvailableCurrencyEnum.usd);
-  LanguageSetting curLanguage = const LanguageSetting(AvailableLanguage.systemDefault);
   PrimaryCurrencySetting curPrimaryCurrency = const PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
   NetworksSetting curNetwork = const NetworksSetting(AvailableNetworks.archethicMainNet);
 
@@ -82,12 +80,12 @@ class StateContainerState extends State<StateContainer> {
     setupServiceLocator().then((_) {
       Preferences.getInstance().then((Preferences preferences) {
         setState(() {
-          curCurrency = preferences.getCurrency(deviceLocale);
+          // TODO(Chralu): apply default currency
+          // curCurrency = preferences.getCurrency(deviceLocale);
           updateCurrency(curCurrency).then((_) {
             bottomBarPageController = PageController(
               initialPage: preferences.getMainScreenCurrentPage(),
             );
-            curLanguage = preferences.getLanguage();
             curPrimaryCurrency = preferences.getPrimaryCurrency();
             curNetwork = preferences.getNetwork();
             showBalance = preferences.getShowBalances();
@@ -176,13 +174,6 @@ class StateContainerState extends State<StateContainer> {
       );
     }
     return tokensFungibles;
-  }
-
-  // Change language
-  void updateLanguage(LanguageSetting language) {
-    setState(() {
-      curLanguage = language;
-    });
   }
 
   // Change primary currency

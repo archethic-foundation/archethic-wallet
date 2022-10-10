@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -198,12 +199,13 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                               height: 50,
                               child: TextButton(
                                 onPressed: () {
+                                  final language = ref.read(LanguageProviders.selectedLanguage);
                                   AppDialogs.showConfirmDialog(
                                       context,
                                       ref,
                                       CaseChange.toUpperCase(
                                         localizations.warning,
-                                        StateContainer.of(context).curLanguage.getLocaleString(),
+                                        language.getLocaleString(),
                                       ),
                                       localizations.removeWalletDetail,
                                       localizations.removeWalletAction.toUpperCase(), () {

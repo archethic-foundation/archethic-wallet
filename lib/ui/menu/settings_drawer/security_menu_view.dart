@@ -105,12 +105,14 @@ class SecurityMenuView extends ConsumerWidget {
                         icon: 'assets/icons/menu/remove-wallet.svg',
                         iconColor: Colors.red,
                         onPressed: () {
+                          final language = ref.read(LanguageProviders.selectedLanguage);
+
                           AppDialogs.showConfirmDialog(
                               context,
                               ref,
                               CaseChange.toUpperCase(
                                 localizations.warning,
-                                StateContainer.of(context).curLanguage.getLocaleString(),
+                                language.getLocaleString(),
                               ),
                               localizations.removeWalletDetail,
                               localizations.removeWalletAction.toUpperCase(), () {
