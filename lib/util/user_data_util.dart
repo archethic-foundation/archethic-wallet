@@ -74,7 +74,7 @@ class UserDataUtil {
       }
       return _parseData(data, type);
     } on PlatformException catch (e) {
-      final theme = ref.watch(ThemeProviders.theme);
+      final theme = ref.watch(ThemeProviders.selectedTheme);
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
           AppLocalization.of(context)!.qrInvalidPermissions,

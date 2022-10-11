@@ -17,7 +17,7 @@ class TextFieldButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SizedBox(
       height: 48,
       width: 48,
@@ -107,7 +107,7 @@ class AppTextField extends ConsumerStatefulWidget {
 class _AppTextFieldState extends ConsumerState<AppTextField> {
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Container(
       margin: EdgeInsets.only(
         left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,

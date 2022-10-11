@@ -17,7 +17,7 @@ class MainBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 22),

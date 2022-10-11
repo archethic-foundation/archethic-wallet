@@ -71,7 +71,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Column(
       children: <Widget>[
@@ -280,7 +280,7 @@ class _AddPublicKeyLine extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Container(
       padding: const EdgeInsets.only(bottom: 8),

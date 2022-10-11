@@ -75,7 +75,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Column(
       children: <Widget>[

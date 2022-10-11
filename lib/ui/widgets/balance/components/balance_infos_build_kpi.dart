@@ -8,7 +8,7 @@ class BalanceInfosKpi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final chartInfos = StateContainer.of(context).chartInfos;
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 

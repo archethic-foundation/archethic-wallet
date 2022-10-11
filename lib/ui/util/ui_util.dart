@@ -28,7 +28,7 @@ class UIUtil {
     ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
     String? contactName,
   }) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     var stringPartOne = '';
     var stringPartTwo = '';
@@ -183,7 +183,7 @@ class UIUtil {
     String address, {
     TextStyle? textStyle,
   }) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final resolvedTextStyle = textStyle ?? theme.textStyleSize14W100Primary;
     final stringPartOne = address.substring(0, 22);
     final stringPartTwo = address.substring(22, 44);
@@ -214,7 +214,7 @@ class UIUtil {
     Color boxShadowColor, {
     Duration duration = const Duration(milliseconds: 3500),
   }) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     showToastWidget(
       Align(
         alignment: Alignment.topCenter,

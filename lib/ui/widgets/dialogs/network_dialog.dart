@@ -23,7 +23,7 @@ class NetworkDialog {
     WidgetRef ref,
     NetworksSetting curNetworksSetting,
   ) async {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
     String? endpointError;
@@ -48,7 +48,7 @@ class NetworkDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         final localizations = AppLocalization.of(context)!;
-        final theme = ref.watch(ThemeProviders.theme);
+        final theme = ref.watch(ThemeProviders.selectedTheme);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),

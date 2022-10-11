@@ -35,7 +35,7 @@ class CurrencyDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = ref.watch(ThemeProviders.theme);
+        final theme = ref.watch(ThemeProviders.selectedTheme);
         final currency = ref.watch(CurrencyProviders.selectedCurrency);
         return AlertDialog(
           title: Padding(

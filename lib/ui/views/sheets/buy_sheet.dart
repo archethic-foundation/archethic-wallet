@@ -14,7 +14,7 @@ class BuySheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         SheetHeader(title: AppLocalization.of(context)!.transactionBuyHeader),

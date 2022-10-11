@@ -33,7 +33,7 @@ class LockDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = ref.watch(ThemeProviders.theme);
+        final theme = ref.watch(ThemeProviders.selectedTheme);
         return AlertDialog(
           title: Text(
             AppLocalization.of(context)!.lockAppSetting,

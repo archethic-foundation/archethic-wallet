@@ -157,7 +157,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.backgroundDarkest,

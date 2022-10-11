@@ -19,7 +19,7 @@ class NftCategoryMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return SliverPadding(
       key: expandedKey,

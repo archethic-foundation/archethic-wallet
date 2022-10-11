@@ -9,7 +9,7 @@ class BalanceInfosChart extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var optionChartList = List<OptionChart>.empty(growable: true);
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
 
     final chartInfos = StateContainer.of(context).chartInfos;

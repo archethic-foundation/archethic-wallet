@@ -61,7 +61,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     _sendTxSub =
         EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) async {
       final localizations = AppLocalization.of(context)!;
-      final theme = ref.watch(ThemeProviders.theme);
+      final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         UIUtil.showSnackbar(
           '${localizations.sendError} (${event.response!})',
@@ -215,7 +215,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -449,7 +449,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
@@ -522,7 +522,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
   void _showSendingAnimation(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     Navigator.of(context).push(
       AnimationLoadingOverlay(
         AnimationType.send,
@@ -562,7 +562,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     } catch (e) {
       error = true;
       final localizations = AppLocalization.of(context)!;
-      final theme = ref.watch(ThemeProviders.theme);
+      final theme = ref.watch(ThemeProviders.selectedTheme);
       UIUtil.showSnackbar(
         '${localizations.sendError} ($e)',
         context,
