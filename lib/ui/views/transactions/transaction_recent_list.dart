@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -97,6 +98,8 @@ class _TxListLine extends ConsumerWidget {
   ) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;
@@ -224,7 +227,7 @@ class _TxListLine extends ConsumerWidget {
                                     if (StateContainer.of(context).showBalance == true)
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
-                                          StateContainer.of(context).curCurrency.currency.name,
+                                          currency.currency.name,
                                           accountSelected.balance!.tokenPrice!.amount!,
                                           transaction.amount!,
                                         ),
@@ -245,7 +248,7 @@ class _TxListLine extends ConsumerWidget {
                                     if (StateContainer.of(context).showBalance == true)
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
-                                          StateContainer.of(context).curCurrency.currency.name,
+                                          currency.currency.name,
                                           accountSelected.balance!.tokenPrice!.amount!,
                                           transaction.amount!,
                                         ),
@@ -368,11 +371,11 @@ class _TxListLine extends ConsumerWidget {
                                         AvailablePrimaryCurrency.native,
                                       ).primaryCurrency.name
                                   ? Text(
-                                      '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                      '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                                   : Text(
-                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                             else

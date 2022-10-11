@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -195,6 +196,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -291,7 +293,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                                   ),
                                   child: feeEstimation > 0
                                       ? Text(
-                                          '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, accountSelected.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
+                                          '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
                                           style: theme.textStyleSize14W100Primary,
                                         )
                                       : const SizedBox(),
@@ -604,6 +606,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
   Widget getEnterAmountContainer(Account accountSelected) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Column(
       children: [
         AppTextField(
@@ -651,7 +654,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
           labelText: widget.accountToken == null
               ? primaryCurrencySelected == PrimaryCurrency.native
                   ? '${localizations.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
-                  : '${localizations.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})'
+                  : '${localizations.enterAmount} (${currency.currency.name})'
               : '${localizations.enterAmount} (${widget.accountToken!.tokenInformations!.symbol})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,

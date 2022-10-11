@@ -115,11 +115,11 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 }
 
-class MainAppBarIconBalanceShowed extends StatelessWidget {
+class MainAppBarIconBalanceShowed extends ConsumerWidget {
   const MainAppBarIconBalanceShowed({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       icon: const Icon(UiIcons.eye),
       onPressed: () async {

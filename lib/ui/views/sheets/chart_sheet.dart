@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -75,7 +76,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.theme);
-
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -110,7 +111,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
                           tooltipText: theme.textStyleSize12W100Primary,
                           axisTextStyle: theme.textStyleSize12W100Primary,
                           optionChartSelected: StateContainer.of(context).idChartOption!,
-                          currency: StateContainer.of(context).curCurrency.currency.name,
+                          currency: currency.currency.name,
                           completeChart: true,
                         )
                       : const SizedBox(),
@@ -134,7 +135,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
                       StateContainer.of(context).activeVibrations,
                     );
                 await StateContainer.of(context).chartInfos!.updateCoinsChart(
-                      StateContainer.of(context).curCurrency.currency.name,
+                      currency.currency.name,
                       option: widget.optionChartList[index].id,
                     );
 

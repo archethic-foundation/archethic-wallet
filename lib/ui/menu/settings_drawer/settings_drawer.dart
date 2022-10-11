@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';

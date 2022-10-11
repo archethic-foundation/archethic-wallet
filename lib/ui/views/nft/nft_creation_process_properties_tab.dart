@@ -257,4 +257,3 @@ class _NFTCreationProcessPropertiesTab extends StatelessWidget {
       );
     }
   }*/
-  

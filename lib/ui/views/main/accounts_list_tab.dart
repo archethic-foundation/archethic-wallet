@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
@@ -19,6 +20,8 @@ class AccountsListTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
     return Column(
       children: [
         Expanded(
@@ -33,7 +36,7 @@ class AccountsListTab extends ConsumerWidget {
               StateContainer.of(context).appWallet = await KeychainUtil().getListAccountsFromKeychain(
                 StateContainer.of(context).appWallet,
                 await StateContainer.of(context).getSeed(),
-                StateContainer.of(context).curCurrency.currency.name,
+                currency.currency.name,
                 accountSelected.balance!.nativeTokenName!,
                 accountSelected.balance!.tokenPrice!,
                 currentName: accountSelected.name,
@@ -72,7 +75,7 @@ class AccountsListTab extends ConsumerWidget {
                             /// ACCOUNTS LIST
                             AccountsListWidget(
                               appWallet: StateContainer.of(context).appWallet,
-                              currencyName: StateContainer.of(context).curCurrency.currency.name,
+                              currencyName: currency.currency.name,
                             )
                           ],
                         ),

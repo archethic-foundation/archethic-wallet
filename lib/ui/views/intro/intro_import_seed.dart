@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -384,6 +385,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                         localizations.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
+                          final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
                           _showSendingAnimation(context);
                           setState(() {
                             _mnemonicError = '';
@@ -416,14 +419,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             final vault = await Vault.getInstance();
                             vault.setSeed(seed);
                             final tokenPrice = await Price.getCurrency(
-                              StateContainer.of(context).curCurrency.currency.name,
+                              currency.currency.name,
                             );
 
                             try {
                               final appWallet = await KeychainUtil().getListAccountsFromKeychain(
                                 StateContainer.of(context).appWallet,
                                 seed,
-                                StateContainer.of(context).curCurrency.currency.name,
+                                currency.currency.name,
                                 StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
                                 tokenPrice,
                               );

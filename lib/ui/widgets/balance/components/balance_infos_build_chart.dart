@@ -10,6 +10,8 @@ class BalanceInfosChart extends ConsumerWidget {
     var optionChartList = List<OptionChart>.empty(growable: true);
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
     final chartInfos = StateContainer.of(context).chartInfos;
 
     return InkWell(
@@ -88,7 +90,7 @@ class BalanceInfosChart extends ConsumerWidget {
                           tooltipText: theme.textStyleSize12W100Primary,
                           axisTextStyle: theme.textStyleSize12W100Primary,
                           optionChartSelected: StateContainer.of(context).idChartOption!,
-                          currency: StateContainer.of(context).curCurrency.currency.name,
+                          currency: currency.currency.name,
                           completeChart: false,
                         )
                       : const SizedBox(),

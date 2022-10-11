@@ -360,12 +360,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
 
   void updateDefaultLocale() {
     ref.read(LanguageProviders.defaultLocale.state).update((state) => Localizations.localeOf(context));
-    Preferences.getInstance().then((Preferences preferences) {
-      setState(() {
-        final locale = ref.read(LanguageProviders.selectedLocale);
-        StateContainer.of(context).curCurrency = preferences.getCurrency(locale);
-      });
-    });
   }
 
   @override

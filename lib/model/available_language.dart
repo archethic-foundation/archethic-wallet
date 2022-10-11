@@ -43,9 +43,9 @@ class LanguageSetting extends SettingSelectionItem {
   Locale? getLocale() {
     switch (language) {
       case AvailableLanguage.english:
-        return const Locale('en');
+        return const Locale('en', 'US');
       case AvailableLanguage.french:
-        return const Locale('fr');
+        return const Locale('fr', 'FR');
       case AvailableLanguage.systemDefault:
         return null;
     }

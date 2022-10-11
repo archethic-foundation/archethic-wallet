@@ -81,18 +81,7 @@ class CustomizationMenuView extends ConsumerWidget {
                         ),
                       ),
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.withDefaultValueWithInfos(
-                        heading: localizations.changeCurrencyHeader,
-                        info: localizations.changeCurrencyDesc.replaceAll(
-                          '%1',
-                          StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
-                        ),
-                        defaultMethod: StateContainer.of(context).curCurrency,
-                        icon: 'assets/icons/menu/currency.svg',
-                        iconColor: theme.iconDrawer!,
-                        onPressed: () => CurrencyDialog.getDialog(context, ref),
-                        disabled: false,
-                      ),
+                      const _CurrencySettingsListItem(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
@@ -142,6 +131,29 @@ class CustomizationMenuView extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _CurrencySettingsListItem extends ConsumerWidget {
+  const _CurrencySettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    return _SettingsListItem.withDefaultValueWithInfos(
+      heading: localizations.changeCurrencyHeader,
+      info: localizations.changeCurrencyDesc.replaceAll(
+        '%1',
+        StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+      ),
+      defaultMethod: currency,
+      icon: 'assets/icons/menu/currency.svg',
+      iconColor: theme.iconDrawer!,
+      onPressed: () => CurrencyDialog.getDialog(context, ref),
+      disabled: false,
     );
   }
 }

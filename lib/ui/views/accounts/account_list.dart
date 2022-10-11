@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -89,6 +90,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
           for (int i = 0; i < appWalletLive!.appKeychain!.accounts!.length; i++)
             _buildAccountListItem(
               context,
+              ref,
               appWalletLive!.appKeychain!.accounts![i],
               setState,
             ),
@@ -234,9 +236,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                         context,
                                                       ).getSeed(),
                                                       nameController.text,
-                                                      StateContainer.of(
-                                                        context,
-                                                      ).curCurrency.currency.name,
+                                                      ref.read(CurrencyProviders.selectedCurrency).currency.name,
                                                       StateContainer.of(
                                                         context,
                                                       ).curNetwork.getNetworkCryptoCurrencyLabel(),
@@ -307,11 +307,13 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
 
   Widget _buildAccountListItem(
     BuildContext context,
+    WidgetRef ref,
     Account account,
     StateSetter setState,
   ) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
       child: GestureDetector(
@@ -418,9 +420,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                       ),
                                                       AutoSizeText(
                                                         CurrencyUtil.getConvertedAmount(
-                                                          StateContainer.of(
-                                                            context,
-                                                          ).curCurrency.currency.name,
+                                                          currency.currency.name,
                                                           account.balance!.fiatCurrencyValue!,
                                                         ),
                                                         textAlign: TextAlign.center,
@@ -449,9 +449,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                     children: <Widget>[
                                                       AutoSizeText(
                                                         CurrencyUtil.getConvertedAmount(
-                                                          StateContainer.of(
-                                                            context,
-                                                          ).curCurrency.currency.name,
+                                                          currency.currency.name,
                                                           account.balance!.fiatCurrencyValue!,
                                                         ),
                                                         textAlign: TextAlign.center,

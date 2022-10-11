@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -130,6 +131,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             size: 21,
                           ),
                           onPressed: () {
+                            final currency = ref.read(CurrencyProviders.selectedCurrency);
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
                                   StateContainer.of(context).activeVibrations,
@@ -144,7 +146,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                   '%1',
                                   accountFungibleToken.tokenInformations!.symbol!,
                                 ),
-                                localCurrency: StateContainer.of(context).curCurrency,
+                                localCurrency: currency,
                               ),
                             );
                           },

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -113,6 +114,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return RichText(
       text: TextSpan(
         text: '',
@@ -124,7 +126,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
             ),
           TextSpan(
             text: CurrencyUtil.getConvertedAmount(
-              StateContainer.of(context).curCurrency.currency.name,
+              currency.currency.name,
               accountSelectedBalance!.fiatCurrencyValue!,
             ),
             style: primary ? theme.textStyleSize16W700Primary : theme.textStyleSize14W700Primary,
