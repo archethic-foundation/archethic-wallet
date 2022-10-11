@@ -11,7 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactsDialog {
-  static Future<Contact?> getDialog(BuildContext context, WidgetRef ref) async {
+  static Future<Contact?> getDialog(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final searchNameFocusNode = FocusNode();
     final searchNameController = TextEditingController();
 

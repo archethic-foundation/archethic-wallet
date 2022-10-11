@@ -13,7 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CurrencyDialog {
   static Future<AvailableCurrencyEnum?> getDialog(
-      BuildContext context, WidgetRef ref) async {
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
 
     for (final value in AvailableCurrencyEnum.values) {

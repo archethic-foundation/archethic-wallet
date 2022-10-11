@@ -131,7 +131,9 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                           .activeVibrations,
                                     );
                                 final contact = await ContactsDialog.getDialog(
-                                    context, ref);
+                                  context,
+                                  ref,
+                                );
                                 if (contact != null && contact.name != null) {
                                   publicKeyAccessController!.text =
                                       contact.name!;

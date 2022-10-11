@@ -204,7 +204,10 @@ class _ThemeSettingsListItem extends ConsumerWidget {
       iconColor: theme.iconDrawer!,
       onPressed: () async {
         final pickedTheme = await ThemeDialog.getDialog(
-            context, ref, ThemeSetting(themeOption));
+          context,
+          ref,
+          ThemeSetting(themeOption),
+        );
         if (pickedTheme == null) return;
 
         await ref.read(

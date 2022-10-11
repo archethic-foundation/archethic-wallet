@@ -99,8 +99,8 @@ class _NFTListState extends ConsumerState<NFTList> {
                                         Dimens.buttonTopDimens,
                                         onPressed: () async {
                                           final currency = ref.read(
-                                              CurrencyProviders
-                                                  .selectedCurrency);
+                                            CurrencyProviders.selectedCurrency,
+                                          );
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
                                                 StateContainer.of(context)

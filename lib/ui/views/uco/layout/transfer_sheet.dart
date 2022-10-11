@@ -670,9 +670,8 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
             CurrencyFormatter(
               maxDecimalDigits: widget.primaryCurrency!.primaryCurrency.name ==
                       const PrimaryCurrencySetting(
-                              AvailablePrimaryCurrency.native)
-                          .primaryCurrency
-                          .name
+                        AvailablePrimaryCurrency.native,
+                      ).primaryCurrency.name
                   ? 8
                   : _localCurrencyFormat.decimalDigits!,
             ),
@@ -896,7 +895,10 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                     );
                 UIUtil.cancelLockEvent();
                 final scanResult = await UserDataUtil.getQRData(
-                    DataType.address, context, ref);
+                  DataType.address,
+                  context,
+                  ref,
+                );
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
                     AppLocalization.of(context)!.qrInvalidAddress,

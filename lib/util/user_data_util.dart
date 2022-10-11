@@ -69,7 +69,10 @@ class UserDataUtil {
   }
 
   static Future<String?> getQRData(
-      DataType type, BuildContext context, WidgetRef ref) async {
+    DataType type,
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     UIUtil.cancelLockEvent();
     try {
       final scanResult = await BarcodeScanner.scan();

@@ -253,8 +253,10 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                       ).getSeed(),
                                                       nameController.text,
                                                       ref
-                                                          .read(CurrencyProviders
-                                                              .selectedCurrency)
+                                                          .read(
+                                                            CurrencyProviders
+                                                                .selectedCurrency,
+                                                          )
                                                           .currency
                                                           .name,
                                                       StateContainer.of(

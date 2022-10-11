@@ -11,7 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LanguageDialog {
   static Future<AvailableLanguage?> getDialog(
-      BuildContext context, WidgetRef ref) async {
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableLanguage.values) {
       pickerItemsList.add(
@@ -50,8 +52,11 @@ class LanguageDialog {
             pickerItems: pickerItemsList,
             selectedIndex: selectedLanguage.language.index,
             onSelected: (value) {
-              ref.read(LanguageProviders.selectLanguage(
-                  language: value.value as AvailableLanguage));
+              ref.read(
+                LanguageProviders.selectLanguage(
+                  language: value.value as AvailableLanguage,
+                ),
+              );
               Navigator.pop(context, value.value);
             },
           ),
