@@ -76,7 +76,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
     _sendTxSub =
         EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) async {
-      final theme = ref.watch(ThemeProviders.theme);
+      final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -165,7 +165,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(
@@ -180,7 +180,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
       minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(

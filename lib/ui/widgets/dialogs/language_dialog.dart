@@ -29,7 +29,7 @@ class LanguageDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = ref.read(ThemeProviders.theme);
+        final theme = ref.read(ThemeProviders.selectedTheme);
         final selectedLanguage = ref.read(LanguageProviders.selectedLanguage);
         return AlertDialog(
           title: Padding(

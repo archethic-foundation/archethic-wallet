@@ -75,7 +75,7 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(

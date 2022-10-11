@@ -62,7 +62,7 @@ class _SettingsListSpacer extends _SettingsListItem {
   Widget build(BuildContext context, WidgetRef ref) {
     return Divider(
       height: 2,
-      color: ref.watch(ThemeProviders.theme).text15,
+      color: ref.watch(ThemeProviders.selectedTheme).text15,
     );
   }
 }
@@ -76,7 +76,7 @@ class _SettingsListTitle extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.text05,

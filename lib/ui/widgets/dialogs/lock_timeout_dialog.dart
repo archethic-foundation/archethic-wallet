@@ -48,7 +48,7 @@ class LockTimeoutDialog {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final theme = ref.watch(ThemeProviders.theme);
+        final theme = ref.watch(ThemeProviders.selectedTheme);
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),

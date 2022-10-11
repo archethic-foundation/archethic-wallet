@@ -18,7 +18,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(

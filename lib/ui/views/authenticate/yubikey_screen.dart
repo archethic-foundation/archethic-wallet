@@ -78,7 +78,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
 
   Future<void> _verifyOTP(String otp) async {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = await Preferences.getInstance();
     final vault = await Vault.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
@@ -213,7 +213,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

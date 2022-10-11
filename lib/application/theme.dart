@@ -20,12 +20,12 @@ Future<void> _selectTheme(
   required ThemeOptions theme,
 }) async {
   await ref.read(SettingsProviders.localSettingsRepository).setTheme(ThemeSetting(theme));
-  ref.invalidate(ThemeProviders.themeOption);
+  ref.invalidate(ThemeProviders.selectedThemeOption);
 }
 
 abstract class ThemeProviders {
-  static final themeOption = _selectedThemeOptionProvider;
-  static final theme = _selectedThemeProvider;
+  static final selectedThemeOption = _selectedThemeOptionProvider;
+  static final selectedTheme = _selectedThemeProvider;
 
   static final selectTheme = _selectThemeProvider;
 }

@@ -45,7 +45,7 @@ class NFTTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
     return Column(
       children: [

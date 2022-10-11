@@ -46,7 +46,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
       return const _LastArticlesNotShowed();
     }
     final asyncArticlesList = ref.watch(BlogProviders.fetchArticles);
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     const blogUrl = 'https://blog.archethic.net';
 
     return Column(
@@ -175,7 +175,7 @@ class SlidingCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
@@ -236,7 +236,7 @@ class CardContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(

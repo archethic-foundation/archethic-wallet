@@ -11,7 +11,7 @@ class CustomizationMenuView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -141,7 +141,7 @@ class _CurrencySettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return _SettingsListItem.withDefaultValueWithInfos(
       heading: localizations.changeCurrencyHeader,
@@ -164,7 +164,7 @@ class _LanguageSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
     return _SettingsListItem.withDefaultValue(
@@ -183,9 +183,9 @@ class _ThemeSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final themeOption = ref.watch(ThemeProviders.themeOption);
+    final themeOption = ref.watch(ThemeProviders.selectedThemeOption);
     return _SettingsListItem.withDefaultValue(
       heading: localizations.themeHeader,
       defaultMethod: ThemeSetting(themeOption),
@@ -209,7 +209,7 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final showBalancesSetting = ref.watch(preferenceProvider.select((settings) => settings.showBalances));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
     return _SettingsListItem.withSwitch(
@@ -231,7 +231,7 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final showBlogSetting = ref.watch(preferenceProvider.select((settings) => settings.showBlog));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
@@ -255,7 +255,7 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final showPriceChart = ref.watch(
       preferenceProvider.select((settings) => settings.showPriceChart),
@@ -281,7 +281,7 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final activeNotifications = ref.watch(
       preferenceProvider.select((settings) => settings.activeNotifications),
@@ -316,7 +316,7 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final activeVibrations = ref.watch(
       preferenceProvider.select((settings) => settings.activeVibrations),

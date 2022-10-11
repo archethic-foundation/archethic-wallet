@@ -31,7 +31,7 @@ class ContactDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,

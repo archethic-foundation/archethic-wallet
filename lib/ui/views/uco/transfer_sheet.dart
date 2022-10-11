@@ -195,7 +195,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     // The main column that holds everything
     return TapOutsideUnfocus(
@@ -605,7 +605,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
 
   Widget getEnterAmountContainer(Account accountSelected) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Column(
       children: [
@@ -763,7 +763,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
 
   // TODO(Chralu): extract to a [Widget] subclass.
   AppTextField getEnterMessage(Account accountSelected) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return AppTextField(
       focusNode: _messageFocusNode,
       controller: _messageController,
@@ -786,7 +786,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
 
   // TODO(Chralu): extract to a [Widget] subclass.
   AppTextField getEnterAddressContainer(Account accountSelected) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return AppTextField(
       padding: _addressValidAndUnfocused ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15) : EdgeInsets.zero,
       focusNode: _sendAddressFocusNode,

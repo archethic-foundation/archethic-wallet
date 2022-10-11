@@ -94,7 +94,7 @@ class _AppState extends ConsumerState<App> {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
     SystemChrome.setSystemUIOverlayStyle(
@@ -365,7 +365,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ref.read(ThemeProviders.theme).background,
+      backgroundColor: ref.read(ThemeProviders.selectedTheme).background,
     );
   }
 }

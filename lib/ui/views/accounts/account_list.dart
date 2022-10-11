@@ -73,7 +73,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Container(
       key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
@@ -312,7 +312,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     StateSetter setState,
   ) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
@@ -513,7 +513,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     animationOpen = true;
     Navigator.of(context).push(
       AnimationLoadingOverlay(

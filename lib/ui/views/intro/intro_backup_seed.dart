@@ -46,7 +46,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

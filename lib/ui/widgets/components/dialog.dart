@@ -23,7 +23,7 @@ class AppDialogs {
     String? cancelText,
     Function? cancelAction,
   }) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
@@ -83,7 +83,7 @@ class AppDialogs {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        final theme = ref.watch(ThemeProviders.theme);
+        final theme = ref.watch(ThemeProviders.selectedTheme);
         return AlertDialog(
           title: Text(
             title,
@@ -134,7 +134,7 @@ class _AppDialogsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return TextButton(
       onPressed: onPressed,
       child: Container(
@@ -255,7 +255,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with S
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
         InkWell(

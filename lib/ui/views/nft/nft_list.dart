@@ -33,7 +33,7 @@ class _NFTListState extends ConsumerState<NFTList> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
     final accountTokenList = accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
     return SizedBox(

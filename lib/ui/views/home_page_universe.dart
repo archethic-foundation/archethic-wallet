@@ -247,7 +247,7 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -329,7 +329,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView> with Ti
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
         Container(

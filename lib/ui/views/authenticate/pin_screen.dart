@@ -203,7 +203,7 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
     String buttonText,
     BuildContext context,
   ) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SizedBox(
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
@@ -290,7 +290,7 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
   }
 
   List<Widget> _buildPinDots() {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final ret = List<Widget>.empty(growable: true);
     for (var i = 0; i < _pinLength; i++) {
       ret.add(
@@ -307,7 +307,7 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     if (pinEnterTitle.isEmpty) {
       setState(() {
         pinEnterTitle = localizations.pinEnterTitle;

@@ -63,7 +63,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
@@ -207,7 +207,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   }
 
   Column getClientIDContainer() {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         AppTextField(
@@ -237,7 +237,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   }
 
   Column getClientAPIKeyContainer() {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         AppTextField(

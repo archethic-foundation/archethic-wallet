@@ -106,7 +106,7 @@ class _GetPublicKeyLine extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Container(
       padding: const EdgeInsets.only(bottom: 8),

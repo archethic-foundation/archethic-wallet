@@ -35,7 +35,7 @@ class BalanceInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
 
     return GestureDetector(
@@ -117,7 +117,7 @@ class BalanceInfos extends ConsumerWidget {
     TapDownDetails details,
     AccountBalance accountSelectedBalance,
   ) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     showMenu(
       color: theme.backgroundDark,
@@ -268,7 +268,7 @@ class BalanceInfos extends ConsumerWidget {
   void copyAmount(BuildContext context, WidgetRef ref, String amount) {
     Clipboard.setData(ClipboardData(text: amount));
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     UIUtil.showSnackbar(
       localizations.amountCopied,
       context,
@@ -287,7 +287,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -318,7 +318,7 @@ class _BalanceInfosNFiatShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
 
     return Column(
@@ -347,7 +347,7 @@ class _BalanceInfosNotShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.theme);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
