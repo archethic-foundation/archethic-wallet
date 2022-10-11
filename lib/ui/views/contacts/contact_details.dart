@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -31,7 +32,6 @@ class ContactDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
-
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -226,13 +226,14 @@ class ContactDetail extends ConsumerWidget {
                       localizations.send,
                       Dimens.buttonTopDimens,
                       onPressed: () {
+                        final currency = ref.read(CurrencyProviders.selectedCurrency);
                         Navigator.of(context).pop();
                         Sheets.showAppHeightNineSheet(
                           context: context,
                           ref: ref,
                           widget: TransferSheet(
                             primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
-                            localCurrency: StateContainer.of(context).curCurrency,
+                            localCurrency: currency,
                             contact: contact,
                           ),
                         );

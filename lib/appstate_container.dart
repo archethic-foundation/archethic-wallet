@@ -3,9 +3,8 @@ import 'dart:async';
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/main.dart';
-import 'package:aewallet/model/available_currency.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/chart_infos.dart';
@@ -25,6 +24,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -38,7 +38,7 @@ class _InheritedStateContainer extends InheritedWidget {
   bool updateShouldNotify(_InheritedStateContainer old) => true;
 }
 
-class StateContainer extends StatefulWidget {
+class StateContainer extends ConsumerStatefulWidget {
   const StateContainer({super.key, required this.child});
 
   final Widget child;
@@ -48,16 +48,16 @@ class StateContainer extends StatefulWidget {
   }
 
   @override
-  State<StateContainer> createState() => StateContainerState();
+  ConsumerState<StateContainer> createState() => StateContainerState();
 }
 
-class StateContainerState extends State<StateContainer> {
+class StateContainerState extends ConsumerState<StateContainer> {
   AppWallet? appWallet;
   Price? price;
   Timer? timerCheckTransactionInputs;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
-  AvailableCurrency curCurrency = const AvailableCurrency(AvailableCurrencyEnum.usd);
+  // AvailableCurrency curCurrency = const AvailableCurrency(AvailableCurrencyEnum.usd);
   PrimaryCurrencySetting curPrimaryCurrency = const PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
   NetworksSetting curNetwork = const NetworksSetting(AvailableNetworks.archethicMainNet);
 
@@ -79,23 +79,22 @@ class StateContainerState extends State<StateContainer> {
     // Setup Service Provide
     setupServiceLocator().then((_) {
       Preferences.getInstance().then((Preferences preferences) {
-        setState(() {
-          // TODO(Chralu): apply default currency
-          // curCurrency = preferences.getCurrency(deviceLocale);
-          updateCurrency(curCurrency).then((_) {
-            bottomBarPageController = PageController(
-              initialPage: preferences.getMainScreenCurrentPage(),
-            );
-            curPrimaryCurrency = preferences.getPrimaryCurrency();
-            curNetwork = preferences.getNetwork();
-            showBalance = preferences.getShowBalances();
-            showBlog = preferences.getShowBlog();
-            activeVibrations = preferences.getActiveVibrations();
-            activeNotifications = preferences.getActiveNotifications();
-            showPriceChart = preferences.getShowPriceChart();
-            updateTheme(preferences.getTheme());
-          });
-        });
+        setState(
+          () {
+            updateCurrency().then((_) {
+              bottomBarPageController = PageController(
+                initialPage: preferences.getMainScreenCurrentPage(),
+              );
+              curPrimaryCurrency = preferences.getPrimaryCurrency();
+              curNetwork = preferences.getNetwork();
+              showBalance = preferences.getShowBalances();
+              showBlog = preferences.getShowBlog();
+              activeVibrations = preferences.getActiveVibrations();
+              activeNotifications = preferences.getActiveNotifications();
+              showPriceChart = preferences.getShowPriceChart();
+            });
+          },
+        );
       });
     });
   }
@@ -184,23 +183,25 @@ class StateContainerState extends State<StateContainer> {
   }
 
   // Change currency
-  Future<void> updateCurrency(AvailableCurrency currency) async {
-    if (appWallet != null) {
-      final tokenPrice = await Price.getCurrency(curCurrency.currency.name);
-      appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice = tokenPrice;
-      appWallet!.save();
-      setState(() {
-        price = tokenPrice;
-        curCurrency = currency;
-      });
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
-    }
+  Future<void> updateCurrency() async {
+    if (appWallet == null) return;
+    final currency = ref.read(CurrencyProviders.selectedCurrency);
+
+    final tokenPrice = await Price.getCurrency(currency.currency.name);
+    appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice = tokenPrice;
+    appWallet!.save();
+    setState(() {
+      price = tokenPrice;
+    });
+    await chartInfos!.updateCoinsChart(currency.currency.name, option: idChartOption!);
   }
 
   // Change theme
   Future<void> updateTheme(ThemeSetting theme) async {
+    final currency = ref.read(CurrencyProviders.selectedCurrency);
+
     if (showPriceChart && chartInfos != null) {
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!.updateCoinsChart(currency.currency.name, option: idChartOption!);
     }
   }
 
@@ -223,10 +224,11 @@ class StateContainerState extends State<StateContainer> {
       recentTransactionsLoading = true;
     });
 
-    final tokenPrice = await Price.getCurrency(curCurrency.currency.name);
+    final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
+    final tokenPrice = await Price.getCurrency(selectedCurrency.currency.name);
     await appWallet!.appKeychain!.getAccountSelected()!.updateBalance(
           curNetwork.getNetworkCryptoCurrencyLabel(),
-          curCurrency.currency.name,
+          selectedCurrency.currency.name,
           tokenPrice,
         );
 
@@ -242,7 +244,7 @@ class StateContainerState extends State<StateContainer> {
     });
 
     if (forceUpdateChart && showPriceChart) {
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!.updateCoinsChart(selectedCurrency.currency.name, option: idChartOption!);
     }
   }
 

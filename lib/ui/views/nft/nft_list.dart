@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -92,6 +93,7 @@ class _NFTListState extends ConsumerState<NFTList> {
                                         localizations.send,
                                         Dimens.buttonTopDimens,
                                         onPressed: () async {
+                                          final currency = ref.read(CurrencyProviders.selectedCurrency);
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
                                                 StateContainer.of(context).activeVibrations,
@@ -103,7 +105,7 @@ class _NFTListState extends ConsumerState<NFTList> {
                                               accountToken: accountSelected.accountNFT![index],
                                               primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
                                               title: localizations.transferNFT,
-                                              localCurrency: StateContainer.of(context).curCurrency,
+                                              localCurrency: currency,
                                             ),
                                           );
                                         },

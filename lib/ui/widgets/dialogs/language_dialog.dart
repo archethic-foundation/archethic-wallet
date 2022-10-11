@@ -6,13 +6,11 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LanguageDialog {
   static Future<AvailableLanguage?> getDialog(BuildContext context, WidgetRef ref) async {
-    final preferences = await Preferences.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableLanguage.values) {
       pickerItemsList.add(

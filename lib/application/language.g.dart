@@ -40,9 +40,14 @@ final _selectedLanguageProvider = AutoDisposeProvider<LanguageSetting>(
       : $_selectedLanguageHash,
 );
 typedef _SelectedLanguageRef = AutoDisposeProviderRef<LanguageSetting>;
-String $_selectedLocaleHash() => r'4fa3162837a1eed1e967b0ea4a733e4588f0d159';
+String $_selectedLocaleHash() => r'6721d4f8a355bb8ff4f7bb52dfbc024f5ac22ae3';
 
-/// See also [_selectedLocale].
+/// Resolves the selected locale
+///
+/// If LanguageSetting is set to LanguageSetting.systemDefault, returns defaultLocale
+/// Otherwise returns selected locale.
+///
+/// Copied from [_selectedLocale].
 final _selectedLocaleProvider = AutoDisposeProvider<Locale>(
   _selectedLocale,
   name: r'_selectedLocaleProvider',

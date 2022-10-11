@@ -2,6 +2,7 @@
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -59,7 +60,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                             '%1',
                             StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
                           ),
-                          localCurrency: StateContainer.of(context).curCurrency,
+                          localCurrency: ref.read(CurrencyProviders.selectedCurrency),
                         ),
                       );
                     },

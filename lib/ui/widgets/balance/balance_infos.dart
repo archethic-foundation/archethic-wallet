@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Project imports:
+import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -287,6 +288,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -297,7 +299,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
         ),
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
-            StateContainer.of(context).curCurrency.currency.name,
+            currency.currency.name,
             accountSelectedBalance.fiatCurrencyValue!,
           ),
           textAlign: TextAlign.center,
@@ -317,13 +319,15 @@ class _BalanceInfosNFiatShowed extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.theme);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
-            StateContainer.of(context).curCurrency.currency.name,
+            currency.currency.name,
             accountSelectedBalance.fiatCurrencyValue!,
           ),
           textAlign: TextAlign.center,
