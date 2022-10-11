@@ -54,12 +54,15 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   void initState() {
     isPressed = false;
     _registerBus();
-    Preferences.getInstance().then((Preferences preferences) => preferences.setLanguageSeed('en'));
+    Preferences.getInstance()
+        .then((Preferences preferences) => preferences.setLanguageSeed('en'));
     super.initState();
   }
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) async {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) async {
       await StateContainer.of(context).requestUpdate();
 
       StateContainer.of(context).checkTransactionInputs(
@@ -104,7 +107,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -145,10 +149,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context).activeVibrations,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
                                           );
 
-                                      final preferences = await Preferences.getInstance();
+                                      final preferences =
+                                          await Preferences.getInstance();
                                       preferences.setLanguageSeed('en');
                                       setState(() {
                                         language = 'en';
@@ -176,10 +182,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context).activeVibrations,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
                                           );
 
-                                      final preferences = await Preferences.getInstance();
+                                      final preferences =
+                                          await Preferences.getInstance();
                                       preferences.setLanguageSeed('fr');
                                       setState(() {
                                         language = 'fr';
@@ -263,21 +271,24 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                       children: [
                                         Text(
                                           (index + 1).toString(),
-                                          style: theme.textStyleSize12W100Primary,
+                                          style:
+                                              theme.textStyleSize12W100Primary,
                                         ),
                                         Autocomplete<String>(
                                           optionsBuilder: (
                                             TextEditingValue textEditingValue,
                                           ) {
                                             if (textEditingValue.text == '') {
-                                              return const Iterable<String>.empty();
+                                              return const Iterable<
+                                                  String>.empty();
                                             }
                                             return AppMnemomics.getLanguage(
                                               language,
                                             ).list.where((String option) {
                                               return option.contains(
                                                 unorm.nfkd(
-                                                  textEditingValue.text.toLowerCase(),
+                                                  textEditingValue.text
+                                                      .toLowerCase(),
                                                 ),
                                               );
                                             });
@@ -289,7 +300,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                             )) {
                                               setState(() {
                                                 _mnemonicIsValid = false;
-                                                _mnemonicError = localizations.mnemonicInvalidWord.replaceAll(
+                                                _mnemonicError = localizations
+                                                    .mnemonicInvalidWord
+                                                    .replaceAll(
                                                   '%1',
                                                   selection,
                                                 );
@@ -309,21 +322,29 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                             onFieldSubmitted,
                                           ) {
                                             return Stack(
-                                              alignment: AlignmentDirectional.center,
+                                              alignment:
+                                                  AlignmentDirectional.center,
                                               children: <Widget>[
                                                 TextFormField(
-                                                  controller: textEditingController,
+                                                  controller:
+                                                      textEditingController,
                                                   focusNode: focusNode,
-                                                  style: theme.textStyleSize12W400Primary,
+                                                  style: theme
+                                                      .textStyleSize12W400Primary,
                                                   autocorrect: false,
                                                   onChanged: (value) {
-                                                    if (!AppMnemomics.isValidWord(
+                                                    if (!AppMnemomics
+                                                        .isValidWord(
                                                       value,
                                                       languageCode: language,
                                                     )) {
                                                       setState(() {
-                                                        _mnemonicIsValid = false;
-                                                        _mnemonicError = localizations.mnemonicInvalidWord.replaceAll(
+                                                        _mnemonicIsValid =
+                                                            false;
+                                                        _mnemonicError =
+                                                            localizations
+                                                                .mnemonicInvalidWord
+                                                                .replaceAll(
                                                           '%1',
                                                           value,
                                                         );
@@ -341,7 +362,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                   bottom: 1,
                                                   child: Container(
                                                     height: 1,
-                                                    width: MediaQuery.of(context).size.width,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     decoration: BoxDecoration(
                                                       gradient: theme.gradient,
                                                     ),
@@ -385,7 +409,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                         localizations.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
-                          final currency = ref.watch(CurrencyProviders.selectedCurrency);
+                          final currency =
+                              ref.watch(CurrencyProviders.selectedCurrency);
 
                           _showSendingAnimation(context);
                           setState(() {
@@ -405,7 +430,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                   ) ==
                                   false) {
                                 _mnemonicIsValid = false;
-                                _mnemonicError = localizations.mnemonicInvalidWord.replaceAll('%1', word);
+                                _mnemonicError = localizations
+                                    .mnemonicInvalidWord
+                                    .replaceAll('%1', word);
                               }
                             }
                           }
@@ -423,11 +450,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             );
 
                             try {
-                              final appWallet = await KeychainUtil().getListAccountsFromKeychain(
+                              final appWallet = await KeychainUtil()
+                                  .getListAccountsFromKeychain(
                                 StateContainer.of(context).appWallet,
                                 seed,
                                 currency.currency.name,
-                                StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel(),
                                 tokenPrice,
                               );
 
@@ -452,7 +482,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                 );
                                 await _accountsDialog(accounts);
                                 await _launchSecurityConfiguration(
-                                  StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
+                                  StateContainer.of(context)
+                                      .appWallet!
+                                      .appKeychain!
+                                      .getAccountSelected()!
+                                      .name!,
                                   seed,
                                 );
                               }
@@ -513,8 +547,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     if (biometricsAvalaible) {
       accessModes.add(
         PickerItem(
-          const AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
+          const AuthenticationMethod(AuthMethod.biometrics)
+              .getDisplayName(context),
+          const AuthenticationMethod(AuthMethod.biometrics)
+              .getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
           theme.pickerItemIconEnabled,
           AuthMethod.biometrics,
@@ -524,8 +560,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     }
     accessModes.add(
       PickerItem(
-        const AuthenticationMethod(AuthMethod.biometricsUniris).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.biometricsUniris).getDescription(context),
+        const AuthenticationMethod(AuthMethod.biometricsUniris)
+            .getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.biometricsUniris)
+            .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
         theme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
@@ -534,8 +572,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     );
     accessModes.add(
       PickerItem(
-        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud).getDescription(context),
+        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+            .getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+            .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
         theme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,
@@ -562,7 +602,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final account in accounts) {
-      pickerItemsList.add(PickerItem(account.name!, null, null, null, account, true));
+      pickerItemsList
+          .add(PickerItem(account.name!, null, null, null, account, true));
     }
 
     final selection = await showDialog<Account>(
@@ -615,7 +656,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       },
     );
     if (selection != null) {
-      await StateContainer.of(context).appWallet!.appKeychain!.setAccountSelected(selection);
+      await StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .setAccountSelected(selection);
     }
   }
 

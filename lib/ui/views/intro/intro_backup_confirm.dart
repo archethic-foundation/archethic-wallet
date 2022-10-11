@@ -54,12 +54,15 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   SubscriptionChannel subscriptionChannel2 = SubscriptionChannel();
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) async {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) async {
       await createKeychain();
     });
 
-    _sendTxSub =
-        EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) async {
+    _sendTxSub = EventTaxiImpl.singleton()
+        .registerTo<TransactionSendEvent>()
+        .listen((TransactionSendEvent event) async {
       final localizations = AppLocalization.of(context)!;
       final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
@@ -127,7 +130,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
               var error = false;
               try {
-                StateContainer.of(context).appWallet = await AppWallet().createNewAppWallet(
+                StateContainer.of(context).appWallet =
+                    await AppWallet().createNewAppWallet(
                   event.params!['keychainAddress']! as String,
                   event.params!['keychain']! as Keychain,
                   widget.name,
@@ -149,8 +153,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                   localizations.transactionInputNotification,
                 );
                 final preferences = await Preferences.getInstance();
-                StateContainer.of(context).bottomBarCurrentPage = preferences.getMainScreenCurrentPage();
-                StateContainer.of(context).bottomBarPageController = PageController(
+                StateContainer.of(context).bottomBarCurrentPage =
+                    preferences.getMainScreenCurrentPage();
+                StateContainer.of(context).bottomBarPageController =
+                    PageController(
                   initialPage: StateContainer.of(context).bottomBarCurrentPage,
                 );
                 Navigator.of(context).pushNamedAndRemoveUntil(
@@ -235,7 +241,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -297,7 +304,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                           ),
                           child: Wrap(
                             spacing: 10,
-                            children: wordListSelected.asMap().entries.map((MapEntry entry) {
+                            children: wordListSelected
+                                .asMap()
+                                .entries
+                                .map((MapEntry entry) {
                               return SizedBox(
                                 height: 35,
                                 child: Chip(
@@ -336,7 +346,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                           ),
                           child: Wrap(
                             spacing: 10,
-                            children: wordListToSelect.asMap().entries.map((MapEntry entry) {
+                            children: wordListToSelect
+                                .asMap()
+                                .entries
+                                .map((MapEntry entry) {
                               return SizedBox(
                                 height: 35,
                                 child: GestureDetector(
@@ -386,8 +399,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                             onPressed: () async {
                               var orderOk = true;
 
-                              for (var i = 0; i < originalWordsList.length; i++) {
-                                if (originalWordsList[i] != wordListSelected[i]) {
+                              for (var i = 0;
+                                  i < originalWordsList.length;
+                                  i++) {
+                                if (originalWordsList[i] !=
+                                    wordListSelected[i]) {
                                   orderOk = false;
                                 }
                               }
@@ -475,8 +491,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     if (biometricsAvalaible) {
       accessModes.add(
         PickerItem(
-          const AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
+          const AuthenticationMethod(AuthMethod.biometrics)
+              .getDisplayName(context),
+          const AuthenticationMethod(AuthMethod.biometrics)
+              .getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
           theme.pickerItemIconEnabled,
           AuthMethod.biometrics,
@@ -486,8 +504,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     }
     accessModes.add(
       PickerItem(
-        const AuthenticationMethod(AuthMethod.biometricsUniris).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.biometricsUniris).getDescription(context),
+        const AuthenticationMethod(AuthMethod.biometricsUniris)
+            .getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.biometricsUniris)
+            .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
         theme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
@@ -496,8 +516,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     );
     accessModes.add(
       PickerItem(
-        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud).getDescription(context),
+        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+            .getDisplayName(context),
+        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+            .getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
         theme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,

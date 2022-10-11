@@ -37,7 +37,8 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
   Future<void> update() async {
     switch (method) {
       case 'getPubKey':
-        final responseHex = hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
+        final responseHex =
+            hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
         originPubKey = responseHex.substring(4, responseHex.length - 4);
         method = 'signTxn';
         break;
@@ -89,7 +90,8 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.10,
@@ -127,14 +129,17 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                                     ),
                                     onPressed: () async {
                                       method = 'getPubKey';
-                                      await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());
+                                      await sl
+                                          .get<LedgerNanoSImpl>()
+                                          .connectLedger(getPubKeyAPDU());
                                     },
                                   )
                                 : method == 'signTxn'
                                     ? ElevatedButton(
                                         child: Text(
                                           'Ledger - Verify transaction',
-                                          style: theme.textStyleSize16W200Primary,
+                                          style:
+                                              theme.textStyleSize16W200Primary,
                                         ),
                                         onPressed: () async {
                                           const addressIndex = '';
@@ -149,27 +154,39 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                                             type: 'transfer',
                                             data: Transaction.initData(),
                                           );
-                                          for (final transfer in widget.ucoTransferList!) {
+                                          for (final transfer
+                                              in widget.ucoTransferList!) {
                                             transaction.addUCOTransfer(
                                               transfer.to,
                                               transfer.amount!,
                                             );
                                           }
-                                          final lastTransaction = await sl.get<ApiService>().getLastTransaction(
+                                          final lastTransaction = await sl
+                                              .get<ApiService>()
+                                              .getLastTransaction(
                                                 StateContainer.of(
                                                   context,
-                                                ).appWallet!.appKeychain!.getAccountSelected()!.lastAddress!,
+                                                )
+                                                    .appWallet!
+                                                    .appKeychain!
+                                                    .getAccountSelected()!
+                                                    .lastAddress!,
                                                 request: 'chainLength',
                                               );
-                                          final transactionChainSeed = await StateContainer.of(context).getSeed();
-                                          final originPrivateKey = sl.get<ApiService>().getOriginKey();
+                                          final transactionChainSeed =
+                                              await StateContainer.of(context)
+                                                  .getSeed();
+                                          final originPrivateKey = sl
+                                              .get<ApiService>()
+                                              .getOriginKey();
                                           transaction
                                               .build(
                                                 transactionChainSeed!,
                                                 lastTransaction.chainLength!,
                                               )
                                               .originSign(originPrivateKey);
-                                          final onChainWalletData = walletEncoder(originPubKey);
+                                          final onChainWalletData =
+                                              walletEncoder(originPubKey);
 
                                           const hashType = 0;
                                           final signTxn = getSignTxnAPDU(
@@ -179,7 +196,9 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                                             int.tryParse(addressIndex)!,
                                           );
                                           log('signTxn:${uint8ListToHex(signTxn)}');
-                                          await sl.get<LedgerNanoSImpl>().connectLedger(signTxn);
+                                          await sl
+                                              .get<LedgerNanoSImpl>()
+                                              .connectLedger(signTxn);
                                         },
                                       )
                                     : const SizedBox()

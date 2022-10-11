@@ -91,10 +91,12 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!.keys.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .keys.first,
                           ),
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!.values.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .values.first,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
@@ -125,25 +127,31 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context).activeVibrations,
+                                      StateContainer.of(context)
+                                          .activeVibrations,
                                     );
-                                final contact = await ContactsDialog.getDialog(context, ref);
+                                final contact = await ContactsDialog.getDialog(
+                                    context, ref);
                                 if (contact != null && contact.name != null) {
-                                  publicKeyAccessController!.text = contact.name!;
+                                  publicKeyAccessController!.text =
+                                      contact.name!;
                                   setState(() {});
                                 }
                               },
                             ),
-                            suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+                            suffixButton: kIsWeb == false &&
+                                    (Platform.isIOS || Platform.isAndroid)
                                 ? TextFieldButton(
                                     icon: FontAwesomeIcons.qrcode,
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context).activeVibrations,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
                                           );
                                       UIUtil.cancelLockEvent();
-                                      final scanResult = await UserDataUtil.getQRData(
+                                      final scanResult =
+                                          await UserDataUtil.getQRData(
                                         DataType.raw,
                                         context,
                                         ref,
@@ -156,7 +164,8 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                           theme.text!,
                                           theme.snackBarShadow!,
                                         );
-                                      } else if (QRScanErrs.errorList.contains(scanResult)) {
+                                      } else if (QRScanErrs.errorList
+                                          .contains(scanResult)) {
                                         UIUtil.showSnackbar(
                                           scanResult,
                                           context,
@@ -167,7 +176,8 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                         return;
                                       } else {
                                         setState(() {
-                                          publicKeyAccessController!.text = scanResult;
+                                          publicKeyAccessController!.text =
+                                              scanResult;
                                         });
                                       }
                                     },
@@ -191,9 +201,11 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context).activeVibrations,
+                                          StateContainer.of(context)
+                                              .activeVibrations,
                                         );
-                                    if (publicKeyAccessController!.text.length < 68 ||
+                                    if (publicKeyAccessController!.text.length <
+                                            68 ||
                                         !isHex(
                                           publicKeyAccessController!.text,
                                         )) {
@@ -210,7 +222,9 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                           publicKeyAccessController!.text,
                                         );
                                         publicKeys!.sort(
-                                          (a, b) => a.toLowerCase().compareTo(b.toLowerCase()),
+                                          (a, b) => a
+                                              .toLowerCase()
+                                              .compareTo(b.toLowerCase()),
                                         );
                                         publicKeyAccessController!.text = '';
                                       });
@@ -237,7 +251,10 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                 right: 10,
                               ),
                               child: Wrap(
-                                children: publicKeys!.asMap().entries.map((MapEntry<dynamic, String> entry) {
+                                children: publicKeys!
+                                    .asMap()
+                                    .entries
+                                    .map((MapEntry<dynamic, String> entry) {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: _AddPublicKeyLine(
@@ -333,9 +350,11 @@ class _AddPublicKeyLine extends ConsumerWidget {
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
-                                        color: theme.backgroundDark!.withOpacity(0.3),
+                                        color: theme.backgroundDark!
+                                            .withOpacity(0.3),
                                         border: Border.all(
-                                          color: theme.backgroundDarkest!.withOpacity(0.2),
+                                          color: theme.backgroundDarkest!
+                                              .withOpacity(0.2),
                                           width: 2,
                                         ),
                                       ),
@@ -348,7 +367,8 @@ class _AddPublicKeyLine extends ConsumerWidget {
                                         onPressed: () {
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
-                                                StateContainer.of(context).activeVibrations,
+                                                StateContainer.of(context)
+                                                    .activeVibrations,
                                               );
                                           AppDialogs.showConfirmDialog(
                                             context,
@@ -359,7 +379,8 @@ class _AddPublicKeyLine extends ConsumerWidget {
                                             () {
                                               sl.get<HapticUtil>().feedback(
                                                     FeedbackType.light,
-                                                    StateContainer.of(context).activeVibrations,
+                                                    StateContainer.of(context)
+                                                        .activeVibrations,
                                                   );
                                             },
                                           );

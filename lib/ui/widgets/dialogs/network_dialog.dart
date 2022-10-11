@@ -71,10 +71,12 @@ class NetworkDialog {
                 NetworksSetting(value.value as AvailableNetworks),
               );
 
-              final selectedNetworkSettings = NetworksSetting(value.value as AvailableNetworks);
+              final selectedNetworkSettings =
+                  NetworksSetting(value.value as AvailableNetworks);
               StateContainer.of(context).curNetwork = selectedNetworkSettings;
 
-              if (value.value as AvailableNetworks == AvailableNetworks.archethicDevNet) {
+              if (value.value as AvailableNetworks ==
+                  AvailableNetworks.archethicDevNet) {
                 endpointController.text = preferences.getNetworkDevEndpoint();
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
@@ -92,7 +94,9 @@ class NetworkDialog {
                                   height: 30,
                                 ),
                                 Text(
-                                  StateContainer.of(context).curNetwork.getDisplayName(context),
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getDisplayName(context),
                                   style: theme.textStyleSize10W100Primary,
                                 ),
                                 const SizedBox(
@@ -117,7 +121,8 @@ class NetworkDialog {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   AppTextField(
                                     leftMargin: 0,
@@ -166,7 +171,8 @@ class NetworkDialog {
                                       endpointError = '';
                                       if (endpointController.text.isEmpty) {
                                         setState(() {
-                                          endpointError = localizations.enterEndpointBlank;
+                                          endpointError =
+                                              localizations.enterEndpointBlank;
                                           FocusScope.of(context).requestFocus(
                                             endpointFocusNode,
                                           );
@@ -177,7 +183,8 @@ class NetworkDialog {
                                             ).isAbsolute ==
                                             false) {
                                           setState(() {
-                                            endpointError = localizations.enterEndpointNotValid;
+                                            endpointError = localizations
+                                                .enterEndpointNotValid;
                                             FocusScope.of(context).requestFocus(
                                               endpointFocusNode,
                                             );

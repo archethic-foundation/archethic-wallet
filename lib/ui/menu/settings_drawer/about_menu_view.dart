@@ -1,6 +1,7 @@
 part of 'settings_drawer.dart';
 
-final versionStringProvider = FutureProvider.autoDispose.family<String, AppLocalization>(
+final versionStringProvider =
+    FutureProvider.autoDispose.family<String, AppLocalization>(
   (ref, localizations) async {
     final packageInfo = await PackageInfo.fromPlatform();
 
@@ -76,7 +77,8 @@ class AboutMenuView extends ConsumerWidget {
                             Consumer(
                               builder: (context, ref, child) {
                                 final asyncVersionString = ref.watch(
-                                  versionStringProvider(AppLocalization.of(context)!),
+                                  versionStringProvider(
+                                      AppLocalization.of(context)!),
                                 );
 
                                 return Text(
@@ -140,7 +142,10 @@ class AboutMenuView extends ConsumerWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
+                          colors: <Color>[
+                            theme.drawerBackground!,
+                            theme.backgroundDark00!
+                          ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
                         ),

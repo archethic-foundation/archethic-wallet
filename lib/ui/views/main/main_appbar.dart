@@ -34,7 +34,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final bottomBarCurrentPage = StateContainer.of(context).bottomBarCurrentPage;
+    final bottomBarCurrentPage =
+        StateContainer.of(context).bottomBarCurrentPage;
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
@@ -62,7 +63,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 StateContainer.of(context).showBalance
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
-              if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+              if (!kIsWeb &&
+                  (Platform.isIOS == true ||
+                      Platform.isAndroid == true ||
+                      Platform.isMacOS == true))
                 StateContainer.of(context).activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
@@ -76,7 +80,11 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           );
                       Clipboard.setData(
                         ClipboardData(
-                          text: StateContainer.of(context).appWallet!.appKeychain!.address!.toUpperCase(),
+                          text: StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .address!
+                              .toUpperCase(),
                         ),
                       );
                       UIUtil.showSnackbar(
@@ -96,7 +104,11 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
+                          StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .name!,
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )

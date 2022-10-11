@@ -59,13 +59,16 @@ class ContactDetail extends ConsumerWidget {
                       context,
                       ref,
                       localizations.removeContact,
-                      localizations.removeContactConfirmation.replaceAll('%1', contact.name!),
+                      localizations.removeContactConfirmation
+                          .replaceAll('%1', contact.name!),
                       localizations.yes,
                       () async {
                         ContactProviders.deleteContact(contact: contact);
-                        StateContainer.of(context).requestUpdate(forceUpdateChart: false);
+                        StateContainer.of(context)
+                            .requestUpdate(forceUpdateChart: false);
                         UIUtil.showSnackbar(
-                          localizations.contactRemoved.replaceAll('%1', contact.name!),
+                          localizations.contactRemoved
+                              .replaceAll('%1', contact.name!),
                           context,
                           ref,
                           theme.text!,
@@ -226,13 +229,15 @@ class ContactDetail extends ConsumerWidget {
                       localizations.send,
                       Dimens.buttonTopDimens,
                       onPressed: () {
-                        final currency = ref.read(CurrencyProviders.selectedCurrency);
+                        final currency =
+                            ref.read(CurrencyProviders.selectedCurrency);
                         Navigator.of(context).pop();
                         Sheets.showAppHeightNineSheet(
                           context: context,
                           ref: ref,
                           widget: TransferSheet(
-                            primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                            primaryCurrency:
+                                StateContainer.of(context).curPrimaryCurrency,
                             localCurrency: currency,
                             contact: contact,
                           ),

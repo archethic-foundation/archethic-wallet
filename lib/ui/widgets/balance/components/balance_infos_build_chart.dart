@@ -31,7 +31,8 @@ class BalanceInfosChart extends ConsumerWidget {
           OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
           OptionChart('all', ChartInfos.getChartOptionLabel(context, 'all')),
         ];
-        final optionChart = _getOptionChart(context, StateContainer.of(context).idChartOption!);
+        final optionChart =
+            _getOptionChart(context, StateContainer.of(context).idChartOption!);
 
         Sheets.showAppHeightNineSheet(
           context: context,
@@ -89,7 +90,8 @@ class BalanceInfosChart extends ConsumerWidget {
                           tooltipBg: theme.backgroundDark!,
                           tooltipText: theme.textStyleSize12W100Primary,
                           axisTextStyle: theme.textStyleSize12W100Primary,
-                          optionChartSelected: StateContainer.of(context).idChartOption!,
+                          optionChartSelected:
+                              StateContainer.of(context).idChartOption!,
                           currency: currency.currency.name,
                           completeChart: false,
                         )

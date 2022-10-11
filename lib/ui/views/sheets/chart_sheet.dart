@@ -89,32 +89,33 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
             padding: const EdgeInsets.only(top: 20),
             child: Padding(
               padding: const EdgeInsets.only(right: 5, left: 5),
-              child:
-                  StateContainer.of(context).chartInfos != null && StateContainer.of(context).chartInfos!.data != null
-                      ? HistoryChart(
-                          intervals: StateContainer.of(context).chartInfos!.data!,
-                          gradientColors: LinearGradient(
-                            colors: <Color>[
-                              theme.text20!,
-                              theme.text!,
-                            ],
-                          ),
-                          gradientColorsBar: LinearGradient(
-                            colors: <Color>[
-                              theme.text!.withOpacity(0.9),
-                              theme.text!.withOpacity(0),
-                            ],
-                            begin: Alignment.center,
-                            end: Alignment.bottomCenter,
-                          ),
-                          tooltipBg: theme.backgroundDark!,
-                          tooltipText: theme.textStyleSize12W100Primary,
-                          axisTextStyle: theme.textStyleSize12W100Primary,
-                          optionChartSelected: StateContainer.of(context).idChartOption!,
-                          currency: currency.currency.name,
-                          completeChart: true,
-                        )
-                      : const SizedBox(),
+              child: StateContainer.of(context).chartInfos != null &&
+                      StateContainer.of(context).chartInfos!.data != null
+                  ? HistoryChart(
+                      intervals: StateContainer.of(context).chartInfos!.data!,
+                      gradientColors: LinearGradient(
+                        colors: <Color>[
+                          theme.text20!,
+                          theme.text!,
+                        ],
+                      ),
+                      gradientColorsBar: LinearGradient(
+                        colors: <Color>[
+                          theme.text!.withOpacity(0.9),
+                          theme.text!.withOpacity(0),
+                        ],
+                        begin: Alignment.center,
+                        end: Alignment.bottomCenter,
+                      ),
+                      tooltipBg: theme.backgroundDark!,
+                      tooltipText: theme.textStyleSize12W100Primary,
+                      axisTextStyle: theme.textStyleSize12W100Primary,
+                      optionChartSelected:
+                          StateContainer.of(context).idChartOption!,
+                      currency: currency.currency.name,
+                      completeChart: true,
+                    )
+                  : const SizedBox(),
             ),
           ),
         ),
@@ -141,7 +142,8 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
 
                 setState(() {
                   optionChartSelected = widget.optionChartList[index];
-                  StateContainer.of(context).idChartOption = widget.optionChartList[index].id;
+                  StateContainer.of(context).idChartOption =
+                      widget.optionChartList[index].id;
 
                   bottomBarCurrentPage = index;
                 });
@@ -153,7 +155,8 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
                     ChartInfos.getChartOptionLabel(context, optionChart.id),
                     style: theme.textStyleSize12W100Primary,
                   ),
-                  backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
+                  backgroundColorOpacity:
+                      theme.bottomBarBackgroundColorOpacity!,
                   activeIconColor: theme.bottomBarActiveIconColor,
                   activeTitleColor: theme.bottomBarActiveTitleColor,
                   activeColor: theme.bottomBarActiveColor!,
@@ -163,7 +166,10 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
             ),
           ],
         ),
-        if (StateContainer.of(context).chartInfos != null) const BalanceInfosKpi() else const SizedBox(),
+        if (StateContainer.of(context).chartInfos != null)
+          const BalanceInfosKpi()
+        else
+          const SizedBox(),
       ],
     );
   }

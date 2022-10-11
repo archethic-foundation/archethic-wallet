@@ -18,7 +18,10 @@ class NFTListPerCategory extends ConsumerWidget {
     final nftCategories = ref.read(
       NftCategoryProviders.fetchNftCategory(
         context,
-        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!,
       ),
     );
 
@@ -39,7 +42,8 @@ class NFTListPerCategory extends ConsumerWidget {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             child: Column(
               children: <Widget>[
                 Row(
@@ -64,7 +68,8 @@ class NFTListPerCategory extends ConsumerWidget {
                       ],
                     ),
                     BalanceIndicatorWidget(
-                      primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                      primaryCurrency:
+                          StateContainer.of(context).curPrimaryCurrency,
                       displaySwitchButton: false,
                     ),
                     Padding(
@@ -72,7 +77,8 @@ class NFTListPerCategory extends ConsumerWidget {
                       child: Column(
                         children: [
                           Hero(
-                            tag: 'nftCategory${nftCategories[currentNftCategoryIndex!].name!}',
+                            tag:
+                                'nftCategory${nftCategories[currentNftCategoryIndex!].name!}',
                             child: Card(
                               elevation: 5,
                               shadowColor: Colors.black,

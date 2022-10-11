@@ -10,7 +10,11 @@ class BalanceInfosKpi extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final chartInfos = StateContainer.of(context).chartInfos;
-    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
+    final accountSelectedBalance = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .balance;
 
     if (chartInfos?.data == null) {
       return const SizedBox(
@@ -37,7 +41,9 @@ class BalanceInfosKpi extends ConsumerWidget {
               ),
               AutoSizeText(
                 '${chartInfos!.getPriceChangePercentage(StateContainer.of(context).idChartOption!)!.toStringAsFixed(2)}%',
-                style: StateContainer.of(context).chartInfos!.getPriceChangePercentage(
+                style: StateContainer.of(context)
+                            .chartInfos!
+                            .getPriceChangePercentage(
                               StateContainer.of(context).idChartOption!,
                             )! >=
                         0

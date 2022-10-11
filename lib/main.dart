@@ -72,7 +72,8 @@ Future<void> main() async {
         child: ProviderScope(
           overrides: [
             // TODO(reddwarf03): Meaning ?
-            SettingsProviders.localSettingsRepository.overrideWithValue(localPreferencesRepository),
+            SettingsProviders.localSettingsRepository
+                .overrideWithValue(localPreferencesRepository),
           ],
           child: const StateContainer(
             child: App(),
@@ -200,10 +201,15 @@ class _AppState extends ConsumerState<App> {
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
                   currentNftCategoryIndex:
-                      args['currentNftCategoryIndex'] == null ? null : args['currentNftCategoryIndex'] as int,
-                  process: args['process'] == null ? null : args['process'] as NFTCreationProcessType,
-                  primaryCurrency:
-                      args['primaryCurrency'] == null ? null : args['primaryCurrency'] as PrimaryCurrencySetting,
+                      args['currentNftCategoryIndex'] == null
+                          ? null
+                          : args['currentNftCategoryIndex'] as int,
+                  process: args['process'] == null
+                      ? null
+                      : args['process'] as NFTCreationProcessType,
+                  primaryCurrency: args['primaryCurrency'] == null
+                      ? null
+                      : args['primaryCurrency'] as PrimaryCurrencySetting,
                 ),
                 settings: settings,
               );
@@ -286,7 +292,8 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       }
 
       if (isLoggedIn) {
-        StateContainer.of(context).appWallet = await sl.get<DBHelper>().getAppWallet();
+        StateContainer.of(context).appWallet =
+            await sl.get<DBHelper>().getAppWallet();
         if (StateContainer.of(context).appWallet == null) {
           await StateContainer.of(context).logOut();
           // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
@@ -327,7 +334,8 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _hasCheckedLoggedIn = false;
-    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
       SchedulerBinding.instance.addPostFrameCallback((_) => checkLoggedIn());
     }
   }
@@ -359,7 +367,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   void updateDefaultLocale() {
-    ref.read(LanguageProviders.defaultLocale.state).update((state) => Localizations.localeOf(context));
+    ref
+        .read(LanguageProviders.defaultLocale.state)
+        .update((state) => Localizations.localeOf(context));
   }
 
   @override

@@ -25,7 +25,11 @@ class QRScanErrs {
   static const String permissionDenied = 'qr_denied';
   static const String unknownError = 'qr_unknown';
   static const String cancelError = 'qr_cancel';
-  static const List<String> errorList = <String>[permissionDenied, unknownError, cancelError];
+  static const List<String> errorList = <String>[
+    permissionDenied,
+    unknownError,
+    cancelError
+  ];
 }
 
 // ignore: avoid_classes_with_only_static_members
@@ -64,7 +68,8 @@ class UserDataUtil {
     return _parseData(data.text!, type);
   }
 
-  static Future<String?> getQRData(DataType type, BuildContext context, WidgetRef ref) async {
+  static Future<String?> getQRData(
+      DataType type, BuildContext context, WidgetRef ref) async {
     UIUtil.cancelLockEvent();
     try {
       final scanResult = await BarcodeScanner.scan();

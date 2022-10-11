@@ -95,10 +95,16 @@ class UCOTransferListWidget extends ConsumerWidget {
   double _getTotal() {
     var totalAmount = 0.0;
     for (var i = 0; i < listUcoTransfer!.length; i++) {
-      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) / Decimal.parse('100000000')).toDouble();
-      totalAmount = (Decimal.parse(totalAmount.toString()) + Decimal.parse(amount.toString())).toDouble();
+      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
+              Decimal.parse('100000000'))
+          .toDouble();
+      totalAmount = (Decimal.parse(totalAmount.toString()) +
+              Decimal.parse(amount.toString()))
+          .toDouble();
     }
-    return (Decimal.parse(totalAmount.toString()) + Decimal.parse(feeEstimation!.toString())).toDouble();
+    return (Decimal.parse(totalAmount.toString()) +
+            Decimal.parse(feeEstimation!.toString()))
+        .toDouble();
   }
 }
 

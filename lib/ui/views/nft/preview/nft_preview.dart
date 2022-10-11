@@ -37,7 +37,8 @@ class NFTPreviewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final description = TokenUtil.getPropertyValue(tokenInformations, 'description');
+    final description =
+        TokenUtil.getPropertyValue(tokenInformations, 'description');
     final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
 
     return Padding(
@@ -53,7 +54,8 @@ class NFTPreviewWidget extends ConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            if (MimeUtil.isImage(typeMime) == true || MimeUtil.isPdf(typeMime) == true)
+            if (MimeUtil.isImage(typeMime) == true ||
+                MimeUtil.isPdf(typeMime) == true)
               if (tokenInformations.address != null)
                 FutureBuilder<Uint8List?>(
                   future: TokenUtil.getImageFromTokenAddress(
@@ -111,12 +113,14 @@ class NFTPreviewWidget extends ConsumerWidget {
                     MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
                   ) {
                     return entry.value.tokenProperty!.keys.first != 'file' &&
-                            entry.value.tokenProperty!.keys.first != 'description' &&
+                            entry.value.tokenProperty!.keys.first !=
+                                'description' &&
                             entry.value.tokenProperty!.keys.first != 'name' &&
                             entry.value.tokenProperty!.keys.first != 'type/mime'
                         ? Padding(
                             padding: const EdgeInsets.all(5),
-                            child: _buildTokenProperty(context, ref, entry.value),
+                            child:
+                                _buildTokenProperty(context, ref, entry.value),
                           )
                         : const SizedBox();
                   }).toList(),
@@ -167,7 +171,8 @@ class NFTPreviewWidget extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                tokenPropertyWithAccessInfos.tokenProperty!.keys.first,
+                                tokenPropertyWithAccessInfos
+                                    .tokenProperty!.keys.first,
                                 style: theme.textStyleSize12W600Primary,
                               ),
                             ),
@@ -175,15 +180,21 @@ class NFTPreviewWidget extends ConsumerWidget {
                               width: 200,
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                tokenPropertyWithAccessInfos.tokenProperty!.values.first,
+                                tokenPropertyWithAccessInfos
+                                    .tokenProperty!.values.first,
                                 style: theme.textStyleSize12W400Primary,
                               ),
                             ),
-                            if (tokenPropertyWithAccessInfos.publicKeysList != null &&
-                                tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty)
-                              tokenPropertyWithAccessInfos.publicKeysList!.length == 1
+                            if (tokenPropertyWithAccessInfos.publicKeysList !=
+                                    null &&
+                                tokenPropertyWithAccessInfos
+                                    .publicKeysList!.isNotEmpty)
+                              tokenPropertyWithAccessInfos
+                                          .publicKeysList!.length ==
+                                      1
                                   ? Container(
-                                      width: MediaQuery.of(context).size.width - 100,
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
                                       padding: const EdgeInsets.only(left: 20),
                                       child: AutoSizeText(
                                         'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
@@ -191,7 +202,8 @@ class NFTPreviewWidget extends ConsumerWidget {
                                       ),
                                     )
                                   : Container(
-                                      width: MediaQuery.of(context).size.width - 100,
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
                                       padding: const EdgeInsets.only(left: 20),
                                       child: AutoSizeText(
                                         'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',

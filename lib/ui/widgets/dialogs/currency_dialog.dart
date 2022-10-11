@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CurrencyDialog {
-  static Future<AvailableCurrencyEnum?> getDialog(BuildContext context, WidgetRef ref) async {
+  static Future<AvailableCurrencyEnum?> getDialog(
+      BuildContext context, WidgetRef ref) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
 
     for (final value in AvailableCurrencyEnum.values) {
@@ -61,8 +62,12 @@ class CurrencyDialog {
               pickerItems: pickerItemsList,
               selectedIndex: currency.getIndex(),
               onSelected: (value) async {
-                final currency = AvailableCurrency(value.value as AvailableCurrencyEnum);
-                final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+                final currency =
+                    AvailableCurrency(value.value as AvailableCurrencyEnum);
+                final accountSelected = StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!;
                 await ref.read(
                   CurrencyProviders.selectCurrency(currency: currency).future,
                 );
@@ -71,11 +76,14 @@ class CurrencyDialog {
                   currency.currency.name,
                 );
                 await accountSelected.updateBalance(
-                  StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel(),
                   currency.currency.name,
                   tokenPrice,
                 );
-                accountSelected.balance!.fiatCurrencyCode = currency.currency.name;
+                accountSelected.balance!.fiatCurrencyCode =
+                    currency.currency.name;
                 Navigator.pop(context, value.value);
               },
             ),

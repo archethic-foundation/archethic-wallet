@@ -59,10 +59,12 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!.keys.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .keys.first,
                           ),
                           Text(
-                            widget.tokenPropertyWithAccessInfos.tokenProperty!.values.first,
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .values.first,
                           ),
                           if (publicKeys != null)
                             Padding(
@@ -72,7 +74,10 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                 right: 10,
                               ),
                               child: Wrap(
-                                children: publicKeys!.asMap().entries.map((MapEntry<dynamic, String> entry) {
+                                children: publicKeys!
+                                    .asMap()
+                                    .entries
+                                    .map((MapEntry<dynamic, String> entry) {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: _GetPublicKeyLine(

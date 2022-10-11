@@ -51,14 +51,20 @@ class PrimaryCurrencyDialog {
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex: StateContainer.of(context).curPrimaryCurrency.primaryCurrency.index,
+            selectedIndex: StateContainer.of(context)
+                .curPrimaryCurrency
+                .primaryCurrency
+                .index,
             onSelected: (value) {
               preferences.setPrimaryCurrency(
                 PrimaryCurrencySetting(
                   value.value as AvailablePrimaryCurrency,
                 ),
               );
-              if (StateContainer.of(context).curPrimaryCurrency.primaryCurrency != value.value) {
+              if (StateContainer.of(context)
+                      .curPrimaryCurrency
+                      .primaryCurrency !=
+                  value.value) {
                 StateContainer.of(context).updatePrimaryCurrency(
                   PrimaryCurrencySetting(
                     value.value as AvailablePrimaryCurrency,

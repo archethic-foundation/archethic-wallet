@@ -40,7 +40,8 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
-    Preferences.getInstance().then((Preferences preferences) => preferences.setLanguageSeed('en'));
+    Preferences.getInstance()
+        .then((Preferences preferences) => preferences.setLanguageSeed('en'));
   }
 
   @override
@@ -66,7 +67,8 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -103,13 +105,15 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context).activeVibrations,
+                                          StateContainer.of(context)
+                                              .activeVibrations,
                                         );
                                     seed = AppSeeds.generateSeed();
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                     );
-                                    final preferences = await Preferences.getInstance();
+                                    final preferences =
+                                        await Preferences.getInstance();
                                     preferences.setLanguageSeed('en');
                                     setState(() {
                                       language = 'en';
@@ -137,14 +141,16 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context).activeVibrations,
+                                          StateContainer.of(context)
+                                              .activeVibrations,
                                         );
                                     seed = AppSeeds.generateSeed();
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                       languageCode: 'fr',
                                     );
-                                    final preferences = await Preferences.getInstance();
+                                    final preferences =
+                                        await Preferences.getInstance();
                                     preferences.setLanguageSeed('fr');
                                     setState(() {
                                       language = 'fr';

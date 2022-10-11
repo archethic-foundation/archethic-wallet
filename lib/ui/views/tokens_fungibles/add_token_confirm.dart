@@ -60,11 +60,15 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) {
       _doAdd();
     });
 
-    _sendTxSub = EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) {
+    _sendTxSub = EventTaxiImpl.singleton()
+        .registerTo<TransactionSendEvent>()
+        .listen((TransactionSendEvent event) {
       final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
@@ -162,7 +166,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -258,7 +263,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
-                          activeVibrations: StateContainer.of(context).activeVibrations,
+                          activeVibrations:
+                              StateContainer.of(context).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
@@ -297,7 +303,11 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
       final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .name!,
       );
       final service = 'archethic-wallet-$nameEncoded';
       final index = (await sl.get<ApiService>().getTransactionIndex(
@@ -305,7 +315,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
               ))
           .chainLength!;
 
-      final transaction = Transaction(type: 'token', data: Transaction.initData());
+      final transaction =
+          Transaction(type: 'token', data: Transaction.initData());
       final content = tokenToJsonForTxDataContent(
         Token(
           name: widget.tokenName,
@@ -316,7 +327,9 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
         ),
       );
       transaction.setContent(content);
-      final signedTx = keychain.buildTransaction(transaction, service, index).originSign(originPrivateKey);
+      final signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
 
       var transactionStatus = TransactionStatus();
 
@@ -383,10 +396,12 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
     var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations = event.data!['transactionConfirmed']['nbConfirmations'];
+        nbConfirmations =
+            event.data!['transactionConfirmed']['nbConfirmations'];
       }
       if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations = event.data!['transactionConfirmed']['maxConfirmations'];
+        maxConfirmations =
+            event.data!['transactionConfirmed']['maxConfirmations'];
       }
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(

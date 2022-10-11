@@ -72,7 +72,9 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                         ),
                       ),
                       label: Text(
-                        _seedObscured && widget.obscureSeed ? '•' * 6 : entry.value,
+                        _seedObscured && widget.obscureSeed
+                            ? '•' * 6
+                            : entry.value,
                         style: theme.textStyleSize12W400Primary,
                       ),
                     ),

@@ -28,7 +28,8 @@ class AuthentificationMethodDialog {
     for (final value in AuthMethod.values) {
       var displayed = false;
       if (value != AuthMethod.ledger) {
-        if ((hasBiometrics && value == AuthMethod.biometrics) || value != AuthMethod.biometrics) {
+        if ((hasBiometrics && value == AuthMethod.biometrics) ||
+            value != AuthMethod.biometrics) {
           displayed = true;
         }
       }
@@ -66,7 +67,9 @@ class AuthentificationMethodDialog {
               onSelected: (value) async {
                 switch (value.value) {
                   case AuthMethod.biometrics:
-                    final auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
+                    final auth = await sl
+                        .get<BiometricUtil>()
+                        .authenticateWithBiometrics(
                           context,
                           localizations.unlockBiometrics,
                         );
@@ -80,7 +83,8 @@ class AuthentificationMethodDialog {
                       );
                     } else {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
+                      await getDialog(
+                          context, ref, hasBiometrics, curAuthMethod);
                     }
                     break;
                   case AuthMethod.pin:
@@ -95,9 +99,11 @@ class AuthentificationMethodDialog {
                     );
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
+                      await getDialog(
+                          context, ref, hasBiometrics, curAuthMethod);
                     } else {
-                      preferences.setAuthMethod(const AuthenticationMethod(AuthMethod.pin));
+                      preferences.setAuthMethod(
+                          const AuthenticationMethod(AuthMethod.pin));
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
                         (Route<dynamic> route) => false,
@@ -110,7 +116,11 @@ class AuthentificationMethodDialog {
                       MaterialPageRoute(
                         builder: (BuildContext context) {
                           return SetPassword(
-                            name: StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name,
+                            name: StateContainer.of(context)
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
+                                .name,
                             seed: seed,
                           );
                         },
@@ -119,7 +129,8 @@ class AuthentificationMethodDialog {
 
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
+                      await getDialog(
+                          context, ref, hasBiometrics, curAuthMethod);
                     } else {
                       preferences.setAuthMethod(
                         const AuthenticationMethod(AuthMethod.password),
@@ -140,7 +151,8 @@ class AuthentificationMethodDialog {
                     );
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
-                      await getDialog(context, ref, hasBiometrics, curAuthMethod);
+                      await getDialog(
+                          context, ref, hasBiometrics, curAuthMethod);
                     } else {
                       preferences.setAuthMethod(
                         const AuthenticationMethod(

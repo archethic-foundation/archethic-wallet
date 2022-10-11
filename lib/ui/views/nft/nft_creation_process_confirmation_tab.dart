@@ -9,17 +9,19 @@ class _NFTCreationProcessConfirmationTab extends StatefulWidget {
   final int tabActiveIndex;
 
   @override
-  State<_NFTCreationProcessConfirmationTab> createState() => _NFTCreationProcessConfirmationTabState();
+  State<_NFTCreationProcessConfirmationTab> createState() =>
+      _NFTCreationProcessConfirmationTabState();
 }
 
-class _NFTCreationProcessConfirmationTabState extends State<_NFTCreationProcessConfirmationTab> {
+class _NFTCreationProcessConfirmationTabState
+    extends State<_NFTCreationProcessConfirmationTab> {
   @override
   Widget build(BuildContext context) {
     // TODO(reddwarf03): refacto code with Riverpod
     return const SizedBox();
   }
 }
-  /*
+/*
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
 

@@ -18,10 +18,12 @@ class IntroNewWalletGetFirstInfos extends ConsumerStatefulWidget {
   const IntroNewWalletGetFirstInfos({super.key});
 
   @override
-  ConsumerState<IntroNewWalletGetFirstInfos> createState() => _IntroNewWalletDisclaimerState();
+  ConsumerState<IntroNewWalletGetFirstInfos> createState() =>
+      _IntroNewWalletDisclaimerState();
 }
 
-class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirstInfos> {
+class _IntroNewWalletDisclaimerState
+    extends ConsumerState<IntroNewWalletGetFirstInfos> {
   FocusNode nameFocusNode = FocusNode();
   TextEditingController nameController = TextEditingController();
   String? nameError;
@@ -48,7 +50,8 @@ class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirs
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -91,7 +94,8 @@ class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirs
                                 height: 30,
                               ),
                               AutoSizeText(
-                                localizations.introNewWalletGetFirstInfosWelcome,
+                                localizations
+                                    .introNewWalletGetFirstInfosWelcome,
                                 style: theme.textStyleSize20W700Primary,
                                 textAlign: TextAlign.left,
                               ),
@@ -99,7 +103,8 @@ class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirs
                                 height: 30,
                               ),
                               AutoSizeText(
-                                localizations.introNewWalletGetFirstInfosNameRequest,
+                                localizations
+                                    .introNewWalletGetFirstInfosNameRequest,
                                 style: theme.textStyleSize16W600Primary,
                                 textAlign: TextAlign.left,
                               ),
@@ -129,7 +134,8 @@ class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirs
                                   height: 40,
                                 ),
                               AutoSizeText(
-                                localizations.introNewWalletGetFirstInfosNameInfos,
+                                localizations
+                                    .introNewWalletGetFirstInfosNameInfos,
                                 style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.justify,
                               ),
@@ -157,7 +163,8 @@ class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirs
                         nameError = '';
                         if (nameController.text.isEmpty) {
                           setState(() {
-                            nameError = localizations.introNewWalletGetFirstInfosNameBlank;
+                            nameError = localizations
+                                .introNewWalletGetFirstInfosNameBlank;
                             FocusScope.of(context).requestFocus(nameFocusNode);
                           });
                         } else {
@@ -165,7 +172,8 @@ class _IntroNewWalletDisclaimerState extends ConsumerState<IntroNewWalletGetFirs
                             context,
                             ref,
                             localizations.newAccount,
-                            localizations.newAccountConfirmation.replaceAll('%1', nameController.text),
+                            localizations.newAccountConfirmation
+                                .replaceAll('%1', nameController.text),
                             localizations.yes,
                             () async {
                               Navigator.of(context).pushNamed(

@@ -34,7 +34,8 @@ class ReceiveSheet extends ConsumerWidget {
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -109,7 +110,8 @@ class ReceiveSheet extends ConsumerWidget {
                                         margin: const EdgeInsets.all(8),
                                         child: AutoSizeText(
                                           localizations.addressInfos,
-                                          style: theme.textStyleSize16W700Primary,
+                                          style:
+                                              theme.textStyleSize16W700Primary,
                                         ),
                                       ),
                                       Container(
@@ -118,7 +120,8 @@ class ReceiveSheet extends ConsumerWidget {
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: QrImage(
                                           foregroundColor: theme.text,
@@ -138,28 +141,32 @@ class ReceiveSheet extends ConsumerWidget {
                                                 address!.substring(0, 16),
                                                 language.getLocaleString(),
                                               ),
-                                              style: theme.textStyleSize12W100Primary,
+                                              style: theme
+                                                  .textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(16, 32),
                                                 language.getLocaleString(),
                                               ),
-                                              style: theme.textStyleSize12W100Primary,
+                                              style: theme
+                                                  .textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(32, 48),
                                                 language.getLocaleString(),
                                               ),
-                                              style: theme.textStyleSize12W100Primary,
+                                              style: theme
+                                                  .textStyleSize12W100Primary,
                                             ),
                                             AutoSizeText(
                                               CaseChange.toUpperCase(
                                                 address!.substring(48),
                                                 language.getLocaleString(),
                                               ),
-                                              style: theme.textStyleSize12W100Primary,
+                                              style: theme
+                                                  .textStyleSize12W100Primary,
                                             ),
                                           ],
                                         ),
@@ -222,7 +229,8 @@ class ReceiveSheet extends ConsumerWidget {
                       final textToShare = address!.toUpperCase();
                       Share.share(
                         textToShare,
-                        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                        sharePositionOrigin:
+                            box!.localToGlobal(Offset.zero) & box.size,
                       );
                     },
                   ),

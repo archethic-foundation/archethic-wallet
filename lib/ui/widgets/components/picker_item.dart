@@ -106,7 +106,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                           else
                             SizedBox(
                               height: 24,
-                              child: widget.pickerItems![index].iconColor == null
+                              child: widget.pickerItems![index].iconColor ==
+                                      null
                                   ? Image.asset(pickerItem.icon!)
                                   : Image.asset(
                                       pickerItem.icon!,
@@ -125,7 +126,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                     pickerItem.label,
                                     style: widget.pickerItems![index].enabled
                                         ? theme.textStyleSize14W600Primary
-                                        : theme.textStyleSize14W600PrimaryDisabled,
+                                        : theme
+                                            .textStyleSize14W600PrimaryDisabled,
                                   ),
                                 ),
                                 if (widget.pickerItems![index].subLabel != null)
@@ -135,7 +137,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                       widget.pickerItems![index].subLabel!,
                                       style: widget.pickerItems![index].enabled
                                           ? theme.textStyleSize12W400Primary
-                                          : theme.textStyleSize12W400PrimaryDisabled,
+                                          : theme
+                                              .textStyleSize12W400PrimaryDisabled,
                                     ),
                                   )
                                 else
@@ -153,7 +156,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                             Container(),
                         ],
                       ),
-                      if (pickerItem.description != null) const SizedBox(height: 5),
+                      if (pickerItem.description != null)
+                        const SizedBox(height: 5),
                       if (pickerItem.description != null)
                         Text(
                           pickerItem.description!,

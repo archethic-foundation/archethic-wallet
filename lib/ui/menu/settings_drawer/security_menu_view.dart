@@ -52,7 +52,8 @@ class SecurityMenuView extends ConsumerWidget {
                         ),
                       ),
                       //Security Header Text
-                      Text(localizations.securityHeader, style: theme.textStyleSize24W700EquinoxPrimary),
+                      Text(localizations.securityHeader,
+                          style: theme.textStyleSize24W700EquinoxPrimary),
                     ],
                   ),
                 ],
@@ -75,7 +76,8 @@ class SecurityMenuView extends ConsumerWidget {
                             top: 15,
                             bottom: 15,
                           ),
-                          child: Text(localizations.preferences, style: theme.textStyleSize20W700EquinoxPrimary),
+                          child: Text(localizations.preferences,
+                              style: theme.textStyleSize20W700EquinoxPrimary),
                         ),
                       ),
                       /* const _SettingsListItem.spacer(),
@@ -105,7 +107,8 @@ class SecurityMenuView extends ConsumerWidget {
                         icon: 'assets/icons/menu/remove-wallet.svg',
                         iconColor: Colors.red,
                         onPressed: () {
-                          final language = ref.read(LanguageProviders.selectedLanguage);
+                          final language =
+                              ref.read(LanguageProviders.selectedLanguage);
 
                           AppDialogs.showConfirmDialog(
                               context,
@@ -115,7 +118,8 @@ class SecurityMenuView extends ConsumerWidget {
                                 language.getLocaleString(),
                               ),
                               localizations.removeWalletDetail,
-                              localizations.removeWalletAction.toUpperCase(), () {
+                              localizations.removeWalletAction.toUpperCase(),
+                              () {
                             // Show another confirm dialog
                             AppDialogs.showConfirmDialog(
                               context,
@@ -127,7 +131,9 @@ class SecurityMenuView extends ConsumerWidget {
                                 await StateContainer.of(context).logOut();
                                 // TODO(Chralu): Déplacer la selection du theme par défaut dans le UseCase `logout`
                                 await ref.read(
-                                  ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+                                  ThemeProviders.selectTheme(
+                                          theme: ThemeOptions.dark)
+                                      .future,
                                 );
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                   '/',
@@ -190,7 +196,8 @@ class _LockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
+    final lock =
+        ref.watch(preferenceProvider.select((settings) => settings.lock));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withDefaultValue(
@@ -219,8 +226,10 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final lock = ref.watch(preferenceProvider.select((settings) => settings.lock));
-    final lockTimeout = ref.watch(preferenceProvider.select((settings) => settings.lockTimeout));
+    final lock =
+        ref.watch(preferenceProvider.select((settings) => settings.lock));
+    final lockTimeout = ref
+        .watch(preferenceProvider.select((settings) => settings.lockTimeout));
     final settingsNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withDefaultValue(
@@ -250,7 +259,8 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final pinPadShuffle = ref.watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
+    final pinPadShuffle = ref
+        .watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
     final authenticationMethod = ref.watch(
       preferenceProvider.select((settings) => settings.authenticationMethod),
     );

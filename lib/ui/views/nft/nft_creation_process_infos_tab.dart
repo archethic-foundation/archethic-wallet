@@ -10,7 +10,7 @@ class _NFTCreationProcessInfosTab extends StatelessWidget {
     return const SizedBox();
   }
 }
-  /*
+/*
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);
 

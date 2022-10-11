@@ -61,7 +61,9 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   }
 
   void _registerBus() {
-    _otpReceiveSub = EventTaxiImpl.singleton().registerTo<OTPReceiveEvent>().listen((OTPReceiveEvent event) {
+    _otpReceiveSub = EventTaxiImpl.singleton()
+        .registerTo<OTPReceiveEvent>()
+        .listen((OTPReceiveEvent event) {
       setState(() {
         buttonNFCLabel = 'get my OTP via NFC';
       });
@@ -83,7 +85,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
     final vault = await Vault.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
     final yubikeyClientID = vault.getYubikeyClientID();
-    verificationResponse = await YubicoService().verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
+    verificationResponse = await YubicoService()
+        .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
     switch (verificationResponse.status) {
       case 'BAD_OTP':
         UIUtil.showSnackbar(
@@ -234,7 +237,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.10,
@@ -285,10 +289,12 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context).activeVibrations,
+                                      StateContainer.of(context)
+                                          .activeVibrations,
                                     );
                                 setState(() {
-                                  buttonNFCLabel = localizations.yubikeyConnectHoldNearDevice;
+                                  buttonNFCLabel = localizations
+                                      .yubikeyConnectHoldNearDevice;
                                 });
                                 await _tagRead();
                               },
@@ -328,10 +334,12 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                               },
                               onChanged: (String value) async {
                                 if (value.trim().length == 44) {
-                                  EventTaxiImpl.singleton().fire(OTPReceiveEvent(otp: value));
+                                  EventTaxiImpl.singleton()
+                                      .fire(OTPReceiveEvent(otp: value));
                                 }
                               },
-                              inputFormatters: <LengthLimitingTextInputFormatter>[
+                              inputFormatters: <
+                                  LengthLimitingTextInputFormatter>[
                                 LengthLimitingTextInputFormatter(45),
                               ],
                               keyboardType: TextInputType.text,
@@ -341,9 +349,11 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                                 onPressed: () {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
-                                        StateContainer.of(context).activeVibrations,
+                                        StateContainer.of(context)
+                                            .activeVibrations,
                                       );
-                                  Clipboard.getData('text/plain').then((ClipboardData? data) async {
+                                  Clipboard.getData('text/plain')
+                                      .then((ClipboardData? data) async {
                                     if (data == null || data.text == null) {
                                       return;
                                     }

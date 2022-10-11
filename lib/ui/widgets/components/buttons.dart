@@ -133,7 +133,8 @@ class AppButton {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize18W600EquinoxMainButtonLabelDisabled,
+                      style: theme
+                          .textStyleSize18W600EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -160,7 +161,8 @@ class AppButton {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize18W600EquinoxMainButtonLabelDisabled,
+                      style: theme
+                          .textStyleSize18W600EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -297,7 +299,8 @@ class AppButton {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
+                      style: theme
+                          .textStyleSize12W400EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -323,7 +326,8 @@ class AppButton {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
+                      style: theme
+                          .textStyleSize12W400EquinoxMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),

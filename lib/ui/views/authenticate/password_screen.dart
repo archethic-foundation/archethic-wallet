@@ -165,7 +165,9 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
                       obscureText: !enterPasswordVisible!,
                       style: theme.textStyleSize16W700Primary,
                       suffixButton: TextFieldButton(
-                        icon: enterPasswordVisible! ? Icons.visibility : Icons.visibility_off,
+                        icon: enterPasswordVisible!
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         onPressed: () {
                           setState(() {
                             enterPasswordVisible = !enterPasswordVisible!;

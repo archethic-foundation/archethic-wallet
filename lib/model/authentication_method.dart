@@ -4,7 +4,14 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
 
-enum AuthMethod { pin, biometrics, biometricsUniris, yubikeyWithYubicloud, ledger, password }
+enum AuthMethod {
+  pin,
+  biometrics,
+  biometricsUniris,
+  yubikeyWithYubicloud,
+  ledger,
+  password
+}
 
 /// Represent the available authentication methods our app supports
 @immutable

@@ -192,7 +192,8 @@ class SlidingCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(15)),
               child: assetName == null
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width,

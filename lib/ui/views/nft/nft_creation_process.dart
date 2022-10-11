@@ -36,7 +36,8 @@ class NFTCreationProcess extends StatefulWidget {
   State<NFTCreationProcess> createState() => _NFTCreationProcessState();
 }
 
-class _NFTCreationProcessState extends State<NFTCreationProcess> with TickerProviderStateMixin {
+class _NFTCreationProcessState extends State<NFTCreationProcess>
+    with TickerProviderStateMixin {
   PageController? pageController;
   int currentPage = 0;
 
@@ -74,16 +75,19 @@ class _NFTCreationProcessState extends State<NFTCreationProcess> with TickerProv
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   FocusNode nftPropertyNameStoreFocusNode = FocusNode();
-  TextEditingController nftPropertyNameStoreController = TextEditingController();
+  TextEditingController nftPropertyNameStoreController =
+      TextEditingController();
   FocusNode nftPropertyIdCardFocusNode = FocusNode();
   TextEditingController nftPropertyIdCardController = TextEditingController();
   FocusNode nftPropertyExpiryDateFocusNode = FocusNode();
-  TextEditingController nftPropertyxpiryDateController = TextEditingController();
+  TextEditingController nftPropertyxpiryDateController =
+      TextEditingController();
 
   FocusNode nftPropertyAuthorFocusNode = FocusNode();
   TextEditingController nftPropertyAuthorController = TextEditingController();
   FocusNode nftPropertyCompositorFocusNode = FocusNode();
-  TextEditingController nftPropertyCompositorController = TextEditingController();
+  TextEditingController nftPropertyCompositorController =
+      TextEditingController();
 /*
   @override
   void initState() {
@@ -206,7 +210,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess> with TickerProv
     return const SizedBox();
   }
 }
-    /*
+/*
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(

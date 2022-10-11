@@ -26,19 +26,23 @@ class BalanceIndicatorWidget extends ConsumerStatefulWidget {
   final bool displaySwitchButton;
 
   @override
-  ConsumerState<BalanceIndicatorWidget> createState() => _BalanceIndicatorWidgetState();
+  ConsumerState<BalanceIndicatorWidget> createState() =>
+      _BalanceIndicatorWidgetState();
 }
 
 enum PrimaryCurrency { fiat, native }
 
-class _BalanceIndicatorWidgetState extends ConsumerState<BalanceIndicatorWidget> {
+class _BalanceIndicatorWidgetState
+    extends ConsumerState<BalanceIndicatorWidget> {
   PrimaryCurrency primaryCurrency = PrimaryCurrency.native;
 
   @override
   void initState() {
     super.initState();
     if (widget.primaryCurrency!.primaryCurrency.name ==
-        const PrimaryCurrencySetting(AvailablePrimaryCurrency.native).primaryCurrency.name) {
+        const PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
+            .primaryCurrency
+            .name) {
       primaryCurrency = PrimaryCurrency.native;
     } else {
       primaryCurrency = PrimaryCurrency.fiat;
@@ -112,7 +116,11 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
+    final accountSelectedBalance = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .balance;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return RichText(
@@ -122,19 +130,25 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
           if (primary == false)
             TextSpan(
               text: '(',
-              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
+              style: primary
+                  ? theme.textStyleSize16W100Primary
+                  : theme.textStyleSize14W100Primary,
             ),
           TextSpan(
             text: CurrencyUtil.getConvertedAmount(
               currency.currency.name,
               accountSelectedBalance!.fiatCurrencyValue!,
             ),
-            style: primary ? theme.textStyleSize16W700Primary : theme.textStyleSize14W700Primary,
+            style: primary
+                ? theme.textStyleSize16W700Primary
+                : theme.textStyleSize14W700Primary,
           ),
           if (primary == false)
             TextSpan(
               text: ')',
-              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
+              style: primary
+                  ? theme.textStyleSize16W100Primary
+                  : theme.textStyleSize14W100Primary,
             ),
         ],
       ),
@@ -149,7 +163,11 @@ class _BalanceIndicatorNative extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
+    final accountSelectedBalance = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .balance;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return RichText(
@@ -159,16 +177,23 @@ class _BalanceIndicatorNative extends ConsumerWidget {
           if (primary == false)
             TextSpan(
               text: '(',
-              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
+              style: primary
+                  ? theme.textStyleSize16W100Primary
+                  : theme.textStyleSize14W100Primary,
             ),
           TextSpan(
-            text: '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
-            style: primary ? theme.textStyleSize16W700Primary : theme.textStyleSize14W700Primary,
+            text:
+                '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
+            style: primary
+                ? theme.textStyleSize16W700Primary
+                : theme.textStyleSize14W700Primary,
           ),
           if (primary == false)
             TextSpan(
               text: ')',
-              style: primary ? theme.textStyleSize16W100Primary : theme.textStyleSize14W100Primary,
+              style: primary
+                  ? theme.textStyleSize16W100Primary
+                  : theme.textStyleSize14W100Primary,
             ),
         ],
       ),

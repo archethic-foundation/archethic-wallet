@@ -31,14 +31,17 @@ List<Locale> _availableLocales(_AvailableLocalesRef ref) {
   ];
 }
 
-final _defaultLocaleProvider = StateProvider<Locale>((ref) => const Locale('en', 'US'));
+final _defaultLocaleProvider =
+    StateProvider<Locale>((ref) => const Locale('en', 'US'));
 
 @riverpod
 Future<void> _selectLanguage(
   _SelectLanguageRef ref, {
   required AvailableLanguage language,
 }) async {
-  await ref.read(SettingsProviders.localSettingsRepository).setLanguage(LanguageSetting(language));
+  await ref
+      .read(SettingsProviders.localSettingsRepository)
+      .setLanguage(LanguageSetting(language));
   ref.invalidate(_selectedLanguageProvider);
 }
 

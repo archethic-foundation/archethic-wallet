@@ -64,7 +64,8 @@ class SettingsNotifier extends StateNotifier<Settings> {
   }
 }
 
-final preferenceProvider = StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
+final preferenceProvider =
+    StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
   final preferences = ref.read(_localSettingsRepositoryProvider);
 
   return SettingsNotifier(

@@ -37,7 +37,8 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
               top: MediaQuery.of(context).size.height * 0.075,
@@ -166,7 +167,8 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                       localizations.understandButton,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/intro_backup', arguments: name);
+                        Navigator.of(context)
+                            .pushNamed('/intro_backup', arguments: name);
                       },
                     ),
                   ],

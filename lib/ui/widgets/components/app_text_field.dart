@@ -140,7 +140,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                 },
                 onChanged: widget.onChanged,
                 style: widget.style,
-                decoration: widget.prefixButton == null && widget.suffixButton == null
+                decoration: widget.prefixButton == null &&
+                        widget.suffixButton == null
                     ? InputDecoration(
                         labelText: widget.labelText ?? '',
                         labelStyle: theme.textStyleSize16W400Primary60,
@@ -152,12 +153,14 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                             labelStyle: theme.textStyleSize16W400Primary60,
                             prefixIcon: const SizedBox(width: 48, height: 48),
                           )
-                        : widget.prefixButton == null && widget.suffixButton != null
+                        : widget.prefixButton == null &&
+                                widget.suffixButton != null
                             ? InputDecoration(
                                 contentPadding: const EdgeInsets.only(left: 48),
                                 labelText: widget.labelText ?? '',
                                 labelStyle: theme.textStyleSize16W400Primary60,
-                                suffixIcon: const SizedBox(width: 48, height: 48),
+                                suffixIcon:
+                                    const SizedBox(width: 48, height: 48),
                               )
                             : InputDecoration(
                                 labelText: widget.labelText ?? '',
@@ -166,8 +169,10 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                                   minWidth: 48,
                                   maxHeight: 48,
                                 ),
-                                prefixIcon: const SizedBox(width: 48, height: 48),
-                                suffixIcon: const SizedBox(width: 48, height: 48),
+                                prefixIcon:
+                                    const SizedBox(width: 48, height: 48),
+                                suffixIcon:
+                                    const SizedBox(width: 48, height: 48),
                               ),
               ),
               Positioned(
@@ -186,28 +191,32 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      if (widget.fadePrefixOnCondition != null && widget.prefixButton != null)
+                      if (widget.fadePrefixOnCondition != null &&
+                          widget.prefixButton != null)
                         AnimatedCrossFade(
                           duration: Duration(
                             milliseconds: widget.buttonFadeDurationMs!,
                           ),
                           firstChild: widget.prefixButton!,
                           secondChild: const SizedBox(height: 48, width: 48),
-                          crossFadeState:
-                              widget.prefixShowFirstCondition! ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          crossFadeState: widget.prefixShowFirstCondition!
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
                         )
                       else
                         widget.prefixButton ?? const SizedBox(),
                       // Second (suffix) button
-                      if (widget.fadeSuffixOnCondition != null && widget.suffixButton != null)
+                      if (widget.fadeSuffixOnCondition != null &&
+                          widget.suffixButton != null)
                         AnimatedCrossFade(
                           duration: Duration(
                             milliseconds: widget.buttonFadeDurationMs!,
                           ),
                           firstChild: widget.suffixButton!,
                           secondChild: const SizedBox(height: 48, width: 48),
-                          crossFadeState:
-                              widget.suffixShowFirstCondition! ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          crossFadeState: widget.suffixShowFirstCondition!
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
                         )
                       else
                         widget.suffixButton ?? const SizedBox()

@@ -8,7 +8,9 @@ part 'currency.g.dart';
 @Riverpod(keepAlive: true)
 AvailableCurrency _selectedCurrency(_SelectedCurrencyRef ref) {
   final selectedLocale = ref.watch(LanguageProviders.selectedLocale);
-  return ref.read(SettingsProviders.localSettingsRepository).getCurrency(selectedLocale);
+  return ref
+      .read(SettingsProviders.localSettingsRepository)
+      .getCurrency(selectedLocale);
 }
 
 @Riverpod(keepAlive: true)
@@ -16,7 +18,9 @@ Future<void> _selectCurrency(
   _SelectCurrencyRef ref, {
   required AvailableCurrency currency,
 }) async {
-  await ref.read(SettingsProviders.localSettingsRepository).setCurrency(currency);
+  await ref
+      .read(SettingsProviders.localSettingsRepository)
+      .setCurrency(currency);
   ref.invalidate(_selectedCurrencyProvider);
 }
 

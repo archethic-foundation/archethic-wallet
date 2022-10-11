@@ -31,10 +31,12 @@ class IntroConfigureSecurity extends ConsumerStatefulWidget {
   final String? seed;
 
   @override
-  ConsumerState<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
+  ConsumerState<IntroConfigureSecurity> createState() =>
+      _IntroConfigureSecurityState();
 }
 
-class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity> {
+class _IntroConfigureSecurityState
+    extends ConsumerState<IntroConfigureSecurity> {
   PickerItem? _accessModesSelected;
   bool? animationOpen;
 
@@ -66,7 +68,8 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.075,
             ),
@@ -79,7 +82,8 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                         Row(
                           children: <Widget>[
                             Container(
-                              margin: const EdgeInsetsDirectional.only(start: 15),
+                              margin:
+                                  const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -139,21 +143,26 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                                   _accessModesSelected = value;
                                 });
                                 if (_accessModesSelected == null) return;
-                                final authMethod = _accessModesSelected!.value as AuthMethod;
+                                final authMethod =
+                                    _accessModesSelected!.value as AuthMethod;
                                 var authenticated = false;
                                 switch (authMethod) {
                                   case AuthMethod.biometrics:
-                                    authenticated = await sl.get<BiometricUtil>().authenticateWithBiometrics(
+                                    authenticated = await sl
+                                        .get<BiometricUtil>()
+                                        .authenticateWithBiometrics(
                                           context,
                                           localizations.unlockBiometrics,
                                         );
                                     break;
                                   case AuthMethod.password:
-                                    authenticated = await Navigator.of(context).push(
+                                    authenticated =
+                                        await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SetPassword(
-                                            header: localizations.setPasswordHeader,
+                                            header:
+                                                localizations.setPasswordHeader,
                                             description: AppLocalization.of(
                                               context,
                                             )!
@@ -166,7 +175,8 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                                     );
                                     break;
                                   case AuthMethod.pin:
-                                    authenticated = await Navigator.of(context).push(
+                                    authenticated =
+                                        await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return const PinScreen(
@@ -177,12 +187,15 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                                     );
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:
-                                    authenticated = await Navigator.of(context).push(
+                                    authenticated =
+                                        await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return SetYubikey(
-                                            header: localizations.seYubicloudHeader,
-                                            description: localizations.seYubicloudDescription,
+                                            header:
+                                                localizations.seYubicloudHeader,
+                                            description: localizations
+                                                .seYubicloudDescription,
                                           );
                                         },
                                       ),
@@ -197,7 +210,8 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                                   await Preferences.initWallet(
                                     AuthenticationMethod(authMethod),
                                   );
-                                  EventTaxiImpl.singleton().fire(AuthenticatedEvent());
+                                  EventTaxiImpl.singleton()
+                                      .fire(AuthenticatedEvent());
                                 }
                               },
                             ),

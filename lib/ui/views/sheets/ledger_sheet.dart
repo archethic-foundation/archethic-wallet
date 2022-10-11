@@ -59,10 +59,12 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
 
       switch (method) {
         case 'getPubKey':
-          response = 'Public Key : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
+          response =
+              'Public Key : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         case 'getArchAddress':
-          response = 'Address : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
+          response =
+              'Address : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         case 'signTxn':
           /*String responseHex = hex.encode(event.apdu!);
@@ -73,7 +75,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
             String originType = rawTxn.substring(offset, offset + 2);
             offset += 2;
             String pubKey = rawTxn.substring(offset, rawTxn.length);*/
-          response = 'Transaction : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
+          response =
+              'Transaction : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         default:
       }
@@ -105,7 +108,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           const SheetHeader(title: 'Ledger - Tests'),
@@ -206,7 +210,9 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                           method = 'getPubKey';
                           info = '';
                         });
-                        await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());
+                        await sl
+                            .get<LedgerNanoSImpl>()
+                            .connectLedger(getPubKeyAPDU());
                       },
                     ),
                     AppButton.buildAppButton(
@@ -222,7 +228,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                           info = '';
                           labelResponse = '';
                         });
-                        if (enterPayloadController!.text.trim() == '' || isHex(enterPayloadController!.text) == false) {
+                        if (enterPayloadController!.text.trim() == '' ||
+                            isHex(enterPayloadController!.text) == false) {
                           info = 'The payload is not valid.';
                         } else {
                           final getArchAddress = transport(
@@ -235,7 +242,9 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                             ),
                           );
                           log('getArchAddress: ${uint8ListToHex(getArchAddress)}');
-                          await sl.get<LedgerNanoSImpl>().connectLedger(getArchAddress);
+                          await sl
+                              .get<LedgerNanoSImpl>()
+                              .connectLedger(getArchAddress);
                         }
                       },
                     ),
@@ -252,7 +261,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                           info = '';
                           labelResponse = '';
                         });
-                        if (enterPayloadController!.text.trim() == '' || isHex(enterPayloadController!.text) == false) {
+                        if (enterPayloadController!.text.trim() == '' ||
+                            isHex(enterPayloadController!.text) == false) {
                           info = 'The payload is not valid.';
                         } else {
                           final signTxn = transport(
@@ -264,7 +274,9 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                               hex.decode(enterPayloadController!.text),
                             ),
                           );
-                          await sl.get<LedgerNanoSImpl>().connectLedger(signTxn);
+                          await sl
+                              .get<LedgerNanoSImpl>()
+                              .connectLedger(signTxn);
                         }
                       },
                     ),

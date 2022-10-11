@@ -36,7 +36,11 @@ class BalanceInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelectedBalance = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance;
+    final accountSelectedBalance = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .balance;
 
     return GestureDetector(
       child: SizedBox(
@@ -51,7 +55,10 @@ class BalanceInfos extends ConsumerWidget {
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
-                  child: StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
+                  child: StateContainer.of(context)
+                              .curPrimaryCurrency
+                              .primaryCurrency
+                              .name ==
                           const PrimaryCurrencySetting(
                             AvailablePrimaryCurrency.native,
                           ).primaryCurrency.name
@@ -61,7 +68,9 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel(),
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
@@ -132,8 +141,13 @@ class BalanceInfos extends ConsumerWidget {
         details.globalPosition.dx,
         details.globalPosition.dy,
       ),
-      items: StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
-              const PrimaryCurrencySetting(AvailablePrimaryCurrency.native).primaryCurrency.name
+      items: StateContainer.of(context)
+                  .curPrimaryCurrency
+                  .primaryCurrency
+                  .name ==
+              const PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
+                  .primaryCurrency
+                  .name
           ? [
               PopupMenuItem(
                 value: '1',

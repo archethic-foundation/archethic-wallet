@@ -50,10 +50,12 @@ class ThemeDialog {
               pickerItems: pickerItemsList,
               selectedIndex: curThemeSetting.getIndex(),
               onSelected: (value) async {
-                final selectedThemeSettings = ThemeSetting(value.value as ThemeOptions);
+                final selectedThemeSettings =
+                    ThemeSetting(value.value as ThemeOptions);
                 if (curThemeSetting != selectedThemeSettings) {
                   preferences.setTheme(selectedThemeSettings);
-                  await StateContainer.of(context).updateTheme(selectedThemeSettings);
+                  await StateContainer.of(context)
+                      .updateTheme(selectedThemeSettings);
                 }
                 Navigator.pop(context, selectedThemeSettings);
               },
@@ -66,7 +68,8 @@ class ThemeDialog {
 }
 
 extension ThemePickerItemExt on PickerItem {
-  static PickerItem fromThemeOption(BuildContext context, ThemeOptions themeOption) {
+  static PickerItem fromThemeOption(
+      BuildContext context, ThemeOptions themeOption) {
     final themeSetting = ThemeSetting(themeOption);
     if (themeOption == ThemeOptions.flat ||
         themeOption == ThemeOptions.byzantineVioletFlat ||

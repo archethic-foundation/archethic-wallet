@@ -44,7 +44,9 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   StreamSubscription<NftFileAddEvent>? _nftFileAddEventSub;
 
   void _registerBus() {
-    _nftFileAddEventSub = EventTaxiImpl.singleton().registerTo<NftFileAddEvent>().listen((NftFileAddEvent event) {
+    _nftFileAddEventSub = EventTaxiImpl.singleton()
+        .registerTo<NftFileAddEvent>()
+        .listen((NftFileAddEvent event) {
       token!.tokenProperties!.addAll(event.tokenProperties!);
       setState(() {});
     });
@@ -82,7 +84,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     return const SizedBox();
   }
 }
-   /* 
+/* 
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.theme);

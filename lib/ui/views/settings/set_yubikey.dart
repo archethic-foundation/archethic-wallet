@@ -82,7 +82,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
         ),
         child: TapOutsideUnfocus(
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075,
@@ -95,7 +96,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                         Row(
                           children: <Widget>[
                             Container(
-                              margin: const EdgeInsetsDirectional.only(start: 15),
+                              margin:
+                                  const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -216,7 +218,9 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           controller: _clientIDController,
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
-          inputFormatters: <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(10)],
+          inputFormatters: <LengthLimitingTextInputFormatter>[
+            LengthLimitingTextInputFormatter(10)
+          ],
           onChanged: (String text) {
             setState(() {
               _clientIDValidationText = '';
@@ -246,7 +250,9 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           controller: _clientAPIKeyController,
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
-          inputFormatters: <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(40)],
+          inputFormatters: <LengthLimitingTextInputFormatter>[
+            LengthLimitingTextInputFormatter(40)
+          ],
           onChanged: (String text) {
             setState(() {
               _clientAPIKeyValidationText = '';
@@ -277,7 +283,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
       if (_clientAPIKeyController!.text.isEmpty) {
         if (mounted) {
           setState(() {
-            _clientIDValidationText = AppLocalization.of(context)!.passwordBlank;
+            _clientIDValidationText =
+                AppLocalization.of(context)!.passwordBlank;
           });
         }
       } else {

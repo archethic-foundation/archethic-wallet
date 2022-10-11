@@ -85,10 +85,12 @@ class CustomizationMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
-                        defaultMethod: StateContainer.of(context).curPrimaryCurrency,
+                        defaultMethod:
+                            StateContainer.of(context).curPrimaryCurrency,
                         icon: 'assets/icons/menu/primary-currency.svg',
                         iconColor: theme.iconDrawer!,
-                        onPressed: () => PrimaryCurrencyDialog.getDialog(context, ref),
+                        onPressed: () =>
+                            PrimaryCurrencyDialog.getDialog(context, ref),
                       ),
                       const _SettingsListItem.spacer(),
                       const _LanguageSettingsListItem(),
@@ -101,9 +103,15 @@ class CustomizationMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       // TODO(Chralu): mettre cette expression booleenne dans un provider DeviceCapabilities.notifications
-                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         const _SettingsListItem.spacer(),
-                      if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true))
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         const _ActiveNotificationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ActiveVibrationsSettingsListItem(),
@@ -118,7 +126,10 @@ class CustomizationMenuView extends ConsumerWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
+                          colors: <Color>[
+                            theme.drawerBackground!,
+                            theme.backgroundDark00!
+                          ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),
                         ),
@@ -192,7 +203,8 @@ class _ThemeSettingsListItem extends ConsumerWidget {
       icon: 'assets/icons/menu/theme.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
-        final pickedTheme = await ThemeDialog.getDialog(context, ref, ThemeSetting(themeOption));
+        final pickedTheme = await ThemeDialog.getDialog(
+            context, ref, ThemeSetting(themeOption));
         if (pickedTheme == null) return;
 
         await ref.read(
@@ -210,7 +222,8 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final showBalancesSetting = ref.watch(preferenceProvider.select((settings) => settings.showBalances));
+    final showBalancesSetting = ref
+        .watch(preferenceProvider.select((settings) => settings.showBalances));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
     return _SettingsListItem.withSwitch(
       heading: localizations.showBalances,
@@ -233,7 +246,8 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final showBlogSetting = ref.watch(preferenceProvider.select((settings) => settings.showBlog));
+    final showBlogSetting =
+        ref.watch(preferenceProvider.select((settings) => settings.showBlog));
     final preferencesNotifier = ref.read(preferenceProvider.notifier);
 
     return _SettingsListItem.withSwitch(

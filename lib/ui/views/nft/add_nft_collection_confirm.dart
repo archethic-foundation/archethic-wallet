@@ -42,10 +42,12 @@ class AddNFTCollectionConfirm extends ConsumerStatefulWidget {
   final double? feeEstimation;
 
   @override
-  ConsumerState<AddNFTCollectionConfirm> createState() => _AddNFTCollectionConfirmState();
+  ConsumerState<AddNFTCollectionConfirm> createState() =>
+      _AddNFTCollectionConfirmState();
 }
 
-class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfirm> {
+class _AddNFTCollectionConfirmState
+    extends ConsumerState<AddNFTCollectionConfirm> {
   bool? animationOpen;
 
   SubscriptionChannel subscriptionChannel = SubscriptionChannel();
@@ -54,11 +56,15 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) {
       _doAdd();
     });
 
-    _sendTxSub = EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) {
+    _sendTxSub = EventTaxiImpl.singleton()
+        .registerTo<TransactionSendEvent>()
+        .listen((TransactionSendEvent event) {
       final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
@@ -156,7 +162,8 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -234,7 +241,8 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
-                          activeVibrations: StateContainer.of(context).activeVibrations,
+                          activeVibrations:
+                              StateContainer.of(context).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
@@ -273,7 +281,11 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
       final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .name!,
       );
       final service = 'archethic-wallet-$nameEncoded';
       final index = (await sl.get<ApiService>().getTransactionIndex(
@@ -281,7 +293,8 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
               ))
           .chainLength!;
 
-      final transaction = Transaction(type: 'token', data: Transaction.initData());
+      final transaction =
+          Transaction(type: 'token', data: Transaction.initData());
       final content = tokenToJsonForTxDataContent(
         Token(
           name: widget.token!.name,
@@ -293,7 +306,9 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
       );
       transaction.setContent(content);
 
-      final signedTx = keychain.buildTransaction(transaction, service, index).originSign(originPrivateKey);
+      final signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
 
       var transactionStatus = TransactionStatus();
 
@@ -348,10 +363,12 @@ class _AddNFTCollectionConfirmState extends ConsumerState<AddNFTCollectionConfir
     var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations = event.data!['transactionConfirmed']['nbConfirmations'];
+        nbConfirmations =
+            event.data!['transactionConfirmed']['nbConfirmations'];
       }
       if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations = event.data!['transactionConfirmed']['maxConfirmations'];
+        maxConfirmations =
+            event.data!['transactionConfirmed']['maxConfirmations'];
       }
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(

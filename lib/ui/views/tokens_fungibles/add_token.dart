@@ -76,11 +76,15 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
       child: SafeArea(
-        minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+        minimum:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
             SheetHeader(
@@ -122,7 +126,8 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
                               autocorrect: false,
                               keyboardType: TextInputType.text,
                               style: theme.textStyleSize16W600Primary,
-                              inputFormatters: <LengthLimitingTextInputFormatter>[
+                              inputFormatters: <
+                                  LengthLimitingTextInputFormatter>[
                                 LengthLimitingTextInputFormatter(40),
                               ],
                               onChanged: (_) async {
@@ -274,7 +279,8 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
                             _isPressed = true;
                           });
 
-                          validRequest = await _validateRequest(accountSelected);
+                          validRequest =
+                              await _validateRequest(accountSelected);
                           if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                               ref: ref,
@@ -291,7 +297,8 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
                                 tokenSymbol: _symbolController!.text,
                                 feeEstimation: feeEstimation,
                                 tokenInitialSupply: double.tryParse(
-                                  _initialSupplyController!.text.replaceAll(' ', ''),
+                                  _initialSupplyController!.text
+                                      .replaceAll(' ', ''),
                                 ),
                               ),
                             );
@@ -338,14 +345,16 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
         _initialSupplyValidationText = localizations.tokenInitialSupplyMissing;
       });
     } else {
-      if (double.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) == null ||
+      if (double.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) ==
+              null ||
           double.tryParse(
                 _initialSupplyController!.text.replaceAll(' ', ''),
               )! <=
               0) {
         isValid = false;
         setState(() {
-          _initialSupplyValidationText = localizations.tokenInitialSupplyPositive;
+          _initialSupplyValidationText =
+              localizations.tokenInitialSupplyPositive;
         });
       } else {
         if (double.tryParse(
@@ -354,7 +363,8 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
             9999999999) {
           isValid = false;
           setState(() {
-            _initialSupplyValidationText = localizations.tokenInitialSupplyTooHigh;
+            _initialSupplyValidationText =
+                localizations.tokenInitialSupplyTooHigh;
           });
         }
       }
@@ -367,7 +377,8 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
     if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
       isValid = false;
       setState(() {
-        _initialSupplyValidationText = localizations.insufficientBalance.replaceAll(
+        _initialSupplyValidationText =
+            localizations.insufficientBalance.replaceAll(
           '%1',
           StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
         );
@@ -379,7 +390,9 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
 
   Future<double> getFee(String accountName) async {
     var fee = 0.0;
-    if (_initialSupplyController!.text.isEmpty || _symbolController!.text.isEmpty || _nameController!.text.isEmpty) {
+    if (_initialSupplyController!.text.isEmpty ||
+        _symbolController!.text.isEmpty ||
+        _nameController!.text.isEmpty) {
       return fee;
     }
     try {

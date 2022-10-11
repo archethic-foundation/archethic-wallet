@@ -27,7 +27,9 @@ class MainBottomBar extends ConsumerWidget {
           child: BottomBar(
             selectedIndex: StateContainer.of(context).bottomBarCurrentPage,
             onTap: (int index) async {
-              StateContainer.of(context).bottomBarPageController!.jumpToPage(index);
+              StateContainer.of(context)
+                  .bottomBarPageController!
+                  .jumpToPage(index);
               final preferences = await Preferences.getInstance();
               preferences.setMainScreenCurrentPage(index);
               StateContainer.of(context).bottomBarCurrentPage = index;

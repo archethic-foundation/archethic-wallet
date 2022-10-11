@@ -5,7 +5,8 @@ class SettingsSheetWallet extends ConsumerStatefulWidget {
   const SettingsSheetWallet({super.key});
 
   @override
-  ConsumerState<SettingsSheetWallet> createState() => _SettingsSheetWalletMobileState();
+  ConsumerState<SettingsSheetWallet> createState() =>
+      _SettingsSheetWalletMobileState();
 }
 
 class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
@@ -19,7 +20,8 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   late AnimationController _aboutController;
   late Animation<Offset> _aboutOffsetFloat;
 
-  NetworksSetting _curNetworksSetting = const NetworksSetting(AvailableNetworks.archethicMainNet);
+  NetworksSetting _curNetworksSetting =
+      const NetworksSetting(AvailableNetworks.archethicMainNet);
 
   late bool _securityOpen;
   late bool _customOpen;
@@ -52,10 +54,18 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _contactsOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_contactsController);
-    _securityOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_securityController);
-    _customOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_customController);
-    _aboutOffsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero).animate(_aboutController);
+    _contactsOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_contactsController);
+    _securityOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_securityController);
+    _customOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_customController);
+    _aboutOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
+            .animate(_aboutController);
   }
 
   @override

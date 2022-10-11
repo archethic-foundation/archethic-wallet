@@ -46,7 +46,8 @@ class PinScreen extends ConsumerStatefulWidget {
   ConsumerState<PinScreen> createState() => _PinScreenState();
 }
 
-class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProviderStateMixin {
+class _PinScreenState extends ConsumerState<PinScreen>
+    with SingleTickerProviderStateMixin {
   static const int maxAttempts = 5;
 
   int _pinLength = 6;
@@ -98,7 +99,8 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
         duration: const Duration(milliseconds: 350),
         vsync: this,
       );
-      final Animation<double> curve = CurvedAnimation(parent: _controller, curve: ShakeCurve());
+      final Animation<double> curve =
+          CurvedAnimation(parent: _controller, curve: ShakeCurve());
       _animation = Tween<double>(begin: 0, end: 25).animate(curve)
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
@@ -119,7 +121,8 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
                   setState(() {
                     _pin = '';
                     _header = AppLocalization.of(context)!.pinInvalid;
-                    _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
+                    _dotStates =
+                        List.filled(_pinLength, FontAwesomeIcons.minus);
                     _controller.value = 0;
                   });
                 }
@@ -181,7 +184,8 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
       var lastFilledIndex = 0;
       for (var i = 0; i < _dotStates.length; i++) {
         if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
-          if (i == _dotStates.length || _dotStates[i + 1] == FontAwesomeIcons.minus) {
+          if (i == _dotStates.length ||
+              _dotStates[i + 1] == FontAwesomeIcons.minus) {
             lastFilledIndex = i;
             break;
           }
@@ -190,7 +194,8 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
       setState(() {
         _dotStates[lastFilledIndex] = FontAwesomeIcons.minus;
         if (_awaitingConfirmation) {
-          _pinConfirmed = _pinConfirmed!.substring(0, _pinConfirmed!.length - 1);
+          _pinConfirmed =
+              _pinConfirmed!.substring(0, _pinConfirmed!.length - 1);
         } else {
           _pin = _pin!.substring(0, _pin!.length - 1);
         }
@@ -218,7 +223,8 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
                 FeedbackType.light,
                 StateContainer.of(context).activeVibrations,
               );
-          if (_controller.status == AnimationStatus.forward || _controller.status == AnimationStatus.reverse) {
+          if (_controller.status == AnimationStatus.forward ||
+              _controller.status == AnimationStatus.reverse) {
             return;
           }
           if (_setCharacter(buttonText)) {
@@ -395,10 +401,12 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
                       margin: EdgeInsetsDirectional.only(
                         start: _animation == null
                             ? MediaQuery.of(context).size.width * 0.25
-                            : MediaQuery.of(context).size.width * 0.25 + _animation!.value,
+                            : MediaQuery.of(context).size.width * 0.25 +
+                                _animation!.value,
                         end: _animation == null
                             ? MediaQuery.of(context).size.width * 0.25
-                            : MediaQuery.of(context).size.width * 0.25 - _animation!.value,
+                            : MediaQuery.of(context).size.width * 0.25 -
+                                _animation!.value,
                         top: MediaQuery.of(context).size.height * 0.05,
                       ),
                       child: Row(
@@ -510,16 +518,24 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             SizedBox(
-                              height: smallScreen(context) ? buttonSize - 15 : buttonSize,
-                              width: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                              height: smallScreen(context)
+                                  ? buttonSize - 15
+                                  : buttonSize,
+                              width: smallScreen(context)
+                                  ? buttonSize - 15
+                                  : buttonSize,
                             ),
                             _buildPinScreenButton(
                               _listPinNumber.elementAt(9).toString(),
                               context,
                             ),
                             SizedBox(
-                              height: smallScreen(context) ? buttonSize - 15 : buttonSize,
-                              width: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                              height: smallScreen(context)
+                                  ? buttonSize - 15
+                                  : buttonSize,
+                              width: smallScreen(context)
+                                  ? buttonSize - 15
+                                  : buttonSize,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(200),
                                 highlightColor: theme.text15,
@@ -528,7 +544,8 @@ class _PinScreenState extends ConsumerState<PinScreen> with SingleTickerProvider
                                 onTapDown: (TapDownDetails details) {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
-                                        StateContainer.of(context).activeVibrations,
+                                        StateContainer.of(context)
+                                            .activeVibrations,
                                       );
                                   _backSpace();
                                 },

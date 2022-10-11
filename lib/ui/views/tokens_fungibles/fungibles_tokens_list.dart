@@ -22,7 +22,11 @@ class FungiblesTokensListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final accountTokens = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.accountTokens;
+    final accountTokens = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .accountTokens;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +68,8 @@ class _FungiblesTokensLine extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
         child: (accountTokens.isNotEmpty && accountTokens.length > num) ||
-                (StateContainer.of(context).recentTransactionsLoading == true && accountTokens.length > num)
+                (StateContainer.of(context).recentTransactionsLoading == true &&
+                    accountTokens.length > num)
             ? _FungiblesTokensDetailTransfer(
                 accountFungibleToken: accountTokens[num],
               )
@@ -131,7 +136,8 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             size: 21,
                           ),
                           onPressed: () {
-                            final currency = ref.read(CurrencyProviders.selectedCurrency);
+                            final currency =
+                                ref.read(CurrencyProviders.selectedCurrency);
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
                                   StateContainer.of(context).activeVibrations,
@@ -141,10 +147,12 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                               ref: ref,
                               widget: TransferSheet(
                                 accountToken: accountFungibleToken,
-                                primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                                primaryCurrency: StateContainer.of(context)
+                                    .curPrimaryCurrency,
                                 title: localizations.transferTokens.replaceAll(
                                   '%1',
-                                  accountFungibleToken.tokenInformations!.symbol!,
+                                  accountFungibleToken
+                                      .tokenInformations!.symbol!,
                                 ),
                                 localCurrency: currency,
                               ),

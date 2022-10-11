@@ -44,7 +44,12 @@ class Sheets {
                 shaderCallback: (rect) {
                   return RadialGradient(
                     radius: value * 5,
-                    colors: const [Colors.white, Colors.white, Colors.transparent, Colors.transparent],
+                    colors: const [
+                      Colors.white,
+                      Colors.white,
+                      Colors.transparent,
+                      Colors.transparent
+                    ],
                     stops: const [0.0, 0.55, 0.6, 1.0],
                     center: const FractionalOffset(0.95, 0.95),
                   ).createShader(rect);
@@ -82,7 +87,9 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
         maxHeight: constraints.maxHeight * 0.95,
       );
     }
-    if ((constraints.maxHeight / constraints.maxWidth > 2.1 && !kIsWeb && Platform.isAndroid) ||
+    if ((constraints.maxHeight / constraints.maxWidth > 2.1 &&
+            !kIsWeb &&
+            Platform.isAndroid) ||
         constraints.maxHeight > 812) {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
@@ -153,8 +160,10 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
-    _animationController = BottomSheet.createAnimationController(navigator!.overlay!);
-    _animationController!.duration = Duration(milliseconds: animationDurationMs!);
+    _animationController =
+        BottomSheet.createAnimationController(navigator!.overlay!);
+    _animationController!.duration =
+        Duration(milliseconds: animationDurationMs!);
     appSheetAnimation = CurvedAnimation(
       parent: _animationController!,
       curve: Curves.easeOut,
@@ -191,7 +200,8 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
           data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
           child: AnimatedBuilder(
             animation: appSheetAnimation!,
-            builder: (BuildContext context, Widget? child) => CustomSingleChildLayout(
+            builder: (BuildContext context, Widget? child) =>
+                CustomSingleChildLayout(
               delegate: _AppHeightNineSheetLayout(appSheetAnimation!.value),
               child: BottomSheet(
                 animationController: _animationController,
@@ -224,5 +234,6 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
   bool get opaque => false;
 
   @override
-  Duration get transitionDuration => Duration(milliseconds: animationDurationMs!);
+  Duration get transitionDuration =>
+      Duration(milliseconds: animationDurationMs!);
 }

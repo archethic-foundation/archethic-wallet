@@ -33,12 +33,15 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
   String _countDownTxt = '';
 
   Future<void> _goHome() async {
-    StateContainer.of(context).appWallet = await sl.get<DBHelper>().getAppWallet();
+    StateContainer.of(context).appWallet =
+        await sl.get<DBHelper>().getAppWallet();
     if (StateContainer.of(context).appWallet == null) {
-      Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
     }
     final preferences = await Preferences.getInstance();
-    StateContainer.of(context).bottomBarCurrentPage = preferences.getMainScreenCurrentPage();
+    StateContainer.of(context).bottomBarCurrentPage =
+        preferences.getMainScreenCurrentPage();
     StateContainer.of(context).bottomBarPageController = PageController(
       initialPage: StateContainer.of(context).bottomBarCurrentPage,
     );
@@ -179,7 +182,8 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075,
@@ -199,7 +203,8 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                               height: 50,
                               child: TextButton(
                                 onPressed: () {
-                                  final language = ref.read(LanguageProviders.selectedLanguage);
+                                  final language = ref
+                                      .read(LanguageProviders.selectedLanguage);
                                   AppDialogs.showConfirmDialog(
                                       context,
                                       ref,
@@ -208,7 +213,8 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                                         language.getLocaleString(),
                                       ),
                                       localizations.removeWalletDetail,
-                                      localizations.removeWalletAction.toUpperCase(), () {
+                                      localizations.removeWalletAction
+                                          .toUpperCase(), () {
                                     // Show another confirm dialog
                                     AppDialogs.showConfirmDialog(
                                       context,
@@ -217,12 +223,16 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                                       localizations.removeWalletReassurance,
                                       localizations.yes,
                                       () async {
-                                        await StateContainer.of(context).logOut();
+                                        await StateContainer.of(context)
+                                            .logOut();
                                         // TODO(Chralu): move that behavior to `logOut` usecase.
                                         await ref.read(
-                                          ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
+                                          ThemeProviders.selectTheme(
+                                                  theme: ThemeOptions.dark)
+                                              .future,
                                         );
-                                        Navigator.of(context).pushNamedAndRemoveUntil(
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
                                           '/',
                                           (Route<dynamic> route) => false,
                                         );

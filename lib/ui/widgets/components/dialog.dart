@@ -228,16 +228,19 @@ class PulsatingCircleLogo extends ConsumerStatefulWidget {
   final String? title;
 
   @override
-  ConsumerState<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
+  ConsumerState<PulsatingCircleLogo> createState() =>
+      PulsatingCircleLogoState();
 }
 
-class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with SingleTickerProviderStateMixin {
+class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
+    with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   late Animation<double> _animation;
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _animation = Tween<double>(begin: 0, end: 12).animate(
       CurvedAnimation(parent: _animationController!, curve: Curves.easeOut),
     );
@@ -271,7 +274,8 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with S
                   boxShadow: [
                     for (int i = 1; i <= 2; i++)
                       BoxShadow(
-                        color: theme.iconDrawer!.withOpacity(_animationController!.value / 2),
+                        color: theme.iconDrawer!
+                            .withOpacity(_animationController!.value / 2),
                         spreadRadius: _animation.value * i,
                       )
                   ],
@@ -292,7 +296,9 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with S
           height: 40,
         ),
         Text(
-          widget.title != null ? widget.title! : AppLocalization.of(context)!.pleaseWait,
+          widget.title != null
+              ? widget.title!
+              : AppLocalization.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
           style: theme.textStyleSize16W600EquinoxPrimary,
         )
@@ -337,7 +343,9 @@ class _AnimationLoadingOverlayContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: type == AnimationType.send ? const EdgeInsets.only(bottom: 10, left: 90, right: 90) : EdgeInsets.zero,
+          margin: type == AnimationType.send
+              ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
+              : EdgeInsets.zero,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 2,
           child: _AnimationLoadingOverlayGetAnimation(type: type, title: title),

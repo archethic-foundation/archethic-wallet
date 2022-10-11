@@ -21,7 +21,8 @@ class Vault {
   static const String _pin = 'archethic_wallet_pin';
   static const String _password = 'archethic_wallet_password';
   static const String _yubikeyClientID = 'archethic_wallet_yubikeyClientID';
-  static const String _yubikeyClientAPIKey = 'archethic_wallet_yubikeyClientAPIKey';
+  static const String _yubikeyClientAPIKey =
+      'archethic_wallet_yubikeyClientAPIKey';
 
   final List<int> secureKey = Hive.generateSecureKey();
 
@@ -31,7 +32,8 @@ class Vault {
     try {
       const secureStorage = FlutterSecureStorage();
       final Uint8List encryptionKey;
-      var secureKey = await secureStorage.read(key: 'archethic_wallet_secure_key');
+      var secureKey =
+          await secureStorage.read(key: 'archethic_wallet_secure_key');
       if (secureKey == null || secureKey.isEmpty) {
         final key = Hive.generateSecureKey();
         encryptionKey = Uint8List.fromList(key);
@@ -54,7 +56,8 @@ class Vault {
     }
   }
 
-  T _getValue<T>(dynamic key, {T? defaultValue}) => _box.get(key, defaultValue: defaultValue) as T;
+  T _getValue<T>(dynamic key, {T? defaultValue}) =>
+      _box.get(key, defaultValue: defaultValue) as T;
 
   Future<void> _setValue<T>(dynamic key, T value) => _box.put(key, value);
 
@@ -84,9 +87,11 @@ class Vault {
     return _removeValue(_password);
   }
 
-  Future<void> setYubikeyClientAPIKey(String v) => _setValue(_yubikeyClientAPIKey, v);
+  Future<void> setYubikeyClientAPIKey(String v) =>
+      _setValue(_yubikeyClientAPIKey, v);
 
-  String getYubikeyClientAPIKey() => _getValue(_yubikeyClientAPIKey, defaultValue: '');
+  String getYubikeyClientAPIKey() =>
+      _getValue(_yubikeyClientAPIKey, defaultValue: '');
 
   Future<void> setYubikeyClientID(String v) => _setValue(_yubikeyClientID, v);
 

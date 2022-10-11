@@ -34,8 +34,12 @@ class _NFTListState extends ConsumerState<NFTList> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
-    final accountTokenList = accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
+    final accountTokenList =
+        accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
     return SizedBox(
       key: expandedKey,
       width: double.infinity,
@@ -54,7 +58,8 @@ class _NFTListState extends ConsumerState<NFTList> {
                 itemCount: accountTokenList.length,
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 itemBuilder: (context, index) {
-                  final tokenInformations = accountTokenList[index].tokenInformations!;
+                  final tokenInformations =
+                      accountTokenList[index].tokenInformations!;
 
                   return NFTCard(
                     tokenInformations: tokenInformations,
@@ -93,17 +98,23 @@ class _NFTListState extends ConsumerState<NFTList> {
                                         localizations.send,
                                         Dimens.buttonTopDimens,
                                         onPressed: () async {
-                                          final currency = ref.read(CurrencyProviders.selectedCurrency);
+                                          final currency = ref.read(
+                                              CurrencyProviders
+                                                  .selectedCurrency);
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
-                                                StateContainer.of(context).activeVibrations,
+                                                StateContainer.of(context)
+                                                    .activeVibrations,
                                               );
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
                                             ref: ref,
                                             widget: TransferSheet(
-                                              accountToken: accountSelected.accountNFT![index],
-                                              primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                                              accountToken: accountSelected
+                                                  .accountNFT![index],
+                                              primaryCurrency:
+                                                  StateContainer.of(context)
+                                                      .curPrimaryCurrency,
                                               title: localizations.transferNFT,
                                               localCurrency: currency,
                                             ),
@@ -172,9 +183,11 @@ class _NFTListState extends ConsumerState<NFTList> {
                   Navigator.of(context).pushNamed(
                     '/nft_creation',
                     arguments: {
-                      'currentNftCategoryIndex': widget.currentNftCategoryIndex!,
+                      'currentNftCategoryIndex':
+                          widget.currentNftCategoryIndex!,
                       'process': NFTCreationProcessType.single,
-                      'primaryCurrency': StateContainer.of(context).curPrimaryCurrency
+                      'primaryCurrency':
+                          StateContainer.of(context).curPrimaryCurrency
                     },
                   );
                 },

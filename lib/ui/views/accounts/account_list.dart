@@ -53,7 +53,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     isPressed = false;
     animationOpen = false;
     appWalletLive = widget.appWallet;
-    appWalletLive!.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
+    appWalletLive!.appKeychain!.accounts!
+        .sort((a, b) => a.name!.compareTo(b.name!));
   }
 
   Future<void> _changeAccount(Account account, StateSetter setState) async {
@@ -121,7 +122,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      localizations.introNewWalletGetFirstInfosNameRequest,
+                                      localizations
+                                          .introNewWalletGetFirstInfosNameRequest,
                                       style: theme.textStyleSize12W400Primary,
                                     ),
                                   ],
@@ -139,7 +141,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       AppTextField(
                                         leftMargin: 0,
@@ -161,7 +164,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                           height: 40,
                                           child: Text(
                                             nameError!,
-                                            style: theme.textStyleSize12W600Primary,
+                                            style: theme
+                                                .textStyleSize12W600Primary,
                                           ),
                                         )
                                       else
@@ -169,7 +173,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                           height: 40,
                                         ),
                                       Text(
-                                        localizations.introNewWalletGetFirstInfosNameInfos,
+                                        localizations
+                                            .introNewWalletGetFirstInfosNameInfos,
                                         style: theme.textStyleSize12W600Primary,
                                         textAlign: TextAlign.justify,
                                       ),
@@ -184,7 +189,9 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                         const Key('addName'),
                                         context,
                                         ref,
-                                        isPressed == false ? AppButtonType.primary : AppButtonType.primaryOutline,
+                                        isPressed == false
+                                            ? AppButtonType.primary
+                                            : AppButtonType.primaryOutline,
                                         localizations.ok,
                                         Dimens.buttonBottomDimens,
                                         onPressed: () async {
@@ -194,22 +201,28 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                           nameError = '';
                                           if (nameController.text.isEmpty) {
                                             setState(() {
-                                              nameError = localizations.introNewWalletGetFirstInfosNameBlank;
-                                              FocusScope.of(context).requestFocus(
+                                              nameError = localizations
+                                                  .introNewWalletGetFirstInfosNameBlank;
+                                              FocusScope.of(context)
+                                                  .requestFocus(
                                                 nameFocusNode,
                                               );
                                             });
                                           } else {
                                             var accountExists = false;
-                                            for (final account in appWalletLive!.appKeychain!.accounts!) {
-                                              if (account.name == nameController.text) {
+                                            for (final account in appWalletLive!
+                                                .appKeychain!.accounts!) {
+                                              if (account.name ==
+                                                  nameController.text) {
                                                 accountExists = true;
                                               }
                                             }
                                             if (accountExists == true) {
                                               setState(() {
-                                                nameError = localizations.addAccountExists;
-                                                FocusScope.of(context).requestFocus(
+                                                nameError = localizations
+                                                    .addAccountExists;
+                                                FocusScope.of(context)
+                                                    .requestFocus(
                                                   nameFocusNode,
                                                 );
                                               });
@@ -221,14 +234,17 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                 context,
                                                 ref,
                                                 localizations.addAccount,
-                                                localizations.addAccountConfirmation.replaceAll(
+                                                localizations
+                                                    .addAccountConfirmation
+                                                    .replaceAll(
                                                   '%1',
                                                   nameController.text,
                                                 ),
                                                 localizations.yes,
                                                 () async {
                                                   try {
-                                                    await KeychainUtil().addAccountInKeyChain(
+                                                    await KeychainUtil()
+                                                        .addAccountInKeyChain(
                                                       StateContainer.of(
                                                         context,
                                                       ).appWallet,
@@ -236,14 +252,21 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                         context,
                                                       ).getSeed(),
                                                       nameController.text,
-                                                      ref.read(CurrencyProviders.selectedCurrency).currency.name,
+                                                      ref
+                                                          .read(CurrencyProviders
+                                                              .selectedCurrency)
+                                                          .currency
+                                                          .name,
                                                       StateContainer.of(
                                                         context,
-                                                      ).curNetwork.getNetworkCryptoCurrencyLabel(),
+                                                      )
+                                                          .curNetwork
+                                                          .getNetworkCryptoCurrencyLabel(),
                                                     );
                                                   } on ArchethicConnectionException {
                                                     UIUtil.showSnackbar(
-                                                      localizations.noConnection,
+                                                      localizations
+                                                          .noConnection,
                                                       context,
                                                       ref,
                                                       theme.text!,
@@ -254,7 +277,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                     );
                                                   } on Exception {
                                                     UIUtil.showSnackbar(
-                                                      localizations.keychainNotExistWarning,
+                                                      localizations
+                                                          .keychainNotExistWarning,
                                                       context,
                                                       ref,
                                                       theme.text!,
@@ -294,7 +318,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                       },
                     );
                     setState(() {
-                      appWalletLive!.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
+                      appWalletLive!.appKeychain!.accounts!
+                          .sort((a, b) => a.name!.compareTo(b.name!));
                     });
                   },
                 ),
@@ -325,8 +350,10 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
           _showSendingAnimation(context);
           if (!account.selected!) {
             _changeAccount(account, setState);
-            StateContainer.of(context).appWallet = await sl.get<DBHelper>().changeAccount(account);
-            await StateContainer.of(context).requestUpdate(forceUpdateChart: false);
+            StateContainer.of(context).appWallet =
+                await sl.get<DBHelper>().changeAccount(account);
+            await StateContainer.of(context)
+                .requestUpdate(forceUpdateChart: false);
           }
           StateContainer.of(context).bottomBarCurrentPage = 1;
           StateContainer.of(context)
@@ -349,7 +376,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
             widget: ReceiveSheet(address: account.lastAddress),
             onDisposed: () {
               setState(() {
-                StateContainer.of(context).requestUpdate(forceUpdateChart: false);
+                StateContainer.of(context)
+                    .requestUpdate(forceUpdateChart: false);
               });
             },
           );
@@ -365,14 +393,17 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
           color: theme.backgroundAccountsListCardSelected,
           child: Container(
             height: 80,
-            color: account.selected! ? theme.backgroundAccountsListCardSelected : theme.backgroundAccountsListCard,
+            color: account.selected!
+                ? theme.backgroundAccountsListCardSelected
+                : theme.backgroundAccountsListCard,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      margin: const EdgeInsetsDirectional.only(bottom: 10, top: 10),
+                      margin:
+                          const EdgeInsetsDirectional.only(bottom: 10, top: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -382,15 +413,20 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                               Row(
                                 children: <Widget>[
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width - 80,
+                                    width:
+                                        MediaQuery.of(context).size.width - 80,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Padding(
                                                 padding: const EdgeInsets.only(
@@ -398,74 +434,112 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                 ),
                                                 child: AutoSizeText(
                                                   account.name!,
-                                                  style: theme.textStyleSize12W400Primary,
+                                                  style: theme
+                                                      .textStyleSize12W400Primary,
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        if (StateContainer.of(context).showBalance)
-                                          StateContainer.of(context).curPrimaryCurrency.primaryCurrency.name ==
+                                        if (StateContainer.of(context)
+                                            .showBalance)
+                                          StateContainer.of(context)
+                                                      .curPrimaryCurrency
+                                                      .primaryCurrency
+                                                      .name ==
                                                   const PrimaryCurrencySetting(
-                                                    AvailablePrimaryCurrency.native,
+                                                    AvailablePrimaryCurrency
+                                                        .native,
                                                   ).primaryCurrency.name
                                               ? Expanded(
                                                   child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
                                                     children: <Widget>[
                                                       AutoSizeText(
                                                         '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                        style: theme.textStyleSize12W400Primary,
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
                                                       ),
                                                       AutoSizeText(
-                                                        CurrencyUtil.getConvertedAmount(
-                                                          currency.currency.name,
-                                                          account.balance!.fiatCurrencyValue!,
+                                                        CurrencyUtil
+                                                            .getConvertedAmount(
+                                                          currency
+                                                              .currency.name,
+                                                          account.balance!
+                                                              .fiatCurrencyValue!,
                                                         ),
-                                                        textAlign: TextAlign.center,
-                                                        style: theme.textStyleSize12W400Primary,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
                                                       ),
-                                                      if (account.accountTokens != null &&
-                                                          account.accountTokens!.isNotEmpty)
+                                                      if (account.accountTokens !=
+                                                              null &&
+                                                          account.accountTokens!
+                                                              .isNotEmpty)
                                                         AutoSizeText(
-                                                          account.accountTokens!.length > 1
+                                                          account.accountTokens!
+                                                                      .length >
+                                                                  1
                                                               ? '${account.accountTokens!.length} ${localizations.tokens}'
                                                               : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: theme.textStyleSize12W400Primary,
+                                                          style: theme
+                                                              .textStyleSize12W400Primary,
                                                         ),
-                                                      if (account.accountNFT != null && account.accountNFT!.isNotEmpty)
+                                                      if (account.accountNFT !=
+                                                              null &&
+                                                          account.accountNFT!
+                                                              .isNotEmpty)
                                                         AutoSizeText(
                                                           '${account.accountNFT!.length} ${localizations.nft}',
-                                                          style: theme.textStyleSize12W400Primary,
+                                                          style: theme
+                                                              .textStyleSize12W400Primary,
                                                         ),
                                                     ],
                                                   ),
                                                 )
                                               : Expanded(
                                                   child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
                                                     children: <Widget>[
                                                       AutoSizeText(
-                                                        CurrencyUtil.getConvertedAmount(
-                                                          currency.currency.name,
-                                                          account.balance!.fiatCurrencyValue!,
+                                                        CurrencyUtil
+                                                            .getConvertedAmount(
+                                                          currency
+                                                              .currency.name,
+                                                          account.balance!
+                                                              .fiatCurrencyValue!,
                                                         ),
-                                                        textAlign: TextAlign.center,
-                                                        style: theme.textStyleSize12W400Primary,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
                                                       ),
                                                       AutoSizeText(
                                                         '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                        style: theme.textStyleSize12W400Primary,
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
                                                       ),
-                                                      if (account.accountTokens != null &&
-                                                          account.accountTokens!.isNotEmpty)
+                                                      if (account.accountTokens !=
+                                                              null &&
+                                                          account.accountTokens!
+                                                              .isNotEmpty)
                                                         AutoSizeText(
-                                                          account.accountTokens!.length > 1
+                                                          account.accountTokens!
+                                                                      .length >
+                                                                  1
                                                               ? '${account.accountTokens!.length} ${localizations.tokens}'
                                                               : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: theme.textStyleSize12W400Primary,
+                                                          style: theme
+                                                              .textStyleSize12W400Primary,
                                                         ),
                                                     ],
                                                   ),
@@ -473,21 +547,26 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                         else
                                           Expanded(
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   '···········',
                                                   textAlign: TextAlign.center,
-                                                  style: theme.textStyleSize12W600Primary60,
+                                                  style: theme
+                                                      .textStyleSize12W600Primary60,
                                                 ),
                                                 AutoSizeText(
                                                   '···········',
-                                                  style: theme.textStyleSize12W600Primary60,
+                                                  style: theme
+                                                      .textStyleSize12W600Primary60,
                                                 ),
                                                 AutoSizeText(
                                                   '···········',
-                                                  style: theme.textStyleSize12W600Primary60,
+                                                  style: theme
+                                                      .textStyleSize12W600Primary60,
                                                 ),
                                               ],
                                             ),

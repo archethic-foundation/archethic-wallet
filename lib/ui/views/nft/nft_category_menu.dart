@@ -35,7 +35,10 @@ class NftCategoryMenu extends ConsumerWidget {
             var count = 0;
             count = ref.read(
               NftCategoryProviders.getNbNFTInCategory(
-                account: StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!,
+                account: StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!,
                 categoryNftIndex: index,
               ),
             );

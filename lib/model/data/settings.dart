@@ -25,9 +25,11 @@ class Settings with _$Settings {
     required bool showBlog,
     required bool activeVibrations,
     required bool activeNotifications,
-    required int mainScreenCurrentPage, // TODO(Chralu): not shure it belongs here
+    required int
+        mainScreenCurrentPage, // TODO(Chralu): not shure it belongs here
     required bool showPriceChart,
-    required UnlockOption lock, // TODO(Chralu): create a notifier dedicated to Lock management
+    required UnlockOption
+        lock, // TODO(Chralu): create a notifier dedicated to Lock management
     required LockTimeoutOption lockTimeout,
     required int lockAttempts,
     DateTime? pinLockUntil,

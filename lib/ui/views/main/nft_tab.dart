@@ -34,7 +34,9 @@ List<NftCategory> fetchNftCategory(
 
   for (final nftCategoryId in account.nftCategoryList!) {
     nftCategoryListCustomized.add(
-      ref.read(NftCategoryProviders.getListByDefault(context: context)).elementAt(nftCategoryId),
+      ref
+          .read(NftCategoryProviders.getListByDefault(context: context))
+          .elementAt(nftCategoryId),
     );
   }
   return nftCategoryListCustomized;
@@ -46,7 +48,10 @@ class NFTTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     return Column(
       children: [
         Expanded(
@@ -102,7 +107,10 @@ class NFTTab extends ConsumerWidget {
                                     gradient: LinearGradient(
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.center,
-                                      colors: <Color>[theme.background!, Colors.transparent],
+                                      colors: <Color>[
+                                        theme.background!,
+                                        Colors.transparent
+                                      ],
                                     ),
                                   ),
                                   child: Image.asset(
@@ -116,7 +124,8 @@ class NFTTab extends ConsumerWidget {
                                     right: 20,
                                   ),
                                   child: Text(
-                                    AppLocalization.of(context)!.nftTabDescriptionHeader,
+                                    AppLocalization.of(context)!
+                                        .nftTabDescriptionHeader,
                                     style: theme.textStyleSize12W600Primary,
                                     textAlign: TextAlign.justify,
                                   ),

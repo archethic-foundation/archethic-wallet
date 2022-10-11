@@ -19,7 +19,9 @@ Future<void> _selectTheme(
   _SelectThemeRef ref, {
   required ThemeOptions theme,
 }) async {
-  await ref.read(SettingsProviders.localSettingsRepository).setTheme(ThemeSetting(theme));
+  await ref
+      .read(SettingsProviders.localSettingsRepository)
+      .setTheme(ThemeSetting(theme));
   ref.invalidate(ThemeProviders.selectedThemeOption);
 }
 

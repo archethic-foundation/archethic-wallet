@@ -171,7 +171,10 @@ class _ContactList extends ConsumerWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: <Color>[theme.drawerBackground!, theme.backgroundDark00!],
+                  colors: <Color>[
+                    theme.drawerBackground!,
+                    theme.backgroundDark00!
+                  ],
                   begin: const AlignmentDirectional(0.5, -1),
                   end: const AlignmentDirectional(0.5, 1),
                 ),

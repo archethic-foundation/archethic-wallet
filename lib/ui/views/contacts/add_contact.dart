@@ -103,7 +103,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
 
     return TapOutsideUnfocus(
       child: SafeArea(
-        minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+        minimum:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
             SheetHeader(
@@ -127,7 +128,9 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     topMargin: MediaQuery.of(context).size.height * 0.14,
                     focusNode: _nameFocusNode,
                     controller: _nameController,
-                    textInputAction: widget.address != null ? TextInputAction.done : TextInputAction.next,
+                    textInputAction: widget.address != null
+                        ? TextInputAction.done
+                        : TextInputAction.next,
                     labelText: localizations.contactNameHint,
                     keyboardType: TextInputType.text,
                     style: theme.textStyleSize16W600Primary,
@@ -138,7 +141,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     onSubmitted: (String text) {
                       if (widget.address == null) {
                         if (!Address(_addressController!.text).isValid()) {
-                          FocusScope.of(context).requestFocus(_addressFocusNode);
+                          FocusScope.of(context)
+                              .requestFocus(_addressFocusNode);
                         } else {
                           FocusScope.of(context).unfocus();
                         }
@@ -164,7 +168,9 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                         : EdgeInsets.zero,
                     focusNode: _addressFocusNode,
                     controller: _addressController,
-                    style: _addressValid ? theme.textStyleSize14W100Primary : theme.textStyleSize14W100Text60,
+                    style: _addressValid
+                        ? theme.textStyleSize14W100Primary
+                        : theme.textStyleSize14W100Text60,
                     inputFormatters: <LengthLimitingTextInputFormatter>[
                       LengthLimitingTextInputFormatter(68),
                     ],
@@ -172,7 +178,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     maxLines: null,
                     autocorrect: false,
                     labelText: localizations.addressHint,
-                    prefixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+                    prefixButton: kIsWeb == false &&
+                            (Platform.isIOS || Platform.isAndroid)
                         ? TextFieldButton(
                             icon: FontAwesomeIcons.qrcode,
                             onPressed: () async {
@@ -267,8 +274,10 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                               setState(() {
                                 _addressValidAndUnfocused = false;
                               });
-                              Future<void>.delayed(const Duration(milliseconds: 50), () {
-                                FocusScope.of(context).requestFocus(_addressFocusNode);
+                              Future<void>.delayed(
+                                  const Duration(milliseconds: 50), () {
+                                FocusScope.of(context)
+                                    .requestFocus(_addressFocusNode);
                               });
                             },
                             child: UIUtil.threeLinetextStyleSmallestW400Text(
@@ -312,9 +321,11 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                           );
                           ContactProviders.saveContact(contact: newContact);
                           await sl.get<DBHelper>().saveContact(newContact);
-                          StateContainer.of(context).requestUpdate(forceUpdateChart: false);
+                          StateContainer.of(context)
+                              .requestUpdate(forceUpdateChart: false);
                           UIUtil.showSnackbar(
-                            localizations.contactAdded.replaceAll('%1', newContact.name!),
+                            localizations.contactAdded
+                                .replaceAll('%1', newContact.name!),
                             context,
                             ref,
                             theme.text!,
@@ -355,7 +366,9 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
         });
       } else {
         _addressFocusNode!.unfocus();
-        final addressExists = await sl.get<DBHelper>().contactExistsWithAddress(_addressController!.text);
+        final addressExists = await sl
+            .get<DBHelper>()
+            .contactExistsWithAddress(_addressController!.text);
         if (addressExists) {
           setState(() {
             isValid = false;
@@ -371,7 +384,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
         _nameValidationText = localizations.contactNameMissing;
       });
     } else {
-      final nameExists = await sl.get<DBHelper>().contactExistsWithName(_nameController!.text);
+      final nameExists =
+          await sl.get<DBHelper>().contactExistsWithName(_nameController!.text);
       if (nameExists) {
         setState(() {
           isValid = false;

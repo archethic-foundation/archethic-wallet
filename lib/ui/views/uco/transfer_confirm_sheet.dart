@@ -58,7 +58,8 @@ class TransferConfirmSheet extends ConsumerStatefulWidget {
   final List<TokenTransferWallet>? tokenTransferList;
 
   @override
-  ConsumerState<TransferConfirmSheet> createState() => _TransferConfirmSheetState();
+  ConsumerState<TransferConfirmSheet> createState() =>
+      _TransferConfirmSheetState();
 }
 
 class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
@@ -70,12 +71,15 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton().registerTo<AuthenticatedEvent>().listen((AuthenticatedEvent event) {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) {
       _doSend();
     });
 
-    _sendTxSub =
-        EventTaxiImpl.singleton().registerTo<TransactionSendEvent>().listen((TransactionSendEvent event) async {
+    _sendTxSub = EventTaxiImpl.singleton()
+        .registerTo<TransactionSendEvent>()
+        .listen((TransactionSendEvent event) async {
       final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
@@ -115,13 +119,19 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             duration: const Duration(milliseconds: 5000),
           );
           if (widget.typeTransfer == 'TOKEN') {
-            final transaction = await sl.get<ApiService>().getLastTransaction(event.transactionAddress!);
+            final transaction = await sl
+                .get<ApiService>()
+                .getLastTransaction(event.transactionAddress!);
 
             final token = await sl.get<ApiService>().getToken(
                   transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
                   request: 'id',
                 );
-            StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.removeftInfosOffChain(token.id);
+            StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .removeftInfosOffChain(token.id);
           }
           setState(() {
             StateContainer.of(context).requestUpdate();
@@ -182,7 +192,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
           SheetHeader(
@@ -257,7 +268,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
-                          activeVibrations: StateContainer.of(context).activeVibrations,
+                          activeVibrations:
+                              StateContainer.of(context).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
@@ -299,7 +311,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
       final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .name!,
       );
       final service = 'archethic-wallet-$nameEncoded';
       final index = (await sl.get<ApiService>().getTransactionIndex(
@@ -307,7 +323,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
               ))
           .chainLength!;
 
-      final transaction = Transaction(type: 'transfer', data: Transaction.initData());
+      final transaction =
+          Transaction(type: 'transfer', data: Transaction.initData());
       for (final UCOTransfer transfer in ucoTransferList) {
         transaction.addUCOTransfer(transfer.to, transfer.amount!);
       }
@@ -333,18 +350,22 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
         authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
         for (final UCOTransfer transfer in ucoTransferList) {
-          final firstTxListRecipient =
-              await sl.get<ApiService>().getTransactionChain(transfer.to!, request: 'previousPublicKey');
+          final firstTxListRecipient = await sl
+              .get<ApiService>()
+              .getTransactionChain(transfer.to!, request: 'previousPublicKey');
           if (firstTxListRecipient.isNotEmpty) {
-            authorizedPublicKeys.add(firstTxListRecipient.first.previousPublicKey!);
+            authorizedPublicKeys
+                .add(firstTxListRecipient.first.previousPublicKey!);
           }
         }
 
         for (final TokenTransfer transfer in tokenTransferList) {
-          final firstTxListRecipient =
-              await sl.get<ApiService>().getTransactionChain(transfer.to!, request: 'previousPublicKey');
+          final firstTxListRecipient = await sl
+              .get<ApiService>()
+              .getTransactionChain(transfer.to!, request: 'previousPublicKey');
           if (firstTxListRecipient.isNotEmpty) {
-            authorizedPublicKeys.add(firstTxListRecipient.first.previousPublicKey!);
+            authorizedPublicKeys
+                .add(firstTxListRecipient.first.previousPublicKey!);
           }
         }
 
@@ -364,7 +385,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
         );
       }
 
-      final signedTx = keychain.buildTransaction(transaction, service, index).originSign(originPrivateKey);
+      final signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
 
       var transactionStatus = TransactionStatus();
 
@@ -423,10 +446,12 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations = event.data!['transactionConfirmed']['nbConfirmations'];
+        nbConfirmations =
+            event.data!['transactionConfirmed']['nbConfirmations'];
       }
       if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations = event.data!['transactionConfirmed']['maxConfirmations'];
+        maxConfirmations =
+            event.data!['transactionConfirmed']['maxConfirmations'];
       }
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(

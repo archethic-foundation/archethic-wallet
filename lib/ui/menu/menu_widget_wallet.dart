@@ -25,7 +25,10 @@ class MenuWidgetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -55,12 +58,16 @@ class MenuWidgetWallet extends ConsumerWidget {
                         context: context,
                         ref: ref,
                         widget: TransferSheet(
-                          primaryCurrency: StateContainer.of(context).curPrimaryCurrency,
+                          primaryCurrency:
+                              StateContainer.of(context).curPrimaryCurrency,
                           title: localizations.transferTokens.replaceAll(
                             '%1',
-                            StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
+                            StateContainer.of(context)
+                                .curNetwork
+                                .getNetworkCryptoCurrencyLabel(),
                           ),
-                          localCurrency: ref.read(CurrencyProviders.selectedCurrency),
+                          localCurrency:
+                              ref.read(CurrencyProviders.selectedCurrency),
                         ),
                       );
                     },
@@ -86,7 +93,8 @@ class MenuWidgetWallet extends ConsumerWidget {
                       ),
                       onDisposed: () {
                         setState(() {
-                          StateContainer.of(context).requestUpdate(forceUpdateChart: false);
+                          StateContainer.of(context)
+                              .requestUpdate(forceUpdateChart: false);
                         });
                       },
                     );

@@ -18,7 +18,10 @@ class AccountsListTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
 
@@ -33,7 +36,8 @@ class AccountsListTab extends ConsumerWidget {
                     FeedbackType.light,
                     StateContainer.of(context).activeVibrations,
                   );
-              StateContainer.of(context).appWallet = await KeychainUtil().getListAccountsFromKeychain(
+              StateContainer.of(context).appWallet =
+                  await KeychainUtil().getListAccountsFromKeychain(
                 StateContainer.of(context).appWallet,
                 await StateContainer.of(context).getSeed(),
                 currency.currency.name,

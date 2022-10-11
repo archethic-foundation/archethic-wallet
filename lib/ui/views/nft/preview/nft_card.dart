@@ -61,7 +61,8 @@ class NFTCard extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (MimeUtil.isImage(typeMime) == true || MimeUtil.isPdf(typeMime) == true)
+                if (MimeUtil.isImage(typeMime) == true ||
+                    MimeUtil.isPdf(typeMime) == true)
                   FutureBuilder<Uint8List?>(
                     future: TokenUtil.getImageFromTokenAddress(
                       tokenInformations.address!,
@@ -117,8 +118,12 @@ class NFTCardBottom extends StatefulWidget {
 class _NFTCardBottomState extends State<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
-    final accountSelected = StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!;
-    final nftInfosOffChain = accountSelected.getftInfosOffChain(widget.tokenInformations.id);
+    final accountSelected = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!;
+    final nftInfosOffChain =
+        accountSelected.getftInfosOffChain(widget.tokenInformations.id);
 
     return Column(
       children: <Widget>[
@@ -159,7 +164,8 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                     );
                     setState(() {});
                   },
-                  child: nftInfosOffChain == null || nftInfosOffChain.favorite == false
+                  child: nftInfosOffChain == null ||
+                          nftInfosOffChain.favorite == false
                       ? Icon(
                           Icons.favorite_border,
                           color: Colors.yellow[800],

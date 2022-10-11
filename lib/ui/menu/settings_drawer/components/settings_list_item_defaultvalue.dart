@@ -60,7 +60,9 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                   ),
                   AutoSizeText(
                     defaultMethod.getDisplayName(context),
-                    style: disabled ? theme.textStyleSize12W100Primary30 : theme.textStyleSize12W100Primary,
+                    style: disabled
+                        ? theme.textStyleSize12W100Primary30
+                        : theme.textStyleSize12W100Primary,
                     maxLines: 1,
                     stepGranularity: 0.1,
                     minFontSize: 8,
@@ -134,7 +136,9 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                       ),
                       Text(
                         defaultMethod.getDisplayName(context),
-                        style: disabled ? theme.textStyleSize12W100Primary30 : theme.textStyleSize12W100Primary,
+                        style: disabled
+                            ? theme.textStyleSize12W100Primary30
+                            : theme.textStyleSize12W100Primary,
                       ),
                     ],
                   ),
