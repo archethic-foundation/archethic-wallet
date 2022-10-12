@@ -20,7 +20,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/uco/transfer_confirm_sheet.dart';
+import 'package:aewallet/ui/views/uco/layout/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
@@ -372,8 +372,9 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                           setState(() {
                             _isPressed = true;
                           });
-                          validRequest =
-                              await _validateRequest(accountSelected);
+                          validRequest = await _validateRequest(
+                            accountSelected,
+                          );
                           if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                               onDisposed: () {

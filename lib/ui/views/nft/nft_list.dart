@@ -9,7 +9,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
 import 'package:aewallet/ui/views/nft/preview/nft_card.dart';
 import 'package:aewallet/ui/views/nft/preview/nft_preview.dart';
-import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
+import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';

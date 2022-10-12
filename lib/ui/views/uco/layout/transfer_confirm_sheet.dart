@@ -1,4 +1,4 @@
-// ignore_for_file: cancel_subscriptions, avoid_unnecessary_containers
+// ignore_for_file: cancel_subscriptions, always_specify_types
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
@@ -9,11 +9,17 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/token_transfer_wallet.dart';
+import 'package:aewallet/model/uco_transfer_wallet.dart';
+import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/layout/token_transfer_list.dart';
+import 'package:aewallet/ui/views/uco/bloc/transaction_builder.dart';
+import 'package:aewallet/ui/views/uco/layout/uco_transfer_list.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -27,25 +33,34 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Project imports:
-
-class AddNFTCollectionConfirm extends ConsumerStatefulWidget {
-  const AddNFTCollectionConfirm({
+class TransferConfirmSheet extends ConsumerStatefulWidget {
+  const TransferConfirmSheet({
     super.key,
-    required this.token,
+    required this.lastAddress,
+    required this.typeTransfer,
     required this.feeEstimation,
+    required this.symbol,
+    this.title,
+    this.ucoTransferList,
+    this.tokenTransferList,
+    this.message,
   });
 
-  final Token? token;
+  final String? lastAddress;
+  final String? typeTransfer;
+  final String? title;
   final double? feeEstimation;
+  final String? message;
+  final String? symbol;
+  final List<UCOTransferWallet>? ucoTransferList;
+  final List<TokenTransferWallet>? tokenTransferList;
 
   @override
-  ConsumerState<AddNFTCollectionConfirm> createState() =>
-      _AddNFTCollectionConfirmState();
+  ConsumerState<TransferConfirmSheet> createState() =>
+      _TransferConfirmSheetState();
 }
 
-class _AddNFTCollectionConfirmState
-    extends ConsumerState<AddNFTCollectionConfirm> {
+class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   bool? animationOpen;
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
@@ -55,66 +70,101 @@ class _AddNFTCollectionConfirmState
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      _doAdd();
+      _doSend();
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
+        .listen((TransactionSendEvent event) async {
+      final theme = ref.read(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
-        if (animationOpen!) {
-          Navigator.of(context).pop();
-        }
-
-        UIUtil.showSnackbar(
-          event.response!,
-          context,
-          ref,
-          theme.text!,
-          theme.snackBarShadow!,
-          duration: const Duration(seconds: 5),
-        );
-        Navigator.of(context).pop();
-      } else {
-        if (event.response == 'ok' &&
-            TransactionConfirmation.isEnoughConfirmations(
-              event.nbConfirmations ?? 0,
-              event.maxConfirmations ?? 0,
-            )) {
-          UIUtil.showSnackbar(
-            event.nbConfirmations == 1
-                ? AppLocalization.of(context)!
-                    .transactionConfirmed1
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString())
-                : AppLocalization.of(context)!
-                    .transactionConfirmed
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString()),
-            context,
-            ref,
-            theme.text!,
-            theme.snackBarShadow!,
-            duration: const Duration(milliseconds: 5000),
-          );
-          setState(() {
-            StateContainer.of(context).requestUpdate();
-          });
-          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-        } else {
-          UIUtil.showSnackbar(
-            AppLocalization.of(context)!.notEnoughConfirmations,
-            context,
-            ref,
-            theme.text!,
-            theme.snackBarShadow!,
-          );
-          Navigator.of(context).pop();
-        }
+        _showSendFailed(event, theme);
+        return;
       }
+
+      if (event.response == 'ok' &&
+          TransactionConfirmation.isEnoughConfirmations(
+            event.nbConfirmations!,
+            event.maxConfirmations!,
+          )) {
+        await _showSendSucceed(event, theme);
+        return;
+      }
+
+      _showNotEnoughConfirmation(theme);
     });
+  }
+
+  void _showNotEnoughConfirmation(BaseTheme theme) {
+    UIUtil.showSnackbar(
+      AppLocalization.of(context)!.notEnoughConfirmations,
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+    );
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _showSendSucceed(
+    TransactionSendEvent event,
+    BaseTheme theme,
+  ) async {
+    UIUtil.showSnackbar(
+      event.nbConfirmations == 1
+          ? AppLocalization.of(context)!
+              .transferConfirmed1
+              .replaceAll('%1', event.nbConfirmations.toString())
+              .replaceAll('%2', event.maxConfirmations.toString())
+          : AppLocalization.of(context)!
+              .transferConfirmed
+              .replaceAll('%1', event.nbConfirmations.toString())
+              .replaceAll('%2', event.maxConfirmations.toString()),
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+      duration: const Duration(milliseconds: 5000),
+    );
+    if (widget.typeTransfer == 'TOKEN') {
+      final transaction = await sl
+          .get<ApiService>()
+          .getLastTransaction(event.transactionAddress!);
+
+      final token = await sl.get<ApiService>().getToken(
+            transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
+            request: 'id',
+          );
+      StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .removeftInfosOffChain(token.id);
+    }
+    setState(() {
+      StateContainer.of(context).requestUpdate();
+    });
+    Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+  }
+
+  void _showSendFailed(
+    TransactionSendEvent event,
+    BaseTheme theme,
+  ) {
+    // Send failed
+    if (animationOpen!) {
+      Navigator.of(context).pop();
+    }
+    UIUtil.showSnackbar(
+      event.response!,
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+      duration: const Duration(seconds: 5),
+    );
+    Navigator.of(context).pop();
   }
 
   void _destroyBus() {
@@ -162,57 +212,54 @@ class _AddNFTCollectionConfirmState
       child: Column(
         children: <Widget>[
           SheetHeader(
-            title: localizations.createNFTCollection,
+            title: widget.title ?? localizations.transfering,
           ),
           Expanded(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 20),
-                Text(
-                  '${localizations.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                  style: theme.textStyleSize14W100Primary,
-                ),
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: Text(
-                    localizations.addNFTCollectionConfirmationMessage,
-                    style: theme.textStyleSize14W600Primary,
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40, top: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        localizations.tokenName,
-                        style: theme.textStyleSize14W600Primary,
-                      ),
-                      Text(
-                        widget.token!.name!,
-                        style: theme.textStyleSize14W100Primary,
-                      ),
-                    ],
-                  ),
+                SizedBox(
+                  child: widget.typeTransfer == 'UCO'
+                      ? UCOTransferListWidget(
+                          listUcoTransfer: widget.ucoTransferList,
+                          feeEstimation: widget.feeEstimation,
+                        )
+                      : widget.typeTransfer == 'TOKEN'
+                          ? TokenTransferListWidget(
+                              listTokenTransfer: widget.tokenTransferList,
+                              feeEstimation: widget.feeEstimation,
+                              symbol: widget.symbol,
+                            )
+                          : const SizedBox(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40, top: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        localizations.tokenSymbol,
-                        style: theme.textStyleSize14W600Primary,
-                      ),
-                      Text(
-                        widget.token!.symbol!,
-                        style: theme.textStyleSize14W100Primary,
-                      ),
-                    ],
+                if (widget.message!.isNotEmpty)
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 20,
+                      bottom: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          localizations.sendMessageConfirmHeader,
+                          style: theme.textStyleSize14W600Primary,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          widget.message!,
+                          style: theme.textStyleSize14W600Primary,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),
@@ -230,8 +277,8 @@ class _AddNFTCollectionConfirmState
                       localizations.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
-                        // Authenticate
                         final preferences = await Preferences.getInstance();
+                        // Authenticate
                         final authMethod = preferences.getAuthMethod();
                         final auth = await AuthFactory.authenticate(
                           context,
@@ -243,7 +290,7 @@ class _AddNFTCollectionConfirmState
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
                         }
                       },
-                    )
+                    ),
                   ],
                 ),
                 Row(
@@ -269,10 +316,13 @@ class _AddNFTCollectionConfirmState
     );
   }
 
-  Future<void> _doAdd() async {
+  Future<void> _doSend() async {
     _showSendingAnimation(context);
     final seed = await StateContainer.of(context).getSeed();
+    final ucoTransferList = widget.ucoTransferList!;
+    final tokenTransferList = widget.tokenTransferList!;
     final originPrivateKey = sl.get<ApiService>().getOriginKey();
+
     final keychain = await sl.get<ApiService>().getKeychain(seed!);
     final nameEncoded = Uri.encodeFull(
       StateContainer.of(context)
@@ -287,39 +337,33 @@ class _AddNFTCollectionConfirmState
             ))
         .chainLength!;
 
-    final transaction = Transaction(
-      type: 'token',
-      data: Transaction.initData(),
+    final transaction = await TransferTransactionBuilder.build(
+      message: widget.message!,
+      index: index,
+      keychain: keychain,
+      originPrivateKey: originPrivateKey,
+      serviceName: service,
+      tokenTransferList: tokenTransferList,
+      ucoTransferList: ucoTransferList,
     );
-    final content = tokenToJsonForTxDataContent(
-      Token(
-        name: widget.token!.name,
-        supply: toBigInt(widget.token!.tokenProperties!.length),
-        symbol: widget.token!.symbol,
-        tokenProperties: widget.token!.tokenProperties,
-        type: 'non-fungible',
-      ),
-    );
-    transaction.setContent(content);
-
-    final signedTx = keychain
-        .buildTransaction(transaction, service, index)
-        .originSign(originPrivateKey);
 
     final preferences = await Preferences.getInstance();
-    final transactionSender = PhoenixTransactionSender(
+
+    final TransactionSenderInterface transactionSender =
+        PhoenixTransactionSender(
       phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
       websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );
 
     transactionSender.send(
-      transaction: signedTx,
+      transaction: transaction,
       onConfirmation: (confirmation) async {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
-            transactionType: TransactionSendEventType.token,
+            transactionType: TransactionSendEventType.transfer,
             response: 'ok',
             nbConfirmations: confirmation.nbConfirmations,
+            transactionAddress: transaction.address,
             maxConfirmations: confirmation.maxConfirmations,
           ),
         );
@@ -329,7 +373,8 @@ class _AddNFTCollectionConfirmState
           connectivity: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType.token,
+                transactionType: TransactionSendEventType
+                    .token, // TODO(reddwarf03): is it the right type ?
                 response: AppLocalization.of(context)!.noConnection,
                 nbConfirmations: 0,
               ),
@@ -338,7 +383,7 @@ class _AddNFTCollectionConfirmState
           invalidConfirmation: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType.token,
+                transactionType: TransactionSendEventType.transfer,
                 nbConfirmations: 0,
                 maxConfirmations: 0,
                 response: 'ko',
@@ -348,7 +393,8 @@ class _AddNFTCollectionConfirmState
           other: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType.token,
+                transactionType: TransactionSendEventType
+                    .token, // TODO(reddwarf03): is it the right type ?
                 response: AppLocalization.of(context)!.keychainNotExistWarning,
                 nbConfirmations: 0,
               ),
@@ -357,7 +403,7 @@ class _AddNFTCollectionConfirmState
           orElse: () {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType.token,
+                transactionType: TransactionSendEventType.transfer,
                 response: '',
                 nbConfirmations: 0,
               ),

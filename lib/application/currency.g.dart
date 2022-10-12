@@ -29,21 +29,21 @@ class _SystemHash {
   }
 }
 
-String $_selectedCurrencyHash() => r'15900e065789bf109739af5817cc7ee6983d36fb';
+String $_selectedCurrencyHash() => r'95d5d20a11f8ac25fb9816ebfd2d3abf54117085';
 
 /// See also [_selectedCurrency].
-final _selectedCurrencyProvider = AutoDisposeProvider<AvailableCurrency>(
+final _selectedCurrencyProvider = Provider<AvailableCurrency>(
   _selectedCurrency,
   name: r'_selectedCurrencyProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_selectedCurrencyHash,
 );
-typedef _SelectedCurrencyRef = AutoDisposeProviderRef<AvailableCurrency>;
-String $_selectCurrencyHash() => r'e6fee8be372142ac68eae59bc6170b580f38986e';
+typedef _SelectedCurrencyRef = ProviderRef<AvailableCurrency>;
+String $_selectCurrencyHash() => r'21c528a3776e12d8fe49deda14aef37d8668b905';
 
 /// See also [_selectCurrency].
-class _SelectCurrencyProvider extends AutoDisposeFutureProvider<void> {
+class _SelectCurrencyProvider extends FutureProvider<void> {
   _SelectCurrencyProvider({
     required this.currency,
   }) : super(
@@ -75,7 +75,7 @@ class _SelectCurrencyProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
-typedef _SelectCurrencyRef = AutoDisposeFutureProviderRef<void>;
+typedef _SelectCurrencyRef = FutureProviderRef<void>;
 
 /// See also [_selectCurrency].
 final _selectCurrencyProvider = _SelectCurrencyFamily();
@@ -92,7 +92,7 @@ class _SelectCurrencyFamily extends Family<AsyncValue<void>> {
   }
 
   @override
-  AutoDisposeFutureProvider<void> getProviderOverride(
+  FutureProvider<void> getProviderOverride(
     covariant _SelectCurrencyProvider provider,
   ) {
     return call(

@@ -263,8 +263,10 @@ class StateContainerState extends ConsumerState<StateContainer> {
     });
 
     if (forceUpdateChart && showPriceChart) {
-      await chartInfos!.updateCoinsChart(selectedCurrency.currency.name,
-          option: idChartOption!);
+      await chartInfos!.updateCoinsChart(
+        selectedCurrency.currency.name,
+        option: idChartOption!,
+      );
     }
   }
 

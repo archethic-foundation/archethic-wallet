@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -12,22 +13,20 @@ import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/util/confirmations/subscription_channel.dart';
+import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class KeychainUtil {
-  Future<Transaction?> createKeyChainAccess(
+  Future<void> createKeyChainAccess(
     String? seed,
     String? name,
     String keychainAddress,
     String originPrivateKey,
     Keychain keychain,
-    SubscriptionChannel subscriptionChannel,
   ) async {
     /// Create Keychain Access for wallet
     final accessKeychainTx = sl.get<ApiService>().newAccessKeychainTransaction(
@@ -36,39 +35,41 @@ class KeychainUtil {
           hexToUint8List(originPrivateKey),
         );
 
-    void waitConfirmationsKeychainAccess(QueryResult event) {
-      final params = <String, Object>{
-        'keychainAddress': keychainAddress,
-        'keychain': keychain
-      };
-
-      waitConfirmations(
-        event,
-        TransactionSendEventType.keychainAccess,
-        params: params,
-      );
-    }
-
-    subscriptionChannel.addSubscriptionTransactionConfirmed(
-      accessKeychainTx.address!,
-      waitConfirmationsKeychainAccess,
+    final preferences = await Preferences.getInstance();
+    final TransactionSenderInterface transactionSender =
+        PhoenixTransactionSender(
+      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );
 
-    await Future.delayed(const Duration(seconds: 1));
-
-    // ignore: unused_local_variable
-    final transactionStatusKeychainAccess =
-        await sl.get<ApiService>().sendTx(accessKeychainTx);
-
-    return accessKeychainTx;
+    dev.log('>>> Create access <<< ${accessKeychainTx.address}');
+    transactionSender.send(
+      transaction: accessKeychainTx,
+      onConfirmation: (event) async {
+        onConfirmation(
+          event,
+          transactionSender,
+          TransactionSendEventType.keychainAccess,
+          params: <String, Object>{
+            'keychainAddress': keychainAddress,
+            'keychain': keychain
+          },
+        );
+      },
+      onError: (error) async {
+        onError(
+          error,
+          transactionSender,
+          TransactionSendEventType.keychainAccess,
+        );
+      },
+    );
   }
 
   Future<void> createKeyChain(
     String? seed,
     String? name,
     String originPrivateKey,
-    Preferences preferences,
-    SubscriptionChannel subscriptionChannel,
   ) async {
     /// Get Wallet KeyPair
     final walletKeyPair = deriveKeyPair(seed!, 0);
@@ -100,29 +101,36 @@ class KeychainUtil {
           derivationPath: kDerivationPath,
         );
 
-    void waitConfirmationsKeychain(QueryResult event) {
-      final params = <String, Object>{
-        'keychainAddress': keychainTransaction.address!,
-        'originPrivateKey': originPrivateKey,
-        'keychain': keychain
-      };
-      waitConfirmations(
-        event,
-        TransactionSendEventType.keychain,
-        params: params,
-      );
-    }
-
-    subscriptionChannel.addSubscriptionTransactionConfirmed(
-      keychainTransaction.address!,
-      waitConfirmationsKeychain,
+    final preferences = await Preferences.getInstance();
+    final TransactionSenderInterface transactionSender =
+        PhoenixTransactionSender(
+      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );
 
-    await Future.delayed(const Duration(seconds: 1));
-
-    // ignore: unused_local_variable
-    final transactionStatusKeychain =
-        await sl.get<ApiService>().sendTx(keychainTransaction);
+    dev.log('>>> Create keychain <<< ${keychainTransaction.address}');
+    transactionSender.send(
+      transaction: keychainTransaction,
+      onConfirmation: (event) async {
+        onConfirmation(
+          event,
+          transactionSender,
+          TransactionSendEventType.keychain,
+          params: <String, Object>{
+            'keychainAddress': keychainTransaction.address!,
+            'originPrivateKey': originPrivateKey,
+            'keychain': keychain
+          },
+        );
+      },
+      onError: (error) async {
+        onError(
+          error,
+          transactionSender,
+          TransactionSendEventType.keychain,
+        );
+      },
+    );
   }
 
   Future<AppWallet?> addAccountInKeyChain(
@@ -352,40 +360,36 @@ class KeychainUtil {
     return currentAppWallet;
   }
 
-  void waitConfirmations(
-    QueryResult event,
+  void onConfirmation(
+    TransactionConfirmation confirmation,
+    TransactionSenderInterface transactionSender,
     TransactionSendEventType transactionSendEventType, {
     Map<String, Object>? params,
   }) {
-    var nbConfirmations = 0;
-    var maxConfirmations = 0;
-    if (event.data != null && event.data!['transactionConfirmed'] != null) {
-      if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations =
-            event.data!['transactionConfirmed']['nbConfirmations'];
-      }
-      if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations =
-            event.data!['transactionConfirmed']['maxConfirmations'];
-      }
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: transactionSendEventType,
-          response: 'ok',
-          nbConfirmations: nbConfirmations,
-          maxConfirmations: maxConfirmations,
-          params: params,
-        ),
-      );
-    } else {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: transactionSendEventType,
-          nbConfirmations: 0,
-          maxConfirmations: 0,
-          response: 'ko',
-        ),
-      );
-    }
+    EventTaxiImpl.singleton().fire(
+      TransactionSendEvent(
+        transactionType: transactionSendEventType,
+        response: 'ok',
+        nbConfirmations: confirmation.nbConfirmations,
+        maxConfirmations: confirmation.maxConfirmations,
+        params: params,
+      ),
+    );
+  }
+
+  void onError(
+    TransactionError error,
+    TransactionSenderInterface transactionSender,
+    TransactionSendEventType transactionSendEventType, {
+    Map<String, Object>? params,
+  }) {
+    EventTaxiImpl.singleton().fire(
+      TransactionSendEvent(
+        transactionType: transactionSendEventType,
+        nbConfirmations: 0,
+        maxConfirmations: 0,
+        response: 'ko',
+      ),
+    );
   }
 }
