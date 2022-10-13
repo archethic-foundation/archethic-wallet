@@ -49,42 +49,44 @@ class ContactDetail extends ConsumerWidget {
                   top: 10,
                   start: 10,
                 ),
-                child: TextButton(
-                  onPressed: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
-                        );
-                    AppDialogs.showConfirmDialog(
-                      context,
-                      ref,
-                      localizations.removeContact,
-                      localizations.removeContactConfirmation
-                          .replaceAll('%1', contact.name!),
-                      localizations.yes,
-                      () async {
-                        ContactProviders.deleteContact(contact: contact);
-                        StateContainer.of(context)
-                            .requestUpdate(forceUpdateChart: false);
-                        UIUtil.showSnackbar(
-                          localizations.contactRemoved
-                              .replaceAll('%1', contact.name!),
-                          context,
-                          ref,
-                          theme.text!,
-                          theme.snackBarShadow!,
-                        );
-                        Navigator.of(context).pop();
-                      },
-                      cancelText: localizations.no,
-                    );
-                  },
-                  child: FaIcon(
-                    FontAwesomeIcons.trash,
-                    size: 24,
-                    color: theme.text,
-                  ),
-                ),
+                child: contact.type == 'keychainService'
+                    ? const SizedBox()
+                    : TextButton(
+                        onPressed: () {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                StateContainer.of(context).activeVibrations,
+                              );
+                          AppDialogs.showConfirmDialog(
+                            context,
+                            ref,
+                            localizations.removeContact,
+                            localizations.removeContactConfirmation
+                                .replaceAll('%1', contact.name!),
+                            localizations.yes,
+                            () async {
+                              ContactProviders.deleteContact(contact: contact);
+                              StateContainer.of(context)
+                                  .requestUpdate(forceUpdateChart: false);
+                              UIUtil.showSnackbar(
+                                localizations.contactRemoved
+                                    .replaceAll('%1', contact.name!),
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                              Navigator.of(context).pop();
+                            },
+                            cancelText: localizations.no,
+                          );
+                        },
+                        child: FaIcon(
+                          FontAwesomeIcons.trash,
+                          size: 24,
+                          color: theme.text,
+                        ),
+                      ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 25),
