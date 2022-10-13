@@ -196,6 +196,7 @@ class AppService {
       if (transaction.inputs != null) {
         for (final transactionInput in transaction.inputs!) {
           if (transactionInput.from != transaction.address &&
+              // TODO (reddwarf03): Voir ce point avec la PR d'Apoorv
               transactionInput.spent == false &&
               (transactionInput.tokenAddress == null ||
                   transactionInput.from != transactionInput.tokenAddress)) {

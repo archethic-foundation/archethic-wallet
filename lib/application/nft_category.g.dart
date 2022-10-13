@@ -43,18 +43,18 @@ final _nftCategoryRepositoryProvider =
 );
 typedef _NftCategoryRepositoryRef
     = AutoDisposeProviderRef<NFTCategoryRepository>;
-String $_fetchNftCategoryHash() => r'9fcec85c19e33e04a9e5b85414e9d193e9c45687';
+String $_fetchNftCategoryHash() => r'5d5f3a4ae7adcb91bbf6f18be01db1e7578f8a2c';
 
 /// See also [_fetchNftCategory].
 class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
-  _FetchNftCategoryProvider(
-    this.context,
-    this.account,
-  ) : super(
+  _FetchNftCategoryProvider({
+    required this.context,
+    required this.account,
+  }) : super(
           (ref) => _fetchNftCategory(
             ref,
-            context,
-            account,
+            context: context,
+            account: account,
           ),
           from: _fetchNftCategoryProvider,
           name: r'_fetchNftCategoryProvider',
@@ -92,13 +92,13 @@ final _fetchNftCategoryProvider = _FetchNftCategoryFamily();
 class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
   _FetchNftCategoryFamily();
 
-  _FetchNftCategoryProvider call(
-    BuildContext context,
-    Account account,
-  ) {
+  _FetchNftCategoryProvider call({
+    required BuildContext context,
+    required Account account,
+  }) {
     return _FetchNftCategoryProvider(
-      context,
-      account,
+      context: context,
+      account: account,
     );
   }
 
@@ -107,8 +107,8 @@ class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
     covariant _FetchNftCategoryProvider provider,
   ) {
     return call(
-      provider.context,
-      provider.account,
+      context: provider.context,
+      account: provider.account,
     );
   }
 
@@ -273,7 +273,7 @@ class _GetListByDefaultFamily extends Family<List<NftCategory>> {
 }
 
 String $_updateNftCategoryListHash() =>
-    r'272713722e4824c85cef043076c582ad89748ccb';
+    r'c3d71c277aee70da60524f024c6de9d48a60288c';
 
 /// See also [_updateNftCategoryList].
 class _UpdateNftCategoryListProvider extends AutoDisposeFutureProvider<void> {
@@ -350,4 +350,84 @@ class _UpdateNftCategoryListFamily extends Family<AsyncValue<void>> {
 
   @override
   String? get name => r'_updateNftCategoryListProvider';
+}
+
+String $_getDescriptionHeaderHash() =>
+    r'185dffe43711a9f602f89b67628173a12657f14a';
+
+/// See also [_getDescriptionHeader].
+class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
+  _GetDescriptionHeaderProvider({
+    required this.context,
+    required this.id,
+  }) : super(
+          (ref) => _getDescriptionHeader(
+            ref,
+            context: context,
+            id: id,
+          ),
+          from: _getDescriptionHeaderProvider,
+          name: r'_getDescriptionHeaderProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_getDescriptionHeaderHash,
+        );
+
+  final BuildContext context;
+  final int id;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetDescriptionHeaderProvider &&
+        other.context == context &&
+        other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, context.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _GetDescriptionHeaderRef = AutoDisposeProviderRef<String>;
+
+/// See also [_getDescriptionHeader].
+final _getDescriptionHeaderProvider = _GetDescriptionHeaderFamily();
+
+class _GetDescriptionHeaderFamily extends Family<String> {
+  _GetDescriptionHeaderFamily();
+
+  _GetDescriptionHeaderProvider call({
+    required BuildContext context,
+    required int id,
+  }) {
+    return _GetDescriptionHeaderProvider(
+      context: context,
+      id: id,
+    );
+  }
+
+  @override
+  AutoDisposeProvider<String> getProviderOverride(
+    covariant _GetDescriptionHeaderProvider provider,
+  ) {
+    return call(
+      context: provider.context,
+      id: provider.id,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_getDescriptionHeaderProvider';
 }

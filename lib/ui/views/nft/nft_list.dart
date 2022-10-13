@@ -6,9 +6,10 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
-import 'package:aewallet/ui/views/nft/preview/nft_card.dart';
-import 'package:aewallet/ui/views/nft/preview/nft_preview.dart';
+import 'package:aewallet/ui/views/nft/nft_card.dart';
+import 'package:aewallet/ui/views/nft/nft_preview.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
 import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -176,6 +177,10 @@ class _NFTListState extends ConsumerState<NFTList> {
                         StateContainer.of(context).curPrimaryCurrency,
                   ),
                 );*/
+
+                  // TODO(reddwarf03): See with Charly how to reinit the form
+                  ref.invalidate(NftCreationProvider.nftCreation);
+
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
                         StateContainer.of(context).activeVibrations,
@@ -185,7 +190,7 @@ class _NFTListState extends ConsumerState<NFTList> {
                     arguments: {
                       'currentNftCategoryIndex':
                           widget.currentNftCategoryIndex!,
-                      'process': NFTCreationProcessType.single,
+                      'process': NFTCreationProcessTypeEnum.single,
                       'primaryCurrency':
                           StateContainer.of(context).curPrimaryCurrency
                     },
