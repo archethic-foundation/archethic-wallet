@@ -30,8 +30,7 @@ import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
-import 'package:aewallet/util/confirmations/subscription_channel.dart';
+import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mime_util.dart';
@@ -85,8 +84,6 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
   Token token = Token();
   int tabActiveIndex = 0;
   bool? isPressed;
-
-  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
@@ -154,7 +151,7 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
-            ConfirmationsUtil.isEnoughConfirmations(
+            TransactionConfirmation.isEnoughConfirmations(
               event.nbConfirmations!,
               event.maxConfirmations!,
             )) {
@@ -391,174 +388,175 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
   }
 
   Future<void> _doAdd() async {
-    try {
-      _showSendingAnimation(context);
-      final seed = await StateContainer.of(context).getSeed();
-      final originPrivateKey = sl.get<ApiService>().getOriginKey();
-      final keychain = await sl.get<ApiService>().getKeychain(seed!);
-      final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .name!,
-      );
-      final service = 'archethic-wallet-$nameEncoded';
-      final index = (await sl.get<ApiService>().getTransactionIndex(
-                uint8ListToHex(keychain.deriveAddress(service)),
-              ))
-          .chainLength!;
+    // try {
+    //   _showSendingAnimation(context);
+    //   final seed = await StateContainer.of(context).getSeed();
+    //   final originPrivateKey = sl.get<ApiService>().getOriginKey();
+    //   final keychain = await sl.get<ApiService>().getKeychain(seed!);
+    //   final nameEncoded = Uri.encodeFull(
+    //     StateContainer.of(context)
+    //         .appWallet!
+    //         .appKeychain!
+    //         .getAccountSelected()!
+    //         .name!,
+    //   );
+    //   final service = 'archethic-wallet-$nameEncoded';
+    //   final index = (await sl.get<ApiService>().getTransactionIndex(
+    //             uint8ListToHex(keychain.deriveAddress(service)),
+    //           ))
+    //       .chainLength!;
 
-      final transaction =
-          Transaction(type: 'token', data: Transaction.initData());
+    //   final transaction =
+    //       Transaction(type: 'token', data: Transaction.initData());
 
-      final aesKey = uint8ListToHex(
-        Uint8List.fromList(
-          List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
-        ),
-      );
+    //   final aesKey = uint8ListToHex(
+    //     Uint8List.fromList(
+    //       List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+    //     ),
+    //   );
 
-      final walletKeyPair = keychain.deriveKeypair(service);
+    //   final walletKeyPair = keychain.deriveKeypair(service);
 
-      for (final tokenPropertyWithAccessInfos
-          in tokenPropertyWithAccessInfosList) {
-        if (tokenPropertyWithAccessInfos.publicKeysList != null &&
-            tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty) {
-          final authorizedPublicKeys = List<String>.empty(growable: true);
-          authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
+    //   for (final tokenPropertyWithAccessInfos
+    //       in tokenPropertyWithAccessInfosList) {
+    //     if (tokenPropertyWithAccessInfos.publicKeysList != null &&
+    //         tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty) {
+    //       final authorizedPublicKeys = List<String>.empty(growable: true);
+    //       authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
-          for (final publicKey
-              in tokenPropertyWithAccessInfos.publicKeysList!) {
-            authorizedPublicKeys.add(publicKey);
-          }
+    //       for (final publicKey
+    //           in tokenPropertyWithAccessInfos.publicKeysList!) {
+    //         authorizedPublicKeys.add(publicKey);
+    //       }
 
-          final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
-          for (final key in authorizedPublicKeys) {
-            authorizedKeys.add(
-              AuthorizedKey(
-                encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
-                publicKey: key,
-              ),
-            );
-          }
+    //       final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
+    //       for (final key in authorizedPublicKeys) {
+    //         authorizedKeys.add(
+    //           AuthorizedKey(
+    //             encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
+    //             publicKey: key,
+    //           ),
+    //         );
+    //       }
 
-          transaction.addOwnership(
-            aesEncrypt(
-              tokenPropertyWithAccessInfos.tokenProperty!.toString(),
-              aesKey,
-            ),
-            authorizedKeys,
-          );
-        }
-      }
+    //       transaction.addOwnership(
+    //         aesEncrypt(
+    //           tokenPropertyWithAccessInfos.tokenProperty!.toString(),
+    //           aesKey,
+    //         ),
+    //         authorizedKeys,
+    //       );
+    //     }
+    //   }
 
-      final clearTokenPropertyList = <String, dynamic>{};
-      for (final tokenPropertyWithAccessInfos
-          in tokenPropertyWithAccessInfosList) {
-        if (tokenPropertyWithAccessInfos.publicKeysList == null ||
-            tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
-          clearTokenPropertyList
-              .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
-        }
-      }
+    //   final clearTokenPropertyList = <String, dynamic>{};
+    //   for (final tokenPropertyWithAccessInfos
+    //       in tokenPropertyWithAccessInfosList) {
+    //     if (tokenPropertyWithAccessInfos.publicKeysList == null ||
+    //         tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
+    //       clearTokenPropertyList
+    //           .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
+    //     }
+    //   }
 
-      final content = tokenToJsonForTxDataContent(
-        Token(
-          name: token.name,
-          supply: token.supply,
-          type: token.type,
-          symbol: token.symbol,
-          tokenProperties: clearTokenPropertyList,
-        ),
-      );
-      transaction.setContent(content);
-      final signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
+    //   final content = tokenToJsonForTxDataContent(
+    //     Token(
+    //       name: token.name,
+    //       supply: token.supply,
+    //       type: token.type,
+    //       symbol: token.symbol,
+    //       tokenProperties: clearTokenPropertyList,
+    //     ),
+    //   );
+    //   transaction.setContent(content);
+    //   final signedTx = keychain
+    //       .buildTransaction(transaction, service, index)
+    //       .originSign(originPrivateKey);
 
-      var transactionStatus = TransactionStatus();
+    //   var transactionStatus = TransactionStatus();
 
-      final preferences = await Preferences.getInstance();
-      await subscriptionChannel.connect(
-        await preferences.getNetwork().getPhoenixHttpLink(),
-        await preferences.getNetwork().getWebsocketUri(),
-      );
+    //   final preferences = await Preferences.getInstance();
 
-      void waitConfirmationsNFT(QueryResult event) {
-        waitConfirmations(event, transactionAddress: signedTx.address);
-      }
+    //   await subscriptionChannel.connect(
+    //     await preferences.getNetwork().getPhoenixHttpLink(),
+    //     await preferences.getNetwork().getWebsocketUri(),
+    //   );
 
-      subscriptionChannel.addSubscriptionTransactionConfirmed(
-        transaction.address!,
-        waitConfirmationsNFT,
-      );
+    //   void waitConfirmationsNFT(QueryResult event) {
+    //     waitConfirmations(event, transactionAddress: signedTx.address);
+    //   }
 
-      await Future.delayed(const Duration(seconds: 1));
+    //   subscriptionChannel.addSubscriptionTransactionConfirmed(
+    //     transaction.address!,
+    //     waitConfirmationsNFT,
+    //   );
 
-      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
+    //   await Future.delayed(const Duration(seconds: 1));
 
-      if (transactionStatus.status == 'invalid') {
-        EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(
-            transactionType: TransactionSendEventType.token,
-            response: '',
-            nbConfirmations: 0,
-          ),
-        );
-        subscriptionChannel.close();
-      }
-    } on ArchethicConnectionException {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          response: AppLocalization.of(context)!.noConnection,
-          nbConfirmations: 0,
-        ),
-      );
-      subscriptionChannel.close();
-    } on Exception {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          response: AppLocalization.of(context)!.keychainNotExistWarning,
-          nbConfirmations: 0,
-        ),
-      );
-      subscriptionChannel.close();
-    }
+    //   transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
+
+    //   if (transactionStatus.status == 'invalid') {
+    //     EventTaxiImpl.singleton().fire(
+    //       TransactionSendEvent(
+    //         transactionType: TransactionSendEventType.token,
+    //         response: '',
+    //         nbConfirmations: 0,
+    //       ),
+    //     );
+    //     subscriptionChannel.close();
+    //   }
+    // } on ArchethicConnectionException {
+    //   EventTaxiImpl.singleton().fire(
+    //     TransactionSendEvent(
+    //       transactionType: TransactionSendEventType.token,
+    //       response: AppLocalization.of(context)!.noConnection,
+    //       nbConfirmations: 0,
+    //     ),
+    //   );
+    //   subscriptionChannel.close();
+    // } on Exception {
+    //   EventTaxiImpl.singleton().fire(
+    //     TransactionSendEvent(
+    //       transactionType: TransactionSendEventType.token,
+    //       response: AppLocalization.of(context)!.keychainNotExistWarning,
+    //       nbConfirmations: 0,
+    //     ),
+    //   );
+    //   subscriptionChannel.close();
+    // }
   }
 
-  void waitConfirmations(QueryResult event, {String? transactionAddress}) {
-    var nbConfirmations = 0;
-    var maxConfirmations = 0;
-    if (event.data != null && event.data!['transactionConfirmed'] != null) {
-      if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations =
-            event.data!['transactionConfirmed']['nbConfirmations'];
-      }
-      if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations =
-            event.data!['transactionConfirmed']['maxConfirmations'];
-      }
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          response: 'ok',
-          transactionAddress: transactionAddress,
-          nbConfirmations: nbConfirmations,
-          maxConfirmations: maxConfirmations,
-        ),
-      );
-    } else {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          nbConfirmations: 0,
-          maxConfirmations: 0,
-          response: 'ko',
-        ),
-      );
-    }
-    subscriptionChannel.close();
-  }
+  // void waitConfirmations(QueryResult event, {String? transactionAddress}) {
+  //   var nbConfirmations = 0;
+  //   var maxConfirmations = 0;
+  //   if (event.data != null && event.data!['transactionConfirmed'] != null) {
+  //     if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
+  //       nbConfirmations =
+  //           event.data!['transactionConfirmed']['nbConfirmations'];
+  //     }
+  //     if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
+  //       maxConfirmations =
+  //           event.data!['transactionConfirmed']['maxConfirmations'];
+  //     }
+  //     EventTaxiImpl.singleton().fire(
+  //       TransactionSendEvent(
+  //         transactionType: TransactionSendEventType.token,
+  //         response: 'ok',
+  //         transactionAddress: transactionAddress,
+  //         nbConfirmations: nbConfirmations,
+  //         maxConfirmations: maxConfirmations,
+  //       ),
+  //     );
+  //   } else {
+  //     EventTaxiImpl.singleton().fire(
+  //       TransactionSendEvent(
+  //         transactionType: TransactionSendEventType.token,
+  //         nbConfirmations: 0,
+  //         maxConfirmations: 0,
+  //         response: 'ko',
+  //       ),
+  //     );
+  //   }
+  //   subscriptionChannel.close();
+  // }
 }
