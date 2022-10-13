@@ -49,7 +49,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
-  bool keychainAccesRequested = false;
+  bool keychainAccessRequested = false;
+  bool newWalletRequested = false;
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -106,10 +107,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
               duration: const Duration(milliseconds: 5000),
             );
 
-            if (keychainAccesRequested) break;
+            if (keychainAccessRequested) break;
 
             setState(() {
-              keychainAccesRequested = true;
+              keychainAccessRequested = true;
             });
             await KeychainUtil().createKeyChainAccess(
               widget.seed,
@@ -135,6 +136,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
               duration: const Duration(milliseconds: 5000),
             );
 
+            if (newWalletRequested) break;
+
+            setState(() {
+              newWalletRequested = true;
+            });
             var error = false;
             try {
               StateContainer.of(context).appWallet =
