@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Project imports:
+import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -56,6 +57,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       context: context,
                       ref: ref,
                       widget: const ConfigureCategoryList(),
+                      onDisposed: () =>
+                          ref.invalidate(NftCategoryProviders.fetchNftCategory),
                     );
                   },
                 )
@@ -127,11 +130,11 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 }
 
-class MainAppBarIconBalanceShowed extends ConsumerWidget {
+class MainAppBarIconBalanceShowed extends StatelessWidget {
   const MainAppBarIconBalanceShowed({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(UiIcons.eye),
       onPressed: () async {

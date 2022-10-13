@@ -69,7 +69,9 @@ class ThemeDialog {
 
 extension ThemePickerItemExt on PickerItem {
   static PickerItem fromThemeOption(
-      BuildContext context, ThemeOptions themeOption) {
+    BuildContext context,
+    ThemeOptions themeOption,
+  ) {
     final themeSetting = ThemeSetting(themeOption);
     if (themeOption == ThemeOptions.flat ||
         themeOption == ThemeOptions.byzantineVioletFlat ||

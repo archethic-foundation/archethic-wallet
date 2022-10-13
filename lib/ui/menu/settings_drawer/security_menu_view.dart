@@ -52,8 +52,10 @@ class SecurityMenuView extends ConsumerWidget {
                         ),
                       ),
                       //Security Header Text
-                      Text(localizations.securityHeader,
-                          style: theme.textStyleSize24W700EquinoxPrimary),
+                      Text(
+                        localizations.securityHeader,
+                        style: theme.textStyleSize24W700EquinoxPrimary,
+                      ),
                     ],
                   ),
                 ],
@@ -76,8 +78,10 @@ class SecurityMenuView extends ConsumerWidget {
                             top: 15,
                             bottom: 15,
                           ),
-                          child: Text(localizations.preferences,
-                              style: theme.textStyleSize20W700EquinoxPrimary),
+                          child: Text(
+                            localizations.preferences,
+                            style: theme.textStyleSize20W700EquinoxPrimary,
+                          ),
                         ),
                       ),
                       /* const _SettingsListItem.spacer(),
@@ -132,8 +136,8 @@ class SecurityMenuView extends ConsumerWidget {
                                 // TODO(Chralu): Déplacer la selection du theme par défaut dans le UseCase `logout`
                                 await ref.read(
                                   ThemeProviders.selectTheme(
-                                          theme: ThemeOptions.dark)
-                                      .future,
+                                    theme: ThemeOptions.dark,
+                                  ).future,
                                 );
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                   '/',

@@ -14,10 +14,10 @@ NFTCategoryRepository _nftCategoryRepository(_NftCategoryRepositoryRef ref) =>
 
 @riverpod
 List<NftCategory> _fetchNftCategory(
-  _FetchNftCategoryRef ref,
-  BuildContext context,
-  Account account,
-) {
+  _FetchNftCategoryRef ref, {
+  required BuildContext context,
+  required Account account,
+}) {
   final nftCategoryAccountSelectedList = ref
       .read(_nftCategoryRepositoryProvider)
       .getListNftCategory(context, account);
@@ -67,10 +67,22 @@ Future<void> _updateNftCategoryList(
   required List<NftCategory> nftCategoryListCustomized,
   required Account account,
 }) async {
-  return ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
+  ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
         nftCategoryListCustomized,
         account,
       );
+  return;
+}
+
+@riverpod
+String _getDescriptionHeader(
+  _GetDescriptionHeaderRef ref, {
+  required BuildContext context,
+  required int id,
+}) {
+  return ref
+      .read(_nftCategoryRepositoryProvider)
+      .getDescriptionHeader(context, id);
 }
 
 class NFTCategoryRepository {
@@ -171,8 +183,10 @@ class NFTCategoryRepository {
 }
 
 abstract class NftCategoryProviders {
+  static final nftCategoryRepository = _nftCategoryRepositoryProvider;
   static final fetchNftCategory = _fetchNftCategoryProvider;
   static final getNbNFTInCategory = _getNbNFTInCategoryProvider;
   static final getListByDefault = _getListByDefaultProvider;
   static final updateNftCategoryList = _updateNftCategoryListProvider;
+  static final getDescriptionHeader = _getDescriptionHeaderProvider;
 }

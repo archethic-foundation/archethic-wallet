@@ -228,8 +228,8 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                                         // TODO(Chralu): move that behavior to `logOut` usecase.
                                         await ref.read(
                                           ThemeProviders.selectTheme(
-                                                  theme: ThemeOptions.dark)
-                                              .future,
+                                            theme: ThemeOptions.dark,
+                                          ).future,
                                         );
                                         Navigator.of(context)
                                             .pushNamedAndRemoveUntil(

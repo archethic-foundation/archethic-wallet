@@ -22,8 +22,8 @@ import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/lock_screen.dart';
-import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
 import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 // Flutter imports:
@@ -206,7 +206,7 @@ class _AppState extends ConsumerState<App> {
                           : args['currentNftCategoryIndex'] as int,
                   process: args['process'] == null
                       ? null
-                      : args['process'] as NFTCreationProcessType,
+                      : args['process'] as NFTCreationProcessTypeEnum,
                   primaryCurrency: args['primaryCurrency'] == null
                       ? null
                       : args['primaryCurrency'] as PrimaryCurrencySetting,

@@ -84,7 +84,11 @@ class AuthentificationMethodDialog {
                     } else {
                       Navigator.pop(context, value.value);
                       await getDialog(
-                          context, ref, hasBiometrics, curAuthMethod);
+                        context,
+                        ref,
+                        hasBiometrics,
+                        curAuthMethod,
+                      );
                     }
                     break;
                   case AuthMethod.pin:
@@ -100,10 +104,15 @@ class AuthentificationMethodDialog {
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(
-                          context, ref, hasBiometrics, curAuthMethod);
+                        context,
+                        ref,
+                        hasBiometrics,
+                        curAuthMethod,
+                      );
                     } else {
                       preferences.setAuthMethod(
-                          const AuthenticationMethod(AuthMethod.pin));
+                        const AuthenticationMethod(AuthMethod.pin),
+                      );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
                         (Route<dynamic> route) => false,
@@ -130,7 +139,11 @@ class AuthentificationMethodDialog {
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(
-                          context, ref, hasBiometrics, curAuthMethod);
+                        context,
+                        ref,
+                        hasBiometrics,
+                        curAuthMethod,
+                      );
                     } else {
                       preferences.setAuthMethod(
                         const AuthenticationMethod(AuthMethod.password),
@@ -152,7 +165,11 @@ class AuthentificationMethodDialog {
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(
-                          context, ref, hasBiometrics, curAuthMethod);
+                        context,
+                        ref,
+                        hasBiometrics,
+                        curAuthMethod,
+                      );
                     } else {
                       preferences.setAuthMethod(
                         const AuthenticationMethod(

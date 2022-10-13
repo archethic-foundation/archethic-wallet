@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -28,13 +29,12 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final listNftCategory = ref.read(
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final listNftCategory = ref.watch(
       NftCategoryProviders.fetchNftCategory(
-        context,
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!,
+        context: context,
+        account: accountSelected!,
       ),
     );
 
@@ -52,7 +52,10 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
                   bottom: MediaQuery.of(context).size.height * 0.035,
                   top: 20,
                 ),
-                child: ReorderableWidget(nftCategory: listNftCategory),
+                child: ReorderableWidget(
+                  nftCategory: listNftCategory,
+                  accountSelected: accountSelected,
+                ),
               ),
             ),
           ),
@@ -62,38 +65,30 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   }
 }
 
-class ReorderableWidget extends ConsumerStatefulWidget {
-  const ReorderableWidget({super.key, required this.nftCategory});
+class ReorderableWidget extends ConsumerWidget {
+  const ReorderableWidget({
+    super.key,
+    required this.nftCategory,
+    required this.accountSelected,
+  });
 
   final List<NftCategory> nftCategory;
+  final Account accountSelected;
 
   @override
-  ConsumerState<ReorderableWidget> createState() => _ReorderableWidgetState();
-}
-
-class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
-  List<NftCategory>? nftCategoryToHidden =
-      List<NftCategory>.empty(growable: true);
-
-  List<NftCategory>? nftCategoryToSort =
-      List<NftCategory>.empty(growable: true);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
 
-    nftCategoryToHidden = ref.read(
-      NftCategoryProviders.fetchNftCategory(context, accountSelected),
+    final nftCategoryToHidden = ref.read(
+      NftCategoryProviders.getListByDefault(
+        context: context,
+      ),
     );
 
-    nftCategoryToSort = widget.nftCategory;
-    for (final nftCategory in nftCategoryToSort!) {
-      nftCategoryToHidden!
+    final nftCategoryToSort = nftCategory;
+    for (final nftCategory in nftCategoryToSort) {
+      nftCategoryToHidden
           .removeWhere((element) => element.id == nftCategory.id);
     }
 
@@ -120,19 +115,19 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
-                  setState(() {
-                    final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
-                    nftCategoryToSort!.insert(newIndex, nftCategory);
-                  });
+
+                  final nftCategory = nftCategoryToSort.removeAt(oldIndex);
+                  nftCategoryToSort.insert(newIndex, nftCategory);
+
                   ref.watch(
                     NftCategoryProviders.updateNftCategoryList(
-                      nftCategoryListCustomized: nftCategoryToSort!,
+                      nftCategoryListCustomized: nftCategoryToSort,
                       account: accountSelected,
                     ),
                   );
                 },
                 children: [
-                  for (NftCategory nftCategory in nftCategoryToSort!)
+                  for (NftCategory nftCategory in nftCategoryToSort)
                     Column(
                       key: ValueKey(nftCategory),
                       children: [
@@ -146,15 +141,14 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                                   icon: const Icon(Icons.remove_circle),
                                   hoverColor: theme.text,
                                   onPressed: () async {
-                                    nftCategoryToSort!.removeWhere(
+                                    nftCategoryToSort.removeWhere(
                                       (element) => element.id == nftCategory.id,
                                     );
-                                    setState(() {});
                                     ref.watch(
                                       NftCategoryProviders
                                           .updateNftCategoryList(
                                         nftCategoryListCustomized:
-                                            nftCategoryToSort!,
+                                            nftCategoryToSort,
                                         account: accountSelected,
                                       ),
                                     );
@@ -165,8 +159,7 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                               : const SizedBox(),
                           trailing: !kIsWeb && Platform.isIOS
                               ? ReorderableDragStartListener(
-                                  index:
-                                      nftCategoryToSort!.indexOf(nftCategory),
+                                  index: nftCategoryToSort.indexOf(nftCategory),
                                   child: const Icon(Icons.drag_handle),
                                 )
                               : null,
@@ -191,7 +184,7 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
-                  for (NftCategory nftCategory in nftCategoryToHidden!)
+                  for (NftCategory nftCategory in nftCategoryToHidden)
                     if (nftCategory.id != 0)
                       Column(
                         key: ValueKey(nftCategory),
@@ -204,16 +197,15 @@ class _ReorderableWidgetState extends ConsumerState<ReorderableWidget> {
                             leading: IconButton(
                               icon: const Icon(Icons.add_circle),
                               onPressed: () async {
-                                nftCategoryToHidden!.removeWhere(
+                                nftCategoryToHidden.removeWhere(
                                   (element) => element.id == nftCategory.id,
                                 );
-                                nftCategoryToSort!.add(nftCategory);
+                                nftCategoryToSort.add(nftCategory);
 
-                                setState(() {});
                                 ref.watch(
                                   NftCategoryProviders.updateNftCategoryList(
                                     nftCategoryListCustomized:
-                                        nftCategoryToSort!,
+                                        nftCategoryToSort,
                                     account: accountSelected,
                                   ),
                                 );

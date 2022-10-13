@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -13,13 +13,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class NftCategoryMenu extends ConsumerWidget {
-  const NftCategoryMenu({super.key, required this.nftCategories});
-  final List<NftCategory> nftCategories;
+  const NftCategoryMenu({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final nftCategories = ref.watch(
+      NftCategoryProviders.fetchNftCategory(
+        context: context,
+        account: accountSelected!,
+      ),
+    );
 
     return SliverPadding(
       key: expandedKey,
@@ -35,10 +42,7 @@ class NftCategoryMenu extends ConsumerWidget {
             var count = 0;
             count = ref.read(
               NftCategoryProviders.getNbNFTInCategory(
-                account: StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!,
+                account: accountSelected,
                 categoryNftIndex: index,
               ),
             );

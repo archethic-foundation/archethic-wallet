@@ -78,7 +78,8 @@ class AboutMenuView extends ConsumerWidget {
                               builder: (context, ref, child) {
                                 final asyncVersionString = ref.watch(
                                   versionStringProvider(
-                                      AppLocalization.of(context)!),
+                                    AppLocalization.of(context)!,
+                                  ),
                                 );
 
                                 return Text(

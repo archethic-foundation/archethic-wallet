@@ -134,14 +134,7 @@ class NFTTab extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        NftCategoryMenu(
-                          nftCategories: ref.watch(
-                            FetchNftCategoryProvider(
-                              account: accountSelected,
-                              context: context,
-                            ),
-                          ),
-                        ),
+                        const NftCategoryMenu(),
                       ],
                     ),
                   ),
