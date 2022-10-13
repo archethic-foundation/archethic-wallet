@@ -169,7 +169,7 @@ class ArchethicTransactionSender
         }
 
         dev.log(
-            '>>> Transaction confirmed $address <<< ${transactionEvent.nbConfirmations} / ${transactionEvent.maxConfirmations}');
+            '>>> Transaction confirmed $address <<< ${transactionEvent.nbConfirmations} / ${transactionEvent.maxConfirmations}',);
 
         if (transactionEvent.isFullyConfirmed) close();
 

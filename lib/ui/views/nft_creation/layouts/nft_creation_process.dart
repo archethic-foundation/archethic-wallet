@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
@@ -47,7 +46,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 part 'nft_creation_process_confirmation_tab.dart';
 part 'nft_creation_process_import_tab.dart';

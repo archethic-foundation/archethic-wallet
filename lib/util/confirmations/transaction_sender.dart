@@ -16,7 +16,7 @@ part 'phoenix_link.dart';
 part 'transaction_sender.freezed.dart';
 
 typedef TransactionConfirmationHandler = Future<void> Function(
-    TransactionConfirmation confirmation);
+    TransactionConfirmation confirmation,);
 typedef TransactionErrorHandler = Future<void> Function(TransactionError error);
 
 abstract class TransactionSenderInterface {
