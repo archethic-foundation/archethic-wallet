@@ -350,7 +350,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     final preferences = await Preferences.getInstance();
 
     final TransactionSenderInterface transactionSender =
-        PhoenixTransactionSender(
+        ArchethicTransactionSender(
       phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
       websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );
