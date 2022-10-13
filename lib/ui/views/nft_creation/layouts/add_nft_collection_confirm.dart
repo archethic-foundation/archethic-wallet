@@ -307,7 +307,7 @@ class _AddNFTCollectionConfirmState
         .originSign(originPrivateKey);
 
     final preferences = await Preferences.getInstance();
-    final transactionSender = PhoenixTransactionSender(
+    final transactionSender = ArchethicTransactionSender(
       phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
       websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );

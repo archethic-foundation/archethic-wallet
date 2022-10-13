@@ -11,7 +11,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 
 part 'transaction_event.dart';
-part 'phoenix_transaction_sender.dart';
+part 'archethic_transaction_sender.dart';
 part 'phoenix_link.dart';
 part 'transaction_sender.freezed.dart';
 

@@ -37,7 +37,7 @@ class KeychainUtil {
 
     final preferences = await Preferences.getInstance();
     final TransactionSenderInterface transactionSender =
-        PhoenixTransactionSender(
+        ArchethicTransactionSender(
       phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
       websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );
@@ -103,7 +103,7 @@ class KeychainUtil {
 
     final preferences = await Preferences.getInstance();
     final TransactionSenderInterface transactionSender =
-        PhoenixTransactionSender(
+        ArchethicTransactionSender(
       phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
       websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );

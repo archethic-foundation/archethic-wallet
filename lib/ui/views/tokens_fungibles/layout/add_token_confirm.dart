@@ -325,7 +325,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
     final preferences = await Preferences.getInstance();
 
     final TransactionSenderInterface transactionSender =
-        PhoenixTransactionSender(
+        ArchethicTransactionSender(
       phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
       websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
     );

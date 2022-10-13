@@ -1,10 +1,10 @@
 part of 'transaction_sender.dart';
 
 /// [TransactionSenderInterface] which talks to the Phoenix API.
-class PhoenixTransactionSender
-    with PhoenixTransactionParser
+class ArchethicTransactionSender
+    with ArchethicTransactionParser
     implements TransactionSenderInterface {
-  PhoenixTransactionSender({
+  ArchethicTransactionSender({
     required this.phoenixHttpEndpoint,
     required this.websocketEndpoint,
   });
@@ -181,8 +181,8 @@ class PhoenixTransactionSender
   }
 }
 
-/// Handles conversion from Phoenix DTOs to Models
-mixin PhoenixTransactionParser {
+/// Handles conversion from Archethic DTOs to Models
+mixin ArchethicTransactionParser {
   TransactionError _errorDtoToModel(Map<String, dynamic>? data) {
     try {
       final transactionError = data?['transactionError'];
