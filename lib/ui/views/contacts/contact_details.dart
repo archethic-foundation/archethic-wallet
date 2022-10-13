@@ -9,7 +9,7 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
+import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';

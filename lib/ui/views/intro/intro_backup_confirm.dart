@@ -18,8 +18,7 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
-import 'package:aewallet/util/confirmations/subscription_channel.dart';
+import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -50,8 +49,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
-  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
-  SubscriptionChannel subscriptionChannel2 = SubscriptionChannel();
+  bool keychainAccesRequested = false;
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -75,104 +73,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
         );
         Navigator.of(context).pop(false);
       } else {
-        if (event.response == 'ok' &&
-            ConfirmationsUtil.isEnoughConfirmations(
+        if (event.response != 'ok' ||
+            !TransactionConfirmation.isEnoughConfirmations(
               event.nbConfirmations!,
               event.maxConfirmations!,
             )) {
-          switch (event.transactionType!) {
-            case TransactionSendEventType.keychain:
-              UIUtil.showSnackbar(
-                event.nbConfirmations == 1
-                    ? localizations.keychainCreationTransactionConfirmed1
-                        .replaceAll('%1', event.nbConfirmations.toString())
-                        .replaceAll('%2', event.maxConfirmations.toString())
-                    : localizations.keychainCreationTransactionConfirmed
-                        .replaceAll('%1', event.nbConfirmations.toString())
-                        .replaceAll('%2', event.maxConfirmations.toString()),
-                context,
-                ref,
-                theme.text!,
-                theme.snackBarShadow!,
-                duration: const Duration(milliseconds: 5000),
-              );
-
-              final preferences = await Preferences.getInstance();
-              await subscriptionChannel2.connect(
-                await preferences.getNetwork().getPhoenixHttpLink(),
-                await preferences.getNetwork().getWebsocketUri(),
-              );
-
-              await KeychainUtil().createKeyChainAccess(
-                widget.seed,
-                widget.name,
-                event.params!['keychainAddress']! as String,
-                event.params!['originPrivateKey']! as String,
-                event.params!['keychain']! as Keychain,
-                subscriptionChannel2,
-              );
-              break;
-            case TransactionSendEventType.keychainAccess:
-              UIUtil.showSnackbar(
-                event.nbConfirmations == 1
-                    ? localizations.keychainAccessCreationTransactionConfirmed1
-                        .replaceAll('%1', event.nbConfirmations.toString())
-                        .replaceAll('%2', event.maxConfirmations.toString())
-                    : localizations.keychainAccessCreationTransactionConfirmed
-                        .replaceAll('%1', event.nbConfirmations.toString())
-                        .replaceAll('%2', event.maxConfirmations.toString()),
-                context,
-                ref,
-                theme.text!,
-                theme.snackBarShadow!,
-                duration: const Duration(milliseconds: 5000),
-              );
-
-              var error = false;
-              try {
-                StateContainer.of(context).appWallet =
-                    await AppWallet().createNewAppWallet(
-                  event.params!['keychainAddress']! as String,
-                  event.params!['keychain']! as Keychain,
-                  widget.name,
-                );
-              } catch (e) {
-                error = true;
-                UIUtil.showSnackbar(
-                  '${localizations.sendError} ($e)',
-                  context,
-                  ref,
-                  theme.text!,
-                  theme.snackBarShadow!,
-                );
-              }
-              if (error == false) {
-                await StateContainer.of(context).requestUpdate();
-
-                StateContainer.of(context).checkTransactionInputs(
-                  localizations.transactionInputNotification,
-                );
-                final preferences = await Preferences.getInstance();
-                StateContainer.of(context).bottomBarCurrentPage =
-                    preferences.getMainScreenCurrentPage();
-                StateContainer.of(context).bottomBarPageController =
-                    PageController(
-                  initialPage: StateContainer.of(context).bottomBarCurrentPage,
-                );
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/home',
-                  (Route<dynamic> route) => false,
-                );
-              } else {
-                Navigator.of(context).pop();
-              }
-              break;
-            case TransactionSendEventType.transfer:
-              break;
-            case TransactionSendEventType.token:
-              break;
-          }
-        } else {
           UIUtil.showSnackbar(
             localizations.notEnoughConfirmations,
             context,
@@ -181,6 +86,98 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             theme.snackBarShadow!,
           );
           Navigator.of(context).pop();
+          return;
+        }
+
+        switch (event.transactionType!) {
+          case TransactionSendEventType.keychain:
+            UIUtil.showSnackbar(
+              event.nbConfirmations == 1
+                  ? localizations.keychainCreationTransactionConfirmed1
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString())
+                  : localizations.keychainCreationTransactionConfirmed
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString()),
+              context,
+              ref,
+              theme.text!,
+              theme.snackBarShadow!,
+              duration: const Duration(milliseconds: 5000),
+            );
+
+            if (keychainAccesRequested) break;
+
+            setState(() {
+              keychainAccesRequested = true;
+            });
+            await KeychainUtil().createKeyChainAccess(
+              widget.seed,
+              widget.name,
+              event.params!['keychainAddress']! as String,
+              event.params!['originPrivateKey']! as String,
+              event.params!['keychain']! as Keychain,
+            );
+            break;
+          case TransactionSendEventType.keychainAccess:
+            UIUtil.showSnackbar(
+              event.nbConfirmations == 1
+                  ? localizations.keychainAccessCreationTransactionConfirmed1
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString())
+                  : localizations.keychainAccessCreationTransactionConfirmed
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString()),
+              context,
+              ref,
+              theme.text!,
+              theme.snackBarShadow!,
+              duration: const Duration(milliseconds: 5000),
+            );
+
+            var error = false;
+            try {
+              StateContainer.of(context).appWallet =
+                  await AppWallet().createNewAppWallet(
+                event.params!['keychainAddress']! as String,
+                event.params!['keychain']! as Keychain,
+                widget.name,
+              );
+            } catch (e) {
+              error = true;
+              UIUtil.showSnackbar(
+                '${localizations.sendError} ($e)',
+                context,
+                ref,
+                theme.text!,
+                theme.snackBarShadow!,
+              );
+            }
+            if (error == false) {
+              await StateContainer.of(context).requestUpdate();
+
+              StateContainer.of(context).checkTransactionInputs(
+                localizations.transactionInputNotification,
+              );
+              final preferences = await Preferences.getInstance();
+              StateContainer.of(context).bottomBarCurrentPage =
+                  preferences.getMainScreenCurrentPage();
+              StateContainer.of(context).bottomBarPageController =
+                  PageController(
+                initialPage: StateContainer.of(context).bottomBarCurrentPage,
+              );
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/home',
+                (Route<dynamic> route) => false,
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
+            break;
+          case TransactionSendEventType.transfer:
+            break;
+          case TransactionSendEventType.token:
+            break;
         }
       }
     });
@@ -194,8 +191,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   @override
   void dispose() {
     _destroyBus();
-    subscriptionChannel.close();
-    subscriptionChannel2.close();
     super.dispose();
   }
 
@@ -567,19 +562,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
-      final preferences = await Preferences.getInstance();
-
-      await subscriptionChannel.connect(
-        await preferences.getNetwork().getPhoenixHttpLink(),
-        await preferences.getNetwork().getWebsocketUri(),
-      );
-
       await KeychainUtil().createKeyChain(
         widget.seed,
         widget.name,
         originPrivateKey,
-        preferences,
-        subscriptionChannel,
       );
     } catch (e) {
       error = true;

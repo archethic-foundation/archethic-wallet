@@ -52,7 +52,7 @@ final _selectedThemeOptionProvider = AutoDisposeProvider<ThemeOptions>(
       : $_selectedThemeOptionHash,
 );
 typedef _SelectedThemeOptionRef = AutoDisposeProviderRef<ThemeOptions>;
-String $_selectThemeHash() => r'e1271b3e8fd93b4bdc9fb3ecdea16512ba07846f';
+String $_selectThemeHash() => r'ada1768c271c36fffe29a77d213a49a262bfd17d';
 
 /// See also [_selectTheme].
 class _SelectThemeProvider extends AutoDisposeFutureProvider<void> {

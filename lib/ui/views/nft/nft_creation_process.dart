@@ -6,7 +6,6 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
-import 'package:aewallet/util/confirmations/subscription_channel.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Flutter imports:
@@ -68,8 +67,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   int tabActiveIndex = 0;
   double feeEstimation = 0;
   bool? isPressed;
-
-  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;

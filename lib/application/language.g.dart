@@ -29,18 +29,18 @@ class _SystemHash {
   }
 }
 
-String $_selectedLanguageHash() => r'37b06015c4bf351709d070fe2c623cff28e376fc';
+String $_selectedLanguageHash() => r'51be0bff0d8a3b5a0b4b9d4f6017fffe0e1d6ae5';
 
 /// See also [_selectedLanguage].
-final _selectedLanguageProvider = AutoDisposeProvider<LanguageSetting>(
+final _selectedLanguageProvider = Provider<LanguageSetting>(
   _selectedLanguage,
   name: r'_selectedLanguageProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_selectedLanguageHash,
 );
-typedef _SelectedLanguageRef = AutoDisposeProviderRef<LanguageSetting>;
-String $_selectedLocaleHash() => r'6721d4f8a355bb8ff4f7bb52dfbc024f5ac22ae3';
+typedef _SelectedLanguageRef = ProviderRef<LanguageSetting>;
+String $_selectedLocaleHash() => r'b1fa4f810786d439212304efb93e2e420b1d1993';
 
 /// Resolves the selected locale
 ///
@@ -48,25 +48,25 @@ String $_selectedLocaleHash() => r'6721d4f8a355bb8ff4f7bb52dfbc024f5ac22ae3';
 /// Otherwise returns selected locale.
 ///
 /// Copied from [_selectedLocale].
-final _selectedLocaleProvider = AutoDisposeProvider<Locale>(
+final _selectedLocaleProvider = Provider<Locale>(
   _selectedLocale,
   name: r'_selectedLocaleProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_selectedLocaleHash,
 );
-typedef _SelectedLocaleRef = AutoDisposeProviderRef<Locale>;
-String $_availableLocalesHash() => r'15ade716063e8ec29321174cee3d0b617b4c6955';
+typedef _SelectedLocaleRef = ProviderRef<Locale>;
+String $_availableLocalesHash() => r'6410cb4632cd07d7908474099e9c859a83fc02a8';
 
 /// See also [_availableLocales].
-final _availableLocalesProvider = AutoDisposeProvider<List<Locale>>(
+final _availableLocalesProvider = Provider<List<Locale>>(
   _availableLocales,
   name: r'_availableLocalesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_availableLocalesHash,
 );
-typedef _AvailableLocalesRef = AutoDisposeProviderRef<List<Locale>>;
+typedef _AvailableLocalesRef = ProviderRef<List<Locale>>;
 String $_selectLanguageHash() => r'5e6cedcf0ff3db0cfdf81ea28905965eeda99ec2';
 
 /// See also [_selectLanguage].

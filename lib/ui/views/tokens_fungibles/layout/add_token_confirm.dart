@@ -14,12 +14,12 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
-import 'package:aewallet/util/confirmations/subscription_channel.dart';
+import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/preferences.dart';
@@ -29,7 +29,6 @@ import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 
@@ -53,8 +52,6 @@ class AddTokenConfirm extends ConsumerStatefulWidget {
 
 class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
   bool? animationOpen;
-
-  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
@@ -87,7 +84,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
-            ConfirmationsUtil.isEnoughConfirmations(
+            TransactionConfirmation.isEnoughConfirmations(
               event.nbConfirmations!,
               event.maxConfirmations!,
             )) {
@@ -132,7 +129,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
     if (_sendTxSub != null) {
       _sendTxSub!.cancel();
     }
-    subscriptionChannel.close();
   }
 
   @override
@@ -297,130 +293,96 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
   }
 
   Future<void> _doAdd() async {
-    try {
-      _showSendingAnimation(context);
-      final seed = await StateContainer.of(context).getSeed();
-      final originPrivateKey = sl.get<ApiService>().getOriginKey();
-      final keychain = await sl.get<ApiService>().getKeychain(seed!);
-      final nameEncoded = Uri.encodeFull(
-        StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .name!,
-      );
-      final service = 'archethic-wallet-$nameEncoded';
-      final index = (await sl.get<ApiService>().getTransactionIndex(
-                uint8ListToHex(keychain.deriveAddress(service)),
-              ))
-          .chainLength!;
+    _showSendingAnimation(context);
+    final seed = await StateContainer.of(context).getSeed();
+    final originPrivateKey = sl.get<ApiService>().getOriginKey();
+    final keychain = await sl.get<ApiService>().getKeychain(seed!);
+    final nameEncoded = Uri.encodeFull(
+      StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .name!,
+    );
+    final service = 'archethic-wallet-$nameEncoded';
+    final index = (await sl.get<ApiService>().getTransactionIndex(
+              uint8ListToHex(
+                keychain.deriveAddress(service),
+              ),
+            ))
+        .chainLength!;
 
-      final transaction =
-          Transaction(type: 'token', data: Transaction.initData());
-      final content = tokenToJsonForTxDataContent(
-        Token(
-          name: widget.tokenName,
-          supply: toBigInt(widget.tokenInitialSupply),
-          type: 'fungible',
-          symbol: widget.tokenSymbol,
-          tokenProperties: {},
-        ),
-      );
-      transaction.setContent(content);
-      final signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
+    final transaction = TokenTransaction.build(
+      keychain: keychain,
+      index: index,
+      originPrivateKey: originPrivateKey,
+      serviceName: service,
+      tokenName: widget.tokenName,
+      tokenInitialSupply: widget.tokenInitialSupply ?? 0,
+      tokenSymbol: widget.tokenSymbol,
+    );
 
-      var transactionStatus = TransactionStatus();
+    final preferences = await Preferences.getInstance();
 
-      final preferences = await Preferences.getInstance();
-      await subscriptionChannel.connect(
-        await preferences.getNetwork().getPhoenixHttpLink(),
-        await preferences.getNetwork().getWebsocketUri(),
-      );
+    final TransactionSenderInterface transactionSender =
+        PhoenixTransactionSender(
+      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+    );
 
-      subscriptionChannel.addSubscriptionTransactionConfirmed(
-        transaction.address!,
-        waitConfirmations,
-      );
-
-      await Future.delayed(const Duration(seconds: 1));
-
-      /*TransactionSender transactionSender = TransactionSender.init();
-      transactionSender
-          .on(
-              'confirmation',
-              (int nbConfirmations, int maxConfirmations) =>
-                  {print('nbConfirmations: $nbConfirmations')})
-          .on('error',
-              (String context, String reason) => {print('error: $reason')})
-          .on('sent', () => {print('success')})
-          .sendTx(signedTx, await preferences.getNetwork().getPhoenixHttpLink(),
-              await preferences.getNetwork().getWebsocketUri());*/
-
-      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
-
-      if (transactionStatus.status == 'invalid') {
+    await transactionSender.send(
+      transaction: transaction,
+      onConfirmation: (confirmation) async {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
             transactionType: TransactionSendEventType.token,
-            response: '',
-            nbConfirmations: 0,
+            response: 'ok',
+            nbConfirmations: confirmation.nbConfirmations,
+            maxConfirmations: confirmation.maxConfirmations,
           ),
         );
-        subscriptionChannel.close();
-      }
-    } on ArchethicConnectionException {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          response: AppLocalization.of(context)!.noConnection,
-          nbConfirmations: 0,
-        ),
-      );
-      subscriptionChannel.close();
-    } on Exception {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          response: AppLocalization.of(context)!.keychainNotExistWarning,
-          nbConfirmations: 0,
-        ),
-      );
-      subscriptionChannel.close();
-    }
-  }
-
-  void waitConfirmations(QueryResult event) {
-    var nbConfirmations = 0;
-    var maxConfirmations = 0;
-    if (event.data != null && event.data!['transactionConfirmed'] != null) {
-      if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-        nbConfirmations =
-            event.data!['transactionConfirmed']['nbConfirmations'];
-      }
-      if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-        maxConfirmations =
-            event.data!['transactionConfirmed']['maxConfirmations'];
-      }
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          response: 'ok',
-          nbConfirmations: nbConfirmations,
-          maxConfirmations: maxConfirmations,
-        ),
-      );
-    } else {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-          transactionType: TransactionSendEventType.token,
-          nbConfirmations: 0,
-          maxConfirmations: 0,
-          response: 'ko',
-        ),
-      );
-    }
-    subscriptionChannel.close();
+      },
+      onError: (error) async {
+        error.maybeMap(
+          connectivity: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: AppLocalization.of(context)!.noConnection,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          other: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: AppLocalization.of(context)!.keychainNotExistWarning,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          invalidConfirmation: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                nbConfirmations: 0,
+                maxConfirmations: 0,
+                response: 'ko',
+              ),
+            );
+          },
+          orElse: () {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: '',
+                nbConfirmations: 0,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

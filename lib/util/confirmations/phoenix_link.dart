@@ -1,10 +1,4 @@
-// Dart imports:
-import 'dart:async';
-import 'dart:developer';
-
-// Package imports:
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:phoenix_socket/phoenix_socket.dart';
+part of 'transaction_sender.dart';
 
 /// a link for subscriptions (or also mutations/queries) over phoenix channels
 class PhoenixLink extends Link {
@@ -77,7 +71,7 @@ class PhoenixLink extends Link {
         throw _parser.parseError(pushResponse.response as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {
-      log(e.toString(), error: e, stackTrace: stackTrace);
+      dev.log(e.toString(), error: e, stackTrace: stackTrace);
     } finally {
       await websocketSubscription?.cancel();
       await streamController?.close();
