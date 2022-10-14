@@ -91,7 +91,7 @@ class AboutMenuView extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      const _SettingsListItem.spacer(),
+                      /*const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutGeneralTermsAndConditions,
                         headingStyle: theme.textStyleSize16W600Primary,
@@ -118,7 +118,7 @@ class AboutMenuView extends ConsumerWidget {
                             localizations.aboutWalletServiceTerms,
                           );
                         },
-                      ),
+                      ),*/
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutPrivacyPolicy,
