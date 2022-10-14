@@ -33,20 +33,20 @@ class _NFTCreationProcessConfirmationTabState
       addNFTMessage = '';
 
       if (nftCreation.file == null && nftCreation.file!.keys.isEmpty) {
-        addNFTMessage = 'Veuillez importer un fichier ou une photo.';
+        addNFTMessage = localizations.nftAddConfirmationFileEmpty;
         isValid = false;
       } else {
         if (nftCreation.name.isEmpty) {
-          addNFTMessage = 'Le nom du NFT est obligatoire.';
+          addNFTMessage = localizations.nftNameEmpty;
           isValid = false;
         } else {
           if (MimeUtil.isImage(nftCreation.fileTypeMime) == false &&
               MimeUtil.isPdf(nftCreation.fileTypeMime) == false) {
-            addNFTMessage = "Le format n'est pas pris en charge.";
+            addNFTMessage = localizations.nftFormatNotSupportedEmpty;
             isValid = false;
           } else {
             if (nftCreation.fileSize! > 2500000) {
-              addNFTMessage = 'Le NFT ne peut excéder 2.5 Mo.';
+              addNFTMessage = localizations.nftSizeExceed;
               isValid = false;
             } else {
               // Estimation of fees

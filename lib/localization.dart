@@ -639,8 +639,8 @@ class AppLocalization {
         name: 'removeWalletAction');
   }
 
-  String get removeWalletAreYouSure {
-    return Intl.message('Are you sure?', name: 'removeWalletAreYouSure');
+  String get areYouSure {
+    return Intl.message('Are you sure?', name: 'areYouSure');
   }
 
   String get removeWalletReassurance {
@@ -1611,6 +1611,10 @@ class AppLocalization {
     return Intl.message('Photo', name: 'nftAddImportPhoto');
   }
 
+  String get nftAddImportCamera {
+    return Intl.message('Take a photo', name: 'nftAddImportCamera');
+  }
+
   String get nftAddImportUrl {
     return Intl.message('Url', name: 'nftAddImportUrl');
   }
@@ -1682,6 +1686,117 @@ class AppLocalization {
   String get createNFTConfirmation {
     return Intl.message('Are you sure you want to create this NFT?',
         name: 'createNFTConfirmation');
+  }
+
+  String get nftPropertiesRequiredByCategory {
+    return Intl.message('Properties required by the category:',
+        name: 'nftPropertiesRequiredByCategory');
+  }
+
+  String get nftAssetProtected1PublicKey {
+    return Intl.message(
+        'This asset is protected and accessible by 1 public key',
+        name: 'nftAssetProtected1PublicKey');
+  }
+
+  String get nftAssetProtectedPublicKeys {
+    return Intl.message(
+        'This asset is protected and accessible by %1 public keys',
+        name: 'nftAssetProtectedPublicKeys');
+  }
+
+  String get nftAssetNotProtected {
+    return Intl.message('This asset is accessible by everyone',
+        name: 'nftAssetNotProtected');
+  }
+
+  String get nftPropertyProtected1PublicKey {
+    return Intl.message(
+        'This property is protected and accessible by 1 public key',
+        name: 'nftPropertyProtected1PublicKey');
+  }
+
+  String get nftPropertyProtectedPublicKeys {
+    return Intl.message(
+        'This property is protected and accessible by %1 public keys',
+        name: 'nftPropertyProtectedPublicKeys');
+  }
+
+  String get nftPropertyNotProtected {
+    return Intl.message('This property is accessible by everyone',
+        name: 'nftPropertyNotProtected');
+  }
+
+  String get propertyAccessDescription {
+    return Intl.message(
+        'Add or remove public keys that can access this property.',
+        name: 'propertyAccessDescription');
+  }
+
+  String get propertyAccessAddAccess {
+    return Intl.message('Add access', name: 'propertyAccessAddAccess');
+  }
+
+  String get nftInfosDescription {
+    return Intl.message(
+        'Add to your NFT a name and a human readable description.',
+        name: 'nftInfosDescription');
+  }
+
+  String get nftPropertyNameEmpty {
+    return Intl.message('Please, enter a name.', name: 'nftPropertyNameEmpty');
+  }
+
+  String get nftPropertyValueEmpty {
+    return Intl.message('Please, enter a value.',
+        name: 'nftPropertyValueEmpty');
+  }
+
+  String get nftPropertyExists {
+    return Intl.message('This property already exists',
+        name: 'nftPropertyExists');
+  }
+
+  String get nftAddConfirmationFileEmpty {
+    return Intl.message('Veuillez importer un fichier ou une photo.',
+        name: 'nftAddConfirmationFileEmpty');
+  }
+
+  String get nftNameEmpty {
+    return Intl.message('Please, enter a name for the NFT.',
+        name: 'nftNameEmpty');
+  }
+
+  String get nftFormatNotSupportedEmpty {
+    return Intl.message("The format is not supported.",
+        name: 'nftFormatNotSupportedEmpty');
+  }
+
+  String get nftSizeExceed {
+    return Intl.message('The NFT cannot exceed 2.5 MB.', name: 'nftSizeExceed');
+  }
+
+  String get nftPropertyExplanation {
+    return Intl.message(
+        'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.',
+        name: 'nftPropertyExplanation');
+  }
+
+  String get publicKeyNotValid {
+    return Intl.message('The public key is not valid.',
+        name: 'publicKeyNotValid');
+  }
+
+  String get deleteFile {
+    return Intl.message('Delete file', name: 'deleteFile');
+  }
+
+  String get deleteProperty {
+    return Intl.message('Delete property', name: 'deleteProperty');
+  }
+
+  String get formatLabel {
+    return Intl.message('Format: ', name: 'formatLabel');
   }
 
   String get notEnoughConfirmations {

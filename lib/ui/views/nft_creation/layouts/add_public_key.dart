@@ -74,7 +74,7 @@ class AddPublicKey extends ConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Text(
-                              'Add or remove public keys that can access this property.',
+                              localizations.propertyAccessDescription,
                               style: theme.textStyleSize12W100Primary,
                               textAlign: TextAlign.justify,
                             ),
@@ -170,7 +170,7 @@ class AddPublicKey extends ConsumerWidget {
                                   context,
                                   ref,
                                   AppButtonType.primary,
-                                  'Add access',
+                                  localizations.propertyAccessAddAccess,
                                   Dimens.buttonBottomDimens,
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
@@ -184,7 +184,7 @@ class AddPublicKey extends ConsumerWidget {
                                           publicKeyAccessController.text,
                                         )) {
                                       UIUtil.showSnackbar(
-                                        'The public key is not valid.',
+                                        localizations.propertyAccessAddAccess,
                                         context,
                                         ref,
                                         theme.text!,
@@ -192,8 +192,9 @@ class AddPublicKey extends ConsumerWidget {
                                       );
                                     } else {
                                       final nftCreationNotifier = ref.watch(
-                                          NftCreationProvider
-                                              .nftCreation.notifier,);
+                                        NftCreationProvider
+                                            .nftCreation.notifier,
+                                      );
                                       nftCreationNotifier.addPublicKey(
                                         propertyName,
                                         publicKeyAccessController.text,
@@ -209,7 +210,7 @@ class AddPublicKey extends ConsumerWidget {
                                   context,
                                   ref,
                                   AppButtonType.primaryOutline,
-                                  'Add access',
+                                  localizations.propertyAccessAddAccess,
                                   Dimens.buttonBottomDimens,
                                   onPressed: () {},
                                 ),

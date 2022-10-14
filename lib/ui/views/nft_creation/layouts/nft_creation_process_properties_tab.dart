@@ -29,19 +29,19 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
       addNFTPropertyMessage = '';
 
       if (nftPropertyNameController.text.isEmpty) {
-        addNFTPropertyMessage = 'Le nom est obligatoire';
+        addNFTPropertyMessage = localizations.nftPropertyNameEmpty;
         return false;
       }
 
       if (nftPropertyValueController.text.isEmpty) {
-        addNFTPropertyMessage = 'La valeur est obligatoire';
+        addNFTPropertyMessage = localizations.nftPropertyValueEmpty;
         return false;
       }
 
       // TODO(reddwarf03): Add control
       /* if (nftCreation.properties.where(element) =>
           element.propertyName!.compareTo(nftPropertyNameController.text)) {
-        addNFTPropertyMessage = 'Le nom existe déjà';
+        addNFTPropertyMessage = localizations.nftPropertyExists;
         return false;
       }*/
 
@@ -57,7 +57,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Text(
-                'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.',
+                localizations.nftPropertyExplanation,
                 style: theme.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),

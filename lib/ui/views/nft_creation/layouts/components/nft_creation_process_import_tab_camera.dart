@@ -61,9 +61,8 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    // TODO(reddwarf03): externalize text
                     Text(
-                      'Take a photo',
+                      localizations.nftAddImportCamera,
                       style: theme.textStyleSize12W400Primary,
                     ),
                     const SizedBox(

@@ -1,4 +1,4 @@
-import 'package:aewallet/localization.dart';
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/public_key_line.dart';
 // Package imports:
@@ -17,7 +17,6 @@ class GetPublicKeys extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
     final property = ref
         .watch(NftCreationProvider.nftCreation)
         .properties

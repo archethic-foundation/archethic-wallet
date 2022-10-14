@@ -90,7 +90,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                                     left: 20,
                                   ),
                                   child: AutoSizeText(
-                                    'This asset is protected and accessible by 1 public key',
+                                    localizations.nftAssetProtected1PublicKey,
                                     style: theme.textStyleSize12W400Primary,
                                   ),
                                 )
@@ -102,7 +102,11 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                                     left: 20,
                                   ),
                                   child: AutoSizeText(
-                                    'This asset is protected and accessible by ${nftCreation.file!.values.length} public keys',
+                                    localizations.nftAssetProtectedPublicKeys
+                                        .replaceAll(
+                                            '%1',
+                                            nftCreation.file!.values.length
+                                                .toString()),
                                     style: theme.textStyleSize12W400Primary,
                                   ),
                                 )
@@ -119,49 +123,55 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                       left: 20,
                     ),
                     child: AutoSizeText(
-                      'This asset is accessible by everyone',
+                      localizations.nftAssetNotProtected,
                       style: theme.textStyleSize12W400Primary,
                     ),
                   ),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Container(
-                        alignment: Alignment.center,
+                    if (nftCreation.file!.values.first.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: theme.backgroundDark!.withOpacity(0.3),
+                            border: Border.all(
+                              color: theme.backgroundDarkest!.withOpacity(0.2),
+                              width: 2,
+                            ),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.key,
+                              color: theme.backgroundDarkest,
+                              size: 21,
+                            ),
+                            onPressed: () {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context).activeVibrations,
+                                  );
+                              Sheets.showAppHeightNineSheet(
+                                context: context,
+                                ref: ref,
+                                widget: const AddPublicKey(
+                                  propertyName: 'file',
+                                  propertyValue: '',
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox(
                         height: 40,
                         width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: theme.backgroundDark!.withOpacity(0.3),
-                          border: Border.all(
-                            color: theme.backgroundDarkest!.withOpacity(0.2),
-                            width: 2,
-                          ),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.key,
-                            color: theme.backgroundDarkest,
-                            size: 21,
-                          ),
-                          onPressed: () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
-                                );
-                            Sheets.showAppHeightNineSheet(
-                              context: context,
-                              ref: ref,
-                              widget: const AddPublicKey(
-                                propertyName: 'file',
-                                propertyValue: '',
-                              ),
-                            );
-                          },
-                        ),
                       ),
-                    ),
                     if (readOnly == false)
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
@@ -194,8 +204,8 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                               AppDialogs.showConfirmDialog(
                                   context,
                                   ref,
-                                  'Delete file',
-                                  'Are you sure ?',
+                                  localizations.deleteFile,
+                                  localizations.areYouSure,
                                   localizations.deleteOption, () {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,

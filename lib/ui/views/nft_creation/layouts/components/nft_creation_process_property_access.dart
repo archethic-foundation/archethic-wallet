@@ -99,7 +99,8 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                                     left: 20,
                                   ),
                                   child: AutoSizeText(
-                                    'This property is protected and accessible by 1 public key',
+                                    localizations
+                                        .nftPropertyProtected1PublicKey,
                                     style: theme.textStyleSize12W400Primary,
                                   ),
                                 )
@@ -111,7 +112,9 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                                     left: 20,
                                   ),
                                   child: AutoSizeText(
-                                    'This property is protected and accessible by ${publicKeys.length} public keys',
+                                    localizations.nftPropertyProtectedPublicKeys
+                                        .replaceAll(
+                                            '%1', publicKeys.length.toString()),
                                     style: theme.textStyleSize12W400Primary,
                                   ),
                                 )
@@ -120,7 +123,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                                 width: MediaQuery.of(context).size.width - 180,
                                 padding: const EdgeInsets.only(left: 20),
                                 child: AutoSizeText(
-                                  'This property is accessible by everyone',
+                                  localizations.nftPropertyNotProtected,
                                   style: theme.textStyleSize12W400Primary,
                                 ),
                               ),
@@ -132,54 +135,55 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                 ),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: theme.backgroundDark!.withOpacity(0.3),
-                          border: Border.all(
-                            color: theme.backgroundDarkest!.withOpacity(0.2),
-                            width: 2,
+                    if (publicKeys.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: theme.backgroundDark!.withOpacity(0.3),
+                            border: Border.all(
+                              color: theme.backgroundDarkest!.withOpacity(0.2),
+                              width: 2,
+                            ),
                           ),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.key,
-                            color: theme.backgroundDarkest,
-                            size: 21,
-                          ),
-                          onPressed: () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.key,
+                              color: theme.backgroundDarkest,
+                              size: 21,
+                            ),
+                            onPressed: () {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context).activeVibrations,
+                                  );
+                              if (readOnly) {
+                                Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  ref: ref,
+                                  widget: GetPublicKeys(
+                                    propertyName: propertyName,
+                                    propertyValue: propertyValue,
+                                  ),
                                 );
-                            if (readOnly) {
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                widget: GetPublicKeys(
-                                  propertyName: propertyName,
-                                  propertyValue: propertyValue,
-                                ),
-                              );
-                            } else {
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                widget: AddPublicKey(
-                                  propertyName: propertyName,
-                                  propertyValue: propertyValue,
-                                ),
-                              );
-                            }
-                          },
+                              } else {
+                                Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  ref: ref,
+                                  widget: AddPublicKey(
+                                    propertyName: propertyName,
+                                    propertyValue: propertyValue,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
                     if (readOnly == false)
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
@@ -212,8 +216,8 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                               AppDialogs.showConfirmDialog(
                                   context,
                                   ref,
-                                  'Delete property',
-                                  'Are you sure ?',
+                                  localizations.deleteProperty,
+                                  localizations.areYouSure,
                                   AppLocalization.of(context)!.deleteOption,
                                   () {
                                 sl.get<HapticUtil>().feedback(

@@ -128,7 +128,7 @@ class SecurityMenuView extends ConsumerWidget {
                             AppDialogs.showConfirmDialog(
                               context,
                               ref,
-                              localizations.removeWalletAreYouSure,
+                              localizations.areYouSure,
                               localizations.removeWalletReassurance,
                               localizations.yes,
                               () async {

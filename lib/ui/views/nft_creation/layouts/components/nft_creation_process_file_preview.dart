@@ -57,7 +57,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Align(
             child: Text(
-              'Format: ${nftCreation.fileTypeMime}',
+              '${localizations.formatLabel} ${nftCreation.fileTypeMime!}',
               style: theme.textStyleSize12W400Primary,
             ),
           ),

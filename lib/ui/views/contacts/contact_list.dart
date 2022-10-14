@@ -9,13 +9,13 @@ import 'package:aewallet/ui/views/contacts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/contact_details.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactsList extends ConsumerWidget {
   ContactsList(this.contactsController, this.contactsOpen, {super.key});
@@ -246,23 +246,23 @@ class _SingleContact extends ConsumerWidget {
                         Row(
                           children: [
                             if (contact.type == 'keychainService')
-                              FaIcon(
-                                FontAwesomeIcons.keycdn,
+                              Icon(
+                                UiIcons.keychain,
                                 color: theme.iconDrawer,
-                                size: 16,
+                                size: 30,
                               )
                             else
                               Icon(
-                                Icons.person,
+                                UiIcons.main,
                                 color: theme.iconDrawer,
-                                size: 16,
+                                size: 30,
                               ),
                             const SizedBox(
                               width: 10,
                             ),
                             Text(
                               contact.name!.replaceFirst('@', ''),
-                              style: theme.textStyleSize14W200Primary,
+                              style: theme.textStyleSize14W600Primary,
                             ),
                           ],
                         ),

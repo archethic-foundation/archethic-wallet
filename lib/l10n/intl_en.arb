@@ -426,8 +426,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "removeWalletAreYouSure": "Are you sure?",
-  "@removeWalletAreYouSure": {
+  "areYouSure": "Are you sure?",
+  "@areYouSure": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2078,6 +2078,246 @@
   },
   "noConnection": "The connection to the network could not be completed. Please check your network settings.",
   "@noConnection": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertiesRequiredByCategory": "Properties required by the category:",
+  "@nftPropertiesRequiredByCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAssetProtected1PublicKey": "This asset is protected and accessible by 1 public key",
+  "@nftAssetProtected1PublicKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAssetProtectedPublicKeys": "This asset is protected and accessible by %1 public keys",
+  "@nftAssetProtectedPublicKeys": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAssetNotProtected": "This asset is accessible by everyone",
+  "@nftAssetNotProtected": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyProtected1PublicKey": "This property is protected and accessible by 1 public key",
+  "@nftPropertyProtected1PublicKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyProtectedPublicKeys": "This property is protected and accessible by %1 public keys",
+  "@nftPropertyProtectedPublicKeys": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyNotProtected": "This property is accessible by everyone",
+  "@nftPropertyNotProtected": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "propertyAccessDescription": "Add or remove public keys that can access this property.",
+  "@propertyAccessDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "propertyAccessAddAccess": "Add access",
+  "@propertyAccessAddAccess": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftInfosDescription": "Add to your NFT a name and a human readable description.",
+  "@nftInfosDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyNameEmpty": "Please, enter a name.",
+  "@nftPropertyNameEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyValueEmpty": "Please, enter a value.",
+  "@nftPropertyValueEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyExists": "This property already exists",
+  "@nftPropertyExists": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddConfirmationFileEmpty": "Veuillez importer un fichier ou une photo.",
+  "@nftAddConfirmationFileEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftNameEmpty": "Please, enter a name for the NFT.",
+  "@nftNameEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftFormatNotSupportedEmpty": "The format is not supported.",
+  "@nftFormatNotSupportedEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftSizeExceed": "The NFT cannot exceed 2.5 MB.",
+  "@nftSizeExceed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.",
+  "@nftPropertyExplanation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "publicKeyNotValid": "The public key is not valid.",
+  "@publicKeyNotValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "deleteFile": "Delete file",
+  "@deleteFile": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "deleteProperty": "Delete property",
+  "@deleteProperty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "formatLabel": "Format: ",
+  "@formatLabel": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createNFT": "Create a NFT",
+  "@createNFT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "saveNFTCollectionInLocal": "Save collection in local",
+  "@saveNFTCollectionInLocal": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addNFTFile": "Add a NFT",
+  "@addNFTFile": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addNFTProperty": "Add property",
+  "@addNFTProperty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftNameHint": "Enter a name",
+  "@nftNameHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftDescriptionHint": "Enter a description",
+  "@nftDescriptionHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyNameHint": "Enter a name",
+  "@nftPropertyNameHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyValueHint": "Enter a value",
+  "@nftPropertyValueHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddStep1": "1) Import from",
+  "@nftAddStep1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddStep2": "2) Enter information",
+  "@nftAddStep2": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddStep3": "3) Add properties (optional)",
+  "@nftAddStep3": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportFile": "File",
+  "@nftAddImportFile": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportPhoto": "Photo",
+  "@nftAddImportPhoto": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportCamera": "Take a photo",
+  "@nftAddImportCamera": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportUrl": "Url",
+  "@nftAddImportUrl": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddPreview": "Your NFT (Preview)",
+  "@nftAddPreview": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddFileSize": "Size: ",
+  "@nftAddFileSize": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createNFTConfirmation": "Are you sure you want to create this NFT?",
+  "@createNFTConfirmation": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

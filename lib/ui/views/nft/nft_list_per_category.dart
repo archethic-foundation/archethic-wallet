@@ -108,12 +108,8 @@ class NFTListPerCategory extends ConsumerWidget {
                     ),
                   ],
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: NFTList(
-                      currentNftCategoryIndex: currentNftCategoryIndex,
-                    ),
-                  ),
+                NFTList(
+                  currentNftCategoryIndex: currentNftCategoryIndex,
                 ),
               ],
             ),

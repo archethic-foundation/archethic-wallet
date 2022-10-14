@@ -55,8 +55,6 @@ class NFTTab extends ConsumerWidget {
     return Column(
       children: [
         Expanded(
-          /// REFRESH
-          // TODO(reddwarf03): Remove refresh feature
           child: RefreshIndicator(
             backgroundColor: theme.backgroundDark,
             onRefresh: () => Future<void>.sync(() async {

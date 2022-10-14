@@ -43,7 +43,7 @@ class NftCategoryMenu extends ConsumerWidget {
             count = ref.read(
               NftCategoryProviders.getNbNFTInCategory(
                 account: accountSelected,
-                categoryNftIndex: index,
+                categoryNftIndex: nftCategories[index].id,
               ),
             );
             return InkWell(
@@ -54,7 +54,7 @@ class NftCategoryMenu extends ConsumerWidget {
                     );
                 Navigator.of(context).pushNamed(
                   '/nft_list_per_category',
-                  arguments: nftCategories[index].id,
+                  arguments: index,
                 );
               },
               child: Column(
@@ -92,7 +92,7 @@ class NftCategoryMenu extends ConsumerWidget {
                   Text(
                     nftCategories[index].name!,
                     textAlign: TextAlign.center,
-                    style: theme.textStyleSize12W100Primary,
+                    style: theme.textStyleSize14W600Primary,
                   ),
                 ],
               ),

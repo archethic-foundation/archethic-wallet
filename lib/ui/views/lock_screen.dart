@@ -219,7 +219,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                                     AppDialogs.showConfirmDialog(
                                       context,
                                       ref,
-                                      localizations.removeWalletAreYouSure,
+                                      localizations.areYouSure,
                                       localizations.removeWalletReassurance,
                                       localizations.yes,
                                       () async {

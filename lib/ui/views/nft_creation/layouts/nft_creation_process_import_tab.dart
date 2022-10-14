@@ -20,7 +20,6 @@ class _NFTCreationProcessImportTabState
     extends ConsumerState<NFTCreationProcessImportTab> {
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreation = ref.watch(NftCreationProvider.nftCreation);
 

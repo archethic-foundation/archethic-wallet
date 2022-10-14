@@ -26,7 +26,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Text(
-              'Add to your NFT a name and a human readable description.',
+              localizations.nftInfosDescription,
               style: theme.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),

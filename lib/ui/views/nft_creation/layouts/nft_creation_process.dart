@@ -18,6 +18,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/category_template_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview.dart';
@@ -175,7 +176,7 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
               .appKeychain!
               .getAccountSelected()!
               .updateNftInfosOffChain(
-                tokenAddress: event.transactionAddress,
+                tokenAddress: event.params!['transactionAddress']! as String,
                 categoryNftIndex: widget.currentNftCategoryIndex,
               );
 
@@ -386,175 +387,107 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
   }
 
   Future<void> _doAdd() async {
-    // try {
-    //   _showSendingAnimation(context);
-    //   final seed = await StateContainer.of(context).getSeed();
-    //   final originPrivateKey = sl.get<ApiService>().getOriginKey();
-    //   final keychain = await sl.get<ApiService>().getKeychain(seed!);
-    //   final nameEncoded = Uri.encodeFull(
-    //     StateContainer.of(context)
-    //         .appWallet!
-    //         .appKeychain!
-    //         .getAccountSelected()!
-    //         .name!,
-    //   );
-    //   final service = 'archethic-wallet-$nameEncoded';
-    //   final index = (await sl.get<ApiService>().getTransactionIndex(
-    //             uint8ListToHex(keychain.deriveAddress(service)),
-    //           ))
-    //       .chainLength!;
+    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
 
-    //   final transaction =
-    //       Transaction(type: 'token', data: Transaction.initData());
+    _showSendingAnimation(context);
+    final seed = await StateContainer.of(context).getSeed();
+    final originPrivateKey = sl.get<ApiService>().getOriginKey();
+    final keychain = await sl.get<ApiService>().getKeychain(seed!);
+    final nameEncoded = Uri.encodeFull(
+      StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .name!,
+    );
+    final service = 'archethic-wallet-$nameEncoded';
+    final index = (await sl.get<ApiService>().getTransactionIndex(
+              uint8ListToHex(
+                keychain.deriveAddress(service),
+              ),
+            ))
+        .chainLength!;
 
-    //   final aesKey = uint8ListToHex(
-    //     Uint8List.fromList(
-    //       List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
-    //     ),
-    //   );
+    final tokenProperties = <String, dynamic>{};
+    for (final element in nftCreation.properties) {
+      tokenProperties[element.propertyName] = element.propertyValue;
+    }
 
-    //   final walletKeyPair = keychain.deriveKeypair(service);
+    final transaction = TokenTransaction.build(
+      keychain: keychain,
+      index: index,
+      originPrivateKey: originPrivateKey,
+      serviceName: service,
+      tokenName: nftCreation.name,
+      tokenInitialSupply: 1,
+      tokenSymbol: '',
+      tokenProperties: tokenProperties,
+    );
 
-    //   for (final tokenPropertyWithAccessInfos
-    //       in tokenPropertyWithAccessInfosList) {
-    //     if (tokenPropertyWithAccessInfos.publicKeysList != null &&
-    //         tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty) {
-    //       final authorizedPublicKeys = List<String>.empty(growable: true);
-    //       authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
+    final preferences = await Preferences.getInstance();
 
-    //       for (final publicKey
-    //           in tokenPropertyWithAccessInfos.publicKeysList!) {
-    //         authorizedPublicKeys.add(publicKey);
-    //       }
+    final TransactionSenderInterface transactionSender =
+        ArchethicTransactionSender(
+      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+    );
 
-    //       final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
-    //       for (final key in authorizedPublicKeys) {
-    //         authorizedKeys.add(
-    //           AuthorizedKey(
-    //             encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
-    //             publicKey: key,
-    //           ),
-    //         );
-    //       }
-
-    //       transaction.addOwnership(
-    //         aesEncrypt(
-    //           tokenPropertyWithAccessInfos.tokenProperty!.toString(),
-    //           aesKey,
-    //         ),
-    //         authorizedKeys,
-    //       );
-    //     }
-    //   }
-
-    //   final clearTokenPropertyList = <String, dynamic>{};
-    //   for (final tokenPropertyWithAccessInfos
-    //       in tokenPropertyWithAccessInfosList) {
-    //     if (tokenPropertyWithAccessInfos.publicKeysList == null ||
-    //         tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
-    //       clearTokenPropertyList
-    //           .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
-    //     }
-    //   }
-
-    //   final content = tokenToJsonForTxDataContent(
-    //     Token(
-    //       name: token.name,
-    //       supply: token.supply,
-    //       type: token.type,
-    //       symbol: token.symbol,
-    //       tokenProperties: clearTokenPropertyList,
-    //     ),
-    //   );
-    //   transaction.setContent(content);
-    //   final signedTx = keychain
-    //       .buildTransaction(transaction, service, index)
-    //       .originSign(originPrivateKey);
-
-    //   var transactionStatus = TransactionStatus();
-
-    //   final preferences = await Preferences.getInstance();
-
-    //   await subscriptionChannel.connect(
-    //     await preferences.getNetwork().getPhoenixHttpLink(),
-    //     await preferences.getNetwork().getWebsocketUri(),
-    //   );
-
-    //   void waitConfirmationsNFT(QueryResult event) {
-    //     waitConfirmations(event, transactionAddress: signedTx.address);
-    //   }
-
-    //   subscriptionChannel.addSubscriptionTransactionConfirmed(
-    //     transaction.address!,
-    //     waitConfirmationsNFT,
-    //   );
-
-    //   await Future.delayed(const Duration(seconds: 1));
-
-    //   transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
-
-    //   if (transactionStatus.status == 'invalid') {
-    //     EventTaxiImpl.singleton().fire(
-    //       TransactionSendEvent(
-    //         transactionType: TransactionSendEventType.token,
-    //         response: '',
-    //         nbConfirmations: 0,
-    //       ),
-    //     );
-    //     subscriptionChannel.close();
-    //   }
-    // } on ArchethicConnectionException {
-    //   EventTaxiImpl.singleton().fire(
-    //     TransactionSendEvent(
-    //       transactionType: TransactionSendEventType.token,
-    //       response: AppLocalization.of(context)!.noConnection,
-    //       nbConfirmations: 0,
-    //     ),
-    //   );
-    //   subscriptionChannel.close();
-    // } on Exception {
-    //   EventTaxiImpl.singleton().fire(
-    //     TransactionSendEvent(
-    //       transactionType: TransactionSendEventType.token,
-    //       response: AppLocalization.of(context)!.keychainNotExistWarning,
-    //       nbConfirmations: 0,
-    //     ),
-    //   );
-    //   subscriptionChannel.close();
-    // }
+    await transactionSender.send(
+      transaction: transaction,
+      onConfirmation: (confirmation) async {
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
+            transactionType: TransactionSendEventType.token,
+            response: 'ok',
+            nbConfirmations: confirmation.nbConfirmations,
+            maxConfirmations: confirmation.maxConfirmations,
+            params: <String, Object>{
+              'transactionAddress': transaction.address!,
+            },
+          ),
+        );
+      },
+      onError: (error) async {
+        error.maybeMap(
+          connectivity: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: AppLocalization.of(context)!.noConnection,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          other: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: AppLocalization.of(context)!.keychainNotExistWarning,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          invalidConfirmation: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                nbConfirmations: 0,
+                maxConfirmations: 0,
+                response: 'ko',
+              ),
+            );
+          },
+          orElse: () {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: '',
+                nbConfirmations: 0,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
-
-  // void waitConfirmations(QueryResult event, {String? transactionAddress}) {
-  //   var nbConfirmations = 0;
-  //   var maxConfirmations = 0;
-  //   if (event.data != null && event.data!['transactionConfirmed'] != null) {
-  //     if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-  //       nbConfirmations =
-  //           event.data!['transactionConfirmed']['nbConfirmations'];
-  //     }
-  //     if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
-  //       maxConfirmations =
-  //           event.data!['transactionConfirmed']['maxConfirmations'];
-  //     }
-  //     EventTaxiImpl.singleton().fire(
-  //       TransactionSendEvent(
-  //         transactionType: TransactionSendEventType.token,
-  //         response: 'ok',
-  //         transactionAddress: transactionAddress,
-  //         nbConfirmations: nbConfirmations,
-  //         maxConfirmations: maxConfirmations,
-  //       ),
-  //     );
-  //   } else {
-  //     EventTaxiImpl.singleton().fire(
-  //       TransactionSendEvent(
-  //         transactionType: TransactionSendEventType.token,
-  //         nbConfirmations: 0,
-  //         maxConfirmations: 0,
-  //         response: 'ko',
-  //       ),
-  //     );
-  //   }
-  //   subscriptionChannel.close();
-  // }
 }

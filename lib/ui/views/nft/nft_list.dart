@@ -1,6 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -20,32 +21,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTList extends ConsumerStatefulWidget {
+class NFTList extends ConsumerWidget {
   const NFTList({super.key, this.currentNftCategoryIndex});
   final int? currentNftCategoryIndex;
 
   @override
-  ConsumerState<NFTList> createState() => _NFTListState();
-}
-
-final GlobalKey expandedKey = GlobalKey();
-
-class _NFTListState extends ConsumerState<NFTList> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
-    final accountTokenList =
-        accountSelected.getAccountNFTFiltered(widget.currentNftCategoryIndex!);
+    final nftCategories = ref.read(
+      NftCategoryProviders.fetchNftCategory(
+        context: context,
+        account: accountSelected,
+      ),
+    );
+    final accountTokenList = accountSelected
+        .getAccountNFTFiltered(nftCategories[currentNftCategoryIndex!].id);
     return SizedBox(
-      key: expandedKey,
       width: double.infinity,
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height * 0.8,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           SingleChildScrollView(
             child: Padding(
@@ -169,15 +169,6 @@ class _NFTListState extends ConsumerState<NFTList> {
                 localizations.createNFT,
                 Dimens.buttonBottomDimens,
                 onPressed: () async {
-                  /* Sheets.showAppHeightNineSheet(
-                  context: context,
-                  widget: AddNFTFile(
-                    process: AddNFTFileProcess.single,
-                    primaryCurrency:
-                        StateContainer.of(context).curPrimaryCurrency,
-                  ),
-                );*/
-
                   // TODO(reddwarf03): See with Charly how to reinit the form
                   ref.invalidate(NftCreationProvider.nftCreation);
 
@@ -188,8 +179,7 @@ class _NFTListState extends ConsumerState<NFTList> {
                   Navigator.of(context).pushNamed(
                     '/nft_creation',
                     arguments: {
-                      'currentNftCategoryIndex':
-                          widget.currentNftCategoryIndex!,
+                      'currentNftCategoryIndex': currentNftCategoryIndex!,
                       'process': NFTCreationProcessTypeEnum.single,
                       'primaryCurrency':
                           StateContainer.of(context).curPrimaryCurrency
@@ -199,23 +189,6 @@ class _NFTListState extends ConsumerState<NFTList> {
               ),
             ],
           ),
-          /*Row(
-            children: <Widget>[
-              AppButton.buildAppButton(
-                  const Key('createNFTCollection'),
-                  context,
-                  AppButtonType.primary,
-                  localizations.createNFTCollection,
-                  Dimens.buttonBottomDimens, onPressed: () {
-                Sheets.showAppHeightNineSheet(
-                    context: context,
-                    widget: AddNFTCollection(
-                      primaryCurrency:
-                          StateContainer.of(context).curPrimaryCurrency,
-                    ));
-              }),
-            ],
-          ),*/
         ],
       ),
     );

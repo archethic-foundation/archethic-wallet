@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_property_apptextfield.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,10 @@ class CategoryTemplateForm extends ConsumerWidget {
   });
   final int currentNftCategoryIndex;
 
-  // TODO(reddwarf03): Externalize text
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
 
     switch (currentNftCategoryIndex) {
       case 4:
@@ -26,7 +27,7 @@ class CategoryTemplateForm extends ConsumerWidget {
         return Column(
           children: [
             Text(
-              'Properties required by the category:',
+              localizations.nftPropertiesRequiredByCategory,
               style: theme.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),
@@ -69,7 +70,7 @@ class CategoryTemplateForm extends ConsumerWidget {
         return Column(
           children: [
             Text(
-              'Properties required by the category:',
+              localizations.nftPropertiesRequiredByCategory,
               style: theme.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),
