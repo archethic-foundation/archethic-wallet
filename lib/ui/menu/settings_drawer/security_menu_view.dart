@@ -105,8 +105,9 @@ class SecurityMenuView extends ConsumerWidget {
                       const _BackupSecretPhraseListItem(),
                       const _PinPadShuffleSettingsListItem(),
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLine(
+                      _SettingsListItem.singleLineWithInfos(
                         heading: localizations.removeWallet,
+                        info: localizations.removeWalletDescription,
                         headingStyle: theme.textStyleSize16W600EquinoxRed,
                         icon: 'assets/icons/menu/remove-wallet.svg',
                         iconColor: Colors.red,

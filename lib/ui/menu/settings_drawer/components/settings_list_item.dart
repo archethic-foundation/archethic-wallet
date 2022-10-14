@@ -41,6 +41,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
   const factory _SettingsListItem.singleLineWithInfos({
     required String heading,
     required String info,
+    TextStyle? headingStyle,
     Function? onPressed,
     String? icon,
     Color? iconColor,

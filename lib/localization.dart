@@ -322,7 +322,7 @@ class AppLocalization {
   }
 
   String get contactNameHint {
-    return Intl.message('Enter a Name @', name: 'contactNameHint');
+    return Intl.message('Enter a Name', name: 'contactNameHint');
   }
 
   String get contactInvalid {
@@ -608,6 +608,11 @@ class AppLocalization {
 
   String get removeWallet {
     return Intl.message('Remove Wallet', name: 'removeWallet');
+  }
+
+  String get removeWalletDescription {
+    return Intl.message('You can find it at any time with your secret phrase',
+        name: 'removeWalletDescription');
   }
 
   String get rootWarning {

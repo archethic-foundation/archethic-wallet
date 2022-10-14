@@ -210,7 +210,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "contactNameHint": "Enter a Name @",
+  "contactNameHint": "Enter a Name",
   "@contactNameHint": {
     "type": "text",
     "placeholders_order": [],
@@ -386,6 +386,12 @@
   },
   "removeWallet": "Remove Wallet",
   "@removeWallet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "removeWalletDescription": "You can find it at any time with your secret phrase",
+  "@removeWalletDescription": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

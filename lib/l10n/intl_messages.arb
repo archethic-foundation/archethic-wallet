@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-10-14T19:49:23.367354",
+  "@@last_modified": "2022-10-15T00:16:25.234065",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -378,7 +378,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "contactNameHint": "Enter a Name @",
+  "contactNameHint": "Enter a Name",
   "@contactNameHint": {
     "type": "text",
     "placeholders_order": [],
@@ -740,6 +740,12 @@
   },
   "removeWallet": "Remove Wallet",
   "@removeWallet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "removeWalletDescription": "You can find it at any time with your secret phrase",
+  "@removeWalletDescription": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

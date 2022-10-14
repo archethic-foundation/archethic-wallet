@@ -5,6 +5,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   const _SettingsListItemSingleLineWithInfos({
     required this.heading,
     required this.info,
+    this.headingStyle,
     this.onPressed,
     this.icon,
     this.iconColor,
@@ -12,6 +13,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
 
   final String heading;
   final String info;
+  final TextStyle? headingStyle;
   final Function? onPressed;
   final String? icon;
   final Color? iconColor;
@@ -50,7 +52,8 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                   width: Responsive.drawerWidth(context) - 100,
                   child: Text(
                     heading,
-                    style: theme.textStyleSize16W600EquinoxPrimary,
+                    style:
+                        headingStyle ?? theme.textStyleSize16W600EquinoxPrimary,
                   ),
                 ),
                 SizedBox(
