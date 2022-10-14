@@ -320,7 +320,6 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                             type: 'externalContact',
                           );
                           ContactProviders.saveContact(contact: newContact);
-                          await sl.get<DBHelper>().saveContact(newContact);
                           StateContainer.of(context)
                               .requestUpdate(forceUpdateChart: false);
                           UIUtil.showSnackbar(
