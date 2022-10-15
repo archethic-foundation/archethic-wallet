@@ -4,6 +4,7 @@ import 'dart:ui';
 
 // Project imports:
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -35,6 +36,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     final bottomBarCurrentPage =
         StateContainer.of(context).bottomBarCurrentPage;
 
@@ -51,7 +53,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     Sheets.showAppHeightNineSheet(
                       context: context,
@@ -63,14 +65,14 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   },
                 )
               else
-                StateContainer.of(context).showBalance
+                preferences.showBalances
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
               if (!kIsWeb &&
                   (Platform.isIOS == true ||
                       Platform.isAndroid == true ||
                       Platform.isMacOS == true))
-                StateContainer.of(context).activeNotifications
+                preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
             ],
@@ -79,7 +81,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
-                            StateContainer.of(context).activeVibrations,
+                            preferences.activeVibrations,
                           );
                       Clipboard.setData(
                         ClipboardData(
@@ -130,86 +132,84 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 }
 
-class MainAppBarIconBalanceShowed extends StatelessWidget {
+class MainAppBarIconBalanceShowed extends ConsumerWidget {
   const MainAppBarIconBalanceShowed({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(preferenceProvider);
+
     return IconButton(
       icon: const Icon(UiIcons.eye),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
-        StateContainer.of(context).showBalance = false;
-
-        final preferences = await Preferences.getInstance();
-        await preferences.setShowBalances(false);
-        StateContainer.of(context).updateState();
+        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        await preferencesNotifier.setShowBalances(false);
       },
     );
   }
 }
 
-class MainAppBarIconBalanceNotShowed extends StatelessWidget {
+class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
   const MainAppBarIconBalanceNotShowed({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(preferenceProvider);
+
     return IconButton(
       icon: const Icon(UiIcons.eye_hidden),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
-        StateContainer.of(context).showBalance = true;
-
-        final preferences = await Preferences.getInstance();
-        await preferences.setShowBalances(true);
-        StateContainer.of(context).updateState();
+        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        await preferencesNotifier.setShowBalances(true);
       },
     );
   }
 }
 
-class MainAppBarIconNotificationEnabled extends StatelessWidget {
+class MainAppBarIconNotificationEnabled extends ConsumerWidget {
   const MainAppBarIconNotificationEnabled({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(preferenceProvider);
     return IconButton(
       icon: const Icon(UiIcons.notification_enabled),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
-        StateContainer.of(context).activeNotifications = false;
         if (StateContainer.of(context).timerCheckTransactionInputs != null) {
           StateContainer.of(context).timerCheckTransactionInputs!.cancel();
         }
-        final preferences = await Preferences.getInstance();
-        await preferences.setActiveNotifications(false);
+        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        await preferencesNotifier.setActiveNotifications(false);
       },
     );
   }
 }
 
-class MainAppBarIconNotificationDisabled extends StatelessWidget {
+class MainAppBarIconNotificationDisabled extends ConsumerWidget {
   const MainAppBarIconNotificationDisabled({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(preferenceProvider);
     return IconButton(
       icon: const Icon(UiIcons.notification_disabled),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
-        StateContainer.of(context).activeNotifications = true;
 
         if (StateContainer.of(context).timerCheckTransactionInputs != null) {
           StateContainer.of(context).timerCheckTransactionInputs!.cancel();
@@ -217,8 +217,8 @@ class MainAppBarIconNotificationDisabled extends StatelessWidget {
         StateContainer.of(context).checkTransactionInputs(
           AppLocalization.of(context)!.transactionInputNotification,
         );
-        final preferences = await Preferences.getInstance();
-        await preferences.setActiveNotifications(true);
+        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        await preferencesNotifier.setActiveNotifications(true);
       },
     );
   }

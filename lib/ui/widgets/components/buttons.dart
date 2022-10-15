@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -29,6 +30,7 @@ class AppButton {
     Icon? icon,
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
@@ -72,7 +74,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -98,7 +100,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -142,7 +144,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -170,7 +172,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -194,6 +196,7 @@ class AppButton {
     Icon? icon,
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     switch (type) {
       case AppButtonType.primary:
         return Expanded(
@@ -237,7 +240,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -264,7 +267,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -308,7 +311,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }
@@ -335,7 +338,7 @@ class AppButton {
                       if (!disabled) {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         onPressed();
                       }

@@ -2,6 +2,7 @@
 
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -41,7 +42,7 @@ class BalanceInfos extends ConsumerWidget {
         .appKeychain!
         .getAccountSelected()!
         .balance;
-
+    final preferences = ref.watch(preferenceProvider);
     return GestureDetector(
       child: SizedBox(
         height: 60,
@@ -74,7 +75,7 @@ class BalanceInfos extends ConsumerWidget {
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
-                            if (StateContainer.of(context).showBalance)
+                            if (preferences.showBalances)
                               _BalanceInfosNativeShowed(
                                 accountSelectedBalance: accountSelectedBalance!,
                               )
@@ -92,7 +93,7 @@ class BalanceInfos extends ConsumerWidget {
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
-                            if (StateContainer.of(context).showBalance)
+                            if (preferences.showBalances)
                               _BalanceInfosNFiatShowed(
                                 accountSelectedBalance: accountSelectedBalance,
                               )

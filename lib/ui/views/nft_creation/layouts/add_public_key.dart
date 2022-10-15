@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -41,6 +42,7 @@ class AddPublicKey extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     final publicKeyAccessFocusNode = FocusNode();
     final publicKeyAccessController = TextEditingController();
@@ -103,8 +105,7 @@ class AddPublicKey extends ConsumerWidget {
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations,
+                                      preferences.activeVibrations,
                                     );
                                 final contact = await ContactsDialog.getDialog(
                                   context,
@@ -123,8 +124,7 @@ class AddPublicKey extends ConsumerWidget {
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations,
+                                            preferences.activeVibrations,
                                           );
                                       UIUtil.cancelLockEvent();
                                       final scanResult =
@@ -175,8 +175,7 @@ class AddPublicKey extends ConsumerWidget {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                          preferences.activeVibrations,
                                         );
                                     if (publicKeyAccessController.text.length <
                                             68 ||

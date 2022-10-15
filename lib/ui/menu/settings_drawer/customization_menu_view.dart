@@ -235,7 +235,6 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
       isSwitched: showBalancesSetting,
       onChanged: (showBalances) async {
         await preferencesNotifier.setShowBalances(showBalances);
-        StateContainer.of(context).showBalance = showBalances;
       },
     );
   }
@@ -260,7 +259,6 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
       isSwitched: showBlogSetting,
       onChanged: (showBlog) async {
         await preferencesNotifier.setShowBlog(showBlog);
-        StateContainer.of(context).showBlog = showBlog;
       },
     );
   }
@@ -286,7 +284,6 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
         await preferencesNotifier.setShowPriceChart(showPriceChart);
-        StateContainer.of(context).showPriceChart = showPriceChart;
       },
     );
   }
@@ -312,8 +309,6 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
       isSwitched: activeNotifications,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveNotifications(isSwitched);
-
-        StateContainer.of(context).activeNotifications = isSwitched;
         if (StateContainer.of(context).timerCheckTransactionInputs != null) {
           StateContainer.of(context).timerCheckTransactionInputs!.cancel();
         }
@@ -347,7 +342,6 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
       isSwitched: activeVibrations,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveVibrations(isSwitched);
-        StateContainer.of(context).activeVibrations = isSwitched;
       },
     );
   }

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/language.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -161,6 +162,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.backgroundDarkest,
@@ -302,7 +304,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                           if (!_lockedOut) {
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
+                                  preferences.activeVibrations,
                                 );
                             _authenticate();
                           }

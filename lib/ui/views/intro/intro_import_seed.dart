@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -89,7 +90,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final preferences = ref.watch(preferenceProvider);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
@@ -149,13 +150,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations,
+                                            preferences.activeVibrations,
                                           );
 
-                                      final preferences =
+                                      final preferences_ =
                                           await Preferences.getInstance();
-                                      preferences.setLanguageSeed('en');
+                                      preferences_.setLanguageSeed('en');
                                       setState(() {
                                         language = 'en';
                                       });
@@ -182,13 +182,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations,
+                                            preferences.activeVibrations,
                                           );
 
-                                      final preferences =
+                                      final preferences_ =
                                           await Preferences.getInstance();
-                                      preferences.setLanguageSeed('fr');
+                                      preferences_.setLanguageSeed('fr');
                                       setState(() {
                                         language = 'fr';
                                       });

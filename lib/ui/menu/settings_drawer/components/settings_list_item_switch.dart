@@ -19,11 +19,13 @@ class _SettingsListItemSwitch extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
       },
       child: Container(
@@ -53,7 +55,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                 if (onChanged == null) return;
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 onChanged?.call(value);
               },

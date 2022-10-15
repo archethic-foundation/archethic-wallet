@@ -2,6 +2,7 @@
 // Project imports:
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -33,6 +34,7 @@ class NFTList extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
+    final preferences = ref.watch(preferenceProvider);
     final nftCategories = ref.read(
       NftCategoryProviders.fetchNftCategory(
         context: context,
@@ -104,8 +106,7 @@ class NFTList extends ConsumerWidget {
                                           );
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
-                                                StateContainer.of(context)
-                                                    .activeVibrations,
+                                                preferences.activeVibrations,
                                               );
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
@@ -174,7 +175,7 @@ class NFTList extends ConsumerWidget {
 
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
-                        StateContainer.of(context).activeVibrations,
+                        preferences.activeVibrations,
                       );
                   Navigator.of(context).pushNamed(
                     '/nft_creation',

@@ -3,6 +3,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -29,6 +30,7 @@ class MenuWidgetWallet extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
+    final preferences = ref.watch(preferenceProvider);
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -52,7 +54,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
-                            StateContainer.of(context).activeVibrations,
+                            preferences.activeVibrations,
                           );
                       Sheets.showAppHeightNineSheet(
                         context: context,
@@ -83,7 +85,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     Sheets.showAppHeightNineSheet(
                       context: context,
@@ -106,7 +108,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     Sheets.showAppHeightNineSheet(
                       context: context,

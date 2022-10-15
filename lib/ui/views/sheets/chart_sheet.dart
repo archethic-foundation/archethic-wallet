@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -77,6 +78,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final preferences = ref.watch(preferenceProvider);
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -133,7 +135,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
               onTap: (int index) async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 await StateContainer.of(context).chartInfos!.updateCoinsChart(
                       currency.currency.name,

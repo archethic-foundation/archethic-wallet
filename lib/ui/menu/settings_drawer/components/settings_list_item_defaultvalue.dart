@@ -21,13 +21,15 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     return IgnorePointer(
       ignoring: disabled,
       child: TextButton(
         onPressed: () {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
+                preferences.activeVibrations,
               );
           onPressed();
         },
@@ -99,11 +101,13 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
         onPressed();
       },

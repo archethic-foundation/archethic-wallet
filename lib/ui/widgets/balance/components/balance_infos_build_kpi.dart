@@ -15,6 +15,7 @@ class BalanceInfosKpi extends ConsumerWidget {
         .appKeychain!
         .getAccountSelected()!
         .balance;
+    final preferences = ref.watch(preferenceProvider);
 
     if (chartInfos?.data == null) {
       return const SizedBox(
@@ -82,7 +83,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     AppDialogs.showInfoDialog(
                       context,

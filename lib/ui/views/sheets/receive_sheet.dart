@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/language.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -32,7 +33,7 @@ class ReceiveSheet extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
-
+    final preferences = ref.watch(preferenceProvider);
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -48,7 +49,7 @@ class ReceiveSheet extends ConsumerWidget {
                 onPressed: () {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
-                        StateContainer.of(context).activeVibrations,
+                        preferences.activeVibrations,
                       );
                   Clipboard.setData(ClipboardData(text: address));
                   UIUtil.showSnackbar(
@@ -79,7 +80,7 @@ class ReceiveSheet extends ConsumerWidget {
                       onPressed: () {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         Clipboard.setData(ClipboardData(text: address));
                         UIUtil.showSnackbar(

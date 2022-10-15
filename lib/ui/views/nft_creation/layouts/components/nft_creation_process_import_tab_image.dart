@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -29,6 +30,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
 
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     final nftCreation = ref.watch(NftCreationProvider.nftCreation);
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
@@ -85,7 +87,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
                   onTap: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     AppDialogs.showInfoDialog(
                       context,

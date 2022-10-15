@@ -308,7 +308,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
         final auth = await AuthFactory.authenticate(
           context,
           AuthenticationMethod(preferences.authenticationMethod),
-          activeVibrations: StateContainer.of(context).activeVibrations,
+          activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
           final seed = await StateContainer.of(context).getSeed();

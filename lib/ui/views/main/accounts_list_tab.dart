@@ -1,6 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
@@ -24,6 +25,7 @@ class AccountsListTab extends ConsumerWidget {
         .getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final preferences = ref.watch(preferenceProvider);
 
     return Column(
       children: [
@@ -34,7 +36,7 @@ class AccountsListTab extends ConsumerWidget {
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    StateContainer.of(context).activeVibrations,
+                    preferences.activeVibrations,
                   );
               StateContainer.of(context).appWallet =
                   await KeychainUtil().getListAccountsFromKeychain(

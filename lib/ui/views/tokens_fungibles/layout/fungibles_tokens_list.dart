@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -90,12 +91,12 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final preferences = ref.watch(preferenceProvider);
     return InkWell(
       onTap: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
       },
       child: Column(
@@ -140,7 +141,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                 ref.read(CurrencyProviders.selectedCurrency);
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
+                                  preferences.activeVibrations,
                                 );
                             Sheets.showAppHeightNineSheet(
                               context: context,
@@ -169,7 +170,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  if (StateContainer.of(context).showBalance == true)
+                  if (preferences.showBalances == true)
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,

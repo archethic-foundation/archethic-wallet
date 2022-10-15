@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -260,7 +261,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
                           context,
                           authMethod,
                           activeVibrations:
-                              StateContainer.of(context).activeVibrations,
+                              ref.watch(preferenceProvider).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());

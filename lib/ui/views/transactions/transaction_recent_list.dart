@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -103,7 +104,7 @@ class _TxListLine extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
-
+    final preferences = ref.watch(preferenceProvider);
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;
@@ -116,7 +117,7 @@ class _TxListLine extends ConsumerWidget {
       onTap: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
         Sheets.showAppHeightNineSheet(
           context: context,
@@ -161,7 +162,7 @@ class _TxListLine extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       if (transaction.typeTx == RecentTransaction.tokenCreation)
-                        StateContainer.of(context).showBalance
+                        preferences.showBalances
                             ? AutoSizeText(
                                 '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
                                 style: theme.textStyleSize12W400Primary,
@@ -183,9 +184,7 @@ class _TxListLine extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   if (transaction.amount != null)
-                                    if (StateContainer.of(context)
-                                            .showBalance ==
-                                        true)
+                                    if (preferences.showBalances == true)
                                       if (transaction.typeTx ==
                                           RecentTransaction.transferOutput)
                                         if (transaction.tokenInformations ==
@@ -246,9 +245,7 @@ class _TxListLine extends ConsumerWidget {
                                       ),
                                   if (transaction.tokenInformations == null &&
                                       transaction.amount != null)
-                                    if (StateContainer.of(context)
-                                            .showBalance ==
-                                        true)
+                                    if (preferences.showBalances == true)
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
                                           currency.currency.name,
@@ -272,9 +269,7 @@ class _TxListLine extends ConsumerWidget {
                                 children: [
                                   if (transaction.tokenInformations == null &&
                                       transaction.amount != null)
-                                    if (StateContainer.of(context)
-                                            .showBalance ==
-                                        true)
+                                    if (preferences.showBalances == true)
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
                                           currency.currency.name,
@@ -291,9 +286,7 @@ class _TxListLine extends ConsumerWidget {
                                             theme.textStyleSize12W600Primary60,
                                       ),
                                   if (transaction.amount != null)
-                                    if (StateContainer.of(context)
-                                            .showBalance ==
-                                        true)
+                                    if (preferences.showBalances == true)
                                       if (transaction.typeTx ==
                                           RecentTransaction.transferOutput)
                                         if (transaction.tokenInformations ==
@@ -413,7 +406,7 @@ class _TxListLine extends ConsumerWidget {
                       if (transaction.typeTx != RecentTransaction.transferInput)
                         Row(
                           children: <Widget>[
-                            if (StateContainer.of(context).showBalance == true)
+                            if (preferences.showBalances == true)
                               StateContainer.of(context)
                                           .curPrimaryCurrency
                                           .primaryCurrency

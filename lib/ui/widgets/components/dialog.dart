@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -24,6 +25,7 @@ class AppDialogs {
     Function? cancelAction,
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
@@ -49,7 +51,7 @@ class AppDialogs {
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 Navigator.of(context).pop();
                 if (cancelAction != null) {
@@ -62,7 +64,7 @@ class AppDialogs {
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 Navigator.of(context).pop();
                 onPressed();
@@ -84,6 +86,7 @@ class AppDialogs {
       context: context,
       builder: (BuildContext context) {
         final theme = ref.watch(ThemeProviders.selectedTheme);
+        final preferences = ref.watch(preferenceProvider);
         return AlertDialog(
           title: Text(
             title,
@@ -111,7 +114,7 @@ class AppDialogs {
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 Navigator.of(context).pop();
               },

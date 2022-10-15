@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -100,6 +101,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -135,8 +137,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     keyboardType: TextInputType.text,
                     style: theme.textStyleSize16W600Primary,
                     inputFormatters: <TextInputFormatter>[
+                      UpperCaseTextFormatter(),
                       LengthLimitingTextInputFormatter(20),
-                      ContactInputFormatter()
                     ],
                     onSubmitted: (String text) {
                       if (widget.address == null) {
@@ -171,7 +173,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     style: _addressValid
                         ? theme.textStyleSize14W100Primary
                         : theme.textStyleSize14W100Text60,
-                    inputFormatters: <LengthLimitingTextInputFormatter>[
+                    inputFormatters: <TextInputFormatter>[
+                      UpperCaseTextFormatter(),
                       LengthLimitingTextInputFormatter(68),
                     ],
                     textInputAction: TextInputAction.done,
@@ -185,7 +188,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                             onPressed: () async {
                               sl.get<HapticUtil>().feedback(
                                     FeedbackType.light,
-                                    StateContainer.of(context).activeVibrations,
+                                    preferences.activeVibrations,
                                   );
                               UIUtil.cancelLockEvent();
                               final scanResult = await UserDataUtil.getQRData(
@@ -217,7 +220,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                         }
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         final data = await UserDataUtil.getClipboardText(
                           DataType.address,
@@ -269,7 +272,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                               }
                               sl.get<HapticUtil>().feedback(
                                     FeedbackType.light,
-                                    StateContainer.of(context).activeVibrations,
+                                    preferences.activeVibrations,
                                   );
                               setState(() {
                                 _addressValidAndUnfocused = false;
@@ -315,11 +318,13 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                       onPressed: () async {
                         if (await validateForm()) {
                           final newContact = Contact(
-                            name: _nameController!.text,
+                            name: '@${_nameController!.text}',
                             address: widget.address ?? _addressController!.text,
                             type: 'externalContact',
                           );
-                          ContactProviders.saveContact(contact: newContact);
+                          ref.read(
+                            ContactProviders.saveContact(contact: newContact),
+                          );
                           StateContainer.of(context)
                               .requestUpdate(forceUpdateChart: false);
                           UIUtil.showSnackbar(
@@ -383,8 +388,9 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
         _nameValidationText = localizations.contactNameMissing;
       });
     } else {
-      final nameExists =
-          await sl.get<DBHelper>().contactExistsWithName(_nameController!.text);
+      final nameExists = await sl
+          .get<DBHelper>()
+          .contactExistsWithName('@${_nameController!.text}');
       if (nameExists) {
         setState(() {
           isValid = false;

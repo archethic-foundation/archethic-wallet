@@ -1,6 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -341,13 +342,15 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final preferences = ref.watch(preferenceProvider);
+
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
       child: GestureDetector(
         onTap: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
+                ref.watch(preferenceProvider).activeVibrations,
               );
           _showSendingAnimation(context);
           if (!account.selected!) {
@@ -361,8 +364,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
           StateContainer.of(context)
               .bottomBarPageController!
               .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
-          final preferences = await Preferences.getInstance();
-          preferences.setMainScreenCurrentPage(
+          final preferences_ = await Preferences.getInstance();
+          preferences_.setMainScreenCurrentPage(
             StateContainer.of(context).bottomBarCurrentPage,
           );
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -370,7 +373,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
         onLongPress: () {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
+                preferences.activeVibrations,
               );
           Sheets.showAppHeightNineSheet(
             context: context,
@@ -443,8 +446,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                             ],
                                           ),
                                         ),
-                                        if (StateContainer.of(context)
-                                            .showBalance)
+                                        if (preferences.showBalances)
                                           StateContainer.of(context)
                                                       .curPrimaryCurrency
                                                       .primaryCurrency

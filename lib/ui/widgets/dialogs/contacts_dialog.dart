@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -20,17 +21,23 @@ class ContactsDialog {
 
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     var contacts = await StateContainer.of(context).getContacts();
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
+
     for (final contact in contacts) {
-      pickerItemsList.add(
-        PickerItem(
-          contact.name!.substring(1),
-          null,
-          null,
-          null,
-          contact,
-          true,
-        ),
-      );
+      if (contact.name!.toLowerCase().replaceFirst('@', '') !=
+          accountSelected!.name!.toLowerCase()) {
+        pickerItemsList.add(
+          PickerItem(
+            contact.name!.substring(1),
+            null,
+            null,
+            null,
+            contact,
+            true,
+          ),
+        );
+      }
     }
     return showDialog<Contact>(
       context: context,
@@ -40,7 +47,12 @@ class ContactsDialog {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              insetPadding: const EdgeInsets.only(top: 100, bottom: 100),
+              insetPadding: const EdgeInsets.only(
+                top: 100,
+                bottom: 100,
+                left: 20,
+                right: 20,
+              ),
               alignment: Alignment.topCenter,
               title: Column(
                 children: [

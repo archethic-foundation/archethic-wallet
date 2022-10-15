@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -52,7 +53,8 @@ class _BalanceIndicatorWidgetState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    return StateContainer.of(context).showBalance
+    final preferences = ref.watch(preferenceProvider);
+    return preferences.showBalances
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -89,7 +91,7 @@ class _BalanceIndicatorWidgetState
                   onPressed: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     if (primaryCurrency == PrimaryCurrency.native) {
                       setState(() {

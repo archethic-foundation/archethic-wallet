@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -33,6 +34,7 @@ class NftPropertyAppTextField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     return AppTextField(
       focusNode: focusNode,
@@ -78,7 +80,7 @@ class NftPropertyAppTextField extends ConsumerWidget {
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 UIUtil.cancelLockEvent();
                 final scanResult =

@@ -152,9 +152,9 @@ class _NFTCreationProcessConfirmationTabState
                                     final auth = await AuthFactory.authenticate(
                                       context,
                                       authMethod,
-                                      activeVibrations:
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                      activeVibrations: ref
+                                          .watch(preferenceProvider)
+                                          .activeVibrations,
                                     );
                                     if (auth) {
                                       EventTaxiImpl.singleton()

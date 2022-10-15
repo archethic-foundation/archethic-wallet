@@ -13,6 +13,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     final nftPropertyNameFocusNode = FocusNode();
     final nftPropertyValueFocusNode = FocusNode();
@@ -90,7 +91,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                       onPressed: () async {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         UIUtil.cancelLockEvent();
                         final scanResult = await UserDataUtil.getQRData(
@@ -150,7 +151,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                       onPressed: () async {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
+                              preferences.activeVibrations,
                             );
                         UIUtil.cancelLockEvent();
                         final scanResult = await UserDataUtil.getQRData(

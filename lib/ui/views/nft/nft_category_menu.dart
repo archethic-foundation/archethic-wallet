@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -21,6 +22,7 @@ class NftCategoryMenu extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
+    final preferences = ref.watch(preferenceProvider);
     final nftCategories = ref.watch(
       NftCategoryProviders.fetchNftCategory(
         context: context,
@@ -50,7 +52,7 @@ class NftCategoryMenu extends ConsumerWidget {
               onTap: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 Navigator.of(context).pushNamed(
                   '/nft_list_per_category',

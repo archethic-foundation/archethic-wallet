@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -48,6 +49,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -105,16 +107,15 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                          preferences.activeVibrations,
                                         );
                                     seed = AppSeeds.generateSeed();
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                     );
-                                    final preferences =
+                                    final preferences_ =
                                         await Preferences.getInstance();
-                                    preferences.setLanguageSeed('en');
+                                    preferences_.setLanguageSeed('en');
                                     setState(() {
                                       language = 'en';
                                     });
@@ -141,17 +142,16 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations,
+                                          preferences.activeVibrations,
                                         );
                                     seed = AppSeeds.generateSeed();
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                       languageCode: 'fr',
                                     );
-                                    final preferences =
+                                    final preferences_ =
                                         await Preferences.getInstance();
-                                    preferences.setLanguageSeed('fr');
+                                    preferences_.setLanguageSeed('fr');
                                     setState(() {
                                       language = 'fr';
                                     });

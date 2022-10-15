@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 
 import 'package:aewallet/application/blog.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -42,7 +43,8 @@ class LastArticlesState extends ConsumerState<LastArticles> {
 
   @override
   Widget build(BuildContext context) {
-    if (StateContainer.of(context).showBlog == false) {
+    final preferences = ref.watch(preferenceProvider);
+    if (preferences.showBlog == false) {
       return const _LastArticlesNotShowed();
     }
     final asyncArticlesList = ref.watch(BlogProviders.fetchArticles);

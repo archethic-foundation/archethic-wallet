@@ -21,12 +21,14 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     return TextButton(
       onPressed: () {
         if (onPressed == null) return;
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
         onPressed?.call();
       },
@@ -97,13 +99,15 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(preferenceProvider);
+
     return TextButton(
       onPressed: () {
         if (onPressed == null) return;
 
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
         onPressed?.call();
       },

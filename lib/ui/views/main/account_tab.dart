@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
@@ -22,6 +23,7 @@ class AccountTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     return Column(
       children: [
@@ -32,7 +34,7 @@ class AccountTab extends ConsumerWidget {
             onRefresh: () => Future<void>.sync(() {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    StateContainer.of(context).activeVibrations,
+                    preferences.activeVibrations,
                   );
               StateContainer.of(context).requestUpdate();
             }),
@@ -73,7 +75,7 @@ class AccountTab extends ConsumerWidget {
                             ),
 
                             /// PRICE CHART
-                            if (StateContainer.of(context).showPriceChart)
+                            if (preferences.showPriceChart)
                               Stack(
                                 children: const <Widget>[
                                   BalanceInfosChart(),
@@ -83,7 +85,7 @@ class AccountTab extends ConsumerWidget {
                               const SizedBox(),
 
                             /// KPI
-                            if (StateContainer.of(context).showPriceChart)
+                            if (preferences.showPriceChart)
                               const BalanceInfosKpi()
                             else
                               const SizedBox(),

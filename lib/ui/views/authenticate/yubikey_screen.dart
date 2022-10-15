@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/otp_event.dart';
@@ -217,6 +218,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -289,8 +292,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations,
+                                      preferences.activeVibrations,
                                     );
                                 setState(() {
                                   buttonNFCLabel = localizations
@@ -349,8 +351,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                                 onPressed: () {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
-                                        StateContainer.of(context)
-                                            .activeVibrations,
+                                        preferences.activeVibrations,
                                       );
                                   Clipboard.getData('text/plain')
                                       .then((ClipboardData? data) async {

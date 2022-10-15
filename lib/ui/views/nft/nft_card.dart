@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/token_informations.dart';
@@ -103,7 +104,8 @@ class NFTCard extends ConsumerWidget {
   }
 }
 
-class NFTCardBottom extends StatefulWidget {
+// TODO(redwarf03): Migrate to stateless
+class NFTCardBottom extends ConsumerStatefulWidget {
   const NFTCardBottom({
     super.key,
     required this.tokenInformations,
@@ -112,10 +114,10 @@ class NFTCardBottom extends StatefulWidget {
   final TokenInformations tokenInformations;
 
   @override
-  State<NFTCardBottom> createState() => _NFTCardBottomState();
+  ConsumerState<NFTCardBottom> createState() => _NFTCardBottomState();
 }
 
-class _NFTCardBottomState extends State<NFTCardBottom> {
+class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
     final accountSelected = StateContainer.of(context)
@@ -124,7 +126,7 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
         .getAccountSelected()!;
     final nftInfosOffChain =
         accountSelected.getftInfosOffChain(widget.tokenInformations.id);
-
+    final preferences = ref.watch(preferenceProvider);
     return Column(
       children: <Widget>[
         Padding(
@@ -156,7 +158,7 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                   onTap: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
 
                     await accountSelected.updateNftInfosOffChainFavorite(

@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -32,6 +34,10 @@ class ContactDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final preferences = ref.watch(preferenceProvider);
+
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -55,22 +61,30 @@ class ContactDetail extends ConsumerWidget {
                         onPressed: () {
                           sl.get<HapticUtil>().feedback(
                                 FeedbackType.light,
-                                StateContainer.of(context).activeVibrations,
+                                preferences.activeVibrations,
                               );
                           AppDialogs.showConfirmDialog(
                             context,
                             ref,
                             localizations.removeContact,
-                            localizations.removeContactConfirmation
-                                .replaceAll('%1', contact.name!),
+                            localizations.removeContactConfirmation.replaceAll(
+                              '%1',
+                              contact.name!.replaceFirst('@', ''),
+                            ),
                             localizations.yes,
-                            () async {
-                              ContactProviders.deleteContact(contact: contact);
+                            () {
+                              ref.read(
+                                ContactProviders.deleteContact(
+                                  contact: contact,
+                                ),
+                              );
                               StateContainer.of(context)
                                   .requestUpdate(forceUpdateChart: false);
                               UIUtil.showSnackbar(
-                                localizations.contactRemoved
-                                    .replaceAll('%1', contact.name!),
+                                localizations.contactRemoved.replaceAll(
+                                  '%1',
+                                  contact.name!.replaceFirst('@', ''),
+                                ),
                                 context,
                                 ref,
                                 theme.text!,
@@ -116,7 +130,7 @@ class ContactDetail extends ConsumerWidget {
                   onPressed: () {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     Clipboard.setData(
                       ClipboardData(text: contact.address),
@@ -148,7 +162,7 @@ class ContactDetail extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    contact.name!,
+                    contact.name!.replaceFirst('@', ''),
                     textAlign: TextAlign.center,
                     style: theme.textStyleSize16W600Primary,
                   ),
@@ -173,7 +187,7 @@ class ContactDetail extends ConsumerWidget {
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
-                            StateContainer.of(context).activeVibrations,
+                            preferences.activeVibrations,
                           );
                       Clipboard.setData(
                         ClipboardData(text: contact.address),
@@ -212,44 +226,45 @@ class ContactDetail extends ConsumerWidget {
               ),
             ),
           ),
-          Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  // Send Button
-                  if (StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .balance!
-                      .isNativeTokenValuePositive())
-                    AppButton.buildAppButton(
-                      const Key('send'),
-                      context,
-                      ref,
-                      AppButtonType.primary,
-                      localizations.send,
-                      Dimens.buttonTopDimens,
-                      onPressed: () {
-                        final currency =
-                            ref.read(CurrencyProviders.selectedCurrency);
-                        Navigator.of(context).pop();
-                        Sheets.showAppHeightNineSheet(
-                          context: context,
-                          ref: ref,
-                          widget: TransferSheet(
-                            primaryCurrency:
-                                StateContainer.of(context).curPrimaryCurrency,
-                            localCurrency: currency,
-                            contact: contact,
-                          ),
-                        );
-                      },
-                    ),
-                ],
-              ),
-            ],
-          ),
+          if (accountSelected!.name != contact.name!.replaceFirst('@', ''))
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    // Send Button
+                    if (StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .isNativeTokenValuePositive())
+                      AppButton.buildAppButton(
+                        const Key('send'),
+                        context,
+                        ref,
+                        AppButtonType.primary,
+                        localizations.send,
+                        Dimens.buttonTopDimens,
+                        onPressed: () {
+                          final currency =
+                              ref.read(CurrencyProviders.selectedCurrency);
+                          Navigator.of(context).pop();
+                          Sheets.showAppHeightNineSheet(
+                            context: context,
+                            ref: ref,
+                            widget: TransferSheet(
+                              primaryCurrency:
+                                  StateContainer.of(context).curPrimaryCurrency,
+                              localCurrency: currency,
+                              contact: contact,
+                            ),
+                          );
+                        },
+                      ),
+                  ],
+                ),
+              ],
+            ),
         ],
       ),
     );

@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -209,6 +210,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
     BuildContext context,
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     return SizedBox(
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
@@ -221,7 +224,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
         onTapDown: (TapDownDetails details) {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
+                preferences.activeVibrations,
               );
           if (_controller.status == AnimationStatus.forward ||
               _controller.status == AnimationStatus.reverse) {
@@ -235,7 +238,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                 if (_pin != widget.expectedPin) {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.error,
-                        StateContainer.of(context).activeVibrations,
+                        preferences.activeVibrations,
                       );
                   _controller.forward();
                 } else {
@@ -264,7 +267,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                   } else {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.error,
-                          StateContainer.of(context).activeVibrations,
+                          preferences.activeVibrations,
                         );
                     _controller.forward();
                   }
@@ -314,6 +317,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
+
     if (pinEnterTitle.isEmpty) {
       setState(() {
         pinEnterTitle = localizations.pinEnterTitle;
@@ -544,8 +549,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                 onTapDown: (TapDownDetails details) {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
-                                        StateContainer.of(context)
-                                            .activeVibrations,
+                                        preferences.activeVibrations,
                                       );
                                   _backSpace();
                                 },

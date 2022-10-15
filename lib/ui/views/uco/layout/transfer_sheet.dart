@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -658,6 +659,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final preferences = ref.watch(preferenceProvider);
     return Column(
       children: [
         AppTextField(
@@ -714,7 +716,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
             onPressed: () async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    StateContainer.of(context).activeVibrations,
+                    preferences.activeVibrations,
                   );
               final fee = await getFee(accountSelected, maxSend: true);
 
@@ -844,6 +846,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
   // TODO(Chralu): extract to a [Widget] subclass.
   AppTextField getEnterAddressContainer(Account accountSelected) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     return AppTextField(
       padding: _addressValidAndUnfocused
           ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
@@ -866,7 +869,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
         onPressed: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
+                preferences.activeVibrations,
               );
 
           final contact = await ContactsDialog.getDialog(context, ref);
@@ -891,7 +894,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                 }
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      StateContainer.of(context).activeVibrations,
+                      preferences.activeVibrations,
                     );
                 UIUtil.cancelLockEvent();
                 final scanResult = await UserDataUtil.getQRData(

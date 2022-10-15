@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -156,6 +157,7 @@ class _AddNFTCollectionConfirmState
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -237,7 +239,7 @@ class _AddNFTCollectionConfirmState
                           context,
                           authMethod,
                           activeVibrations:
-                              StateContainer.of(context).activeVibrations,
+                              ref.watch(preferenceProvider).activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());

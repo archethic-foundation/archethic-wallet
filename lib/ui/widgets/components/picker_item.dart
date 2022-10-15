@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -55,6 +56,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
     return SizedBox(
       width: double.maxFinite,
       child: ListView.builder(
@@ -74,7 +76,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                 if (widget.pickerItems![index].enabled) {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
-                        StateContainer.of(context).activeVibrations,
+                        preferences.activeVibrations,
                       );
                   selectedIndex = index;
                   widget.onSelected!(widget.pickerItems![index]);

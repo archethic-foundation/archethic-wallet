@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -152,9 +153,9 @@ class _TransactionBuildInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return (StateContainer.of(context).showBalance == true ||
-            (StateContainer.of(context).showBalance == false &&
+    final preferences = ref.watch(preferenceProvider);
+    return (preferences.showBalances == true ||
+            (preferences.showBalances == false &&
                 transactionInfo.titleInfo != 'Amount'))
         ? Row(
             children: <Widget>[

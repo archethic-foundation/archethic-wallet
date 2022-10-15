@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';

@@ -4,6 +4,7 @@ import 'dart:io';
 
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
@@ -70,12 +71,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
   int bottomBarCurrentPage = 1;
   PageController? bottomBarPageController = PageController(initialPage: 1);
 
-  bool showBalance = false;
-  bool showPriceChart = false;
-  bool showBlog = false;
-  bool activeVibrations = false;
-  bool activeNotifications = false;
-
   @override
   void initState() {
     super.initState();
@@ -91,11 +86,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
               );
               curPrimaryCurrency = preferences.getPrimaryCurrency();
               curNetwork = preferences.getNetwork();
-              showBalance = preferences.getShowBalances();
-              showBlog = preferences.getShowBlog();
-              activeVibrations = preferences.getActiveVibrations();
-              activeNotifications = preferences.getActiveNotifications();
-              showPriceChart = preferences.getShowPriceChart();
             });
           },
         );
@@ -215,8 +205,9 @@ class StateContainerState extends ConsumerState<StateContainer> {
   // Change theme
   Future<void> updateTheme(ThemeSetting theme) async {
     final currency = ref.read(CurrencyProviders.selectedCurrency);
+    final preferences = ref.watch(preferenceProvider);
 
-    if (showPriceChart && chartInfos != null) {
+    if (preferences.showPriceChart && chartInfos != null) {
       await chartInfos!
           .updateCoinsChart(currency.currency.name, option: idChartOption!);
     }
@@ -262,7 +253,8 @@ class StateContainerState extends ConsumerState<StateContainer> {
       recentTransactionsLoading = false;
     });
 
-    if (forceUpdateChart && showPriceChart) {
+    final preferences = ref.watch(preferenceProvider);
+    if (forceUpdateChart && preferences.showPriceChart) {
       await chartInfos!.updateCoinsChart(
         selectedCurrency.currency.name,
         option: idChartOption!,

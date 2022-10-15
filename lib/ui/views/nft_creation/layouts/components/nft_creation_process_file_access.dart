@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -30,6 +31,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
     }
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(preferenceProvider);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -153,7 +155,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                             onPressed: () {
                               sl.get<HapticUtil>().feedback(
                                     FeedbackType.light,
-                                    StateContainer.of(context).activeVibrations,
+                                    preferences.activeVibrations,
                                   );
                               Sheets.showAppHeightNineSheet(
                                 context: context,
@@ -199,7 +201,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                               );
                               sl.get<HapticUtil>().feedback(
                                     FeedbackType.light,
-                                    StateContainer.of(context).activeVibrations,
+                                    preferences.activeVibrations,
                                   );
                               AppDialogs.showConfirmDialog(
                                   context,
@@ -209,8 +211,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                                   localizations.deleteOption, () {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations,
+                                      preferences.activeVibrations,
                                     );
                                 nftCreationNotifier.removeFileProperties();
                               });

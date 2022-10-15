@@ -11,6 +11,7 @@ class BalanceInfosChart extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final preferences = ref.watch(preferenceProvider);
 
     final chartInfos = StateContainer.of(context).chartInfos;
 
@@ -18,7 +19,7 @@ class BalanceInfosChart extends ConsumerWidget {
       onTap: () async {
         await sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
+              preferences.activeVibrations,
             );
         optionChartList = <OptionChart>[
           OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h')),

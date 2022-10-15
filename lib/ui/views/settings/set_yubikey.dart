@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -273,6 +274,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   }
 
   Future<void> validate() async {
+    final preferences = ref.watch(preferenceProvider);
     if (_clientIDController!.text.isEmpty) {
       if (mounted) {
         setState(() {
@@ -295,7 +297,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
         final auth = await AuthFactory.authenticate(
           context,
           const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
-          activeVibrations: StateContainer.of(context).activeVibrations,
+          activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
           Navigator.of(context).pop(true);

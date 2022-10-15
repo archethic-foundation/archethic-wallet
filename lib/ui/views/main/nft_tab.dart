@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/settings.dart';
 // Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -52,6 +53,7 @@ class NFTTab extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
+    final preferences = ref.watch(preferenceProvider);
     return Column(
       children: [
         Expanded(
@@ -60,7 +62,7 @@ class NFTTab extends ConsumerWidget {
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    StateContainer.of(context).activeVibrations,
+                    preferences.activeVibrations,
                   );
               await accountSelected.updateNFT();
             }),
