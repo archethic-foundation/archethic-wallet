@@ -143,6 +143,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
     final authMethod = preferences.getAuthMethod();
     final auth = await AuthFactory.authenticate(
       context,
+      ref,
       authMethod,
       transitions: transitions,
     );

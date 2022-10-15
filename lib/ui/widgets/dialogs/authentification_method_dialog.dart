@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -95,8 +96,9 @@ class AuthentificationMethodDialog {
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const PinScreen(
+                          return PinScreen(
                             PinOverlayType.newPin,
+                            ref.watch(preferenceProvider).pinPadShuffle,
                           );
                         },
                       ),

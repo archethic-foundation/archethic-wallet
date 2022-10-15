@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -11,12 +12,14 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/vault.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AuthFactory {
   static Future<bool> authenticate(
     BuildContext context,
+    WidgetRef ref,
     AuthenticationMethod authMethod, {
     bool transitions = false,
     bool activeVibrations = false,
@@ -32,7 +35,8 @@ class AuthFactory {
             await _authenticateWithPassword(context, transitions: transitions);
         break;
       case AuthMethod.pin:
-        auth = await _authenticateWithPin(context, transitions: transitions);
+        auth =
+            await _authenticateWithPin(context, ref, transitions: transitions);
         break;
       case AuthMethod.biometrics:
         final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
@@ -106,7 +110,8 @@ class AuthFactory {
   }
 
   static Future<bool> _authenticateWithPin(
-    BuildContext context, {
+    BuildContext context,
+    WidgetRef ref, {
     bool transitions = false,
   }) async {
     final vault = await Vault.getInstance();
@@ -119,6 +124,7 @@ class AuthFactory {
           builder: (BuildContext context) {
             return PinScreen(
               PinOverlayType.enterPin,
+              ref.watch(preferenceProvider).pinPadShuffle,
               expectedPin: expectedPin!,
             );
           },
@@ -130,6 +136,7 @@ class AuthFactory {
           builder: (BuildContext context) {
             return PinScreen(
               PinOverlayType.enterPin,
+              ref.watch(preferenceProvider).pinPadShuffle,
               expectedPin: expectedPin!,
             );
           },

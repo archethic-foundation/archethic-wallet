@@ -4,7 +4,6 @@ import 'dart:math';
 // Project imports:
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -31,7 +30,8 @@ class ShakeCurve extends Curve {
 
 class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
-    this.type, {
+    this.type,
+    this.pinPadShuffle, {
     this.description = '',
     this.expectedPin = '',
     this.pinScreenBackgroundColor,
@@ -42,6 +42,7 @@ class PinScreen extends ConsumerStatefulWidget {
   final String expectedPin;
   final String description;
   final Color? pinScreenBackgroundColor;
+  final bool pinPadShuffle;
 
   @override
   ConsumerState<PinScreen> createState() => _PinScreenState();
@@ -86,10 +87,11 @@ class _PinScreenState extends ConsumerState<PinScreen>
     _pin = '';
     _pinConfirmed = '';
 
+    if (widget.pinPadShuffle) {
+      _listPinNumber.shuffle();
+    }
+
     Preferences.getInstance().then((Preferences preferences) {
-      if (preferences.getPinPadShuffle()) {
-        _listPinNumber.shuffle();
-      }
       setState(() {
         // Get adjusted failed attempts
         _failedAttempts = preferences.getLockAttempts() % maxAttempts;

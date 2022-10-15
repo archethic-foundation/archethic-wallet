@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
@@ -50,7 +51,7 @@ class _IntroConfigureSecurityState
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final preferences = ref.watch(preferenceProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
@@ -179,8 +180,9 @@ class _IntroConfigureSecurityState
                                         await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
-                                          return const PinScreen(
+                                          return PinScreen(
                                             PinOverlayType.newPin,
+                                            preferences.pinPadShuffle,
                                           );
                                         },
                                       ),
