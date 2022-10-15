@@ -193,13 +193,11 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
             Row(
               children: <Widget>[
                 //   if (nftCreation.canAddProperty)
-                AppButton.buildAppButtonTiny(
-                  const Key('addNFTProperty'),
-                  context,
-                  ref,
-                  AppButtonType.primary,
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
                   AppLocalization.of(context)!.addNFTProperty,
                   Dimens.buttonBottomDimens,
+                  key: const Key('addNFTProperty'),
                   onPressed: () async {
                     if (validateAddNFTProperty() == true) {
                       nftCreationNotifier.setProperty(

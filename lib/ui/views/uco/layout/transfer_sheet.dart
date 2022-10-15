@@ -23,8 +23,8 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/uco/layout/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -352,23 +352,19 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                 Row(
                   children: <Widget>[
                     if (_isPressed == true)
-                      AppButton.buildAppButton(
-                        const Key('send'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primaryOutline,
                         widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
+                        key: const Key('send'),
                         onPressed: () {},
                       )
                     else
-                      AppButton.buildAppButton(
-                        const Key('send'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primary,
                         widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
+                        key: const Key('send'),
                         onPressed: () async {
                           setState(() {
                             _isPressed = true;

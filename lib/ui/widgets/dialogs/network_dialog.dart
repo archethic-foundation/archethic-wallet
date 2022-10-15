@@ -1,13 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
@@ -160,13 +159,11 @@ class NetworkDialog {
                               ),
                               Row(
                                 children: [
-                                  AppButton.buildAppButtonTiny(
-                                    const Key('addEndpoint'),
-                                    context,
-                                    ref,
-                                    AppButtonType.primary,
+                                  AppButtonTiny(
+                                    AppButtonTinyType.primary,
                                     localizations.ok,
                                     Dimens.buttonTopDimens,
+                                    key: const Key('addEndpoint'),
                                     onPressed: () async {
                                       endpointError = '';
                                       if (endpointController.text.isEmpty) {

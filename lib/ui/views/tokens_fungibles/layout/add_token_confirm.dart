@@ -16,7 +16,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/transaction_builder.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -246,13 +246,11 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('confirm'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       localizations.confirm,
                       Dimens.buttonTopDimens,
+                      key: const Key('confirm'),
                       onPressed: () async {
                         // Authenticate
                         final preferences = await Preferences.getInstance();
@@ -273,13 +271,11 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
                 ),
                 Row(
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('cancel'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       localizations.cancel,
                       Dimens.buttonBottomDimens,
+                      key: const Key('cancel'),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

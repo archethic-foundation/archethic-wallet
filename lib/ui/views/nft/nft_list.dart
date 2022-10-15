@@ -13,7 +13,8 @@ import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
 import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -93,13 +94,11 @@ class NFTList extends ConsumerWidget {
                                   ),
                                   Row(
                                     children: <Widget>[
-                                      AppButton.buildAppButtonTiny(
-                                        const Key('sendNFT'),
-                                        context,
-                                        ref,
-                                        AppButtonType.primary,
+                                      AppButtonTiny(
+                                        AppButtonTinyType.primary,
                                         localizations.send,
                                         Dimens.buttonTopDimens,
+                                        key: const Key('sendNFT'),
                                         onPressed: () async {
                                           final currency = ref.read(
                                             CurrencyProviders.selectedCurrency,
@@ -127,17 +126,15 @@ class NFTList extends ConsumerWidget {
                                   ),
                                   Row(
                                     children: <Widget>[
-                                      AppButton.buildAppButtonTiny(
-                                        const Key('viewExplorer'),
-                                        context,
-                                        ref,
-                                        AppButtonType.primary,
+                                      AppButtonTiny(
+                                        AppButtonTinyType.primary,
                                         localizations.viewExplorer,
                                         Dimens.buttonTopDimens,
                                         icon: Icon(
                                           Icons.more_horiz,
                                           color: theme.text,
                                         ),
+                                        key: const Key('viewExplorer'),
                                         onPressed: () async {
                                           UIUtil.showWebview(
                                             context,
@@ -162,13 +159,11 @@ class NFTList extends ConsumerWidget {
           ),
           Row(
             children: <Widget>[
-              AppButton.buildAppButton(
-                const Key('createNFT'),
-                context,
-                ref,
+              AppButton(
                 AppButtonType.primary,
                 localizations.createNFT,
                 Dimens.buttonBottomDimens,
+                key: const Key('createNFT'),
                 onPressed: () async {
                   // TODO(reddwarf03): See with Charly how to reinit the form
                   ref.invalidate(NftCreationProvider.nftCreation);

@@ -6,7 +6,7 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -143,15 +143,13 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     ),
                     Row(
                       children: <Widget>[
-                        AppButton.buildAppButton(
-                          const Key('newWallet'),
-                          context,
-                          ref,
+                        AppButton(
                           checkedValue
                               ? AppButtonType.primary
                               : AppButtonType.primaryOutline,
                           localizations.newWallet,
                           Dimens.buttonTopDimens,
+                          key: const Key('newWallet'),
                           onPressed: () async {
                             if (checkedValue) {
                               await _networkDialog();
@@ -173,15 +171,13 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     Row(
                       children: <Widget>[
                         // Import Wallet Button
-                        AppButton.buildAppButton(
-                          const Key('importWallet'),
-                          context,
-                          ref,
+                        AppButton(
                           checkedValue
                               ? AppButtonType.primary
                               : AppButtonType.primaryOutline,
                           localizations.importWallet,
                           Dimens.buttonBottomDimens,
+                          key: const Key('importWallet'),
                           onPressed: () async {
                             if (checkedValue) {
                               // TODO(reddwarf03): to implement, https://github.com/archethic-foundation/archethic-wallet/issues/144

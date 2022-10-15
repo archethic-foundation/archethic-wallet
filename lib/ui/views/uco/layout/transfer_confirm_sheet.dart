@@ -21,7 +21,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layout/token_transfer_list.dart';
 import 'package:aewallet/ui/views/uco/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/views/uco/layout/uco_transfer_list.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
@@ -270,13 +270,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('confirm'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       localizations.confirm,
                       Dimens.buttonTopDimens,
+                      key: const Key('confirm'),
                       onPressed: () async {
                         final preferences = await Preferences.getInstance();
                         // Authenticate
@@ -297,13 +295,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                 ),
                 Row(
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('cancel'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       localizations.cancel,
                       Dimens.buttonBottomDimens,
+                      key: const Key('cancel'),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

@@ -6,7 +6,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/mnemonic_display.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -200,23 +200,19 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     if (isPressed == true)
-                      AppButton.buildAppButton(
-                        const Key('iveBackedItUp'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primaryOutline,
                         localizations.iveBackedItUp,
                         Dimens.buttonBottomDimens,
+                        key: const Key('iveBackedItUp'),
                         onPressed: () {},
                       )
                     else
-                      AppButton.buildAppButton(
-                        const Key('iveBackedItUp'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primary,
                         localizations.iveBackedItUp,
                         Dimens.buttonBottomDimens,
+                        key: const Key('iveBackedItUp'),
                         onPressed: () async {
                           Navigator.of(context).pushNamed(
                             '/intro_backup_confirm',

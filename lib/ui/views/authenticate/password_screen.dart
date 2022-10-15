@@ -7,8 +7,8 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
@@ -207,23 +207,19 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
                     Row(
                       children: <Widget>[
                         if (enterPasswordController!.text == '')
-                          AppButton.buildAppButton(
-                            const Key('confirm'),
-                            context,
-                            ref,
+                          AppButton(
                             AppButtonType.primaryOutline,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
+                            key: const Key('confirm'),
                             onPressed: () async {},
                           )
                         else
-                          AppButton.buildAppButton(
-                            const Key('confirm'),
-                            context,
-                            ref,
+                          AppButton(
                             AppButtonType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
+                            key: const Key('confirm'),
                             onPressed: () async {
                               await _verifyPassword();
                             },

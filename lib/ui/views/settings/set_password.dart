@@ -6,8 +6,8 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/string_encryption.dart';
@@ -353,13 +353,11 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          AppButton.buildAppButton(
-                            const Key('confirm'),
-                            context,
-                            ref,
+                          AppButton(
                             AppButtonType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
+                            key: const Key('confirm'),
                             onPressed: () async {
                               await _validateRequest();
                             },

@@ -15,8 +15,8 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -101,13 +101,11 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
               if (appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts)
                 const SizedBox()
               else
-                AppButton.buildAppButtonTiny(
-                  const Key('addAccount'),
-                  context,
-                  ref,
-                  AppButtonType.primary,
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
                   localizations.addAccount,
                   Dimens.buttonBottomDimens,
+                  key: const Key('addAccount'),
                   onPressed: () async {
                     final nameFocusNode = FocusNode();
                     final nameController = TextEditingController();
@@ -186,15 +184,13 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                   ),
                                   Row(
                                     children: [
-                                      AppButton.buildAppButtonTiny(
-                                        const Key('addName'),
-                                        context,
-                                        ref,
+                                      AppButtonTiny(
                                         isPressed == false
-                                            ? AppButtonType.primary
-                                            : AppButtonType.primaryOutline,
+                                            ? AppButtonTinyType.primary
+                                            : AppButtonTinyType.primaryOutline,
                                         localizations.ok,
                                         Dimens.buttonBottomDimens,
+                                        key: const Key('addName'),
                                         onPressed: () async {
                                           if (isPressed == true) {
                                             return;

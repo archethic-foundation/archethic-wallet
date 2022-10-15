@@ -2,7 +2,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/token_transfer_wallet.dart';

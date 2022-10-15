@@ -13,8 +13,8 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layout/add_token_confirm.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -257,23 +257,19 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
                 Row(
                   children: <Widget>[
                     if (_isPressed == true)
-                      AppButton.buildAppButton(
-                        const Key('createToken'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primaryOutline,
                         localizations.createToken,
                         Dimens.buttonTopDimens,
+                        key: const Key('createToken'),
                         onPressed: () {},
                       )
                     else
-                      AppButton.buildAppButton(
-                        const Key('createToken'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primary,
                         localizations.createToken,
                         Dimens.buttonTopDimens,
+                        key: const Key('createToken'),
                         onPressed: () async {
                           setState(() {
                             _isPressed = true;

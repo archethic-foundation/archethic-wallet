@@ -4,7 +4,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -159,13 +159,11 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('understandButton'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       localizations.understandButton,
                       Dimens.buttonBottomDimens,
+                      key: const Key('understandButton'),
                       onPressed: () {
                         Navigator.of(context)
                             .pushNamed('/intro_backup', arguments: name);

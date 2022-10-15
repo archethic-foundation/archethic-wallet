@@ -6,8 +6,8 @@ import 'dart:io';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/ledger/archethic_ledger_util.dart';
@@ -198,13 +198,11 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('getPubKey'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       'Get pubKey',
                       Dimens.buttonTopDimens,
+                      key: const Key('getPubKey'),
                       onPressed: () async {
                         setState(() {
                           method = 'getPubKey';
@@ -215,12 +213,10 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                             .connectLedger(getPubKeyAPDU());
                       },
                     ),
-                    AppButton.buildAppButton(
-                      const Key('getArchAddress'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       'Get Arch Address',
+                      key: const Key('getArchAddress'),
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         setState(() {
@@ -248,13 +244,11 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                         }
                       },
                     ),
-                    AppButton.buildAppButton(
-                      const Key('signTransaction'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       'Sign Transaction',
                       Dimens.buttonTopDimens,
+                      key: const Key('signTransaction'),
                       onPressed: () async {
                         setState(() {
                           method = 'signTxn';

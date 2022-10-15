@@ -10,7 +10,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -225,13 +225,11 @@ class ReorderableWidget extends ConsumerWidget {
               ),
               Row(
                 children: [
-                  AppButton.buildAppButtonTiny(
-                    const Key('addNftNewCategory'),
-                    context,
-                    ref,
-                    AppButtonType.primaryOutline,
+                  AppButtonTiny(
+                    AppButtonTinyType.primaryOutline,
                     localizations.addNftNewCategory,
                     Dimens.buttonBottomDimens,
+                    key: const Key('addNftNewCategory'),
                     onPressed: () {},
                   ),
                 ],

@@ -16,7 +16,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -390,23 +390,19 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     if (isPressed == true || phrase.contains(''))
-                      AppButton.buildAppButton(
-                        const Key('ok'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primaryOutline,
                         localizations.ok,
                         Dimens.buttonTopDimens,
+                        key: const Key('ok'),
                         onPressed: () {},
                       )
                     else
-                      AppButton.buildAppButton(
-                        const Key('ok'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primary,
                         localizations.ok,
                         Dimens.buttonTopDimens,
+                        key: const Key('ok'),
                         onPressed: () async {
                           final currency =
                               ref.watch(CurrencyProviders.selectedCurrency);

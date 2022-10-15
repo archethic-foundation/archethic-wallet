@@ -1,12 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -152,13 +151,11 @@ class _IntroNewWalletDisclaimerState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('okButton'),
-                      context,
-                      ref,
+                    AppButton(
                       AppButtonType.primary,
                       localizations.ok,
                       Dimens.buttonBottomDimens,
+                      key: const Key('okButton'),
                       onPressed: () async {
                         nameError = '';
                         if (nameController.text.isEmpty) {

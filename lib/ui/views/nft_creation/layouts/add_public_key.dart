@@ -10,8 +10,8 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/get_public_key.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -164,13 +164,11 @@ class AddPublicKey extends ConsumerWidget {
                           Row(
                             children: <Widget>[
                               if (nftCreation.canAddAccess)
-                                AppButton.buildAppButtonTiny(
-                                  const Key('addPublicKey'),
-                                  context,
-                                  ref,
-                                  AppButtonType.primary,
+                                AppButtonTiny(
+                                  AppButtonTinyType.primary,
                                   localizations.propertyAccessAddAccess,
                                   Dimens.buttonBottomDimens,
+                                  key: const Key('addPublicKey'),
                                   onPressed: () async {
                                     sl.get<HapticUtil>().feedback(
                                           FeedbackType.light,
@@ -203,13 +201,11 @@ class AddPublicKey extends ConsumerWidget {
                                   },
                                 )
                               else
-                                AppButton.buildAppButtonTiny(
-                                  const Key('addPublicKey'),
-                                  context,
-                                  ref,
-                                  AppButtonType.primaryOutline,
+                                AppButtonTiny(
+                                  AppButtonTinyType.primaryOutline,
                                   localizations.propertyAccessAddAccess,
                                   Dimens.buttonBottomDimens,
+                                  key: const Key('addPublicKey'),
                                   onPressed: () {},
                                 ),
                             ],

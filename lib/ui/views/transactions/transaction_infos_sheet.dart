@@ -9,7 +9,7 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -108,10 +108,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  AppButton.buildAppButton(
-                                    const Key('viewExplorer'),
-                                    context,
-                                    ref,
+                                  AppButton(
                                     AppButtonType.primary,
                                     localizations.viewExplorer,
                                     Dimens.buttonBottomDimens,
@@ -119,6 +116,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                       Icons.more_horiz,
                                       color: theme.text,
                                     ),
+                                    key: const Key('viewExplorer'),
                                     onPressed: () async {
                                       UIUtil.showWebview(
                                         context,

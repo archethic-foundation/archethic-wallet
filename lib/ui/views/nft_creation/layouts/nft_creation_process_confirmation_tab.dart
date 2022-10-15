@@ -114,23 +114,19 @@ class _NFTCreationProcessConfirmationTabState
                     Row(
                       children: <Widget>[
                         if (nftCreation.canCreateNFT == true)
-                          AppButton.buildAppButton(
-                            const Key('addNFTFile'),
-                            context,
-                            ref,
+                          AppButton(
                             AppButtonType.primaryOutline,
                             AppLocalization.of(context)!.createNFT,
                             Dimens.buttonTopDimens,
+                            key: const Key('addNFTFile'),
                             onPressed: () async {},
                           )
                         else
-                          AppButton.buildAppButton(
-                            const Key('addNFTFile'),
-                            context,
-                            ref,
+                          AppButton(
                             AppButtonType.primary,
                             AppLocalization.of(context)!.createNFT,
                             Dimens.buttonTopDimens,
+                            key: const Key('addNFTFile'),
                             onPressed: () async {
                               if (await validateAddNFT(context) == true) {
                                 AppDialogs.showConfirmDialog(

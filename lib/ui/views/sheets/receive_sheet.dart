@@ -8,7 +8,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -191,10 +191,7 @@ class ReceiveSheet extends ConsumerWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  AppButton.buildAppButton(
-                    const Key('viewExplorer'),
-                    context,
-                    ref,
+                  AppButton(
                     AppButtonType.primary,
                     localizations.viewExplorer,
                     Dimens.buttonTopDimens,
@@ -202,6 +199,7 @@ class ReceiveSheet extends ConsumerWidget {
                       Icons.more_horiz,
                       color: theme.text,
                     ),
+                    key: const Key('viewExplorer'),
                     onPressed: () async {
                       UIUtil.showWebview(
                         context,
@@ -214,10 +212,7 @@ class ReceiveSheet extends ConsumerWidget {
               ),
               Row(
                 children: <Widget>[
-                  AppButton.buildAppButton(
-                    const Key('share'),
-                    context,
-                    ref,
+                  AppButton(
                     AppButtonType.primary,
                     localizations.share,
                     Dimens.buttonBottomDimens,
@@ -225,6 +220,7 @@ class ReceiveSheet extends ConsumerWidget {
                       Icons.share,
                       color: theme.text,
                     ),
+                    key: const Key('share'),
                     onPressed: () {
                       final box = context.findRenderObject() as RenderBox?;
                       final textToShare = address!.toUpperCase();

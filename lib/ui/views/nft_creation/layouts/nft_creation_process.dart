@@ -28,8 +28,9 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_p
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_image.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_property_access.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';

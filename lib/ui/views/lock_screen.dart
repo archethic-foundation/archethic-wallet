@@ -10,7 +10,7 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -294,13 +294,11 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      AppButton.buildAppButton(
-                        const Key('unlock'),
-                        context,
-                        ref,
+                      AppButton(
                         AppButtonType.primary,
                         _lockedOut ? _countDownTxt : localizations.unlock,
                         Dimens.buttonBottomDimens,
+                        key: const Key('unlock'),
                         onPressed: () {
                           if (!_lockedOut) {
                             sl.get<HapticUtil>().feedback(
