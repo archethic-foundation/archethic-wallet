@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
@@ -116,7 +115,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                                   child: AutoSizeText(
                                     localizations.nftPropertyProtectedPublicKeys
                                         .replaceAll(
-                                            '%1', publicKeys.length.toString()),
+                                            '%1', publicKeys.length.toString(),),
                                     style: theme.textStyleSize12W400Primary,
                                   ),
                                 )

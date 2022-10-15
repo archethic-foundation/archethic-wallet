@@ -4,15 +4,11 @@ import 'dart:ui';
 
 // Project imports:
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Sheets {
