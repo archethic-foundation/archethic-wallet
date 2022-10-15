@@ -35,7 +35,7 @@ class GetPublicKeys extends ConsumerWidget {
             right: 10,
           ),
           child: Wrap(
-            // TODO(reddwarf03) : create dynamic loading
+            // TODO(reddwarf03): create dynamic loading
             children: List.generate(
               property.publicKeys.length,
               (index) {
