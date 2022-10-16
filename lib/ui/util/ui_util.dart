@@ -267,15 +267,6 @@ class UIUtil {
     });
   }
 
-  // TODO(Chralu): duplicate with [AppStyles.smallScreen] ?
-  static bool smallScreen(BuildContext context) {
-    if (MediaQuery.of(context).size.height < 667) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   static Future<void> showWebview(
     BuildContext context,
     String url,
