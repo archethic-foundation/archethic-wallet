@@ -19,8 +19,8 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layout/token_transfer_list.dart';
-import 'package:aewallet/ui/views/uco/bloc/transaction_builder.dart';
-import 'package:aewallet/ui/views/uco/layout/uco_transfer_list.dart';
+import 'package:aewallet/ui/views/uco_transfer/bloc/transaction_builder.dart';
+import 'package:aewallet/ui/views/uco_transfer/layout/uco_transfer_list.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -371,8 +371,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           connectivity: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType
-                    .token, // TODO(reddwarf03): is it the right type ?
+                transactionType: TransactionSendEventType.transfer,
                 response: AppLocalization.of(context)!.noConnection,
                 nbConfirmations: 0,
               ),
@@ -391,8 +390,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           other: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType
-                    .token, // TODO(reddwarf03): is it the right type ?
+                transactionType: TransactionSendEventType.transfer,
                 response: AppLocalization.of(context)!.keychainNotExistWarning,
                 nbConfirmations: 0,
               ),

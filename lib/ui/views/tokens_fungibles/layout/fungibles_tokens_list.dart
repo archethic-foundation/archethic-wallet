@@ -1,13 +1,10 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -136,9 +133,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             color: theme.backgroundDarkest,
                             size: 21,
                           ),
-                          onPressed: () {
-                            final currency =
-                                ref.read(CurrencyProviders.selectedCurrency);
+                          onPressed: () async {
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
                                   preferences.activeVibrations,
@@ -147,15 +142,14 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                               context: context,
                               ref: ref,
                               widget: TransferSheet(
+                                seed: (await StateContainer.of(context)
+                                    .getSeed())!,
                                 accountToken: accountFungibleToken,
-                                primaryCurrency: StateContainer.of(context)
-                                    .curPrimaryCurrency,
                                 title: localizations.transferTokens.replaceAll(
                                   '%1',
                                   accountFungibleToken
                                       .tokenInformations!.symbol!,
                                 ),
-                                localCurrency: currency,
                               ),
                             );
                           },

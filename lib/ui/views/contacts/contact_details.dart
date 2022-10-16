@@ -2,7 +2,6 @@
 // Project imports:
 import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -11,7 +10,7 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -243,17 +242,14 @@ class ContactDetail extends ConsumerWidget {
                         localizations.send,
                         Dimens.buttonTopDimens,
                         key: const Key('send'),
-                        onPressed: () {
-                          final currency =
-                              ref.read(CurrencyProviders.selectedCurrency);
+                        onPressed: () async {
                           Navigator.of(context).pop();
                           Sheets.showAppHeightNineSheet(
                             context: context,
                             ref: ref,
                             widget: TransferSheet(
-                              primaryCurrency:
-                                  StateContainer.of(context).curPrimaryCurrency,
-                              localCurrency: currency,
+                              seed:
+                                  (await StateContainer.of(context).getSeed())!,
                               contact: contact,
                             ),
                           );
