@@ -10,7 +10,6 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -62,11 +61,9 @@ class NFTCreationProcess extends ConsumerStatefulWidget {
     super.key,
     this.currentNftCategoryIndex,
     this.process,
-    this.primaryCurrency,
   });
   final int? currentNftCategoryIndex;
   final NFTCreationProcessTypeEnum? process;
-  final PrimaryCurrencySetting? primaryCurrency;
 
   @override
   ConsumerState<NFTCreationProcess> createState() => _NFTCreationProcessState();
@@ -254,8 +251,7 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
                         ),
                       ],
                     ),
-                    BalanceIndicatorWidget(
-                      primaryCurrency: widget.primaryCurrency,
+                    const BalanceIndicatorWidget(
                       displaySwitchButton: false,
                     ),
                     Padding(

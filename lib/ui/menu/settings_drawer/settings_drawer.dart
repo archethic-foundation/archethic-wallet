@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/language.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';

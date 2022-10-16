@@ -1,8 +1,5 @@
 // ignore_for_file: avoid_unnecessary_containers
 
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -10,7 +7,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -20,7 +17,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-// TODO(reddwarf03): This Widget is not part of the Drawer menu. Should we move it in `views/main` directory ?
 class MenuWidgetWallet extends ConsumerWidget {
   const MenuWidgetWallet({super.key});
 
@@ -51,7 +47,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   _ActionButton(
                     text: localizations.send,
                     icon: UiIcons.send,
-                    onTap: () {
+                    onTap: () async {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
                             preferences.activeVibrations,
@@ -60,16 +56,13 @@ class MenuWidgetWallet extends ConsumerWidget {
                         context: context,
                         ref: ref,
                         widget: TransferSheet(
-                          primaryCurrency:
-                              StateContainer.of(context).curPrimaryCurrency,
+                          seed: (await StateContainer.of(context).getSeed())!,
                           title: localizations.transferTokens.replaceAll(
                             '%1',
                             StateContainer.of(context)
                                 .curNetwork
                                 .getNetworkCryptoCurrencyLabel(),
                           ),
-                          localCurrency:
-                              ref.read(CurrencyProviders.selectedCurrency),
                         ),
                       );
                     },

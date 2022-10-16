@@ -99,13 +99,13 @@ class Preferences {
         )],
       );
 
-  Future<void> setPrimaryCurrency(PrimaryCurrencySetting primarySetting) =>
-      _setValue(curPrimarySetting, primarySetting.getIndex());
+  Future<void> setPrimaryCurrency(AvailablePrimaryCurrency primaryCurrency) =>
+      _setValue(curPrimarySetting, primaryCurrency.getIndex());
 
-  PrimaryCurrencySetting getPrimaryCurrency() => PrimaryCurrencySetting(
-        AvailablePrimaryCurrency.values[_getValue(
+  AvailablePrimaryCurrency getPrimaryCurrency() => AvailablePrimaryCurrency(
+        AvailablePrimaryCurrencyEnum.values[_getValue(
           curPrimarySetting,
-          defaultValue: AvailablePrimaryCurrency.native.index,
+          defaultValue: AvailablePrimaryCurrencyEnum.native.index,
         )],
       );
 
@@ -275,7 +275,7 @@ class Preferences {
       ..setPinPadShuffle(false)
       ..setShowPriceChart(true)
       ..setPrimaryCurrency(
-        const PrimaryCurrencySetting(AvailablePrimaryCurrency.native),
+        const AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
       )
       ..setLockTimeout(const LockTimeoutSetting(LockTimeoutOption.one))
       ..setAuthMethod(authenticationMethod)
@@ -297,7 +297,7 @@ class Preferences {
         mainScreenCurrentPage: getMainScreenCurrentPage(),
         networks: getNetwork().network,
         pinPadShuffle: getPinPadShuffle(),
-        primaryCurrency: getPrimaryCurrency().primaryCurrency,
+        primaryCurrency: getPrimaryCurrency(),
         showBalances: getShowBalances(),
         showBlog: getShowBlog(),
         showPriceChart: getShowPriceChart(),

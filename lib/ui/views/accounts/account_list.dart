@@ -1,6 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -339,6 +340,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(preferenceProvider);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
@@ -443,14 +446,9 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                           ),
                                         ),
                                         if (preferences.showBalances)
-                                          StateContainer.of(context)
-                                                      .curPrimaryCurrency
-                                                      .primaryCurrency
-                                                      .name ==
-                                                  const PrimaryCurrencySetting(
-                                                    AvailablePrimaryCurrency
-                                                        .native,
-                                                  ).primaryCurrency.name
+                                          primaryCurrency.primaryCurrency ==
+                                                  AvailablePrimaryCurrencyEnum
+                                                      .native
                                               ? Expanded(
                                                   child: Column(
                                                     mainAxisAlignment:

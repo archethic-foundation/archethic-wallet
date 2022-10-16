@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -14,51 +15,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class BalanceIndicatorWidget extends ConsumerStatefulWidget {
+class BalanceIndicatorWidget extends ConsumerWidget {
   const BalanceIndicatorWidget({
     super.key,
-    this.primaryCurrency,
-    this.onPrimaryCurrencySelected,
     this.displaySwitchButton = true,
   });
 
-  final PrimaryCurrencySetting? primaryCurrency;
-  final ValueChanged<PrimaryCurrency>? onPrimaryCurrencySelected;
   final bool displaySwitchButton;
 
   @override
-  ConsumerState<BalanceIndicatorWidget> createState() =>
-      _BalanceIndicatorWidgetState();
-}
-
-enum PrimaryCurrency { fiat, native }
-
-class _BalanceIndicatorWidgetState
-    extends ConsumerState<BalanceIndicatorWidget> {
-  PrimaryCurrency primaryCurrency = PrimaryCurrency.native;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.primaryCurrency!.primaryCurrency.name ==
-        const PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-            .primaryCurrency
-            .name) {
-      primaryCurrency = PrimaryCurrency.native;
-    } else {
-      primaryCurrency = PrimaryCurrency.fiat;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(preferenceProvider);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+
     return preferences.showBalances
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (primaryCurrency == PrimaryCurrency.native)
+              if (primaryCurrency.primaryCurrency ==
+                  AvailablePrimaryCurrencyEnum.native)
                 Column(
                   children: const [
                     _BalanceIndicatorNative(
@@ -83,26 +60,34 @@ class _BalanceIndicatorWidgetState
               const SizedBox(
                 width: 10,
               ),
-              if (widget.displaySwitchButton == true)
+              if (displaySwitchButton == true)
                 IconButton(
                   icon: const Icon(Icons.change_circle),
                   alignment: Alignment.centerRight,
                   color: theme.textFieldIcon,
-                  onPressed: () {
+                  onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
-                    if (primaryCurrency == PrimaryCurrency.native) {
-                      setState(() {
-                        primaryCurrency = PrimaryCurrency.fiat;
-                      });
+                    if (primaryCurrency.primaryCurrency ==
+                        AvailablePrimaryCurrencyEnum.native) {
+                      await ref.read(
+                        PrimaryCurrencyProviders.selectPrimaryCurrency(
+                          primaryCurrency: const AvailablePrimaryCurrency(
+                            AvailablePrimaryCurrencyEnum.fiat,
+                          ),
+                        ).future,
+                      );
                     } else {
-                      setState(() {
-                        primaryCurrency = PrimaryCurrency.native;
-                      });
+                      await ref.read(
+                        PrimaryCurrencyProviders.selectPrimaryCurrency(
+                          primaryCurrency: const AvailablePrimaryCurrency(
+                            AvailablePrimaryCurrencyEnum.native,
+                          ),
+                        ).future,
+                      );
                     }
-                    widget.onPrimaryCurrencySelected!(primaryCurrency);
                   },
                 ),
             ],

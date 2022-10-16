@@ -13,7 +13,6 @@ import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
@@ -60,9 +59,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
   Timer? timerCheckTransactionInputs;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
-  // AvailableCurrency curCurrency = const AvailableCurrency(AvailableCurrencyEnum.usd);
-  PrimaryCurrencySetting curPrimaryCurrency =
-      const PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
   NetworksSetting curNetwork =
       const NetworksSetting(AvailableNetworks.archethicMainNet);
 
@@ -84,7 +80,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
               bottomBarPageController = PageController(
                 initialPage: preferences.getMainScreenCurrentPage(),
               );
-              curPrimaryCurrency = preferences.getPrimaryCurrency();
               curNetwork = preferences.getNetwork();
             });
           },
@@ -177,13 +172,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
       );
     }
     return tokensFungibles;
-  }
-
-  // Change primary currency
-  void updatePrimaryCurrency(PrimaryCurrencySetting primaryCurrency) {
-    setState(() {
-      curPrimaryCurrency = primaryCurrency;
-    });
   }
 
   // Change currency

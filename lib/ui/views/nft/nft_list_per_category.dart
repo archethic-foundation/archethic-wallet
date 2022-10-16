@@ -2,7 +2,6 @@
 import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
@@ -67,9 +66,7 @@ class NFTListPerCategory extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    BalanceIndicatorWidget(
-                      primaryCurrency:
-                          StateContainer.of(context).curPrimaryCurrency,
+                    const BalanceIndicatorWidget(
                       displaySwitchButton: false,
                     ),
                     Padding(

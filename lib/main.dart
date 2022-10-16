@@ -11,7 +11,6 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
@@ -71,7 +70,7 @@ Future<void> main() async {
       RestartWidget(
         child: ProviderScope(
           overrides: [
-            // TODO(reddwarf03): Meaning ?
+            // TODO(reddwarf03): Meaning ? => a wau to reinitiliaze the wallet
             SettingsProviders.localSettingsRepository
                 .overrideWithValue(localPreferencesRepository),
           ],
@@ -207,9 +206,6 @@ class _AppState extends ConsumerState<App> {
                   process: args['process'] == null
                       ? null
                       : args['process'] as NFTCreationProcessTypeEnum,
-                  primaryCurrency: args['primaryCurrency'] == null
-                      ? null
-                      : args['primaryCurrency'] as PrimaryCurrencySetting,
                 ),
                 settings: settings,
               );

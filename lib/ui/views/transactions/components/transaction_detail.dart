@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -36,6 +37,8 @@ class TransactionDetail extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;
@@ -103,13 +106,8 @@ class TransactionDetail extends ConsumerWidget {
                                 style: theme.textStyleSize12W600Primary60,
                               )
                       else
-                        StateContainer.of(context)
-                                    .curPrimaryCurrency
-                                    .primaryCurrency
-                                    .name ==
-                                const PrimaryCurrencySetting(
-                                  AvailablePrimaryCurrency.native,
-                                ).primaryCurrency.name
+                        primaryCurrency.primaryCurrency ==
+                                AvailablePrimaryCurrencyEnum.native
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -338,13 +336,8 @@ class TransactionDetail extends ConsumerWidget {
                         Row(
                           children: <Widget>[
                             if (preferences.showBalances == true)
-                              StateContainer.of(context)
-                                          .curPrimaryCurrency
-                                          .primaryCurrency
-                                          .name ==
-                                      const PrimaryCurrencySetting(
-                                        AvailablePrimaryCurrency.native,
-                                      ).primaryCurrency.name
+                              primaryCurrency.primaryCurrency ==
+                                      AvailablePrimaryCurrencyEnum.native
                                   ? Text(
                                       '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                       style: theme.textStyleSize12W400Primary,

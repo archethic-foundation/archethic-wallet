@@ -12,6 +12,8 @@ class CustomizationMenuView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -85,8 +87,7 @@ class CustomizationMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
-                        defaultMethod:
-                            StateContainer.of(context).curPrimaryCurrency,
+                        defaultMethod: primaryCurrency,
                         icon: 'assets/icons/menu/primary-currency.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: () =>

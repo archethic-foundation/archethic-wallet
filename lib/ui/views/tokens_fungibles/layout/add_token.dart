@@ -6,7 +6,6 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -30,10 +29,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AddTokenSheet extends ConsumerStatefulWidget {
   const AddTokenSheet({
     super.key,
-    this.primaryCurrency,
   });
-
-  final PrimaryCurrencySetting? primaryCurrency;
 
   @override
   ConsumerState<AddTokenSheet> createState() => _AddTokenSheetState();
@@ -80,6 +76,7 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
+
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -90,8 +87,7 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
             SheetHeader(
               title: localizations.createFungibleToken,
               widgetBeforeTitle: const NetworkIndicator(),
-              widgetAfterTitle: BalanceIndicatorWidget(
-                primaryCurrency: widget.primaryCurrency,
+              widgetAfterTitle: const BalanceIndicatorWidget(
                 displaySwitchButton: false,
               ),
             ),

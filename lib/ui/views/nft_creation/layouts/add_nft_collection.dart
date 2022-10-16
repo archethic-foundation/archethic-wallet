@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:aewallet/bus/nft_file_add_event.dart';
-import 'package:aewallet/model/primary_currency.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -12,10 +11,7 @@ import 'package:flutter/material.dart';
 class AddNFTCollection extends StatefulWidget {
   const AddNFTCollection({
     super.key,
-    this.primaryCurrency,
   });
-
-  final PrimaryCurrencySetting? primaryCurrency;
 
   @override
   State<AddNFTCollection> createState() => _AddNFTCollectionState();
@@ -80,7 +76,6 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(reddwarf03): refacto code with Riverpod
     return const SizedBox();
   }
 }

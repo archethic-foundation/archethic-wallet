@@ -1,6 +1,5 @@
 // Flutter imports:
 // Project imports:
-import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -12,7 +11,7 @@ import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
-import 'package:aewallet/ui/views/uco/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -100,9 +99,6 @@ class NFTList extends ConsumerWidget {
                                         Dimens.buttonTopDimens,
                                         key: const Key('sendNFT'),
                                         onPressed: () async {
-                                          final currency = ref.read(
-                                            CurrencyProviders.selectedCurrency,
-                                          );
                                           sl.get<HapticUtil>().feedback(
                                                 FeedbackType.light,
                                                 preferences.activeVibrations,
@@ -111,13 +107,12 @@ class NFTList extends ConsumerWidget {
                                             context: context,
                                             ref: ref,
                                             widget: TransferSheet(
+                                              seed: (await StateContainer.of(
+                                                      context,)
+                                                  .getSeed())!,
                                               accountToken: accountSelected
                                                   .accountNFT![index],
-                                              primaryCurrency:
-                                                  StateContainer.of(context)
-                                                      .curPrimaryCurrency,
                                               title: localizations.transferNFT,
-                                              localCurrency: currency,
                                             ),
                                           );
                                         },
@@ -175,10 +170,8 @@ class NFTList extends ConsumerWidget {
                   Navigator.of(context).pushNamed(
                     '/nft_creation',
                     arguments: {
-                      'currentNftCategoryIndex': currentNftCategoryIndex!,
+                      'currentNftCategoryIndex': currentNftCategoryIndex,
                       'process': NFTCreationProcessTypeEnum.single,
-                      'primaryCurrency':
-                          StateContainer.of(context).curPrimaryCurrency
                     },
                   );
                 },

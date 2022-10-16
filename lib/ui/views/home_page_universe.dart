@@ -408,10 +408,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                     Sheets.showAppHeightNineSheet(
                       context: context,
                       ref: ref,
-                      widget: AddTokenSheet(
-                        primaryCurrency:
-                            StateContainer.of(context).curPrimaryCurrency,
-                      ),
+                      widget: const AddTokenSheet(),
                     );
                   },
                 ),

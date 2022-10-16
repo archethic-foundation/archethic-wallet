@@ -2,6 +2,7 @@
 
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -43,6 +44,8 @@ class BalanceInfos extends ConsumerWidget {
         .getAccountSelected()!
         .balance;
     final preferences = ref.watch(preferenceProvider);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     return GestureDetector(
       child: SizedBox(
         height: 60,
@@ -56,13 +59,8 @@ class BalanceInfos extends ConsumerWidget {
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
-                  child: StateContainer.of(context)
-                              .curPrimaryCurrency
-                              .primaryCurrency
-                              .name ==
-                          const PrimaryCurrencySetting(
-                            AvailablePrimaryCurrency.native,
-                          ).primaryCurrency.name
+                  child: primaryCurrency.primaryCurrency ==
+                          AvailablePrimaryCurrencyEnum.native
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -128,6 +126,8 @@ class BalanceInfos extends ConsumerWidget {
     AccountBalance accountSelectedBalance,
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     showMenu(
       color: theme.backgroundDark,
@@ -142,13 +142,8 @@ class BalanceInfos extends ConsumerWidget {
         details.globalPosition.dx,
         details.globalPosition.dy,
       ),
-      items: StateContainer.of(context)
-                  .curPrimaryCurrency
-                  .primaryCurrency
-                  .name ==
-              const PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-                  .primaryCurrency
-                  .name
+      items: primaryCurrency.primaryCurrency ==
+              AvailablePrimaryCurrencyEnum.native
           ? [
               PopupMenuItem(
                 value: '1',
