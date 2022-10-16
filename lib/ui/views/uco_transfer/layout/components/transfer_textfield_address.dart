@@ -97,6 +97,7 @@ class TransferTextFieldAddress extends ConsumerWidget {
               },
             )
           : null,
+      suffixShowFirstCondition: true,
       fadeSuffixOnCondition: true,
       style: theme.textStyleSize14W700Primary,
       onChanged: (String text) async {
