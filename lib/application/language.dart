@@ -31,8 +31,9 @@ List<Locale> _availableLocales(_AvailableLocalesRef ref) {
   ];
 }
 
-final _defaultLocaleProvider =
-    StateProvider<Locale>((ref) => const Locale('en', 'US'));
+final _defaultLocaleProvider = StateProvider<Locale>(
+  (ref) => const Locale('en', 'US'),
+);
 
 @riverpod
 Future<void> _selectLanguage(

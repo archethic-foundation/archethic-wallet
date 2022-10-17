@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -17,10 +18,36 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+abstract class DurationFormatters {
+  static String _twoDigitsFormatter(int value) =>
+      value.toString().padLeft(2, '0');
+
+  // ignore: non_constant_identifier_names
+  static String HHmmss(Duration duration) =>
+      '${_twoDigitsFormatter(duration.inHours)}:${_twoDigitsFormatter(duration.inMinutes % 59)}:${_twoDigitsFormatter(duration.inSeconds % 59)}';
+}
+
+abstract class AppLockScreenProviders {
+  static final remainingLockSeconds = Provider.autoDispose<String>(
+    (ref) {
+      final remainingDuration = ref
+          .watch(
+            AuthenticationProviders.lockCountdown,
+          )
+          .valueOrNull;
+
+      if (remainingDuration == null) return '';
+
+      return DurationFormatters.HHmmss(remainingDuration);
+    },
+  );
+}
 
 class AppLockScreen extends ConsumerStatefulWidget {
   const AppLockScreen({super.key});
@@ -30,15 +57,14 @@ class AppLockScreen extends ConsumerStatefulWidget {
 }
 
 class _AppLockScreenState extends ConsumerState<AppLockScreen> {
-  bool _lockedOut = true;
-  String _countDownTxt = '';
-
   Future<void> _goHome() async {
     StateContainer.of(context).appWallet =
         await sl.get<DBHelper>().getAppWallet();
     if (StateContainer.of(context).appWallet == null) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/',
+        (Route<dynamic> route) => false,
+      );
     }
     final preferences = await Preferences.getInstance();
     StateContainer.of(context).bottomBarCurrentPage =
@@ -54,93 +80,10 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
     );
   }
 
-  String _formatCountDisplay(int count) {
-    if (count <= 60) {
-      // Seconds only
-      var secondsStr = count.toString();
-      if (count < 10) {
-        secondsStr = '0$secondsStr';
-      }
-      return '00:$secondsStr';
-    } else if (count > 60 && count <= 3600) {
-      // Minutes:Seconds
-      var minutesStr = '';
-      final minutes = count ~/ 60;
-      if (minutes < 10) {
-        minutesStr = '0$minutes';
-      } else {
-        minutesStr = minutes.toString();
-      }
-      var secondsStr = '';
-      final seconds = count % 60;
-      if (seconds < 10) {
-        secondsStr = '0$seconds';
-      } else {
-        secondsStr = seconds.toString();
-      }
-      return '$minutesStr:$secondsStr';
-    } else {
-      // Hours:Minutes:Seconds
-      var hoursStr = '';
-      final hours = count ~/ 3600;
-      if (hours < 10) {
-        hoursStr = '0$hours';
-      } else {
-        hoursStr = hours.toString();
-      }
-      final remainingSeconds = count % 3600;
-      var minutesStr = '';
-      final minutes = remainingSeconds ~/ 60;
-      if (minutes < 10) {
-        minutesStr = '0$minutes';
-      } else {
-        minutesStr = minutes.toString();
-      }
-      var secondsStr = '';
-      final seconds = count % 60;
-      if (seconds < 10) {
-        secondsStr = '0$seconds';
-      } else {
-        secondsStr = seconds.toString();
-      }
-      return '$hoursStr:$minutesStr:$secondsStr';
-    }
-  }
-
-  Future<void> _runCountdown(int count) async {
-    if (count >= 1) {
-      if (mounted) {
-        setState(() {
-          _lockedOut = true;
-          _countDownTxt = _formatCountDisplay(count);
-        });
-      }
-      Future<void>.delayed(const Duration(seconds: 1), () {
-        _runCountdown(count - 1);
-      });
-    } else {
-      if (mounted) {
-        setState(() {
-          _lockedOut = false;
-        });
-      }
-    }
-  }
-
   Future<void> _authenticate({bool transitions = false}) async {
-    final preferences = await Preferences.getInstance();
-    final lockUntil = preferences.getLockDate();
-    if (lockUntil != null) {
-      final countDown = lockUntil.difference(DateTime.now().toUtc()).inSeconds;
-      if (countDown > 0) {
-        _runCountdown(countDown);
-        return;
-      }
-    }
-    setState(() {
-      _lockedOut = false;
-    });
-    final authMethod = preferences.getAuthMethod();
+    final authMethod = ref.read(
+      AuthenticationProviders.preferedAuthMethod,
+    );
     final auth = await AuthFactory.authenticate(
       context,
       ref,
@@ -154,7 +97,9 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
 
   @override
   void initState() {
-    _authenticate();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _authenticate(),
+    );
 
     super.initState();
   }
@@ -163,7 +108,19 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final activeVibrations = ref.watch(
+      SettingsProviders.settings.select((value) => value.activeVibrations),
+    );
+    final isLocked = ref.read(AuthenticationProviders.isLocked);
+    final countDownString = ref.watch(
+      AppLockScreenProviders.remainingLockSeconds,
+    );
+    ref.listen<bool>(
+      AuthenticationProviders.isLocked,
+      (_, isLocked) {
+        if (!isLocked) _goHome();
+      },
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.backgroundDarkest,
@@ -187,7 +144,10 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
             ),
           ),
           LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
+            builder: (
+              BuildContext context,
+              BoxConstraints constraints,
+            ) =>
                 SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
@@ -267,7 +227,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                             ),
                           ],
                         ),
-                        if (_lockedOut)
+                        if (isLocked)
                           Container(
                             margin: const EdgeInsets.only(top: 10),
                             child: Text(
@@ -275,7 +235,7 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                               style: theme.textStyleSize24W700EquinoxPrimary,
                             ),
                           ),
-                        if (_lockedOut)
+                        if (isLocked)
                           Container(
                             width: MediaQuery.of(context).size.width - 100,
                             margin: const EdgeInsets.symmetric(
@@ -298,19 +258,19 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                     children: <Widget>[
                       AppButton(
                         AppButtonType.primary,
-                        _lockedOut ? _countDownTxt : localizations.unlock,
+                        isLocked ? countDownString : localizations.unlock,
                         Dimens.buttonBottomDimens,
                         key: const Key('unlock'),
                         onPressed: () {
-                          if (!_lockedOut) {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            _authenticate();
-                          }
+                          if (isLocked) return;
+
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                activeVibrations,
+                              );
+                          _authenticate();
                         },
-                        disabled: _lockedOut,
+                        disabled: isLocked,
                       ),
                     ],
                   ),

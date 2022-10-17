@@ -1,14 +1,29 @@
 import 'dart:io';
 
-import 'package:aewallet/util/biometrics_util.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_auth/local_auth.dart';
 
 class DeviceAbilities {
   static final hasBiometricsProvider = FutureProvider<bool>(
     (ref) async {
-      return sl.get<BiometricUtil>().hasBiometrics();
+      if (!kIsWeb &&
+          (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
+        final localAuth = LocalAuthentication();
+        final canCheck = await localAuth.canCheckBiometrics;
+        if (canCheck) {
+          final availableBiometrics = await localAuth.getAvailableBiometrics();
+          if (availableBiometrics.contains(BiometricType.face) ||
+              availableBiometrics.contains(BiometricType.fingerprint) ||
+              availableBiometrics.contains(BiometricType.strong) ||
+              availableBiometrics.contains(BiometricType.weak)) {
+            return true;
+          }
+        }
+        return false;
+      } else {
+        return false;
+      }
     },
   );
 

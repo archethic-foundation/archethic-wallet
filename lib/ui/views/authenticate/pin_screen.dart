@@ -2,13 +2,14 @@
 import 'dart:math';
 
 // Project imports:
+import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/authentication/model/model.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -30,19 +31,15 @@ class ShakeCurve extends Curve {
 
 class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
-    this.type,
-    this.pinPadShuffle, {
+    this.type, {
     this.description = '',
-    this.expectedPin = '',
     this.pinScreenBackgroundColor,
     super.key,
   });
 
   final PinOverlayType type;
-  final String expectedPin;
   final String description;
   final Color? pinScreenBackgroundColor;
-  final bool pinPadShuffle;
 
   @override
   ConsumerState<PinScreen> createState() => _PinScreenState();
@@ -50,9 +47,9 @@ class PinScreen extends ConsumerStatefulWidget {
 
 class _PinScreenState extends ConsumerState<PinScreen>
     with SingleTickerProviderStateMixin {
-  static const int maxAttempts = 5;
+  // int maxAttempts = 0;
 
-  int _pinLength = 6;
+  static const int _pinLength = 6;
   double buttonSize = 70;
 
   String pinEnterTitle = '';
@@ -64,7 +61,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   String? _pinConfirmed;
   late bool _awaitingConfirmation;
   late String _header;
-  int _failedAttempts = 0;
+  // int _failedAttempts = 0;
   final List<int> _listPinNumber = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
   // Invalid animation
@@ -78,7 +75,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
     // Initialize list all empty
     if (widget.type == PinOverlayType.enterPin) {
       _header = pinEnterTitle;
-      _pinLength = widget.expectedPin.length;
     } else {
       _header = pinCreateTitle;
     }
@@ -87,67 +83,70 @@ class _PinScreenState extends ConsumerState<PinScreen>
     _pin = '';
     _pinConfirmed = '';
 
-    if (widget.pinPadShuffle) {
+    final shouldShuffle = ref.read(preferenceProvider).pinPadShuffle;
+    if (shouldShuffle) {
       _listPinNumber.shuffle();
     }
 
-    Preferences.getInstance().then((Preferences preferences) {
-      setState(() {
-        // Get adjusted failed attempts
-        _failedAttempts = preferences.getLockAttempts() % maxAttempts;
-      });
+    // setState(() {
+    //   final authenticationState =
+    //       ref.read(AuthenticationProviders.pinAuthentication);
+    //   // Get adjusted failed attempts
+    //   _failedAttempts = authenticationState.failedAttemptsCount;
+    //   maxAttempts = authenticationState.maxAttemptsCount;
+    // });
 
-      // Set animation
-      _controller = AnimationController(
-        duration: const Duration(milliseconds: 350),
-        vsync: this,
-      );
-      final Animation<double> curve =
-          CurvedAnimation(parent: _controller, curve: ShakeCurve());
-      _animation = Tween<double>(begin: 0, end: 25).animate(curve)
-        ..addStatusListener((status) {
-          if (status == AnimationStatus.completed) {
-            if (widget.type == PinOverlayType.enterPin) {
-              preferences.incrementLockAttempts().then((_) {
-                _failedAttempts++;
-                if (_failedAttempts >= maxAttempts) {
-                  setState(() {
-                    _controller.value = 0;
-                  });
-                  preferences.updateLockDate().then((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/lock_screen_transition',
-                      (Route<dynamic> route) => false,
-                    );
-                  });
-                } else {
-                  setState(() {
-                    _pin = '';
-                    _header = AppLocalization.of(context)!.pinInvalid;
-                    _dotStates =
-                        List.filled(_pinLength, FontAwesomeIcons.minus);
-                    _controller.value = 0;
-                  });
-                }
+    // Set animation
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 350),
+      vsync: this,
+    );
+    final Animation<double> curve = CurvedAnimation(
+      parent: _controller,
+      curve: ShakeCurve(),
+    );
+    _animation = Tween<double>(begin: 0, end: 25).animate(curve)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          if (widget.type == PinOverlayType.enterPin) {
+            final authenticationState = ref.read(
+              AuthenticationProviders.pinAuthentication,
+            );
+            // _failedAttempts = authenticationState.failedAttemptsCount;
+            if (authenticationState.failedAttemptsCount >=
+                authenticationState.maxAttemptsCount) {
+              setState(() {
+                _controller.value = 0;
               });
+              Navigator.of(context).pushReplacementNamed(
+                '/lock_screen_transition',
+              );
             } else {
               setState(() {
-                _awaitingConfirmation = false;
-                _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
                 _pin = '';
-                _pinConfirmed = '';
-                _header = AppLocalization.of(context)!.pinConfirmError;
+                _header = AppLocalization.of(context)!.pinInvalid;
+                _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
                 _controller.value = 0;
               });
             }
+          } else {
+            setState(() {
+              _awaitingConfirmation = false;
+              _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
+              _pin = '';
+              _pinConfirmed = '';
+              _header = AppLocalization.of(context)!.pinConfirmError;
+              _controller.value = 0;
+            });
           }
-        })
-        ..addListener(() {
-          setState(() {
-            // the animation object’s value is the changed state
-          });
+        }
+      })
+      ..addListener(() {
+        setState(() {
+          // the animation object’s value is the changed state
         });
-    });
+      });
+    ;
   }
 
   @override
@@ -234,48 +233,59 @@ class _PinScreenState extends ConsumerState<PinScreen>
           }
           if (_setCharacter(buttonText)) {
             // Mild delay so they can actually see the last dot get filled
-            Future<void>.delayed(const Duration(milliseconds: 50), () async {
-              if (widget.type == PinOverlayType.enterPin) {
-                // Pin is not what was expected
-                if (_pin != widget.expectedPin) {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.error,
-                        preferences.activeVibrations,
+            Future<void>.delayed(
+              const Duration(milliseconds: 50),
+              () async {
+                if (widget.type == PinOverlayType.enterPin) {
+                  final result = await ref
+                      .read(
+                        AuthenticationProviders.pinAuthentication.notifier,
+                      )
+                      .authenticateWithPin(
+                        PinCredentials(pin: _pin ?? ''),
                       );
-                  _controller.forward();
+
+                  result.maybeMap(
+                    success: (_) {
+                      Navigator.of(context).pop(true);
+                      return;
+                    },
+                    orElse: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.error,
+                            preferences.activeVibrations,
+                          );
+                      _controller.forward();
+                    },
+                  );
                 } else {
-                  Preferences.getInstance().then((Preferences preferences) {
-                    preferences.resetLockAttempts();
-                    Navigator.of(context).pop(true);
-                  });
-                }
-              } else {
-                if (!_awaitingConfirmation) {
-                  // Switch to confirm pin
-                  setState(() {
-                    _awaitingConfirmation = true;
-                    _dotStates = List<IconData>.filled(
-                      _pinLength,
-                      FontAwesomeIcons.minus,
-                    );
-                    _header = AppLocalization.of(context)!.pinConfirmTitle;
-                  });
-                } else {
-                  // First and second pins match
-                  if (_pin == _pinConfirmed) {
-                    final vault = await Vault.getInstance();
-                    vault.setPin(_pin!);
-                    Navigator.of(context).pop(true);
+                  if (!_awaitingConfirmation) {
+                    // Switch to confirm pin
+                    setState(() {
+                      _awaitingConfirmation = true;
+                      _dotStates = List<IconData>.filled(
+                        _pinLength,
+                        FontAwesomeIcons.minus,
+                      );
+                      _header = AppLocalization.of(context)!.pinConfirmTitle;
+                    });
                   } else {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.error,
-                          preferences.activeVibrations,
-                        );
-                    _controller.forward();
+                    // First and second pins match
+                    if (_pin == _pinConfirmed) {
+                      final vault = await Vault.getInstance();
+                      vault.setPin(_pin!);
+                      Navigator.of(context).pop(true);
+                    } else {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.error,
+                            preferences.activeVibrations,
+                          );
+                      _controller.forward();
+                    }
                   }
                 }
-              }
-            });
+              },
+            );
           }
         },
         child: Container(
@@ -300,26 +310,45 @@ class _PinScreenState extends ConsumerState<PinScreen>
     );
   }
 
-  List<Widget> _buildPinDots() {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final ret = List<Widget>.empty(growable: true);
-    for (var i = 0; i < _pinLength; i++) {
-      ret.add(
-        FaIcon(
-          _dotStates[i],
-          color: theme.text,
-          size: 15,
-        ),
-      );
-    }
-    return ret;
-  }
-
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+
+    final pinAuthentication = ref.watch(
+      AuthenticationProviders.pinAuthentication,
+    );
+
+    // ref.listen<bool>(
+    //   AuthenticationProviders.isLocked,
+    //   (previous, isLocked) {
+    //     if (previous == isLocked || !isLocked) return;
+
+    //     setState(() {
+    //       _controller.value = 0;
+    //     });
+    //     Navigator.of(context).pushReplacementNamed(
+    //       '/lock_screen_transition',
+    //     );
+    //   },
+    // );
+
+    // ref.listen<PinAuthenticationState>(
+    //   AuthenticationProviders.pinAuthentication,
+    //   (previous, next) {
+    //     if (next.failedAttemptsCount < next.maxAttemptsCount) {
+    //       setState(() {
+    //         _awaitingConfirmation = false;
+    //         _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
+    //         _pin = '';
+    //         _pinConfirmed = '';
+    //         _header = AppLocalization.of(context)!.pinConfirmError;
+    //         _controller.value = 0;
+    //       });
+    //     }
+    //   },
+    // );
 
     if (pinEnterTitle.isEmpty) {
       setState(() {
@@ -354,236 +383,240 @@ class _PinScreenState extends ConsumerState<PinScreen>
             colors: <Color>[theme.backgroundDark!, theme.background!],
           ),
         ),
-        child: Material(
-          color: Colors.transparent,
-          child: Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.06,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(start: 15),
-                          height: 50,
-                          width: 50,
-                          child: BackButton(
-                            key: const Key('back'),
-                            color: theme.text,
-                            onPressed: () {
-                              Navigator.pop(context, false);
-                            },
-                          ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.06,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsetsDirectional.only(start: 15),
+                        height: 50,
+                        width: 50,
+                        child: BackButton(
+                          key: const Key('back'),
+                          color: theme.text,
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                    child: AutoSizeText(
+                      _header,
+                      style: theme.textStyleSize24W700EquinoxPrimary,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      stepGranularity: 0.1,
                     ),
+                  ),
+                  if (widget.description.isNotEmpty)
                     Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 40),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 10,
+                      ),
                       child: AutoSizeText(
-                        _header,
-                        style: theme.textStyleSize24W700EquinoxPrimary,
+                        widget.description,
+                        style: theme.textStyleSize16W200Primary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
                       ),
                     ),
-                    if (widget.description.isNotEmpty)
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 10,
-                        ),
-                        child: AutoSizeText(
-                          widget.description,
-                          style: theme.textStyleSize16W200Primary,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
-                        ),
-                      ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: _animation == null
+                          ? MediaQuery.of(context).size.width * 0.25
+                          : MediaQuery.of(context).size.width * 0.25 +
+                              _animation!.value,
+                      end: _animation == null
+                          ? MediaQuery.of(context).size.width * 0.25
+                          : MediaQuery.of(context).size.width * 0.25 -
+                              _animation!.value,
+                      top: MediaQuery.of(context).size.height * 0.05,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        for (var i = 0; i < _pinLength; i++)
+                          FaIcon(
+                            _dotStates[i],
+                            color: theme.text,
+                            size: 15,
+                          )
+                      ],
+                    ),
+                  ),
+                  if (pinAuthentication.failedAttemptsCount > 0)
                     Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: _animation == null
-                            ? MediaQuery.of(context).size.width * 0.25
-                            : MediaQuery.of(context).size.width * 0.25 +
-                                _animation!.value,
-                        end: _animation == null
-                            ? MediaQuery.of(context).size.width * 0.25
-                            : MediaQuery.of(context).size.width * 0.25 -
-                                _animation!.value,
-                        top: MediaQuery.of(context).size.height * 0.05,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 10,
+                      ),
+                      child: AutoSizeText(
+                        '${localizations.attempt}${pinAuthentication.failedAttemptsCount}/${pinAuthentication.maxAttemptsCount}',
+                        style: theme.textStyleSize16W200Primary,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        stepGranularity: 0.1,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  right: MediaQuery.of(context).size.width * 0.07,
+                  bottom: smallScreen(context)
+                      ? MediaQuery.of(context).size.height * 0.02
+                      : MediaQuery.of(context).size.height * 0.05,
+                  top: MediaQuery.of(context).size.height * 0.05,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.01,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: _buildPinDots(),
+                        children: <Widget>[
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(0).toString(),
+                            context,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(1).toString(),
+                            context,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(2).toString(),
+                            context,
+                          ),
+                        ],
                       ),
                     ),
-                    if (_failedAttempts > 0)
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 10,
-                        ),
-                        child: AutoSizeText(
-                          '${localizations.attempt}$_failedAttempts/$maxAttempts',
-                          style: theme.textStyleSize16W200Primary,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
-                        ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.01,
                       ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.07,
-                    right: MediaQuery.of(context).size.width * 0.07,
-                    bottom: smallScreen(context)
-                        ? MediaQuery.of(context).size.height * 0.02
-                        : MediaQuery.of(context).size.height * 0.05,
-                    top: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(0).toString(),
-                              context,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(1).toString(),
-                              context,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(2).toString(),
-                              context,
-                            ),
-                          ],
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(3).toString(),
+                            context,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(4).toString(),
+                            context,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(5).toString(),
+                            context,
+                          ),
+                        ],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(3).toString(),
-                              context,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(4).toString(),
-                              context,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(5).toString(),
-                              context,
-                            ),
-                          ],
-                        ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.01,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(6).toString(),
-                              context,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(7).toString(),
-                              context,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(8).toString(),
-                              context,
-                            ),
-                          ],
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(6).toString(),
+                            context,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(7).toString(),
+                            context,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(8).toString(),
+                            context,
+                          ),
+                        ],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.009,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            SizedBox(
-                              height: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
-                              width: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
-                            ),
-                            _buildPinScreenButton(
-                              _listPinNumber.elementAt(9).toString(),
-                              context,
-                            ),
-                            SizedBox(
-                              height: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
-                              width: smallScreen(context)
-                                  ? buttonSize - 15
-                                  : buttonSize,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(200),
-                                highlightColor: theme.text15,
-                                splashColor: theme.text30,
-                                onTap: () {},
-                                onTapDown: (TapDownDetails details) {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        preferences.activeVibrations,
-                                      );
-                                  _backSpace();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                        color: theme.background40!,
-                                        blurRadius: 15,
-                                        spreadRadius: -15,
-                                      ),
-                                    ],
-                                  ),
-                                  alignment: AlignmentDirectional.center,
-                                  child: FaIcon(
-                                    Icons.backspace,
-                                    color: theme.text,
-                                    size: 20,
-                                  ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.009,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          SizedBox(
+                            height: smallScreen(context)
+                                ? buttonSize - 15
+                                : buttonSize,
+                            width: smallScreen(context)
+                                ? buttonSize - 15
+                                : buttonSize,
+                          ),
+                          _buildPinScreenButton(
+                            _listPinNumber.elementAt(9).toString(),
+                            context,
+                          ),
+                          SizedBox(
+                            height: smallScreen(context)
+                                ? buttonSize - 15
+                                : buttonSize,
+                            width: smallScreen(context)
+                                ? buttonSize - 15
+                                : buttonSize,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(200),
+                              highlightColor: theme.text15,
+                              splashColor: theme.text30,
+                              onTap: () {},
+                              onTapDown: (TapDownDetails details) {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
+                                    );
+                                _backSpace();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      color: theme.background40!,
+                                      blurRadius: 15,
+                                      spreadRadius: -15,
+                                    ),
+                                  ],
+                                ),
+                                alignment: AlignmentDirectional.center,
+                                child: FaIcon(
+                                  Icons.backspace,
+                                  color: theme.text,
+                                  size: 20,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

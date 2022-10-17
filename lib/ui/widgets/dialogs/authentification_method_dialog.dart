@@ -97,9 +97,8 @@ class AuthentificationMethodDialog {
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return PinScreen(
+                          return const PinScreen(
                             PinOverlayType.newPin,
-                            ref.watch(SettingsProviders.settings).pinPadShuffle,
                           );
                         },
                       ),

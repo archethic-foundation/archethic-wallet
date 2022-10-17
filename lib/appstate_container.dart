@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-import 'dart:io';
 
 // Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -22,7 +22,6 @@ import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -97,55 +96,53 @@ class StateContainerState extends ConsumerState<StateContainer> {
   }
 
   void checkTransactionInputs(String message) {
-    if (!kIsWeb &&
-        (Platform.isIOS == true ||
-            Platform.isAndroid == true ||
-            Platform.isMacOS == true)) {
-      if (appWallet != null) {
-        timerCheckTransactionInputs =
-            Timer.periodic(const Duration(seconds: 30), (Timer t) async {
-          final accounts = appWallet!.appKeychain!.accounts;
-          for (final account in accounts!) {
-            final transactionInputList =
-                await sl.get<AppService>().getTransactionInputs(
-                      account.lastAddress!,
-                      'from, amount, timestamp, tokenAddress ',
-                    );
+    if (!ref.read(DeviceAbilities.hasNotificationsProvider)) return;
+    if (appWallet == null) return;
 
-            if (transactionInputList.isNotEmpty) {
-              for (final transactionInput in transactionInputList) {
-                if (account.lastLoadingTransactionInputs == null ||
-                    transactionInput.timestamp! >
-                        account.lastLoadingTransactionInputs!) {
-                  account.updateLastLoadingTransactionInputs();
-                  if (transactionInput.from != account.lastAddress) {
-                    var symbol = 'UCO';
-                    if (transactionInput.tokenAddress != null) {
-                      symbol = (await sl
-                              .get<ApiService>()
-                              .getToken(transactionInput.tokenAddress!))
-                          .symbol!;
-                    }
-                    NotificationsUtil.showNotification(
-                      title: 'Archethic',
-                      body: message
-                          .replaceAll(
-                            '%1',
-                            fromBigInt(transactionInput.amount).toString(),
-                          )
-                          .replaceAll('%2', symbol)
-                          .replaceAll('%3', account.name!),
-                      payload: account.name,
-                    );
-                    await requestUpdate(forceUpdateChart: false);
+    timerCheckTransactionInputs = Timer.periodic(
+      const Duration(seconds: 30),
+      (Timer t) async {
+        final accounts = appWallet!.appKeychain!.accounts;
+        for (final account in accounts!) {
+          final transactionInputList =
+              await sl.get<AppService>().getTransactionInputs(
+                    account.lastAddress!,
+                    'from, amount, timestamp, tokenAddress ',
+                  );
+
+          if (transactionInputList.isNotEmpty) {
+            for (final transactionInput in transactionInputList) {
+              if (account.lastLoadingTransactionInputs == null ||
+                  transactionInput.timestamp! >
+                      account.lastLoadingTransactionInputs!) {
+                account.updateLastLoadingTransactionInputs();
+                if (transactionInput.from != account.lastAddress) {
+                  var symbol = 'UCO';
+                  if (transactionInput.tokenAddress != null) {
+                    symbol = (await sl
+                            .get<ApiService>()
+                            .getToken(transactionInput.tokenAddress!))
+                        .symbol!;
                   }
+                  NotificationsUtil.showNotification(
+                    title: 'Archethic',
+                    body: message
+                        .replaceAll(
+                          '%1',
+                          fromBigInt(transactionInput.amount).toString(),
+                        )
+                        .replaceAll('%2', symbol)
+                        .replaceAll('%3', account.name!),
+                    payload: account.name,
+                  );
+                  await requestUpdate(forceUpdateChart: false);
                 }
               }
             }
           }
-        });
-      }
-    }
+        }
+      },
+    );
   }
 
   Future<List<Contact>> getContacts() async {

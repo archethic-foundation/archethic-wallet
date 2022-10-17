@@ -13,6 +13,7 @@ import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
@@ -20,7 +21,6 @@ import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
-import 'package:aewallet/ui/views/lock_screen.dart';
 import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -301,6 +301,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         StateContainer.of(context).checkTransactionInputs(
           AppLocalization.of(context)!.transactionInputNotification,
         );
+
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
