@@ -1,6 +1,6 @@
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/ui/views/uco_transfer/bloc/model.dart';
-import 'package:aewallet/ui/views/uco_transfer/bloc/transaction_builder.dart';
+import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
@@ -24,24 +24,14 @@ class TransferNotifier extends StateNotifier<Transfer> {
 
   void setContact(Contact contact) {
     state = state.copyWith(
-      isContact: true,
       contactRecipient: contact,
     );
   }
 
   void setAddress(String address) {
-    final isContact = address.startsWith('@');
-    if (isContact) {
-      state = state.copyWith(
-        isContact: isContact,
-      );
-    } else {
-      // TODO(reddwarf03): Ajouter controle adresse + détermination contact address
-      state = state.copyWith(
-        addressRecipient: address,
-        isContact: isContact,
-      );
-    }
+    state = state.copyWith(
+      addressRecipient: address,
+    );
   }
 
   void setAmount(double amount) {
@@ -50,6 +40,10 @@ class TransferNotifier extends StateNotifier<Transfer> {
 
   void setMessage(String message) {
     state = state.copyWith(message: message.trim());
+  }
+
+  void setTransferType(TransferType transferType) {
+    state = state.copyWith(transferType: transferType);
   }
 
   void isMaxSend(

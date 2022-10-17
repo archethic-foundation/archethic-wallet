@@ -18,9 +18,11 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/layout/token_transfer_list.dart';
-import 'package:aewallet/ui/views/uco_transfer/bloc/transaction_builder.dart';
-import 'package:aewallet/ui/views/uco_transfer/layout/uco_transfer_list.dart';
+import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/layout/components/token_transfer_detail.dart';
+import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
+import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
+import 'package:aewallet/ui/views/transfer/layout/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -37,24 +39,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class TransferConfirmSheet extends ConsumerStatefulWidget {
   const TransferConfirmSheet({
     super.key,
-    required this.lastAddress,
-    required this.typeTransfer,
-    required this.feeEstimation,
-    required this.symbol,
     this.title,
-    this.ucoTransferList,
-    this.tokenTransferList,
     this.message,
   });
 
-  final String? lastAddress;
-  final String? typeTransfer;
   final String? title;
-  final double? feeEstimation;
   final String? message;
-  final String? symbol;
-  final List<UCOTransferWallet>? ucoTransferList;
-  final List<TokenTransferWallet>? tokenTransferList;
 
   @override
   ConsumerState<TransferConfirmSheet> createState() =>
@@ -128,7 +118,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
     );
-    if (widget.typeTransfer == 'TOKEN') {
+    final transfer = ref.watch(TransferProvider.transfer);
+    if (transfer.transferType == TransferType.token) {
       final transaction = await sl
           .get<ApiService>()
           .getLastTransaction(event.transactionAddress!);
@@ -207,6 +198,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final transfer = ref.watch(TransferProvider.transfer);
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -222,17 +214,10 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                   height: 20,
                 ),
                 SizedBox(
-                  child: widget.typeTransfer == 'UCO'
-                      ? UCOTransferListWidget(
-                          listUcoTransfer: widget.ucoTransferList,
-                          feeEstimation: widget.feeEstimation,
-                        )
-                      : widget.typeTransfer == 'TOKEN'
-                          ? TokenTransferListWidget(
-                              listTokenTransfer: widget.tokenTransferList,
-                              feeEstimation: widget.feeEstimation,
-                              symbol: widget.symbol,
-                            )
+                  child: transfer.transferType == TransferType.uco
+                      ? const UCOTransferDetail()
+                      : transfer.transferType == TransferType.token
+                          ? const TokenTransferDetail()
                           : const SizedBox(),
                 ),
                 if (widget.message!.isNotEmpty)
@@ -317,10 +302,19 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
   Future<void> _doSend() async {
     _showSendingAnimation(context);
+    final transfer = ref.watch(TransferProvider.transfer);
     final seed = await StateContainer.of(context).getSeed();
-    final ucoTransferList = widget.ucoTransferList!;
-    final tokenTransferList = widget.tokenTransferList!;
+    final tokenTransferList = List<TokenTransfer>.empty(growable: true);
     final originPrivateKey = sl.get<ApiService>().getOriginKey();
+
+    final ucoTransferList = [
+      UCOTransfer(
+        amount: toBigInt(transfer.amount),
+        to: transfer.contactRecipient == null
+            ? transfer.addressRecipient
+            : transfer.contactRecipient!.address!,
+      ),
+    ];
 
     final keychain = await sl.get<ApiService>().getKeychain(seed!);
     final nameEncoded = Uri.encodeFull(

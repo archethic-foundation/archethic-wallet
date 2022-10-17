@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/primary_currency.dart';
@@ -12,14 +13,14 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/model/token_transfer_wallet.dart';
-import 'package:aewallet/model/uco_transfer_wallet.dart';
+import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/uco_transfer/layout/transfer_confirm_sheet.dart';
+import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
+import 'package:aewallet/ui/views/transfer/layout/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -54,6 +55,7 @@ enum AddressStyle { text60, text90, primary }
 class TransferSheet extends ConsumerWidget {
   const TransferSheet({
     required this.seed,
+    required this.transferType,
     this.contact,
     this.address,
     this.title,
@@ -67,6 +69,7 @@ class TransferSheet extends ConsumerWidget {
   final String? title;
   final String? actionButtonTitle;
   final AccountToken? accountToken;
+  final TransferType transferType;
   final String seed;
 
   @override
@@ -76,11 +79,6 @@ class TransferSheet extends ConsumerWidget {
     const _messageValidationText = '';
     const validRequest = true;
     bool? _isPressed;
-
-    final ucoTransferList = List<UCOTransferWallet>.empty(growable: true);
-
-    final tokenTransferList = List<TokenTransferWallet>.empty(growable: true);
-
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = StateContainer.of(context)
@@ -90,6 +88,7 @@ class TransferSheet extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final transfer = ref.watch(TransferProvider.transfer);
+
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -107,17 +106,6 @@ class TransferSheet extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 10),
                 child: Stack(
                   children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        //  sendAddressFocusNode!.unfocus();
-                        //  sendAmountFocusNode!.unfocus();
-                      },
-                      child: Container(
-                        color: Colors.transparent,
-                        constraints: const BoxConstraints.expand(),
-                        child: const SizedBox.expand(),
-                      ),
-                    ),
                     SingleChildScrollView(
                       child: Padding(
                         padding: EdgeInsets.only(bottom: bottom + 80),
@@ -151,19 +139,6 @@ class TransferSheet extends ConsumerWidget {
                                   alignment: Alignment.topCenter,
                                   child: TransferTextFieldAddress(
                                     seed: seed,
-                                    accountSelected: accountSelected,
-                                  ),
-                                ),
-                                Container(
-                                  alignment: AlignmentDirectional.center,
-                                  margin: const EdgeInsets.only(
-                                    left: 50,
-                                    right: 40,
-                                    top: 3,
-                                  ),
-                                  child: Text(
-                                    _addressValidationText,
-                                    style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -173,7 +148,7 @@ class TransferSheet extends ConsumerWidget {
                                   ),
                                   child: transfer.feeEstimation > 0
                                       ? Text(
-                                          '+ ${localizations.estimatedFees}: ${transfer.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                          '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(transfer.feeEstimation, StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel())}',
                                           style:
                                               theme.textStyleSize14W100Primary,
                                         )
@@ -258,17 +233,8 @@ class TransferSheet extends ConsumerWidget {
                               context: context,
                               ref: ref,
                               widget: TransferConfirmSheet(
-                                lastAddress: accountSelected.lastAddress,
-                                ucoTransferList: ucoTransferList,
-                                tokenTransferList: tokenTransferList,
                                 title: title,
-                                typeTransfer:
-                                    accountToken == null ? 'UCO' : 'TOKEN',
-                                feeEstimation: transfer.feeEstimation,
                                 message: transfer.message,
-                                symbol: accountToken == null
-                                    ? null
-                                    : accountToken!.tokenInformations!.symbol!,
                               ),
                             );
                           } else {

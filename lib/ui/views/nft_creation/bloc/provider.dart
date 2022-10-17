@@ -12,7 +12,7 @@ import 'package:path/path.dart' as path;
 import 'package:pdfx/pdfx.dart';
 
 final _nftCreationProvider =
-    StateNotifierProvider<NftCreationNotifier, NftCreation>((ref) {
+    StateNotifierProvider.autoDispose<NftCreationNotifier, NftCreation>((ref) {
   return NftCreationNotifier(const NftCreation());
 });
 
