@@ -14,6 +14,18 @@ class DeviceAbilities {
 
   static final hasNotificationsProvider = Provider<bool>(
     (ref) {
+      if (kIsWeb == false &&
+          (Platform.isIOS == true ||
+              Platform.isAndroid == true ||
+              Platform.isMacOS == true)) {
+        return true;
+      }
+      return false;
+    },
+  );
+
+  static final hasQRCodeProvider = Provider<bool>(
+    (ref) {
       if (!kIsWeb &&
           (Platform.isIOS == true ||
               Platform.isAndroid == true ||

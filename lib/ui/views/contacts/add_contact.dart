@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 // Project imports:
@@ -102,6 +103,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(preferenceProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -181,8 +183,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     maxLines: null,
                     autocorrect: false,
                     labelText: localizations.addressHint,
-                    prefixButton: kIsWeb == false &&
-                            (Platform.isIOS || Platform.isAndroid)
+                    prefixButton: hasQRCode
                         ? TextFieldButton(
                             icon: FontAwesomeIcons.qrcode,
                             onPressed: () async {

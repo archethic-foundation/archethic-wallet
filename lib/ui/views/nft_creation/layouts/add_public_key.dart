@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -48,6 +49,7 @@ class AddPublicKey extends ConsumerWidget {
     final nftCreation = ref.watch(NftCreationProvider.nftCreation);
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
+    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
 
     return Column(
       children: <Widget>[
@@ -116,8 +118,7 @@ class AddPublicKey extends ConsumerWidget {
                                 }
                               },
                             ),
-                            suffixButton: kIsWeb == false &&
-                                    (Platform.isIOS || Platform.isAndroid)
+                            suffixButton: hasQRCode
                                 ? TextFieldButton(
                                     icon: FontAwesomeIcons.qrcode,
                                     onPressed: () async {

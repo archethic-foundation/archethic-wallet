@@ -17,6 +17,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
 
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
+    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
 
     return Container(
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -47,8 +48,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
             onChanged: (text) {
               nftCreationNotifier.setName(text);
             },
-            suffixButton: kIsWeb == false &&
-                    (Platform.isIOS || Platform.isAndroid)
+            suffixButton: hasQRCode
                 ? TextFieldButton(
                     icon: FontAwesomeIcons.qrcode,
                     onPressed: () async {
@@ -104,8 +104,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
             onChanged: (text) {
               nftCreationNotifier.setDescription(text);
             },
-            suffixButton: kIsWeb == false &&
-                    (Platform.isIOS || Platform.isAndroid)
+            suffixButton: hasQRCode
                 ? TextFieldButton(
                     icon: FontAwesomeIcons.qrcode,
                     onPressed: () async {

@@ -25,6 +25,8 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
     final nftCreation = ref.watch(NftCreationProvider.nftCreation);
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
+    ref.watch(NftCreationProvider.nftCreation.notifier);
+    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
 
     bool validateAddNFTProperty() {
       addNFTPropertyMessage = '';
@@ -84,8 +86,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                   nftPropertyValueController.text,
                 );*/
               },
-              suffixButton: kIsWeb == false &&
-                      (Platform.isIOS || Platform.isAndroid)
+              suffixButton: hasQRCode
                   ? TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {
@@ -144,8 +145,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                   text,
                 );*/
               },
-              suffixButton: kIsWeb == false &&
-                      (Platform.isIOS || Platform.isAndroid)
+              suffixButton: hasQRCode
                   ? TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {

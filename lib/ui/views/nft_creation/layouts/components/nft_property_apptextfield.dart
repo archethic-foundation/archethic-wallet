@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -34,7 +35,7 @@ class NftPropertyAppTextField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(preferenceProvider);
-
+    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
     return AppTextField(
       focusNode: focusNode,
       controller: textEditingController,
@@ -73,7 +74,7 @@ class NftPropertyAppTextField extends ConsumerWidget {
           );
         }*/
       },
-      suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+      suffixButton: hasQRCode
           ? TextFieldButton(
               icon: FontAwesomeIcons.qrcode,
               onPressed: () async {
