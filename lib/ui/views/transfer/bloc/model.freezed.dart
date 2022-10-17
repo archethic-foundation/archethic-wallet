@@ -25,6 +25,10 @@ mixin _$Transfer {
   Contact? get contactRecipient => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   bool get isMaxSend => throw _privateConstructorUsedError;
+  bool get isContactKnown => throw _privateConstructorUsedError;
+  String get errorAddressText => throw _privateConstructorUsedError;
+  String get errorAmountText => throw _privateConstructorUsedError;
+  String get errorMessageText => throw _privateConstructorUsedError;
   Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -46,6 +50,10 @@ abstract class $TransferCopyWith<$Res> {
       Contact? contactRecipient,
       String message,
       bool isMaxSend,
+      bool isContactKnown,
+      String errorAddressText,
+      String errorAmountText,
+      String errorMessageText,
       Transaction? transaction});
 }
 
@@ -68,6 +76,10 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
     Object? contactRecipient = freezed,
     Object? message = freezed,
     Object? isMaxSend = freezed,
+    Object? isContactKnown = freezed,
+    Object? errorAddressText = freezed,
+    Object? errorAmountText = freezed,
+    Object? errorMessageText = freezed,
     Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
@@ -107,6 +119,22 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
           ? _value.isMaxSend
           : isMaxSend // ignore: cast_nullable_to_non_nullable
               as bool,
+      isContactKnown: isContactKnown == freezed
+          ? _value.isContactKnown
+          : isContactKnown // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorAddressText: errorAddressText == freezed
+          ? _value.errorAddressText
+          : errorAddressText // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorAmountText: errorAmountText == freezed
+          ? _value.errorAmountText
+          : errorAmountText // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorMessageText: errorMessageText == freezed
+          ? _value.errorMessageText
+          : errorMessageText // ignore: cast_nullable_to_non_nullable
+              as String,
       transaction: transaction == freezed
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
@@ -131,6 +159,10 @@ abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
       Contact? contactRecipient,
       String message,
       bool isMaxSend,
+      bool isContactKnown,
+      String errorAddressText,
+      String errorAmountText,
+      String errorMessageText,
       Transaction? transaction});
 }
 
@@ -155,6 +187,10 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
     Object? contactRecipient = freezed,
     Object? message = freezed,
     Object? isMaxSend = freezed,
+    Object? isContactKnown = freezed,
+    Object? errorAddressText = freezed,
+    Object? errorAmountText = freezed,
+    Object? errorMessageText = freezed,
     Object? transaction = freezed,
   }) {
     return _then(_$_Transfer(
@@ -194,6 +230,22 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
           ? _value.isMaxSend
           : isMaxSend // ignore: cast_nullable_to_non_nullable
               as bool,
+      isContactKnown: isContactKnown == freezed
+          ? _value.isContactKnown
+          : isContactKnown // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorAddressText: errorAddressText == freezed
+          ? _value.errorAddressText
+          : errorAddressText // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorAmountText: errorAmountText == freezed
+          ? _value.errorAmountText
+          : errorAmountText // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorMessageText: errorMessageText == freezed
+          ? _value.errorMessageText
+          : errorMessageText // ignore: cast_nullable_to_non_nullable
+              as String,
       transaction: transaction == freezed
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
@@ -215,6 +267,10 @@ class _$_Transfer extends _Transfer {
       this.contactRecipient,
       this.message = '',
       this.isMaxSend = false,
+      this.isContactKnown = false,
+      this.errorAddressText = '',
+      this.errorAmountText = '',
+      this.errorMessageText = '',
       this.transaction})
       : super._();
 
@@ -245,11 +301,23 @@ class _$_Transfer extends _Transfer {
   @JsonKey()
   final bool isMaxSend;
   @override
+  @JsonKey()
+  final bool isContactKnown;
+  @override
+  @JsonKey()
+  final String errorAddressText;
+  @override
+  @JsonKey()
+  final String errorAmountText;
+  @override
+  @JsonKey()
+  final String errorMessageText;
+  @override
   final Transaction? transaction;
 
   @override
   String toString() {
-    return 'Transfer(transferType: $transferType, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, message: $message, isMaxSend: $isMaxSend, transaction: $transaction)';
+    return 'Transfer(transferType: $transferType, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
   }
 
   @override
@@ -272,6 +340,14 @@ class _$_Transfer extends _Transfer {
             const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality().equals(other.isMaxSend, isMaxSend) &&
             const DeepCollectionEquality()
+                .equals(other.isContactKnown, isContactKnown) &&
+            const DeepCollectionEquality()
+                .equals(other.errorAddressText, errorAddressText) &&
+            const DeepCollectionEquality()
+                .equals(other.errorAmountText, errorAmountText) &&
+            const DeepCollectionEquality()
+                .equals(other.errorMessageText, errorMessageText) &&
+            const DeepCollectionEquality()
                 .equals(other.transaction, transaction));
   }
 
@@ -287,6 +363,10 @@ class _$_Transfer extends _Transfer {
       const DeepCollectionEquality().hash(contactRecipient),
       const DeepCollectionEquality().hash(message),
       const DeepCollectionEquality().hash(isMaxSend),
+      const DeepCollectionEquality().hash(isContactKnown),
+      const DeepCollectionEquality().hash(errorAddressText),
+      const DeepCollectionEquality().hash(errorAmountText),
+      const DeepCollectionEquality().hash(errorMessageText),
       const DeepCollectionEquality().hash(transaction));
 
   @JsonKey(ignore: true)
@@ -306,6 +386,10 @@ abstract class _Transfer extends Transfer {
       final Contact? contactRecipient,
       final String message,
       final bool isMaxSend,
+      final bool isContactKnown,
+      final String errorAddressText,
+      final String errorAmountText,
+      final String errorMessageText,
       final Transaction? transaction}) = _$_Transfer;
   const _Transfer._() : super._();
 
@@ -327,6 +411,14 @@ abstract class _Transfer extends Transfer {
   String get message;
   @override
   bool get isMaxSend;
+  @override
+  bool get isContactKnown;
+  @override
+  String get errorAddressText;
+  @override
+  String get errorAmountText;
+  @override
+  String get errorMessageText;
   @override
   Transaction? get transaction;
   @override

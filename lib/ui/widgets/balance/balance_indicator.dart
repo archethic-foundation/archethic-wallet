@@ -61,6 +61,7 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                 width: 10,
               ),
               if (displaySwitchButton == true)
+                // TODO(Chralu): Works only twice
                 IconButton(
                   icon: const Icon(Icons.change_circle),
                   alignment: Alignment.centerRight,

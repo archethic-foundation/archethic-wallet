@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -20,6 +19,10 @@ class Transfer with _$Transfer {
     Contact? contactRecipient,
     @Default('') String message,
     @Default(false) bool isMaxSend,
+    @Default(false) bool isContactKnown,
+    @Default('') String errorAddressText,
+    @Default('') String errorAmountText,
+    @Default('') String errorMessageText,
     Transaction? transaction,
   }) = _Transfer;
   const Transfer._();

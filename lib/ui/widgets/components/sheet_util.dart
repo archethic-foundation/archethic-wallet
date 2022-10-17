@@ -220,7 +220,7 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  bool get maintainState => false;
+  bool get maintainState => true;
 
   @override
   bool get opaque => false;

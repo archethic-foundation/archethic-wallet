@@ -8,7 +8,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
-import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';

@@ -10,18 +10,15 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/token_transfer_wallet.dart';
-import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
-import 'package:aewallet/ui/views/transfer/layout/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
+import 'package:aewallet/ui/views/transfer/layout/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layout/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -40,11 +37,9 @@ class TransferConfirmSheet extends ConsumerStatefulWidget {
   const TransferConfirmSheet({
     super.key,
     this.title,
-    this.message,
   });
 
   final String? title;
-  final String? message;
 
   @override
   ConsumerState<TransferConfirmSheet> createState() =>
@@ -220,32 +215,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                           ? const TokenTransferDetail()
                           : const SizedBox(),
                 ),
-                if (widget.message!.isNotEmpty)
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 20,
-                      bottom: 20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          localizations.sendMessageConfirmHeader,
-                          style: theme.textStyleSize14W600Primary,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          widget.message!,
-                          style: theme.textStyleSize14W600Primary,
-                        ),
-                      ],
-                    ),
-                  ),
               ],
             ),
           ),
@@ -331,7 +300,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
         .chainLength!;
 
     final transaction = await TransferTransactionBuilder.build(
-      message: widget.message!,
+      message: transfer.message,
       index: index,
       keychain: keychain,
       originPrivateKey: originPrivateKey,

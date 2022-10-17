@@ -4,12 +4,12 @@ part of '../transfer_sheet.dart';
 class TransferTextFieldAmount extends ConsumerStatefulWidget {
   const TransferTextFieldAmount({
     super.key,
-    required this.accountSelected,
+    required this.seed,
     this.accountToken,
   });
 
-  final Account accountSelected;
   final AccountToken? accountToken;
+  final String seed;
 
   @override
   ConsumerState<TransferTextFieldAmount> createState() =>
@@ -48,6 +48,8 @@ class _TransferTextFieldAmountState
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final transfer = ref.watch(TransferProvider.transfer);
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
     final localCurrencyFormat = NumberFormat.currency(
       locale: CurrencyUtil.getLocale(currency.currency.name).toString(),
       symbol: CurrencyUtil.getCurrencySymbol(
@@ -79,6 +81,10 @@ class _TransferTextFieldAmountState
           onChanged: (String text) async {
             final amount = double.tryParse(text);
             transferNotifier.setAmount(amount ?? 0);
+            await transferNotifier.calculateFees(
+              widget.seed,
+              accountSelected!.name!,
+            );
           },
           textInputAction: TextInputAction.next,
           maxLines: null,
@@ -100,16 +106,15 @@ class _TransferTextFieldAmountState
               var sendAmount = 0.0;
               if (primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native) {
-                sendAmount = widget.accountSelected.balance!.nativeTokenValue! -
+                sendAmount = accountSelected!.balance!.nativeTokenValue! -
                     transfer.feeEstimation;
                 sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
                 final selectedCurrencyFee =
-                    widget.accountSelected.balance!.tokenPrice!.amount! *
+                    accountSelected!.balance!.tokenPrice!.amount! *
                         transfer.feeEstimation;
-                sendAmount =
-                    widget.accountSelected.balance!.fiatCurrencyValue! -
-                        selectedCurrencyFee;
+                sendAmount = accountSelected.balance!.fiatCurrencyValue! -
+                    selectedCurrencyFee;
                 sendAmountController!.text = sendAmount
                     .toStringAsFixed(localCurrencyFormat.decimalDigits!);
               }
@@ -135,7 +140,7 @@ class _TransferTextFieldAmountState
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '1 ${widget.accountSelected.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(widget.accountSelected.balance!.fiatCurrencyCode!, widget.accountSelected.balance!.tokenPrice!.amount!)}',
+                  '1 ${accountSelected!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),
@@ -148,7 +153,7 @@ class _TransferTextFieldAmountState
                       ? Text(
                           '= ${_convertNetworkCurrencyToSelectedCurrency(
                             transfer.amount.toString(),
-                            widget.accountSelected.balance!.tokenPrice!.amount,
+                            accountSelected.balance!.tokenPrice!.amount,
                             localCurrencyFormat,
                           )}',
                           textAlign: TextAlign.right,
@@ -157,7 +162,7 @@ class _TransferTextFieldAmountState
                       : Text(
                           '= ${_convertSelectedCurrencyToNetworkCurrency(
                             transfer.amount.toString(),
-                            widget.accountSelected.balance!.tokenPrice!.amount,
+                            accountSelected.balance!.tokenPrice!.amount,
                             context,
                           )}',
                           textAlign: TextAlign.right,
@@ -181,7 +186,7 @@ class _TransferTextFieldAmountState
                 ),
               ),
             ],
-          )
+          ),
       ],
     );
   }

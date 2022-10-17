@@ -8,7 +8,6 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -52,7 +51,7 @@ part 'components/transfer_textfield_message.dart';
 
 enum AddressStyle { text60, text90, primary }
 
-class TransferSheet extends ConsumerWidget {
+class TransferSheet extends ConsumerStatefulWidget {
   const TransferSheet({
     required this.seed,
     required this.transferType,
@@ -73,12 +72,13 @@ class TransferSheet extends ConsumerWidget {
   final String seed;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    const _amountValidationText = '';
-    const _addressValidationText = '';
-    const _messageValidationText = '';
-    const validRequest = true;
-    bool? _isPressed;
+  ConsumerState<TransferSheet> createState() => _TransferSheetState();
+}
+
+class _TransferSheetState extends ConsumerState<TransferSheet> {
+  @override
+  Widget build(BuildContext context) {
+    const _isPressed = false;
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = StateContainer.of(context)
@@ -88,6 +88,10 @@ class TransferSheet extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final transfer = ref.watch(TransferProvider.transfer);
+    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+
+    // TODO(Chralu): How to init transfer ?
+    // transferNotifier.setTransferType(widget.transferType);
 
     // The main column that holds everything
     return TapOutsideUnfocus(
@@ -97,7 +101,7 @@ class TransferSheet extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: title ?? localizations.send,
+              title: widget.title ?? localizations.send,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: const BalanceIndicatorWidget(),
             ),
@@ -112,81 +116,54 @@ class TransferSheet extends ConsumerWidget {
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 25),
-                            Column(
-                              children: <Widget>[
-                                if (accountToken == null ||
-                                    (accountToken != null &&
-                                        accountToken!.tokenInformations !=
-                                            null &&
-                                        accountToken!.tokenInformations!.type ==
-                                            'fungible'))
-                                  TransferTextFieldAmount(
-                                    accountSelected: accountSelected,
-                                  ),
-                                Container(
-                                  alignment: AlignmentDirectional.center,
-                                  margin: const EdgeInsets.only(top: 3),
-                                  child: Text(
-                                    _amountValidationText,
-                                    style: theme.textStyleSize14W600Primary,
-                                  ),
-                                ),
-                              ],
+                            if (widget.accountToken == null ||
+                                (widget.accountToken != null &&
+                                    widget.accountToken!.tokenInformations !=
+                                        null &&
+                                    widget.accountToken!.tokenInformations!
+                                            .type ==
+                                        'fungible'))
+                              TransferTextFieldAmount(
+                                seed: widget.seed,
+                              ),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                top: 20,
+                                bottom: 20,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: TransferTextFieldAddress(
+                                seed: widget.seed,
+                              ),
                             ),
-                            Column(
-                              children: <Widget>[
-                                Container(
-                                  alignment: Alignment.topCenter,
-                                  child: TransferTextFieldAddress(
-                                    seed: seed,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 30,
-                                  ),
-                                  child: transfer.feeEstimation > 0
-                                      ? Text(
-                                          '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(transfer.feeEstimation, StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel())}',
-                                          style:
-                                              theme.textStyleSize14W100Primary,
-                                        )
-                                      : Text(
-                                          localizations.estimatedFeesNote,
-                                          style:
-                                              theme.textStyleSize14W100Primary,
-                                        ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 30,
-                                  ),
-                                  child: transfer.feeEstimation > 0
-                                      ? Text(
-                                          '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transfer.feeEstimation, 8)})',
-                                          style:
-                                              theme.textStyleSize14W100Primary,
-                                        )
-                                      : const SizedBox(),
-                                ),
-                                const SizedBox(height: 10),
-                                TransferTextFieldMessage(
-                                  accountSelected: accountSelected,
-                                ),
-                                Container(
-                                  alignment: AlignmentDirectional.center,
-                                  margin: const EdgeInsets.only(
-                                    left: 50,
-                                    right: 40,
-                                    top: 3,
-                                  ),
-                                  child: Text(
-                                    _messageValidationText,
-                                    style: theme.textStyleSize14W600Primary,
-                                  ),
-                                ),
-                              ],
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                              ),
+                              child: transfer.feeEstimation > 0
+                                  ? Text(
+                                      '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(transfer.feeEstimation, StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel())}',
+                                      style: theme.textStyleSize14W100Primary,
+                                    )
+                                  : Text(
+                                      localizations.estimatedFeesNote,
+                                      style: theme.textStyleSize14W100Primary,
+                                    ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                              ),
+                              child: transfer.feeEstimation > 0
+                                  ? Text(
+                                      '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transfer.feeEstimation, 8)})',
+                                      style: theme.textStyleSize14W100Primary,
+                                    )
+                                  : const SizedBox(),
+                            ),
+                            const SizedBox(height: 10),
+                            TransferTextFieldMessage(
+                              seed: widget.seed,
                             ),
                           ],
                         ),
@@ -203,7 +180,7 @@ class TransferSheet extends ConsumerWidget {
                     if (_isPressed == true)
                       AppButton(
                         AppButtonType.primaryOutline,
-                        actionButtonTitle ?? localizations.send,
+                        widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
                         key: const Key('send'),
                         onPressed: () {},
@@ -211,36 +188,41 @@ class TransferSheet extends ConsumerWidget {
                     else
                       AppButton(
                         AppButtonType.primary,
-                        actionButtonTitle ?? localizations.send,
+                        widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
                         key: const Key('send'),
                         onPressed: () async {
-                          //setState(() {
-                          //  _isPressed = true;
-                          //});
-                          //validRequest = await _validateRequest(
-                          //  accountSelected,
-                          //);
-                          if (validRequest) {
+                          final isAddressOk =
+                              await transferNotifier.controlAddress(
+                            context,
+                            accountSelected,
+                          );
+                          final isAmountOk = transferNotifier.controlAmount(
+                            context,
+                            accountSelected,
+                          );
+
+                          if (isAddressOk == true && isAmountOk == true) {
                             Sheets.showAppHeightNineSheet(
-                              onDisposed: () {
-                                //    if (mounted) {
-                                //      setState(() {
-                                //        _isPressed = false;
-                                //      });
-                                //    }
-                              },
+                              onDisposed: () {},
                               context: context,
                               ref: ref,
                               widget: TransferConfirmSheet(
-                                title: title,
-                                message: transfer.message,
+                                title: widget.title,
                               ),
                             );
                           } else {
-                            // setState(() {
-                            //   _isPressed = false;
-                            //  });
+                            // TODO(Chralu): How to display first time ?
+                            UIUtil.showSnackbar(
+                              transfer.errorAmountText +
+                                  transfer.errorAddressText +
+                                  transfer.errorMessageText,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                              duration: const Duration(seconds: 5),
+                            );
                           }
                         },
                       ),
@@ -253,208 +235,4 @@ class TransferSheet extends ConsumerWidget {
       ),
     );
   }
-/*
-  /// Validate form data to see if valid
-  /// @returns true if valid, false otherwise
-  Future<bool> _validateRequest(Account accountSelected) async {
-    final localizations = AppLocalization.of(context)!;
-    var isValid = true;
-    final ucoTransfer = UCOTransferWallet();
-    final tokenTransfer = TokenTransferWallet();
-    setState(() {
-      _sendAmountFocusNode!.unfocus();
-      _sendAddressFocusNode!.unfocus();
-      _addressValidationText = '';
-      _messageValidationText = '';
-      _amountValidationText = '';
-    });
-    // Validate amount
-    if (_sendAmountController!.text.trim().isEmpty) {
-      isValid = false;
-      setState(() {
-        _amountValidationText = localizations.amountMissing;
-      });
-    } else {
-      if (double.tryParse(_sendAmountController!.text)! <= 0) {
-        isValid = false;
-        setState(() {
-          _amountValidationText = localizations.amountZero;
-        });
-      } else {
-        // Estimation of fees
-        feeEstimation = await getFee(accountSelected);
-
-        final amount = _rawAmount == null
-            ? _sendAmountController!.text
-            : NumberUtil.getRawAsUsableString(_rawAmount!);
-        var balanceRaw = 0.0;
-        var sendAmount = 0.0;
-        if (widget.accountToken == null) {
-          balanceRaw = accountSelected.balance!.nativeTokenValue!;
-
-          if (primaryCurrencySelected == PrimaryCurrency.native) {
-            sendAmount = double.tryParse(amount)!;
-          } else {
-            sendAmount = priceConverted;
-          }
-          if (sendAmount + feeEstimation > balanceRaw) {
-            isValid = false;
-            setState(() {
-              _amountValidationText =
-                  localizations.insufficientBalance.replaceAll(
-                '%1',
-                StateContainer.of(context)
-                    .curNetwork
-                    .getNetworkCryptoCurrencyLabel(),
-              );
-            });
-          } else {
-            ucoTransfer.amount = toBigInt(sendAmount);
-          }
-        } else {
-          balanceRaw = widget.accountToken!.amount!;
-          sendAmount = double.tryParse(amount)!;
-          if (sendAmount > balanceRaw) {
-            isValid = false;
-            setState(() {
-              _amountValidationText =
-                  localizations.insufficientBalance.replaceAll(
-                '%1',
-                widget.accountToken!.tokenInformations!.symbol!,
-              );
-            });
-          } else {
-            if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
-              isValid = false;
-              setState(() {
-                _amountValidationText =
-                    localizations.insufficientBalance.replaceAll(
-                  '%1',
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
-                );
-              });
-            } else {
-              tokenTransfer.amount = toBigInt(sendAmount);
-            }
-          }
-        }
-      }
-    }
-    // Validate address
-    final isContact = _sendAddressController!.text.startsWith('@');
-    Contact? contact;
-    if (_sendAddressController!.text.trim().isEmpty) {
-      isValid = false;
-      setState(() {
-        _addressValidationText = localizations.addressMissing;
-        _qrCodeButtonVisible = true;
-      });
-    } else if (!isContact && !Address(_sendAddressController!.text).isValid()) {
-      isValid = false;
-      setState(() {
-        _addressValidationText = localizations.invalidAddress;
-        _qrCodeButtonVisible = true;
-      });
-    } else if (!isContact) {
-      try {
-        contact = await sl
-            .get<DBHelper>()
-            .getContactWithAddress(_sendAddressController!.text);
-        // ignore: empty_catches
-      } catch (e) {}
-
-      setState(() {
-        _addressValidationText = '';
-        _qrCodeButtonVisible = false;
-      });
-      _sendAddressFocusNode!.unfocus();
-    } else {
-      // Get contact info
-      try {
-        contact = await sl
-            .get<DBHelper>()
-            .getContactWithName(_sendAddressController!.text);
-      } catch (e) {
-        isValid = false;
-        setState(() {
-          _addressValidationText = localizations.contactInvalid;
-          _qrCodeButtonVisible = true;
-        });
-      }
-    }
-
-    if (isValid) {
-      ucoTransferList.clear();
-      tokenTransferList.clear();
-
-      var lastAddressRecipient = '';
-      if (widget.accountToken == null) {
-        if (contact != null) {
-          ucoTransfer.toContactName = contact.name;
-          ucoTransfer.to = contact.address;
-        } else {
-          ucoTransfer.to = _sendAddressController!.text.trim();
-        }
-
-        lastAddressRecipient = await sl
-            .get<AddressService>()
-            .lastAddressFromAddress(ucoTransfer.to!);
-        if (lastAddressRecipient == '') {
-          lastAddressRecipient = ucoTransfer.to!;
-        }
-      } else {
-        if (contact != null) {
-          tokenTransfer.toContactName = contact.name;
-          tokenTransfer.to = contact.address;
-        } else {
-          tokenTransfer.to = _sendAddressController!.text.trim();
-        }
-        //
-        lastAddressRecipient = await sl
-            .get<AddressService>()
-            .lastAddressFromAddress(tokenTransfer.to!);
-        if (lastAddressRecipient == '') {
-          lastAddressRecipient = tokenTransfer.to!;
-        }
-      }
-
-      if (lastAddressRecipient == accountSelected.lastAddress!) {
-        isValid = false;
-        if (widget.accountToken == null) {
-          _addressValidationText = localizations.sendToMeError.replaceAll(
-            '%1',
-            StateContainer.of(context)
-                .curNetwork
-                .getNetworkCryptoCurrencyLabel(),
-          );
-        } else {
-          _addressValidationText = localizations.sendToMeError.replaceAll(
-            '%1',
-            widget.accountToken!.tokenInformations!.symbol!,
-          );
-        }
-        setState(() {
-          _qrCodeButtonVisible = true;
-        });
-      } else {
-        if (widget.accountToken == null) {
-          ucoTransferList.add(ucoTransfer);
-        } else {
-          tokenTransfer.tokenAddress =
-              widget.accountToken!.tokenInformations!.address;
-          // TODO(redDwarf03): Warning about collection
-          if (widget.accountToken!.tokenInformations!.type == 'fungible') {
-            tokenTransfer.tokenId = 0;
-          } else {
-            tokenTransfer.tokenId = 1;
-          }
-
-          tokenTransferList.add(tokenTransfer);
-        }
-      }
-    }
-    return isValid;
-  }*/
 }

@@ -4,10 +4,10 @@ part of '../transfer_sheet.dart';
 class TransferTextFieldMessage extends ConsumerStatefulWidget {
   const TransferTextFieldMessage({
     super.key,
-    required this.accountSelected,
+    required this.seed,
   });
 
-  final Account accountSelected;
+  final String seed;
 
   @override
   ConsumerState<TransferTextFieldMessage> createState() =>
@@ -40,6 +40,8 @@ class _TransferTextFieldMessageState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
 
     return AppTextField(
       focusNode: messageFocusNode,
@@ -47,8 +49,12 @@ class _TransferTextFieldMessageState
       maxLines: 4,
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${transfer.message.length}/200)',
-      onChanged: (String text) {
+      onChanged: (String text) async {
         transferNotifier.setMessage(text);
+        await transferNotifier.calculateFees(
+          widget.seed,
+          accountSelected!.name!,
+        );
       },
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
