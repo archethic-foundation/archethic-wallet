@@ -6,9 +6,13 @@ class TransferTextFieldAddress extends ConsumerStatefulWidget {
   const TransferTextFieldAddress({
     super.key,
     required this.seed,
+    this.contact,
+    this.address,
   });
 
   final String seed;
+  final Contact? contact;
+  final String? address;
 
   @override
   ConsumerState<TransferTextFieldAddress> createState() =>
@@ -26,6 +30,31 @@ class _TransferTextFieldAddressState
 
     sendAddressFocusNode = FocusNode();
     sendAddressController = TextEditingController();
+    if (widget.contact != null) {
+      // Setup initial state for contact pre-filled
+      sendAddressController!.text = widget.contact!.name!;
+    } else if (widget.address != null) {
+      // Setup initial state with prefilled address
+      sendAddressController!.text = widget.address!;
+    }
+
+    sendAddressFocusNode!.addListener(() {
+      if (sendAddressFocusNode!.hasFocus) {
+        sendAddressController!.selection = TextSelection.fromPosition(
+          TextPosition(offset: sendAddressController!.text.length),
+        );
+        if (sendAddressController!.text.startsWith('@')) {
+          sl
+              .get<DBHelper>()
+              .getContactsWithNameLike(sendAddressController!.text)
+              .then((List<Contact> contactList) {});
+        }
+      } else {
+        if (sendAddressController!.text.trim() == '@') {
+          sendAddressController!.text = '';
+        }
+      }
+    });
   }
 
   @override
@@ -46,126 +75,120 @@ class _TransferTextFieldAddressState
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
 
-    var addressValidationText = '';
-
-    return Column(
-      children: [
-        AppTextField(
-          focusNode: sendAddressFocusNode,
-          controller: sendAddressController,
-          cursorColor: theme.text,
-          inputFormatters: <LengthLimitingTextInputFormatter>[
-            if (transfer.contactRecipient != null)
-              LengthLimitingTextInputFormatter(20)
-            else
-              LengthLimitingTextInputFormatter(68),
-          ],
-          textInputAction: TextInputAction.done,
-          maxLines: null,
-          autocorrect: false,
-          labelText: AppLocalization.of(context)!.enterAddress,
-          prefixButton: TextFieldButton(
-            icon: FontAwesomeIcons.at,
-            onPressed: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              final contact = await ContactsDialog.getDialog(context, ref);
-              if (contact != null && contact.name != null) {
-                transferNotifier.setContact(contact);
-                sendAddressController!.text = contact.name!;
-                await transferNotifier.calculateFees(
-                  widget.seed,
-                  accountSelected!.name!,
-                );
-              }
-            },
-          ),
-          fadePrefixOnCondition: true,
-          prefixShowFirstCondition: true,
-          suffixButton: hasQRCode
-              ? TextFieldButton(
-                  icon: FontAwesomeIcons.qrcode,
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    UIUtil.cancelLockEvent();
-                    final scanResult = await UserDataUtil.getQRData(
-                      DataType.address,
-                      context,
-                      ref,
-                    );
-                    if (scanResult == null) {
-                      UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.qrInvalidAddress,
-                        context,
-                        ref,
-                        theme.text!,
-                        theme.snackBarShadow!,
-                      );
-                    } else if (QRScanErrs.errorList.contains(scanResult)) {
-                      UIUtil.showSnackbar(
-                        scanResult,
-                        context,
-                        ref,
-                        theme.text!,
-                        theme.snackBarShadow!,
-                      );
-                      return;
-                    } else {
-                      // Is a URI
-                      final address = Address(scanResult);
-                      addressValidationText = '';
-                      final contact = await sl
-                          .get<DBHelper>()
-                          .getContactWithAddress(address.address);
-
-                      if (contact != null) {
-                        transferNotifier.setContact(contact);
-                        sendAddressController!.text = contact.name!;
-                      } else {
-                        transferNotifier.setAddress(address.address);
-                        sendAddressController!.text = address.address;
-                      }
-                    }
-                  },
-                )
-              : null,
-          suffixShowFirstCondition: true,
-          fadeSuffixOnCondition: true,
-          style: theme.textStyleSize14W700Primary,
-          onChanged: (String text) async {
-            addressValidationText = '';
-            if (text.startsWith('@')) {
-              final contact = await sl.get<DBHelper>().getContactWithName(text);
-              transferNotifier.setContact(contact);
-              sendAddressController!.text = contact.name!;
-            } else {
-              transferNotifier.setAddress(text);
-              sendAddressController!.text = text;
-            }
+    return AppTextField(
+      focusNode: sendAddressFocusNode,
+      controller: sendAddressController,
+      cursorColor: theme.text,
+      inputFormatters: <TextInputFormatter>[
+        UpperCaseTextFormatter(),
+        if (transfer.contactRecipient != null)
+          LengthLimitingTextInputFormatter(20)
+        else
+          LengthLimitingTextInputFormatter(68),
+      ],
+      textInputAction: TextInputAction.done,
+      maxLines: null,
+      autocorrect: false,
+      labelText: AppLocalization.of(context)!.enterAddress,
+      prefixButton: TextFieldButton(
+        icon: FontAwesomeIcons.at,
+        onPressed: () async {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                preferences.activeVibrations,
+              );
+          final contact = await ContactsDialog.getDialog(context, ref);
+          if (contact != null && contact.name != null) {
+            transferNotifier.setContact(contact);
+            sendAddressController!.text = contact.name!;
             await transferNotifier.calculateFees(
               widget.seed,
               accountSelected!.name!,
             );
-          },
-        ),
-        Container(
-          alignment: AlignmentDirectional.center,
-          margin: const EdgeInsets.only(
-            left: 50,
-            right: 40,
-            top: 3,
-          ),
-          child: Text(
-            addressValidationText,
-            style: theme.textStyleSize14W600Primary,
-          ),
-        ),
-      ],
+          }
+        },
+      ),
+      fadePrefixOnCondition: true,
+      prefixShowFirstCondition: true,
+      suffixButton: hasQRCode
+          ? TextFieldButton(
+              icon: FontAwesomeIcons.qrcode,
+              onPressed: () async {
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      preferences.activeVibrations,
+                    );
+                UIUtil.cancelLockEvent();
+                final scanResult = await UserDataUtil.getQRData(
+                  DataType.address,
+                  context,
+                  ref,
+                );
+                if (scanResult == null) {
+                  UIUtil.showSnackbar(
+                    AppLocalization.of(context)!.qrInvalidAddress,
+                    context,
+                    ref,
+                    theme.text!,
+                    theme.snackBarShadow!,
+                  );
+                } else if (QRScanErrs.errorList.contains(scanResult)) {
+                  UIUtil.showSnackbar(
+                    scanResult,
+                    context,
+                    ref,
+                    theme.text!,
+                    theme.snackBarShadow!,
+                  );
+                  return;
+                } else {
+                  // Is a URI
+                  final address = Address(scanResult);
+                  final contact = await sl
+                      .get<DBHelper>()
+                      .getContactWithAddress(address.address);
+
+                  if (contact != null) {
+                    transferNotifier.setContact(contact);
+                    sendAddressController!.text = contact.name!;
+                  } else {
+                    transferNotifier.setAddress(address.address);
+                    transferNotifier.setContactKnown(false);
+                    sendAddressController!.text = address.address;
+                  }
+                }
+              },
+            )
+          : null,
+      suffixShowFirstCondition: true,
+      fadeSuffixOnCondition: true,
+      style: theme.textStyleSize14W700Primary,
+      onChanged: (String text) async {
+        if (text.startsWith('@')) {
+          try {
+            final contact = await sl.get<DBHelper>().getContactWithName(text);
+            transferNotifier.setContact(contact);
+            sendAddressController!.text = contact.name!;
+          } catch (e) {
+            transferNotifier.setContact(
+              Contact(
+                name: sendAddressController!.text,
+                type: '',
+                address: '',
+              ),
+            );
+            transferNotifier.setContactKnown(false);
+          }
+        } else {
+          transferNotifier.setAddress(text);
+          transferNotifier.setContactKnown(false);
+          sendAddressController!.text = text;
+        }
+        await transferNotifier.calculateFees(
+          widget.seed,
+          accountSelected!.name!,
+        );
+      },
     );
   }
 }

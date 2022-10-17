@@ -1,3 +1,6 @@
+import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
 import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
@@ -10,10 +13,11 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         uint8ListToHex,
         UCOTransfer,
         TokenTransfer;
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _transferProvider =
-    StateNotifierProvider<TransferNotifier, Transfer>((ref) {
+    StateNotifierProvider.autoDispose<TransferNotifier, Transfer>((ref) {
   return TransferNotifier(const Transfer());
 });
 
@@ -22,28 +26,46 @@ class TransferNotifier extends StateNotifier<Transfer> {
     super.state,
   );
 
-  void setContact(Contact contact) {
+  void setContact(Contact? contact) {
     state = state.copyWith(
       contactRecipient: contact,
+      isContactKnown: true,
+      errorAddressText: '',
+    );
+  }
+
+  void setContactKnown(bool isContactKnown) {
+    state = state.copyWith(
+      isContactKnown: isContactKnown,
     );
   }
 
   void setAddress(String address) {
     state = state.copyWith(
       addressRecipient: address,
+      errorAddressText: '',
     );
   }
 
   void setAmount(double amount) {
-    state = state.copyWith(amount: amount);
+    state = state.copyWith(
+      amount: amount,
+      errorAmountText: '',
+    );
   }
 
   void setMessage(String message) {
-    state = state.copyWith(message: message.trim());
+    state = state.copyWith(
+      message: message.trim(),
+      errorMessageText: '',
+    );
   }
 
   void setTransferType(TransferType transferType) {
-    state = state.copyWith(transferType: transferType);
+    if (transferType == TransferType.uco) {
+      // TODO(reddwarf03): Change hard code 'UCO'
+      state = state.copyWith(transferType: transferType, symbol: 'UCO');
+    }
   }
 
   void isMaxSend(
@@ -64,7 +86,25 @@ class TransferNotifier extends StateNotifier<Transfer> {
   }
 
   Future<void> calculateFees(String seed, String accountSelectedName) async {
-    if (state.amount <= 0 || state.addressRecipient.isEmpty) {
+    if (state.amount <= 0) {
+      state = state.copyWith(
+        feeEstimation: 0,
+      );
+      return;
+    }
+
+    if (state.contactRecipient != null &&
+        (state.contactRecipient!.address!.isEmpty ||
+            Address(state.contactRecipient!.address!).isValid() == false)) {
+      state = state.copyWith(
+        feeEstimation: 0,
+      );
+      return;
+    }
+
+    if (state.contactRecipient == null &&
+        (state.addressRecipient.isEmpty ||
+            Address(state.addressRecipient).isValid() == false)) {
       state = state.copyWith(
         feeEstimation: 0,
       );
@@ -112,20 +152,116 @@ class TransferNotifier extends StateNotifier<Transfer> {
       keychain: keychain,
       originPrivateKey: originPrivateKey,
       serviceName: service,
-      tokenTransferList: <TokenTransfer>[
-        // TODO(reddwarf03): Add token address and id
-        TokenTransfer(
-          amount: toBigInt(state.amount),
-          to: state.addressRecipient,
-        )
-      ],
+      tokenTransferList: List<TokenTransfer>.empty(
+        growable: true,
+      ),
       ucoTransferList: <UCOTransfer>[
-        UCOTransfer(amount: toBigInt(state.amount), to: state.addressRecipient)
+        UCOTransfer(
+          amount: toBigInt(state.amount),
+          to: state.contactRecipient == null
+              ? state.addressRecipient
+              : state.contactRecipient!.address!,
+        )
       ],
     );
     state = state.copyWith(
       transaction: transaction,
     );
+  }
+
+  bool controlAmount(
+    BuildContext context,
+    Account accountSelected,
+  ) {
+    if (state.amount <= 0) {
+      state = state.copyWith(
+        errorAmountText: AppLocalization.of(context)!.amountZero,
+      );
+      return false;
+    }
+
+    if (state.amount + state.feeEstimation >
+        accountSelected.balance!.nativeTokenValue!) {
+      state = state.copyWith(
+        errorAmountText:
+            AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                  '%1',
+                  state.symbol,
+                ),
+      );
+      return false;
+    }
+
+    state = state.copyWith(
+      errorAmountText: '',
+    );
+    return true;
+  }
+
+  Future<bool> controlAddress(
+    BuildContext context,
+    Account accountSelected,
+  ) async {
+    if (state.contactRecipient == null) {
+      if (state.addressRecipient.isEmpty) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!.addressMissing,
+        );
+        return false;
+      }
+
+      if (Address(state.addressRecipient).isValid() == false) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!.invalidAddress,
+        );
+        return false;
+      }
+
+      if (accountSelected.lastAddress == state.addressRecipient) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!
+              .sendToMeError
+              .replaceAll('%1', state.symbol),
+        );
+        return false;
+      }
+    } else {
+      if (state.isContactKnown == false) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!.contactInvalid,
+        );
+        return false;
+      }
+
+      if (state.contactRecipient!.address == null ||
+          state.contactRecipient!.address!.isEmpty) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!.addressMissing,
+        );
+        return false;
+      }
+
+      if (Address(state.contactRecipient!.address!).isValid() == false) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!.invalidAddress,
+        );
+        return false;
+      }
+
+      if (accountSelected.lastAddress == state.contactRecipient!.address) {
+        state = state.copyWith(
+          errorAddressText: AppLocalization.of(context)!
+              .sendToMeError
+              .replaceAll('%1', state.symbol),
+        );
+        return false;
+      }
+    }
+
+    state = state.copyWith(
+      errorAddressText: '',
+    );
+    return true;
   }
 }
 
