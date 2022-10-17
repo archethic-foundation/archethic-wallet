@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Project imports:
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -38,6 +39,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final preferences = ref.watch(preferenceProvider);
     final bottomBarCurrentPage =
         StateContainer.of(context).bottomBarCurrentPage;
+    final hasNotifications =
+        ref.watch(DeviceAbilities.hasNotificationsProvider);
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
@@ -67,10 +70,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 preferences.showBalances
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
-              if (!kIsWeb &&
-                  (Platform.isIOS == true ||
-                      Platform.isAndroid == true ||
-                      Platform.isMacOS == true))
+              if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()

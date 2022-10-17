@@ -14,6 +14,8 @@ class CustomizationMenuView extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final hasNotifications =
+        ref.watch(DeviceAbilities.hasNotificationsProvider);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -103,16 +105,8 @@ class CustomizationMenuView extends ConsumerWidget {
                       const _ShowBlogSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
-                      // TODO(Chralu): mettre cette expression booleenne dans un provider DeviceCapabilities.notifications
-                      if (!kIsWeb &&
-                          (Platform.isIOS == true ||
-                              Platform.isAndroid == true ||
-                              Platform.isMacOS == true))
-                        const _SettingsListItem.spacer(),
-                      if (!kIsWeb &&
-                          (Platform.isIOS == true ||
-                              Platform.isAndroid == true ||
-                              Platform.isMacOS == true))
+                      if (hasNotifications) const _SettingsListItem.spacer(),
+                      if (hasNotifications)
                         const _ActiveNotificationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ActiveVibrationsSettingsListItem(),

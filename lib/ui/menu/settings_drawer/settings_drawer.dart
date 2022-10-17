@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-import 'dart:io';
-
 // Project imports:
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
@@ -41,7 +39,6 @@ import 'package:aewallet/util/mnemonics.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
