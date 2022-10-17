@@ -31,20 +31,8 @@ class Vault {
   static Future<Vault> getInstance() async {
     try {
       const secureStorage = FlutterSecureStorage();
-      final Uint8List encryptionKey;
-      var secureKey =
-          await secureStorage.read(key: 'archethic_wallet_secure_key');
-      if (secureKey == null || secureKey.isEmpty) {
-        final key = Hive.generateSecureKey();
-        encryptionKey = Uint8List.fromList(key);
-        secureKey = base64UrlEncode(key);
-        await secureStorage.write(
-          key: 'archethic_wallet_secure_key',
-          value: secureKey,
-        );
-      } else {
-        encryptionKey = base64Url.decode(secureKey);
-      }
+      final encryptionKey = await _readEncryptionKey(secureStorage) ??
+          await _generateEncryptionKey(secureStorage);
       final encryptedBox = await Hive.openBox<dynamic>(
         _vaultBox,
         encryptionCipher: HiveAesCipher(encryptionKey),
@@ -54,6 +42,30 @@ class Vault {
       dev.log(e.toString());
       throw Exception();
     }
+  }
+
+  static Future<Uint8List> _generateEncryptionKey(
+    FlutterSecureStorage secureStorage,
+  ) async {
+    final key = Hive.generateSecureKey();
+    final secureKey = base64UrlEncode(key);
+    await secureStorage.write(
+      key: 'archethic_wallet_secure_key',
+      value: secureKey,
+    );
+    return Uint8List.fromList(key);
+  }
+
+  static Future<Uint8List?> _readEncryptionKey(
+    FlutterSecureStorage secureStorage,
+  ) async {
+    final secureKey = await secureStorage.read(
+      key: 'archethic_wallet_secure_key',
+    );
+    if (secureKey == null || secureKey.isEmpty) {
+      return null;
+    }
+    return base64Url.decode(secureKey);
   }
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>

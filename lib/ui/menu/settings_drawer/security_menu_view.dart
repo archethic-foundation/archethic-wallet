@@ -308,7 +308,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       icon: 'assets/icons/menu/vault.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
-        final preferences = ref.watch(SettingsProviders.settings);
+        final preferences = ref.read(SettingsProviders.settings);
 
         final auth = await AuthFactory.authenticate(
           context,

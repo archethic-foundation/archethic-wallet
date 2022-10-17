@@ -1,6 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -10,7 +7,6 @@ import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/vault.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
@@ -27,16 +23,23 @@ class AuthFactory {
     var auth = false;
     switch (authMethod.method) {
       case AuthMethod.yubikeyWithYubicloud:
-        auth =
-            await _authenticateWithYubikey(context, transitions: transitions);
+        auth = await _authenticateWithYubikey(
+          context,
+          transitions: transitions,
+        );
         break;
       case AuthMethod.password:
-        auth =
-            await _authenticateWithPassword(context, transitions: transitions);
+        auth = await _authenticateWithPassword(
+          context,
+          transitions: transitions,
+        );
         break;
       case AuthMethod.pin:
-        auth =
-            await _authenticateWithPin(context, ref, transitions: transitions);
+        auth = await _authenticateWithPin(
+          context,
+          ref,
+          transitions: transitions,
+        );
         break;
       case AuthMethod.biometrics:
         final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
@@ -114,18 +117,14 @@ class AuthFactory {
     WidgetRef ref, {
     bool transitions = false,
   }) async {
-    final vault = await Vault.getInstance();
-    final expectedPin = vault.getPin();
     var auth = false;
     if (transitions) {
       // TODO(redDwarf03): add the description
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return PinScreen(
+            return const PinScreen(
               PinOverlayType.enterPin,
-              ref.watch(SettingsProviders.settings).pinPadShuffle,
-              expectedPin: expectedPin!,
             );
           },
         ),
@@ -134,10 +133,8 @@ class AuthFactory {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(
           builder: (BuildContext context) {
-            return PinScreen(
+            return const PinScreen(
               PinOverlayType.enterPin,
-              ref.watch(SettingsProviders.settings).pinPadShuffle,
-              expectedPin: expectedPin!,
             );
           },
         ),

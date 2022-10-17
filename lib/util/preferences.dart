@@ -237,6 +237,16 @@ class Preferences {
     }
   }
 
+  void resetLockDate() {
+    _removeValue(pinLockUntil);
+  }
+
+  // TODO(Chralu): juste pour tester le lock
+  void setLockDate(DateTime lockDate) {
+    final lockDateStr = DateFormat.yMd().add_jms().format(lockDate.toUtc());
+    _setValue(pinLockUntil, lockDateStr);
+  }
+
   DateTime? getLockDate() {
     final lockDateStr = _getValue(pinLockUntil);
     if (lockDateStr != null) {
