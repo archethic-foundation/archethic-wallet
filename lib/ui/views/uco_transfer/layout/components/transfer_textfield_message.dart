@@ -15,12 +15,10 @@ class TransferTextFieldMessage extends ConsumerWidget {
     final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
 
-    final _messageFocusNode = FocusNode();
-    final _messageController = TextEditingController();
+    final messageController = TextEditingController(text: transfer.message);
 
     return AppTextField(
-      focusNode: _messageFocusNode,
-      controller: _messageController,
+      controller: messageController,
       maxLines: 4,
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${transfer.message.length}/200)',

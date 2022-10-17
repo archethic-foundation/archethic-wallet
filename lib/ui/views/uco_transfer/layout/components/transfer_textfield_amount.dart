@@ -23,8 +23,8 @@ class TransferTextFieldAmount extends ConsumerWidget
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final transfer = ref.watch(TransferProvider.transfer);
 
-    final sendAmountFocusNode = FocusNode();
-    final sendAmountController = TextEditingController();
+    final sendAmountController =
+        TextEditingController(text: transfer.amount.toString());
 
     final localCurrencyFormat = NumberFormat.currency(
       locale: CurrencyUtil.getLocale(currency.currency.name).toString(),
@@ -36,7 +36,6 @@ class TransferTextFieldAmount extends ConsumerWidget
     return Column(
       children: [
         AppTextField(
-          focusNode: sendAmountFocusNode,
           controller: sendAmountController,
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,

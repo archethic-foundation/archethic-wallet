@@ -1,7 +1,6 @@
 // Project imports:
-import 'dart:io';
-
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -38,7 +37,6 @@ import 'package:aewallet/util/user_data_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
-import 'package:flutter/foundation.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

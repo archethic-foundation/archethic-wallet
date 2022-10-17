@@ -16,13 +16,14 @@ class TransferTextFieldAddress extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(preferenceProvider);
-    final sendAddressFocusNode = FocusNode();
-    final sendAddressController = TextEditingController();
     final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+
+    final sendAddressController =
+        TextEditingController(text: transfer.addressRecipient);
 
     return AppTextField(
-      focusNode: sendAddressFocusNode,
       controller: sendAddressController,
       cursorColor: theme.text,
       inputFormatters: <LengthLimitingTextInputFormatter>[
@@ -48,7 +49,7 @@ class TransferTextFieldAddress extends ConsumerWidget {
       ),
       fadePrefixOnCondition: true,
       prefixShowFirstCondition: true,
-      suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+      suffixButton: hasQRCode
           ? TextFieldButton(
               icon: FontAwesomeIcons.qrcode,
               onPressed: () async {
@@ -102,12 +103,6 @@ class TransferTextFieldAddress extends ConsumerWidget {
       style: theme.textStyleSize14W700Primary,
       onChanged: (String text) async {
         transferNotifier.setAddress(text);
-
-        // TODO(redwarf03): ????
-        sl
-            .get<DBHelper>()
-            .getContactsWithNameLike(text)
-            .then((List<Contact> matchedList) {});
       },
     );
   }
