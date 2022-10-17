@@ -11,8 +11,9 @@ import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
-import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
+import 'package:aewallet/ui/views/transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -104,12 +105,11 @@ class NFTList extends ConsumerWidget {
                                                 FeedbackType.light,
                                                 preferences.activeVibrations,
                                               );
-                                          ref.invalidate(
-                                              TransferProvider.transfer,);
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
                                             ref: ref,
                                             widget: TransferSheet(
+                                              transferType: TransferType.token,
                                               seed: (await StateContainer.of(
                                                 context,
                                               ).getSeed())!,
@@ -163,9 +163,6 @@ class NFTList extends ConsumerWidget {
                 Dimens.buttonBottomDimens,
                 key: const Key('createNFT'),
                 onPressed: () async {
-                  // TODO(reddwarf03): See with Charly how to reinit the form
-                  ref.invalidate(NftCreationProvider.nftCreation);
-
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
                         preferences.activeVibrations,

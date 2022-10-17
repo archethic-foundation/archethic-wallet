@@ -10,8 +10,9 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
+import 'package:aewallet/ui/views/transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -245,11 +246,11 @@ class ContactDetail extends ConsumerWidget {
                         key: const Key('send'),
                         onPressed: () async {
                           Navigator.of(context).pop();
-                          ref.invalidate(TransferProvider.transfer);
                           Sheets.showAppHeightNineSheet(
                             context: context,
                             ref: ref,
                             widget: TransferSheet(
+                              transferType: TransferType.uco,
                               seed:
                                   (await StateContainer.of(context).getSeed())!,
                               contact: contact,
