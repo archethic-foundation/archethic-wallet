@@ -1,5 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
 import 'dart:ui';
 
 // Project imports:
@@ -19,7 +17,6 @@ import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
