@@ -26,10 +26,8 @@ class DeviceAbilities {
 
   static final hasQRCodeProvider = Provider<bool>(
     (ref) {
-      if (!kIsWeb &&
-          (Platform.isIOS == true ||
-              Platform.isAndroid == true ||
-              Platform.isMacOS == true)) {
+      if (kIsWeb == false &&
+          (Platform.isIOS == true || Platform.isAndroid == true)) {
         return true;
       }
       return false;

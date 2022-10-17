@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
-
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -11,7 +9,6 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +32,7 @@ class NftPropertyAppTextField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(preferenceProvider);
-    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     return AppTextField(
       focusNode: focusNode,
       controller: textEditingController,

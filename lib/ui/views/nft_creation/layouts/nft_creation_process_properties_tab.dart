@@ -26,7 +26,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
     ref.watch(NftCreationProvider.nftCreation.notifier);
-    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     bool validateAddNFTProperty() {
       addNFTPropertyMessage = '';

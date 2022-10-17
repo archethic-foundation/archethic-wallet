@@ -93,7 +93,9 @@ class TransferNotifier extends StateNotifier<Transfer> {
   }
 
   Future<void> _buildTransaction(
-      String seed, String accountSelectedName,) async {
+    String seed,
+    String accountSelectedName,
+  ) async {
     final originPrivateKey = sl.get<ApiService>().getOriginKey();
     final keychain = await sl.get<ApiService>().getKeychain(seed);
 

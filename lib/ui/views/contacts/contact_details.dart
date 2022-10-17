@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -244,6 +245,7 @@ class ContactDetail extends ConsumerWidget {
                         key: const Key('send'),
                         onPressed: () async {
                           Navigator.of(context).pop();
+                          ref.invalidate(TransferProvider.transfer);
                           Sheets.showAppHeightNineSheet(
                             context: context,
                             ref: ref,

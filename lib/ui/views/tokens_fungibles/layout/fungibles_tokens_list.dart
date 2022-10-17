@@ -4,6 +4,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -138,6 +139,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                   FeedbackType.light,
                                   preferences.activeVibrations,
                                 );
+                            ref.invalidate(TransferProvider.transfer);
                             Sheets.showAppHeightNineSheet(
                               context: context,
                               ref: ref,

@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
 
 // Project imports:
 import 'package:aewallet/application/device_abilities.dart';
@@ -21,7 +20,6 @@ import 'package:aewallet/util/user_data_util.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +47,7 @@ class AddPublicKey extends ConsumerWidget {
     final nftCreation = ref.watch(NftCreationProvider.nftCreation);
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
-    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return Column(
       children: <Widget>[

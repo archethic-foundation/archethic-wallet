@@ -17,7 +17,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
 
     final nftCreationNotifier =
         ref.watch(NftCreationProvider.nftCreation.notifier);
-    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return Container(
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20),

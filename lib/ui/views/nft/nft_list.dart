@@ -11,6 +11,7 @@ import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
+import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -103,13 +104,15 @@ class NFTList extends ConsumerWidget {
                                                 FeedbackType.light,
                                                 preferences.activeVibrations,
                                               );
+                                          ref.invalidate(
+                                              TransferProvider.transfer);
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
                                             ref: ref,
                                             widget: TransferSheet(
                                               seed: (await StateContainer.of(
-                                                      context,)
-                                                  .getSeed())!,
+                                                context,
+                                              ).getSeed())!,
                                               accountToken: accountSelected
                                                   .accountNFT![index],
                                               title: localizations.transferNFT,

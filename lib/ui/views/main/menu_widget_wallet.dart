@@ -7,6 +7,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
+import 'package:aewallet/ui/views/uco_transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/uco_transfer/layout/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -52,6 +53,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
+                      ref.invalidate(TransferProvider.transfer);
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         ref: ref,

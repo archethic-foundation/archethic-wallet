@@ -103,7 +103,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(preferenceProvider);
-    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return TapOutsideUnfocus(
       child: SafeArea(

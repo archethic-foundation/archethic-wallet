@@ -18,7 +18,7 @@ class TransferTextFieldAddress extends ConsumerWidget {
     final preferences = ref.watch(preferenceProvider);
     final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
-    final hasQRCode = ref.watch(DeviceAbilities.hasNotificationsProvider);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     final sendAddressController =
         TextEditingController(text: transfer.addressRecipient);
