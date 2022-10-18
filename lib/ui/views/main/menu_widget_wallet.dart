@@ -73,6 +73,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   _ActionButton(
                     text: localizations.send,
                     icon: UiIcons.send,
+                    enabled: false,
                   ),
                 _ActionButton(
                   text: localizations.receive,
@@ -144,11 +145,13 @@ class _ActionButton extends ConsumerWidget {
     this.onTap,
     required this.text,
     required this.icon,
+    this.enabled = true,
   });
 
   final VoidCallback? onTap;
   final String text;
   final IconData icon;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -164,7 +167,9 @@ class _ActionButton extends ConsumerWidget {
                     child: SizedBox(
                       child: Icon(
                         icon,
-                        color: Colors.white,
+                        color: enabled
+                            ? Colors.white
+                            : theme.text!.withOpacity(0.3),
                         size: 40,
                       ),
                     ),
@@ -174,10 +179,16 @@ class _ActionButton extends ConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 5),
-                  Text(
-                    text,
-                    style: theme.textStyleSize14W600EquinoxPrimary,
-                  ),
+                  if (enabled)
+                    Text(
+                      text,
+                      style: theme.textStyleSize14W600EquinoxPrimary,
+                    )
+                  else
+                    Text(
+                      text,
+                      style: theme.textStyleSize14W600EquinoxPrimaryDisabled,
+                    )
                 ],
               ),
             )
@@ -187,7 +198,8 @@ class _ActionButton extends ConsumerWidget {
                   child: SizedBox(
                     child: Icon(
                       icon,
-                      color: Colors.white,
+                      color:
+                          enabled ? Colors.white : theme.text!.withOpacity(0.3),
                       size: 40,
                     ),
                   ),
@@ -197,10 +209,16 @@ class _ActionButton extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 5),
-                Text(
-                  text,
-                  style: theme.textStyleSize14W600EquinoxPrimary,
-                ),
+                if (enabled)
+                  Text(
+                    text,
+                    style: theme.textStyleSize14W600EquinoxPrimary,
+                  )
+                else
+                  Text(
+                    text,
+                    style: theme.textStyleSize14W600EquinoxPrimaryDisabled,
+                  )
               ],
             ),
     );
