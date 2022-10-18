@@ -49,12 +49,12 @@ class UCOTransferDetail extends ConsumerWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: theme.backgroundTransferListOutline!,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 0,
-              color: theme.backgroundAccountsListCard,
+              color: theme.backgroundTransferListCard,
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 10,
@@ -77,12 +77,12 @@ class UCOTransferDetail extends ConsumerWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: theme.backgroundTransferListOutline!,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 0,
-              color: theme.backgroundAccountsListCard,
+              color: theme.backgroundTransferListCard,
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 10,
@@ -93,7 +93,7 @@ class UCOTransferDetail extends ConsumerWidget {
                   children: <Widget>[
                     Text(
                       transfer.contactRecipient == null
-                          ? Address(transfer.addressRecipient).getShortString()
+                          ? '${localizations.txListTo} ${Address(transfer.addressRecipient).getShortString()}'
                           : '${localizations.txListTo} ${transfer.contactRecipient!.name!.replaceFirst('@', '')}',
                       style: theme.textStyleSize12W400Primary,
                     ),
@@ -116,12 +116,12 @@ class UCOTransferDetail extends ConsumerWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: theme.backgroundTransferListOutline!,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 0,
-              color: theme.backgroundAccountsListCard,
+              color: theme.backgroundTransferListCard,
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 10,
@@ -153,12 +153,12 @@ class UCOTransferDetail extends ConsumerWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: theme.backgroundTransferListOutline!,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 0,
-              color: theme.backgroundAccountsListCardSelected,
+              color: theme.backgroundTransferListTotalCard,
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 10,
@@ -190,12 +190,12 @@ class UCOTransferDetail extends ConsumerWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: theme.backgroundTransferListOutline!,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 0,
-              color: theme.backgroundAccountsListCard,
+              color: theme.backgroundTransferListCard,
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 10,
@@ -227,12 +227,12 @@ class UCOTransferDetail extends ConsumerWidget {
               child: Card(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    color: theme.backgroundAccountsListCardSelected!,
+                    color: theme.backgroundTransferListOutline!,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 elevation: 0,
-                color: theme.backgroundAccountsListCard,
+                color: theme.backgroundTransferListCard,
                 child: Padding(
                   padding: const EdgeInsets.only(
                     top: 10,

@@ -132,6 +132,12 @@ class PearlGreyTheme implements BaseTheme {
       Colors.green.withOpacity(0.1);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
+  @override
+  Color? backgroundTransferListCard = Colors.transparent;
+  @override
+  Color? backgroundTransferListTotalCard = Colors.white.withOpacity(0.1);
+  @override
+  Color? backgroundTransferListOutline = Colors.white.withOpacity(0.1);
 
   // Bottom Bar
   @override

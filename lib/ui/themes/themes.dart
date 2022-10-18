@@ -79,6 +79,9 @@ abstract class BaseTheme {
   Color? backgroundRecentTxListCardTokenCreation;
   Color? backgroundRecentTxListCardTransferInput;
   Color? backgroundFungiblesTokensListCard;
+  Color? backgroundTransferListCard;
+  Color? backgroundTransferListTotalCard;
+  Color? backgroundTransferListOutline;
 
   // Bottom Bar
   num? bottomBarBackgroundColorOpacity;
