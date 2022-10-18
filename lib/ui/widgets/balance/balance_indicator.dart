@@ -25,7 +25,6 @@ class BalanceIndicatorWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
@@ -60,40 +59,53 @@ class BalanceIndicatorWidget extends ConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              if (displaySwitchButton == true)
-                // TODO(Chralu): Works only twice
-                IconButton(
-                  icon: const Icon(Icons.change_circle),
-                  alignment: Alignment.centerRight,
-                  color: theme.textFieldIcon,
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    if (primaryCurrency.primaryCurrency ==
-                        AvailablePrimaryCurrencyEnum.native) {
-                      await ref.read(
-                        PrimaryCurrencyProviders.selectPrimaryCurrency(
-                          primaryCurrency: const AvailablePrimaryCurrency(
-                            AvailablePrimaryCurrencyEnum.fiat,
-                          ),
-                        ).future,
-                      );
-                    } else {
-                      await ref.read(
-                        PrimaryCurrencyProviders.selectPrimaryCurrency(
-                          primaryCurrency: const AvailablePrimaryCurrency(
-                            AvailablePrimaryCurrencyEnum.native,
-                          ),
-                        ).future,
-                      );
-                    }
-                  },
-                ),
+              if (displaySwitchButton == true) const _BalanceIndicatorButton(),
             ],
           )
         : const SizedBox();
+  }
+}
+
+class _BalanceIndicatorButton extends ConsumerWidget {
+  const _BalanceIndicatorButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(SettingsProviders.settings);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+
+    return // TODO(Chralu): Works only twice
+        IconButton(
+      icon: const Icon(Icons.change_circle),
+      alignment: Alignment.centerRight,
+      color: theme.textFieldIcon,
+      onPressed: () async {
+        sl.get<HapticUtil>().feedback(
+              FeedbackType.light,
+              preferences.activeVibrations,
+            );
+        if (primaryCurrency.primaryCurrency ==
+            AvailablePrimaryCurrencyEnum.native) {
+          await ref.read(
+            PrimaryCurrencyProviders.selectPrimaryCurrency(
+              primaryCurrency: const AvailablePrimaryCurrency(
+                AvailablePrimaryCurrencyEnum.fiat,
+              ),
+            ).future,
+          );
+        } else {
+          await ref.read(
+            PrimaryCurrencyProviders.selectPrimaryCurrency(
+              primaryCurrency: const AvailablePrimaryCurrency(
+                AvailablePrimaryCurrencyEnum.native,
+              ),
+            ).future,
+          );
+        }
+      },
+    );
   }
 }
 

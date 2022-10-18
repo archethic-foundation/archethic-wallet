@@ -36,9 +36,7 @@ class UCOTransferDetail extends ConsumerWidget {
               child: AutoSizeText(
                 AmountFormatters.standard(
                   transfer.amount,
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  transfer.symbol,
                 ),
                 style: theme.textStyleSize28W700Primary,
               ),
@@ -100,9 +98,7 @@ class UCOTransferDetail extends ConsumerWidget {
                     Text(
                       AmountFormatters.standard(
                         transfer.amount,
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel(),
+                        transfer.symbol,
                       ),
                       style: theme.textStyleSize12W400Primary,
                     ),
@@ -212,7 +208,7 @@ class UCOTransferDetail extends ConsumerWidget {
                       AmountFormatters.standard(
                         accountSelected.balance!.nativeTokenValue! -
                             (transfer.feeEstimation + transfer.amount),
-                        accountSelected.balance!.nativeTokenName!,
+                        transfer.symbol,
                       ),
                       style: theme.textStyleSize12W400Primary,
                     ),

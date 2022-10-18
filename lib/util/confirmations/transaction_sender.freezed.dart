@@ -22,6 +22,7 @@ mixin _$TransactionError {
     required TResult Function() connectivity,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
     required TResult Function(String? reason) other,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$TransactionError {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +42,7 @@ mixin _$TransactionError {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
     required TResult orElse(),
   }) =>
@@ -51,6 +54,8 @@ mixin _$TransactionError {
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
     required TResult Function(_TransactionOtherError value) other,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,6 +66,7 @@ mixin _$TransactionError {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
   }) =>
       throw _privateConstructorUsedError;
@@ -71,6 +77,7 @@ mixin _$TransactionError {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
     required TResult orElse(),
   }) =>
@@ -139,6 +146,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     required TResult Function() connectivity,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
     required TResult Function(String? reason) other,
   }) {
     return timeout();
@@ -151,6 +159,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
   }) {
     return timeout?.call();
@@ -163,6 +172,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
     required TResult orElse(),
   }) {
@@ -180,6 +190,8 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
     required TResult Function(_TransactionOtherError value) other,
   }) {
     return timeout(this);
@@ -193,6 +205,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
   }) {
     return timeout?.call(this);
@@ -206,6 +219,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
     required TResult orElse(),
   }) {
@@ -270,6 +284,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     required TResult Function() connectivity,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
     required TResult Function(String? reason) other,
   }) {
     return connectivity();
@@ -282,6 +297,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
   }) {
     return connectivity?.call();
@@ -294,6 +310,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
     required TResult orElse(),
   }) {
@@ -311,6 +328,8 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
     required TResult Function(_TransactionOtherError value) other,
   }) {
     return connectivity(this);
@@ -324,6 +343,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
   }) {
     return connectivity?.call(this);
@@ -337,6 +357,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
     required TResult orElse(),
   }) {
@@ -397,6 +418,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     required TResult Function() connectivity,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
     required TResult Function(String? reason) other,
   }) {
     return invalidTransaction();
@@ -409,6 +431,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
   }) {
     return invalidTransaction?.call();
@@ -421,6 +444,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
     required TResult orElse(),
   }) {
@@ -438,6 +462,8 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
     required TResult Function(_TransactionOtherError value) other,
   }) {
     return invalidTransaction(this);
@@ -451,6 +477,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
   }) {
     return invalidTransaction?.call(this);
@@ -464,6 +491,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
     required TResult orElse(),
   }) {
@@ -529,6 +557,7 @@ class _$_TransactionInvalidConfirmation
     required TResult Function() connectivity,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
     required TResult Function(String? reason) other,
   }) {
     return invalidConfirmation();
@@ -541,6 +570,7 @@ class _$_TransactionInvalidConfirmation
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
   }) {
     return invalidConfirmation?.call();
@@ -553,6 +583,7 @@ class _$_TransactionInvalidConfirmation
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
     required TResult orElse(),
   }) {
@@ -570,6 +601,8 @@ class _$_TransactionInvalidConfirmation
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
     required TResult Function(_TransactionOtherError value) other,
   }) {
     return invalidConfirmation(this);
@@ -583,6 +616,7 @@ class _$_TransactionInvalidConfirmation
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
   }) {
     return invalidConfirmation?.call(this);
@@ -596,6 +630,7 @@ class _$_TransactionInvalidConfirmation
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
     required TResult orElse(),
   }) {
@@ -610,6 +645,145 @@ abstract class _TransactionInvalidConfirmation extends TransactionError {
   const factory _TransactionInvalidConfirmation() =
       _$_TransactionInvalidConfirmation;
   const _TransactionInvalidConfirmation._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_TransactionInsufficientFundsCopyWith<$Res> {
+  factory _$$_TransactionInsufficientFundsCopyWith(
+          _$_TransactionInsufficientFunds value,
+          $Res Function(_$_TransactionInsufficientFunds) then) =
+      __$$_TransactionInsufficientFundsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_TransactionInsufficientFundsCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res>
+    implements _$$_TransactionInsufficientFundsCopyWith<$Res> {
+  __$$_TransactionInsufficientFundsCopyWithImpl(
+      _$_TransactionInsufficientFunds _value,
+      $Res Function(_$_TransactionInsufficientFunds) _then)
+      : super(_value, (v) => _then(v as _$_TransactionInsufficientFunds));
+
+  @override
+  _$_TransactionInsufficientFunds get _value =>
+      super._value as _$_TransactionInsufficientFunds;
+}
+
+/// @nodoc
+
+class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
+  const _$_TransactionInsufficientFunds() : super._();
+
+  @override
+  String toString() {
+    return 'TransactionError.insufficientFunds()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionInsufficientFunds);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() timeout,
+    required TResult Function() connectivity,
+    required TResult Function() invalidTransaction,
+    required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
+    required TResult Function(String? reason) other,
+  }) {
+    return insufficientFunds();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? timeout,
+    TResult Function()? connectivity,
+    TResult Function()? invalidTransaction,
+    TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
+    TResult Function(String? reason)? other,
+  }) {
+    return insufficientFunds?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? timeout,
+    TResult Function()? connectivity,
+    TResult Function()? invalidTransaction,
+    TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
+    TResult Function(String? reason)? other,
+    required TResult orElse(),
+  }) {
+    if (insufficientFunds != null) {
+      return insufficientFunds();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransactionTimeout value) timeout,
+    required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionInvalid value) invalidTransaction,
+    required TResult Function(_TransactionInvalidConfirmation value)
+        invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
+    required TResult Function(_TransactionOtherError value) other,
+  }) {
+    return insufficientFunds(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionTimeout value)? timeout,
+    TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionInvalid value)? invalidTransaction,
+    TResult Function(_TransactionInvalidConfirmation value)?
+        invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionOtherError value)? other,
+  }) {
+    return insufficientFunds?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransactionTimeout value)? timeout,
+    TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionInvalid value)? invalidTransaction,
+    TResult Function(_TransactionInvalidConfirmation value)?
+        invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionOtherError value)? other,
+    required TResult orElse(),
+  }) {
+    if (insufficientFunds != null) {
+      return insufficientFunds(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TransactionInsufficientFunds extends TransactionError {
+  const factory _TransactionInsufficientFunds() =
+      _$_TransactionInsufficientFunds;
+  const _TransactionInsufficientFunds._() : super._();
 }
 
 /// @nodoc
@@ -683,6 +857,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     required TResult Function() connectivity,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
     required TResult Function(String? reason) other,
   }) {
     return other(reason);
@@ -695,6 +870,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
   }) {
     return other?.call(reason);
@@ -707,6 +883,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult Function()? connectivity,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
     TResult Function(String? reason)? other,
     required TResult orElse(),
   }) {
@@ -724,6 +901,8 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
     required TResult Function(_TransactionOtherError value) other,
   }) {
     return other(this);
@@ -737,6 +916,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
   }) {
     return other?.call(this);
@@ -750,6 +930,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
     TResult Function(_TransactionOtherError value)? other,
     required TResult orElse(),
   }) {

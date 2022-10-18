@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'model.freezed.dart';
 
-enum TransferType { uco, token }
+enum TransferType { uco, token, nft }
 
 @freezed
 class Transfer with _$Transfer {
@@ -17,6 +18,7 @@ class Transfer with _$Transfer {
     @Default('') String symbol,
     @Default('') String addressRecipient,
     Contact? contactRecipient,
+    AccountToken? accountToken,
     @Default('') String message,
     @Default(false) bool isMaxSend,
     @Default(false) bool isContactKnown,

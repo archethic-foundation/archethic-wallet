@@ -5,10 +5,8 @@ class TransferTextFieldAmount extends ConsumerStatefulWidget {
   const TransferTextFieldAmount({
     super.key,
     required this.seed,
-    this.accountToken,
   });
 
-  final AccountToken? accountToken;
   final String seed;
 
   @override
@@ -83,9 +81,15 @@ class _TransferTextFieldAmountState
           ],
           onChanged: (String text) async {
             final amount = double.tryParse(text);
-            if (transfer.amount != amount) {
+
+            if (amount != null &&
+                accountSelected!.balance!.nativeTokenValue! ==
+                    amount + transfer.feeEstimation) {
+              transferNotifier.setMaxSend(true);
+            } else {
               transferNotifier.setMaxSend(false);
             }
+
             transferNotifier.setAmount(
               amount ?? 0,
               accountSelected!.balance!.nativeTokenValue!,
@@ -99,12 +103,7 @@ class _TransferTextFieldAmountState
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: widget.accountToken == null
-              ? primaryCurrency.primaryCurrency ==
-                      AvailablePrimaryCurrencyEnum.native
-                  ? '${localizations.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
-                  : '${localizations.enterAmount} (${currency.currency.name})'
-              : '${localizations.enterAmount} (${widget.accountToken!.tokenInformations!.symbol})',
+          labelText: '${localizations.enterAmount} (${transfer.symbol})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
@@ -113,21 +112,31 @@ class _TransferTextFieldAmountState
                     preferences.activeVibrations,
                   );
 
+              transferNotifier.setAmount(
+                accountSelected!.balance!.nativeTokenValue!,
+                accountSelected.balance!.nativeTokenValue!,
+              );
+              await transferNotifier.calculateFees(
+                widget.seed,
+                accountSelected.name!,
+              );
+
               var sendAmount = 0.0;
               if (primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native) {
-                sendAmount = accountSelected!.balance!.nativeTokenValue! -
+                sendAmount = accountSelected.balance!.nativeTokenValue! -
                     transfer.feeEstimation;
                 sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
                 final selectedCurrencyFee =
-                    accountSelected!.balance!.tokenPrice!.amount! *
+                    accountSelected.balance!.tokenPrice!.amount! *
                         transfer.feeEstimation;
                 sendAmount = accountSelected.balance!.fiatCurrencyValue! -
                     selectedCurrencyFee;
                 sendAmountController!.text = sendAmount
                     .toStringAsFixed(localCurrencyFormat.decimalDigits!);
               }
+
               transferNotifier.setAmount(
                 accountSelected.balance!.nativeTokenValue! -
                     transfer.feeEstimation,
@@ -138,21 +147,17 @@ class _TransferTextFieldAmountState
                 widget.seed,
                 accountSelected.name!,
               );
-
-              if (transfer.isMaxSend) {
-                return;
-              }
             },
           ),
           fadeSuffixOnCondition: true,
           suffixShowFirstCondition:
-              widget.accountToken == null && !transfer.isMaxSend,
+              transfer.accountToken == null && !transfer.isMaxSend,
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
             decimal: true,
           ),
         ),
-        if (widget.accountToken == null)
+        if (transfer.transferType == TransferType.uco)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -160,7 +165,7 @@ class _TransferTextFieldAmountState
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '1 ${accountSelected!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
+                  '1 ${transfer.symbol} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected!.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),
@@ -201,7 +206,7 @@ class _TransferTextFieldAmountState
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '${NumberUtil.formatThousands(widget.accountToken!.amount!)} ${widget.accountToken!.tokenInformations!.symbol}',
+                  '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformations!.symbol}',
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),

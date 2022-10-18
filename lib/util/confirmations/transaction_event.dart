@@ -8,6 +8,8 @@ class TransactionError with _$TransactionError {
   const factory TransactionError.invalidTransaction() = _TransactionInvalid;
   const factory TransactionError.invalidConfirmation() =
       _TransactionInvalidConfirmation;
+  const factory TransactionError.insufficientFunds() =
+      _TransactionInsufficientFunds;
   const factory TransactionError.other({
     String? reason,
   }) = _TransactionOtherError;
@@ -17,6 +19,7 @@ class TransactionError with _$TransactionError {
         connectivity: (_) => 'connectivity issue',
         invalidTransaction: (_) => 'invalid transaction',
         invalidConfirmation: (_) => 'invalid confirmation',
+        insufficientFunds: (_) => 'insufficient funds',
         other: (other) => other.reason ?? 'other reason',
       );
 }

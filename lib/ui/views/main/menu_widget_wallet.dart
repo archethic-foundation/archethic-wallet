@@ -59,12 +59,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                         widget: TransferSheet(
                           transferType: TransferType.uco,
                           seed: (await StateContainer.of(context).getSeed())!,
-                          title: localizations.transferTokens.replaceAll(
-                            '%1',
-                            StateContainer.of(context)
-                                .curNetwork
-                                .getNetworkCryptoCurrencyLabel(),
-                          ),
                         ),
                       );
                     },
