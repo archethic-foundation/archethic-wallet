@@ -5,7 +5,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
-import 'package:aewallet/ui/views/transfer/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';

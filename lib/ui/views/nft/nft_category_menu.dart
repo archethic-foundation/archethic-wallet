@@ -93,7 +93,7 @@ class NftCategoryMenu extends ConsumerWidget {
                   Text(
                     nftCategories[index].name!,
                     textAlign: TextAlign.center,
-                    style: theme.textStyleSize14W600Primary,
+                    style: theme.textStyleSize12W400Primary,
                   ),
                 ],
               ),
