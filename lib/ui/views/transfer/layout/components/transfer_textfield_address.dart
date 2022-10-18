@@ -163,7 +163,6 @@ class _TransferTextFieldAddressState
           try {
             final contact = await sl.get<DBHelper>().getContactWithName(text);
             transferNotifier.setContact(contact);
-            sendAddressController!.text = contact.name!;
           } catch (e) {
             transferNotifier.setContact(
               Contact(
@@ -177,7 +176,7 @@ class _TransferTextFieldAddressState
         } else {
           transferNotifier.setAddress(text);
           transferNotifier.setContactKnown(false);
-          sendAddressController!.text = text;
+          transferNotifier.setContact(null);
         }
         await transferNotifier.calculateFees(
           widget.seed,
