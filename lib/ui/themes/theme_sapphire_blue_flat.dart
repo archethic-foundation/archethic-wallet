@@ -132,6 +132,12 @@ class SapphireBlueFlatTheme implements BaseTheme {
       Colors.greenAccent[100]!.withOpacity(0.1);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
+  @override
+  Color? backgroundTransferListCard = Colors.transparent;
+  @override
+  Color? backgroundTransferListTotalCard = Colors.white.withOpacity(0.1);
+  @override
+  Color? backgroundTransferListOutline = Colors.white.withOpacity(0.1);
 
   // Bottom Bar
   @override
