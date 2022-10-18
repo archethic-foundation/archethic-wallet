@@ -20,7 +20,7 @@ import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
 import 'package:aewallet/ui/views/main/main_appbar.dart';
 import 'package:aewallet/ui/views/main/main_bottombar.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/layout/add_token.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';

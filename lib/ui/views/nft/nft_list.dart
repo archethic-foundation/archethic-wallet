@@ -11,7 +11,7 @@ import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
-import 'package:aewallet/ui/views/transfer/layout/transfer_sheet.dart';
+import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';

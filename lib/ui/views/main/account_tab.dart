@@ -6,7 +6,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/main/menu_widget_wallet.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/layout/fungibles_tokens_list.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';

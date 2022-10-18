@@ -19,7 +19,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/transfer/layout/transfer_confirm_sheet.dart';
+import 'package:aewallet/ui/views/transfer/layouts/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
