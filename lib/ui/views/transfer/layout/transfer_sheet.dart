@@ -51,7 +51,7 @@ part 'components/transfer_textfield_message.dart';
 
 enum AddressStyle { text60, text90, primary }
 
-class TransferSheet extends ConsumerStatefulWidget {
+class TransferSheet extends StatelessWidget {
   const TransferSheet({
     required this.seed,
     required this.transferType,
@@ -72,12 +72,52 @@ class TransferSheet extends ConsumerStatefulWidget {
   final String seed;
 
   @override
-  ConsumerState<TransferSheet> createState() => _TransferSheetState();
+  Widget build(BuildContext context) {
+    // The main column that holds everything
+    return ProviderScope(
+      overrides: [
+        TransferProvider.initialTransfer.overrideWithValue(
+          Transfer(
+            transferType: transferType,
+            addressRecipient: address ?? '',
+            contactRecipient: contact,
+            isContactKnown: contact != null && true,
+          ),
+        ),
+      ],
+      child: TransferSheetBody(
+        seed: seed,
+        transferType: transferType,
+        accountToken: accountToken,
+        actionButtonTitle: actionButtonTitle,
+        title: title,
+      ),
+    );
+  }
 }
 
-class _TransferSheetState extends ConsumerState<TransferSheet> {
+class TransferSheetBody extends ConsumerWidget {
+  const TransferSheetBody({
+    required this.seed,
+    required this.transferType,
+    this.contact,
+    this.address,
+    this.title,
+    this.actionButtonTitle,
+    this.accountToken,
+    super.key,
+  });
+
+  final Contact? contact;
+  final String? address;
+  final String? title;
+  final String? actionButtonTitle;
+  final AccountToken? accountToken;
+  final TransferType transferType;
+  final String seed;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const _isPressed = false;
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
@@ -87,13 +127,37 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
         .getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
     final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
 
-    // TODO(Chralu): How to init transfer ?
-    // transferNotifier.setTransferType(widget.transferType);
+    ref.listen<Transfer>(
+      TransferProvider.transfer,
+      (_, transfer) {
+        if (transfer.isControlsOk) return;
 
-    // The main column that holds everything
+        final errorMessages = <String>[];
+        if (transfer.errorAmountText.isNotEmpty) {
+          errorMessages.add(transfer.errorAmountText);
+        }
+        if (transfer.errorAddressText.isNotEmpty) {
+          errorMessages.add(transfer.errorAddressText);
+        }
+        if (transfer.errorMessageText.isNotEmpty) {
+          errorMessages.add(transfer.errorMessageText);
+        }
+
+        UIUtil.showSnackbar(
+          errorMessages.join('\n'),
+          context,
+          ref,
+          theme.text!,
+          theme.snackBarShadow!,
+          duration: const Duration(seconds: 5),
+        );
+      },
+    );
+
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -101,7 +165,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: widget.title ?? localizations.send,
+              title: title ?? localizations.send,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: const BalanceIndicatorWidget(),
             ),
@@ -116,15 +180,13 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 25),
-                            if (widget.accountToken == null ||
-                                (widget.accountToken != null &&
-                                    widget.accountToken!.tokenInformations !=
-                                        null &&
-                                    widget.accountToken!.tokenInformations!
-                                            .type ==
+                            if (accountToken == null ||
+                                (accountToken != null &&
+                                    accountToken!.tokenInformations != null &&
+                                    accountToken!.tokenInformations!.type ==
                                         'fungible'))
                               TransferTextFieldAmount(
-                                seed: widget.seed,
+                                seed: seed,
                               ),
                             Container(
                               padding: const EdgeInsets.only(
@@ -133,7 +195,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                               ),
                               alignment: Alignment.topCenter,
                               child: TransferTextFieldAddress(
-                                seed: widget.seed,
+                                seed: seed,
                               ),
                             ),
                             Container(
@@ -163,7 +225,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                             ),
                             const SizedBox(height: 10),
                             TransferTextFieldMessage(
-                              seed: widget.seed,
+                              seed: seed,
                             ),
                           ],
                         ),
@@ -180,7 +242,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                     if (_isPressed == true)
                       AppButton(
                         AppButtonType.primaryOutline,
-                        widget.actionButtonTitle ?? localizations.send,
+                        actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
                         key: const Key('send'),
                         onPressed: () {},
@@ -188,7 +250,7 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                     else
                       AppButton(
                         AppButtonType.primary,
-                        widget.actionButtonTitle ?? localizations.send,
+                        actionButtonTitle ?? localizations.send,
                         Dimens.buttonTopDimens,
                         key: const Key('send'),
                         onPressed: () async {
@@ -202,26 +264,14 @@ class _TransferSheetState extends ConsumerState<TransferSheet> {
                             accountSelected,
                           );
 
-                          if (isAddressOk == true && isAmountOk == true) {
+                          if (isAddressOk && isAmountOk) {
                             Sheets.showAppHeightNineSheet(
                               onDisposed: () {},
                               context: context,
                               ref: ref,
                               widget: TransferConfirmSheet(
-                                title: widget.title,
+                                title: title,
                               ),
-                            );
-                          } else {
-                            // TODO(Chralu): How to display first time ?
-                            UIUtil.showSnackbar(
-                              transfer.errorAmountText +
-                                  transfer.errorAddressText +
-                                  transfer.errorMessageText,
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
-                              duration: const Duration(seconds: 5),
                             );
                           }
                         },

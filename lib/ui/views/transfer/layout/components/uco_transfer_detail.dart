@@ -64,7 +64,7 @@ class UCOTransferDetail extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'From : ${accountSelected!.name!}',
+                      '${localizations.txListFrom} ${accountSelected!.name!}',
                       style: theme.textStyleSize12W400Primary,
                     ),
                   ],
@@ -205,7 +205,7 @@ class UCOTransferDetail extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Available after transfer',
+                      localizations.availableAfterTransfer,
                       style: theme.textStyleSize12W400Primary,
                     ),
                     Text(
@@ -223,6 +223,7 @@ class UCOTransferDetail extends ConsumerWidget {
           ),
           if (transfer.message.isNotEmpty)
             SizedBox(
+              width: MediaQuery.of(context).size.width,
               child: Card(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(

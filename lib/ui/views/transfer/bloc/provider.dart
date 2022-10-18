@@ -16,10 +16,20 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final _initialTransferProvider = Provider.autoDispose<Transfer>(
+  (ref) {
+    throw UnimplementedError();
+  },
+);
+
 final _transferProvider =
-    StateNotifierProvider.autoDispose<TransferNotifier, Transfer>((ref) {
-  return TransferNotifier(const Transfer());
-});
+    StateNotifierProvider.autoDispose<TransferNotifier, Transfer>(
+  (ref) {
+    final initialTransfer = ref.watch(TransferProvider.initialTransfer);
+    return TransferNotifier(initialTransfer);
+  },
+  dependencies: [TransferProvider.initialTransfer],
+);
 
 class TransferNotifier extends StateNotifier<Transfer> {
   TransferNotifier(
@@ -31,6 +41,8 @@ class TransferNotifier extends StateNotifier<Transfer> {
       contactRecipient: contact,
       isContactKnown: true,
       errorAddressText: '',
+      errorAmountText: '',
+      errorMessageText: '',
     );
   }
 
@@ -40,18 +52,39 @@ class TransferNotifier extends StateNotifier<Transfer> {
     );
   }
 
+  void setMaxSend(bool sendMax) {
+    state = state.copyWith(
+      isMaxSend: sendMax,
+    );
+  }
+
   void setAddress(String address) {
     state = state.copyWith(
       addressRecipient: address,
       errorAddressText: '',
+      errorAmountText: '',
+      errorMessageText: '',
     );
   }
 
-  void setAmount(double amount) {
-    state = state.copyWith(
-      amount: amount,
-      errorAmountText: '',
-    );
+  void setAmount(double amount, double balance) {
+    if (amount + state.feeEstimation == balance) {
+      state = state.copyWith(
+        amount: amount,
+        errorAddressText: '',
+        errorAmountText: '',
+        errorMessageText: '',
+        isMaxSend: true,
+      );
+    } else {
+      state = state.copyWith(
+        amount: amount,
+        errorAddressText: '',
+        errorAmountText: '',
+        errorMessageText: '',
+        isMaxSend: false,
+      );
+    }
   }
 
   void setMessage(String message) {
@@ -266,5 +299,6 @@ class TransferNotifier extends StateNotifier<Transfer> {
 }
 
 abstract class TransferProvider {
+  static final initialTransfer = _initialTransferProvider;
   static final transfer = _transferProvider;
 }
