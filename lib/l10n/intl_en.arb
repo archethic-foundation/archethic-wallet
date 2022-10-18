@@ -1368,6 +1368,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "availableAfterTransfer": "Available after transfer",
+  "@availableAfterTransfer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "seeAll": "See all transactions",
   "@seeAll": {
     "type": "text",

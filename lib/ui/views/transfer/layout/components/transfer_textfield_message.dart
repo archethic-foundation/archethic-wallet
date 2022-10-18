@@ -58,7 +58,7 @@ class _TransferTextFieldMessageState
       },
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,
-      style: theme.textStyleSize16W600Primary,
+      style: theme.textStyleSize14W600Primary,
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(200),
       ],

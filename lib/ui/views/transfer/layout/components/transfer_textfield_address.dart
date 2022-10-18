@@ -6,13 +6,9 @@ class TransferTextFieldAddress extends ConsumerStatefulWidget {
   const TransferTextFieldAddress({
     super.key,
     required this.seed,
-    this.contact,
-    this.address,
   });
 
   final String seed;
-  final Contact? contact;
-  final String? address;
 
   @override
   ConsumerState<TransferTextFieldAddress> createState() =>
@@ -30,12 +26,11 @@ class _TransferTextFieldAddressState
 
     sendAddressFocusNode = FocusNode();
     sendAddressController = TextEditingController();
-    if (widget.contact != null) {
-      // Setup initial state for contact pre-filled
-      sendAddressController!.text = widget.contact!.name!;
-    } else if (widget.address != null) {
-      // Setup initial state with prefilled address
-      sendAddressController!.text = widget.address!;
+    final transfer = ref.read(TransferProvider.transfer);
+    if (transfer.contactRecipient != null) {
+      sendAddressController!.text = transfer.contactRecipient!.name!;
+    } else if (transfer.addressRecipient.isNotEmpty) {
+      sendAddressController!.text = transfer.addressRecipient;
     }
 
     sendAddressFocusNode!.addListener(() {

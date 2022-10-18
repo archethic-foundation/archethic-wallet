@@ -70,7 +70,7 @@ Future<void> main() async {
       RestartWidget(
         child: ProviderScope(
           overrides: [
-            // TODO(reddwarf03): Meaning ? => a wau to reinitiliaze the wallet
+            // TODO(reddwarf03): Meaning ? => a way to reinitiliaze the wallet
             SettingsProviders.localSettingsRepository
                 .overrideWithValue(localPreferencesRepository),
           ],

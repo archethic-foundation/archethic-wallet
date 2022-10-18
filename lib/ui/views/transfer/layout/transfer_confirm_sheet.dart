@@ -192,7 +192,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferProvider.transfer);
     return SafeArea(
       minimum:
@@ -203,19 +202,21 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             title: widget.title ?? localizations.transfering,
           ),
           Expanded(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  child: transfer.transferType == TransferType.uco
-                      ? const UCOTransferDetail()
-                      : transfer.transferType == TransferType.token
-                          ? const TokenTransferDetail()
-                          : const SizedBox(),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    child: transfer.transferType == TransferType.uco
+                        ? const UCOTransferDetail()
+                        : transfer.transferType == TransferType.token
+                            ? const TokenTransferDetail()
+                            : const SizedBox(),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
@@ -269,6 +270,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     );
   }
 
+  // TODO(reddwarf03): Future provider fait le trt
   Future<void> _doSend() async {
     _showSendingAnimation(context);
     final transfer = ref.watch(TransferProvider.transfer);

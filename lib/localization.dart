@@ -507,6 +507,11 @@ class AppLocalization {
     return Intl.message('Total', name: 'total');
   }
 
+  String get availableAfterTransfer {
+    return Intl.message('Available after transfer',
+        name: 'availableAfterTransfer');
+  }
+
   String get estimatedFeesNote {
     return Intl.message(
         'Note: The fees will be estimated when the address and the amount are specified.',

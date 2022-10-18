@@ -27,6 +27,7 @@ class AppDialogs {
     final preferences = ref.watch(SettingsProviders.settings);
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

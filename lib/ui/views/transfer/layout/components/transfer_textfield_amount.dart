@@ -32,7 +32,8 @@ class _TransferTextFieldAmountState
 
   @override
   void dispose() {
-    sendAmountFocusNode!.dispose();
+    sendAmountFocusNode?.dispose();
+    sendAmountController?.dispose();
     super.dispose();
   }
 
@@ -76,14 +77,19 @@ class _TransferTextFieldAmountState
               active: false,
               currencyFormat: localCurrencyFormat,
             ),
-            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^\d+\.?\d{0,8}'),
+            ),
           ],
           onChanged: (String text) async {
             final amount = double.tryParse(text);
-            transferNotifier.setAmount(amount ?? 0);
+            transferNotifier.setAmount(
+              amount ?? 0,
+              accountSelected!.balance!.nativeTokenValue!,
+            );
             await transferNotifier.calculateFees(
               widget.seed,
-              accountSelected!.name!,
+              accountSelected.name!,
             );
           },
           textInputAction: TextInputAction.next,
@@ -118,6 +124,16 @@ class _TransferTextFieldAmountState
                 sendAmountController!.text = sendAmount
                     .toStringAsFixed(localCurrencyFormat.decimalDigits!);
               }
+              transferNotifier.setAmount(
+                accountSelected.balance!.nativeTokenValue! -
+                    transfer.feeEstimation,
+                accountSelected.balance!.nativeTokenValue!,
+              );
+              transferNotifier.setMaxSend(true);
+              await transferNotifier.calculateFees(
+                widget.seed,
+                accountSelected.name!,
+              );
 
               if (transfer.isMaxSend) {
                 return;

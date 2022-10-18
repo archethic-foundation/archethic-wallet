@@ -26,4 +26,7 @@ class Transfer with _$Transfer {
     Transaction? transaction,
   }) = _Transfer;
   const Transfer._();
+
+  bool get isControlsOk =>
+      errorAddressText == '' && errorAmountText == '' && errorMessageText == '';
 }
