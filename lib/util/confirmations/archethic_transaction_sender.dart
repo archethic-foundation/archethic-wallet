@@ -169,7 +169,8 @@ class ArchethicTransactionSender
         }
 
         dev.log(
-            '>>> Transaction confirmed $address <<< ${transactionEvent.nbConfirmations} / ${transactionEvent.maxConfirmations}',);
+          '>>> Transaction confirmed $address <<< ${transactionEvent.nbConfirmations} / ${transactionEvent.maxConfirmations}',
+        );
 
         if (transactionEvent.isFullyConfirmed) close();
 
@@ -187,6 +188,11 @@ mixin ArchethicTransactionParser {
     try {
       final transactionError = data?['transactionError'];
       final reason = transactionError?['reason'];
+
+      if (reason == 'Insufficient funds') {
+        return const TransactionError.insufficientFunds();
+      }
+
       return TransactionError.other(reason: reason);
     } catch (e) {
       return const TransactionError.other();

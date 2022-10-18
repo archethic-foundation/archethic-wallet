@@ -57,7 +57,6 @@ class TransferSheet extends StatelessWidget {
     required this.transferType,
     this.contact,
     this.address,
-    this.title,
     this.actionButtonTitle,
     this.accountToken,
     super.key,
@@ -65,7 +64,6 @@ class TransferSheet extends StatelessWidget {
 
   final Contact? contact;
   final String? address;
-  final String? title;
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final TransferType transferType;
@@ -79,6 +77,12 @@ class TransferSheet extends StatelessWidget {
         TransferProvider.initialTransfer.overrideWithValue(
           Transfer(
             transferType: transferType,
+            accountToken: accountToken,
+            symbol: transferType == TransferType.uco
+                ? StateContainer.of(context)
+                    .curNetwork
+                    .getNetworkCryptoCurrencyLabel()
+                : accountToken!.tokenInformations!.symbol!,
             addressRecipient: address ?? '',
             contactRecipient: contact,
             isContactKnown: contact != null,
@@ -87,9 +91,7 @@ class TransferSheet extends StatelessWidget {
       ],
       child: TransferSheetBody(
         seed: seed,
-        accountToken: accountToken,
         actionButtonTitle: actionButtonTitle,
-        title: title,
       ),
     );
   }
@@ -98,20 +100,15 @@ class TransferSheet extends StatelessWidget {
 class TransferSheetBody extends ConsumerWidget {
   const TransferSheetBody({
     required this.seed,
-    this.title,
     this.actionButtonTitle,
-    this.accountToken,
     super.key,
   });
 
-  final String? title;
   final String? actionButtonTitle;
-  final AccountToken? accountToken;
   final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const _isPressed = false;
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = StateContainer.of(context)
@@ -151,6 +148,22 @@ class TransferSheetBody extends ConsumerWidget {
       },
     );
 
+    final title = transfer.transferType == TransferType.uco
+        ? localizations.transferTokens.replaceAll(
+            '%1',
+            StateContainer.of(context)
+                .curNetwork
+                .getNetworkCryptoCurrencyLabel(),
+          )
+        : transfer.transferType == TransferType.token
+            ? localizations.transferTokens.replaceAll(
+                '%1',
+                transfer.accountToken!.tokenInformations!.symbol!,
+              )
+            : transfer.transferType == TransferType.nft
+                ? localizations.transferNFT
+                : localizations.send;
+
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -158,7 +171,7 @@ class TransferSheetBody extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: title ?? localizations.send,
+              title: title,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: const BalanceIndicatorWidget(),
             ),
@@ -173,11 +186,7 @@ class TransferSheetBody extends ConsumerWidget {
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 25),
-                            if (accountToken == null ||
-                                (accountToken != null &&
-                                    accountToken!.tokenInformations != null &&
-                                    accountToken!.tokenInformations!.type ==
-                                        'fungible'))
+                            if (transfer.transferType != TransferType.nft)
                               TransferTextFieldAmount(
                                 seed: seed,
                               ),
@@ -232,46 +241,37 @@ class TransferSheetBody extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (_isPressed == true)
-                      AppButton(
-                        AppButtonType.primaryOutline,
-                        actionButtonTitle ?? localizations.send,
-                        Dimens.buttonTopDimens,
-                        key: const Key('send'),
-                        onPressed: () {},
-                      )
-                    else
-                      AppButton(
-                        AppButtonType.primary,
-                        actionButtonTitle ?? localizations.send,
-                        Dimens.buttonTopDimens,
-                        key: const Key('send'),
-                        onPressed: () async {
-                          final isAddressOk =
-                              await transferNotifier.controlAddress(
-                            context,
-                            accountSelected,
-                          );
-                          final isAmountOk = transferNotifier.controlAmount(
-                            context,
-                            accountSelected,
-                          );
+                    AppButton(
+                      AppButtonType.primary,
+                      actionButtonTitle ?? localizations.send,
+                      Dimens.buttonTopDimens,
+                      key: const Key('send'),
+                      onPressed: () async {
+                        final isAddressOk =
+                            await transferNotifier.controlAddress(
+                          context,
+                          accountSelected,
+                        );
+                        final isAmountOk = transferNotifier.controlAmount(
+                          context,
+                          accountSelected,
+                        );
 
-                          if (isAddressOk && isAmountOk) {
-                            Sheets.showAppHeightNineSheet(
-                              onDisposed: () {},
-                              context: context,
-                              ref: ref,
-                              widget: TransferConfirmSheet(
-                                title: title,
-                                transfer: ref.read(
-                                  TransferProvider.transfer,
-                                ),
+                        if (isAddressOk && isAmountOk) {
+                          Sheets.showAppHeightNineSheet(
+                            onDisposed: () {},
+                            context: context,
+                            ref: ref,
+                            widget: TransferConfirmSheet(
+                              title: title,
+                              transfer: ref.read(
+                                TransferProvider.transfer,
                               ),
-                            );
-                          }
-                        },
-                      ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ],

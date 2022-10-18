@@ -94,13 +94,6 @@ class TransferNotifier extends StateNotifier<Transfer> {
     );
   }
 
-  void setTransferType(TransferType transferType) {
-    if (transferType == TransferType.uco) {
-      // TODO(reddwarf03): Change hard code 'UCO'
-      state = state.copyWith(transferType: transferType, symbol: 'UCO');
-    }
-  }
-
   void isMaxSend(
     double? nativeTokenValue,
     double? fiatCurrencyValue,
@@ -144,7 +137,16 @@ class TransferNotifier extends StateNotifier<Transfer> {
       return;
     }
 
-    await _buildTransaction(seed, accountSelectedName);
+    try {
+      await _buildTransaction(seed, accountSelectedName);
+    } catch (e) {
+      state = state.copyWith(
+        feeEstimation: 0,
+        errorAmountText: e.toString(),
+      );
+      return;
+    }
+
     final transactionFee =
         await sl.get<ApiService>().getTransactionFee(state.transaction!);
     if (transactionFee.errors != null) {
@@ -185,17 +187,41 @@ class TransferNotifier extends StateNotifier<Transfer> {
       keychain: keychain,
       originPrivateKey: originPrivateKey,
       serviceName: service,
-      tokenTransferList: List<TokenTransfer>.empty(
-        growable: true,
-      ),
-      ucoTransferList: <UCOTransfer>[
-        UCOTransfer(
-          amount: toBigInt(state.amount),
-          to: state.contactRecipient == null
-              ? state.addressRecipient
-              : state.contactRecipient!.address!,
-        )
-      ],
+      tokenTransferList: state.transferType == TransferType.token
+          ? <TokenTransfer>[
+              TokenTransfer(
+                amount: toBigInt(state.amount),
+                to: state.contactRecipient == null
+                    ? state.addressRecipient
+                    : state.contactRecipient!.address!,
+                tokenAddress: state.accountToken!.tokenInformations!.address,
+                tokenId: 0,
+              )
+            ]
+          : state.transferType == TransferType.nft
+              ? <TokenTransfer>[
+                  TokenTransfer(
+                    amount: toBigInt(state.amount),
+                    to: state.contactRecipient == null
+                        ? state.addressRecipient
+                        : state.contactRecipient!.address!,
+                    tokenAddress:
+                        state.accountToken!.tokenInformations!.address,
+                    // TODO(reddwarf03) : to fix nft management
+                    tokenId: 0,
+                  )
+                ]
+              : <TokenTransfer>[],
+      ucoTransferList: state.transferType == TransferType.uco
+          ? <UCOTransfer>[
+              UCOTransfer(
+                amount: toBigInt(state.amount),
+                to: state.contactRecipient == null
+                    ? state.addressRecipient
+                    : state.contactRecipient!.address!,
+              )
+            ]
+          : <UCOTransfer>[],
     );
     state = state.copyWith(
       transaction: transaction,
@@ -213,16 +239,40 @@ class TransferNotifier extends StateNotifier<Transfer> {
       return false;
     }
 
-    if (state.amount + state.feeEstimation >
-        accountSelected.balance!.nativeTokenValue!) {
-      state = state.copyWith(
-        errorAmountText:
-            AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                  '%1',
-                  state.symbol,
-                ),
-      );
-      return false;
+    if (state.transferType == TransferType.uco) {
+      if (state.amount + state.feeEstimation >
+          accountSelected.balance!.nativeTokenValue!) {
+        state = state.copyWith(
+          errorAmountText:
+              AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol,
+                  ),
+        );
+        return false;
+      }
+    } else {
+      if (state.feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+        state = state.copyWith(
+          errorAmountText:
+              AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol,
+                  ),
+        );
+        return false;
+      }
+
+      if (state.amount > state.accountToken!.amount!) {
+        state = state.copyWith(
+          errorAmountText:
+              AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol,
+                  ),
+        );
+        return false;
+      }
     }
 
     state = state.copyWith(

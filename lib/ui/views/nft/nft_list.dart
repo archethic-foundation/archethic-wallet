@@ -113,7 +113,6 @@ class NFTList extends ConsumerWidget {
                                               ).getSeed())!,
                                               accountToken: accountSelected
                                                   .accountNFT![index],
-                                              title: localizations.transferNFT,
                                             ),
                                           );
                                         },

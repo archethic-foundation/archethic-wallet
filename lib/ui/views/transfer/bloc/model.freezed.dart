@@ -23,6 +23,7 @@ mixin _$Transfer {
   String get symbol => throw _privateConstructorUsedError;
   String get addressRecipient => throw _privateConstructorUsedError;
   Contact? get contactRecipient => throw _privateConstructorUsedError;
+  AccountToken? get accountToken => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   bool get isMaxSend => throw _privateConstructorUsedError;
   bool get isContactKnown => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $TransferCopyWith<$Res> {
       String symbol,
       String addressRecipient,
       Contact? contactRecipient,
+      AccountToken? accountToken,
       String message,
       bool isMaxSend,
       bool isContactKnown,
@@ -74,6 +76,7 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
     Object? symbol = freezed,
     Object? addressRecipient = freezed,
     Object? contactRecipient = freezed,
+    Object? accountToken = freezed,
     Object? message = freezed,
     Object? isMaxSend = freezed,
     Object? isContactKnown = freezed,
@@ -111,6 +114,10 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
           ? _value.contactRecipient
           : contactRecipient // ignore: cast_nullable_to_non_nullable
               as Contact?,
+      accountToken: accountToken == freezed
+          ? _value.accountToken
+          : accountToken // ignore: cast_nullable_to_non_nullable
+              as AccountToken?,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -157,6 +164,7 @@ abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
       String symbol,
       String addressRecipient,
       Contact? contactRecipient,
+      AccountToken? accountToken,
       String message,
       bool isMaxSend,
       bool isContactKnown,
@@ -185,6 +193,7 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
     Object? symbol = freezed,
     Object? addressRecipient = freezed,
     Object? contactRecipient = freezed,
+    Object? accountToken = freezed,
     Object? message = freezed,
     Object? isMaxSend = freezed,
     Object? isContactKnown = freezed,
@@ -222,6 +231,10 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
           ? _value.contactRecipient
           : contactRecipient // ignore: cast_nullable_to_non_nullable
               as Contact?,
+      accountToken: accountToken == freezed
+          ? _value.accountToken
+          : accountToken // ignore: cast_nullable_to_non_nullable
+              as AccountToken?,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -265,6 +278,7 @@ class _$_Transfer extends _Transfer {
       this.symbol = '',
       this.addressRecipient = '',
       this.contactRecipient,
+      this.accountToken,
       this.message = '',
       this.isMaxSend = false,
       this.isContactKnown = false,
@@ -295,6 +309,8 @@ class _$_Transfer extends _Transfer {
   @override
   final Contact? contactRecipient;
   @override
+  final AccountToken? accountToken;
+  @override
   @JsonKey()
   final String message;
   @override
@@ -317,7 +333,7 @@ class _$_Transfer extends _Transfer {
 
   @override
   String toString() {
-    return 'Transfer(transferType: $transferType, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
+    return 'Transfer(transferType: $transferType, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, accountToken: $accountToken, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
   }
 
   @override
@@ -337,6 +353,8 @@ class _$_Transfer extends _Transfer {
                 .equals(other.addressRecipient, addressRecipient) &&
             const DeepCollectionEquality()
                 .equals(other.contactRecipient, contactRecipient) &&
+            const DeepCollectionEquality()
+                .equals(other.accountToken, accountToken) &&
             const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality().equals(other.isMaxSend, isMaxSend) &&
             const DeepCollectionEquality()
@@ -361,6 +379,7 @@ class _$_Transfer extends _Transfer {
       const DeepCollectionEquality().hash(symbol),
       const DeepCollectionEquality().hash(addressRecipient),
       const DeepCollectionEquality().hash(contactRecipient),
+      const DeepCollectionEquality().hash(accountToken),
       const DeepCollectionEquality().hash(message),
       const DeepCollectionEquality().hash(isMaxSend),
       const DeepCollectionEquality().hash(isContactKnown),
@@ -384,6 +403,7 @@ abstract class _Transfer extends Transfer {
       final String symbol,
       final String addressRecipient,
       final Contact? contactRecipient,
+      final AccountToken? accountToken,
       final String message,
       final bool isMaxSend,
       final bool isContactKnown,
@@ -407,6 +427,8 @@ abstract class _Transfer extends Transfer {
   String get addressRecipient;
   @override
   Contact? get contactRecipient;
+  @override
+  AccountToken? get accountToken;
   @override
   String get message;
   @override

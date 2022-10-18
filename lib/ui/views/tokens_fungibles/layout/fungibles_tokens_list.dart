@@ -147,11 +147,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                 seed: (await StateContainer.of(context)
                                     .getSeed())!,
                                 accountToken: accountFungibleToken,
-                                title: localizations.transferTokens.replaceAll(
-                                  '%1',
-                                  accountFungibleToken
-                                      .tokenInformations!.symbol!,
-                                ),
                               ),
                             );
                           },

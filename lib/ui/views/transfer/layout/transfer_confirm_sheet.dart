@@ -301,43 +301,6 @@ class _TransferConfirmSheetBodyState
   Future<void> _doSend() async {
     _showSendingAnimation(context);
     final transfer = ref.watch(TransferProvider.transfer);
-    final seed = await StateContainer.of(context).getSeed();
-    final tokenTransferList = List<TokenTransfer>.empty(growable: true);
-    final originPrivateKey = sl.get<ApiService>().getOriginKey();
-
-    final ucoTransferList = [
-      UCOTransfer(
-        amount: toBigInt(transfer.amount),
-        to: transfer.contactRecipient == null
-            ? transfer.addressRecipient
-            : transfer.contactRecipient!.address!,
-      ),
-    ];
-
-    final keychain = await sl.get<ApiService>().getKeychain(seed!);
-    final nameEncoded = Uri.encodeFull(
-      StateContainer.of(context)
-          .appWallet!
-          .appKeychain!
-          .getAccountSelected()!
-          .name!,
-    );
-    final service = 'archethic-wallet-$nameEncoded';
-    final index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(keychain.deriveAddress(service)),
-            ))
-        .chainLength!;
-
-    final transaction = await TransferTransactionBuilder.build(
-      message: transfer.message,
-      index: index,
-      keychain: keychain,
-      originPrivateKey: originPrivateKey,
-      serviceName: service,
-      tokenTransferList: tokenTransferList,
-      ucoTransferList: ucoTransferList,
-    );
-
     final preferences = await Preferences.getInstance();
 
     final TransactionSenderInterface transactionSender =
@@ -347,14 +310,14 @@ class _TransferConfirmSheetBodyState
     );
 
     transactionSender.send(
-      transaction: transaction,
+      transaction: transfer.transaction!,
       onConfirmation: (confirmation) async {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
             transactionType: TransactionSendEventType.transfer,
             response: 'ok',
             nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: transaction.address,
+            transactionAddress: transfer.transaction!.address,
             maxConfirmations: confirmation.maxConfirmations,
           ),
         );
@@ -380,7 +343,18 @@ class _TransferConfirmSheetBodyState
               ),
             );
           },
-          other: (_) {
+          insufficientFunds: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: AppLocalization.of(context)!
+                    .insufficientBalance
+                    .replaceAll('%1', transfer.symbol),
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          other: (error) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
                 transactionType: TransactionSendEventType.transfer,
