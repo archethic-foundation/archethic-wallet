@@ -83,10 +83,14 @@ class _TransferTextFieldAmountState
           ],
           onChanged: (String text) async {
             final amount = double.tryParse(text);
+            if (transfer.amount != amount) {
+              transferNotifier.setMaxSend(false);
+            }
             transferNotifier.setAmount(
               amount ?? 0,
               accountSelected!.balance!.nativeTokenValue!,
             );
+
             await transferNotifier.calculateFees(
               widget.seed,
               accountSelected.name!,

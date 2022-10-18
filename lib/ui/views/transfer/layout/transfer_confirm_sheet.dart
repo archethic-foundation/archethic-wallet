@@ -33,8 +33,34 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransferConfirmSheet extends ConsumerStatefulWidget {
+class TransferConfirmSheet extends ConsumerWidget {
   const TransferConfirmSheet({
+    super.key,
+    this.title,
+    required this.transfer,
+  });
+
+  final String? title;
+  final Transfer transfer;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // The main column that holds everything
+    return ProviderScope(
+      overrides: [
+        TransferProvider.initialTransfer.overrideWithValue(
+          transfer,
+        ),
+      ],
+      child: TransferConfirmSheetBody(
+        title: title,
+      ),
+    );
+  }
+}
+
+class TransferConfirmSheetBody extends ConsumerStatefulWidget {
+  const TransferConfirmSheetBody({
     super.key,
     this.title,
   });
@@ -42,11 +68,12 @@ class TransferConfirmSheet extends ConsumerStatefulWidget {
   final String? title;
 
   @override
-  ConsumerState<TransferConfirmSheet> createState() =>
-      _TransferConfirmSheetState();
+  ConsumerState<TransferConfirmSheetBody> createState() =>
+      _TransferConfirmSheetBodyState();
 }
 
-class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
+class _TransferConfirmSheetBodyState
+    extends ConsumerState<TransferConfirmSheetBody> {
   bool? animationOpen;
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
@@ -113,7 +140,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
     );
-    final transfer = ref.watch(TransferProvider.transfer);
+    final transfer = ref.read(TransferProvider.transfer);
     if (transfer.transferType == TransferType.token) {
       final transaction = await sl
           .get<ApiService>()

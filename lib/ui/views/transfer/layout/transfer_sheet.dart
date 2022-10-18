@@ -81,13 +81,12 @@ class TransferSheet extends StatelessWidget {
             transferType: transferType,
             addressRecipient: address ?? '',
             contactRecipient: contact,
-            isContactKnown: contact != null && true,
+            isContactKnown: contact != null,
           ),
         ),
       ],
       child: TransferSheetBody(
         seed: seed,
-        transferType: transferType,
         accountToken: accountToken,
         actionButtonTitle: actionButtonTitle,
         title: title,
@@ -99,21 +98,15 @@ class TransferSheet extends StatelessWidget {
 class TransferSheetBody extends ConsumerWidget {
   const TransferSheetBody({
     required this.seed,
-    required this.transferType,
-    this.contact,
-    this.address,
     this.title,
     this.actionButtonTitle,
     this.accountToken,
     super.key,
   });
 
-  final Contact? contact;
-  final String? address;
   final String? title;
   final String? actionButtonTitle;
   final AccountToken? accountToken;
-  final TransferType transferType;
   final String seed;
 
   @override
@@ -271,6 +264,9 @@ class TransferSheetBody extends ConsumerWidget {
                               ref: ref,
                               widget: TransferConfirmSheet(
                                 title: title,
+                                transfer: ref.read(
+                                  TransferProvider.transfer,
+                                ),
                               ),
                             );
                           }
