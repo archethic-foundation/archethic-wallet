@@ -5,10 +5,12 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactsDialog {
@@ -25,8 +27,8 @@ class ContactsDialog {
         ref.read(AccountProviders.getSelectedAccount(context: context));
 
     for (final contact in contacts) {
-      if (contact.name!.toLowerCase().replaceFirst('@', '') !=
-          accountSelected!.name!.toLowerCase()) {
+      if (contact.name!.toUpperCase().replaceFirst('@', '') !=
+          accountSelected!.name!.toUpperCase()) {
         pickerItemsList.add(
           PickerItem(
             contact.name!.substring(1),
@@ -68,13 +70,22 @@ class ContactsDialog {
                     labelText: localizations.searchField,
                     keyboardType: TextInputType.text,
                     style: theme.textStyleSize16W600Primary,
+                    inputFormatters: <TextInputFormatter>[
+                      UpperCaseTextFormatter(),
+                      LengthLimitingTextInputFormatter(20)
+                    ],
                     onChanged: (text) async {
                       contacts = await StateContainer.of(context).getContacts();
+                      contacts.removeWhere(
+                        (element) =>
+                            element.name!.toUpperCase().replaceFirst('@', '') ==
+                            accountSelected!.name!.toUpperCase(),
+                      );
                       setState(
                         () {
                           contacts = contacts.where((Contact contact) {
-                            final contactName = contact.name!.toLowerCase();
-                            return contactName.contains(text);
+                            final contactName = contact.name!.toUpperCase();
+                            return contactName.contains(text.toUpperCase());
                           }).toList();
                           pickerItemsList.clear();
                           for (final contact in contacts) {
