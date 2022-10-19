@@ -189,11 +189,12 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                                       localizations.yes,
                                       () async {
                                         // TODO(Chralu): move that behavior to `logOut` usecase.
-                                        await ref.read(
-                                          ThemeProviders.selectTheme(
-                                            theme: ThemeOptions.dark,
-                                          ).future,
-                                        );
+                                        await ref
+                                            .read(ThemeProviders
+                                                .selectedThemeOption.notifier)
+                                            .selectTheme(
+                                              ThemeOptions.dark,
+                                            );
                                         await StateContainer.of(context)
                                             .logOut();
                                         Navigator.of(context)

@@ -205,9 +205,9 @@ class _ThemeSettingsListItem extends ConsumerWidget {
         );
         if (pickedTheme == null) return;
 
-        await ref.read(
-          ThemeProviders.selectTheme(theme: pickedTheme.theme).future,
-        );
+        await ref
+            .read(ThemeProviders.selectedThemeOption.notifier)
+            .selectTheme(pickedTheme.theme);
       },
     );
   }
