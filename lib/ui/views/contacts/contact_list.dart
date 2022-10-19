@@ -4,6 +4,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/contact_details.dart';
@@ -83,6 +84,9 @@ class ContactsList extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: AppTextField(
+                inputFormatters: <UpperCaseTextFormatter>[
+                  UpperCaseTextFormatter()
+                ],
                 controller: searchNameController,
                 autocorrect: false,
                 labelText: localizations.searchField,
