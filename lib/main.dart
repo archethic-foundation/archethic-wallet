@@ -293,9 +293,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         if (StateContainer.of(context).appWallet == null) {
           await StateContainer.of(context).logOut();
           // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
-          await ref.read(
-            ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
-          );
+          await ref
+              .read(ThemeProviders.selectedThemeOption.notifier)
+              .selectTheme(ThemeOptions.dark);
           Navigator.of(context).pushReplacementNamed('/intro_welcome');
         }
         StateContainer.of(context).checkTransactionInputs(
@@ -309,18 +309,18 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {
-        await ref.read(
-          ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
-        );
+        await ref
+            .read(ThemeProviders.selectedThemeOption.notifier)
+            .selectTheme(ThemeOptions.dark);
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
       dev.log(e.toString());
       await StateContainer.of(context).logOut();
       // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
-      await ref.read(
-        ThemeProviders.selectTheme(theme: ThemeOptions.dark).future,
-      );
+      await ref
+          .read(ThemeProviders.selectedThemeOption.notifier)
+          .selectTheme(ThemeOptions.dark);
       Navigator.of(context).pushReplacementNamed('/intro_welcome');
     }
     FlutterNativeSplash.remove();

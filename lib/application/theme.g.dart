@@ -29,95 +29,14 @@ class _SystemHash {
   }
 }
 
-String $_selectedThemeHash() => r'9c5b1303dd00571d8330e43193f29fdea47a64e6';
+String $_selectedThemeHash() => r'33e68526141fc42c19625940a2e53e5dbce77ab2';
 
 /// See also [_selectedTheme].
-final _selectedThemeProvider = AutoDisposeProvider<BaseTheme>(
+final _selectedThemeProvider = Provider<BaseTheme>(
   _selectedTheme,
   name: r'_selectedThemeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_selectedThemeHash,
 );
-typedef _SelectedThemeRef = AutoDisposeProviderRef<BaseTheme>;
-String $_selectedThemeOptionHash() =>
-    r'41ffc74805f1bac4147cdc749a3eff6d13aab936';
-
-/// See also [_selectedThemeOption].
-final _selectedThemeOptionProvider = AutoDisposeProvider<ThemeOptions>(
-  _selectedThemeOption,
-  name: r'_selectedThemeOptionProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_selectedThemeOptionHash,
-);
-typedef _SelectedThemeOptionRef = AutoDisposeProviderRef<ThemeOptions>;
-String $_selectThemeHash() => r'ada1768c271c36fffe29a77d213a49a262bfd17d';
-
-/// See also [_selectTheme].
-class _SelectThemeProvider extends AutoDisposeFutureProvider<void> {
-  _SelectThemeProvider({
-    required this.theme,
-  }) : super(
-          (ref) => _selectTheme(
-            ref,
-            theme: theme,
-          ),
-          from: _selectThemeProvider,
-          name: r'_selectThemeProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : $_selectThemeHash,
-        );
-
-  final ThemeOptions theme;
-
-  @override
-  bool operator ==(Object other) {
-    return other is _SelectThemeProvider && other.theme == theme;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, theme.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-typedef _SelectThemeRef = AutoDisposeFutureProviderRef<void>;
-
-/// See also [_selectTheme].
-final _selectThemeProvider = _SelectThemeFamily();
-
-class _SelectThemeFamily extends Family<AsyncValue<void>> {
-  _SelectThemeFamily();
-
-  _SelectThemeProvider call({
-    required ThemeOptions theme,
-  }) {
-    return _SelectThemeProvider(
-      theme: theme,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<void> getProviderOverride(
-    covariant _SelectThemeProvider provider,
-  ) {
-    return call(
-      theme: provider.theme,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_selectThemeProvider';
-}
+typedef _SelectedThemeRef = ProviderRef<BaseTheme>;

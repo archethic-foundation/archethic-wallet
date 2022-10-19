@@ -134,11 +134,12 @@ class SecurityMenuView extends ConsumerWidget {
                               localizations.yes,
                               () async {
                                 // TODO(Chralu): Déplacer la selection du theme par défaut dans le UseCase `logout`
-                                await ref.read(
-                                  ThemeProviders.selectTheme(
-                                    theme: ThemeOptions.dark,
-                                  ).future,
-                                );
+                                await ref
+                                    .read(
+                                      ThemeProviders
+                                          .selectedThemeOption.notifier,
+                                    )
+                                    .selectTheme(ThemeOptions.dark);
                                 await StateContainer.of(context).logOut();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                   '/',
