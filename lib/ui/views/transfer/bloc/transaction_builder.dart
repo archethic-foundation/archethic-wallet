@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -76,7 +77,7 @@ extension TransferTransactionBuilder on Transaction {
       }
 
       transaction.addOwnership(
-        aesEncrypt(message, aesKey),
+        aesEncrypt(utf8.encode(message), aesKey),
         authorizedKeys,
       );
     }
