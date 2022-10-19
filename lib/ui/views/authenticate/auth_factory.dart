@@ -13,10 +13,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AuthFactory {
+  static Future<void> forceAuthenticate(
+    BuildContext context,
+    WidgetRef ref, {
+    required AuthenticationMethod authMethod,
+    bool canCancel = true,
+  }) async {
+    var authResult = await authenticate(
+      context,
+      ref,
+      authMethod: authMethod,
+      canCancel: canCancel,
+    );
+
+    while (!authResult) {
+      authResult = await authenticate(
+        context,
+        ref,
+        authMethod: authMethod,
+        canCancel: canCancel,
+      );
+    }
+  }
+
   static Future<bool> authenticate(
     BuildContext context,
-    WidgetRef ref,
-    AuthenticationMethod authMethod, {
+    WidgetRef ref, {
+    required AuthenticationMethod authMethod,
+    bool canCancel = true,
     bool transitions = false,
     bool activeVibrations = false,
   }) async {
@@ -39,6 +63,7 @@ class AuthFactory {
           context,
           ref,
           transitions: transitions,
+          canCancel: canCancel,
         );
         break;
       case AuthMethod.biometrics:
@@ -116,25 +141,26 @@ class AuthFactory {
     BuildContext context,
     WidgetRef ref, {
     bool transitions = false,
+    required bool canCancel,
   }) async {
     var auth = false;
     if (transitions) {
       // TODO(redDwarf03): add the description
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) {
-            return const PinScreen(
-              PinOverlayType.enterPin,
-            );
-          },
+          builder: (BuildContext context) => PinScreen(
+            PinOverlayType.enterPin,
+            canNavigateBack: canCancel,
+          ),
         ),
       ) as bool;
     } else {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(
           builder: (BuildContext context) {
-            return const PinScreen(
+            return PinScreen(
               PinOverlayType.enterPin,
+              canNavigateBack: canCancel,
             );
           },
         ),

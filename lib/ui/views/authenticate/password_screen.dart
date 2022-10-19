@@ -66,7 +66,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       preferences.incrementLockAttempts();
       _failedAttempts++;
       if (_failedAttempts >= maxAttempts) {
-        preferences.updateLockDate();
+        // TODO(Chralu): remettre en place ce mécanisme.
+        // preferences.updateLockDate();
         Navigator.of(context).pushNamedAndRemoveUntil(
           '/lock_screen_transition',
           (Route<dynamic> route) => false,

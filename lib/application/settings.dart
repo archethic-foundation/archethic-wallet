@@ -1,4 +1,3 @@
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/settings.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
@@ -13,14 +12,16 @@ abstract class SettingsProviders {
   static final localSettingsRepository = _localSettingsRepositoryProvider;
 
   static final settings =
-      StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
-    final preferences = ref.read(_localSettingsRepositoryProvider);
+      StateNotifierProvider.autoDispose<SettingsNotifier, Settings>(
+    (ref) {
+      final preferences = ref.read(_localSettingsRepositoryProvider);
 
-    return SettingsNotifier(
-      preferences,
-      preferences.toModel(),
-    );
-  });
+      return SettingsNotifier(
+        preferences,
+        preferences.toModel(),
+      );
+    },
+  );
 }
 
 class SettingsNotifier extends StateNotifier<Settings> {
@@ -33,20 +34,20 @@ class SettingsNotifier extends StateNotifier<Settings> {
     state = state.copyWith(lock: lockApp);
   }
 
-  Future<void> setAuthMethod(AuthMethod method) async {
-    await preferences.setAuthMethod(AuthenticationMethod(method));
-    state = state.copyWith(authenticationMethod: method);
-  }
+  // Future<void> setAuthMethod(AuthMethod method) async {
+  //   await preferences.setAuthMethod(AuthenticationMethod(method));
+  //   state = state.copyWith(authenticationMethod: method);
+  // }
 
   Future<void> setLockTimeout(LockTimeoutOption lockTimeoutOption) async {
     await preferences.setLockTimeout(LockTimeoutSetting(lockTimeoutOption));
     state = state.copyWith(lockTimeout: lockTimeoutOption);
   }
 
-  Future<void> setPinPadShuffle(bool pinPadShuffle) async {
-    await preferences.setPinPadShuffle(pinPadShuffle);
-    state = state.copyWith(pinPadShuffle: pinPadShuffle);
-  }
+  // Future<void> setPinPadShuffle(bool pinPadShuffle) async {
+  //   await preferences.setPinPadShuffle(pinPadShuffle);
+  //   state = state.copyWith(pinPadShuffle: pinPadShuffle);
+  // }
 
   Future<void> setShowBalances(bool showBalances) async {
     await preferences.setShowBalances(showBalances);

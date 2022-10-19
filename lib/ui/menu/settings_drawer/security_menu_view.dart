@@ -172,8 +172,9 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final authenticationMethod = ref.watch(
-      SettingsProviders.settings
-          .select((settings) => settings.authenticationMethod),
+      AuthenticationProviders.settings.select(
+        (settings) => settings.authenticationMethod,
+      ),
     );
     final asyncHasBiometrics = ref.watch(DeviceAbilities.hasBiometricsProvider);
 
@@ -269,13 +270,15 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final pinPadShuffle = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.pinPadShuffle),
+      AuthenticationProviders.settings.select(
+        (settings) => settings.pinPadShuffle,
+      ),
     );
     final authenticationMethod = ref.watch(
-      SettingsProviders.settings
-          .select((settings) => settings.authenticationMethod),
+      AuthenticationProviders.settings.select(
+        (settings) => settings.authenticationMethod,
+      ),
     );
-    final settingsNotifier = ref.read(SettingsProviders.settings.notifier);
 
     if (authenticationMethod != AuthMethod.pin) return const SizedBox();
     return Column(
@@ -287,7 +290,11 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
           iconColor: theme.iconDrawer!,
           isSwitched: pinPadShuffle,
           onChanged: (bool isSwitched) {
-            settingsNotifier.setPinPadShuffle(isSwitched);
+            ref
+                .read(
+                  AuthenticationProviders.settings.notifier,
+                )
+                .setPinPadShuffle(isSwitched);
           },
         ),
       ],
@@ -310,11 +317,16 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       iconColor: theme.iconDrawer!,
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);
+        final authenticationSettings = ref.read(
+          AuthenticationProviders.settings,
+        );
 
         final auth = await AuthFactory.authenticate(
           context,
           ref,
-          AuthenticationMethod(preferences.authenticationMethod),
+          authMethod: AuthenticationMethod(
+            authenticationSettings.authenticationMethod,
+          ),
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {

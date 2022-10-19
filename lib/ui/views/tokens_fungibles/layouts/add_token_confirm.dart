@@ -259,7 +259,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,
-                          authMethod,
+                          authMethod: authMethod,
                           activeVibrations: ref
                               .watch(SettingsProviders.settings)
                               .activeVibrations,

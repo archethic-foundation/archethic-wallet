@@ -293,7 +293,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
         final auth = await AuthFactory.authenticate(
           context,
           ref,
-          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
+          authMethod:
+              const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {

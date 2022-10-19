@@ -1,4 +1,3 @@
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -13,14 +12,14 @@ part 'settings.freezed.dart';
 @freezed
 class Settings with _$Settings {
   const factory Settings({
-    required AuthMethod authenticationMethod,
+    // required AuthMethod authenticationMethod,
     required AvailableCurrencyEnum currency,
     required AvailablePrimaryCurrency primaryCurrency,
     required AvailableLanguage language,
     required AvailableNetworks networks,
     required String languageSeed,
     required bool firstLaunch,
-    required bool pinPadShuffle,
+    // required bool pinPadShuffle,
     required bool showBalances,
     required bool showBlog,
     required bool activeVibrations,
