@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -34,6 +35,8 @@ class ReceiveSheet extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
     final preferences = ref.watch(SettingsProviders.settings);
+    final accountSelected =
+        ref.read(AccountProviders.getSelectedAccount(context: context));
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -107,12 +110,15 @@ class ReceiveSheet extends ConsumerWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width: 200,
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
                                         margin: const EdgeInsets.all(8),
                                         child: AutoSizeText(
                                           localizations.addressInfos,
                                           style:
-                                              theme.textStyleSize16W700Primary,
+                                              theme.textStyleSize12W400Primary,
                                         ),
                                       ),
                                       Container(
@@ -131,7 +137,18 @@ class ReceiveSheet extends ConsumerWidget {
                                           gapless: false,
                                         ),
                                       ),
+                                      FittedBox(
+                                        fit: BoxFit.fitWidth,
+                                        child: Text(
+                                          accountSelected!.name!,
+                                          style: theme
+                                              .textStyleSize20W700EquinoxPrimary,
+                                        ),
+                                      ),
                                       Container(
+                                        padding: const EdgeInsets.only(
+                                          top: 10,
+                                        ),
                                         width: 200,
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.all(8),
