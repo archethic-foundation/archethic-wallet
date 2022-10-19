@@ -73,8 +73,6 @@ class _BalanceIndicatorButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     return // TODO(Chralu): Works only twice
         IconButton(
@@ -86,24 +84,9 @@ class _BalanceIndicatorButton extends ConsumerWidget {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        if (primaryCurrency.primaryCurrency ==
-            AvailablePrimaryCurrencyEnum.native) {
-          await ref.read(
-            PrimaryCurrencyProviders.selectPrimaryCurrency(
-              primaryCurrency: const AvailablePrimaryCurrency(
-                AvailablePrimaryCurrencyEnum.fiat,
-              ),
-            ).future,
-          );
-        } else {
-          await ref.read(
-            PrimaryCurrencyProviders.selectPrimaryCurrency(
-              primaryCurrency: const AvailablePrimaryCurrency(
-                AvailablePrimaryCurrencyEnum.native,
-              ),
-            ).future,
-          );
-        }
+        await ref
+            .read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier)
+            .switchSelectedPrimaryCurrency();
       },
     );
   }

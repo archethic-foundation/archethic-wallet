@@ -55,13 +55,16 @@ class PrimaryCurrencyDialog {
             selectedIndex: primaryCurrency.getIndex(),
             onSelected: (value) async {
               final primaryCurrency = AvailablePrimaryCurrency(
-                  value.value as AvailablePrimaryCurrencyEnum,);
-
-              await ref.read(
-                PrimaryCurrencyProviders.selectPrimaryCurrency(
-                  primaryCurrency: primaryCurrency,
-                ).future,
+                value.value as AvailablePrimaryCurrencyEnum,
               );
+
+              await ref
+                  .read(
+                    PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier,
+                  )
+                  .selectPrimaryCurrency(
+                    primaryCurrency: primaryCurrency,
+                  );
               Navigator.pop(context, value.value);
             },
           ),
