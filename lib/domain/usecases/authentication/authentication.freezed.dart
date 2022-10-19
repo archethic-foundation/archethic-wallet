@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'model.dart';
+part of 'authentication.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -571,163 +571,129 @@ abstract class _AuthenticationTooMuchAttempts extends AuthenticationResult {
 }
 
 /// @nodoc
-mixin _$Credentials {
-  String get pin => throw _privateConstructorUsedError;
+mixin _$UpdatePinResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pin,
+    required TResult Function() success,
+    required TResult Function() pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String pin)? pin,
+    TResult Function()? success,
+    TResult Function()? pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pin,
+    TResult Function()? success,
+    TResult Function()? pinsDoNotMatch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(PinCredentials value) pin,
+    required TResult Function(_UpdatePinSuccess value) success,
+    required TResult Function(_UpdatePinsDoNotMatch value) pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(PinCredentials value)? pin,
+    TResult Function(_UpdatePinSuccess value)? success,
+    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(PinCredentials value)? pin,
+    TResult Function(_UpdatePinSuccess value)? success,
+    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $CredentialsCopyWith<Credentials> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CredentialsCopyWith<$Res> {
-  factory $CredentialsCopyWith(
-          Credentials value, $Res Function(Credentials) then) =
-      _$CredentialsCopyWithImpl<$Res>;
-  $Res call({String pin});
+abstract class $UpdatePinResultCopyWith<$Res> {
+  factory $UpdatePinResultCopyWith(
+          UpdatePinResult value, $Res Function(UpdatePinResult) then) =
+      _$UpdatePinResultCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CredentialsCopyWithImpl<$Res> implements $CredentialsCopyWith<$Res> {
-  _$CredentialsCopyWithImpl(this._value, this._then);
+class _$UpdatePinResultCopyWithImpl<$Res>
+    implements $UpdatePinResultCopyWith<$Res> {
+  _$UpdatePinResultCopyWithImpl(this._value, this._then);
 
-  final Credentials _value;
+  final UpdatePinResult _value;
   // ignore: unused_field
-  final $Res Function(Credentials) _then;
-
-  @override
-  $Res call({
-    Object? pin = freezed,
-  }) {
-    return _then(_value.copyWith(
-      pin: pin == freezed
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+  final $Res Function(UpdatePinResult) _then;
 }
 
 /// @nodoc
-abstract class _$$PinCredentialsCopyWith<$Res>
-    implements $CredentialsCopyWith<$Res> {
-  factory _$$PinCredentialsCopyWith(
-          _$PinCredentials value, $Res Function(_$PinCredentials) then) =
-      __$$PinCredentialsCopyWithImpl<$Res>;
-  @override
-  $Res call({String pin});
+abstract class _$$_UpdatePinSuccessCopyWith<$Res> {
+  factory _$$_UpdatePinSuccessCopyWith(
+          _$_UpdatePinSuccess value, $Res Function(_$_UpdatePinSuccess) then) =
+      __$$_UpdatePinSuccessCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PinCredentialsCopyWithImpl<$Res>
-    extends _$CredentialsCopyWithImpl<$Res>
-    implements _$$PinCredentialsCopyWith<$Res> {
-  __$$PinCredentialsCopyWithImpl(
-      _$PinCredentials _value, $Res Function(_$PinCredentials) _then)
-      : super(_value, (v) => _then(v as _$PinCredentials));
+class __$$_UpdatePinSuccessCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res>
+    implements _$$_UpdatePinSuccessCopyWith<$Res> {
+  __$$_UpdatePinSuccessCopyWithImpl(
+      _$_UpdatePinSuccess _value, $Res Function(_$_UpdatePinSuccess) _then)
+      : super(_value, (v) => _then(v as _$_UpdatePinSuccess));
 
   @override
-  _$PinCredentials get _value => super._value as _$PinCredentials;
-
-  @override
-  $Res call({
-    Object? pin = freezed,
-  }) {
-    return _then(_$PinCredentials(
-      pin: pin == freezed
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+  _$_UpdatePinSuccess get _value => super._value as _$_UpdatePinSuccess;
 }
 
 /// @nodoc
 
-class _$PinCredentials extends PinCredentials {
-  const _$PinCredentials({required this.pin}) : super._();
-
-  @override
-  final String pin;
+class _$_UpdatePinSuccess extends _UpdatePinSuccess {
+  const _$_UpdatePinSuccess() : super._();
 
   @override
   String toString() {
-    return 'Credentials.pin(pin: $pin)';
+    return 'UpdatePinResult.success()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PinCredentials &&
-            const DeepCollectionEquality().equals(other.pin, pin));
+        (other.runtimeType == runtimeType && other is _$_UpdatePinSuccess);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(pin));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$PinCredentialsCopyWith<_$PinCredentials> get copyWith =>
-      __$$PinCredentialsCopyWithImpl<_$PinCredentials>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pin,
+    required TResult Function() success,
+    required TResult Function() pinsDoNotMatch,
   }) {
-    return pin(this.pin);
+    return success();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String pin)? pin,
+    TResult Function()? success,
+    TResult Function()? pinsDoNotMatch,
   }) {
-    return pin?.call(this.pin);
+    return success?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pin,
+    TResult Function()? success,
+    TResult Function()? pinsDoNotMatch,
     required TResult orElse(),
   }) {
-    if (pin != null) {
-      return pin(this.pin);
+    if (success != null) {
+      return success();
     }
     return orElse();
   }
@@ -735,182 +701,142 @@ class _$PinCredentials extends PinCredentials {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(PinCredentials value) pin,
+    required TResult Function(_UpdatePinSuccess value) success,
+    required TResult Function(_UpdatePinsDoNotMatch value) pinsDoNotMatch,
   }) {
-    return pin(this);
+    return success(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(PinCredentials value)? pin,
+    TResult Function(_UpdatePinSuccess value)? success,
+    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
   }) {
-    return pin?.call(this);
+    return success?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(PinCredentials value)? pin,
+    TResult Function(_UpdatePinSuccess value)? success,
+    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
     required TResult orElse(),
   }) {
-    if (pin != null) {
-      return pin(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
 }
 
-abstract class PinCredentials extends Credentials {
-  const factory PinCredentials({required final String pin}) = _$PinCredentials;
-  const PinCredentials._() : super._();
-
-  @override
-  String get pin;
-  @override
-  @JsonKey(ignore: true)
-  _$$PinCredentialsCopyWith<_$PinCredentials> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _UpdatePinSuccess extends UpdatePinResult {
+  const factory _UpdatePinSuccess() = _$_UpdatePinSuccess;
+  const _UpdatePinSuccess._() : super._();
 }
 
 /// @nodoc
-mixin _$PinAuthenticationState {
-  int get failedAttemptsCount => throw _privateConstructorUsedError;
-  int get maxAttemptsCount => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $PinAuthenticationStateCopyWith<PinAuthenticationState> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _$$_UpdatePinsDoNotMatchCopyWith<$Res> {
+  factory _$$_UpdatePinsDoNotMatchCopyWith(_$_UpdatePinsDoNotMatch value,
+          $Res Function(_$_UpdatePinsDoNotMatch) then) =
+      __$$_UpdatePinsDoNotMatchCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-abstract class $PinAuthenticationStateCopyWith<$Res> {
-  factory $PinAuthenticationStateCopyWith(PinAuthenticationState value,
-          $Res Function(PinAuthenticationState) then) =
-      _$PinAuthenticationStateCopyWithImpl<$Res>;
-  $Res call({int failedAttemptsCount, int maxAttemptsCount});
-}
-
-/// @nodoc
-class _$PinAuthenticationStateCopyWithImpl<$Res>
-    implements $PinAuthenticationStateCopyWith<$Res> {
-  _$PinAuthenticationStateCopyWithImpl(this._value, this._then);
-
-  final PinAuthenticationState _value;
-  // ignore: unused_field
-  final $Res Function(PinAuthenticationState) _then;
+class __$$_UpdatePinsDoNotMatchCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res>
+    implements _$$_UpdatePinsDoNotMatchCopyWith<$Res> {
+  __$$_UpdatePinsDoNotMatchCopyWithImpl(_$_UpdatePinsDoNotMatch _value,
+      $Res Function(_$_UpdatePinsDoNotMatch) _then)
+      : super(_value, (v) => _then(v as _$_UpdatePinsDoNotMatch));
 
   @override
-  $Res call({
-    Object? failedAttemptsCount = freezed,
-    Object? maxAttemptsCount = freezed,
-  }) {
-    return _then(_value.copyWith(
-      failedAttemptsCount: failedAttemptsCount == freezed
-          ? _value.failedAttemptsCount
-          : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxAttemptsCount: maxAttemptsCount == freezed
-          ? _value.maxAttemptsCount
-          : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$$_PinAuthenticationStateCopyWith<$Res>
-    implements $PinAuthenticationStateCopyWith<$Res> {
-  factory _$$_PinAuthenticationStateCopyWith(_$_PinAuthenticationState value,
-          $Res Function(_$_PinAuthenticationState) then) =
-      __$$_PinAuthenticationStateCopyWithImpl<$Res>;
-  @override
-  $Res call({int failedAttemptsCount, int maxAttemptsCount});
-}
-
-/// @nodoc
-class __$$_PinAuthenticationStateCopyWithImpl<$Res>
-    extends _$PinAuthenticationStateCopyWithImpl<$Res>
-    implements _$$_PinAuthenticationStateCopyWith<$Res> {
-  __$$_PinAuthenticationStateCopyWithImpl(_$_PinAuthenticationState _value,
-      $Res Function(_$_PinAuthenticationState) _then)
-      : super(_value, (v) => _then(v as _$_PinAuthenticationState));
-
-  @override
-  _$_PinAuthenticationState get _value =>
-      super._value as _$_PinAuthenticationState;
-
-  @override
-  $Res call({
-    Object? failedAttemptsCount = freezed,
-    Object? maxAttemptsCount = freezed,
-  }) {
-    return _then(_$_PinAuthenticationState(
-      failedAttemptsCount: failedAttemptsCount == freezed
-          ? _value.failedAttemptsCount
-          : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxAttemptsCount: maxAttemptsCount == freezed
-          ? _value.maxAttemptsCount
-          : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+  _$_UpdatePinsDoNotMatch get _value => super._value as _$_UpdatePinsDoNotMatch;
 }
 
 /// @nodoc
 
-class _$_PinAuthenticationState extends _PinAuthenticationState {
-  const _$_PinAuthenticationState(
-      {required this.failedAttemptsCount, required this.maxAttemptsCount})
-      : super._();
-
-  @override
-  final int failedAttemptsCount;
-  @override
-  final int maxAttemptsCount;
+class _$_UpdatePinsDoNotMatch extends _UpdatePinsDoNotMatch {
+  const _$_UpdatePinsDoNotMatch() : super._();
 
   @override
   String toString() {
-    return 'PinAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount)';
+    return 'UpdatePinResult.pinsDoNotMatch()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_PinAuthenticationState &&
-            const DeepCollectionEquality()
-                .equals(other.failedAttemptsCount, failedAttemptsCount) &&
-            const DeepCollectionEquality()
-                .equals(other.maxAttemptsCount, maxAttemptsCount));
+        (other.runtimeType == runtimeType && other is _$_UpdatePinsDoNotMatch);
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(failedAttemptsCount),
-      const DeepCollectionEquality().hash(maxAttemptsCount));
+  int get hashCode => runtimeType.hashCode;
 
-  @JsonKey(ignore: true)
   @override
-  _$$_PinAuthenticationStateCopyWith<_$_PinAuthenticationState> get copyWith =>
-      __$$_PinAuthenticationStateCopyWithImpl<_$_PinAuthenticationState>(
-          this, _$identity);
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() success,
+    required TResult Function() pinsDoNotMatch,
+  }) {
+    return pinsDoNotMatch();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? success,
+    TResult Function()? pinsDoNotMatch,
+  }) {
+    return pinsDoNotMatch?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? success,
+    TResult Function()? pinsDoNotMatch,
+    required TResult orElse(),
+  }) {
+    if (pinsDoNotMatch != null) {
+      return pinsDoNotMatch();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UpdatePinSuccess value) success,
+    required TResult Function(_UpdatePinsDoNotMatch value) pinsDoNotMatch,
+  }) {
+    return pinsDoNotMatch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_UpdatePinSuccess value)? success,
+    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+  }) {
+    return pinsDoNotMatch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UpdatePinSuccess value)? success,
+    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    required TResult orElse(),
+  }) {
+    if (pinsDoNotMatch != null) {
+      return pinsDoNotMatch(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _PinAuthenticationState extends PinAuthenticationState {
-  const factory _PinAuthenticationState(
-      {required final int failedAttemptsCount,
-      required final int maxAttemptsCount}) = _$_PinAuthenticationState;
-  const _PinAuthenticationState._() : super._();
-
-  @override
-  int get failedAttemptsCount;
-  @override
-  int get maxAttemptsCount;
-  @override
-  @JsonKey(ignore: true)
-  _$$_PinAuthenticationStateCopyWith<_$_PinAuthenticationState> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _UpdatePinsDoNotMatch extends UpdatePinResult {
+  const factory _UpdatePinsDoNotMatch() = _$_UpdatePinsDoNotMatch;
+  const _UpdatePinsDoNotMatch._() : super._();
 }

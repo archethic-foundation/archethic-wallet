@@ -1,6 +1,4 @@
-import 'package:aewallet/domain/models/core/result.dart';
-
-abstract class UseCase<Command, Value, Failure> {
+abstract class UseCase<Command, Result> {
   const UseCase();
-  Future<Result<Value, Failure>> run(Command command);
+  Future<Result> run(Command command);
 }

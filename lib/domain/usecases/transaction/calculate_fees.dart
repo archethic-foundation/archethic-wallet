@@ -4,7 +4,8 @@ import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transfer.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 
-class CalculateFeesUsecase implements UseCase<Transfer, double, Failure> {
+class CalculateFeesUsecase
+    implements UseCase<Transfer, Result<double, Failure>> {
   const CalculateFeesUsecase({
     required this.repository,
   });

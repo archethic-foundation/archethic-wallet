@@ -186,62 +186,19 @@ class Preferences {
 
   int getLockAttempts() => _getValue(pinAttempts, defaultValue: 0);
 
-  Future<void> incrementLockAttempts() =>
-      _setValue(pinAttempts, getLockAttempts() + 1);
+  Future<void> incrementLockAttempts() => _setValue(
+        pinAttempts,
+        getLockAttempts() + 1,
+      );
 
   Future<void> resetLockAttempts() async {
     _removeValue(pinAttempts);
+  }
+
+  void removeLockDate() {
     _removeValue(pinLockUntil);
   }
 
-  bool shouldLock() {
-    if (_getValue(pinLockUntil) != null || getLockAttempts() >= 5) {
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> updateLockDate() async {
-    final attempts = getLockAttempts();
-    if (attempts >= 20) {
-      // 4+ failed attempts
-      _setValue(
-        pinLockUntil,
-        DateFormat.yMd()
-            .add_jms()
-            .format(DateTime.now().toUtc().add(const Duration(hours: 24))),
-      );
-    } else if (attempts >= 15) {
-      // 3 failed attempts
-      _setValue(
-        pinLockUntil,
-        DateFormat.yMd()
-            .add_jms()
-            .format(DateTime.now().toUtc().add(const Duration(minutes: 15))),
-      );
-    } else if (attempts >= 10) {
-      // 2 failed attempts
-      _setValue(
-        pinLockUntil,
-        DateFormat.yMd()
-            .add_jms()
-            .format(DateTime.now().toUtc().add(const Duration(minutes: 5))),
-      );
-    } else if (attempts >= 5) {
-      _setValue(
-        pinLockUntil,
-        DateFormat.yMd()
-            .add_jms()
-            .format(DateTime.now().toUtc().add(const Duration(minutes: 1))),
-      );
-    }
-  }
-
-  void resetLockDate() {
-    _removeValue(pinLockUntil);
-  }
-
-  // TODO(Chralu): juste pour tester le lock
   void setLockDate(DateTime lockDate) {
     final lockDateStr = DateFormat.yMd().add_jms().format(lockDate.toUtc());
     _setValue(pinLockUntil, lockDateStr);
@@ -249,6 +206,7 @@ class Preferences {
 
   DateTime? getLockDate() {
     final lockDateStr = _getValue(pinLockUntil);
+
     if (lockDateStr != null) {
       return DateFormat.yMd().add_jms().parseUtc(lockDateStr);
     } else {
@@ -260,8 +218,10 @@ class Preferences {
       _setValue(curTheme, theme.getIndex());
 
   ThemeSetting getTheme() => ThemeSetting(
-        ThemeOptions
-            .values[_getValue(curTheme, defaultValue: ThemeOptions.dark.index)],
+        ThemeOptions.values[_getValue(
+          curTheme,
+          defaultValue: ThemeOptions.dark.index,
+        )],
       );
 
   Future<void> clearAll() async {
@@ -296,7 +256,6 @@ class Preferences {
   Settings toModel() => Settings(
         activeNotifications: getActiveNotifications(),
         activeVibrations: getActiveVibrations(),
-        authenticationMethod: getAuthMethod().method,
         currency: getCurrency(const Locale('us', 'US'))
             .currency, // TODO(Chralu): utiliser la locale du telephone (mettre en place un provider dédié)
         firstLaunch: getFirstLaunch(),
@@ -307,7 +266,6 @@ class Preferences {
         lockTimeout: getLockTimeout().setting,
         mainScreenCurrentPage: getMainScreenCurrentPage(),
         networks: getNetwork().network,
-        pinPadShuffle: getPinPadShuffle(),
         primaryCurrency: getPrimaryCurrency(),
         showBalances: getShowBalances(),
         showBlog: getShowBlog(),

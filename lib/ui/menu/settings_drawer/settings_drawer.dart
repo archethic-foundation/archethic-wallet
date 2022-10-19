@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 // Project imports:
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/language.dart';

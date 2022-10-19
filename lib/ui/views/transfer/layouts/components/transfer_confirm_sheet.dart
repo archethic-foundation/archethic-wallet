@@ -234,7 +234,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,
-                          authMethod,
+                          authMethod: authMethod,
                           activeVibrations: ref
                               .watch(SettingsProviders.settings)
                               .activeVibrations,

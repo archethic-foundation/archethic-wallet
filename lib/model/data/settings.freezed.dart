@@ -16,15 +16,15 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Settings {
-  AuthMethod get authenticationMethod => throw _privateConstructorUsedError;
+// required AuthMethod authenticationMethod,
   AvailableCurrencyEnum get currency => throw _privateConstructorUsedError;
   AvailablePrimaryCurrency get primaryCurrency =>
       throw _privateConstructorUsedError;
   AvailableLanguage get language => throw _privateConstructorUsedError;
   AvailableNetworks get networks => throw _privateConstructorUsedError;
   String get languageSeed => throw _privateConstructorUsedError;
-  bool get firstLaunch => throw _privateConstructorUsedError;
-  bool get pinPadShuffle => throw _privateConstructorUsedError;
+  bool get firstLaunch =>
+      throw _privateConstructorUsedError; // required bool pinPadShuffle,
   bool get showBalances => throw _privateConstructorUsedError;
   bool get showBlog => throw _privateConstructorUsedError;
   bool get activeVibrations => throw _privateConstructorUsedError;
@@ -49,14 +49,12 @@ abstract class $SettingsCopyWith<$Res> {
   factory $SettingsCopyWith(Settings value, $Res Function(Settings) then) =
       _$SettingsCopyWithImpl<$Res>;
   $Res call(
-      {AuthMethod authenticationMethod,
-      AvailableCurrencyEnum currency,
+      {AvailableCurrencyEnum currency,
       AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
       AvailableNetworks networks,
       String languageSeed,
       bool firstLaunch,
-      bool pinPadShuffle,
       bool showBalances,
       bool showBlog,
       bool activeVibrations,
@@ -80,14 +78,12 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? authenticationMethod = freezed,
     Object? currency = freezed,
     Object? primaryCurrency = freezed,
     Object? language = freezed,
     Object? networks = freezed,
     Object? languageSeed = freezed,
     Object? firstLaunch = freezed,
-    Object? pinPadShuffle = freezed,
     Object? showBalances = freezed,
     Object? showBlog = freezed,
     Object? activeVibrations = freezed,
@@ -101,10 +97,6 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
     Object? theme = freezed,
   }) {
     return _then(_value.copyWith(
-      authenticationMethod: authenticationMethod == freezed
-          ? _value.authenticationMethod
-          : authenticationMethod // ignore: cast_nullable_to_non_nullable
-              as AuthMethod,
       currency: currency == freezed
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -128,10 +120,6 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
       firstLaunch: firstLaunch == freezed
           ? _value.firstLaunch
           : firstLaunch // ignore: cast_nullable_to_non_nullable
-              as bool,
-      pinPadShuffle: pinPadShuffle == freezed
-          ? _value.pinPadShuffle
-          : pinPadShuffle // ignore: cast_nullable_to_non_nullable
               as bool,
       showBalances: showBalances == freezed
           ? _value.showBalances
@@ -188,14 +176,12 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
       __$$_SettingsCopyWithImpl<$Res>;
   @override
   $Res call(
-      {AuthMethod authenticationMethod,
-      AvailableCurrencyEnum currency,
+      {AvailableCurrencyEnum currency,
       AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
       AvailableNetworks networks,
       String languageSeed,
       bool firstLaunch,
-      bool pinPadShuffle,
       bool showBalances,
       bool showBlog,
       bool activeVibrations,
@@ -221,14 +207,12 @@ class __$$_SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? authenticationMethod = freezed,
     Object? currency = freezed,
     Object? primaryCurrency = freezed,
     Object? language = freezed,
     Object? networks = freezed,
     Object? languageSeed = freezed,
     Object? firstLaunch = freezed,
-    Object? pinPadShuffle = freezed,
     Object? showBalances = freezed,
     Object? showBlog = freezed,
     Object? activeVibrations = freezed,
@@ -242,10 +226,6 @@ class __$$_SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
     Object? theme = freezed,
   }) {
     return _then(_$_Settings(
-      authenticationMethod: authenticationMethod == freezed
-          ? _value.authenticationMethod
-          : authenticationMethod // ignore: cast_nullable_to_non_nullable
-              as AuthMethod,
       currency: currency == freezed
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -269,10 +249,6 @@ class __$$_SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
       firstLaunch: firstLaunch == freezed
           ? _value.firstLaunch
           : firstLaunch // ignore: cast_nullable_to_non_nullable
-              as bool,
-      pinPadShuffle: pinPadShuffle == freezed
-          ? _value.pinPadShuffle
-          : pinPadShuffle // ignore: cast_nullable_to_non_nullable
               as bool,
       showBalances: showBalances == freezed
           ? _value.showBalances
@@ -326,14 +302,12 @@ class __$$_SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
 
 class _$_Settings extends _Settings {
   const _$_Settings(
-      {required this.authenticationMethod,
-      required this.currency,
+      {required this.currency,
       required this.primaryCurrency,
       required this.language,
       required this.networks,
       required this.languageSeed,
       required this.firstLaunch,
-      required this.pinPadShuffle,
       required this.showBalances,
       required this.showBlog,
       required this.activeVibrations,
@@ -347,8 +321,7 @@ class _$_Settings extends _Settings {
       required this.theme})
       : super._();
 
-  @override
-  final AuthMethod authenticationMethod;
+// required AuthMethod authenticationMethod,
   @override
   final AvailableCurrencyEnum currency;
   @override
@@ -361,8 +334,7 @@ class _$_Settings extends _Settings {
   final String languageSeed;
   @override
   final bool firstLaunch;
-  @override
-  final bool pinPadShuffle;
+// required bool pinPadShuffle,
   @override
   final bool showBalances;
   @override
@@ -390,7 +362,7 @@ class _$_Settings extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(authenticationMethod: $authenticationMethod, currency: $currency, primaryCurrency: $primaryCurrency, language: $language, networks: $networks, languageSeed: $languageSeed, firstLaunch: $firstLaunch, pinPadShuffle: $pinPadShuffle, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, lock: $lock, lockTimeout: $lockTimeout, lockAttempts: $lockAttempts, pinLockUntil: $pinLockUntil, theme: $theme)';
+    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, networks: $networks, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, lock: $lock, lockTimeout: $lockTimeout, lockAttempts: $lockAttempts, pinLockUntil: $pinLockUntil, theme: $theme)';
   }
 
   @override
@@ -398,8 +370,6 @@ class _$_Settings extends _Settings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Settings &&
-            const DeepCollectionEquality()
-                .equals(other.authenticationMethod, authenticationMethod) &&
             const DeepCollectionEquality().equals(other.currency, currency) &&
             const DeepCollectionEquality()
                 .equals(other.primaryCurrency, primaryCurrency) &&
@@ -409,8 +379,6 @@ class _$_Settings extends _Settings {
                 .equals(other.languageSeed, languageSeed) &&
             const DeepCollectionEquality()
                 .equals(other.firstLaunch, firstLaunch) &&
-            const DeepCollectionEquality()
-                .equals(other.pinPadShuffle, pinPadShuffle) &&
             const DeepCollectionEquality()
                 .equals(other.showBalances, showBalances) &&
             const DeepCollectionEquality().equals(other.showBlog, showBlog) &&
@@ -433,28 +401,25 @@ class _$_Settings extends _Settings {
   }
 
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        const DeepCollectionEquality().hash(authenticationMethod),
-        const DeepCollectionEquality().hash(currency),
-        const DeepCollectionEquality().hash(primaryCurrency),
-        const DeepCollectionEquality().hash(language),
-        const DeepCollectionEquality().hash(networks),
-        const DeepCollectionEquality().hash(languageSeed),
-        const DeepCollectionEquality().hash(firstLaunch),
-        const DeepCollectionEquality().hash(pinPadShuffle),
-        const DeepCollectionEquality().hash(showBalances),
-        const DeepCollectionEquality().hash(showBlog),
-        const DeepCollectionEquality().hash(activeVibrations),
-        const DeepCollectionEquality().hash(activeNotifications),
-        const DeepCollectionEquality().hash(mainScreenCurrentPage),
-        const DeepCollectionEquality().hash(showPriceChart),
-        const DeepCollectionEquality().hash(lock),
-        const DeepCollectionEquality().hash(lockTimeout),
-        const DeepCollectionEquality().hash(lockAttempts),
-        const DeepCollectionEquality().hash(pinLockUntil),
-        const DeepCollectionEquality().hash(theme)
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(currency),
+      const DeepCollectionEquality().hash(primaryCurrency),
+      const DeepCollectionEquality().hash(language),
+      const DeepCollectionEquality().hash(networks),
+      const DeepCollectionEquality().hash(languageSeed),
+      const DeepCollectionEquality().hash(firstLaunch),
+      const DeepCollectionEquality().hash(showBalances),
+      const DeepCollectionEquality().hash(showBlog),
+      const DeepCollectionEquality().hash(activeVibrations),
+      const DeepCollectionEquality().hash(activeNotifications),
+      const DeepCollectionEquality().hash(mainScreenCurrentPage),
+      const DeepCollectionEquality().hash(showPriceChart),
+      const DeepCollectionEquality().hash(lock),
+      const DeepCollectionEquality().hash(lockTimeout),
+      const DeepCollectionEquality().hash(lockAttempts),
+      const DeepCollectionEquality().hash(pinLockUntil),
+      const DeepCollectionEquality().hash(theme));
 
   @JsonKey(ignore: true)
   @override
@@ -464,14 +429,12 @@ class _$_Settings extends _Settings {
 
 abstract class _Settings extends Settings {
   const factory _Settings(
-      {required final AuthMethod authenticationMethod,
-      required final AvailableCurrencyEnum currency,
+      {required final AvailableCurrencyEnum currency,
       required final AvailablePrimaryCurrency primaryCurrency,
       required final AvailableLanguage language,
       required final AvailableNetworks networks,
       required final String languageSeed,
       required final bool firstLaunch,
-      required final bool pinPadShuffle,
       required final bool showBalances,
       required final bool showBlog,
       required final bool activeVibrations,
@@ -485,9 +448,7 @@ abstract class _Settings extends Settings {
       required final ThemeOptions theme}) = _$_Settings;
   const _Settings._() : super._();
 
-  @override
-  AuthMethod get authenticationMethod;
-  @override
+  @override // required AuthMethod authenticationMethod,
   AvailableCurrencyEnum get currency;
   @override
   AvailablePrimaryCurrency get primaryCurrency;
@@ -499,9 +460,7 @@ abstract class _Settings extends Settings {
   String get languageSeed;
   @override
   bool get firstLaunch;
-  @override
-  bool get pinPadShuffle;
-  @override
+  @override // required bool pinPadShuffle,
   bool get showBalances;
   @override
   bool get showBlog;

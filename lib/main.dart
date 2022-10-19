@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Project imports:
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -13,6 +14,7 @@ import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
@@ -28,7 +30,6 @@ import 'package:aewallet/util/preferences.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -302,8 +303,17 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           AppLocalization.of(context)!.transactionInputNotification,
         );
 
-        if (preferences.getLock() || preferences.shouldLock()) {
-          Navigator.of(context).pushReplacementNamed('/lock_screen');
+        if (preferences.getLock()) {
+          Navigator.of(context).pushReplacementNamed('/home');
+
+          AuthFactory.forceAuthenticate(
+            context,
+            ref,
+            authMethod: ref.read(
+              AuthenticationProviders.preferedAuthMethod,
+            ),
+            canCancel: false,
+          );
         } else {
           await StateContainer.of(context).requestUpdate();
           Navigator.of(context).pushReplacementNamed('/home');
@@ -331,10 +341,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _hasCheckedLoggedIn = false;
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) => checkLoggedIn());
-    }
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => checkLoggedIn(),
+    );
   }
 
   @override

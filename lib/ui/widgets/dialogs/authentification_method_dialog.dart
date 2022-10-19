@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -24,7 +24,7 @@ class AuthentificationMethodDialog {
   ) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settingsNotifier = ref.watch(
-      SettingsProviders.settings.notifier,
+      AuthenticationProviders.settings.notifier,
     );
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
