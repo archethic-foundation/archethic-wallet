@@ -412,7 +412,7 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
       tokenProperties[element.propertyName] = element.propertyValue;
     }
 
-    final transaction = TokenTransaction.build(
+    final transaction = TokenTransactionBuilder.build(
       keychain: keychain,
       index: index,
       originPrivateKey: originPrivateKey,

@@ -82,7 +82,11 @@ extension TransferTransactionBuilder on Transaction {
     }
 
     return keychain
-        .buildTransaction(transaction, serviceName, index)
+        .buildTransaction(
+          transaction,
+          serviceName,
+          index,
+        )
         .originSign(originPrivateKey);
   }
 }

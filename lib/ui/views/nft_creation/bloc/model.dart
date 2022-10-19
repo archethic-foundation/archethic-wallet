@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'model.freezed.dart';
@@ -23,6 +24,7 @@ class NftCreation with _$NftCreation {
     @Default(false) bool canAddProperty,
     @Default(false) bool canCreateNFT,
     @Default(false) bool canAddAccess,
+    Transaction? transaction,
   }) = _NftCreation;
   const NftCreation._();
 }

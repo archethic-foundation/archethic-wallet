@@ -29,6 +29,7 @@ mixin _$NftCreation {
   bool get canAddProperty => throw _privateConstructorUsedError;
   bool get canCreateNFT => throw _privateConstructorUsedError;
   bool get canAddAccess => throw _privateConstructorUsedError;
+  Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NftCreationCopyWith<NftCreation> get copyWith =>
@@ -52,7 +53,8 @@ abstract class $NftCreationCopyWith<$Res> {
       List<NftCreationProperty> properties,
       bool canAddProperty,
       bool canCreateNFT,
-      bool canAddAccess});
+      bool canAddAccess,
+      Transaction? transaction});
 }
 
 /// @nodoc
@@ -77,6 +79,7 @@ class _$NftCreationCopyWithImpl<$Res> implements $NftCreationCopyWith<$Res> {
     Object? canAddProperty = freezed,
     Object? canCreateNFT = freezed,
     Object? canAddAccess = freezed,
+    Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
       file: file == freezed
@@ -127,6 +130,10 @@ class _$NftCreationCopyWithImpl<$Res> implements $NftCreationCopyWith<$Res> {
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
               as bool,
+      transaction: transaction == freezed
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as Transaction?,
     ));
   }
 }
@@ -150,7 +157,8 @@ abstract class _$$_NftCreationCopyWith<$Res>
       List<NftCreationProperty> properties,
       bool canAddProperty,
       bool canCreateNFT,
-      bool canAddAccess});
+      bool canAddAccess,
+      Transaction? transaction});
 }
 
 /// @nodoc
@@ -177,6 +185,7 @@ class __$$_NftCreationCopyWithImpl<$Res> extends _$NftCreationCopyWithImpl<$Res>
     Object? canAddProperty = freezed,
     Object? canCreateNFT = freezed,
     Object? canAddAccess = freezed,
+    Object? transaction = freezed,
   }) {
     return _then(_$_NftCreation(
       file: file == freezed
@@ -227,6 +236,10 @@ class __$$_NftCreationCopyWithImpl<$Res> extends _$NftCreationCopyWithImpl<$Res>
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
               as bool,
+      transaction: transaction == freezed
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as Transaction?,
     ));
   }
 }
@@ -246,7 +259,8 @@ class _$_NftCreation extends _NftCreation {
       final List<NftCreationProperty> properties = const [],
       this.canAddProperty = false,
       this.canCreateNFT = false,
-      this.canAddAccess = false})
+      this.canAddAccess = false,
+      this.transaction})
       : _file = file,
         _properties = properties,
         super._();
@@ -293,10 +307,12 @@ class _$_NftCreation extends _NftCreation {
   @override
   @JsonKey()
   final bool canAddAccess;
+  @override
+  final Transaction? transaction;
 
   @override
   String toString() {
-    return 'NftCreation(file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canCreateNFT: $canCreateNFT, canAddAccess: $canAddAccess)';
+    return 'NftCreation(file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canCreateNFT: $canCreateNFT, canAddAccess: $canAddAccess, transaction: $transaction)';
   }
 
   @override
@@ -324,7 +340,9 @@ class _$_NftCreation extends _NftCreation {
             const DeepCollectionEquality()
                 .equals(other.canCreateNFT, canCreateNFT) &&
             const DeepCollectionEquality()
-                .equals(other.canAddAccess, canAddAccess));
+                .equals(other.canAddAccess, canAddAccess) &&
+            const DeepCollectionEquality()
+                .equals(other.transaction, transaction));
   }
 
   @override
@@ -341,7 +359,8 @@ class _$_NftCreation extends _NftCreation {
       const DeepCollectionEquality().hash(_properties),
       const DeepCollectionEquality().hash(canAddProperty),
       const DeepCollectionEquality().hash(canCreateNFT),
-      const DeepCollectionEquality().hash(canAddAccess));
+      const DeepCollectionEquality().hash(canAddAccess),
+      const DeepCollectionEquality().hash(transaction));
 
   @JsonKey(ignore: true)
   @override
@@ -362,7 +381,8 @@ abstract class _NftCreation extends NftCreation {
       final List<NftCreationProperty> properties,
       final bool canAddProperty,
       final bool canCreateNFT,
-      final bool canAddAccess}) = _$_NftCreation;
+      final bool canAddAccess,
+      final Transaction? transaction}) = _$_NftCreation;
   const _NftCreation._() : super._();
 
   @override
@@ -389,6 +409,8 @@ abstract class _NftCreation extends NftCreation {
   bool get canCreateNFT;
   @override
   bool get canAddAccess;
+  @override
+  Transaction? get transaction;
   @override
   @JsonKey(ignore: true)
   _$$_NftCreationCopyWith<_$_NftCreation> get copyWith =>
