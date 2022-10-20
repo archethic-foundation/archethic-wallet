@@ -55,7 +55,10 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      _doSend();
+      _showSendingAnimation(context);
+      final transferNotifier =
+          ref.watch(TransferFormProvider.transferForm.notifier);
+      transferNotifier.send(context);
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
@@ -263,86 +266,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           ),
         ],
       ),
-    );
-  }
-
-  // TODO(reddwarf03): Future provider fait le trt
-  Future<void> _doSend() async {
-    _showSendingAnimation(context);
-    final transfer = ref.watch(TransferFormProvider.transferForm);
-    final preferences = await Preferences.getInstance();
-
-    final TransactionSenderInterface transactionSender =
-        ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
-    );
-
-    transactionSender.send(
-      transaction: transfer.transaction!,
-      onConfirmation: (confirmation) async {
-        EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(
-            transactionType: TransactionSendEventType.transfer,
-            response: 'ok',
-            nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: transfer.transaction!.address,
-            maxConfirmations: confirmation.maxConfirmations,
-          ),
-        );
-      },
-      onError: (error) async {
-        error.maybeMap(
-          connectivity: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: AppLocalization.of(context)!.noConnection,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          invalidConfirmation: (_) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                nbConfirmations: 0,
-                maxConfirmations: 0,
-                response: 'ko',
-              ),
-            );
-          },
-          insufficientFunds: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: AppLocalization.of(context)!
-                    .insufficientBalance
-                    .replaceAll('%1', transfer.symbol),
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          other: (error) {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: AppLocalization.of(context)!.keychainNotExistWarning,
-                nbConfirmations: 0,
-              ),
-            );
-          },
-          orElse: () {
-            EventTaxiImpl.singleton().fire(
-              TransactionSendEvent(
-                transactionType: TransactionSendEventType.transfer,
-                response: '',
-                nbConfirmations: 0,
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

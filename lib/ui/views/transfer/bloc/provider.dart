@@ -1,10 +1,13 @@
+import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
 import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
+import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
         ApiService,
@@ -13,6 +16,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         uint8ListToHex,
         UCOTransfer,
         TokenTransfer;
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -352,6 +356,84 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
       errorAddressText: '',
     );
     return true;
+  }
+
+  Future<void> send(BuildContext context) async {
+    final localizations = AppLocalization.of(context)!;
+
+    final preferences = await Preferences.getInstance();
+
+    final TransactionSenderInterface transactionSender =
+        ArchethicTransactionSender(
+      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+    );
+
+    transactionSender.send(
+      transaction: state.transaction!,
+      onConfirmation: (confirmation) async {
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
+            transactionType: TransactionSendEventType.transfer,
+            response: 'ok',
+            nbConfirmations: confirmation.nbConfirmations,
+            transactionAddress: state.transaction!.address,
+            maxConfirmations: confirmation.maxConfirmations,
+          ),
+        );
+      },
+      onError: (error) async {
+        error.maybeMap(
+          connectivity: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: localizations.noConnection,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          invalidConfirmation: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                nbConfirmations: 0,
+                maxConfirmations: 0,
+                response: 'ko',
+              ),
+            );
+          },
+          insufficientFunds: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: localizations.insufficientBalance
+                    .replaceAll('%1', state.symbol),
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          other: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: localizations.keychainNotExistWarning,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          orElse: () {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: '',
+                nbConfirmations: 0,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
 
