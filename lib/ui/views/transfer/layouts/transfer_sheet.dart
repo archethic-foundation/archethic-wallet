@@ -64,7 +64,7 @@ class TransferSheet extends ConsumerWidget {
     // The main column that holds everything
     return ProviderScope(
       overrides: [
-        TransferProvider.initialTransfer.overrideWithValue(
+        TransferFormProvider.initialTransferForm.overrideWithValue(
           TransferFormData(
             transferType: transferType,
             accountToken: accountToken,
@@ -101,10 +101,10 @@ class TransferSheetBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final transfer = ref.watch(TransferProvider.transfer);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
 
     ref.listen<TransferFormData>(
-      TransferProvider.transfer,
+      TransferFormProvider.transferForm,
       (_, transfer) {
         if (transfer.isControlsOk) return;
 

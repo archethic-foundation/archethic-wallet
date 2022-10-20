@@ -16,19 +16,20 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialTransferProvider = Provider.autoDispose<TransferFormData>(
+final _initialTransferFormProvider = Provider.autoDispose<TransferFormData>(
   (ref) {
     throw UnimplementedError();
   },
 );
 
-final _transferProvider =
+final _transferFormProvider =
     StateNotifierProvider.autoDispose<TransferNotifier, TransferFormData>(
   (ref) {
-    final initialTransfer = ref.watch(TransferProvider.initialTransfer);
-    return TransferNotifier(initialTransfer);
+    final initialTransferForm =
+        ref.watch(TransferFormProvider.initialTransferForm);
+    return TransferNotifier(initialTransferForm);
   },
-  dependencies: [TransferProvider.initialTransfer],
+  dependencies: [TransferFormProvider.initialTransferForm],
 );
 
 class TransferNotifier extends StateNotifier<TransferFormData> {
@@ -354,7 +355,7 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
   }
 }
 
-abstract class TransferProvider {
-  static final initialTransfer = _initialTransferProvider;
-  static final transfer = _transferProvider;
+abstract class TransferFormProvider {
+  static final initialTransferForm = _initialTransferFormProvider;
+  static final transferForm = _transferFormProvider;
 }
