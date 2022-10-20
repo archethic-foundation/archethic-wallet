@@ -17,8 +17,8 @@ class TransferTextFieldAddress extends ConsumerStatefulWidget {
 
 class _TransferTextFieldAddressState
     extends ConsumerState<TransferTextFieldAddress> {
-  TextEditingController? sendAddressController;
-  FocusNode? sendAddressFocusNode;
+  late TextEditingController sendAddressController;
+  late FocusNode sendAddressFocusNode;
 
   @override
   void initState() {
@@ -28,25 +28,25 @@ class _TransferTextFieldAddressState
     sendAddressController = TextEditingController();
     final transfer = ref.read(TransferFormProvider.transferForm);
     if (transfer.contactRecipient != null) {
-      sendAddressController!.text = transfer.contactRecipient!.name!;
+      sendAddressController.text = transfer.contactRecipient!.name!;
     } else if (transfer.addressRecipient.isNotEmpty) {
-      sendAddressController!.text = transfer.addressRecipient;
+      sendAddressController.text = transfer.addressRecipient;
     }
 
-    sendAddressFocusNode!.addListener(() {
-      if (sendAddressFocusNode!.hasFocus) {
-        sendAddressController!.selection = TextSelection.fromPosition(
-          TextPosition(offset: sendAddressController!.text.length),
+    sendAddressFocusNode.addListener(() {
+      if (sendAddressFocusNode.hasFocus) {
+        sendAddressController.selection = TextSelection.fromPosition(
+          TextPosition(offset: sendAddressController.text.length),
         );
-        if (sendAddressController!.text.startsWith('@')) {
+        if (sendAddressController.text.startsWith('@')) {
           sl
               .get<DBHelper>()
-              .getContactsWithNameLike(sendAddressController!.text)
+              .getContactsWithNameLike(sendAddressController.text)
               .then((List<Contact> contactList) {});
         }
       } else {
-        if (sendAddressController!.text.trim() == '@') {
-          sendAddressController!.text = '';
+        if (sendAddressController.text.trim() == '@') {
+          sendAddressController.text = '';
         }
       }
     });
@@ -54,7 +54,8 @@ class _TransferTextFieldAddressState
 
   @override
   void dispose() {
-    sendAddressController!.dispose();
+    sendAddressFocusNode.dispose();
+    sendAddressController.dispose();
     super.dispose();
   }
 
@@ -96,7 +97,7 @@ class _TransferTextFieldAddressState
           final contact = await ContactsDialog.getDialog(context, ref);
           if (contact != null && contact.name != null) {
             transferNotifier.setContact(contact);
-            sendAddressController!.text = contact.name!;
+            sendAddressController.text = contact.name!;
             await transferNotifier.calculateFees(
               widget.seed,
               accountSelected!.name!,
@@ -146,11 +147,11 @@ class _TransferTextFieldAddressState
 
                   if (contact != null) {
                     transferNotifier.setContact(contact);
-                    sendAddressController!.text = contact.name!;
+                    sendAddressController.text = contact.name!;
                   } else {
                     transferNotifier.setAddress(address.address);
                     transferNotifier.setContactKnown(false);
-                    sendAddressController!.text = address.address;
+                    sendAddressController.text = address.address;
                   }
                 }
               },
@@ -167,7 +168,7 @@ class _TransferTextFieldAddressState
           } catch (e) {
             transferNotifier.setContact(
               Contact(
-                name: sendAddressController!.text,
+                name: sendAddressController.text,
                 type: '',
                 address: '',
               ),
