@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Transfer {
+mixin _$TransferFormData {
   TransferType get transferType => throw _privateConstructorUsedError;
   TransferProcessStep get transferProcessStep =>
       throw _privateConstructorUsedError;
@@ -35,14 +35,15 @@ mixin _$Transfer {
   Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TransferCopyWith<Transfer> get copyWith =>
+  $TransferFormDataCopyWith<TransferFormData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TransferCopyWith<$Res> {
-  factory $TransferCopyWith(Transfer value, $Res Function(Transfer) then) =
-      _$TransferCopyWithImpl<$Res>;
+abstract class $TransferFormDataCopyWith<$Res> {
+  factory $TransferFormDataCopyWith(
+          TransferFormData value, $Res Function(TransferFormData) then) =
+      _$TransferFormDataCopyWithImpl<$Res>;
   $Res call(
       {TransferType transferType,
       TransferProcessStep transferProcessStep,
@@ -63,12 +64,13 @@ abstract class $TransferCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
-  _$TransferCopyWithImpl(this._value, this._then);
+class _$TransferFormDataCopyWithImpl<$Res>
+    implements $TransferFormDataCopyWith<$Res> {
+  _$TransferFormDataCopyWithImpl(this._value, this._then);
 
-  final Transfer _value;
+  final TransferFormData _value;
   // ignore: unused_field
-  final $Res Function(Transfer) _then;
+  final $Res Function(TransferFormData) _then;
 
   @override
   $Res call({
@@ -159,10 +161,11 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
-  factory _$$_TransferCopyWith(
-          _$_Transfer value, $Res Function(_$_Transfer) then) =
-      __$$_TransferCopyWithImpl<$Res>;
+abstract class _$$_TransferFormDataCopyWith<$Res>
+    implements $TransferFormDataCopyWith<$Res> {
+  factory _$$_TransferFormDataCopyWith(
+          _$_TransferFormData value, $Res Function(_$_TransferFormData) then) =
+      __$$_TransferFormDataCopyWithImpl<$Res>;
   @override
   $Res call(
       {TransferType transferType,
@@ -184,14 +187,15 @@ abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
-    implements _$$_TransferCopyWith<$Res> {
-  __$$_TransferCopyWithImpl(
-      _$_Transfer _value, $Res Function(_$_Transfer) _then)
-      : super(_value, (v) => _then(v as _$_Transfer));
+class __$$_TransferFormDataCopyWithImpl<$Res>
+    extends _$TransferFormDataCopyWithImpl<$Res>
+    implements _$$_TransferFormDataCopyWith<$Res> {
+  __$$_TransferFormDataCopyWithImpl(
+      _$_TransferFormData _value, $Res Function(_$_TransferFormData) _then)
+      : super(_value, (v) => _then(v as _$_TransferFormData));
 
   @override
-  _$_Transfer get _value => super._value as _$_Transfer;
+  _$_TransferFormData get _value => super._value as _$_TransferFormData;
 
   @override
   $Res call({
@@ -212,7 +216,7 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
     Object? errorMessageText = freezed,
     Object? transaction = freezed,
   }) {
-    return _then(_$_Transfer(
+    return _then(_$_TransferFormData(
       transferType: transferType == freezed
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
@@ -283,8 +287,8 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Transfer extends _Transfer {
-  const _$_Transfer(
+class _$_TransferFormData extends _TransferFormData {
+  const _$_TransferFormData(
       {this.transferType = TransferType.uco,
       this.transferProcessStep = TransferProcessStep.form,
       this.feeEstimation = 0.0,
@@ -351,14 +355,14 @@ class _$_Transfer extends _Transfer {
 
   @override
   String toString() {
-    return 'Transfer(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, accountToken: $accountToken, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
+    return 'TransferFormData(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, accountToken: $accountToken, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Transfer &&
+            other is _$_TransferFormData &&
             const DeepCollectionEquality()
                 .equals(other.transferType, transferType) &&
             const DeepCollectionEquality()
@@ -411,12 +415,12 @@ class _$_Transfer extends _Transfer {
 
   @JsonKey(ignore: true)
   @override
-  _$$_TransferCopyWith<_$_Transfer> get copyWith =>
-      __$$_TransferCopyWithImpl<_$_Transfer>(this, _$identity);
+  _$$_TransferFormDataCopyWith<_$_TransferFormData> get copyWith =>
+      __$$_TransferFormDataCopyWithImpl<_$_TransferFormData>(this, _$identity);
 }
 
-abstract class _Transfer extends Transfer {
-  const factory _Transfer(
+abstract class _TransferFormData extends TransferFormData {
+  const factory _TransferFormData(
       {final TransferType transferType,
       final TransferProcessStep transferProcessStep,
       final double feeEstimation,
@@ -432,8 +436,8 @@ abstract class _Transfer extends Transfer {
       final String errorAddressText,
       final String errorAmountText,
       final String errorMessageText,
-      final Transaction? transaction}) = _$_Transfer;
-  const _Transfer._() : super._();
+      final Transaction? transaction}) = _$_TransferFormData;
+  const _TransferFormData._() : super._();
 
   @override
   TransferType get transferType;
@@ -469,6 +473,6 @@ abstract class _Transfer extends Transfer {
   Transaction? get transaction;
   @override
   @JsonKey(ignore: true)
-  _$$_TransferCopyWith<_$_Transfer> get copyWith =>
+  _$$_TransferFormDataCopyWith<_$_TransferFormData> get copyWith =>
       throw _privateConstructorUsedError;
 }

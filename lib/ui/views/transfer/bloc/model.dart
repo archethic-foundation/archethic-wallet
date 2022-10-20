@@ -11,8 +11,8 @@ enum TransferType { uco, token, nft }
 enum TransferProcessStep { form, confirmation }
 
 @freezed
-class Transfer with _$Transfer {
-  const factory Transfer({
+class TransferFormData with _$TransferFormData {
+  const factory TransferFormData({
     @Default(TransferType.uco) TransferType transferType,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
     @Default(0.0) double feeEstimation,
@@ -29,8 +29,8 @@ class Transfer with _$Transfer {
     @Default('') String errorAmountText,
     @Default('') String errorMessageText,
     Transaction? transaction,
-  }) = _Transfer;
-  const Transfer._();
+  }) = _TransferFormData;
+  const TransferFormData._();
 
   bool get isControlsOk =>
       errorAddressText == '' && errorAmountText == '' && errorMessageText == '';
