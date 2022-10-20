@@ -169,18 +169,20 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
       backgroundColor: theme.backgroundDarkest,
       body: Stack(
         children: <Widget>[
-          DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  theme.background3Small!,
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    theme.background3Small!,
+                  ),
+                  fit: BoxFit.fitHeight,
                 ),
-                fit: BoxFit.fitHeight,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[theme.backgroundDark!, theme.background!],
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[theme.backgroundDark!, theme.background!],
+                ),
               ),
             ),
           ),
