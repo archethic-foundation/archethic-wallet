@@ -226,14 +226,14 @@ class _AppLockScreenState extends ConsumerState<AppLockScreen> {
                                       localizations.removeWalletReassurance,
                                       localizations.yes,
                                       () async {
-                                        await StateContainer.of(context)
-                                            .logOut();
                                         // TODO(Chralu): move that behavior to `logOut` usecase.
                                         await ref.read(
                                           ThemeProviders.selectTheme(
                                             theme: ThemeOptions.dark,
                                           ).future,
                                         );
+                                        await StateContainer.of(context)
+                                            .logOut();
                                         Navigator.of(context)
                                             .pushNamedAndRemoveUntil(
                                           '/',
