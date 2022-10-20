@@ -16,8 +16,8 @@ class TransferTextFieldMessage extends ConsumerStatefulWidget {
 
 class _TransferTextFieldMessageState
     extends ConsumerState<TransferTextFieldMessage> {
-  TextEditingController? messageController;
-  FocusNode? messageFocusNode;
+  late TextEditingController messageController;
+  late FocusNode messageFocusNode;
 
   @override
   void initState() {
@@ -29,7 +29,8 @@ class _TransferTextFieldMessageState
 
   @override
   void dispose() {
-    messageController!.dispose();
+    messageFocusNode.dispose();
+    messageController.dispose();
     super.dispose();
   }
 

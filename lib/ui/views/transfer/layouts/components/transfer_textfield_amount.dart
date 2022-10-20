@@ -17,8 +17,8 @@ class TransferTextFieldAmount extends ConsumerStatefulWidget {
 class _TransferTextFieldAmountState
     extends ConsumerState<TransferTextFieldAmount>
     with PrimaryCurrencyConverter {
-  TextEditingController? sendAmountController;
-  FocusNode? sendAmountFocusNode;
+  late TextEditingController sendAmountController;
+  late FocusNode sendAmountFocusNode;
 
   @override
   void initState() {
@@ -32,8 +32,8 @@ class _TransferTextFieldAmountState
 
   @override
   void dispose() {
-    sendAmountFocusNode?.dispose();
-    sendAmountController?.dispose();
+    sendAmountFocusNode.dispose();
+    sendAmountController.dispose();
     super.dispose();
   }
 
@@ -129,14 +129,14 @@ class _TransferTextFieldAmountState
                   AvailablePrimaryCurrencyEnum.native) {
                 sendAmount = accountSelected.balance!.nativeTokenValue! -
                     transfer.feeEstimation;
-                sendAmountController!.text = sendAmount.toStringAsFixed(8);
+                sendAmountController.text = sendAmount.toStringAsFixed(8);
               } else {
                 final selectedCurrencyFee =
                     accountSelected.balance!.tokenPrice!.amount! *
                         transfer.feeEstimation;
                 sendAmount = accountSelected.balance!.fiatCurrencyValue! -
                     selectedCurrencyFee;
-                sendAmountController!.text = sendAmount
+                sendAmountController.text = sendAmount
                     .toStringAsFixed(localCurrencyFormat.decimalDigits!);
               }
 
@@ -172,7 +172,7 @@ class _TransferTextFieldAmountState
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),
-              if (sendAmountController!.text.isNotEmpty)
+              if (sendAmountController.text.isNotEmpty)
                 Container(
                   margin: const EdgeInsets.only(right: 40),
                   alignment: Alignment.centerRight,
