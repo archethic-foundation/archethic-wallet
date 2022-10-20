@@ -130,31 +130,34 @@ class TransferSheetBody extends ConsumerWidget {
       },
     );
 
-    final title = transfer.transferType == TransferType.uco
-        ? localizations.transferTokens.replaceAll(
+    String title() {
+      switch (transfer.transferType) {
+        case TransferType.uco:
+          return localizations.transferTokens.replaceAll(
             '%1',
             StateContainer.of(context)
                 .curNetwork
                 .getNetworkCryptoCurrencyLabel(),
-          )
-        : transfer.transferType == TransferType.token
-            ? localizations.transferTokens.replaceAll(
-                '%1',
-                transfer.accountToken!.tokenInformations!.symbol!,
-              )
-            : transfer.transferType == TransferType.nft
-                ? localizations.transferNFT
-                : localizations.send;
+          );
+        case TransferType.token:
+          return localizations.transferTokens.replaceAll(
+            '%1',
+            transfer.accountToken!.tokenInformations!.symbol!,
+          );
+        case TransferType.nft:
+          return localizations.transferNFT;
+      }
+    }
 
     if (transfer.transferProcessStep == TransferProcessStep.form) {
       return TransferFormSheet(
         seed: seed,
-        title: title,
+        title: title(),
         actionButtonTitle: actionButtonTitle,
       );
     } else {
       return TransferConfirmSheet(
-        title: title,
+        title: title(),
       );
     }
   }
