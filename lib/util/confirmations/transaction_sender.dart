@@ -31,7 +31,7 @@ abstract class TransactionSenderInterface {
   ///     - when transaction fails
   Future<void> send({
     required Transaction transaction,
-    Duration timeout = const Duration(seconds: 60),
+    Duration timeout = const Duration(seconds: 10),
     required TransactionConfirmationHandler onConfirmation,
     required TransactionErrorHandler onError,
   });

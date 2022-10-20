@@ -51,7 +51,7 @@ part 'components/transfer_textfield_message.dart';
 
 enum AddressStyle { text60, text90, primary }
 
-class TransferSheet extends StatelessWidget {
+class TransferSheet extends ConsumerWidget {
   const TransferSheet({
     required this.seed,
     required this.transferType,
@@ -70,7 +70,7 @@ class TransferSheet extends StatelessWidget {
   final String seed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // The main column that holds everything
     return ProviderScope(
       overrides: [
@@ -164,6 +164,12 @@ class TransferSheetBody extends ConsumerWidget {
                 ? localizations.transferNFT
                 : localizations.send;
 
+    if (transfer.transferProcessStep == TransferProcessStep.confirmation) {
+      return TransferConfirmSheet(
+        title: title,
+      );
+    }
+
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -244,7 +250,7 @@ class TransferSheetBody extends ConsumerWidget {
                     AppButton(
                       AppButtonType.primary,
                       actionButtonTitle ?? localizations.send,
-                      Dimens.buttonTopDimens,
+                      Dimens.buttonBottomDimens,
                       key: const Key('send'),
                       onPressed: () async {
                         final isAddressOk =
@@ -258,16 +264,8 @@ class TransferSheetBody extends ConsumerWidget {
                         );
 
                         if (isAddressOk && isAmountOk) {
-                          Sheets.showAppHeightNineSheet(
-                            onDisposed: () {},
-                            context: context,
-                            ref: ref,
-                            widget: TransferConfirmSheet(
-                              title: title,
-                              transfer: ref.read(
-                                TransferProvider.transfer,
-                              ),
-                            ),
+                          transferNotifier.setTransferProcessStep(
+                            TransferProcessStep.confirmation,
                           );
                         }
                       },

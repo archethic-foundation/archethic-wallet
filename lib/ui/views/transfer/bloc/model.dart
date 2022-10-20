@@ -8,10 +8,13 @@ part 'model.freezed.dart';
 
 enum TransferType { uco, token, nft }
 
+enum TransferProcessStep { form, confirmation }
+
 @freezed
 class Transfer with _$Transfer {
   const factory Transfer({
     @Default(TransferType.uco) TransferType transferType,
+    @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
     @Default(0.0) double feeEstimation,
     @Default(false) bool canTransfer,
     @Default(0.0) double amount,

@@ -17,7 +17,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/transfer/bloc/model.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
@@ -33,47 +32,20 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransferConfirmSheet extends ConsumerWidget {
+class TransferConfirmSheet extends ConsumerStatefulWidget {
   const TransferConfirmSheet({
     super.key,
     this.title,
-    required this.transfer,
-  });
-
-  final String? title;
-  final Transfer transfer;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // The main column that holds everything
-    return ProviderScope(
-      overrides: [
-        TransferProvider.initialTransfer.overrideWithValue(
-          transfer,
-        ),
-      ],
-      child: TransferConfirmSheetBody(
-        title: title,
-      ),
-    );
-  }
-}
-
-class TransferConfirmSheetBody extends ConsumerStatefulWidget {
-  const TransferConfirmSheetBody({
-    super.key,
-    this.title,
   });
 
   final String? title;
 
   @override
-  ConsumerState<TransferConfirmSheetBody> createState() =>
-      _TransferConfirmSheetBodyState();
+  ConsumerState<TransferConfirmSheet> createState() =>
+      _TransferConfirmSheetState();
 }
 
-class _TransferConfirmSheetBodyState
-    extends ConsumerState<TransferConfirmSheetBody> {
+class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   bool? animationOpen;
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
@@ -220,6 +192,8 @@ class _TransferConfirmSheetBodyState
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final transfer = ref.watch(TransferProvider.transfer);
+    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -284,7 +258,9 @@ class _TransferConfirmSheetBodyState
                       Dimens.buttonBottomDimens,
                       key: const Key('cancel'),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        transferNotifier.setTransferProcessStep(
+                          TransferProcessStep.form,
+                        );
                       },
                     ),
                   ],
