@@ -23,9 +23,11 @@ class _TransferTextFieldAmountState
   @override
   void initState() {
     super.initState();
-
+    final transfer = ref.read(TransferProvider.transfer);
     sendAmountFocusNode = FocusNode();
-    sendAmountController = TextEditingController();
+    sendAmountController = TextEditingController(
+      text: transfer.amount == 0 ? '' : transfer.amount.toString(),
+    );
   }
 
   @override
@@ -43,10 +45,10 @@ class _TransferTextFieldAmountState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
+    final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final transfer = ref.watch(TransferProvider.transfer);
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
     final localCurrencyFormat = NumberFormat.currency(
