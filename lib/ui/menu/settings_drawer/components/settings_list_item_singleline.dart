@@ -21,7 +21,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return TextButton(
       onPressed: () {
@@ -99,7 +99,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return TextButton(
       onPressed: () {

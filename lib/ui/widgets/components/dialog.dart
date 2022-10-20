@@ -24,7 +24,7 @@ class AppDialogs {
     Function? cancelAction,
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
@@ -85,7 +85,7 @@ class AppDialogs {
       context: context,
       builder: (BuildContext context) {
         final theme = ref.watch(ThemeProviders.selectedTheme);
-        final preferences = ref.watch(preferenceProvider);
+        final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
           title: Text(
             title,

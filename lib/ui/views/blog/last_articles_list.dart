@@ -42,7 +42,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
 
   @override
   Widget build(BuildContext context) {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     if (preferences.showBlog == false) {
       return const _LastArticlesNotShowed();
     }

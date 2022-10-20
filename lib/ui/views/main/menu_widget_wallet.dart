@@ -27,7 +27,7 @@ class MenuWidgetWallet extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return StatefulBuilder(
       builder: (context, setState) {

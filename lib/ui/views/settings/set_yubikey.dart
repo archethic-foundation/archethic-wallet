@@ -270,7 +270,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   }
 
   Future<void> validate() async {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     if (_clientIDController!.text.isEmpty) {
       if (mounted) {
         setState(() {

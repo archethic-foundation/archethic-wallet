@@ -220,9 +220,10 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final showBalancesSetting = ref
-        .watch(preferenceProvider.select((settings) => settings.showBalances));
-    final preferencesNotifier = ref.read(preferenceProvider.notifier);
+    final showBalancesSetting = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.showBalances),
+    );
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
     return _SettingsListItem.withSwitch(
       heading: localizations.showBalances,
       icon: 'assets/icons/menu/show-balance.svg',
@@ -243,9 +244,10 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final showBlogSetting =
-        ref.watch(preferenceProvider.select((settings) => settings.showBlog));
-    final preferencesNotifier = ref.read(preferenceProvider.notifier);
+    final showBlogSetting = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.showBlog),
+    );
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showBlog,
@@ -268,9 +270,9 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final showPriceChart = ref.watch(
-      preferenceProvider.select((settings) => settings.showPriceChart),
+      SettingsProviders.settings.select((settings) => settings.showPriceChart),
     );
-    final preferencesNotifier = ref.read(preferenceProvider.notifier);
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showPriceChart,
@@ -293,9 +295,10 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final activeNotifications = ref.watch(
-      preferenceProvider.select((settings) => settings.activeNotifications),
+      SettingsProviders.settings
+          .select((settings) => settings.activeNotifications),
     );
-    final preferencesNotifier = ref.read(preferenceProvider.notifier);
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateNotifications,
@@ -326,9 +329,10 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final activeVibrations = ref.watch(
-      preferenceProvider.select((settings) => settings.activeVibrations),
+      SettingsProviders.settings
+          .select((settings) => settings.activeVibrations),
     );
-    final preferencesNotifier = ref.read(preferenceProvider.notifier);
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateVibrations,

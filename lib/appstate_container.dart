@@ -193,7 +193,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
   // Change theme
   Future<void> updateTheme(ThemeSetting theme) async {
     final currency = ref.read(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     if (preferences.showPriceChart && chartInfos != null) {
       await chartInfos!
@@ -241,7 +241,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
       recentTransactionsLoading = false;
     });
 
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     if (forceUpdateChart && preferences.showPriceChart) {
       await chartInfos!.updateCoinsChart(
         selectedCurrency.currency.name,

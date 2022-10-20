@@ -53,7 +53,7 @@ class NFTTab extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: [
         Expanded(

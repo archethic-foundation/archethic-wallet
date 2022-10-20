@@ -55,7 +55,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return SizedBox(
       width: double.maxFinite,
       child: ListView.builder(

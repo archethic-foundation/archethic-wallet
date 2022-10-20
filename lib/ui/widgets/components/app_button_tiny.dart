@@ -37,7 +37,7 @@ class AppButtonTiny extends ConsumerWidget {
     WidgetRef ref,
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     switch (type) {
       case AppButtonTinyType.primary:
         return Expanded(

@@ -43,7 +43,7 @@ class BalanceInfos extends ConsumerWidget {
         .appKeychain!
         .getAccountSelected()!
         .balance;
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     return GestureDetector(

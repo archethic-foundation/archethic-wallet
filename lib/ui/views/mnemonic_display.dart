@@ -41,7 +41,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
         GestureDetector(

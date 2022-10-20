@@ -90,7 +90,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(

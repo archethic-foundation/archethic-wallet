@@ -11,6 +11,16 @@ final _localSettingsRepositoryProvider = Provider<Preferences>(
 
 abstract class SettingsProviders {
   static final localSettingsRepository = _localSettingsRepositoryProvider;
+
+  static final settings =
+      StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
+    final preferences = ref.read(_localSettingsRepositoryProvider);
+
+    return SettingsNotifier(
+      preferences,
+      preferences.toModel(),
+    );
+  });
 }
 
 class SettingsNotifier extends StateNotifier<Settings> {
@@ -63,13 +73,3 @@ class SettingsNotifier extends StateNotifier<Settings> {
     state = state.copyWith(activeVibrations: activeVibrations);
   }
 }
-
-final preferenceProvider =
-    StateNotifierProvider.autoDispose<SettingsNotifier, Settings>((ref) {
-  final preferences = ref.read(_localSettingsRepositoryProvider);
-
-  return SettingsNotifier(
-    preferences,
-    preferences.toModel(),
-  );
-});
