@@ -22,9 +22,9 @@ class _TransferTextFieldMessageState
   @override
   void initState() {
     super.initState();
-
+    final transfer = ref.read(TransferProvider.transfer);
     messageFocusNode = FocusNode();
-    messageController = TextEditingController();
+    messageController = TextEditingController(text: transfer.message);
   }
 
   @override
