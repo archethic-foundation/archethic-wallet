@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Transfer {
   TransferType get transferType => throw _privateConstructorUsedError;
+  TransferProcessStep get transferProcessStep =>
+      throw _privateConstructorUsedError;
   double get feeEstimation => throw _privateConstructorUsedError;
   bool get canTransfer => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
@@ -43,6 +45,7 @@ abstract class $TransferCopyWith<$Res> {
       _$TransferCopyWithImpl<$Res>;
   $Res call(
       {TransferType transferType,
+      TransferProcessStep transferProcessStep,
       double feeEstimation,
       bool canTransfer,
       double amount,
@@ -70,6 +73,7 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
   @override
   $Res call({
     Object? transferType = freezed,
+    Object? transferProcessStep = freezed,
     Object? feeEstimation = freezed,
     Object? canTransfer = freezed,
     Object? amount = freezed,
@@ -90,6 +94,10 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
               as TransferType,
+      transferProcessStep: transferProcessStep == freezed
+          ? _value.transferProcessStep
+          : transferProcessStep // ignore: cast_nullable_to_non_nullable
+              as TransferProcessStep,
       feeEstimation: feeEstimation == freezed
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
@@ -158,6 +166,7 @@ abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
   @override
   $Res call(
       {TransferType transferType,
+      TransferProcessStep transferProcessStep,
       double feeEstimation,
       bool canTransfer,
       double amount,
@@ -187,6 +196,7 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
   @override
   $Res call({
     Object? transferType = freezed,
+    Object? transferProcessStep = freezed,
     Object? feeEstimation = freezed,
     Object? canTransfer = freezed,
     Object? amount = freezed,
@@ -207,6 +217,10 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
               as TransferType,
+      transferProcessStep: transferProcessStep == freezed
+          ? _value.transferProcessStep
+          : transferProcessStep // ignore: cast_nullable_to_non_nullable
+              as TransferProcessStep,
       feeEstimation: feeEstimation == freezed
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
@@ -272,6 +286,7 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
 class _$_Transfer extends _Transfer {
   const _$_Transfer(
       {this.transferType = TransferType.uco,
+      this.transferProcessStep = TransferProcessStep.form,
       this.feeEstimation = 0.0,
       this.canTransfer = false,
       this.amount = 0.0,
@@ -291,6 +306,9 @@ class _$_Transfer extends _Transfer {
   @override
   @JsonKey()
   final TransferType transferType;
+  @override
+  @JsonKey()
+  final TransferProcessStep transferProcessStep;
   @override
   @JsonKey()
   final double feeEstimation;
@@ -333,7 +351,7 @@ class _$_Transfer extends _Transfer {
 
   @override
   String toString() {
-    return 'Transfer(transferType: $transferType, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, accountToken: $accountToken, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
+    return 'Transfer(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, symbol: $symbol, addressRecipient: $addressRecipient, contactRecipient: $contactRecipient, accountToken: $accountToken, message: $message, isMaxSend: $isMaxSend, isContactKnown: $isContactKnown, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
   }
 
   @override
@@ -343,6 +361,8 @@ class _$_Transfer extends _Transfer {
             other is _$_Transfer &&
             const DeepCollectionEquality()
                 .equals(other.transferType, transferType) &&
+            const DeepCollectionEquality()
+                .equals(other.transferProcessStep, transferProcessStep) &&
             const DeepCollectionEquality()
                 .equals(other.feeEstimation, feeEstimation) &&
             const DeepCollectionEquality()
@@ -373,6 +393,7 @@ class _$_Transfer extends _Transfer {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(transferType),
+      const DeepCollectionEquality().hash(transferProcessStep),
       const DeepCollectionEquality().hash(feeEstimation),
       const DeepCollectionEquality().hash(canTransfer),
       const DeepCollectionEquality().hash(amount),
@@ -397,6 +418,7 @@ class _$_Transfer extends _Transfer {
 abstract class _Transfer extends Transfer {
   const factory _Transfer(
       {final TransferType transferType,
+      final TransferProcessStep transferProcessStep,
       final double feeEstimation,
       final bool canTransfer,
       final double amount,
@@ -415,6 +437,8 @@ abstract class _Transfer extends Transfer {
 
   @override
   TransferType get transferType;
+  @override
+  TransferProcessStep get transferProcessStep;
   @override
   double get feeEstimation;
   @override

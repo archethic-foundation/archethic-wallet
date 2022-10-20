@@ -94,6 +94,12 @@ class TransferNotifier extends StateNotifier<Transfer> {
     );
   }
 
+  void setTransferProcessStep(TransferProcessStep transferProcessStep) {
+    state = state.copyWith(
+      transferProcessStep: transferProcessStep,
+    );
+  }
+
   void isMaxSend(
     double? nativeTokenValue,
     double? fiatCurrencyValue,
