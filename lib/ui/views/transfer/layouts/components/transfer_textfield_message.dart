@@ -22,7 +22,7 @@ class _TransferTextFieldMessageState
   @override
   void initState() {
     super.initState();
-    final transfer = ref.read(TransferProvider.transfer);
+    final transfer = ref.read(TransferFormProvider.transferForm);
     messageFocusNode = FocusNode();
     messageController = TextEditingController(text: transfer.message);
   }
@@ -38,8 +38,9 @@ class _TransferTextFieldMessageState
     BuildContext context,
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final transfer = ref.watch(TransferProvider.transfer);
-    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    final transferNotifier =
+        ref.watch(TransferFormProvider.transferForm.notifier);
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
 

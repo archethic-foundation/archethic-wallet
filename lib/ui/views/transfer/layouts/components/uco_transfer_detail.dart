@@ -22,7 +22,7 @@ class UCOTransferDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final transfer = ref.watch(TransferProvider.transfer);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
     return Container(

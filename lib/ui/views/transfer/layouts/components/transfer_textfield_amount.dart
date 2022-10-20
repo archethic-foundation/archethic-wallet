@@ -23,7 +23,7 @@ class _TransferTextFieldAmountState
   @override
   void initState() {
     super.initState();
-    final transfer = ref.read(TransferProvider.transfer);
+    final transfer = ref.read(TransferFormProvider.transferForm);
     sendAmountFocusNode = FocusNode();
     sendAmountController = TextEditingController(
       text: transfer.amount == 0 ? '' : transfer.amount.toString(),
@@ -45,8 +45,9 @@ class _TransferTextFieldAmountState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
-    final transfer = ref.watch(TransferProvider.transfer);
-    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    final transferNotifier =
+        ref.watch(TransferFormProvider.transferForm.notifier);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final accountSelected =

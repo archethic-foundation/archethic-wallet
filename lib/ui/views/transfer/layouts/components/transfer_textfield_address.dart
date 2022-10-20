@@ -26,7 +26,7 @@ class _TransferTextFieldAddressState
 
     sendAddressFocusNode = FocusNode();
     sendAddressController = TextEditingController();
-    final transfer = ref.read(TransferProvider.transfer);
+    final transfer = ref.read(TransferFormProvider.transferForm);
     if (transfer.contactRecipient != null) {
       sendAddressController!.text = transfer.contactRecipient!.name!;
     } else if (transfer.addressRecipient.isNotEmpty) {
@@ -64,8 +64,9 @@ class _TransferTextFieldAddressState
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final transfer = ref.watch(TransferProvider.transfer);
-    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    final transferNotifier =
+        ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));

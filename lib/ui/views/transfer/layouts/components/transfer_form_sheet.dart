@@ -40,8 +40,9 @@ class TransferFormSheet extends ConsumerWidget {
         .getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final transfer = ref.watch(TransferProvider.transfer);
-    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    final transferNotifier =
+        ref.watch(TransferFormProvider.transferForm.notifier);
 
     return TapOutsideUnfocus(
       child: SafeArea(

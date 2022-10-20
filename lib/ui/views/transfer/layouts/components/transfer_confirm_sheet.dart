@@ -112,7 +112,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
     );
-    final transfer = ref.read(TransferProvider.transfer);
+    final transfer = ref.read(TransferFormProvider.transferForm);
     if (transfer.transferType == TransferType.token) {
       final transaction = await sl
           .get<ApiService>()
@@ -183,8 +183,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final transfer = ref.watch(TransferProvider.transfer);
-    final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    final transferNotifier =
+        ref.watch(TransferFormProvider.transferForm.notifier);
 
     return SafeArea(
       minimum:
@@ -268,7 +269,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   // TODO(reddwarf03): Future provider fait le trt
   Future<void> _doSend() async {
     _showSendingAnimation(context);
-    final transfer = ref.watch(TransferProvider.transfer);
+    final transfer = ref.watch(TransferFormProvider.transferForm);
     final preferences = await Preferences.getInstance();
 
     final TransactionSenderInterface transactionSender =
