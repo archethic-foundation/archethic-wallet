@@ -12,7 +12,6 @@ import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +23,9 @@ class AuthentificationMethodDialog {
     AuthenticationMethod curAuthMethod,
   ) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = await Preferences.getInstance();
+    final settingsNotifier = ref.watch(
+      SettingsProviders.settings.notifier,
+    );
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
       var displayed = false;
@@ -75,8 +76,8 @@ class AuthentificationMethodDialog {
                           localizations.unlockBiometrics,
                         );
                     if (auth) {
-                      preferences.setAuthMethod(
-                        const AuthenticationMethod(AuthMethod.biometrics),
+                      settingsNotifier.setAuthMethod(
+                        AuthMethod.biometrics,
                       );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
@@ -98,7 +99,7 @@ class AuthentificationMethodDialog {
                         builder: (BuildContext context) {
                           return PinScreen(
                             PinOverlayType.newPin,
-                            ref.watch(preferenceProvider).pinPadShuffle,
+                            ref.watch(SettingsProviders.settings).pinPadShuffle,
                           );
                         },
                       ),
@@ -112,8 +113,8 @@ class AuthentificationMethodDialog {
                         curAuthMethod,
                       );
                     } else {
-                      preferences.setAuthMethod(
-                        const AuthenticationMethod(AuthMethod.pin),
+                      settingsNotifier.setAuthMethod(
+                        AuthMethod.pin,
                       );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
@@ -147,8 +148,8 @@ class AuthentificationMethodDialog {
                         curAuthMethod,
                       );
                     } else {
-                      preferences.setAuthMethod(
-                        const AuthenticationMethod(AuthMethod.password),
+                      settingsNotifier.setAuthMethod(
+                        AuthMethod.password,
                       );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
@@ -173,10 +174,8 @@ class AuthentificationMethodDialog {
                         curAuthMethod,
                       );
                     } else {
-                      preferences.setAuthMethod(
-                        const AuthenticationMethod(
-                          AuthMethod.yubikeyWithYubicloud,
-                        ),
+                      settingsNotifier.setAuthMethod(
+                        AuthMethod.yubikeyWithYubicloud,
                       );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',

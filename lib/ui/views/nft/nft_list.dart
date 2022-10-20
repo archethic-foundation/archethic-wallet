@@ -35,7 +35,7 @@ class NFTList extends ConsumerWidget {
         .appWallet!
         .appKeychain!
         .getAccountSelected()!;
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final nftCategories = ref.read(
       NftCategoryProviders.fetchNftCategory(
         context: context,
@@ -105,7 +105,7 @@ class NFTList extends ConsumerWidget {
                                                 preferences.activeVibrations,
                                               );
                                           ref.invalidate(
-                                              TransferProvider.transfer);
+                                              TransferProvider.transfer,);
                                           Sheets.showAppHeightNineSheet(
                                             context: context,
                                             ref: ref,

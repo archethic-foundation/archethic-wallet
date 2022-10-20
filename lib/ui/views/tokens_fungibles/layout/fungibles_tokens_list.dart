@@ -89,7 +89,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return InkWell(
       onTap: () {
         sl.get<HapticUtil>().feedback(

@@ -339,7 +339,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
@@ -349,7 +349,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
         onTap: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
-                ref.watch(preferenceProvider).activeVibrations,
+                ref.watch(SettingsProviders.settings).activeVibrations,
               );
           _showSendingAnimation(context);
           if (!account.selected!) {

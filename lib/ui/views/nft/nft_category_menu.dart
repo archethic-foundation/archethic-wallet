@@ -21,7 +21,7 @@ class NftCategoryMenu extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final nftCategories = ref.watch(
       NftCategoryProviders.fetchNftCategory(
         context: context,

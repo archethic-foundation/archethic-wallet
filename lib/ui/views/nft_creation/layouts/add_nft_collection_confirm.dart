@@ -237,8 +237,9 @@ class _AddNFTCollectionConfirmState
                           context,
                           ref,
                           authMethod,
-                          activeVibrations:
-                              ref.watch(preferenceProvider).activeVibrations,
+                          activeVibrations: ref
+                              .watch(SettingsProviders.settings)
+                              .activeVibrations,
                         );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());

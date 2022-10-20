@@ -33,7 +33,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final bottomBarCurrentPage =
         StateContainer.of(context).bottomBarCurrentPage;
     final hasNotifications =
@@ -133,7 +133,7 @@ class MainAppBarIconBalanceShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return IconButton(
       icon: const Icon(UiIcons.eye),
@@ -142,7 +142,8 @@ class MainAppBarIconBalanceShowed extends ConsumerWidget {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        final preferencesNotifier =
+            ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setShowBalances(false);
       },
     );
@@ -154,7 +155,7 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return IconButton(
       icon: const Icon(UiIcons.eye_hidden),
@@ -163,7 +164,8 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        final preferencesNotifier =
+            ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setShowBalances(true);
       },
     );
@@ -175,7 +177,7 @@ class MainAppBarIconNotificationEnabled extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
       icon: const Icon(UiIcons.notification_enabled),
       onPressed: () async {
@@ -186,7 +188,8 @@ class MainAppBarIconNotificationEnabled extends ConsumerWidget {
         if (StateContainer.of(context).timerCheckTransactionInputs != null) {
           StateContainer.of(context).timerCheckTransactionInputs!.cancel();
         }
-        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        final preferencesNotifier =
+            ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setActiveNotifications(false);
       },
     );
@@ -198,7 +201,7 @@ class MainAppBarIconNotificationDisabled extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
       icon: const Icon(UiIcons.notification_disabled),
       onPressed: () async {
@@ -213,7 +216,8 @@ class MainAppBarIconNotificationDisabled extends ConsumerWidget {
         StateContainer.of(context).checkTransactionInputs(
           AppLocalization.of(context)!.transactionInputNotification,
         );
-        final preferencesNotifier = ref.read(preferenceProvider.notifier);
+        final preferencesNotifier =
+            ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setActiveNotifications(true);
       },
     );

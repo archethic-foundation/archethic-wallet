@@ -126,7 +126,7 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
         .getAccountSelected()!;
     final nftInfosOffChain =
         accountSelected.getftInfosOffChain(widget.tokenInformations.id);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
         Padding(

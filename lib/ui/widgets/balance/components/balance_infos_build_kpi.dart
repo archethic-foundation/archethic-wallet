@@ -15,7 +15,7 @@ class BalanceInfosKpi extends ConsumerWidget {
         .appKeychain!
         .getAccountSelected()!
         .balance;
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     if (chartInfos?.data == null) {
       return const SizedBox(

@@ -124,7 +124,7 @@ class AuthFactory {
           builder: (BuildContext context) {
             return PinScreen(
               PinOverlayType.enterPin,
-              ref.watch(preferenceProvider).pinPadShuffle,
+              ref.watch(SettingsProviders.settings).pinPadShuffle,
               expectedPin: expectedPin!,
             );
           },
@@ -136,7 +136,7 @@ class AuthFactory {
           builder: (BuildContext context) {
             return PinScreen(
               PinOverlayType.enterPin,
-              ref.watch(preferenceProvider).pinPadShuffle,
+              ref.watch(SettingsProviders.settings).pinPadShuffle,
               expectedPin: expectedPin!,
             );
           },

@@ -15,7 +15,7 @@ class TransferTextFieldAddress extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferProvider.transfer);
     final transferNotifier = ref.watch(TransferProvider.transfer.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);

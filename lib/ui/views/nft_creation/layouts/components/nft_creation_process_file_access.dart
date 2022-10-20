@@ -30,7 +30,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
     }
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -105,9 +105,10 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                                   child: AutoSizeText(
                                     localizations.nftAssetProtectedPublicKeys
                                         .replaceAll(
-                                            '%1',
-                                            nftCreation.file!.values.length
-                                                .toString(),),
+                                      '%1',
+                                      nftCreation.file!.values.length
+                                          .toString(),
+                                    ),
                                     style: theme.textStyleSize12W400Primary,
                                   ),
                                 )

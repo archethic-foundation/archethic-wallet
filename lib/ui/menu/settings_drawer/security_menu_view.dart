@@ -171,7 +171,8 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final authenticationMethod = ref.watch(
-      preferenceProvider.select((settings) => settings.authenticationMethod),
+      SettingsProviders.settings
+          .select((settings) => settings.authenticationMethod),
     );
     final asyncHasBiometrics = ref.watch(DeviceAbilities.hasBiometricsProvider);
 
@@ -201,9 +202,9 @@ class _LockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final lock =
-        ref.watch(preferenceProvider.select((settings) => settings.lock));
-    final settingsNotifier = ref.read(preferenceProvider.notifier);
+    final lock = ref
+        .watch(SettingsProviders.settings.select((settings) => settings.lock));
+    final settingsNotifier = ref.read(SettingsProviders.settings.notifier);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.lockAppSetting,
@@ -231,11 +232,13 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final lock =
-        ref.watch(preferenceProvider.select((settings) => settings.lock));
-    final lockTimeout = ref
-        .watch(preferenceProvider.select((settings) => settings.lockTimeout));
-    final settingsNotifier = ref.read(preferenceProvider.notifier);
+    final lock = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.lock),
+    );
+    final lockTimeout = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.lockTimeout),
+    );
+    final settingsNotifier = ref.read(SettingsProviders.settings.notifier);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.autoLockHeader,
@@ -264,12 +267,14 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final pinPadShuffle = ref
-        .watch(preferenceProvider.select((settings) => settings.pinPadShuffle));
-    final authenticationMethod = ref.watch(
-      preferenceProvider.select((settings) => settings.authenticationMethod),
+    final pinPadShuffle = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.pinPadShuffle),
     );
-    final settingsNotifier = ref.read(preferenceProvider.notifier);
+    final authenticationMethod = ref.watch(
+      SettingsProviders.settings
+          .select((settings) => settings.authenticationMethod),
+    );
+    final settingsNotifier = ref.read(SettingsProviders.settings.notifier);
 
     if (authenticationMethod != AuthMethod.pin) return const SizedBox();
     return Column(
@@ -303,7 +308,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       icon: 'assets/icons/menu/vault.svg',
       iconColor: theme.iconDrawer!,
       onPressed: () async {
-        final preferences = ref.watch(preferenceProvider);
+        final preferences = ref.watch(SettingsProviders.settings);
 
         final auth = await AuthFactory.authenticate(
           context,

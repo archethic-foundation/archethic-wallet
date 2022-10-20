@@ -1,5 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
 
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
@@ -25,7 +23,6 @@ import 'package:aewallet/util/user_data_util.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,7 +99,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(preferenceProvider);
+    final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return TapOutsideUnfocus(

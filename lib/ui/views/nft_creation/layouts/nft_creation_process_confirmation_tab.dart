@@ -150,7 +150,7 @@ class _NFTCreationProcessConfirmationTabState
                                       ref,
                                       authMethod,
                                       activeVibrations: ref
-                                          .watch(preferenceProvider)
+                                          .watch(SettingsProviders.settings)
                                           .activeVibrations,
                                     );
                                     if (auth) {
