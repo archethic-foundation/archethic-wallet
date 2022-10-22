@@ -48,7 +48,7 @@ class UserDataUtil {
       }
     } else if (type == DataType.address) {
       final address = Address(dataTrim);
-      if (address.isValid()) {
+      if (address.isValid) {
         return address.address;
       }
     } else if (type == DataType.seed) {

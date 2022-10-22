@@ -2,9 +2,10 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -87,7 +88,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return InkWell(
@@ -147,6 +147,9 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                 seed: (await StateContainer.of(context)
                                     .getSeed())!,
                                 accountToken: accountFungibleToken,
+                                recipient: const TransferRecipient.address(
+                                  address: Address(''),
+                                ),
                               ),
                             );
                           },

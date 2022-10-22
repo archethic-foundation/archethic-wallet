@@ -17,9 +17,9 @@ class ContactAdapter extends TypeAdapter<Contact> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Contact(
-      name: fields[0] as String?,
-      address: fields[1] as String?,
-      type: fields[4] as String?,
+      name: fields[0] as String,
+      address: fields[1] as String,
+      type: fields[4] as String,
     );
   }
 

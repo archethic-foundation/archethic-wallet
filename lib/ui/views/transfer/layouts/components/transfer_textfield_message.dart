@@ -42,8 +42,6 @@ class _TransferTextFieldMessageState
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
 
     return AppTextField(
       focusNode: messageFocusNode,
@@ -52,10 +50,9 @@ class _TransferTextFieldMessageState
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${transfer.message.length}/200)',
       onChanged: (String text) async {
-        transferNotifier.setMessage(text);
-        await transferNotifier.calculateFees(
-          widget.seed,
-          accountSelected!.name!,
+        transferNotifier.setMessage(
+          context: context,
+          message: text,
         );
       },
       keyboardType: TextInputType.text,

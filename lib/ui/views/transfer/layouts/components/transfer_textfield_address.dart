@@ -26,12 +26,7 @@ class _TransferTextFieldAddressState
 
     sendAddressFocusNode = FocusNode();
     sendAddressController = TextEditingController();
-    final transfer = ref.read(TransferFormProvider.transferForm);
-    if (transfer.contactRecipient != null) {
-      sendAddressController.text = transfer.contactRecipient!.name!;
-    } else if (transfer.addressRecipient.isNotEmpty) {
-      sendAddressController.text = transfer.addressRecipient;
-    }
+    _updateAmountTextController();
 
     sendAddressFocusNode.addListener(() {
       if (sendAddressFocusNode.hasFocus) {
@@ -59,6 +54,15 @@ class _TransferTextFieldAddressState
     super.dispose();
   }
 
+  void _updateAmountTextController() {
+    final recipient = ref.read(TransferFormProvider.transferForm).recipient;
+    sendAddressController.text = recipient.when(
+      address: (address) => address.address,
+      contact: (contact) => contact.name,
+      unknownContact: (name) => name,
+    );
+  }
+
   @override
   Widget build(
     BuildContext context,
@@ -69,8 +73,6 @@ class _TransferTextFieldAddressState
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
 
     return AppTextField(
       focusNode: sendAddressFocusNode,
@@ -78,10 +80,12 @@ class _TransferTextFieldAddressState
       cursorColor: theme.text,
       inputFormatters: <TextInputFormatter>[
         UpperCaseTextFormatter(),
-        if (transfer.contactRecipient != null)
-          LengthLimitingTextInputFormatter(20)
-        else
-          LengthLimitingTextInputFormatter(68),
+        LengthLimitingTextInputFormatter(
+          transfer.recipient.maybeWhen(
+            address: (_) => 68,
+            orElse: () => 20,
+          ),
+        )
       ],
       textInputAction: TextInputAction.done,
       maxLines: null,
@@ -95,14 +99,14 @@ class _TransferTextFieldAddressState
                 preferences.activeVibrations,
               );
           final contact = await ContactsDialog.getDialog(context, ref);
-          if (contact != null && contact.name != null) {
-            transferNotifier.setContact(contact);
-            sendAddressController.text = contact.name!;
-            await transferNotifier.calculateFees(
-              widget.seed,
-              accountSelected!.name!,
-            );
-          }
+          if (contact == null) return;
+
+          await transferNotifier.setRecipient(
+            context: context,
+            recipient: TransferRecipient.contact(contact: contact),
+          );
+
+          _updateAmountTextController();
         },
       ),
       fadePrefixOnCondition: true,
@@ -141,48 +145,24 @@ class _TransferTextFieldAddressState
                 } else {
                   // Is a URI
                   final address = Address(scanResult);
-                  final contact = await sl
-                      .get<DBHelper>()
-                      .getContactWithAddress(address.address);
-
-                  if (contact != null) {
-                    transferNotifier.setContact(contact);
-                    sendAddressController.text = contact.name!;
-                  } else {
-                    transferNotifier.setAddress(address.address);
-                    transferNotifier.setContactKnown(false);
-                    sendAddressController.text = address.address;
-                  }
+                  await transferNotifier.setContactAddress(
+                    context: context,
+                    address: address,
+                  );
+                  _updateAmountTextController();
                 }
               },
             )
           : null,
       suffixShowFirstCondition: true,
       fadeSuffixOnCondition: true,
-      style: theme.textStyleSize14W700Primary,
+      style: transfer.recipient.address?.isValid == true
+          ? theme.textStyleSize14W700Primary
+          : theme.textStyleSize14W700Primary60,
       onChanged: (String text) async {
-        if (text.startsWith('@')) {
-          try {
-            final contact = await sl.get<DBHelper>().getContactWithName(text);
-            transferNotifier.setContact(contact);
-          } catch (e) {
-            transferNotifier.setContact(
-              Contact(
-                name: sendAddressController.text,
-                type: '',
-                address: '',
-              ),
-            );
-            transferNotifier.setContactKnown(false);
-          }
-        } else {
-          transferNotifier.setAddress(text);
-          transferNotifier.setContactKnown(false);
-          transferNotifier.setContact(null);
-        }
-        await transferNotifier.calculateFees(
-          widget.seed,
-          accountSelected!.name!,
+        transferNotifier.setRecipientNameOrAddress(
+          context: context,
+          text: text,
         );
       },
     );

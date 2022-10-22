@@ -4,9 +4,9 @@ import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_detail_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -24,8 +24,9 @@ class UCOTransferDetail extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final accountSelected = ref.read(
+      AccountProviders.getSelectedAccount(context: context),
+    );
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -37,7 +38,7 @@ class UCOTransferDetail extends ConsumerWidget {
               child: AutoSizeText(
                 AmountFormatters.standard(
                   transfer.amount,
-                  transfer.symbol,
+                  transfer.symbol(context),
                 ),
                 style: theme.textStyleSize28W700Primary,
               ),
@@ -54,15 +55,13 @@ class UCOTransferDetail extends ConsumerWidget {
           TransferDetailCard(
             children: [
               Text(
-                transfer.contactRecipient == null
-                    ? '${localizations.txListTo} ${Address(transfer.addressRecipient).getShortString()}'
-                    : '${localizations.txListTo} ${transfer.contactRecipient!.name!.replaceFirst('@', '')}',
+                transfer.recipient.format(localizations),
                 style: theme.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standard(
                   transfer.amount,
-                  transfer.symbol,
+                  transfer.symbol(context),
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),
@@ -112,7 +111,7 @@ class UCOTransferDetail extends ConsumerWidget {
                 AmountFormatters.standard(
                   accountSelected.balance!.nativeTokenValue! -
                       (transfer.feeEstimation + transfer.amount),
-                  transfer.symbol,
+                  transfer.symbol(context),
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),

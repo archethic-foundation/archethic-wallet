@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/add_contact.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -286,10 +287,10 @@ class TransactionDetail extends ConsumerWidget {
                                 localizations.txListFrom +
                                     Address(
                                       transaction.contactInformations == null
-                                          ? transaction.from!
+                                          ? transaction
+                                              .from! // TODO(Chralu): Should we show origin or destination address ?
                                           : transaction
-                                              .contactInformations!.name!
-                                              .replaceFirst('@', ''),
+                                              .contactInformations!.format,
                                     ).getShortString4(),
                                 style: theme.textStyleSize12W400Primary,
                               )
@@ -311,8 +312,7 @@ class TransactionDetail extends ConsumerWidget {
                                       transaction.contactInformations == null
                                           ? transaction.recipient!
                                           : transaction
-                                              .contactInformations!.name!
-                                              .replaceFirst('@', ''),
+                                              .contactInformations!.format,
                                     ).getShortString4(),
                                 style: theme.textStyleSize12W400Primary,
                               )

@@ -5,12 +5,13 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
-import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -113,6 +114,10 @@ class NFTList extends ConsumerWidget {
                                               ).getSeed())!,
                                               accountToken: accountSelected
                                                   .accountNFT![index],
+                                              recipient: const TransferRecipient
+                                                  .address(
+                                                address: Address(''),
+                                              ),
                                             ),
                                           );
                                         },

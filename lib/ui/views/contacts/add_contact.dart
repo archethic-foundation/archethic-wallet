@@ -1,4 +1,3 @@
-
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
@@ -76,7 +75,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
         );
       } else {
         setState(() {
-          if (Address(_addressController!.text).isValid()) {
+          if (Address(_addressController!.text).isValid) {
             _addressValidAndUnfocused = true;
           }
         });
@@ -141,7 +140,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                     ],
                     onSubmitted: (String text) {
                       if (widget.address == null) {
-                        if (!Address(_addressController!.text).isValid()) {
+                        if (!Address(_addressController!.text).isValid) {
                           FocusScope.of(context)
                               .requestFocus(_addressFocusNode);
                         } else {
@@ -325,7 +324,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                               .requestUpdate(forceUpdateChart: false);
                           UIUtil.showSnackbar(
                             localizations.contactAdded
-                                .replaceAll('%1', newContact.name!),
+                                .replaceAll('%1', newContact.name),
                             context,
                             ref,
                             theme.text!,
@@ -359,7 +358,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
         setState(() {
           _addressValidationText = localizations.addressMissing;
         });
-      } else if (!Address(_addressController!.text).isValid()) {
+      } else if (!Address(_addressController!.text).isValid) {
         isValid = false;
         setState(() {
           _addressValidationText = localizations.invalidAddress;

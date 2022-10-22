@@ -10,7 +10,8 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -26,7 +27,10 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactDetail extends ConsumerWidget {
-  const ContactDetail({required this.contact, super.key});
+  const ContactDetail({
+    required this.contact,
+    super.key,
+  });
 
   final Contact contact;
 
@@ -34,8 +38,9 @@ class ContactDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final accountSelected = ref.read(
+      AccountProviders.getSelectedAccount(context: context),
+    );
     final preferences = ref.watch(SettingsProviders.settings);
 
     return SafeArea(
@@ -69,7 +74,7 @@ class ContactDetail extends ConsumerWidget {
                             localizations.removeContact,
                             localizations.removeContactConfirmation.replaceAll(
                               '%1',
-                              contact.name!.replaceFirst('@', ''),
+                              contact.format,
                             ),
                             localizations.yes,
                             () {
@@ -83,7 +88,7 @@ class ContactDetail extends ConsumerWidget {
                               UIUtil.showSnackbar(
                                 localizations.contactRemoved.replaceAll(
                                   '%1',
-                                  contact.name!.replaceFirst('@', ''),
+                                  contact.format,
                                 ),
                                 context,
                                 ref,
@@ -162,7 +167,7 @@ class ContactDetail extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    contact.name!.replaceFirst('@', ''),
+                    contact.format,
                     textAlign: TextAlign.center,
                     style: theme.textStyleSize16W600Primary,
                   ),
@@ -203,7 +208,7 @@ class ContactDetail extends ConsumerWidget {
                     child: UIUtil.threeLinetextStyleSmallestW400Text(
                       context,
                       ref,
-                      contact.address!,
+                      contact.address,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -226,7 +231,7 @@ class ContactDetail extends ConsumerWidget {
               ),
             ),
           ),
-          if (accountSelected!.name != contact.name!.replaceFirst('@', ''))
+          if (accountSelected!.name != contact.format)
             Column(
               children: <Widget>[
                 Row(
@@ -252,7 +257,9 @@ class ContactDetail extends ConsumerWidget {
                               transferType: TransferType.uco,
                               seed:
                                   (await StateContainer.of(context).getSeed())!,
-                              contact: contact,
+                              recipient: TransferRecipient.contact(
+                                contact: contact,
+                              ),
                             ),
                           );
                         },
