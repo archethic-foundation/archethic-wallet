@@ -12,11 +12,12 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/transfer/bloc/model.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
+import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_form_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -45,15 +46,13 @@ class TransferSheet extends ConsumerWidget {
   const TransferSheet({
     required this.seed,
     required this.transferType,
-    this.contact,
-    this.address,
+    required this.recipient,
     this.actionButtonTitle,
     this.accountToken,
     super.key,
   });
 
-  final Contact? contact;
-  final String? address;
+  final TransferRecipient recipient;
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final TransferType transferType;
@@ -61,21 +60,20 @@ class TransferSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedAccount = ref.watch(
+      AccountProviders.getSelectedAccount(context: context),
+    );
+
     // The main column that holds everything
     return ProviderScope(
       overrides: [
         TransferFormProvider.initialTransferForm.overrideWithValue(
-          TransferFormData(
+          TransferFormState(
             transferType: transferType,
             accountToken: accountToken,
-            symbol: transferType == TransferType.uco
-                ? StateContainer.of(context)
-                    .curNetwork
-                    .getNetworkCryptoCurrencyLabel()
-                : accountToken!.tokenInformations!.symbol!,
-            addressRecipient: address ?? '',
-            contactRecipient: contact,
-            isContactKnown: contact != null,
+            seed: seed,
+            recipient: recipient,
+            accountBalance: selectedAccount!.balance!.nativeTokenValue!,
           ),
         ),
       ],
@@ -103,7 +101,7 @@ class TransferSheetBody extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
 
-    ref.listen<TransferFormData>(
+    ref.listen<TransferFormState>(
       TransferFormProvider.transferForm,
       (_, transfer) {
         if (transfer.isControlsOk) return;

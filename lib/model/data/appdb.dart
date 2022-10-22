@@ -41,7 +41,7 @@ class DBHelper {
     final contactsList = box.values.toList();
     contactsList.sort(
       (Contact a, Contact b) =>
-          a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+          a.name.toLowerCase().compareTo(b.name.toLowerCase()),
     );
     return contactsList;
   }
@@ -52,7 +52,7 @@ class DBHelper {
     // ignore: prefer_final_locals
     var contactsListSelected = List<Contact>.empty(growable: true);
     for (final contact in contactsList) {
-      if (contact.name!.contains(pattern)) {
+      if (contact.name.contains(pattern)) {
         contactsListSelected.add(contact);
       }
     }
@@ -74,7 +74,7 @@ class DBHelper {
     for (final contact in contactsList) {
       var lastAddressContact = (await sl
               .get<ApiService>()
-              .getLastTransaction(contact.address!, request: 'address'))
+              .getLastTransaction(contact.address, request: 'address'))
           .address;
 
       if (lastAddressContact == null || lastAddressContact.isEmpty) {
@@ -84,7 +84,7 @@ class DBHelper {
         contactToUpdate.address = lastAddressContact;
         await sl.get<DBHelper>().saveContact(contactToUpdate);
       }
-      if (lastAddressContact?.toLowerCase() == lastAddress.toLowerCase()) {
+      if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {
         contactSelected = contact;
       }
     }
@@ -98,7 +98,7 @@ class DBHelper {
     final nameWithAt = name.startsWith('@') ? name : '@$name';
 
     for (final contact in contactsList) {
-      if (contact.name!.toLowerCase() == nameWithAt.toLowerCase()) {
+      if (contact.name.toLowerCase() == nameWithAt.toLowerCase()) {
         contactSelected = contact;
       }
     }
@@ -114,7 +114,7 @@ class DBHelper {
     final contactsList = box.values.toList();
     var contactExists = false;
     for (final contact in contactsList) {
-      if (contact.name!.toLowerCase() == name.toLowerCase()) {
+      if (contact.name.toLowerCase() == name.toLowerCase()) {
         contactExists = true;
       }
     }
@@ -136,10 +136,10 @@ class DBHelper {
     for (final contact in contactsList) {
       var lastAddressContact = (await sl
               .get<ApiService>()
-              .getLastTransaction(contact.address!, request: 'address'))
+              .getLastTransaction(contact.address, request: 'address'))
           .address!;
       if (lastAddressContact == '') {
-        lastAddressContact = contact.address!;
+        lastAddressContact = contact.address;
       }
       if (lastAddressContact
           .toLowerCase()

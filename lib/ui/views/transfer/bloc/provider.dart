@@ -1,241 +1,229 @@
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/domain/models/transfer.dart';
+import 'package:aewallet/domain/repositories/transfer.dart';
+import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
+import 'package:aewallet/infrastructure/repositories/transfer.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/ui/views/transfer/bloc/model.dart';
-import 'package:aewallet/ui/views/transfer/bloc/transaction_builder.dart';
+import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        ApiService,
-        fromBigInt,
-        toBigInt,
-        uint8ListToHex,
-        UCOTransfer,
-        TokenTransfer;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _initialTransferFormProvider = Provider.autoDispose<TransferFormData>(
+final _initialTransferFormProvider = Provider<TransferFormState>(
   (ref) {
     throw UnimplementedError();
   },
 );
 
 final _transferFormProvider =
-    StateNotifierProvider.autoDispose<TransferNotifier, TransferFormData>(
-  (ref) {
-    final initialTransferForm =
-        ref.watch(TransferFormProvider.initialTransferForm);
-    return TransferNotifier(initialTransferForm);
+    NotifierProvider.autoDispose<TransferFormNotifier, TransferFormState>(
+  () {
+    return TransferFormNotifier();
   },
-  dependencies: [TransferFormProvider.initialTransferForm],
+  dependencies: [
+    TransferFormProvider.initialTransferForm,
+    AccountProviders.getSelectedAccount,
+    TransferFormProvider._repository,
+  ],
 );
 
-class TransferNotifier extends StateNotifier<TransferFormData> {
-  TransferNotifier(
-    super.state,
-  );
+class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
+  TransferFormNotifier();
 
-  void setContact(Contact? contact) {
-    state = state.copyWith(
-      contactRecipient: contact,
-      isContactKnown: true,
-      errorAddressText: '',
-      errorAmountText: '',
-      errorMessageText: '',
-    );
-  }
-
-  void setContactKnown(bool isContactKnown) {
-    state = state.copyWith(
-      isContactKnown: isContactKnown,
-    );
-  }
-
-  void setMaxSend(bool sendMax) {
-    state = state.copyWith(
-      isMaxSend: sendMax,
-    );
-  }
-
-  void setAddress(String address) {
-    state = state.copyWith(
-      addressRecipient: address,
-      errorAddressText: '',
-      errorAmountText: '',
-      errorMessageText: '',
-    );
-  }
-
-  void setAmount(double amount, double balance) {
-    if (amount + state.feeEstimation == balance) {
-      state = state.copyWith(
-        amount: amount,
-        errorAddressText: '',
-        errorAmountText: '',
-        errorMessageText: '',
-        isMaxSend: true,
+  @override
+  TransferFormState build() => ref.watch(
+        TransferFormProvider.initialTransferForm,
       );
-    } else {
-      state = state.copyWith(
-        amount: amount,
-        errorAddressText: '',
-        errorAmountText: '',
-        errorMessageText: '',
-        isMaxSend: false,
+
+  Future<void> setRecipient({
+    required BuildContext context,
+    required TransferRecipient recipient,
+  }) async {
+    final fees = await _calculateFees(
+      context: context,
+      formState: state.copyWith(
+        recipient: recipient,
+      ),
+    );
+
+    state = state.copyWith(
+      feeEstimation: fees ?? 0,
+      recipient: recipient,
+      errorAddressText: '',
+      errorMessageText: '',
+    );
+  }
+
+  Future<void> setRecipientNameOrAddress({
+    required BuildContext context,
+    required String text,
+  }) async {
+    if (!text.startsWith('@')) {
+      setRecipient(
+        context: context,
+        recipient: TransferRecipient.address(address: Address(text)),
+      );
+      return;
+    }
+
+    try {
+      final contact = await sl.get<DBHelper>().getContactWithName(text);
+      setRecipient(
+        context: context,
+        recipient: TransferRecipient.contact(
+          contact: contact,
+        ),
+      );
+    } catch (e) {
+      setRecipient(
+        context: context,
+        recipient: TransferRecipient.unknownContact(
+          name: text,
+        ),
       );
     }
   }
 
-  void setMessage(String message) {
+  Future<void> setContactAddress({
+    required BuildContext context,
+    required Address address,
+  }) async {
+    final contact =
+        await sl.get<DBHelper>().getContactWithAddress(address.address);
+
+    if (contact != null) {
+      setRecipient(
+        context: context,
+        recipient: TransferRecipient.contact(contact: contact),
+      );
+    } else {
+      setRecipient(
+        context: context,
+        recipient: TransferRecipient.address(
+          address: address,
+        ),
+      );
+    }
+  }
+
+  // TODO(Chralu): That operation should be delayed to avoid to spam backend.
+  Future<double?> _calculateFees({
+    required BuildContext context,
+    required TransferFormState formState,
+  }) async {
+    final selectedAccount = ref.read(
+      AccountProviders.getSelectedAccount(context: context),
+    );
+
+    final recipientAddress = formState.recipient.address;
+    if (recipientAddress == null) return null;
+
+    final calculateFeesResult = await CalculateFeesUsecase(
+      repository: ref.read(TransferFormProvider._repository),
+    ).run(
+      Transfer.uco(
+        accountSelectedName: selectedAccount!.name!,
+        amount: formState.amount,
+        message: formState.message,
+        recipientAddress: recipientAddress,
+        seed: formState.seed,
+        tokenAddress: formState.accountToken?.tokenInformations!.address,
+      ),
+    );
+
+    return calculateFeesResult.valueOrNull;
+  }
+
+  Future<void> setMaxAmount({
+    required BuildContext context,
+  }) async {
+    final balance = state.accountBalance;
+
+    final fees = await _calculateFees(
+      context: context,
+      formState: state.copyWith(amount: balance),
+    );
+
+    if (fees == null) {
+      return;
+    }
+
+    state = state.copyWith(
+      amount: balance - fees,
+      feeEstimation: fees,
+      errorAmountText: '',
+    );
+  }
+
+  Future<void> setAmount({
+    required BuildContext context,
+    required double amount,
+  }) async {
+    final balance = state.accountBalance;
+
+    final fees = await _calculateFees(
+      context: context,
+      formState: state.copyWith(
+        amount: amount,
+      ),
+    );
+
+    if (fees == null) {
+      state = state.copyWith(
+        amount: amount,
+        feeEstimation: 0,
+        errorAmountText: '',
+      );
+      return;
+    }
+
+    if (amount > balance - fees) {
+      state = state.copyWith(
+        errorAmountText:
+            AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                  '%1',
+                  state.symbol(context),
+                ),
+      );
+      return;
+    }
+
+    state = state.copyWith(
+      amount: amount,
+      feeEstimation: fees,
+      accountBalance: balance,
+      errorAmountText: '',
+    );
+  }
+
+  Future<void> setMessage({
+    required BuildContext context,
+    required String message,
+  }) async {
+    final fees = await _calculateFees(
+      context: context,
+      formState: state.copyWith(
+        message: message,
+      ),
+    );
+
     state = state.copyWith(
       message: message.trim(),
-      errorMessageText: '',
+      feeEstimation: fees ?? 0,
     );
   }
 
   void setTransferProcessStep(TransferProcessStep transferProcessStep) {
     state = state.copyWith(
       transferProcessStep: transferProcessStep,
-    );
-  }
-
-  void isMaxSend(
-    double? nativeTokenValue,
-    double? fiatCurrencyValue,
-    double balance,
-  ) {
-    if (state.amount <= 0) {
-      state = state.copyWith(isMaxSend: false);
-      return;
-    }
-
-    if (state.amount + state.feeEstimation == balance) {
-      state = state.copyWith(isMaxSend: true);
-    } else {
-      state = state.copyWith(isMaxSend: false);
-    }
-  }
-
-  Future<void> calculateFees(String seed, String accountSelectedName) async {
-    if (state.amount <= 0) {
-      state = state.copyWith(
-        feeEstimation: 0,
-      );
-      return;
-    }
-
-    if (state.contactRecipient != null &&
-        (state.contactRecipient!.address!.isEmpty ||
-            Address(state.contactRecipient!.address!).isValid() == false)) {
-      state = state.copyWith(
-        feeEstimation: 0,
-      );
-      return;
-    }
-
-    if (state.contactRecipient == null &&
-        (state.addressRecipient.isEmpty ||
-            Address(state.addressRecipient).isValid() == false)) {
-      state = state.copyWith(
-        feeEstimation: 0,
-      );
-      return;
-    }
-
-    try {
-      await _buildTransaction(seed, accountSelectedName);
-    } catch (e) {
-      state = state.copyWith(
-        feeEstimation: 0,
-        errorAmountText: e.toString(),
-      );
-      return;
-    }
-
-    final transactionFee =
-        await sl.get<ApiService>().getTransactionFee(state.transaction!);
-    if (transactionFee.errors != null) {
-      state = state.copyWith(
-        feeEstimation: 0,
-      );
-      return;
-    }
-
-    state = state.copyWith(
-      feeEstimation: fromBigInt(transactionFee.fee).toDouble(),
-    );
-  }
-
-  Future<void> _buildTransaction(
-    String seed,
-    String accountSelectedName,
-  ) async {
-    final originPrivateKey = sl.get<ApiService>().getOriginKey();
-    final keychain = await sl.get<ApiService>().getKeychain(seed);
-
-    final nameEncoded = Uri.encodeFull(
-      accountSelectedName,
-    );
-    final service = 'archethic-wallet-$nameEncoded';
-    final index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(
-                keychain.deriveAddress(
-                  service,
-                ),
-              ),
-            ))
-        .chainLength!;
-
-    final transaction = await TransferTransactionBuilder.build(
-      message: state.message,
-      index: index,
-      keychain: keychain,
-      originPrivateKey: originPrivateKey,
-      serviceName: service,
-      tokenTransferList: state.transferType == TransferType.token
-          ? <TokenTransfer>[
-              TokenTransfer(
-                amount: toBigInt(state.amount),
-                to: state.contactRecipient == null
-                    ? state.addressRecipient
-                    : state.contactRecipient!.address!,
-                tokenAddress: state.accountToken!.tokenInformations!.address,
-                tokenId: 0,
-              )
-            ]
-          : state.transferType == TransferType.nft
-              ? <TokenTransfer>[
-                  TokenTransfer(
-                    amount: toBigInt(state.amount),
-                    to: state.contactRecipient == null
-                        ? state.addressRecipient
-                        : state.contactRecipient!.address!,
-                    tokenAddress:
-                        state.accountToken!.tokenInformations!.address,
-                    // TODO(reddwarf03) : to fix nft management
-                    tokenId: 0,
-                  )
-                ]
-              : <TokenTransfer>[],
-      ucoTransferList: state.transferType == TransferType.uco
-          ? <UCOTransfer>[
-              UCOTransfer(
-                amount: toBigInt(state.amount),
-                to: state.contactRecipient == null
-                    ? state.addressRecipient
-                    : state.contactRecipient!.address!,
-              )
-            ]
-          : <UCOTransfer>[],
-    );
-    state = state.copyWith(
-      transaction: transaction,
     );
   }
 
@@ -257,7 +245,7 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
           errorAmountText:
               AppLocalization.of(context)!.insufficientBalance.replaceAll(
                     '%1',
-                    state.symbol,
+                    state.symbol(context),
                   ),
         );
         return false;
@@ -268,7 +256,7 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
           errorAmountText:
               AppLocalization.of(context)!.insufficientBalance.replaceAll(
                     '%1',
-                    state.symbol,
+                    state.symbol(context),
                   ),
         );
         return false;
@@ -279,7 +267,7 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
           errorAmountText:
               AppLocalization.of(context)!.insufficientBalance.replaceAll(
                     '%1',
-                    state.symbol,
+                    state.symbol(context),
                   ),
         );
         return false;
@@ -296,66 +284,48 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
     BuildContext context,
     Account accountSelected,
   ) async {
-    if (state.contactRecipient == null) {
-      if (state.addressRecipient.isEmpty) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!.addressMissing,
-        );
-        return false;
-      }
+    final error = state.recipient.when(
+      address: (address) {
+        if (address.address.isEmpty) {
+          return AppLocalization.of(context)!.addressMissing;
+        }
+        if (!address.isValid) {
+          return AppLocalization.of(context)!.invalidAddress;
+        }
+        if (accountSelected.lastAddress == address.address) {
+          return AppLocalization.of(context)!.sendToMeError.replaceAll(
+                '%1',
+                state.symbol(context),
+              );
+        }
+      },
+      contact: (contact) {
+        if (contact.address.isEmpty) {
+          return AppLocalization.of(context)!.addressMissing;
+        }
 
-      if (Address(state.addressRecipient).isValid() == false) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!.invalidAddress,
-        );
-        return false;
-      }
+        if (!Address(contact.address).isValid) {
+          return AppLocalization.of(context)!.invalidAddress;
+        }
 
-      if (accountSelected.lastAddress == state.addressRecipient) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!
-              .sendToMeError
-              .replaceAll('%1', state.symbol),
-        );
-        return false;
-      }
-    } else {
-      if (state.isContactKnown == false) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!.contactInvalid,
-        );
-        return false;
-      }
+        if (accountSelected.lastAddress == contact.address) {
+          return AppLocalization.of(context)!.sendToMeError.replaceAll(
+                '%1',
+                state.symbol(context),
+              );
+        }
+      },
+      unknownContact: (_) {
+        return AppLocalization.of(context)!.contactInvalid;
+      },
+    );
 
-      if (state.contactRecipient!.address == null ||
-          state.contactRecipient!.address!.isEmpty) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!.addressMissing,
-        );
-        return false;
-      }
-
-      if (Address(state.contactRecipient!.address!).isValid() == false) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!.invalidAddress,
-        );
-        return false;
-      }
-
-      if (accountSelected.lastAddress == state.contactRecipient!.address) {
-        state = state.copyWith(
-          errorAddressText: AppLocalization.of(context)!
-              .sendToMeError
-              .replaceAll('%1', state.symbol),
-        );
-        return false;
-      }
-    }
+    if (error == null) return true;
 
     state = state.copyWith(
-      errorAddressText: '',
+      errorAddressText: error,
     );
-    return true;
+    return false;
   }
 
   Future<void> send(BuildContext context) async {
@@ -407,8 +377,10 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
                 transactionType: TransactionSendEventType.transfer,
-                response: localizations.insufficientBalance
-                    .replaceAll('%1', state.symbol),
+                response: localizations.insufficientBalance.replaceAll(
+                  '%1',
+                  state.symbol(context),
+                ),
                 nbConfirmations: 0,
               ),
             );
@@ -438,6 +410,9 @@ class TransferNotifier extends StateNotifier<TransferFormData> {
 }
 
 abstract class TransferFormProvider {
+  static final _repository = Provider<TransferRepositoryInterface>(
+    (ref) => ArchethicTransferRepository(),
+  );
   static final initialTransferForm = _initialTransferFormProvider;
   static final transferForm = _transferFormProvider;
 }

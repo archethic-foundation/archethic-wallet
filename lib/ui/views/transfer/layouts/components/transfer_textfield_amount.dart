@@ -23,11 +23,10 @@ class _TransferTextFieldAmountState
   @override
   void initState() {
     super.initState();
-    final transfer = ref.read(TransferFormProvider.transferForm);
+
     sendAmountFocusNode = FocusNode();
-    sendAmountController = TextEditingController(
-      text: transfer.amount == 0 ? '' : transfer.amount.toString(),
-    );
+    sendAmountController = TextEditingController();
+    _updateAmountTextController();
   }
 
   @override
@@ -35,6 +34,15 @@ class _TransferTextFieldAmountState
     sendAmountFocusNode.dispose();
     sendAmountController.dispose();
     super.dispose();
+  }
+
+  void _updateAmountTextController() {
+    final transfer = ref.read(TransferFormProvider.transferForm);
+    sendAmountController.text = transfer.amount == 0
+        ? ''
+        : AmountFormatters.withoutCurrency(
+            transfer.amount,
+          );
   }
 
   @override
@@ -50,8 +58,9 @@ class _TransferTextFieldAmountState
         ref.watch(TransferFormProvider.transferForm.notifier);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final accountSelected = ref.read(
+      AccountProviders.getSelectedAccount(context: context),
+    );
     final localCurrencyFormat = NumberFormat.currency(
       locale: CurrencyUtil.getLocale(currency.currency.name).toString(),
       symbol: CurrencyUtil.getCurrencySymbol(
@@ -72,7 +81,8 @@ class _TransferTextFieldAmountState
               maxDecimalDigits: primaryCurrency.primaryCurrency ==
                       AvailablePrimaryCurrencyEnum.native
                   ? 8
-                  : localCurrencyFormat.decimalDigits!,
+                  : localCurrencyFormat
+                      .decimalDigits!, // TODO(Chralu): `decimalDigits` property seems to never be set.
             ),
             LocalCurrencyFormatter(
               active: false,
@@ -83,30 +93,16 @@ class _TransferTextFieldAmountState
             ),
           ],
           onChanged: (String text) async {
-            final amount = double.tryParse(text);
-
-            if (amount != null &&
-                accountSelected!.balance!.nativeTokenValue! ==
-                    amount + transfer.feeEstimation) {
-              transferNotifier.setMaxSend(true);
-            } else {
-              transferNotifier.setMaxSend(false);
-            }
-
             transferNotifier.setAmount(
-              amount ?? 0,
-              accountSelected!.balance!.nativeTokenValue!,
-            );
-
-            await transferNotifier.calculateFees(
-              widget.seed,
-              accountSelected.name!,
+              context: context,
+              amount: double.tryParse(text) ?? 0,
             );
           },
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: '${localizations.enterAmount} (${transfer.symbol})',
+          labelText:
+              '${localizations.enterAmount} (${transfer.symbol(context)})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
@@ -115,46 +111,15 @@ class _TransferTextFieldAmountState
                     preferences.activeVibrations,
                   );
 
-              transferNotifier.setAmount(
-                accountSelected!.balance!.nativeTokenValue!,
-                accountSelected.balance!.nativeTokenValue!,
+              await transferNotifier.setMaxAmount(
+                context: context,
               );
-              await transferNotifier.calculateFees(
-                widget.seed,
-                accountSelected.name!,
-              );
-
-              var sendAmount = 0.0;
-              if (primaryCurrency.primaryCurrency ==
-                  AvailablePrimaryCurrencyEnum.native) {
-                sendAmount = accountSelected.balance!.nativeTokenValue! -
-                    transfer.feeEstimation;
-                sendAmountController.text = sendAmount.toStringAsFixed(8);
-              } else {
-                final selectedCurrencyFee =
-                    accountSelected.balance!.tokenPrice!.amount! *
-                        transfer.feeEstimation;
-                sendAmount = accountSelected.balance!.fiatCurrencyValue! -
-                    selectedCurrencyFee;
-                sendAmountController.text = sendAmount
-                    .toStringAsFixed(localCurrencyFormat.decimalDigits!);
-              }
-
-              transferNotifier.setAmount(
-                accountSelected.balance!.nativeTokenValue! -
-                    transfer.feeEstimation,
-                accountSelected.balance!.nativeTokenValue!,
-              );
-              transferNotifier.setMaxSend(true);
-              await transferNotifier.calculateFees(
-                widget.seed,
-                accountSelected.name!,
-              );
+              _updateAmountTextController();
             },
           ),
           fadeSuffixOnCondition: true,
           suffixShowFirstCondition:
-              transfer.accountToken == null && !transfer.isMaxSend,
+              transfer.accountToken == null && !transfer.isMaxAmount,
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
             decimal: true,
@@ -168,11 +133,11 @@ class _TransferTextFieldAmountState
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '1 ${transfer.symbol} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected!.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
+                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected!.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),
-              if (sendAmountController.text.isNotEmpty)
+              if (transfer.amount != 0)
                 Container(
                   margin: const EdgeInsets.only(right: 40),
                   alignment: Alignment.centerRight,

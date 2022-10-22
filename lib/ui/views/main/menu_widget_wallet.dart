@@ -4,10 +4,11 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/views/transfer/bloc/model.dart';
+import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -59,6 +60,9 @@ class MenuWidgetWallet extends ConsumerWidget {
                         widget: TransferSheet(
                           transferType: TransferType.uco,
                           seed: (await StateContainer.of(context).getSeed())!,
+                          recipient: const TransferRecipient.address(
+                            address: Address(''),
+                          ),
                         ),
                       );
                     },

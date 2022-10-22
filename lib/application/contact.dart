@@ -58,7 +58,7 @@ class ContactRepository {
     return contacts
         .where(
           (contact) =>
-              contact.name!.toLowerCase().contains(search.toLowerCase()),
+              contact.name.toLowerCase().contains(search.toLowerCase()),
         )
         .toList();
   }

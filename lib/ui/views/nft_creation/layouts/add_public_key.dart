@@ -110,9 +110,8 @@ class AddPublicKey extends ConsumerWidget {
                                   context,
                                   ref,
                                 );
-                                if (contact != null && contact.name != null) {
-                                  publicKeyAccessController.text =
-                                      contact.name!;
+                                if (contact != null) {
+                                  publicKeyAccessController.text = contact.name;
                                 }
                               },
                             ),

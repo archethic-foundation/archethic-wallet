@@ -3,6 +3,7 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -263,7 +264,7 @@ class _SingleContact extends ConsumerWidget {
                               width: 10,
                             ),
                             Text(
-                              contact.name!.replaceFirst('@', ''),
+                              contact.format,
                               style: theme.textStyleSize14W600Primary,
                             ),
                           ],
