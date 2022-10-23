@@ -1047,12 +1047,6 @@ class AppLocalization {
         name: 'addTokenConfirmationMessage');
   }
 
-  String get addNFTCollectionConfirmationMessage {
-    return Intl.message(
-        'Do you confirm the creation of the following Collection?',
-        name: 'addNFTCollectionConfirmationMessage');
-  }
-
   String get tokensHeader {
     return Intl.message('Tokens', name: 'tokensHeader');
   }
@@ -1562,18 +1556,8 @@ class AppLocalization {
     return Intl.message('Create a token', name: 'createFungibleToken');
   }
 
-  String get createNFTCollection {
-    return Intl.message('Create collection of NFT',
-        name: 'createNFTCollection');
-  }
-
   String get createNFT {
     return Intl.message('Create a NFT', name: 'createNFT');
-  }
-
-  String get saveNFTCollectionInLocal {
-    return Intl.message('Save collection in local',
-        name: 'saveNFTCollectionInLocal');
   }
 
   String get nftTabDescriptionHeader {

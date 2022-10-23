@@ -1,16 +1,16 @@
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
-extension TokenTransactionBuilder on Transaction {
+extension NftTransactionBuilder on Transaction {
   /// Builds a Token transfer Transaction
   static Transaction build({
-    required Keychain keychain,
-    required String serviceName,
-    required String originPrivateKey,
-    required int index,
     required String? tokenName,
-    required double tokenInitialSupply,
     required String? tokenSymbol,
+    required double tokenInitialSupply,
     required Map<String, dynamic> tokenProperties,
+    required String serviceName,
+    required Keychain keychain,
+    required int index,
+    required String originPrivateKey,
   }) {
     final transaction = Transaction(
       type: 'token',
@@ -29,13 +29,6 @@ extension TokenTransactionBuilder on Transaction {
       token,
     );
     transaction.setContent(content);
-
-    transaction.address = uint8ListToHex(
-      keychain.deriveAddress(
-        serviceName,
-        index: index + 1,
-      ),
-    );
 
     return keychain
         .buildTransaction(

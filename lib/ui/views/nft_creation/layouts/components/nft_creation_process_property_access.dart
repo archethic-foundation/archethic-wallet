@@ -210,7 +210,8 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                             ),
                             onPressed: () {
                               final nftCreationNotifier = ref.watch(
-                                NftCreationProvider.nftCreation.notifier,
+                                NftCreationFormProvider
+                                    .nftCreationForm.notifier,
                               );
                               sl.get<HapticUtil>().feedback(
                                     FeedbackType.light,

@@ -16,7 +16,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
     final nftDescriptionController = TextEditingController();
 
     final nftCreationNotifier =
-        ref.watch(NftCreationProvider.nftCreation.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return Container(

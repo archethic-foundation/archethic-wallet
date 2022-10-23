@@ -1320,12 +1320,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTCollectionConfirmationMessage": "Do you confirm the creation of the following Collection?",
-  "@addNFTCollectionConfirmationMessage": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "tokensHeader": "Tokens",
   "@tokensHeader": {
     "type": "text",
@@ -2010,20 +2004,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "createNFTCollection": "Create collection of NFT",
-  "@createNFTCollection": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "createNFT": "Create a NFT",
   "@createNFT": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "saveNFTCollectionInLocal": "Save collection in local",
-  "@saveNFTCollectionInLocal": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

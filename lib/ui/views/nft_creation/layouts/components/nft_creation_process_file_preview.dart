@@ -13,7 +13,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     if (nftCreation.file == null ||
         nftCreation.file!.keys.isEmpty ||
         (MimeUtil.isImage(nftCreation.fileTypeMime) == false &&

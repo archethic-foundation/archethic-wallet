@@ -137,7 +137,7 @@ class NFTCategoryRepository {
         name: localizations.nftCategoryAccess,
         image: 'assets/images/category_nft_access.jpg',
       ),
-      NftCategory(
+      /* NftCategory(
         id: 3,
         name: localizations.nftCategoryCollectibles,
         image: 'assets/images/category_nft_collectibles.jpg',
@@ -146,7 +146,7 @@ class NFTCategoryRepository {
         id: 4,
         name: localizations.nftCategoryMusic,
         image: 'assets/images/category_nft_music.jpg',
-      ),
+      ),*/
       NftCategory(
         id: 5,
         name: localizations.nftCategoryDoc,

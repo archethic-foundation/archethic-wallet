@@ -201,12 +201,7 @@ class _AppState extends ConsumerState<App> {
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
                   currentNftCategoryIndex:
-                      args['currentNftCategoryIndex'] == null
-                          ? null
-                          : args['currentNftCategoryIndex'] as int,
-                  process: args['process'] == null
-                      ? null
-                      : args['process'] as NFTCreationProcessTypeEnum,
+                      args['currentNftCategoryIndex'] as int,
                 ),
                 settings: settings,
               );

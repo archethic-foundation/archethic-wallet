@@ -12,14 +12,16 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
+// ignore: unused_import
 import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/model.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/category_template_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview.dart';
@@ -55,22 +57,43 @@ part 'nft_creation_process_import_tab.dart';
 part 'nft_creation_process_infos_tab.dart';
 part 'nft_creation_process_properties_tab.dart';
 
-enum NFTCreationProcessTypeEnum { single, collection }
-
-class NFTCreationProcess extends ConsumerStatefulWidget {
+class NFTCreationProcess extends ConsumerWidget {
   const NFTCreationProcess({
+    required this.currentNftCategoryIndex,
     super.key,
-    this.currentNftCategoryIndex,
-    this.process,
   });
-  final int? currentNftCategoryIndex;
-  final NFTCreationProcessTypeEnum? process;
+
+  final int currentNftCategoryIndex;
 
   @override
-  ConsumerState<NFTCreationProcess> createState() => _NFTCreationProcessState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    // The main column that holds everything
+    return ProviderScope(
+      overrides: [
+        NftCreationFormProvider.initialNftCreationForm.overrideWithValue(
+          const NftCreationFormData(),
+        ),
+      ],
+      child: NFTCreationProcessBody(
+        currentNftCategoryIndex: currentNftCategoryIndex,
+      ),
+    );
+  }
 }
 
-class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
+class NFTCreationProcessBody extends ConsumerStatefulWidget {
+  const NFTCreationProcessBody({
+    super.key,
+    required this.currentNftCategoryIndex,
+  });
+  final int currentNftCategoryIndex;
+
+  @override
+  ConsumerState<NFTCreationProcessBody> createState() =>
+      _NFTCreationProcessBodyState();
+}
+
+class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
     with TickerProviderStateMixin {
   PageController? pageController;
   int currentPage = 0;
@@ -86,6 +109,71 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
+
+  Future<void> _showSendSucceed(
+    TransactionSendEvent event,
+    BaseTheme theme,
+  ) async {
+    UIUtil.showSnackbar(
+      event.nbConfirmations == 1
+          ? AppLocalization.of(context)!
+              .nftCreationTransactionConfirmed1
+              .replaceAll('%1', event.nbConfirmations.toString())
+              .replaceAll('%2', event.maxConfirmations.toString())
+          : AppLocalization.of(context)!
+              .nftCreationTransactionConfirmed
+              .replaceAll('%1', event.nbConfirmations.toString())
+              .replaceAll('%2', event.maxConfirmations.toString()),
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+      duration: const Duration(milliseconds: 5000),
+    );
+    await StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .updateNftInfosOffChain(
+          tokenAddress: event.params!['transactionAddress']! as String,
+          categoryNftIndex: widget.currentNftCategoryIndex,
+        );
+
+    StateContainer.of(context).requestUpdate();
+
+    Navigator.of(context).popUntil(
+      RouteUtils.withNameLike('/nft_list_per_category'),
+    );
+  }
+
+  void _showSendFailed(
+    TransactionSendEvent event,
+    BaseTheme theme,
+  ) {
+    // Send failed
+
+    Navigator.of(context).pop();
+    UIUtil.showSnackbar(
+      event.response!,
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+      duration: const Duration(seconds: 5),
+    );
+    Navigator.of(context).pop();
+  }
+
+  void _showNotEnoughConfirmation(BaseTheme theme) {
+    UIUtil.showSnackbar(
+      AppLocalization.of(context)!.notEnoughConfirmations,
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+    );
+    Navigator.of(context).pop();
+  }
 
   @override
   void initState() {
@@ -126,8 +214,17 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
-      _doAdd();
+        .listen((AuthenticatedEvent event) async {
+      _showSendingAnimation(context);
+      final nftCreationNotifier =
+          ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
+      final seed = await StateContainer.of(context).getSeed();
+      final accountSelected = StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!;
+      await nftCreationNotifier.buildTransaction(seed!, accountSelected.name!);
+      await nftCreationNotifier.send(context);
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
@@ -136,71 +233,27 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
       final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
-
-        Navigator.of(context).pop();
-
-        UIUtil.showSnackbar(
-          event.response!,
-          context,
-          ref,
-          theme.text!,
-          theme.snackBarShadow!,
-          duration: const Duration(seconds: 5),
-        );
-        Navigator.of(context).pop();
-      } else {
-        if (event.response == 'ok' &&
-            TransactionConfirmation.isEnoughConfirmations(
-              event.nbConfirmations!,
-              event.maxConfirmations!,
-            )) {
-          UIUtil.showSnackbar(
-            event.nbConfirmations == 1
-                ? AppLocalization.of(context)!
-                    .nftCreationTransactionConfirmed1
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString())
-                : AppLocalization.of(context)!
-                    .nftCreationTransactionConfirmed
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString()),
-            context,
-            ref,
-            theme.text!,
-            theme.snackBarShadow!,
-            duration: const Duration(milliseconds: 5000),
-          );
-
-          await StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .updateNftInfosOffChain(
-                tokenAddress: event.params!['transactionAddress']! as String,
-                categoryNftIndex: widget.currentNftCategoryIndex,
-              );
-
-          StateContainer.of(context).requestUpdate();
-
-          Navigator.of(context)
-              .popUntil(RouteUtils.withNameLike('/nft_list_per_category'));
-        } else {
-          UIUtil.showSnackbar(
-            AppLocalization.of(context)!.notEnoughConfirmations,
-            context,
-            ref,
-            theme.text!,
-            theme.snackBarShadow!,
-          );
-          Navigator.of(context).pop();
-        }
+        _showSendFailed(event, theme);
+        return;
       }
+
+      if (event.response == 'ok' &&
+          TransactionConfirmation.isEnoughConfirmations(
+            event.nbConfirmations!,
+            event.maxConfirmations!,
+          )) {
+        await _showSendSucceed(event, theme);
+        return;
+      }
+
+      _showNotEnoughConfirmation(theme);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
     final accountSelected =
         ref.read(AccountProviders.getSelectedAccount(context: context));
     final listNftCategory = ref.watch(
@@ -272,7 +325,7 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                listNftCategory[widget.currentNftCategoryIndex!]
+                                listNftCategory[widget.currentNftCategoryIndex]
                                     .image,
                                 width: 40,
                               ),
@@ -307,33 +360,36 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
                           icon: const Icon(UiIcons.nft_creation_process_import),
                         ),
                         Tab(
-                          text: AppLocalization.of(context)!
+                          text: localizations
                               .nftCreationProcessTabDescriptionHeader,
                           icon: const Icon(
-                              UiIcons.nft_creation_process_description,),
+                            UiIcons.nft_creation_process_description,
+                          ),
                         ),
                         Tab(
-                          text: AppLocalization.of(context)!
+                          text: localizations
                               .nftCreationProcessTabPropertiesHeader,
                           icon: const Icon(
-                              UiIcons.nft_creation_process_properties,),
+                            UiIcons.nft_creation_process_properties,
+                          ),
                         ),
                         Tab(
-                          text: AppLocalization.of(context)!
+                          text: localizations
                               .nftCreationProcessTabConfirmationHeader,
                           icon: const Icon(
-                              UiIcons.nft_creation_process_confirmation,),
+                            UiIcons.nft_creation_process_confirmation,
+                          ),
                         ),
                       ],
                       views: [
                         NFTCreationProcessImportTab(
                           tabActiveIndex: tabActiveIndex,
                           currentNftCategoryIndex:
-                              widget.currentNftCategoryIndex!,
+                              widget.currentNftCategoryIndex,
                         ),
                         const NFTCreationProcessInfosTab(),
                         NFTCreationProcessPropertiesTab(
-                          widget.currentNftCategoryIndex!,
+                          widget.currentNftCategoryIndex,
                         ),
                         NFTCreationProcessConfirmationTab(
                           tabActiveIndex: tabActiveIndex,

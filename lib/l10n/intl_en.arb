@@ -1818,12 +1818,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "createNFTCollection": "Create collection of NFT",
-  "@createNFTCollection": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "tokenInitialSupplyTooHigh": "The initial supply is too high",
   "@tokenInitialSupplyTooHigh": {
     "type": "text",
@@ -2246,12 +2240,6 @@
   },
   "createNFT": "Create a NFT",
   "@createNFT": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "saveNFTCollectionInLocal": "Save collection in local",
-  "@saveNFTCollectionInLocal": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

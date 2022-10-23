@@ -18,7 +18,7 @@ class GetPublicKeys extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final property = ref
-        .watch(NftCreationProvider.nftCreation)
+        .watch(NftCreationFormProvider.nftCreationForm)
         .properties
         .where(
           (element) => element.propertyName == propertyName,

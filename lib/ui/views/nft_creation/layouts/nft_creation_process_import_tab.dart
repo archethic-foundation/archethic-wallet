@@ -21,7 +21,7 @@ class _NFTCreationProcessImportTabState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
 
     return SingleChildScrollView(
       physics: nftCreation.file == null

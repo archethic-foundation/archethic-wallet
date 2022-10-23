@@ -22,10 +22,9 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
     final nftPropertyValueController = TextEditingController();
     var addNFTPropertyMessage = '';
 
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
-        ref.watch(NftCreationProvider.nftCreation.notifier);
-    ref.watch(NftCreationProvider.nftCreation.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     bool validateAddNFTProperty() {

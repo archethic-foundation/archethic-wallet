@@ -44,9 +44,9 @@ class AddPublicKey extends ConsumerWidget {
 
     final publicKeyAccessFocusNode = FocusNode();
     final publicKeyAccessController = TextEditingController();
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
-        ref.watch(NftCreationProvider.nftCreation.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return Column(
@@ -186,8 +186,8 @@ class AddPublicKey extends ConsumerWidget {
                                       );
                                     } else {
                                       final nftCreationNotifier = ref.watch(
-                                        NftCreationProvider
-                                            .nftCreation.notifier,
+                                        NftCreationFormProvider
+                                            .nftCreationForm.notifier,
                                       );
                                       nftCreationNotifier.addPublicKey(
                                         propertyName,

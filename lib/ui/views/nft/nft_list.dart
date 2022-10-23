@@ -173,7 +173,6 @@ class NFTList extends ConsumerWidget {
                     '/nft_creation',
                     arguments: {
                       'currentNftCategoryIndex': currentNftCategoryIndex,
-                      'process': NFTCreationProcessTypeEnum.single,
                     },
                   );
                 },
