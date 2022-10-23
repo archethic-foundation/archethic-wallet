@@ -18,9 +18,9 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
-        ref.watch(NftCreationProvider.nftCreation.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
 
     return Column(
       children: [
@@ -33,7 +33,7 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
               if (result != null) {
                 nftCreationNotifier.setFileProperties(
                   File(result.files.single.path!),
-                  FileImportTypeEnum.file,
+                  FileImportType.file,
                 );
               } else {
                 // User canceled the picker
@@ -59,7 +59,7 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
                 const SizedBox(
                   width: 30,
                 ),
-                if (nftCreation.fileImportType == FileImportTypeEnum.file)
+                if (nftCreation.fileImportType == FileImportType.file)
                   const Icon(
                     Icons.check_circle,
                     size: 16,

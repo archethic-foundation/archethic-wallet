@@ -24,7 +24,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     if (nftCreation.file == null) {
       return const SizedBox();
     }
@@ -131,49 +131,43 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                   ),
                 Row(
                   children: [
-                    if (nftCreation.file!.values.first.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: theme.backgroundDark!.withOpacity(0.3),
-                            border: Border.all(
-                              color: theme.backgroundDarkest!.withOpacity(0.2),
-                              width: 2,
-                            ),
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.key,
-                              color: theme.backgroundDarkest,
-                              size: 21,
-                            ),
-                            onPressed: () {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                widget: const AddPublicKey(
-                                  propertyName: 'file',
-                                  propertyValue: '',
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    else
-                      const SizedBox(
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Container(
+                        alignment: Alignment.center,
                         height: 40,
                         width: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: theme.backgroundDark!.withOpacity(0.3),
+                          border: Border.all(
+                            color: theme.backgroundDarkest!.withOpacity(0.2),
+                            width: 2,
+                          ),
+                        ),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.key,
+                            color: theme.backgroundDarkest,
+                            size: 21,
+                          ),
+                          onPressed: () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            Sheets.showAppHeightNineSheet(
+                              context: context,
+                              ref: ref,
+                              widget: const AddPublicKey(
+                                propertyName: 'file',
+                                propertyValue: '',
+                              ),
+                            );
+                          },
+                        ),
                       ),
+                    ),
                     if (readOnly == false)
                       Padding(
                         padding: const EdgeInsets.only(right: 5),
@@ -197,7 +191,8 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                             ),
                             onPressed: () {
                               final nftCreationNotifier = ref.watch(
-                                NftCreationProvider.nftCreation.notifier,
+                                NftCreationFormProvider
+                                    .nftCreationForm.notifier,
                               );
                               sl.get<HapticUtil>().feedback(
                                     FeedbackType.light,

@@ -24,9 +24,9 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
 
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
-        ref.watch(NftCreationProvider.nftCreation.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     return Column(
       children: [
         SizedBox(
@@ -41,7 +41,7 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
               if (pickedFile != null) {
                 nftCreationNotifier.setFileProperties(
                   File(pickedFile.path),
-                  FileImportTypeEnum.camera,
+                  FileImportType.camera,
                 );
               }
             },
@@ -68,7 +68,7 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
                     const SizedBox(
                       width: 30,
                     ),
-                    if (nftCreation.fileImportType == FileImportTypeEnum.camera)
+                    if (nftCreation.fileImportType == FileImportType.camera)
                       const Icon(
                         Icons.check_circle,
                         size: 16,

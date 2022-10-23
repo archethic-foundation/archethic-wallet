@@ -312,7 +312,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirm> {
             ))
         .chainLength!;
 
-    final transaction = TokenTransaction.build(
+    final transaction = TokenTransactionBuilder.build(
       keychain: keychain,
       index: index,
       originPrivateKey: originPrivateKey,

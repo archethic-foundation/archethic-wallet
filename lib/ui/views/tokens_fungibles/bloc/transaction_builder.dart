@@ -1,6 +1,6 @@
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
-extension TokenTransaction on Transaction {
+extension TokenTransactionBuilder on Transaction {
   /// Builds a Token transfer Transaction
   static Transaction build({
     required Keychain keychain,

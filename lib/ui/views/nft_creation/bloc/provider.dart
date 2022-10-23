@@ -3,20 +3,40 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/model.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/transaction_builder.dart';
+import 'package:aewallet/util/confirmations/transaction_sender.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
+import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mime_dart/mime_dart.dart';
 import 'package:path/path.dart' as path;
 import 'package:pdfx/pdfx.dart';
 
-final _nftCreationProvider =
-    StateNotifierProvider.autoDispose<NftCreationNotifier, NftCreation>((ref) {
-  return NftCreationNotifier(const NftCreation());
-});
+final _initialNftCreationFormProvider =
+    Provider.autoDispose<NftCreationFormData>(
+  (ref) {
+    throw UnimplementedError();
+  },
+);
 
-class NftCreationNotifier extends StateNotifier<NftCreation> {
+final _nftCreationFormProvider =
+    StateNotifierProvider.autoDispose<NftCreationNotifier, NftCreationFormData>(
+  (ref) {
+    final initialNftCreationForm =
+        ref.watch(NftCreationFormProvider.initialNftCreationForm);
+    return NftCreationNotifier(initialNftCreationForm);
+  },
+  dependencies: [NftCreationFormProvider.initialNftCreationForm],
+);
+
+class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
   NftCreationNotifier(
     super.state,
   );
@@ -74,15 +94,16 @@ class NftCreationNotifier extends StateNotifier<NftCreation> {
   void removeFileProperties() {
     final propertiesToRemove = [...state.properties];
     propertiesToRemove.removeWhere(
-      (NftCreationProperty element) => element.propertyName == 'file',
+      (NftCreationFormDataProperty element) => element.propertyName == 'file',
     );
     propertiesToRemove.removeWhere(
-      (NftCreationProperty element) => element.propertyName == 'type/mime',
+      (NftCreationFormDataProperty element) =>
+          element.propertyName == 'type/mime',
     );
 
     state = state.copyWith(
       fileImportType: null,
-      fileSize: null,
+      fileSize: 0,
       fileDecodedForPreview: null,
       file: null,
       properties: propertiesToRemove,
@@ -92,7 +113,8 @@ class NftCreationNotifier extends StateNotifier<NftCreation> {
   void removeProperty(String propertyName) {
     final propertiesToRemove = [...state.properties];
     propertiesToRemove.removeWhere(
-      (NftCreationProperty element) => element.propertyName == propertyName,
+      (NftCreationFormDataProperty element) =>
+          element.propertyName == propertyName,
     );
     state = state.copyWith(
       properties: propertiesToRemove,
@@ -102,7 +124,7 @@ class NftCreationNotifier extends StateNotifier<NftCreation> {
   void setProperty(String propertyName, String propertyValue) {
     final propertiesToSet = [
       ...state.properties,
-      NftCreationProperty(
+      NftCreationFormDataProperty(
         propertyName: propertyName,
         propertyValue: propertyValue,
       ),
@@ -125,7 +147,7 @@ class NftCreationNotifier extends StateNotifier<NftCreation> {
 
   Future<void> setFileProperties(
     File file,
-    FileImportTypeEnum fileImportType,
+    FileImportType fileImportType,
   ) async {
     final fileDecoded = File(file.path).readAsBytesSync();
     final file64 = base64Encode(fileDecoded);
@@ -165,11 +187,11 @@ class NftCreationNotifier extends StateNotifier<NftCreation> {
 
     final newPropertiesToSet = [
       ...state.properties,
-      NftCreationProperty(
+      NftCreationFormDataProperty(
         propertyName: 'file',
         propertyValue: file64,
       ),
-      NftCreationProperty(
+      NftCreationFormDataProperty(
         propertyName: 'type/mime',
         propertyValue: typeMime,
       ),
@@ -184,8 +206,127 @@ class NftCreationNotifier extends StateNotifier<NftCreation> {
       properties: newPropertiesToSet,
     );
   }
+
+  Future<void> buildTransaction(
+    String seed,
+    String accountSelectedName,
+  ) async {
+    final originPrivateKey = sl.get<ApiService>().getOriginKey();
+    final keychain = await sl.get<ApiService>().getKeychain(seed);
+
+    final nameEncoded = Uri.encodeFull(
+      accountSelectedName,
+    );
+    final service = 'archethic-wallet-$nameEncoded';
+    final index = (await sl.get<ApiService>().getTransactionIndex(
+              uint8ListToHex(
+                keychain.deriveAddress(
+                  service,
+                ),
+              ),
+            ))
+        .chainLength!;
+
+    var tokenProperties = <String, dynamic>{};
+    for (final element in state.properties) {
+      tokenProperties = {element.propertyName: element.propertyValue};
+    }
+
+    final transaction = NftTransactionBuilder.build(
+      tokenInitialSupply: 1,
+      tokenName: state.name,
+      tokenSymbol: state.symbol,
+      tokenProperties: tokenProperties,
+      index: index,
+      keychain: keychain,
+      originPrivateKey: originPrivateKey,
+      serviceName: service,
+    );
+    state = state.copyWith(
+      transaction: transaction,
+    );
+  }
+
+  Future<void> send(BuildContext context) async {
+    final localizations = AppLocalization.of(context)!;
+
+    final preferences = await Preferences.getInstance();
+
+    final TransactionSenderInterface transactionSender =
+        ArchethicTransactionSender(
+      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+    );
+
+    transactionSender.send(
+      transaction: state.transaction!,
+      onConfirmation: (confirmation) async {
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
+            transactionType: TransactionSendEventType.token,
+            response: 'ok',
+            nbConfirmations: confirmation.nbConfirmations,
+            transactionAddress: state.transaction!.address,
+            maxConfirmations: confirmation.maxConfirmations,
+          ),
+        );
+      },
+      onError: (error) async {
+        error.maybeMap(
+          connectivity: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.noConnection,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          invalidConfirmation: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                nbConfirmations: 0,
+                maxConfirmations: 0,
+                response: 'ko',
+              ),
+            );
+          },
+          insufficientFunds: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.insufficientBalance
+                    .replaceAll('%1', state.symbol),
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          other: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.keychainNotExistWarning,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          orElse: () {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: '',
+                nbConfirmations: 0,
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }
 
-abstract class NftCreationProvider {
-  static final nftCreation = _nftCreationProvider;
+abstract class NftCreationFormProvider {
+  static final initialNftCreationForm = _initialNftCreationFormProvider;
+  static final nftCreationForm = _nftCreationFormProvider;
 }

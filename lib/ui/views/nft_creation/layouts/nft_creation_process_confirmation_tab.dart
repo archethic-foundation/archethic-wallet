@@ -20,14 +20,14 @@ class _NFTCreationProcessConfirmationTabState
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
-        ref.watch(NftCreationProvider.nftCreation.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     const feeEstimation = 0.0;
     var addNFTMessage = '';
 
     Future<bool> validateAddNFT(BuildContext context) async {
-      final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+      final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
       var isValid = true;
 
       addNFTMessage = '';
@@ -45,7 +45,7 @@ class _NFTCreationProcessConfirmationTabState
             addNFTMessage = localizations.nftFormatNotSupportedEmpty;
             isValid = false;
           } else {
-            if (nftCreation.fileSize! > 2500000) {
+            if (nftCreation.fileSize > 2500000) {
               addNFTMessage = localizations.nftSizeExceed;
               isValid = false;
             } else {
