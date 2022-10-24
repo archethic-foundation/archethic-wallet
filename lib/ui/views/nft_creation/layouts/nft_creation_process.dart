@@ -20,7 +20,7 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/model.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/category_template_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access.dart';
@@ -71,7 +71,7 @@ class NFTCreationProcess extends ConsumerWidget {
     return ProviderScope(
       overrides: [
         NftCreationFormProvider.initialNftCreationForm.overrideWithValue(
-          const NftCreationFormData(),
+          const NftCreationFormState(),
         ),
       ],
       child: NFTCreationProcessBody(
@@ -135,7 +135,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
         .appKeychain!
         .getAccountSelected()!
         .updateNftInfosOffChain(
-          tokenAddress: event.params!['transactionAddress']! as String,
+          tokenAddress: event.transactionAddress,
           categoryNftIndex: widget.currentNftCategoryIndex,
         );
 
@@ -389,7 +389,8 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
                         ),
                         const NFTCreationProcessInfosTab(),
                         NFTCreationProcessPropertiesTab(
-                          widget.currentNftCategoryIndex,
+                          currentNftCategoryIndex:
+                              widget.currentNftCategoryIndex,
                         ),
                         NFTCreationProcessConfirmationTab(
                           tabActiveIndex: tabActiveIndex,

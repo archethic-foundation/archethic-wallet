@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'model.dart';
+part of 'state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$NftCreationFormData {
+mixin _$NftCreationFormState {
   Map<File, List<String>>? get file => throw _privateConstructorUsedError;
   FileImportType? get fileImportType => throw _privateConstructorUsedError;
   Uint8List? get fileDecoded => throw _privateConstructorUsedError;
@@ -24,7 +24,7 @@ mixin _$NftCreationFormData {
   int get fileSize => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  List<NftCreationFormDataProperty> get properties =>
+  List<NftCreationFormStateProperty> get properties =>
       throw _privateConstructorUsedError;
   bool get canAddProperty => throw _privateConstructorUsedError;
   bool get canCreateNFT => throw _privateConstructorUsedError;
@@ -33,15 +33,15 @@ mixin _$NftCreationFormData {
   Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $NftCreationFormDataCopyWith<NftCreationFormData> get copyWith =>
+  $NftCreationFormStateCopyWith<NftCreationFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NftCreationFormDataCopyWith<$Res> {
-  factory $NftCreationFormDataCopyWith(
-          NftCreationFormData value, $Res Function(NftCreationFormData) then) =
-      _$NftCreationFormDataCopyWithImpl<$Res>;
+abstract class $NftCreationFormStateCopyWith<$Res> {
+  factory $NftCreationFormStateCopyWith(NftCreationFormState value,
+          $Res Function(NftCreationFormState) then) =
+      _$NftCreationFormStateCopyWithImpl<$Res>;
   $Res call(
       {Map<File, List<String>>? file,
       FileImportType? fileImportType,
@@ -51,7 +51,7 @@ abstract class $NftCreationFormDataCopyWith<$Res> {
       int fileSize,
       String name,
       String description,
-      List<NftCreationFormDataProperty> properties,
+      List<NftCreationFormStateProperty> properties,
       bool canAddProperty,
       bool canCreateNFT,
       bool canAddAccess,
@@ -60,13 +60,13 @@ abstract class $NftCreationFormDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NftCreationFormDataCopyWithImpl<$Res>
-    implements $NftCreationFormDataCopyWith<$Res> {
-  _$NftCreationFormDataCopyWithImpl(this._value, this._then);
+class _$NftCreationFormStateCopyWithImpl<$Res>
+    implements $NftCreationFormStateCopyWith<$Res> {
+  _$NftCreationFormStateCopyWithImpl(this._value, this._then);
 
-  final NftCreationFormData _value;
+  final NftCreationFormState _value;
   // ignore: unused_field
-  final $Res Function(NftCreationFormData) _then;
+  final $Res Function(NftCreationFormState) _then;
 
   @override
   $Res call({
@@ -121,7 +121,7 @@ class _$NftCreationFormDataCopyWithImpl<$Res>
       properties: properties == freezed
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as List<NftCreationFormDataProperty>,
+              as List<NftCreationFormStateProperty>,
       canAddProperty: canAddProperty == freezed
           ? _value.canAddProperty
           : canAddProperty // ignore: cast_nullable_to_non_nullable
@@ -147,11 +147,11 @@ class _$NftCreationFormDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_NftCreationFormDataCopyWith<$Res>
-    implements $NftCreationFormDataCopyWith<$Res> {
-  factory _$$_NftCreationFormDataCopyWith(_$_NftCreationFormData value,
-          $Res Function(_$_NftCreationFormData) then) =
-      __$$_NftCreationFormDataCopyWithImpl<$Res>;
+abstract class _$$_NftCreationFormStateCopyWith<$Res>
+    implements $NftCreationFormStateCopyWith<$Res> {
+  factory _$$_NftCreationFormStateCopyWith(_$_NftCreationFormState value,
+          $Res Function(_$_NftCreationFormState) then) =
+      __$$_NftCreationFormStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {Map<File, List<String>>? file,
@@ -162,7 +162,7 @@ abstract class _$$_NftCreationFormDataCopyWith<$Res>
       int fileSize,
       String name,
       String description,
-      List<NftCreationFormDataProperty> properties,
+      List<NftCreationFormStateProperty> properties,
       bool canAddProperty,
       bool canCreateNFT,
       bool canAddAccess,
@@ -171,15 +171,15 @@ abstract class _$$_NftCreationFormDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NftCreationFormDataCopyWithImpl<$Res>
-    extends _$NftCreationFormDataCopyWithImpl<$Res>
-    implements _$$_NftCreationFormDataCopyWith<$Res> {
-  __$$_NftCreationFormDataCopyWithImpl(_$_NftCreationFormData _value,
-      $Res Function(_$_NftCreationFormData) _then)
-      : super(_value, (v) => _then(v as _$_NftCreationFormData));
+class __$$_NftCreationFormStateCopyWithImpl<$Res>
+    extends _$NftCreationFormStateCopyWithImpl<$Res>
+    implements _$$_NftCreationFormStateCopyWith<$Res> {
+  __$$_NftCreationFormStateCopyWithImpl(_$_NftCreationFormState _value,
+      $Res Function(_$_NftCreationFormState) _then)
+      : super(_value, (v) => _then(v as _$_NftCreationFormState));
 
   @override
-  _$_NftCreationFormData get _value => super._value as _$_NftCreationFormData;
+  _$_NftCreationFormState get _value => super._value as _$_NftCreationFormState;
 
   @override
   $Res call({
@@ -198,7 +198,7 @@ class __$$_NftCreationFormDataCopyWithImpl<$Res>
     Object? symbol = freezed,
     Object? transaction = freezed,
   }) {
-    return _then(_$_NftCreationFormData(
+    return _then(_$_NftCreationFormState(
       file: file == freezed
           ? _value._file
           : file // ignore: cast_nullable_to_non_nullable
@@ -234,7 +234,7 @@ class __$$_NftCreationFormDataCopyWithImpl<$Res>
       properties: properties == freezed
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as List<NftCreationFormDataProperty>,
+              as List<NftCreationFormStateProperty>,
       canAddProperty: canAddProperty == freezed
           ? _value.canAddProperty
           : canAddProperty // ignore: cast_nullable_to_non_nullable
@@ -261,8 +261,8 @@ class __$$_NftCreationFormDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NftCreationFormData extends _NftCreationFormData {
-  const _$_NftCreationFormData(
+class _$_NftCreationFormState extends _NftCreationFormState {
+  const _$_NftCreationFormState(
       {final Map<File, List<String>>? file,
       this.fileImportType,
       this.fileDecoded,
@@ -271,7 +271,7 @@ class _$_NftCreationFormData extends _NftCreationFormData {
       this.fileSize = 0,
       this.name = '',
       this.description = '',
-      final List<NftCreationFormDataProperty> properties = const [],
+      final List<NftCreationFormStateProperty> properties = const [],
       this.canAddProperty = false,
       this.canCreateNFT = false,
       this.canAddAccess = false,
@@ -308,10 +308,10 @@ class _$_NftCreationFormData extends _NftCreationFormData {
   @override
   @JsonKey()
   final String description;
-  final List<NftCreationFormDataProperty> _properties;
+  final List<NftCreationFormStateProperty> _properties;
   @override
   @JsonKey()
-  List<NftCreationFormDataProperty> get properties {
+  List<NftCreationFormStateProperty> get properties {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_properties);
   }
@@ -333,14 +333,14 @@ class _$_NftCreationFormData extends _NftCreationFormData {
 
   @override
   String toString() {
-    return 'NftCreationFormData(file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canCreateNFT: $canCreateNFT, canAddAccess: $canAddAccess, symbol: $symbol, transaction: $transaction)';
+    return 'NftCreationFormState(file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canCreateNFT: $canCreateNFT, canAddAccess: $canAddAccess, symbol: $symbol, transaction: $transaction)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NftCreationFormData &&
+            other is _$_NftCreationFormState &&
             const DeepCollectionEquality().equals(other._file, _file) &&
             const DeepCollectionEquality()
                 .equals(other.fileImportType, fileImportType) &&
@@ -387,13 +387,13 @@ class _$_NftCreationFormData extends _NftCreationFormData {
 
   @JsonKey(ignore: true)
   @override
-  _$$_NftCreationFormDataCopyWith<_$_NftCreationFormData> get copyWith =>
-      __$$_NftCreationFormDataCopyWithImpl<_$_NftCreationFormData>(
+  _$$_NftCreationFormStateCopyWith<_$_NftCreationFormState> get copyWith =>
+      __$$_NftCreationFormStateCopyWithImpl<_$_NftCreationFormState>(
           this, _$identity);
 }
 
-abstract class _NftCreationFormData extends NftCreationFormData {
-  const factory _NftCreationFormData(
+abstract class _NftCreationFormState extends NftCreationFormState {
+  const factory _NftCreationFormState(
       {final Map<File, List<String>>? file,
       final FileImportType? fileImportType,
       final Uint8List? fileDecoded,
@@ -402,13 +402,13 @@ abstract class _NftCreationFormData extends NftCreationFormData {
       final int fileSize,
       final String name,
       final String description,
-      final List<NftCreationFormDataProperty> properties,
+      final List<NftCreationFormStateProperty> properties,
       final bool canAddProperty,
       final bool canCreateNFT,
       final bool canAddAccess,
       final String symbol,
-      final Transaction? transaction}) = _$_NftCreationFormData;
-  const _NftCreationFormData._() : super._();
+      final Transaction? transaction}) = _$_NftCreationFormState;
+  const _NftCreationFormState._() : super._();
 
   @override
   Map<File, List<String>>? get file;
@@ -427,7 +427,7 @@ abstract class _NftCreationFormData extends NftCreationFormData {
   @override
   String get description;
   @override
-  List<NftCreationFormDataProperty> get properties;
+  List<NftCreationFormStateProperty> get properties;
   @override
   bool get canAddProperty;
   @override
@@ -440,39 +440,39 @@ abstract class _NftCreationFormData extends NftCreationFormData {
   Transaction? get transaction;
   @override
   @JsonKey(ignore: true)
-  _$$_NftCreationFormDataCopyWith<_$_NftCreationFormData> get copyWith =>
+  _$$_NftCreationFormStateCopyWith<_$_NftCreationFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$NftCreationFormDataProperty {
+mixin _$NftCreationFormStateProperty {
   String get propertyName => throw _privateConstructorUsedError;
   String get propertyValue => throw _privateConstructorUsedError;
   List<String> get publicKeys => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $NftCreationFormDataPropertyCopyWith<NftCreationFormDataProperty>
+  $NftCreationFormStatePropertyCopyWith<NftCreationFormStateProperty>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NftCreationFormDataPropertyCopyWith<$Res> {
-  factory $NftCreationFormDataPropertyCopyWith(
-          NftCreationFormDataProperty value,
-          $Res Function(NftCreationFormDataProperty) then) =
-      _$NftCreationFormDataPropertyCopyWithImpl<$Res>;
+abstract class $NftCreationFormStatePropertyCopyWith<$Res> {
+  factory $NftCreationFormStatePropertyCopyWith(
+          NftCreationFormStateProperty value,
+          $Res Function(NftCreationFormStateProperty) then) =
+      _$NftCreationFormStatePropertyCopyWithImpl<$Res>;
   $Res call(
       {String propertyName, String propertyValue, List<String> publicKeys});
 }
 
 /// @nodoc
-class _$NftCreationFormDataPropertyCopyWithImpl<$Res>
-    implements $NftCreationFormDataPropertyCopyWith<$Res> {
-  _$NftCreationFormDataPropertyCopyWithImpl(this._value, this._then);
+class _$NftCreationFormStatePropertyCopyWithImpl<$Res>
+    implements $NftCreationFormStatePropertyCopyWith<$Res> {
+  _$NftCreationFormStatePropertyCopyWithImpl(this._value, this._then);
 
-  final NftCreationFormDataProperty _value;
+  final NftCreationFormStateProperty _value;
   // ignore: unused_field
-  final $Res Function(NftCreationFormDataProperty) _then;
+  final $Res Function(NftCreationFormStateProperty) _then;
 
   @override
   $Res call({
@@ -498,29 +498,29 @@ class _$NftCreationFormDataPropertyCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_NftCreationFormDataPropertyCopyWith<$Res>
-    implements $NftCreationFormDataPropertyCopyWith<$Res> {
-  factory _$$_NftCreationFormDataPropertyCopyWith(
-          _$_NftCreationFormDataProperty value,
-          $Res Function(_$_NftCreationFormDataProperty) then) =
-      __$$_NftCreationFormDataPropertyCopyWithImpl<$Res>;
+abstract class _$$_NftCreationFormStatePropertyCopyWith<$Res>
+    implements $NftCreationFormStatePropertyCopyWith<$Res> {
+  factory _$$_NftCreationFormStatePropertyCopyWith(
+          _$_NftCreationFormStateProperty value,
+          $Res Function(_$_NftCreationFormStateProperty) then) =
+      __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>;
   @override
   $Res call(
       {String propertyName, String propertyValue, List<String> publicKeys});
 }
 
 /// @nodoc
-class __$$_NftCreationFormDataPropertyCopyWithImpl<$Res>
-    extends _$NftCreationFormDataPropertyCopyWithImpl<$Res>
-    implements _$$_NftCreationFormDataPropertyCopyWith<$Res> {
-  __$$_NftCreationFormDataPropertyCopyWithImpl(
-      _$_NftCreationFormDataProperty _value,
-      $Res Function(_$_NftCreationFormDataProperty) _then)
-      : super(_value, (v) => _then(v as _$_NftCreationFormDataProperty));
+class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
+    extends _$NftCreationFormStatePropertyCopyWithImpl<$Res>
+    implements _$$_NftCreationFormStatePropertyCopyWith<$Res> {
+  __$$_NftCreationFormStatePropertyCopyWithImpl(
+      _$_NftCreationFormStateProperty _value,
+      $Res Function(_$_NftCreationFormStateProperty) _then)
+      : super(_value, (v) => _then(v as _$_NftCreationFormStateProperty));
 
   @override
-  _$_NftCreationFormDataProperty get _value =>
-      super._value as _$_NftCreationFormDataProperty;
+  _$_NftCreationFormStateProperty get _value =>
+      super._value as _$_NftCreationFormStateProperty;
 
   @override
   $Res call({
@@ -528,7 +528,7 @@ class __$$_NftCreationFormDataPropertyCopyWithImpl<$Res>
     Object? propertyValue = freezed,
     Object? publicKeys = freezed,
   }) {
-    return _then(_$_NftCreationFormDataProperty(
+    return _then(_$_NftCreationFormStateProperty(
       propertyName: propertyName == freezed
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
@@ -547,8 +547,8 @@ class __$$_NftCreationFormDataPropertyCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NftCreationFormDataProperty extends _NftCreationFormDataProperty {
-  const _$_NftCreationFormDataProperty(
+class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
+  const _$_NftCreationFormStateProperty(
       {this.propertyName = '',
       this.propertyValue = '',
       final List<String> publicKeys = const []})
@@ -571,14 +571,14 @@ class _$_NftCreationFormDataProperty extends _NftCreationFormDataProperty {
 
   @override
   String toString() {
-    return 'NftCreationFormDataProperty(propertyName: $propertyName, propertyValue: $propertyValue, publicKeys: $publicKeys)';
+    return 'NftCreationFormStateProperty(propertyName: $propertyName, propertyValue: $propertyValue, publicKeys: $publicKeys)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NftCreationFormDataProperty &&
+            other is _$_NftCreationFormStateProperty &&
             const DeepCollectionEquality()
                 .equals(other.propertyName, propertyName) &&
             const DeepCollectionEquality()
@@ -596,18 +596,18 @@ class _$_NftCreationFormDataProperty extends _NftCreationFormDataProperty {
 
   @JsonKey(ignore: true)
   @override
-  _$$_NftCreationFormDataPropertyCopyWith<_$_NftCreationFormDataProperty>
-      get copyWith => __$$_NftCreationFormDataPropertyCopyWithImpl<
-          _$_NftCreationFormDataProperty>(this, _$identity);
+  _$$_NftCreationFormStatePropertyCopyWith<_$_NftCreationFormStateProperty>
+      get copyWith => __$$_NftCreationFormStatePropertyCopyWithImpl<
+          _$_NftCreationFormStateProperty>(this, _$identity);
 }
 
-abstract class _NftCreationFormDataProperty
-    extends NftCreationFormDataProperty {
-  const factory _NftCreationFormDataProperty(
+abstract class _NftCreationFormStateProperty
+    extends NftCreationFormStateProperty {
+  const factory _NftCreationFormStateProperty(
       {final String propertyName,
       final String propertyValue,
-      final List<String> publicKeys}) = _$_NftCreationFormDataProperty;
-  const _NftCreationFormDataProperty._() : super._();
+      final List<String> publicKeys}) = _$_NftCreationFormStateProperty;
+  const _NftCreationFormStateProperty._() : super._();
 
   @override
   String get propertyName;
@@ -617,6 +617,6 @@ abstract class _NftCreationFormDataProperty
   List<String> get publicKeys;
   @override
   @JsonKey(ignore: true)
-  _$$_NftCreationFormDataPropertyCopyWith<_$_NftCreationFormDataProperty>
+  _$$_NftCreationFormStatePropertyCopyWith<_$_NftCreationFormStateProperty>
       get copyWith => throw _privateConstructorUsedError;
 }

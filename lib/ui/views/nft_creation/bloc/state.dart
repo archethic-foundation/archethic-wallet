@@ -5,13 +5,13 @@ import 'dart:typed_data';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'model.freezed.dart';
+part 'state.freezed.dart';
 
 enum FileImportType { file, image, camera }
 
 @freezed
-class NftCreationFormData with _$NftCreationFormData {
-  const factory NftCreationFormData({
+class NftCreationFormState with _$NftCreationFormState {
+  const factory NftCreationFormState({
     Map<File, List<String>>? file,
     FileImportType? fileImportType,
     Uint8List? fileDecoded,
@@ -20,22 +20,22 @@ class NftCreationFormData with _$NftCreationFormData {
     @Default(0) int fileSize,
     @Default('') String name,
     @Default('') String description,
-    @Default([]) List<NftCreationFormDataProperty> properties,
+    @Default([]) List<NftCreationFormStateProperty> properties,
     @Default(false) bool canAddProperty,
     @Default(false) bool canCreateNFT,
     @Default(false) bool canAddAccess,
     @Default('') String symbol,
     Transaction? transaction,
-  }) = _NftCreationFormData;
-  const NftCreationFormData._();
+  }) = _NftCreationFormState;
+  const NftCreationFormState._();
 }
 
 @freezed
-class NftCreationFormDataProperty with _$NftCreationFormDataProperty {
-  const factory NftCreationFormDataProperty({
+class NftCreationFormStateProperty with _$NftCreationFormStateProperty {
+  const factory NftCreationFormStateProperty({
     @Default('') String propertyName,
     @Default('') String propertyValue,
     @Default([]) List<String> publicKeys,
-  }) = _NftCreationFormDataProperty;
-  const NftCreationFormDataProperty._();
+  }) = _NftCreationFormStateProperty;
+  const NftCreationFormStateProperty._();
 }

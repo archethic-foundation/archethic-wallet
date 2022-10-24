@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/model.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

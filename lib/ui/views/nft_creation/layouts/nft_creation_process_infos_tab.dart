@@ -1,20 +1,46 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'nft_creation_process.dart';
 
-class NFTCreationProcessInfosTab extends ConsumerWidget {
-  const NFTCreationProcessInfosTab({super.key});
+class NFTCreationProcessInfosTab extends ConsumerStatefulWidget {
+  const NFTCreationProcessInfosTab({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NFTCreationProcessInfosTab> createState() =>
+      _NFTCreationProcessInfosTabState();
+}
+
+class _NFTCreationProcessInfosTabState
+    extends ConsumerState<NFTCreationProcessInfosTab> {
+  late FocusNode nftNameFocusNode;
+  late FocusNode nftDescriptionFocusNode;
+  late TextEditingController nftNameController;
+  late TextEditingController nftDescriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    nftNameFocusNode = FocusNode();
+    nftDescriptionFocusNode = FocusNode();
+    nftNameController = TextEditingController();
+    nftDescriptionController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nftNameFocusNode.dispose();
+    nftDescriptionFocusNode.dispose();
+    nftNameController.dispose();
+    nftDescriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-
-    final nftNameFocusNode = FocusNode();
-    final nftDescriptionFocusNode = FocusNode();
-    final nftNameController = TextEditingController();
-    final nftDescriptionController = TextEditingController();
-
     final nftCreationNotifier =
         ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);

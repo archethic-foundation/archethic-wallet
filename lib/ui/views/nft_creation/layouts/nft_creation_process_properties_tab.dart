@@ -1,27 +1,53 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'nft_creation_process.dart';
 
-class NFTCreationProcessPropertiesTab extends ConsumerWidget {
-  const NFTCreationProcessPropertiesTab(
-    this.currentNftCategoryIndex, {
+class NFTCreationProcessPropertiesTab extends ConsumerStatefulWidget {
+  const NFTCreationProcessPropertiesTab({
+    required this.currentNftCategoryIndex,
     super.key,
   });
 
   final int currentNftCategoryIndex;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NFTCreationProcessPropertiesTab> createState() =>
+      _NFTCreationProcessPropertiesTabState();
+}
+
+class _NFTCreationProcessPropertiesTabState
+    extends ConsumerState<NFTCreationProcessPropertiesTab> {
+  late FocusNode nftPropertyNameFocusNode;
+  late FocusNode nftPropertyValueFocusNode;
+  late TextEditingController nftPropertySearchController;
+  late TextEditingController nftPropertyNameController;
+  late TextEditingController nftPropertyValueController;
+
+  @override
+  void initState() {
+    super.initState();
+    nftPropertyNameFocusNode = FocusNode();
+    nftPropertyValueFocusNode = FocusNode();
+    nftPropertySearchController = TextEditingController();
+    nftPropertyNameController = TextEditingController();
+    nftPropertyValueController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nftPropertyNameFocusNode.dispose();
+    nftPropertyValueFocusNode.dispose();
+    nftPropertySearchController.dispose();
+    nftPropertyNameController.dispose();
+    nftPropertyValueController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-
-    final nftPropertyNameFocusNode = FocusNode();
-    final nftPropertyValueFocusNode = FocusNode();
-    final nftPropertySearchController = TextEditingController();
-    final nftPropertyNameController = TextEditingController();
-    final nftPropertyValueController = TextEditingController();
     var addNFTPropertyMessage = '';
-
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
         ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
@@ -65,7 +91,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
               ),
             ),
             CategoryTemplateForm(
-              currentNftCategoryIndex: currentNftCategoryIndex,
+              currentNftCategoryIndex: widget.currentNftCategoryIndex,
             ),
             AppTextField(
               focusNode: nftPropertyNameFocusNode,
