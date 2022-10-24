@@ -5,7 +5,7 @@ import 'dart:typed_data';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/model.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/transaction_builder.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -18,28 +18,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mime_dart/mime_dart.dart';
 import 'package:path/path.dart' as path;
 import 'package:pdfx/pdfx.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _initialNftCreationFormProvider =
-    Provider.autoDispose<NftCreationFormData>(
+final _initialNftCreationFormProvider = Provider<NftCreationFormState>(
   (ref) {
     throw UnimplementedError();
   },
 );
 
 final _nftCreationFormProvider =
-    StateNotifierProvider.autoDispose<NftCreationNotifier, NftCreationFormData>(
-  (ref) {
-    final initialNftCreationForm =
-        ref.watch(NftCreationFormProvider.initialNftCreationForm);
-    return NftCreationNotifier(initialNftCreationForm);
+    NotifierProvider.autoDispose<NftCreationFormNotifier, NftCreationFormState>(
+  () {
+    return NftCreationFormNotifier();
   },
-  dependencies: [NftCreationFormProvider.initialNftCreationForm],
+  dependencies: [
+    NftCreationFormProvider.initialNftCreationForm,
+  ],
 );
 
-class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
-  NftCreationNotifier(
-    super.state,
-  );
+class NftCreationFormNotifier
+    extends AutoDisposeNotifier<NftCreationFormState> {
+  NftCreationFormNotifier();
+
+  @override
+  NftCreationFormState build() => ref.watch(
+        NftCreationFormProvider.initialNftCreationForm,
+      );
 
   void canAddProperty(String propertyName, String propertyValue) {
     if (propertyName.isNotEmpty && propertyValue.isNotEmpty) {
@@ -94,10 +98,10 @@ class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
   void removeFileProperties() {
     final propertiesToRemove = [...state.properties];
     propertiesToRemove.removeWhere(
-      (NftCreationFormDataProperty element) => element.propertyName == 'file',
+      (NftCreationFormStateProperty element) => element.propertyName == 'file',
     );
     propertiesToRemove.removeWhere(
-      (NftCreationFormDataProperty element) =>
+      (NftCreationFormStateProperty element) =>
           element.propertyName == 'type/mime',
     );
 
@@ -113,7 +117,7 @@ class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
   void removeProperty(String propertyName) {
     final propertiesToRemove = [...state.properties];
     propertiesToRemove.removeWhere(
-      (NftCreationFormDataProperty element) =>
+      (NftCreationFormStateProperty element) =>
           element.propertyName == propertyName,
     );
     state = state.copyWith(
@@ -122,13 +126,16 @@ class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
   }
 
   void setProperty(String propertyName, String propertyValue) {
-    final propertiesToSet = [
-      ...state.properties,
-      NftCreationFormDataProperty(
+    final propertiesToSet = [...state.properties];
+    propertiesToSet.removeWhere(
+      (element) => element.propertyName == propertyName,
+    );
+    propertiesToSet.add(
+      NftCreationFormStateProperty(
         propertyName: propertyName,
         propertyValue: propertyValue,
       ),
-    ];
+    );
     propertiesToSet.sort((a, b) => a.propertyName.compareTo(b.propertyName));
     state = state.copyWith(
       properties: propertiesToSet,
@@ -187,11 +194,11 @@ class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
 
     final newPropertiesToSet = [
       ...state.properties,
-      NftCreationFormDataProperty(
+      NftCreationFormStateProperty(
         propertyName: 'file',
         propertyValue: file64,
       ),
-      NftCreationFormDataProperty(
+      NftCreationFormStateProperty(
         propertyName: 'type/mime',
         propertyValue: typeMime,
       ),
@@ -227,9 +234,9 @@ class NftCreationNotifier extends StateNotifier<NftCreationFormData> {
             ))
         .chainLength!;
 
-    var tokenProperties = <String, dynamic>{};
+    final tokenProperties = <String, dynamic>{};
     for (final element in state.properties) {
-      tokenProperties = {element.propertyName: element.propertyValue};
+      tokenProperties[element.propertyName] = element.propertyValue;
     }
 
     final transaction = NftTransactionBuilder.build(

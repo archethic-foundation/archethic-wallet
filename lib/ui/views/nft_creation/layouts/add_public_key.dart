@@ -26,7 +26,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AddPublicKey extends ConsumerWidget {
+class AddPublicKey extends ConsumerStatefulWidget {
   const AddPublicKey({
     super.key,
     required this.propertyName,
@@ -37,14 +37,34 @@ class AddPublicKey extends ConsumerWidget {
   final String propertyValue;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AddPublicKey> createState() => _AddPublicKeyState();
+}
+
+class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
+  late FocusNode publicKeyAccessFocusNode;
+  late TextEditingController publicKeyAccessController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    publicKeyAccessFocusNode = FocusNode();
+    publicKeyAccessController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    publicKeyAccessFocusNode.dispose();
+    publicKeyAccessController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-
-    final publicKeyAccessFocusNode = FocusNode();
-    final publicKeyAccessController = TextEditingController();
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.read(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
         ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
@@ -67,10 +87,10 @@ class AddPublicKey extends ConsumerWidget {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            propertyName,
+                            widget.propertyName,
                           ),
                           Text(
-                            propertyValue,
+                            widget.propertyValue,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
@@ -95,7 +115,7 @@ class AddPublicKey extends ConsumerWidget {
                             ],
                             onChanged: (text) {
                               nftCreationNotifier.addPublicKey(
-                                propertyName,
+                                widget.propertyName,
                                 text,
                               );
                             },
@@ -190,7 +210,7 @@ class AddPublicKey extends ConsumerWidget {
                                             .nftCreationForm.notifier,
                                       );
                                       nftCreationNotifier.addPublicKey(
-                                        propertyName,
+                                        widget.propertyName,
                                         publicKeyAccessController.text,
                                       );
 
@@ -209,8 +229,8 @@ class AddPublicKey extends ConsumerWidget {
                             ],
                           ),
                           GetPublicKeys(
-                            propertyName: propertyName,
-                            propertyValue: propertyValue,
+                            propertyName: widget.propertyName,
+                            propertyValue: widget.propertyValue,
                           ),
                         ],
                       ),
