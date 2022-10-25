@@ -40,6 +40,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -177,6 +178,13 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                                 Sheets.showAppHeightNineSheet(
                                   context: context,
                                   ref: ref,
+                                  overrides: [
+                                    NftCreationFormProvider
+                                        .initialNftCreationForm
+                                        .overrideWithValue(
+                                      nftCreation,
+                                    ),
+                                  ],
                                   widget: AddPublicKey(
                                     propertyName: propertyName,
                                     propertyValue: propertyValue,

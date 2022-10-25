@@ -159,6 +159,12 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                             Sheets.showAppHeightNineSheet(
                               context: context,
                               ref: ref,
+                              overrides: [
+                                NftCreationFormProvider.initialNftCreationForm
+                                    .overrideWithValue(
+                                  nftCreation,
+                                ),
+                              ],
                               widget: const AddPublicKey(
                                 propertyName: 'file',
                                 propertyValue: '',
