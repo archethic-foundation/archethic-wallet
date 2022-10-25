@@ -113,10 +113,11 @@ class Preferences {
       _setValue(curNetwork, network.getIndex());
 
   NetworksSetting getNetwork() => NetworksSetting(
-        AvailableNetworks.values[_getValue(
+        network: AvailableNetworks.values[_getValue(
           curNetwork,
           defaultValue: AvailableNetworks.archethicMainNet.index,
         )],
+        networkDevEndpoint: getNetworkDevEndpoint(),
       );
 
   Future<void> setNetworkDevEndpoint(String s) =>

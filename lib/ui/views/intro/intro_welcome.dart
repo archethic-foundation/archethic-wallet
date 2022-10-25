@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -22,8 +22,6 @@ class IntroWelcome extends ConsumerStatefulWidget {
 
 class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
   bool checkedValue = false;
-  NetworksSetting _curNetworksSetting =
-      const NetworksSetting(AvailableNetworks.archethicMainNet);
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +203,10 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
   }
 
   Future<void> _networkDialog() async {
-    _curNetworksSetting =
-        (await NetworkDialog.getDialog(context, ref, _curNetworksSetting))!;
-    setState(() {});
+    (await NetworkDialog.getDialog(
+      context,
+      ref,
+      ref.read(SettingsProviders.localSettingsRepository).getNetwork(),
+    ))!;
   }
 }

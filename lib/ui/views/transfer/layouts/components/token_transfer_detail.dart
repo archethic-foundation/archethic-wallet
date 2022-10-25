@@ -75,7 +75,7 @@ class TokenTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standardSmallValue(
-                  transfer.feeEstimation,
+                  transfer.feeEstimation.valueOrNull ?? 0,
                   StateContainer.of(context)
                       .curNetwork
                       .getNetworkCryptoCurrencyLabel(),

@@ -3,8 +3,8 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'state.freezed.dart';
 
@@ -18,7 +18,7 @@ class TransferFormState with _$TransferFormState {
     @Default(TransferType.uco) TransferType transferType,
     required String seed,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
-    @Default(0.0) double feeEstimation,
+    required AsyncValue<double> feeEstimation,
     @Default(false) bool canTransfer,
     @Default(0.0) double amount,
     required double accountBalance,
@@ -28,14 +28,18 @@ class TransferFormState with _$TransferFormState {
     @Default('') String errorAddressText,
     @Default('') String errorAmountText,
     @Default('') String errorMessageText,
-    Transaction? transaction,
   }) = _TransferFormState;
   const TransferFormState._();
 
   bool get isControlsOk =>
       errorAddressText == '' && errorAmountText == '' && errorMessageText == '';
 
-  bool get isMaxAmount => (amount + feeEstimation) >= accountBalance;
+  bool get showMaxAmountButton {
+    final fees = feeEstimation.valueOrNull ?? 0;
+    return (amount + fees) < accountBalance;
+  }
+
+  double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
   String symbol(BuildContext context) => transferType == TransferType.uco
       ? StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()
@@ -60,4 +64,6 @@ class TransferRecipient with _$TransferRecipient {
         contact: (contact) => Address(contact.address),
         unknownContact: (_) => null,
       );
+
+  bool get isAddressValid => (address ?? const Address('')).isValid;
 }

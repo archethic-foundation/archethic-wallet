@@ -84,26 +84,29 @@ class TransferFormSheet extends ConsumerWidget {
                               margin: const EdgeInsets.symmetric(
                                 horizontal: 30,
                               ),
-                              child: transfer.feeEstimation > 0
-                                  ? Text(
-                                      '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(transfer.feeEstimation, StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel())}',
+                              child: transfer.feeEstimation.maybeWhen(
+                                loading: () => SizedBox.square(
+                                  dimension: 34,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1,
+                                    color: theme.text,
+                                  ),
+                                ),
+                                data: (data) {
+                                  if (data > 0) {
+                                    return Text(
+                                      '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(data, StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel())}\n(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transfer.feeEstimation.valueOrNull ?? 0, 8)})',
                                       style: theme.textStyleSize14W100Primary,
-                                    )
-                                  : Text(
-                                      localizations.estimatedFeesNote,
-                                      style: theme.textStyleSize14W100Primary,
-                                    ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 30,
+                                      textAlign: TextAlign.center,
+                                    );
+                                  }
+                                  return Text(
+                                    localizations.estimatedFeesNote,
+                                    style: theme.textStyleSize14W100Primary,
+                                  );
+                                },
+                                orElse: SizedBox.new,
                               ),
-                              child: transfer.feeEstimation > 0
-                                  ? Text(
-                                      '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transfer.feeEstimation, 8)})',
-                                      style: theme.textStyleSize14W100Primary,
-                                    )
-                                  : const SizedBox(),
                             ),
                             const SizedBox(height: 10),
                             TransferTextFieldMessage(

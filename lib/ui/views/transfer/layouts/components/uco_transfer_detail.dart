@@ -75,7 +75,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standardSmallValue(
-                  transfer.feeEstimation,
+                  transfer.feeEstimationOrZero,
                   StateContainer.of(context)
                       .curNetwork
                       .getNetworkCryptoCurrencyLabel(),
@@ -92,7 +92,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  transfer.feeEstimation + transfer.amount,
+                  transfer.feeEstimationOrZero + transfer.amount,
                   StateContainer.of(context)
                       .curNetwork
                       .getNetworkCryptoCurrencyLabel(),
@@ -110,7 +110,7 @@ class UCOTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standard(
                   accountSelected.balance!.nativeTokenValue! -
-                      (transfer.feeEstimation + transfer.amount),
+                      (transfer.feeEstimationOrZero + transfer.amount),
                   transfer.symbol(context),
                 ),
                 style: theme.textStyleSize12W400Primary,

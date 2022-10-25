@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transfer.dart';
@@ -8,10 +9,9 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
-import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,24 +38,58 @@ final _transferFormProvider =
 class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   TransferFormNotifier();
 
+  CancelableTask<double?>? _calculateFeesTask;
+
+  Future<void> _updateFees(
+    BuildContext context, {
+    Duration delay = const Duration(milliseconds: 800),
+  }) async {
+    state = state.copyWith(
+      feeEstimation: const AsyncValue.loading(),
+    );
+
+    final fees = await Future<double>(
+      () async {
+        if (state.amount <= 0 || !state.recipient.isAddressValid) {
+          return 0; // TODO(Chralu): should we use an error class instead ?
+        }
+
+        _calculateFeesTask?.cancel();
+        _calculateFeesTask = CancelableTask<double?>(
+          task: () => _calculateFees(
+            context: context,
+            formState: state.copyWith(
+              amount: state.amount,
+            ),
+          ),
+        );
+        final fees = await _calculateFeesTask?.schedule(delay);
+
+        return fees ??
+            0; // TODO(Chralu): should we use an error class instead ?
+      },
+    );
+
+    state = state.copyWith(
+      feeEstimation: AsyncValue.data(fees),
+      errorAmountText: state.amount > state.accountBalance - fees
+          ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                '%1',
+                state.symbol(context),
+              )
+          : '',
+    );
+  }
+
   @override
   TransferFormState build() => ref.watch(
         TransferFormProvider.initialTransferForm,
       );
 
-  Future<void> setRecipient({
-    required BuildContext context,
+  void _setRecipient({
     required TransferRecipient recipient,
-  }) async {
-    final fees = await _calculateFees(
-      context: context,
-      formState: state.copyWith(
-        recipient: recipient,
-      ),
-    );
-
+  }) {
     state = state.copyWith(
-      feeEstimation: fees ?? 0,
       recipient: recipient,
       errorAddressText: '',
       errorMessageText: '',
@@ -67,8 +101,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required String text,
   }) async {
     if (!text.startsWith('@')) {
-      setRecipient(
-        context: context,
+      _setRecipient(
         recipient: TransferRecipient.address(address: Address(text)),
       );
       return;
@@ -76,42 +109,57 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     try {
       final contact = await sl.get<DBHelper>().getContactWithName(text);
-      setRecipient(
-        context: context,
+      _setRecipient(
         recipient: TransferRecipient.contact(
           contact: contact,
         ),
       );
     } catch (e) {
-      setRecipient(
-        context: context,
+      _setRecipient(
         recipient: TransferRecipient.unknownContact(
           name: text,
         ),
       );
     }
+    _updateFees(context);
+  }
+
+  Future<void> setRecipient({
+    required BuildContext context,
+    required TransferRecipient contact,
+  }) async {
+    _setRecipient(
+      recipient: contact,
+    );
+    _updateFees(
+      context,
+      delay: Duration.zero,
+    );
   }
 
   Future<void> setContactAddress({
     required BuildContext context,
     required Address address,
   }) async {
-    final contact =
-        await sl.get<DBHelper>().getContactWithAddress(address.address);
+    final contact = await sl.get<DBHelper>().getContactWithAddress(
+          address.address,
+        );
 
     if (contact != null) {
-      setRecipient(
-        context: context,
+      _setRecipient(
         recipient: TransferRecipient.contact(contact: contact),
       );
     } else {
-      setRecipient(
-        context: context,
+      _setRecipient(
         recipient: TransferRecipient.address(
           address: address,
         ),
       );
     }
+    _updateFees(
+      context,
+      delay: Duration.zero,
+    );
   }
 
   // TODO(Chralu): That operation should be delayed to avoid to spam backend.
@@ -122,7 +170,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final selectedAccount = ref.read(
       AccountProviders.getSelectedAccount(context: context),
     );
-
     final recipientAddress = formState.recipient.address;
     if (recipientAddress == null) return null;
 
@@ -158,7 +205,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     state = state.copyWith(
       amount: balance - fees,
-      feeEstimation: fees,
+      feeEstimation: AsyncValue.data(fees),
       errorAmountText: '',
     );
   }
@@ -167,58 +214,21 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     required double amount,
   }) async {
-    final balance = state.accountBalance;
-
-    final fees = await _calculateFees(
-      context: context,
-      formState: state.copyWith(
-        amount: amount,
-      ),
-    );
-
-    if (fees == null) {
-      state = state.copyWith(
-        amount: amount,
-        feeEstimation: 0,
-        errorAmountText: '',
-      );
-      return;
-    }
-
-    if (amount > balance - fees) {
-      state = state.copyWith(
-        errorAmountText:
-            AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                  '%1',
-                  state.symbol(context),
-                ),
-      );
-      return;
-    }
-
     state = state.copyWith(
       amount: amount,
-      feeEstimation: fees,
-      accountBalance: balance,
       errorAmountText: '',
     );
+    _updateFees(context);
   }
 
   Future<void> setMessage({
     required BuildContext context,
     required String message,
   }) async {
-    final fees = await _calculateFees(
-      context: context,
-      formState: state.copyWith(
-        message: message,
-      ),
-    );
-
     state = state.copyWith(
       message: message.trim(),
-      feeEstimation: fees ?? 0,
     );
+    _updateFees(context);
   }
 
   void setTransferProcessStep(TransferProcessStep transferProcessStep) {
@@ -238,8 +248,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return false;
     }
 
+    final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
+
     if (state.transferType == TransferType.uco) {
-      if (state.amount + state.feeEstimation >
+      if (state.amount + feeEstimation >
           accountSelected.balance!.nativeTokenValue!) {
         state = state.copyWith(
           errorAmountText:
@@ -251,7 +263,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         return false;
       }
     } else {
-      if (state.feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+      if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
         state = state.copyWith(
           errorAmountText:
               AppLocalization.of(context)!.insufficientBalance.replaceAll(
@@ -329,25 +341,30 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   }
 
   Future<void> send(BuildContext context) async {
+    final transferRepository = ref.read(TransferFormProvider._repository);
+
     final localizations = AppLocalization.of(context)!;
 
-    final preferences = await Preferences.getInstance();
-
-    final TransactionSenderInterface transactionSender =
-        ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+    final selectedAccount = ref.read(
+      AccountProviders.getSelectedAccount(context: context),
     );
 
-    transactionSender.send(
-      transaction: state.transaction!,
+    transferRepository.send(
+      transfer: Transfer.uco(
+        accountSelectedName: selectedAccount!.name!,
+        amount: state.amount,
+        message: state.message,
+        recipientAddress: state.recipient.address!,
+        seed: state.seed,
+        tokenAddress: state.accountToken?.tokenInformations!.address,
+      ),
       onConfirmation: (confirmation) async {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
             transactionType: TransactionSendEventType.transfer,
             response: 'ok',
             nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: state.transaction!.address,
+            transactionAddress: confirmation.transactionAddress,
             maxConfirmations: confirmation.maxConfirmations,
           ),
         );
@@ -411,7 +428,17 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
 abstract class TransferFormProvider {
   static final _repository = Provider<TransferRepositoryInterface>(
-    (ref) => ArchethicTransferRepository(),
+    (ref) {
+      final networkSettings = ref
+          .watch(
+            SettingsProviders.localSettingsRepository,
+          )
+          .getNetwork();
+      return ArchethicTransferRepository(
+        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
+        websocketEndpoint: networkSettings.getWebsocketUri(),
+      );
+    },
   );
   static final initialTransferForm = _initialTransferFormProvider;
   static final transferForm = _transferFormProvider;

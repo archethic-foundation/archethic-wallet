@@ -27,6 +27,12 @@ class ArchethicTransactionSender
     _transactionErrorSubscription?.cancel();
   }
 
+  /// Sends a transaction and listens to confirmations.
+  ///
+  /// Sender auto-closes in the following situations :
+  ///     - when transaction is fully confirmed
+  ///     - when timeout is reached
+  ///     - when transaction fails
   @override
   Future<void> send({
     required Transaction transaction,
@@ -162,7 +168,10 @@ class ArchethicTransactionSender
       'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
     ).listen(
       (result) async {
-        final transactionEvent = _confirmationDtoToModel(result.data);
+        final transactionEvent = _confirmationDtoToModel(
+          transactionAddress: address,
+          data: result.data,
+        );
         if (transactionEvent == null) {
           await onError(const TransactionError.invalidConfirmation());
           return;
@@ -199,13 +208,17 @@ mixin ArchethicTransactionParser {
     }
   }
 
-  TransactionConfirmation? _confirmationDtoToModel(Map<String, dynamic>? data) {
+  TransactionConfirmation? _confirmationDtoToModel({
+    required String transactionAddress,
+    Map<String, dynamic>? data,
+  }) {
     final transactionConfirmation = data?['transactionConfirmed'];
     if (transactionConfirmation == null) return null;
 
     final nbConfirmations = transactionConfirmation?['nbConfirmations'] ?? 0;
     final maxConfirmations = transactionConfirmation?['maxConfirmations'] ?? 0;
     return TransactionConfirmation(
+      transactionAddress: transactionAddress,
       nbConfirmations: nbConfirmations,
       maxConfirmations: maxConfirmations,
     );
