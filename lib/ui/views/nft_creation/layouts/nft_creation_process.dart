@@ -31,6 +31,7 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -302,24 +303,25 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
                         Tab(
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabImportHeader,
-                          icon: const Icon(Icons.arrow_downward),
+                          icon: const Icon(UiIcons.nft_creation_process_import),
                         ),
                         Tab(
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabDescriptionHeader,
-                          icon: const Icon(Icons.info_outline),
+                          icon: const Icon(
+                              UiIcons.nft_creation_process_description),
                         ),
                         Tab(
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabPropertiesHeader,
-                          icon: const Icon(Icons.insert_comment_rounded),
+                          icon: const Icon(
+                              UiIcons.nft_creation_process_properties),
                         ),
                         Tab(
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabConfirmationHeader,
                           icon: const Icon(
-                            Icons.check_circle_outline_outlined,
-                          ),
+                              UiIcons.nft_creation_process_confirmation),
                         ),
                       ],
                       views: [

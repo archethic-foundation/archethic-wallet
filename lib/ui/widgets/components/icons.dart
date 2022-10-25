@@ -5,8 +5,9 @@ import 'package:flutter/widgets.dart';
 // ignore_for_file: constant_identifier_names
 @immutable
 class _UiIconsData extends IconData {
-  const _UiIconsData(super.codePoint, this.name)
+  const _UiIconsData(int codePoint, this.name)
       : super(
+          codePoint,
           fontFamily: 'UiIcons',
         );
 
@@ -17,37 +18,49 @@ class _UiIconsData extends IconData {
 class UiIcons {
   const UiIcons._();
 
-  static const address_book = _UiIconsData(0xf101, 'address_book');
-  static const authent_at_launch = _UiIconsData(0xf102, 'authent_at_launch');
-  static const authent = _UiIconsData(0xf103, 'authent');
-  static const auto_lock = _UiIconsData(0xf104, 'auto_lock');
-  static const buy = _UiIconsData(0xf105, 'buy');
-  static const currency = _UiIconsData(0xf106, 'currency');
-  static const eye_hidden = _UiIconsData(0xf107, 'eye_hidden');
-  static const eye = _UiIconsData(0xf108, 'eye');
-  static const keychain = _UiIconsData(0xf109, 'keychain');
-  static const language = _UiIconsData(0xf10a, 'language');
-  static const main = _UiIconsData(0xf10b, 'main');
-  static const nft = _UiIconsData(0xf10c, 'nft');
-  static const notification_disabled =
-      _UiIconsData(0xf10d, 'notification_disabled');
-  static const notification_enabled =
-      _UiIconsData(0xf10e, 'notification_enabled');
-  static const notification = _UiIconsData(0xf10f, 'notification');
-  static const pin_swap = _UiIconsData(0xf110, 'pin_swap');
-  static const primary_currency = _UiIconsData(0xf111, 'primary_currency');
-  static const receive = _UiIconsData(0xf112, 'receive');
-  static const remove_wallet = _UiIconsData(0xf113, 'remove_wallet');
-  static const send = _UiIconsData(0xf114, 'send');
-  static const show_balance = _UiIconsData(0xf115, 'show_balance');
-  static const show_blog = _UiIconsData(0xf116, 'show_blog');
-  static const show_chart = _UiIconsData(0xf117, 'show_chart');
-  static const theme = _UiIconsData(0xf118, 'theme');
-  static const vault = _UiIconsData(0xf119, 'vault');
-  static const vibration = _UiIconsData(0xf11a, 'vibration');
+  static const about = _UiIconsData(0xf101, 'about');
+  static const address_book = _UiIconsData(0xf102, 'address_book');
+  static const app_custom = _UiIconsData(0xf103, 'app_custom');
+  static const authent_at_launch = _UiIconsData(0xf104, 'authent_at_launch');
+  static const authent = _UiIconsData(0xf105, 'authent');
+  static const auto_lock = _UiIconsData(0xf106, 'auto_lock');
+  static const buy = _UiIconsData(0xf107, 'buy');
+  static const currency = _UiIconsData(0xf108, 'currency');
+  static const eye_hidden = _UiIconsData(0xf109, 'eye_hidden');
+  static const eye = _UiIconsData(0xf10a, 'eye');
+  static const keychain = _UiIconsData(0xf10b, 'keychain');
+  static const language = _UiIconsData(0xf10c, 'language');
+  static const link_archethic_lab = _UiIconsData(0xf10d, 'link_archethic_lab');
+  static const link_archethic_website = _UiIconsData(0xf10e, 'link_archethic_website');
+  static const main = _UiIconsData(0xf10f, 'main');
+  static const nft_creation_process_confirmation = _UiIconsData(0xf110, 'nft_creation_process_confirmation');
+  static const nft_creation_process_description = _UiIconsData(0xf111, 'nft_creation_process_description');
+  static const nft_creation_process_import = _UiIconsData(0xf112, 'nft_creation_process_import');
+  static const nft_creation_process_properties = _UiIconsData(0xf113, 'nft_creation_process_properties');
+  static const nft = _UiIconsData(0xf114, 'nft');
+  static const notification_disabled = _UiIconsData(0xf115, 'notification_disabled');
+  static const notification_enabled = _UiIconsData(0xf116, 'notification_enabled');
+  static const notification = _UiIconsData(0xf117, 'notification');
+  static const oracle = _UiIconsData(0xf118, 'oracle');
+  static const pin_swap = _UiIconsData(0xf119, 'pin_swap');
+  static const primary_currency = _UiIconsData(0xf11a, 'primary_currency');
+  static const privacy_policy = _UiIconsData(0xf11b, 'privacy_policy');
+  static const receive = _UiIconsData(0xf11c, 'receive');
+  static const remove_wallet = _UiIconsData(0xf11d, 'remove_wallet');
+  static const security_custom = _UiIconsData(0xf11e, 'security_custom');
+  static const send = _UiIconsData(0xf11f, 'send');
+  static const settings = _UiIconsData(0xf120, 'settings');
+  static const show_balance = _UiIconsData(0xf121, 'show_balance');
+  static const show_blog = _UiIconsData(0xf122, 'show_blog');
+  static const show_chart = _UiIconsData(0xf123, 'show_chart');
+  static const theme = _UiIconsData(0xf124, 'theme');
+  static const vault = _UiIconsData(0xf125, 'vault');
+  static const vibration = _UiIconsData(0xf126, 'vibration');
 
   static const all = <String, _UiIconsData>{
+    'about': about,
     'address_book': address_book,
+    'app_custom': app_custom,
     'authent_at_launch': authent_at_launch,
     'authent': authent,
     'auto_lock': auto_lock,
@@ -57,16 +70,26 @@ class UiIcons {
     'eye': eye,
     'keychain': keychain,
     'language': language,
+    'link_archethic_lab': link_archethic_lab,
+    'link_archethic_website': link_archethic_website,
     'main': main,
+    'nft_creation_process_confirmation': nft_creation_process_confirmation,
+    'nft_creation_process_description': nft_creation_process_description,
+    'nft_creation_process_import': nft_creation_process_import,
+    'nft_creation_process_properties': nft_creation_process_properties,
     'nft': nft,
     'notification_disabled': notification_disabled,
     'notification_enabled': notification_enabled,
     'notification': notification,
+    'oracle': oracle,
     'pin_swap': pin_swap,
     'primary_currency': primary_currency,
+    'privacy_policy': privacy_policy,
     'receive': receive,
     'remove_wallet': remove_wallet,
+    'security_custom': security_custom,
     'send': send,
+    'settings': settings,
     'show_balance': show_balance,
     'show_blog': show_blog,
     'show_chart': show_chart,
