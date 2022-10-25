@@ -20,8 +20,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   late AnimationController _aboutController;
   late Animation<Offset> _aboutOffsetFloat;
 
-  NetworksSetting _curNetworksSetting =
-      const NetworksSetting(AvailableNetworks.archethicMainNet);
+  late NetworksSetting _curNetworksSetting;
 
   late bool _securityOpen;
   late bool _customOpen;
@@ -33,6 +32,13 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   @override
   void initState() {
     super.initState();
+    _curNetworksSetting = NetworksSetting(
+      network: AvailableNetworks.archethicMainNet,
+      networkDevEndpoint: ref
+          .read(SettingsProviders.localSettingsRepository)
+          .getNetworkDevEndpoint(),
+    );
+
     _contactsOpen = false;
     _securityOpen = false;
     _customOpen = false;
@@ -98,7 +104,11 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   // TODO(reddwarf03): https://github.com/archethic-foundation/archethic-wallet/issues/116
   // ignore: unused_element
   Future<void> _networkDialog() async {
-    final ns = await NetworkDialog.getDialog(context, ref, _curNetworksSetting);
+    final ns = await NetworkDialog.getDialog(
+      context,
+      ref,
+      _curNetworksSetting,
+    );
     if (ns != null) {
       _curNetworksSetting = ns;
       await StateContainer.of(context).requestUpdate();

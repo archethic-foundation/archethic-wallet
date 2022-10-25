@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'transaction_sender.dart';
+part of 'transaction_event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -954,6 +954,7 @@ abstract class _TransactionOtherError extends TransactionError {
 
 /// @nodoc
 mixin _$TransactionConfirmation {
+  String get transactionAddress => throw _privateConstructorUsedError;
   int get nbConfirmations => throw _privateConstructorUsedError;
   int get maxConfirmations => throw _privateConstructorUsedError;
 
@@ -967,7 +968,8 @@ abstract class $TransactionConfirmationCopyWith<$Res> {
   factory $TransactionConfirmationCopyWith(TransactionConfirmation value,
           $Res Function(TransactionConfirmation) then) =
       _$TransactionConfirmationCopyWithImpl<$Res>;
-  $Res call({int nbConfirmations, int maxConfirmations});
+  $Res call(
+      {String transactionAddress, int nbConfirmations, int maxConfirmations});
 }
 
 /// @nodoc
@@ -981,10 +983,15 @@ class _$TransactionConfirmationCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? transactionAddress = freezed,
     Object? nbConfirmations = freezed,
     Object? maxConfirmations = freezed,
   }) {
     return _then(_value.copyWith(
+      transactionAddress: transactionAddress == freezed
+          ? _value.transactionAddress
+          : transactionAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       nbConfirmations: nbConfirmations == freezed
           ? _value.nbConfirmations
           : nbConfirmations // ignore: cast_nullable_to_non_nullable
@@ -1004,7 +1011,8 @@ abstract class _$$_TransactionConfirmationCopyWith<$Res>
           $Res Function(_$_TransactionConfirmation) then) =
       __$$_TransactionConfirmationCopyWithImpl<$Res>;
   @override
-  $Res call({int nbConfirmations, int maxConfirmations});
+  $Res call(
+      {String transactionAddress, int nbConfirmations, int maxConfirmations});
 }
 
 /// @nodoc
@@ -1021,10 +1029,15 @@ class __$$_TransactionConfirmationCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? transactionAddress = freezed,
     Object? nbConfirmations = freezed,
     Object? maxConfirmations = freezed,
   }) {
     return _then(_$_TransactionConfirmation(
+      transactionAddress: transactionAddress == freezed
+          ? _value.transactionAddress
+          : transactionAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       nbConfirmations: nbConfirmations == freezed
           ? _value.nbConfirmations
           : nbConfirmations // ignore: cast_nullable_to_non_nullable
@@ -1041,9 +1054,13 @@ class __$$_TransactionConfirmationCopyWithImpl<$Res>
 
 class _$_TransactionConfirmation extends _TransactionConfirmation {
   const _$_TransactionConfirmation(
-      {this.nbConfirmations = 0, this.maxConfirmations = 0})
+      {required this.transactionAddress,
+      this.nbConfirmations = 0,
+      this.maxConfirmations = 0})
       : super._();
 
+  @override
+  final String transactionAddress;
   @override
   @JsonKey()
   final int nbConfirmations;
@@ -1053,7 +1070,7 @@ class _$_TransactionConfirmation extends _TransactionConfirmation {
 
   @override
   String toString() {
-    return 'TransactionConfirmation(nbConfirmations: $nbConfirmations, maxConfirmations: $maxConfirmations)';
+    return 'TransactionConfirmation(transactionAddress: $transactionAddress, nbConfirmations: $nbConfirmations, maxConfirmations: $maxConfirmations)';
   }
 
   @override
@@ -1061,6 +1078,8 @@ class _$_TransactionConfirmation extends _TransactionConfirmation {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionConfirmation &&
+            const DeepCollectionEquality()
+                .equals(other.transactionAddress, transactionAddress) &&
             const DeepCollectionEquality()
                 .equals(other.nbConfirmations, nbConfirmations) &&
             const DeepCollectionEquality()
@@ -1070,6 +1089,7 @@ class _$_TransactionConfirmation extends _TransactionConfirmation {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(transactionAddress),
       const DeepCollectionEquality().hash(nbConfirmations),
       const DeepCollectionEquality().hash(maxConfirmations));
 
@@ -1083,10 +1103,13 @@ class _$_TransactionConfirmation extends _TransactionConfirmation {
 
 abstract class _TransactionConfirmation extends TransactionConfirmation {
   const factory _TransactionConfirmation(
-      {final int nbConfirmations,
+      {required final String transactionAddress,
+      final int nbConfirmations,
       final int maxConfirmations}) = _$_TransactionConfirmation;
   const _TransactionConfirmation._() : super._();
 
+  @override
+  String get transactionAddress;
   @override
   int get nbConfirmations;
   @override

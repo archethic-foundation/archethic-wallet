@@ -20,7 +20,7 @@ mixin _$TransferFormState {
   String get seed => throw _privateConstructorUsedError;
   TransferProcessStep get transferProcessStep =>
       throw _privateConstructorUsedError;
-  double get feeEstimation => throw _privateConstructorUsedError;
+  AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   bool get canTransfer => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
   double get accountBalance => throw _privateConstructorUsedError;
@@ -30,7 +30,6 @@ mixin _$TransferFormState {
   String get errorAddressText => throw _privateConstructorUsedError;
   String get errorAmountText => throw _privateConstructorUsedError;
   String get errorMessageText => throw _privateConstructorUsedError;
-  Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TransferFormStateCopyWith<TransferFormState> get copyWith =>
@@ -46,7 +45,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       {TransferType transferType,
       String seed,
       TransferProcessStep transferProcessStep,
-      double feeEstimation,
+      AsyncValue<double> feeEstimation,
       bool canTransfer,
       double amount,
       double accountBalance,
@@ -55,8 +54,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       String message,
       String errorAddressText,
       String errorAmountText,
-      String errorMessageText,
-      Transaction? transaction});
+      String errorMessageText});
 
   $TransferRecipientCopyWith<$Res> get recipient;
 }
@@ -85,7 +83,6 @@ class _$TransferFormStateCopyWithImpl<$Res>
     Object? errorAddressText = freezed,
     Object? errorAmountText = freezed,
     Object? errorMessageText = freezed,
-    Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
       transferType: transferType == freezed
@@ -103,7 +100,7 @@ class _$TransferFormStateCopyWithImpl<$Res>
       feeEstimation: feeEstimation == freezed
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
-              as double,
+              as AsyncValue<double>,
       canTransfer: canTransfer == freezed
           ? _value.canTransfer
           : canTransfer // ignore: cast_nullable_to_non_nullable
@@ -140,10 +137,6 @@ class _$TransferFormStateCopyWithImpl<$Res>
           ? _value.errorMessageText
           : errorMessageText // ignore: cast_nullable_to_non_nullable
               as String,
-      transaction: transaction == freezed
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as Transaction?,
     ));
   }
 
@@ -166,7 +159,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       {TransferType transferType,
       String seed,
       TransferProcessStep transferProcessStep,
-      double feeEstimation,
+      AsyncValue<double> feeEstimation,
       bool canTransfer,
       double amount,
       double accountBalance,
@@ -175,8 +168,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       String message,
       String errorAddressText,
       String errorAmountText,
-      String errorMessageText,
-      Transaction? transaction});
+      String errorMessageText});
 
   @override
   $TransferRecipientCopyWith<$Res> get recipient;
@@ -208,7 +200,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
     Object? errorAddressText = freezed,
     Object? errorAmountText = freezed,
     Object? errorMessageText = freezed,
-    Object? transaction = freezed,
   }) {
     return _then(_$_TransferFormState(
       transferType: transferType == freezed
@@ -226,7 +217,7 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
       feeEstimation: feeEstimation == freezed
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
-              as double,
+              as AsyncValue<double>,
       canTransfer: canTransfer == freezed
           ? _value.canTransfer
           : canTransfer // ignore: cast_nullable_to_non_nullable
@@ -263,10 +254,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
           ? _value.errorMessageText
           : errorMessageText // ignore: cast_nullable_to_non_nullable
               as String,
-      transaction: transaction == freezed
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as Transaction?,
     ));
   }
 }
@@ -278,7 +265,7 @@ class _$_TransferFormState extends _TransferFormState {
       {this.transferType = TransferType.uco,
       required this.seed,
       this.transferProcessStep = TransferProcessStep.form,
-      this.feeEstimation = 0.0,
+      required this.feeEstimation,
       this.canTransfer = false,
       this.amount = 0.0,
       required this.accountBalance,
@@ -287,8 +274,7 @@ class _$_TransferFormState extends _TransferFormState {
       this.message = '',
       this.errorAddressText = '',
       this.errorAmountText = '',
-      this.errorMessageText = '',
-      this.transaction})
+      this.errorMessageText = ''})
       : super._();
 
   @override
@@ -300,8 +286,7 @@ class _$_TransferFormState extends _TransferFormState {
   @JsonKey()
   final TransferProcessStep transferProcessStep;
   @override
-  @JsonKey()
-  final double feeEstimation;
+  final AsyncValue<double> feeEstimation;
   @override
   @JsonKey()
   final bool canTransfer;
@@ -326,12 +311,10 @@ class _$_TransferFormState extends _TransferFormState {
   @override
   @JsonKey()
   final String errorMessageText;
-  @override
-  final Transaction? transaction;
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText, transaction: $transaction)';
+    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -360,9 +343,7 @@ class _$_TransferFormState extends _TransferFormState {
             const DeepCollectionEquality()
                 .equals(other.errorAmountText, errorAmountText) &&
             const DeepCollectionEquality()
-                .equals(other.errorMessageText, errorMessageText) &&
-            const DeepCollectionEquality()
-                .equals(other.transaction, transaction));
+                .equals(other.errorMessageText, errorMessageText));
   }
 
   @override
@@ -380,8 +361,7 @@ class _$_TransferFormState extends _TransferFormState {
       const DeepCollectionEquality().hash(message),
       const DeepCollectionEquality().hash(errorAddressText),
       const DeepCollectionEquality().hash(errorAmountText),
-      const DeepCollectionEquality().hash(errorMessageText),
-      const DeepCollectionEquality().hash(transaction));
+      const DeepCollectionEquality().hash(errorMessageText));
 
   @JsonKey(ignore: true)
   @override
@@ -395,7 +375,7 @@ abstract class _TransferFormState extends TransferFormState {
       {final TransferType transferType,
       required final String seed,
       final TransferProcessStep transferProcessStep,
-      final double feeEstimation,
+      required final AsyncValue<double> feeEstimation,
       final bool canTransfer,
       final double amount,
       required final double accountBalance,
@@ -404,8 +384,7 @@ abstract class _TransferFormState extends TransferFormState {
       final String message,
       final String errorAddressText,
       final String errorAmountText,
-      final String errorMessageText,
-      final Transaction? transaction}) = _$_TransferFormState;
+      final String errorMessageText}) = _$_TransferFormState;
   const _TransferFormState._() : super._();
 
   @override
@@ -415,7 +394,7 @@ abstract class _TransferFormState extends TransferFormState {
   @override
   TransferProcessStep get transferProcessStep;
   @override
-  double get feeEstimation;
+  AsyncValue<double> get feeEstimation;
   @override
   bool get canTransfer;
   @override
@@ -434,8 +413,6 @@ abstract class _TransferFormState extends TransferFormState {
   String get errorAmountText;
   @override
   String get errorMessageText;
-  @override
-  Transaction? get transaction;
   @override
   @JsonKey(ignore: true)
   _$$_TransferFormStateCopyWith<_$_TransferFormState> get copyWith =>

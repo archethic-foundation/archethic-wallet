@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -28,12 +29,17 @@ class NetworkDialog {
     String? endpointError;
 
     final preferences = await Preferences.getInstance();
+    final networkDevEndpoint = preferences.getNetworkDevEndpoint();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableNetworks.values) {
+      final networkSetting = NetworksSetting(
+        network: value,
+        networkDevEndpoint: networkDevEndpoint,
+      );
       pickerItemsList.add(
         PickerItem(
-          NetworksSetting(value).getDisplayName(context),
-          await NetworksSetting(value).getLink(),
+          networkSetting.getDisplayName(context),
+          networkSetting.getLink(),
           '${theme.assetsFolder!}${theme.logoAlone!}.png',
           null,
           value,
@@ -66,12 +72,15 @@ class NetworkDialog {
             pickerItems: pickerItemsList,
             selectedIndex: curNetworksSetting.getIndex(),
             onSelected: (value) async {
-              preferences.setNetwork(
-                NetworksSetting(value.value as AvailableNetworks),
+              final selectedNetworkSettings = NetworksSetting(
+                network: value.value as AvailableNetworks,
+                networkDevEndpoint: networkDevEndpoint,
               );
 
-              final selectedNetworkSettings =
-                  NetworksSetting(value.value as AvailableNetworks);
+              ref.read(SettingsProviders.localSettingsRepository).setNetwork(
+                    selectedNetworkSettings,
+                  );
+
               StateContainer.of(context).curNetwork = selectedNetworkSettings;
 
               if (value.value as AvailableNetworks ==

@@ -49,7 +49,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new);
 
   final preferences = await Preferences.getInstance();
-  final network = await preferences.getNetwork().getLink();
+  final network = preferences.getNetwork().getLink();
   if (sl.isRegistered<ApiService>()) {
     sl.unregister<ApiService>();
   }

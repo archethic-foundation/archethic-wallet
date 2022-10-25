@@ -59,8 +59,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
   Timer? timerCheckTransactionInputs;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
-  NetworksSetting curNetwork =
-      const NetworksSetting(AvailableNetworks.archethicMainNet);
+  late NetworksSetting curNetwork;
 
   ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1h';

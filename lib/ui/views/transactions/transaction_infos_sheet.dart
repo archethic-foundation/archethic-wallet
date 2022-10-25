@@ -120,7 +120,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                     onPressed: () async {
                                       UIUtil.showWebview(
                                         context,
-                                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.txAddress}',
+                                        '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.txAddress}',
                                         '',
                                       );
                                     },

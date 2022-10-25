@@ -9,6 +9,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -308,8 +309,8 @@ class _AddNFTCollectionConfirmState
 
     final preferences = await Preferences.getInstance();
     final transactionSender = ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
     );
 
     transactionSender.send(

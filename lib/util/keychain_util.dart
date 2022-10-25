@@ -7,6 +7,7 @@ import 'dart:typed_data';
 
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
@@ -38,8 +39,8 @@ class KeychainUtil {
     final preferences = await Preferences.getInstance();
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
     );
 
     dev.log('>>> Create access <<< ${accessKeychainTx.address}');
@@ -104,8 +105,8 @@ class KeychainUtil {
     final preferences = await Preferences.getInstance();
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
     );
 
     dev.log('>>> Create keychain <<< ${keychainTransaction.address}');

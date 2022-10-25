@@ -138,7 +138,7 @@ class NFTList extends ConsumerWidget {
                                         onPressed: () async {
                                           UIUtil.showWebview(
                                             context,
-                                            '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${tokenInformations.address}',
+                                            '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${tokenInformations.address}',
                                             '',
                                           );
                                         },

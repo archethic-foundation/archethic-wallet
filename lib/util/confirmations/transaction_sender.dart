@@ -1,24 +1,17 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:developer' as dev;
-import 'dart:math';
 
 // Project imports:
+import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/domain/repositories/transfer.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 
-part 'transaction_event.dart';
 part 'archethic_transaction_sender.dart';
 part 'phoenix_link.dart';
-part 'transaction_sender.freezed.dart';
-
-typedef TransactionConfirmationHandler = Future<void> Function(
-  TransactionConfirmation confirmation,
-);
-typedef TransactionErrorHandler = Future<void> Function(TransactionError error);
 
 abstract class TransactionSenderInterface {
   const TransactionSenderInterface();

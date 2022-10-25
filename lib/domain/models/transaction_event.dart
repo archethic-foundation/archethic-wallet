@@ -1,4 +1,7 @@
-part of 'transaction_sender.dart';
+import 'dart:math';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'transaction_event.freezed.dart';
 
 @freezed
 class TransactionError with _$TransactionError {
@@ -27,6 +30,7 @@ class TransactionError with _$TransactionError {
 @freezed
 class TransactionConfirmation with _$TransactionConfirmation {
   const factory TransactionConfirmation({
+    required String transactionAddress,
     @Default(0) int nbConfirmations,
     @Default(0) int maxConfirmations,
   }) = _TransactionConfirmation;
@@ -38,25 +42,6 @@ class TransactionConfirmation with _$TransactionConfirmation {
   double get confirmationRatio => max(1, maxConfirmations / nbConfirmations);
 
   static bool isEnoughConfirmations(int nbConfirmations, int maxConfirmations) {
-    /*if (maxConfirmations == 0 && nbConfirmations == 0) {
-      return false;
-    } else {
-      if (maxConfirmations == 0 && nbConfirmations > 0) {
-        return true;
-      } else {
-        if (nbConfirmations > 0 && maxConfirmations <= 3) {
-          if (nbConfirmations > 0 && maxConfirmations <= 3) {
-          return true;
-        } else {
-          if ((maxConfirmations / 3).ceil() <= nbConfirmations) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }
-    }
-  }*/
     if (nbConfirmations > 0) {
       return true;
     } else {

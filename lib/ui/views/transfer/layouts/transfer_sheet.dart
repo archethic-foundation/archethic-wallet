@@ -69,6 +69,7 @@ class TransferSheet extends ConsumerWidget {
       overrides: [
         TransferFormProvider.initialTransferForm.overrideWithValue(
           TransferFormState(
+            feeEstimation: const AsyncValue.data(0),
             transferType: transferType,
             accountToken: accountToken,
             seed: seed,

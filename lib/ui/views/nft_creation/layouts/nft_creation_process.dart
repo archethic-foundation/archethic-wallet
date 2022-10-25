@@ -9,6 +9,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -425,8 +426,8 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
     );
 
     await transactionSender.send(

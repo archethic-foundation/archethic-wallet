@@ -220,7 +220,7 @@ class ReceiveSheet extends ConsumerWidget {
                     onPressed: () async {
                       UIUtil.showWebview(
                         context,
-                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${address!}',
+                        '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${address!}',
                         '',
                       );
                     },

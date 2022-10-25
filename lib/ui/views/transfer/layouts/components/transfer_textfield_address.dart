@@ -103,7 +103,7 @@ class _TransferTextFieldAddressState
 
           await transferNotifier.setRecipient(
             context: context,
-            recipient: TransferRecipient.contact(contact: contact),
+            contact: TransferRecipient.contact(contact: contact),
           );
 
           _updateAmountTextController();
@@ -156,7 +156,7 @@ class _TransferTextFieldAddressState
           : null,
       suffixShowFirstCondition: true,
       fadeSuffixOnCondition: true,
-      style: transfer.recipient.address?.isValid == true
+      style: transfer.recipient.isAddressValid
           ? theme.textStyleSize14W700Primary
           : theme.textStyleSize14W700Primary60,
       onChanged: (String text) async {

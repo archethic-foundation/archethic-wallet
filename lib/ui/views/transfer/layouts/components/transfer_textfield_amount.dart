@@ -119,7 +119,7 @@ class _TransferTextFieldAmountState
           ),
           fadeSuffixOnCondition: true,
           suffixShowFirstCondition:
-              transfer.accountToken == null && !transfer.isMaxAmount,
+              transfer.accountToken == null && transfer.showMaxAmountButton,
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
             decimal: true,
