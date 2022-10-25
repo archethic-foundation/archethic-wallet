@@ -17,6 +17,7 @@ class Sheets {
     required BuildContext context,
     required WidgetRef ref,
     required Widget widget,
+    List<Override> overrides = const [],
     Color? color,
     double radius = 25.0,
     Color? bgColor,
@@ -50,7 +51,10 @@ class Sheets {
                     center: const FractionalOffset(0.95, 0.95),
                   ).createShader(rect);
                 },
-                child: widget,
+                child: ProviderScope(
+                  overrides: overrides,
+                  child: widget,
+                ),
               );
             },
           ),

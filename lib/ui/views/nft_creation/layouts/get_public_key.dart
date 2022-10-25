@@ -17,13 +17,14 @@ class GetPublicKeys extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final property = ref
-        .watch(NftCreationFormProvider.nftCreationForm)
-        .properties
-        .where(
-          (element) => element.propertyName == propertyName,
-        )
-        .first;
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final property = nftCreation.properties;
+    if (property.isEmpty) {
+      return const SizedBox();
+    }
+    final propertySelected = property.firstWhere(
+      (element) => element.propertyName == propertyName,
+    );
 
     return Center(
       child: SizedBox(
@@ -37,12 +38,12 @@ class GetPublicKeys extends ConsumerWidget {
           child: Wrap(
             // TODO(reddwarf03): create dynamic loading
             children: List.generate(
-              property.publicKeys.length,
+              propertySelected.publicKeys.length,
               (index) {
                 return Padding(
                   padding: const EdgeInsets.all(5),
                   child: PublicKeyLine(
-                    publicKey: property.publicKeys[index],
+                    publicKey: propertySelected.publicKeys[index],
                   ),
                 );
               },

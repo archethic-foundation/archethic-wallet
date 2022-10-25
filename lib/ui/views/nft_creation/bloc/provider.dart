@@ -83,14 +83,19 @@ class NftCreationFormNotifier
         canAddAccess: false,
       );
     } else {
-      for (final element in state.properties) {
-        if (element.propertyName == propertyName) {
-          final publicKeys = [...element.publicKeys, publicKey];
-          element.copyWith(publicKeys: publicKeys);
-        }
-      }
+      final updatedNftCreationProperties = state.properties.map(
+        (property) {
+          if (property.propertyName != propertyName) return property;
+
+          return property.copyWith(
+            publicKeys: [...property.publicKeys, publicKey],
+          );
+        },
+      ).toList();
+
       state = state.copyWith(
         canAddAccess: true,
+        properties: updatedNftCreationProperties,
       );
     }
   }

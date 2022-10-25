@@ -382,6 +382,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
                         ),
                       ],
                       views: [
+                        // TODO(reddwarf03): remove params with providers
                         NFTCreationProcessImportTab(
                           tabActiveIndex: tabActiveIndex,
                           currentNftCategoryIndex:

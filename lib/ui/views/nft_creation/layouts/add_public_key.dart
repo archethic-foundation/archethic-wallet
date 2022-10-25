@@ -9,6 +9,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/get_public_key.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -64,7 +65,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final nftCreation = ref.read(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier =
         ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
@@ -93,7 +94,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                             widget.propertyValue,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
+                            padding: const EdgeInsets.all(20),
                             child: Text(
                               localizations.propertyAccessDescription,
                               style: theme.textStyleSize12W100Primary,
@@ -107,7 +108,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                             textInputAction: TextInputAction.next,
                             labelText: localizations.publicKeyAddHint,
                             autocorrect: false,
-                            maxLines: 3,
+                            maxLines: 4,
                             keyboardType: TextInputType.text,
                             style: theme.textStyleSize16W600Primary,
                             inputFormatters: <LengthLimitingTextInputFormatter>[
