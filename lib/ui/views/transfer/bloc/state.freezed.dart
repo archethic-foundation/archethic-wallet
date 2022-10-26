@@ -22,6 +22,7 @@ mixin _$TransferFormState {
       throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   bool get canTransfer => throw _privateConstructorUsedError;
+  bool get defineMaxAmountInProgress => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
   double get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
       bool canTransfer,
+      bool defineMaxAmountInProgress,
       double amount,
       double accountBalance,
       TransferRecipient recipient,
@@ -75,6 +77,7 @@ class _$TransferFormStateCopyWithImpl<$Res>
     Object? transferProcessStep = freezed,
     Object? feeEstimation = freezed,
     Object? canTransfer = freezed,
+    Object? defineMaxAmountInProgress = freezed,
     Object? amount = freezed,
     Object? accountBalance = freezed,
     Object? recipient = freezed,
@@ -104,6 +107,10 @@ class _$TransferFormStateCopyWithImpl<$Res>
       canTransfer: canTransfer == freezed
           ? _value.canTransfer
           : canTransfer // ignore: cast_nullable_to_non_nullable
+              as bool,
+      defineMaxAmountInProgress: defineMaxAmountInProgress == freezed
+          ? _value.defineMaxAmountInProgress
+          : defineMaxAmountInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
       amount: amount == freezed
           ? _value.amount
@@ -161,6 +168,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
       bool canTransfer,
+      bool defineMaxAmountInProgress,
       double amount,
       double accountBalance,
       TransferRecipient recipient,
@@ -192,6 +200,7 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
     Object? transferProcessStep = freezed,
     Object? feeEstimation = freezed,
     Object? canTransfer = freezed,
+    Object? defineMaxAmountInProgress = freezed,
     Object? amount = freezed,
     Object? accountBalance = freezed,
     Object? recipient = freezed,
@@ -221,6 +230,10 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
       canTransfer: canTransfer == freezed
           ? _value.canTransfer
           : canTransfer // ignore: cast_nullable_to_non_nullable
+              as bool,
+      defineMaxAmountInProgress: defineMaxAmountInProgress == freezed
+          ? _value.defineMaxAmountInProgress
+          : defineMaxAmountInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
       amount: amount == freezed
           ? _value.amount
@@ -267,6 +280,7 @@ class _$_TransferFormState extends _TransferFormState {
       this.transferProcessStep = TransferProcessStep.form,
       required this.feeEstimation,
       this.canTransfer = false,
+      this.defineMaxAmountInProgress = false,
       this.amount = 0.0,
       required this.accountBalance,
       required this.recipient,
@@ -292,6 +306,9 @@ class _$_TransferFormState extends _TransferFormState {
   final bool canTransfer;
   @override
   @JsonKey()
+  final bool defineMaxAmountInProgress;
+  @override
+  @JsonKey()
   final double amount;
   @override
   final double accountBalance;
@@ -314,7 +331,7 @@ class _$_TransferFormState extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, amount: $amount, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -331,6 +348,8 @@ class _$_TransferFormState extends _TransferFormState {
                 .equals(other.feeEstimation, feeEstimation) &&
             const DeepCollectionEquality()
                 .equals(other.canTransfer, canTransfer) &&
+            const DeepCollectionEquality().equals(
+                other.defineMaxAmountInProgress, defineMaxAmountInProgress) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality()
                 .equals(other.accountBalance, accountBalance) &&
@@ -354,6 +373,7 @@ class _$_TransferFormState extends _TransferFormState {
       const DeepCollectionEquality().hash(transferProcessStep),
       const DeepCollectionEquality().hash(feeEstimation),
       const DeepCollectionEquality().hash(canTransfer),
+      const DeepCollectionEquality().hash(defineMaxAmountInProgress),
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(accountBalance),
       const DeepCollectionEquality().hash(recipient),
@@ -377,6 +397,7 @@ abstract class _TransferFormState extends TransferFormState {
       final TransferProcessStep transferProcessStep,
       required final AsyncValue<double> feeEstimation,
       final bool canTransfer,
+      final bool defineMaxAmountInProgress,
       final double amount,
       required final double accountBalance,
       required final TransferRecipient recipient,
@@ -397,6 +418,8 @@ abstract class _TransferFormState extends TransferFormState {
   AsyncValue<double> get feeEstimation;
   @override
   bool get canTransfer;
+  @override
+  bool get defineMaxAmountInProgress;
   @override
   double get amount;
   @override

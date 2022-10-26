@@ -20,6 +20,7 @@ class TransferFormState with _$TransferFormState {
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
     required AsyncValue<double> feeEstimation,
     @Default(false) bool canTransfer,
+    @Default(false) bool defineMaxAmountInProgress,
     @Default(0.0) double amount,
     required double accountBalance,
     required TransferRecipient recipient,

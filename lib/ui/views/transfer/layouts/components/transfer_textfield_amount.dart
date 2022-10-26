@@ -101,25 +101,38 @@ class _TransferTextFieldAmountState
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText:
-              '${localizations.enterAmount} (${transfer.symbol(context)})',
+          labelText: primaryCurrency.primaryCurrency ==
+                  AvailablePrimaryCurrencyEnum.native
+              ? '${localizations.enterAmount} (${transfer.symbol(context)})'
+              : '${AppLocalization.of(context)!.enterAmount} (${currency.currency.name.toUpperCase()})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
+              transferNotifier.setDefineMaxAmountInProgress(
+                defineMaxAmountInProgress: true,
+              );
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-
+              if (transferNotifier.controlMaxSend(context) == false) {
+                transferNotifier.setDefineMaxAmountInProgress(
+                  defineMaxAmountInProgress: false,
+                );
+                return;
+              }
               await transferNotifier.setMaxAmount(
                 context: context,
               );
               _updateAmountTextController();
+              transferNotifier.setDefineMaxAmountInProgress(
+                defineMaxAmountInProgress: false,
+              );
             },
           ),
           fadeSuffixOnCondition: true,
-          suffixShowFirstCondition:
-              transfer.accountToken == null && transfer.showMaxAmountButton,
+          suffixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
+              (transfer.accountToken == null && transfer.showMaxAmountButton),
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
             decimal: true,
