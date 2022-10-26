@@ -32,8 +32,7 @@ class NFTList extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+        .appKeychain.getAccountSelected()!;
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCategories = ref.read(
       NftCategoryProviders.fetchNftCategory(

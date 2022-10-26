@@ -54,8 +54,7 @@ class _NFTCreationProcessConfirmationTabState
               if (feeEstimation >
                   StateContainer.of(context)
                       .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
+                      .appKeychain.getAccountSelected()!
                       .balance!
                       .nativeTokenValue!) {
                 isValid = false;

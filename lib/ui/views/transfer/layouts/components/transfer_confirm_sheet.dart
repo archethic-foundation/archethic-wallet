@@ -127,8 +127,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           );
       StateContainer.of(context)
           .appWallet!
-          .appKeychain!
-          .getAccountSelected()!
+          .appKeychain.getAccountSelected()!
           .removeftInfosOffChain(token.id);
     }
     setState(() {

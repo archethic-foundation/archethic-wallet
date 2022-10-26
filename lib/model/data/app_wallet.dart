@@ -13,17 +13,20 @@ part 'app_wallet.g.dart';
 
 @HiveType(typeId: 4)
 class AppWallet extends HiveObject {
-  AppWallet({this.seed, this.appKeychain});
+  AppWallet({
+    required this.seed,
+    required this.appKeychain,
+  });
 
   /// Seed
   @HiveField(0)
-  String? seed;
+  String seed;
 
   /// Keychain
   @HiveField(1)
-  AppKeychain? appKeychain;
+  AppKeychain appKeychain;
 
-  Future<AppWallet> createNewAppWallet(
+  static Future<AppWallet> createNewAppWallet(
     String keychainAddress,
     Keychain keychain,
     String? name,

@@ -168,8 +168,7 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                                                   context,
                                                 )
                                                     .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
+                                                    .appKeychain.getAccountSelected()!
                                                     .lastAddress!,
                                                 request: 'chainLength',
                                               );

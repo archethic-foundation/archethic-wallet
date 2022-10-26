@@ -122,8 +122,7 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
   Widget build(BuildContext context) {
     final accountSelected = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+        .appKeychain.getAccountSelected()!;
     final nftInfosOffChain =
         accountSelected.getftInfosOffChain(widget.tokenInformations.id);
     final preferences = ref.watch(SettingsProviders.settings);

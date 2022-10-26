@@ -24,8 +24,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final accountTokens = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
+        .appKeychain.getAccountSelected()!
         .accountTokens;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(

@@ -51,8 +51,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
               context,
               StateContainer.of(context)
                   .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
+                  .appKeychain.getAccountSelected()!
                   .name!,
             ),
         builder: (

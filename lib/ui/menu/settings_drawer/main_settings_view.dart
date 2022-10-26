@@ -50,8 +50,7 @@ class MainMenuView extends ConsumerWidget {
                       // TODO(reddwarf03): that conditional spacer seems odd.
                       if (StateContainer.of(context)
                           .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
+                          .appKeychain.getAccountSelected()!
                           .balance!
                           .isNativeTokenValuePositive())
                         const _SettingsListItem.spacer()

@@ -40,8 +40,7 @@ class BalanceInfos extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelectedBalance = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
+        .appKeychain.getAccountSelected()!
         .balance;
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =

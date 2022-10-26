@@ -36,8 +36,7 @@ class TransactionDetail extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+        .appKeychain.getAccountSelected()!;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     String? contactAddress;

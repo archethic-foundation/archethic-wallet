@@ -16,8 +16,7 @@ class TxList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+        .appKeychain.getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
