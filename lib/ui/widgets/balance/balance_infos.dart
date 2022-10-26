@@ -106,7 +106,11 @@ class BalanceInfos extends ConsumerWidget {
       onTapDown: (details) {
         if (accountSelectedBalance!.fiatCurrencyValue! > 0) {
           BalanceInfosPopup.getPopup(
-              context, ref, details, accountSelectedBalance,);
+            context,
+            ref,
+            details,
+            accountSelectedBalance,
+          );
         }
       },
     );

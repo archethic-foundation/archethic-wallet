@@ -417,7 +417,9 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              bottom: 10, top: 10,),
+                            bottom: 10,
+                            top: 10,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -457,110 +459,14 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                 ],
                                               ),
                                             ),
-                                            if (preferences.showBalances)
-                                              primaryCurrency.primaryCurrency ==
-                                                      AvailablePrimaryCurrencyEnum
-                                                          .native
-                                                  ? Expanded(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: <Widget>[
-                                                          AutoSizeText(
-                                                            '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          AutoSizeText(
-                                                            CurrencyUtil
-                                                                .getConvertedAmount(
-                                                              currency.currency
-                                                                  .name,
-                                                              account.balance!
-                                                                  .fiatCurrencyValue!,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          if (account.accountTokens !=
-                                                                  null &&
-                                                              account
-                                                                  .accountTokens!
-                                                                  .isNotEmpty)
-                                                            AutoSizeText(
-                                                              account.accountTokens!
-                                                                          .length >
-                                                                      1
-                                                                  ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                                                  : '${account.accountTokens!.length} ${localizations.token}',
-                                                              style: theme
-                                                                  .textStyleSize12W400Primary,
-                                                            ),
-                                                          if (account.accountNFT !=
-                                                                  null &&
-                                                              account
-                                                                  .accountNFT!
-                                                                  .isNotEmpty)
-                                                            AutoSizeText(
-                                                              '${account.accountNFT!.length} ${localizations.nft}',
-                                                              style: theme
-                                                                  .textStyleSize12W400Primary,
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Expanded(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: <Widget>[
-                                                          AutoSizeText(
-                                                            CurrencyUtil
-                                                                .getConvertedAmount(
-                                                              currency.currency
-                                                                  .name,
-                                                              account.balance!
-                                                                  .fiatCurrencyValue!,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          AutoSizeText(
-                                                            '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          if (account.accountTokens !=
-                                                                  null &&
-                                                              account
-                                                                  .accountTokens!
-                                                                  .isNotEmpty)
-                                                            AutoSizeText(
-                                                              account.accountTokens!
-                                                                          .length >
-                                                                      1
-                                                                  ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                                                  : '${account.accountTokens!.length} ${localizations.token}',
-                                                              style: theme
-                                                                  .textStyleSize12W400Primary,
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    )
-                                            else
-                                              Expanded(
+                                          ],
+                                        ),
+                                      ),
+                                      if (preferences.showBalances)
+                                        primaryCurrency.primaryCurrency ==
+                                                AvailablePrimaryCurrencyEnum
+                                                    .native
+                                            ? Expanded(
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -568,28 +474,114 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                       CrossAxisAlignment.end,
                                                   children: <Widget>[
                                                     AutoSizeText(
-                                                      '···········',
+                                                      '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
+                                                      style: theme
+                                                          .textStyleSize12W400Primary,
+                                                    ),
+                                                    AutoSizeText(
+                                                      CurrencyUtil
+                                                          .getConvertedAmount(
+                                                        currency.currency.name,
+                                                        account.balance!
+                                                            .fiatCurrencyValue!,
+                                                      ),
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: theme
-                                                          .textStyleSize12W600Primary60,
+                                                          .textStyleSize12W400Primary,
                                                     ),
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      style: theme
-                                                          .textStyleSize12W600Primary60,
-                                                    ),
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      style: theme
-                                                          .textStyleSize12W600Primary60,
-                                                    ),
+                                                    if (account.accountTokens !=
+                                                            null &&
+                                                        account.accountTokens!
+                                                            .isNotEmpty)
+                                                      AutoSizeText(
+                                                        account.accountTokens!
+                                                                    .length >
+                                                                1
+                                                            ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                                            : '${account.accountTokens!.length} ${localizations.token}',
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
+                                                      ),
+                                                    if (account.accountNFT !=
+                                                            null &&
+                                                        account.accountNFT!
+                                                            .isNotEmpty)
+                                                      AutoSizeText(
+                                                        '${account.accountNFT!.length} ${localizations.nft}',
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
+                                                      ),
                                                   ],
                                                 ),
                                               )
-                                          ],
+                                            : Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    AutoSizeText(
+                                                      CurrencyUtil
+                                                          .getConvertedAmount(
+                                                        currency.currency.name,
+                                                        account.balance!
+                                                            .fiatCurrencyValue!,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: theme
+                                                          .textStyleSize12W400Primary,
+                                                    ),
+                                                    AutoSizeText(
+                                                      '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                      style: theme
+                                                          .textStyleSize12W400Primary,
+                                                    ),
+                                                    if (account.accountTokens !=
+                                                            null &&
+                                                        account.accountTokens!
+                                                            .isNotEmpty)
+                                                      AutoSizeText(
+                                                        account.accountTokens!
+                                                                    .length >
+                                                                1
+                                                            ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                                            : '${account.accountTokens!.length} ${localizations.token}',
+                                                        style: theme
+                                                            .textStyleSize12W400Primary,
+                                                      ),
+                                                  ],
+                                                ),
+                                              )
+                                      else
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: <Widget>[
+                                              AutoSizeText(
+                                                '···········',
+                                                textAlign: TextAlign.center,
+                                                style: theme
+                                                    .textStyleSize12W600Primary60,
+                                              ),
+                                              AutoSizeText(
+                                                '···········',
+                                                style: theme
+                                                    .textStyleSize12W600Primary60,
+                                              ),
+                                              AutoSizeText(
+                                                '···········',
+                                                style: theme
+                                                    .textStyleSize12W600Primary60,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ],

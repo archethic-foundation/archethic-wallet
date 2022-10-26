@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
+
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';

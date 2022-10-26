@@ -19,9 +19,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+part 'add_token_textfield_initial_supply.dart';
 part 'add_token_textfield_name.dart';
 part 'add_token_textfield_symbol.dart';
-part 'add_token_textfield_initial_supply.dart';
 
 class AddTokenFormSheet extends ConsumerStatefulWidget {
   const AddTokenFormSheet({
