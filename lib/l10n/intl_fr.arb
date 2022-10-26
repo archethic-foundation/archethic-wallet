@@ -301,6 +301,7 @@
 	"passBackupConfirmationMessage": "Nous vous invitons à confirmer manuellement l'enregistrement de votre recovery phrase. En cas de perte, vous perdrez vos fonds. Pour rappel, Archethic n'en garde aucune copie",
 	"accountsKeychainAddressHeader": "Adresse de votre porte-clés",
 	"amountZero": "Le montant doit être > 0",
+	"maxSendRecipientMissing": "Svp, renseignez le destinataire pour que le montant max soit défini.",
 	"tokenSymbolMissing": "Choisissez un symbole pour le jeton",
 	"tokenSupply": "Offre: ",
 	"tokenInitialSupplyTooHigh": "L'offre est trop élevée",

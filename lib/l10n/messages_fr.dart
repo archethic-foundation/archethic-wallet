@@ -172,6 +172,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lockAppSetting" : MessageLookupByLibrary.simpleMessage("Auth. au lancement"),
     "locked" : MessageLookupByLibrary.simpleMessage("Bloqué"),
     "manage" : MessageLookupByLibrary.simpleMessage("Gérer"),
+    "maxSendRecipientMissing" : MessageLookupByLibrary.simpleMessage("Svp, renseignez le destinataire pour que le montant max soit défini."),
     "messageInTxTransfer" : MessageLookupByLibrary.simpleMessage("Consulter le message associé..."),
     "messageInvalid" : MessageLookupByLibrary.simpleMessage("Votre message ne peut pas comporter (pour le moment) des caractères spéciaux."),
     "mnemonicInvalidWord" : MessageLookupByLibrary.simpleMessage("%1 n\'est pas un mot valide"),

@@ -1782,6 +1782,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "maxSendRecipientMissing": "Please, enter the recipient to define the max amount.",
+  "@maxSendRecipientMissing": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "fungiblesTokensListNoTokenYet": "No token yet",
   "@fungiblesTokensListNoTokenYet": {
     "type": "text",

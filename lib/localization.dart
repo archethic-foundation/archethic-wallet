@@ -490,6 +490,11 @@ class AppLocalization {
     return Intl.message('Your amount should be > 0', name: 'amountZero');
   }
 
+  String get maxSendRecipientMissing {
+    return Intl.message('Please, enter the recipient to define the max amount.',
+        name: 'maxSendRecipientMissing');
+  }
+
   String get insufficientBalance {
     return Intl.message('You don\'t have enough %1',
         name: 'insufficientBalance');

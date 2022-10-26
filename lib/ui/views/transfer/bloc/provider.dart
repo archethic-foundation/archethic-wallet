@@ -93,6 +93,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       recipient: recipient,
       errorAddressText: '',
       errorMessageText: '',
+      errorAmountText: '',
     );
   }
 
@@ -221,6 +222,14 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     _updateFees(context);
   }
 
+  Future<void> setDefineMaxAmountInProgress({
+    required bool defineMaxAmountInProgress,
+  }) async {
+    state = state.copyWith(
+      defineMaxAmountInProgress: defineMaxAmountInProgress,
+    );
+  }
+
   Future<void> setMessage({
     required BuildContext context,
     required String message,
@@ -235,6 +244,19 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     state = state.copyWith(
       transferProcessStep: transferProcessStep,
     );
+  }
+
+  bool controlMaxSend(
+    BuildContext context,
+  ) {
+    if (state.recipient.address == null ||
+        state.recipient.address!.address.isEmpty) {
+      state = state.copyWith(
+        errorAmountText: AppLocalization.of(context)!.maxSendRecipientMissing,
+      );
+      return false;
+    }
+    return true;
   }
 
   bool controlAmount(
