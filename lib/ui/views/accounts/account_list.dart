@@ -55,12 +55,11 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     isPressed = false;
     animationOpen = false;
     appWalletLive = widget.appWallet;
-    appWalletLive!.appKeychain.accounts!
-        .sort((a, b) => a.name!.compareTo(b.name!));
+    appWalletLive!.appKeychain.accounts.sort((a, b) => a.name!.compareTo(b.name!));
   }
 
   Future<void> _changeAccount(Account account, StateSetter setState) async {
-    for (final a in appWalletLive!.appKeychain.accounts!) {
+    for (final a in appWalletLive!.appKeychain.accounts) {
       if (a.selected!) {
         setState(() {
           a.selected = false;
@@ -90,16 +89,16 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
               style: theme.textStyleSize12W400Primary,
             ),
           ),
-          for (int i = 0; i < appWalletLive!.appKeychain.accounts!.length; i++)
+          for (int i = 0; i < appWalletLive!.appKeychain.accounts.length; i++)
             _buildAccountListItem(
               context,
               ref,
-              appWalletLive!.appKeychain.accounts![i],
+              appWalletLive!.appKeychain.accounts[i],
               setState,
             ),
           Row(
             children: <Widget>[
-              if (appWalletLive!.appKeychain.accounts!.length >= kMaxAccounts)
+              if (appWalletLive!.appKeychain.accounts.length >= kMaxAccounts)
                 const SizedBox()
               else
                 AppButtonTiny(
@@ -209,7 +208,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                           } else {
                                             var accountExists = false;
                                             for (final account in appWalletLive!
-                                                .appKeychain.accounts!) {
+                                                .appKeychain.accounts) {
                                               if (account.name ==
                                                   nameController.text) {
                                                 accountExists = true;
@@ -318,8 +317,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                       },
                     );
                     setState(() {
-                      appWalletLive!.appKeychain.accounts!
-                          .sort((a, b) => a.name!.compareTo(b.name!));
+                      appWalletLive!.appKeychain.accounts.sort((a, b) => a.name!.compareTo(b.name!));
                     });
                   },
                 ),

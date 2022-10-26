@@ -105,7 +105,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
       const Duration(seconds: 30),
       (Timer t) async {
         final accounts = appWallet!.appKeychain.accounts;
-        for (final account in accounts!) {
+        for (final account in accounts) {
           final transactionInputList =
               await sl.get<AppService>().getTransactionInputs(
                     account.lastAddress!,
