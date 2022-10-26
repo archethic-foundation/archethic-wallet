@@ -9,6 +9,7 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/settings.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
@@ -48,7 +49,7 @@ class PinScreen extends ConsumerStatefulWidget {
 }
 
 class _PinScreenState extends ConsumerState<PinScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, ShowLockScreenMixin {
   static const int _pinLength = 6;
   double buttonSize = 70;
 
@@ -113,7 +114,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   /// It returns either pin or confirmation pin.
   String get displayedPin => _awaitingConfirmation ? _pinConfirmed : _pin;
 
-  /// return true if all characters entered
+  /// return true if entered pin is long enough
   bool get allExpectedCharactersEntered {
     return displayedPin.length >= _pinLength;
   }
@@ -292,12 +293,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
     );
   }
 
-  void _showLockScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      '/lock_screen_transition',
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
@@ -314,7 +309,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
         if (next.isLoading) return;
         if (previous?.value == next.value) return;
 
-        if (next.valueOrNull == true) _showLockScreen(context);
+        if (next.valueOrNull == true) showLockScreen(context);
       },
     );
 

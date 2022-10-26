@@ -50,12 +50,14 @@ class AuthFactory {
         auth = await _authenticateWithYubikey(
           context,
           transitions: transitions,
+          canCancel: canCancel,
         );
         break;
       case AuthMethod.password:
         auth = await _authenticateWithPassword(
           context,
           transitions: transitions,
+          canCancel: canCancel,
         );
         break;
       case AuthMethod.pin:
@@ -88,13 +90,16 @@ class AuthFactory {
   static Future<bool> _authenticateWithYubikey(
     BuildContext context, {
     bool transitions = false,
+    required canCancel,
   }) async {
     var auth = false;
     if (transitions) {
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return const YubikeyScreen();
+            return YubikeyScreen(
+              canNavigateBack: canCancel,
+            );
           },
         ),
       ) as bool;
@@ -102,7 +107,9 @@ class AuthFactory {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(
           builder: (BuildContext context) {
-            return const YubikeyScreen();
+            return YubikeyScreen(
+              canNavigateBack: canCancel,
+            );
           },
         ),
       ) as bool;
@@ -114,22 +121,23 @@ class AuthFactory {
   static Future<bool> _authenticateWithPassword(
     BuildContext context, {
     bool transitions = false,
+    required bool canCancel,
   }) async {
     var auth = false;
     if (transitions) {
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) {
-            return const PasswordScreen();
-          },
+          builder: (BuildContext context) => PasswordScreen(
+            canNavigateBack: canCancel,
+          ),
         ),
       ) as bool;
     } else {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(
-          builder: (BuildContext context) {
-            return const PasswordScreen();
-          },
+          builder: (BuildContext context) => PasswordScreen(
+            canNavigateBack: canCancel,
+          ),
         ),
       ) as bool;
     }
