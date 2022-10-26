@@ -475,7 +475,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             );
 
                             StateContainer.of(context).appWallet = appWallet;
-                            final accounts = appWallet!.appKeychain!.accounts;
+                            final accounts = appWallet!.appKeychain.accounts;
 
                             if (accounts == null || accounts.isEmpty) {
                               setState(() {
@@ -497,7 +497,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               await _launchSecurityConfiguration(
                                 StateContainer.of(context)
                                     .appWallet!
-                                    .appKeychain!
+                                    .appKeychain
                                     .getAccountSelected()!
                                     .name!,
                                 seed,
@@ -670,7 +670,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     if (selection != null) {
       await StateContainer.of(context)
           .appWallet!
-          .appKeychain!
+          .appKeychain
           .setAccountSelected(selection);
     }
   }

@@ -104,8 +104,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
+        .appKeychain.getAccountSelected()!
         .balance;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
@@ -151,8 +150,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
+        .appKeychain.getAccountSelected()!
         .balance;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 

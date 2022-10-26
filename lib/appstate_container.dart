@@ -104,7 +104,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
     timerCheckTransactionInputs = Timer.periodic(
       const Duration(seconds: 30),
       (Timer t) async {
-        final accounts = appWallet!.appKeychain!.accounts;
+        final accounts = appWallet!.appKeychain.accounts;
         for (final account in accounts!) {
           final transactionInputList =
               await sl.get<AppService>().getTransactionInputs(
@@ -178,7 +178,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
     final currency = ref.read(CurrencyProviders.selectedCurrency);
 
     final tokenPrice = await Price.getCurrency(currency.currency.name);
-    appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
+    appWallet!.appKeychain.getAccountSelected()!.balance!.tokenPrice =
         tokenPrice;
     appWallet!.save();
     setState(() {
@@ -207,11 +207,11 @@ class StateContainerState extends ConsumerState<StateContainer> {
     String? pagingAddress = '',
     bool forceUpdateChart = true,
   }) async {
-    await appWallet!.appKeychain!.getAccountSelected()!.updateLastAddress();
+    await appWallet!.appKeychain.getAccountSelected()!.updateLastAddress();
 
-    await appWallet!.appKeychain!.getAccountSelected()!.updateFungiblesTokens();
+    await appWallet!.appKeychain.getAccountSelected()!.updateFungiblesTokens();
 
-    await appWallet!.appKeychain!.getAccountSelected()!.updateNFT();
+    await appWallet!.appKeychain.getAccountSelected()!.updateNFT();
 
     setState(() {
       balanceLoading = true;
@@ -220,7 +220,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
     final tokenPrice = await Price.getCurrency(selectedCurrency.currency.name);
-    await appWallet!.appKeychain!.getAccountSelected()!.updateBalance(
+    await appWallet!.appKeychain.getAccountSelected()!.updateBalance(
           curNetwork.getNetworkCryptoCurrencyLabel(),
           selectedCurrency.currency.name,
           tokenPrice,
@@ -231,7 +231,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
     });
 
     final seed = await getSeed();
-    await appWallet!.appKeychain!
+    await appWallet!.appKeychain
         .getAccountSelected()!
         .updateRecentTransactions(pagingAddress!, seed!);
 

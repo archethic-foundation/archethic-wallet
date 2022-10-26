@@ -31,10 +31,8 @@ class TransferFormSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =

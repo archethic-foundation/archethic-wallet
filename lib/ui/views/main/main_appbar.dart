@@ -82,8 +82,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         ClipboardData(
                           text: StateContainer.of(context)
                               .appWallet!
-                              .appKeychain!
-                              .address!
+                              .appKeychain.address!
                               .toUpperCase(),
                         ),
                       );
@@ -106,8 +105,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         child: Text(
                           StateContainer.of(context)
                               .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
+                              .appKeychain.getAccountSelected()!
                               .name!,
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),

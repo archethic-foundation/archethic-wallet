@@ -145,7 +145,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             var error = false;
             try {
               StateContainer.of(context).appWallet =
-                  await AppWallet().createNewAppWallet(
+                  await AppWallet.createNewAppWallet(
                 event.params!['keychainAddress']! as String,
                 event.params!['keychain']! as Keychain,
                 widget.name,

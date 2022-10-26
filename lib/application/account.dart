@@ -22,8 +22,7 @@ class AccountRepository {
   Account? getSelectedAccount(BuildContext context) {
     return StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected();
+        .appKeychain.getAccountSelected();
   }
 }
 

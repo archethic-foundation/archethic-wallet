@@ -12,8 +12,7 @@ class BalanceInfosKpi extends ConsumerWidget {
     final chartInfos = StateContainer.of(context).chartInfos;
     final accountSelectedBalance = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!
+        .appKeychain.getAccountSelected()!
         .balance;
     final preferences = ref.watch(SettingsProviders.settings);
 

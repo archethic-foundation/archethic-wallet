@@ -21,8 +21,7 @@ class AccountsListTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+        .appKeychain.getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);

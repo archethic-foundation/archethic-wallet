@@ -129,8 +129,7 @@ class AuthentificationMethodDialog {
                           return SetPassword(
                             name: StateContainer.of(context)
                                 .appWallet!
-                                .appKeychain!
-                                .getAccountSelected()!
+                                .appKeychain.getAccountSelected()!
                                 .name,
                             seed: seed,
                           );

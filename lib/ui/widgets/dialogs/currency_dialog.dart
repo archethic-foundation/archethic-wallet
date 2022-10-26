@@ -68,8 +68,7 @@ class CurrencyDialog {
                     AvailableCurrency(value.value as AvailableCurrencyEnum);
                 final accountSelected = StateContainer.of(context)
                     .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!;
+                    .appKeychain.getAccountSelected()!;
                 await ref.read(
                   CurrencyProviders.selectCurrency(currency: currency).future,
                 );

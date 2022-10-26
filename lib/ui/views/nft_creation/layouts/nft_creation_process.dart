@@ -133,7 +133,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
     );
     await StateContainer.of(context)
         .appWallet!
-        .appKeychain!
+        .appKeychain
         .getAccountSelected()!
         .updateNftInfosOffChain(
           tokenAddress: event.transactionAddress,
@@ -222,7 +222,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
       final seed = await StateContainer.of(context).getSeed();
       final accountSelected = StateContainer.of(context)
           .appWallet!
-          .appKeychain!
+          .appKeychain
           .getAccountSelected()!;
       await nftCreationNotifier.buildTransaction(seed!, accountSelected.name!);
       await nftCreationNotifier.send(context);
@@ -436,7 +436,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
     final nameEncoded = Uri.encodeFull(
       StateContainer.of(context)
           .appWallet!
-          .appKeychain!
+          .appKeychain
           .getAccountSelected()!
           .name!,
     );

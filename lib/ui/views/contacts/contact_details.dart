@@ -238,8 +238,7 @@ class ContactDetail extends ConsumerWidget {
                     // Send Button
                     if (StateContainer.of(context)
                         .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
+                        .appKeychain.getAccountSelected()!
                         .balance!
                         .isNativeTokenValuePositive())
                       AppButton(

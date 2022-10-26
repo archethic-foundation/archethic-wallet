@@ -26,8 +26,7 @@ class MenuWidgetWallet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = StateContainer.of(context)
         .appWallet!
-        .appKeychain!
-        .getAccountSelected()!;
+        .appKeychain.getAccountSelected()!;
     final preferences = ref.watch(SettingsProviders.settings);
 
     return StatefulBuilder(
