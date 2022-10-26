@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transfer.dart';
@@ -9,6 +10,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -32,6 +34,7 @@ final _transferFormProvider =
     TransferFormProvider.initialTransferForm,
     AccountProviders.getSelectedAccount,
     TransferFormProvider._repository,
+    PrimaryCurrencyProviders.selectedPrimaryCurrency,
   ],
 );
 
@@ -48,9 +51,16 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       feeEstimation: const AsyncValue.loading(),
     );
 
+    var amountInUCO = state.amount;
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
+      amountInUCO = state.amountConverted;
+    }
+
     final fees = await Future<double>(
       () async {
-        if (state.amount <= 0 || !state.recipient.isAddressValid) {
+        if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
           return 0; // TODO(Chralu): should we use an error class instead ?
         }
 
@@ -59,7 +69,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           task: () => _calculateFees(
             context: context,
             formState: state.copyWith(
-              amount: state.amount,
+              amount: amountInUCO,
             ),
           ),
         );
@@ -72,7 +82,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     state = state.copyWith(
       feeEstimation: AsyncValue.data(fees),
-      errorAmountText: state.amount > state.accountBalance - fees
+      errorAmountText: amountInUCO > state.accountBalance - fees
           ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
                 '%1',
                 state.symbol(context),
@@ -214,11 +224,25 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   Future<void> setAmount({
     required BuildContext context,
     required double amount,
+    double? tokenPrice,
   }) async {
+    var amountConverted = 0.0;
+    if (amount > 0 && tokenPrice != null) {
+      final primaryCurrencyNotifier =
+          ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier);
+
+      amountConverted = primaryCurrencyNotifier.getValueConverted(
+        amount: amount,
+        tokenPrice: tokenPrice,
+      );
+    }
+
     state = state.copyWith(
       amount: amount,
+      amountConverted: amountConverted,
       errorAmountText: '',
     );
+
     _updateFees(context);
   }
 

@@ -23,7 +23,9 @@ mixin _$TransferFormState {
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   bool get canTransfer => throw _privateConstructorUsedError;
   bool get defineMaxAmountInProgress => throw _privateConstructorUsedError;
-  double get amount => throw _privateConstructorUsedError;
+  double get amount =>
+      throw _privateConstructorUsedError; // Amount converted in UCO if primary currency is native. Else in fiat currency
+  double get amountConverted => throw _privateConstructorUsedError;
   double get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
   AccountToken? get accountToken => throw _privateConstructorUsedError;
@@ -50,6 +52,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       bool canTransfer,
       bool defineMaxAmountInProgress,
       double amount,
+      double amountConverted,
       double accountBalance,
       TransferRecipient recipient,
       AccountToken? accountToken,
@@ -79,6 +82,7 @@ class _$TransferFormStateCopyWithImpl<$Res>
     Object? canTransfer = freezed,
     Object? defineMaxAmountInProgress = freezed,
     Object? amount = freezed,
+    Object? amountConverted = freezed,
     Object? accountBalance = freezed,
     Object? recipient = freezed,
     Object? accountToken = freezed,
@@ -115,6 +119,10 @@ class _$TransferFormStateCopyWithImpl<$Res>
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      amountConverted: amountConverted == freezed
+          ? _value.amountConverted
+          : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
       accountBalance: accountBalance == freezed
           ? _value.accountBalance
@@ -170,6 +178,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       bool canTransfer,
       bool defineMaxAmountInProgress,
       double amount,
+      double amountConverted,
       double accountBalance,
       TransferRecipient recipient,
       AccountToken? accountToken,
@@ -202,6 +211,7 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
     Object? canTransfer = freezed,
     Object? defineMaxAmountInProgress = freezed,
     Object? amount = freezed,
+    Object? amountConverted = freezed,
     Object? accountBalance = freezed,
     Object? recipient = freezed,
     Object? accountToken = freezed,
@@ -238,6 +248,10 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      amountConverted: amountConverted == freezed
+          ? _value.amountConverted
+          : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
       accountBalance: accountBalance == freezed
           ? _value.accountBalance
@@ -282,6 +296,7 @@ class _$_TransferFormState extends _TransferFormState {
       this.canTransfer = false,
       this.defineMaxAmountInProgress = false,
       this.amount = 0.0,
+      this.amountConverted = 0.0,
       required this.accountBalance,
       required this.recipient,
       this.accountToken,
@@ -310,6 +325,10 @@ class _$_TransferFormState extends _TransferFormState {
   @override
   @JsonKey()
   final double amount;
+// Amount converted in UCO if primary currency is native. Else in fiat currency
+  @override
+  @JsonKey()
+  final double amountConverted;
   @override
   final double accountBalance;
   @override
@@ -331,7 +350,7 @@ class _$_TransferFormState extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -351,6 +370,8 @@ class _$_TransferFormState extends _TransferFormState {
             const DeepCollectionEquality().equals(
                 other.defineMaxAmountInProgress, defineMaxAmountInProgress) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality()
+                .equals(other.amountConverted, amountConverted) &&
             const DeepCollectionEquality()
                 .equals(other.accountBalance, accountBalance) &&
             const DeepCollectionEquality().equals(other.recipient, recipient) &&
@@ -375,6 +396,7 @@ class _$_TransferFormState extends _TransferFormState {
       const DeepCollectionEquality().hash(canTransfer),
       const DeepCollectionEquality().hash(defineMaxAmountInProgress),
       const DeepCollectionEquality().hash(amount),
+      const DeepCollectionEquality().hash(amountConverted),
       const DeepCollectionEquality().hash(accountBalance),
       const DeepCollectionEquality().hash(recipient),
       const DeepCollectionEquality().hash(accountToken),
@@ -399,6 +421,7 @@ abstract class _TransferFormState extends TransferFormState {
       final bool canTransfer,
       final bool defineMaxAmountInProgress,
       final double amount,
+      final double amountConverted,
       required final double accountBalance,
       required final TransferRecipient recipient,
       final AccountToken? accountToken,
@@ -422,6 +445,8 @@ abstract class _TransferFormState extends TransferFormState {
   bool get defineMaxAmountInProgress;
   @override
   double get amount;
+  @override // Amount converted in UCO if primary currency is native. Else in fiat currency
+  double get amountConverted;
   @override
   double get accountBalance;
   @override

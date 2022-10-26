@@ -15,8 +15,7 @@ class TransferTextFieldAmount extends ConsumerStatefulWidget {
 }
 
 class _TransferTextFieldAmountState
-    extends ConsumerState<TransferTextFieldAmount>
-    with PrimaryCurrencyConverter {
+    extends ConsumerState<TransferTextFieldAmount> {
   late TextEditingController sendAmountController;
   late FocusNode sendAmountFocusNode;
 
@@ -58,6 +57,8 @@ class _TransferTextFieldAmountState
         ref.watch(TransferFormProvider.transferForm.notifier);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final primaryCurrencyNotifier =
+        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier);
     final accountSelected = ref.read(
       AccountProviders.getSelectedAccount(context: context),
     );
@@ -96,6 +97,7 @@ class _TransferTextFieldAmountState
             transferNotifier.setAmount(
               context: context,
               amount: double.tryParse(text) ?? 0,
+              tokenPrice: accountSelected!.balance!.tokenPrice!.amount ?? 0,
             );
           },
           textInputAction: TextInputAction.next,
@@ -154,26 +156,11 @@ class _TransferTextFieldAmountState
                 Container(
                   margin: const EdgeInsets.only(right: 40),
                   alignment: Alignment.centerRight,
-                  child: primaryCurrency.primaryCurrency ==
-                          AvailablePrimaryCurrencyEnum.native
-                      ? Text(
-                          '= ${_convertNetworkCurrencyToSelectedCurrency(
-                            transfer.amount.toString(),
-                            accountSelected.balance!.tokenPrice!.amount,
-                            localCurrencyFormat,
-                          )}',
-                          textAlign: TextAlign.right,
-                          style: theme.textStyleSize14W100Primary,
-                        )
-                      : Text(
-                          '= ${_convertSelectedCurrencyToNetworkCurrency(
-                            transfer.amount.toString(),
-                            accountSelected.balance!.tokenPrice!.amount,
-                            context,
-                          )}',
-                          textAlign: TextAlign.right,
-                          style: theme.textStyleSize14W100Primary,
-                        ),
+                  child: Text(
+                    '= ${primaryCurrencyNotifier.getValueConvertedLabel(amount: transfer.amount, tokenPrice: accountSelected.balance!.tokenPrice!.amount!, context: context)}',
+                    textAlign: TextAlign.right,
+                    style: theme.textStyleSize14W100Primary,
+                  ),
                 )
               else
                 const SizedBox(),
@@ -195,47 +182,5 @@ class _TransferTextFieldAmountState
           ),
       ],
     );
-  }
-}
-
-mixin PrimaryCurrencyConverter {
-  String _convertSelectedCurrencyToNetworkCurrency(
-    String amountEntered,
-    double? tokenPriceAmount,
-    BuildContext context,
-  ) {
-    var priceConverted = 0.0;
-    var convertedAmt = amountEntered.replaceAll(',', '.');
-    convertedAmt = NumberUtil.sanitizeNumber(convertedAmt);
-    if (convertedAmt.isEmpty || double.tryParse(convertedAmt) == 0) {
-      return '';
-    }
-    priceConverted = (Decimal.parse(convertedAmt) /
-            Decimal.parse(
-              tokenPriceAmount.toString(),
-            ))
-        .toDouble();
-    return '${priceConverted.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}';
-  }
-
-  String _convertNetworkCurrencyToSelectedCurrency(
-    String amountEntered,
-    double? tokenPriceAmount,
-    NumberFormat localCurrencyFormat,
-  ) {
-    var priceConverted = 0.0;
-    final convertedAmt = NumberUtil.sanitizeNumber(
-      amountEntered,
-      maxDecimalDigits: localCurrencyFormat.decimalDigits!,
-    );
-    if (convertedAmt.isEmpty) {
-      return '';
-    }
-    priceConverted = (Decimal.parse(
-              tokenPriceAmount.toString(),
-            ) *
-            Decimal.parse(convertedAmt))
-        .toDouble();
-    return localCurrencyFormat.format(priceConverted);
   }
 }

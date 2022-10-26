@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
 import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
@@ -27,6 +29,9 @@ class UCOTransferDetail extends ConsumerWidget {
     final accountSelected = ref.read(
       AccountProviders.getSelectedAccount(context: context),
     );
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -60,7 +65,10 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  transfer.amount,
+                  primaryCurrency.primaryCurrency ==
+                          AvailablePrimaryCurrencyEnum.fiat
+                      ? transfer.amountConverted
+                      : transfer.amount,
                   transfer.symbol(context),
                 ),
                 style: theme.textStyleSize12W400Primary,
