@@ -27,7 +27,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yubidart/yubidart.dart';
 
 class YubikeyScreen extends ConsumerStatefulWidget {
-  const YubikeyScreen({super.key});
+  const YubikeyScreen({
+    super.key,
+    required this.canNavigateBack,
+  });
+
+  final bool canNavigateBack;
 
   @override
   ConsumerState<YubikeyScreen> createState() => _YubikeyScreenState();
@@ -219,163 +224,169 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: <Widget>[
-          DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  theme.background5Small!,
+    return WillPopScope(
+      onWillPop: () async => widget.canNavigateBack,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: <Widget>[
+            DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    theme.background5Small!,
+                  ),
+                  fit: BoxFit.fitHeight,
                 ),
-                fit: BoxFit.fitHeight,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[theme.backgroundDark!, theme.background!],
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[theme.backgroundDark!, theme.background!],
+                ),
               ),
             ),
-          ),
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
-              minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.10,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsetsDirectional.only(start: 15),
-                    height: 50,
-                    width: 50,
-                    child: BackButton(
-                      key: const Key('back'),
-                      color: theme.text,
-                      onPressed: () {
-                        Navigator.pop(context, false);
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          const IconWidget(
-                            icon: 'assets/icons/digital-key.png',
-                            width: 90,
-                            height: 90,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 40),
-                            child: AutoSizeText(
-                              'OTP',
-                              style: theme.textStyleSize16W400Primary,
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                              stepGranularity: 0.1,
-                            ),
-                          ),
-                          if (isNFCAvailable)
-                            ElevatedButton(
-                              child: Text(
-                                buttonNFCLabel,
-                                style: theme.textStyleSize16W200Primary,
-                              ),
-                              onPressed: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-                                setState(() {
-                                  buttonNFCLabel = localizations
-                                      .yubikeyConnectHoldNearDevice;
-                                });
-                                await _tagRead();
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  top: MediaQuery.of(context).size.height * 0.10,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsetsDirectional.only(start: 15),
+                      height: 50,
+                      width: 50,
+                      child: widget.canNavigateBack
+                          ? BackButton(
+                              key: const Key('back'),
+                              color: theme.text,
+                              onPressed: () {
+                                Navigator.pop(context, false);
                               },
                             )
-                          else
+                          : const SizedBox(),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            const IconWidget(
+                              icon: 'assets/icons/digital-key.png',
+                              width: 90,
+                              height: 90,
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
                             Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 10,
-                              ),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 40),
                               child: AutoSizeText(
-                                localizations.yubikeyConnectInvite,
-                                style: theme.textStyleSize16W200Primary,
+                                'OTP',
+                                style: theme.textStyleSize16W400Primary,
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 stepGranularity: 0.1,
                               ),
                             ),
-                          if (isNFCAvailable)
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                            )
-                          else
-                            AppTextField(
-                              topMargin: 30,
-                              maxLines: 3,
-                              padding: const EdgeInsetsDirectional.only(
-                                start: 16,
-                                end: 16,
-                              ),
-                              focusNode: enterOTPFocusNode,
-                              controller: enterOTPController,
-                              textInputAction: TextInputAction.go,
-                              autofocus: true,
-                              onSubmitted: (value) async {
-                                FocusScope.of(context).unfocus();
-                              },
-                              onChanged: (String value) async {
-                                if (value.trim().length == 44) {
-                                  EventTaxiImpl.singleton()
-                                      .fire(OTPReceiveEvent(otp: value));
-                                }
-                              },
-                              inputFormatters: <
-                                  LengthLimitingTextInputFormatter>[
-                                LengthLimitingTextInputFormatter(45),
-                              ],
-                              keyboardType: TextInputType.text,
-                              style: theme.textStyleSize16W600Primary,
-                              suffixButton: TextFieldButton(
-                                icon: FontAwesomeIcons.paste,
-                                onPressed: () {
+                            if (isNFCAvailable)
+                              ElevatedButton(
+                                child: Text(
+                                  buttonNFCLabel,
+                                  style: theme.textStyleSize16W200Primary,
+                                ),
+                                onPressed: () async {
                                   sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
                                         preferences.activeVibrations,
                                       );
-                                  Clipboard.getData('text/plain')
-                                      .then((ClipboardData? data) async {
-                                    if (data == null || data.text == null) {
-                                      return;
-                                    }
-                                    enterOTPController!.text = data.text!;
-                                    EventTaxiImpl.singleton().fire(
-                                      OTPReceiveEvent(
-                                        otp: enterOTPController!.text,
-                                      ),
-                                    );
+                                  setState(() {
+                                    buttonNFCLabel = localizations
+                                        .yubikeyConnectHoldNearDevice;
                                   });
+                                  await _tagRead();
                                 },
+                              )
+                            else
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 40,
+                                  vertical: 10,
+                                ),
+                                child: AutoSizeText(
+                                  localizations.yubikeyConnectInvite,
+                                  style: theme.textStyleSize16W200Primary,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  stepGranularity: 0.1,
+                                ),
                               ),
-                            )
-                        ],
+                            if (isNFCAvailable)
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                              )
+                            else
+                              AppTextField(
+                                topMargin: 30,
+                                maxLines: 3,
+                                padding: const EdgeInsetsDirectional.only(
+                                  start: 16,
+                                  end: 16,
+                                ),
+                                focusNode: enterOTPFocusNode,
+                                controller: enterOTPController,
+                                textInputAction: TextInputAction.go,
+                                autofocus: true,
+                                onSubmitted: (value) async {
+                                  FocusScope.of(context).unfocus();
+                                },
+                                onChanged: (String value) async {
+                                  if (value.trim().length == 44) {
+                                    EventTaxiImpl.singleton()
+                                        .fire(OTPReceiveEvent(otp: value));
+                                  }
+                                },
+                                inputFormatters: <
+                                    LengthLimitingTextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(45),
+                                ],
+                                keyboardType: TextInputType.text,
+                                style: theme.textStyleSize16W600Primary,
+                                suffixButton: TextFieldButton(
+                                  icon: FontAwesomeIcons.paste,
+                                  onPressed: () {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          preferences.activeVibrations,
+                                        );
+                                    Clipboard.getData('text/plain')
+                                        .then((ClipboardData? data) async {
+                                      if (data == null || data.text == null) {
+                                        return;
+                                      }
+                                      enterOTPController!.text = data.text!;
+                                      EventTaxiImpl.singleton().fire(
+                                        OTPReceiveEvent(
+                                          otp: enterOTPController!.text,
+                                        ),
+                                      );
+                                    });
+                                  },
+                                ),
+                              )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

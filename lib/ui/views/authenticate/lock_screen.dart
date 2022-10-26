@@ -27,6 +27,15 @@ abstract class DurationFormatters {
       '${_twoDigitsFormatter(duration.inHours)}:${_twoDigitsFormatter(duration.inMinutes % 59)}:${_twoDigitsFormatter(duration.inSeconds % 59)}';
 }
 
+/// Handles navigation to the lock screen
+mixin ShowLockScreenMixin {
+  void showLockScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      '/lock_screen_transition',
+    );
+  }
+}
+
 abstract class AppLockScreenProviders {
   static final remainingLockSeconds = Provider.autoDispose<String>(
     (ref) {
