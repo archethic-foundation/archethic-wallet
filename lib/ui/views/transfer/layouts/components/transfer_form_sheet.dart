@@ -81,16 +81,15 @@ class TransferFormSheet extends ConsumerWidget {
                               ),
                             ),
                             Container(
+                              height: 40,
                               margin: const EdgeInsets.symmetric(
                                 horizontal: 30,
                               ),
                               child: transfer.feeEstimation.maybeWhen(
-                                loading: () => SizedBox.square(
-                                  dimension: 34,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1,
-                                    color: theme.text,
-                                  ),
+                                loading: () => Text(
+                                  localizations.estimatedFeesCalculationNote,
+                                  style: theme.textStyleSize14W100Primary,
+                                  textAlign: TextAlign.center,
                                 ),
                                 data: (data) {
                                   if (data > 0) {

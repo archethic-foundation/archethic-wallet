@@ -523,6 +523,11 @@ class AppLocalization {
         name: 'estimatedFeesNote');
   }
 
+  String get estimatedFeesCalculationNote {
+    return Intl.message('Fees are being calculated...',
+        name: 'estimatedFeesCalculationNote');
+  }
+
   String get estimatedFeesAddTokenNote {
     return Intl.message(
         'Note: The fees will be estimated when the name and the initial supply are specified.',
