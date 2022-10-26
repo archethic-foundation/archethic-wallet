@@ -101,7 +101,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: 'assets/icons/encrypted.png',
+                        icon: 'assets/icons/menu/security-custom.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: showSecurity,
                       ),
@@ -109,7 +109,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: 'assets/icons/menu/theme.svg',
+                        icon: 'assets/icons/menu/app-custom.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: showCustom,
                       ),
@@ -120,7 +120,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.aeWebsiteLinkHeader,
                         info: localizations.aeWebsiteLinkDesc,
-                        icon: 'assets/icons/home.png',
+                        icon: 'assets/icons/menu/link-archethic-website.svg',
                         iconColor: theme.iconDrawer,
                         onPressed: () async {
                           UIUtil.showWebview(
@@ -134,7 +134,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.labLinkHeader,
                         info: localizations.labLinkDesc,
-                        icon: 'assets/icons/microscope.png',
+                        icon: 'assets/icons/menu/link-archethic-lab.svg',
                         iconColor: theme.iconDrawer,
                         onPressed: () async {
                           UIUtil.showWebview(
@@ -148,7 +148,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: 'assets/icons/help.png',
+                        icon: 'assets/icons/menu/about.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: showAbout,
                       ),

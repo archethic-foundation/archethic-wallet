@@ -23,6 +23,7 @@ import 'package:aewallet/ui/views/contacts/contact_list.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/currency_dialog.dart';

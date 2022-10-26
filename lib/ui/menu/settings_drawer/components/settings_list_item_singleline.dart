@@ -39,11 +39,14 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget(
-                icon: icon!,
-                width: 30,
-                height: 30,
-                color: iconColor,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: IconWidget(
+                  icon: icon!,
+                  width: 30,
+                  height: 30,
+                  color: iconColor,
+                ),
               ),
             ),
             Column(

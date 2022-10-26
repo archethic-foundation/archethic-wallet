@@ -48,7 +48,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             actions: [
               if (StateContainer.of(context).bottomBarCurrentPage == 2)
                 IconButton(
-                  icon: const FaIcon(FontAwesomeIcons.gear),
+                  icon: const Icon(UiIcons.settings),
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,

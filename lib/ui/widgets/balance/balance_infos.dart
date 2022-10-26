@@ -16,6 +16,7 @@ import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';

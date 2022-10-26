@@ -93,7 +93,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                     );
                   },
                   child: const IconWidget(
-                    icon: 'assets/icons/oracle.png',
+                    icon: 'assets/icons/menu/oracle.svg',
                     width: 15,
                     height: 15,
                   ),
