@@ -477,7 +477,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             StateContainer.of(context).appWallet = appWallet;
                             final accounts = appWallet!.appKeychain.accounts;
 
-                            if (accounts == null || accounts.isEmpty) {
+                            if (accounts.isEmpty) {
                               setState(() {
                                 _mnemonicIsValid = false;
                               });

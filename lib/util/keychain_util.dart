@@ -222,13 +222,14 @@ class KeychainUtil {
       recentTransactions: [],
     );
 
-    appWallet!.appKeychain.accounts!.add(selectedAcct);
-    appWallet.appKeychain.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
+    appWallet!.appKeychain.accounts.add(selectedAcct);
+    appWallet.appKeychain.accounts.sort((a, b) => a.name!.compareTo(b.name!));
 
     final lastTransactionKeychainAddress = await sl
         .get<ApiService>()
         .getLastTransaction(genesisAddressKeychain, request: 'address');
-    appWallet.appKeychain.address = lastTransactionKeychainAddress.address;
+    appWallet.appKeychain.address = lastTransactionKeychainAddress
+        .address!; // TODO(Chralu): Transaction.address should be non-nullable
 
     await appWallet.save();
 
@@ -349,7 +350,7 @@ class KeychainUtil {
       final lastTransactionKeychain = await sl
           .get<ApiService>()
           .getLastTransaction(genesisAddressKeychain, request: 'address');
-      currentAppWallet.appKeychain.address = lastTransactionKeychain.address;
+      currentAppWallet.appKeychain.address = lastTransactionKeychain.address!;
       accounts.sort((a, b) => a.name!.compareTo(b.name!));
       currentAppWallet.appKeychain.accounts = accounts;
 

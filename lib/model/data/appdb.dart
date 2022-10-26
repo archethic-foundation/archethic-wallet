@@ -171,7 +171,7 @@ class DBHelper {
   Future<AppWallet> addAccount(Account account) async {
     final box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
-    appWallet.appKeychain.accounts!.add(account);
+    appWallet.appKeychain.accounts.add(account);
     await box.putAt(0, appWallet);
     return appWallet;
   }
@@ -179,7 +179,7 @@ class DBHelper {
   Future<AppWallet> clearAccount() async {
     final box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
-    appWallet.appKeychain.accounts!.clear();
+    appWallet.appKeychain.accounts.clear();
     await box.putAt(0, appWallet);
     return appWallet;
   }
@@ -187,11 +187,11 @@ class DBHelper {
   Future<AppWallet> changeAccount(Account account) async {
     final box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
-    for (var i = 0; i < appWallet.appKeychain.accounts!.length; i++) {
-      if (appWallet.appKeychain.accounts![i].name == account.name) {
-        appWallet.appKeychain.accounts![i].selected = true;
+    for (var i = 0; i < appWallet.appKeychain.accounts.length; i++) {
+      if (appWallet.appKeychain.accounts[i].name == account.name) {
+        appWallet.appKeychain.accounts[i].selected = true;
       } else {
-        appWallet.appKeychain.accounts![i].selected = false;
+        appWallet.appKeychain.accounts[i].selected = false;
       }
     }
     await box.putAt(0, appWallet);
@@ -205,7 +205,7 @@ class DBHelper {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
-    final accounts = appWallet.appKeychain.accounts!;
+    final accounts = appWallet.appKeychain.accounts;
     for (final account in accounts) {
       if (selectedAccount.name == account.name) {
         account.balance = balance;
@@ -219,7 +219,7 @@ class DBHelper {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
-    final accounts = appWallet.appKeychain.accounts!;
+    final accounts = appWallet.appKeychain.accounts;
     for (var account in accounts) {
       if (selectedAccount.name == account.name) {
         account = selectedAccount;
