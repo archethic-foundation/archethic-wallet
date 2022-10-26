@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -22,6 +23,8 @@ class TransferFormState with _$TransferFormState {
     @Default(false) bool canTransfer,
     @Default(false) bool defineMaxAmountInProgress,
     @Default(0.0) double amount,
+    // Amount converted in UCO if primary currency is native. Else in fiat currency
+    @Default(0.0) double amountConverted,
     required double accountBalance,
     required TransferRecipient recipient,
     AccountToken? accountToken,
