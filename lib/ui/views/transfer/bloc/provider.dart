@@ -82,12 +82,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     state = state.copyWith(
       feeEstimation: AsyncValue.data(fees),
-      errorAmountText: amountInUCO > state.accountBalance - fees
-          ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                '%1',
-                state.symbol(context),
-              )
-          : '',
+      errorAmountText:
+          amountInUCO > state.accountBalance.nativeTokenValue! - fees
+              ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol(context),
+                  )
+              : '',
     );
   }
 
@@ -203,12 +204,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
   Future<void> setMaxAmount({
     required BuildContext context,
+    double? tokenPrice,
   }) async {
     final balance = state.accountBalance;
 
     final fees = await _calculateFees(
       context: context,
-      formState: state.copyWith(amount: balance),
+      formState: state.copyWith(amount: balance.nativeTokenValue!),
     );
 
     if (fees == null) {
@@ -216,7 +218,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
 
     state = state.copyWith(
-      amount: balance - fees,
+      amount: balance.fiatCurrencyValue! - fees,
       feeEstimation: AsyncValue.data(fees),
       errorAmountText: '',
     );

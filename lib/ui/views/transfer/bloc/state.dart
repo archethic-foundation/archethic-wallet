@@ -1,5 +1,6 @@
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class TransferFormState with _$TransferFormState {
     @Default(0.0) double amount,
     // Amount converted in UCO if primary currency is native. Else in fiat currency
     @Default(0.0) double amountConverted,
-    required double accountBalance,
+    required AccountBalance accountBalance,
     required TransferRecipient recipient,
     AccountToken? accountToken,
     @Default('') String message,
@@ -40,7 +41,7 @@ class TransferFormState with _$TransferFormState {
 
   bool get showMaxAmountButton {
     final fees = feeEstimation.valueOrNull ?? 0;
-    return (amount + fees) < accountBalance;
+    return (amount + fees) < accountBalance.nativeTokenValue!;
   }
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;

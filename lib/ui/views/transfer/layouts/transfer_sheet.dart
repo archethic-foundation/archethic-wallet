@@ -71,7 +71,7 @@ class TransferSheet extends ConsumerWidget {
             accountToken: accountToken,
             seed: seed,
             recipient: recipient,
-            accountBalance: selectedAccount!.balance!.nativeTokenValue!,
+            accountBalance: selectedAccount!.balance!,
           ),
         ),
       ],
