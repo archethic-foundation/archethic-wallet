@@ -1,5 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -20,7 +18,6 @@ class TransferFormState with _$TransferFormState {
     required String seed,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
     required AsyncValue<double> feeEstimation,
-    @Default(false) bool canTransfer,
     @Default(false) bool defineMaxAmountInProgress,
     @Default(0.0) double amount,
     // Amount converted in UCO if primary currency is native. Else in fiat currency
@@ -37,6 +34,9 @@ class TransferFormState with _$TransferFormState {
 
   bool get isControlsOk =>
       errorAddressText == '' && errorAmountText == '' && errorMessageText == '';
+
+  bool get canTransfer =>
+      feeEstimation.value != null && feeEstimation.value! > 0;
 
   bool get showMaxAmountButton {
     final fees = feeEstimation.valueOrNull ?? 0;
