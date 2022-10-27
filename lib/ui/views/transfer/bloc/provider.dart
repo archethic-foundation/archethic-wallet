@@ -115,6 +115,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       _setRecipient(
         recipient: TransferRecipient.address(address: Address(text)),
       );
+      _updateFees(context);
       return;
     }
 
