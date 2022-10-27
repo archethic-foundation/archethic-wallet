@@ -17,7 +17,10 @@ class AppKeychain extends HiveObject {
   @HiveField(0)
   String address;
 
-  /// @deprecated HiveField(1) : Seed
+  /// Seed
+  // TODO(reddwarf03): This should be mandatory and filled on Keychain creation.
+  @HiveField(1)
+  String? seed;
 
   /// Accounts
   @HiveField(2, defaultValue: [])

@@ -43,17 +43,7 @@ class AppHomePageUniverse extends ConsumerStatefulWidget {
 
 class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  late AnimationController _placeholderCardAnimationController;
-  late Animation<double> _opacityAnimation;
-  late bool _animationDisposed;
-
   bool _lockDisabled = false; // whether we should avoid locking the app
-
-  bool? accountIsPressed;
-
-  AnimationController? animationController;
-  ColorTween? colorTween;
-  CurvedAnimation? curvedAnimation;
 
   TabController? tabController;
 
@@ -61,7 +51,6 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
   void initState() {
     super.initState();
 
-    accountIsPressed = false;
     tabController = TabController(length: 2, vsync: this);
 
     _registerBus();
@@ -69,24 +58,14 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
 
     NotificationsUtil.init();
     listenNotifications();
+  }
 
-    // Setup placeholder animation and start
-    _animationDisposed = false;
-    _placeholderCardAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-    _placeholderCardAnimationController
-        .addListener(_animationControllerListener);
-    _opacityAnimation = Tween<double>(begin: 1, end: 0.4).animate(
-      CurvedAnimation(
-        parent: _placeholderCardAnimationController,
-        curve: Curves.easeIn,
-        reverseCurve: Curves.easeOut,
-      ),
-    );
-    _opacityAnimation.addStatusListener(_animationStatusListener);
-    _placeholderCardAnimationController.forward();
+  @override
+  void dispose() {
+    _destroyBus();
+    WidgetsBinding.instance.removeObserver(this);
+    tabController!.dispose();
+    super.dispose();
   }
 
   StreamSubscription<String?> listenNotifications() =>
@@ -94,45 +73,6 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
 
   void onClickedNotification(String? payload) {
     EventTaxiImpl.singleton().fire(NotificationsEvent(payload: payload));
-  }
-
-  void _animationStatusListener(AnimationStatus status) {
-    switch (status) {
-      case AnimationStatus.dismissed:
-        _placeholderCardAnimationController.forward();
-        break;
-      case AnimationStatus.completed:
-        _placeholderCardAnimationController.reverse();
-        break;
-      case AnimationStatus.reverse:
-        break;
-      case AnimationStatus.forward:
-        break;
-    }
-  }
-
-  void _animationControllerListener() {
-    setState(() {});
-  }
-
-  void _startAnimation() {
-    if (_animationDisposed) {
-      _animationDisposed = false;
-      _placeholderCardAnimationController
-          .addListener(_animationControllerListener);
-      _opacityAnimation.addStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController.forward();
-    }
-  }
-
-  void _disposeAnimation() {
-    if (!_animationDisposed) {
-      _animationDisposed = true;
-      _opacityAnimation.removeStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController
-          .removeListener(_animationControllerListener);
-      _placeholderCardAnimationController.stop();
-    }
   }
 
   StreamSubscription<DisableLockTimeoutEvent>? _disableLockSub;
@@ -156,10 +96,7 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
       setState(() {
         StateContainer.of(context).recentTransactionsLoading = true;
 
-        _startAnimation();
-
         StateContainer.of(context).requestUpdate();
-        _disposeAnimation();
 
         StateContainer.of(context).recentTransactionsLoading = false;
       });
@@ -183,15 +120,6 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
       StateContainer.of(context).recentTransactionsLoading = false;
       Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
     });
-  }
-
-  @override
-  void dispose() {
-    _destroyBus();
-    WidgetsBinding.instance.removeObserver(this);
-    tabController!.dispose();
-    _placeholderCardAnimationController.dispose();
-    super.dispose();
   }
 
   void _destroyBus() {
