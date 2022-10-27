@@ -31,6 +31,10 @@ class UCOTransferDetail extends ConsumerWidget {
     );
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    var amountInUco = transfer.amount;
+    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
+      amountInUco = transfer.amountConverted;
+    }
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -42,7 +46,7 @@ class UCOTransferDetail extends ConsumerWidget {
             child: Align(
               child: AutoSizeText(
                 AmountFormatters.standard(
-                  transfer.amount,
+                  amountInUco,
                   transfer.symbol(context),
                 ),
                 style: theme.textStyleSize28W700Primary,
@@ -65,10 +69,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  primaryCurrency.primaryCurrency ==
-                          AvailablePrimaryCurrencyEnum.fiat
-                      ? transfer.amountConverted
-                      : transfer.amount,
+                  amountInUco,
                   transfer.symbol(context),
                 ),
                 style: theme.textStyleSize12W400Primary,
@@ -100,7 +101,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  transfer.feeEstimationOrZero + transfer.amount,
+                  transfer.feeEstimationOrZero + amountInUco,
                   StateContainer.of(context)
                       .curNetwork
                       .getNetworkCryptoCurrencyLabel(),
@@ -118,7 +119,7 @@ class UCOTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standard(
                   accountSelected.balance!.nativeTokenValue! -
-                      (transfer.feeEstimationOrZero + transfer.amount),
+                      (transfer.feeEstimationOrZero + amountInUco),
                   transfer.symbol(context),
                 ),
                 style: theme.textStyleSize12W400Primary,
