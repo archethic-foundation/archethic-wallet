@@ -53,7 +53,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     var amountInUCO = state.amount;
     final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
       amountInUCO = state.amountConverted;
     }
@@ -302,7 +302,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     if (state.transferType == TransferType.uco) {
       var amountInUCO = state.amount;
       final primaryCurrency =
-          ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+          ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
       if (primaryCurrency.primaryCurrency ==
           AvailablePrimaryCurrencyEnum.fiat) {
         amountInUCO = state.amountConverted;
@@ -408,7 +408,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     var amountInUCO = state.amount;
     final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
       amountInUCO = state.amountConverted;
     }
