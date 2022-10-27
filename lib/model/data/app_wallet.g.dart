@@ -17,8 +17,8 @@ class AppWalletAdapter extends TypeAdapter<AppWallet> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AppWallet(
-      seed: fields[0] as String?,
-      appKeychain: fields[1] as AppKeychain?,
+      seed: fields[0] as String,
+      appKeychain: fields[1] as AppKeychain,
     );
   }
 

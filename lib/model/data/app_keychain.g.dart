@@ -17,10 +17,9 @@ class AppKeychainAdapter extends TypeAdapter<AppKeychain> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AppKeychain(
-      address: fields[0] as String?,
-      seed: fields[1] as String?,
-      accounts: (fields[2] as List?)?.cast<Account>(),
-    );
+      address: fields[0] as String,
+      accounts: fields[2] == null ? [] : (fields[2] as List).cast<Account>(),
+    )..seed = fields[1] as String?;
   }
 
   @override
