@@ -21,7 +21,6 @@ mixin _$TransferFormState {
   TransferProcessStep get transferProcessStep =>
       throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
-  bool get canTransfer => throw _privateConstructorUsedError;
   bool get defineMaxAmountInProgress => throw _privateConstructorUsedError;
   double get amount =>
       throw _privateConstructorUsedError; // Amount converted in UCO if primary currency is native. Else in fiat currency
@@ -49,7 +48,6 @@ abstract class $TransferFormStateCopyWith<$Res> {
       String seed,
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
-      bool canTransfer,
       bool defineMaxAmountInProgress,
       double amount,
       double amountConverted,
@@ -79,7 +77,6 @@ class _$TransferFormStateCopyWithImpl<$Res>
     Object? seed = freezed,
     Object? transferProcessStep = freezed,
     Object? feeEstimation = freezed,
-    Object? canTransfer = freezed,
     Object? defineMaxAmountInProgress = freezed,
     Object? amount = freezed,
     Object? amountConverted = freezed,
@@ -108,10 +105,6 @@ class _$TransferFormStateCopyWithImpl<$Res>
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
               as AsyncValue<double>,
-      canTransfer: canTransfer == freezed
-          ? _value.canTransfer
-          : canTransfer // ignore: cast_nullable_to_non_nullable
-              as bool,
       defineMaxAmountInProgress: defineMaxAmountInProgress == freezed
           ? _value.defineMaxAmountInProgress
           : defineMaxAmountInProgress // ignore: cast_nullable_to_non_nullable
@@ -175,7 +168,6 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       String seed,
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
-      bool canTransfer,
       bool defineMaxAmountInProgress,
       double amount,
       double amountConverted,
@@ -208,7 +200,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
     Object? seed = freezed,
     Object? transferProcessStep = freezed,
     Object? feeEstimation = freezed,
-    Object? canTransfer = freezed,
     Object? defineMaxAmountInProgress = freezed,
     Object? amount = freezed,
     Object? amountConverted = freezed,
@@ -237,10 +228,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
               as AsyncValue<double>,
-      canTransfer: canTransfer == freezed
-          ? _value.canTransfer
-          : canTransfer // ignore: cast_nullable_to_non_nullable
-              as bool,
       defineMaxAmountInProgress: defineMaxAmountInProgress == freezed
           ? _value.defineMaxAmountInProgress
           : defineMaxAmountInProgress // ignore: cast_nullable_to_non_nullable
@@ -293,7 +280,6 @@ class _$_TransferFormState extends _TransferFormState {
       required this.seed,
       this.transferProcessStep = TransferProcessStep.form,
       required this.feeEstimation,
-      this.canTransfer = false,
       this.defineMaxAmountInProgress = false,
       this.amount = 0.0,
       this.amountConverted = 0.0,
@@ -316,9 +302,6 @@ class _$_TransferFormState extends _TransferFormState {
   final TransferProcessStep transferProcessStep;
   @override
   final AsyncValue<double> feeEstimation;
-  @override
-  @JsonKey()
-  final bool canTransfer;
   @override
   @JsonKey()
   final bool defineMaxAmountInProgress;
@@ -350,7 +333,7 @@ class _$_TransferFormState extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, canTransfer: $canTransfer, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -365,8 +348,6 @@ class _$_TransferFormState extends _TransferFormState {
                 .equals(other.transferProcessStep, transferProcessStep) &&
             const DeepCollectionEquality()
                 .equals(other.feeEstimation, feeEstimation) &&
-            const DeepCollectionEquality()
-                .equals(other.canTransfer, canTransfer) &&
             const DeepCollectionEquality().equals(
                 other.defineMaxAmountInProgress, defineMaxAmountInProgress) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
@@ -393,7 +374,6 @@ class _$_TransferFormState extends _TransferFormState {
       const DeepCollectionEquality().hash(seed),
       const DeepCollectionEquality().hash(transferProcessStep),
       const DeepCollectionEquality().hash(feeEstimation),
-      const DeepCollectionEquality().hash(canTransfer),
       const DeepCollectionEquality().hash(defineMaxAmountInProgress),
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(amountConverted),
@@ -418,7 +398,6 @@ abstract class _TransferFormState extends TransferFormState {
       required final String seed,
       final TransferProcessStep transferProcessStep,
       required final AsyncValue<double> feeEstimation,
-      final bool canTransfer,
       final bool defineMaxAmountInProgress,
       final double amount,
       final double amountConverted,
@@ -439,8 +418,6 @@ abstract class _TransferFormState extends TransferFormState {
   TransferProcessStep get transferProcessStep;
   @override
   AsyncValue<double> get feeEstimation;
-  @override
-  bool get canTransfer;
   @override
   bool get defineMaxAmountInProgress;
   @override

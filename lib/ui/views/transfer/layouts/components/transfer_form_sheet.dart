@@ -123,29 +123,38 @@ class TransferFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
-                      actionButtonTitle ?? localizations.send,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('send'),
-                      onPressed: () async {
-                        final isAddressOk =
-                            await transferNotifier.controlAddress(
-                          context,
-                          accountSelected,
-                        );
-                        final isAmountOk = transferNotifier.controlAmount(
-                          context,
-                          accountSelected,
-                        );
-
-                        if (isAddressOk && isAmountOk) {
-                          transferNotifier.setTransferProcessStep(
-                            TransferProcessStep.confirmation,
+                    if (transfer.canTransfer)
+                      AppButton(
+                        AppButtonType.primary,
+                        actionButtonTitle ?? localizations.send,
+                        Dimens.buttonBottomDimens,
+                        key: const Key('send'),
+                        onPressed: () async {
+                          final isAddressOk =
+                              await transferNotifier.controlAddress(
+                            context,
+                            accountSelected,
                           );
-                        }
-                      },
-                    ),
+                          final isAmountOk = transferNotifier.controlAmount(
+                            context,
+                            accountSelected,
+                          );
+
+                          if (isAddressOk && isAmountOk) {
+                            transferNotifier.setTransferProcessStep(
+                              TransferProcessStep.confirmation,
+                            );
+                          }
+                        },
+                      )
+                    else
+                      AppButton(
+                        AppButtonType.primaryOutline,
+                        actionButtonTitle ?? localizations.send,
+                        Dimens.buttonBottomDimens,
+                        key: const Key('send'),
+                        onPressed: () {},
+                      ),
                   ],
                 ),
               ],
