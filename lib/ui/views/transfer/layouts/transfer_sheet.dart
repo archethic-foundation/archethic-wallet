@@ -39,8 +39,6 @@ part 'components/transfer_textfield_address.dart';
 part 'components/transfer_textfield_amount.dart';
 part 'components/transfer_textfield_message.dart';
 
-enum AddressStyle { text60, text90, primary }
-
 class TransferSheet extends ConsumerWidget {
   const TransferSheet({
     required this.seed,
