@@ -125,6 +125,7 @@ class _TransferTextFieldAmountState
               }
               await transferNotifier.setMaxAmount(
                 context: context,
+                tokenPrice: accountSelected!.balance!.tokenPrice!.amount,
               );
               _updateAmountTextController();
               transferNotifier.setDefineMaxAmountInProgress(

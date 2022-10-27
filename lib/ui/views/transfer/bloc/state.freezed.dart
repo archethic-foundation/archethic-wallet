@@ -25,7 +25,7 @@ mixin _$TransferFormState {
   double get amount =>
       throw _privateConstructorUsedError; // Amount converted in UCO if primary currency is native. Else in fiat currency
   double get amountConverted => throw _privateConstructorUsedError;
-  double get accountBalance => throw _privateConstructorUsedError;
+  AccountBalance get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
   AccountToken? get accountToken => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
@@ -51,7 +51,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       bool defineMaxAmountInProgress,
       double amount,
       double amountConverted,
-      double accountBalance,
+      AccountBalance accountBalance,
       TransferRecipient recipient,
       AccountToken? accountToken,
       String message,
@@ -120,7 +120,7 @@ class _$TransferFormStateCopyWithImpl<$Res>
       accountBalance: accountBalance == freezed
           ? _value.accountBalance
           : accountBalance // ignore: cast_nullable_to_non_nullable
-              as double,
+              as AccountBalance,
       recipient: recipient == freezed
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -171,7 +171,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       bool defineMaxAmountInProgress,
       double amount,
       double amountConverted,
-      double accountBalance,
+      AccountBalance accountBalance,
       TransferRecipient recipient,
       AccountToken? accountToken,
       String message,
@@ -243,7 +243,7 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
       accountBalance: accountBalance == freezed
           ? _value.accountBalance
           : accountBalance // ignore: cast_nullable_to_non_nullable
-              as double,
+              as AccountBalance,
       recipient: recipient == freezed
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -313,7 +313,7 @@ class _$_TransferFormState extends _TransferFormState {
   @JsonKey()
   final double amountConverted;
   @override
-  final double accountBalance;
+  final AccountBalance accountBalance;
   @override
   final TransferRecipient recipient;
   @override
@@ -401,7 +401,7 @@ abstract class _TransferFormState extends TransferFormState {
       final bool defineMaxAmountInProgress,
       final double amount,
       final double amountConverted,
-      required final double accountBalance,
+      required final AccountBalance accountBalance,
       required final TransferRecipient recipient,
       final AccountToken? accountToken,
       final String message,
@@ -425,7 +425,7 @@ abstract class _TransferFormState extends TransferFormState {
   @override // Amount converted in UCO if primary currency is native. Else in fiat currency
   double get amountConverted;
   @override
-  double get accountBalance;
+  AccountBalance get accountBalance;
   @override
   TransferRecipient get recipient;
   @override
