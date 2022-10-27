@@ -5,6 +5,7 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -42,7 +43,6 @@ part 'components/transfer_textfield_message.dart';
 
 class TransferSheet extends ConsumerWidget {
   const TransferSheet({
-    required this.seed,
     required this.transferType,
     required this.recipient,
     this.actionButtonTitle,
@@ -54,13 +54,14 @@ class TransferSheet extends ConsumerWidget {
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final TransferType transferType;
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref.watch(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
+
+    final seed = ref.watch(SessionProviders.session).loggedIn!.seed;
 
     // The main column that holds everything
     return ProviderScope(

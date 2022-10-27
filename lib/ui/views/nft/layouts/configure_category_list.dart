@@ -26,8 +26,9 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final accountSelected = ref.watch(
+      AccountProviders.selectedAccount,
+    );
     final listNftCategory = ref.watch(
       NftCategoryProviders.fetchNftCategory(
         context: context,

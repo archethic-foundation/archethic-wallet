@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
@@ -48,8 +48,7 @@ class _TransferFormSheetState extends ConsumerState<TransferFormSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =

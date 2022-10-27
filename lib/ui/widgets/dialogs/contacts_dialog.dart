@@ -25,7 +25,7 @@ class ContactsDialog {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     var contacts = await StateContainer.of(context).getContacts();
     final accountSelected = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     for (final contact in contacts) {

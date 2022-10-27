@@ -3,6 +3,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+// Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -126,10 +128,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
             request: 'id',
           );
-      StateContainer.of(context)
-          .appWallet!
-          .appKeychain
-          .getAccountSelected()!
+
+      ref
+          .read(AccountProviders.selectedAccount)!
           .removeftInfosOffChain(token.id);
     }
     setState(() {

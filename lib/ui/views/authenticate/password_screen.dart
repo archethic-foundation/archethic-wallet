@@ -3,7 +3,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -65,7 +65,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     if (enterPasswordController!.text ==
         stringDecryptBase64(
           vault.getPassword()!,
-          await StateContainer.of(context).getSeed(),
+          ref.read(SessionProviders.session).loggedIn?.seed,
         )) {
       preferences.resetLockAttempts();
       Navigator.of(context).pop(true);

@@ -23,8 +23,8 @@ class TokenTransferDetail extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final accountSelected = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+    final accountSelected = ref.watch(
+      AccountProviders.selectedAccount,
     );
     return Container(
       width: MediaQuery.of(context).size.width,

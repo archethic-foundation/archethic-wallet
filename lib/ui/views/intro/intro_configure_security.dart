@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
@@ -172,8 +171,6 @@ class _IntroConfigureSecurityState
                                                 context,
                                               )!
                                                   .configureSecurityExplanationPassword,
-                                              name: widget.name,
-                                              seed: widget.seed,
                                             );
                                           },
                                         ),

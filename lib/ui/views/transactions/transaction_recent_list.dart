@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -14,9 +15,7 @@ class TxList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!;
+    final accountSelected = ref.read(AccountProviders.selectedAccount)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

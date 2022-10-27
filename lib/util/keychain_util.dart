@@ -134,7 +134,7 @@ class KeychainUtil {
     );
   }
 
-  Future<AppWallet?> addAccountInKeyChain(
+  Future<AppWallet> addAccountInKeyChain(
     AppWallet? appWallet,
     String? seed,
     String? name,

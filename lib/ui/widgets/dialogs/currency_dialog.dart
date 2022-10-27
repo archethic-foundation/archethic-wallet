@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -66,9 +66,10 @@ class CurrencyDialog {
               onSelected: (value) async {
                 final currency =
                     AvailableCurrency(value.value as AvailableCurrencyEnum);
-                final accountSelected = StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain.getAccountSelected()!;
+
+                final accountSelected = ref.read(
+                  AccountProviders.selectedAccount,
+                )!;
                 await ref.read(
                   CurrencyProviders.selectCurrency(currency: currency).future,
                 );

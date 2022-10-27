@@ -3,13 +3,13 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -147,12 +147,15 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             });
             var error = false;
             try {
-              StateContainer.of(context).appWallet =
-                  await AppWallet.createNewAppWallet(
-                event.params!['keychainAddress']! as String,
-                event.params!['keychain']! as Keychain,
-                widget.name,
-              );
+              await ref
+                  .read(SessionProviders.session.notifier)
+                  .createNewAppWallet(
+                    seed: widget.seed!,
+                    keychainAddress:
+                        event.params!['keychainAddress']! as String,
+                    keychain: event.params!['keychain']! as Keychain,
+                    name: widget.name,
+                  );
             } catch (e) {
               error = true;
               UIUtil.showSnackbar(
@@ -166,9 +169,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             if (error == false) {
               await StateContainer.of(context).requestUpdate();
 
-              StateContainer.of(context).checkTransactionInputs(
-                localizations.transactionInputNotification,
-              );
               final preferences = await Preferences.getInstance();
               StateContainer.of(context).bottomBarCurrentPage =
                   preferences.getMainScreenCurrentPage();

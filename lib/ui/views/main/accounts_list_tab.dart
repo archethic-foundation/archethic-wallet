@@ -3,11 +3,10 @@
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/keychain_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,12 +37,9 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
-
     return Column(
       children: [
         Expanded(
@@ -55,15 +51,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              StateContainer.of(context).appWallet =
-                  await KeychainUtil().getListAccountsFromKeychain(
-                StateContainer.of(context).appWallet,
-                await StateContainer.of(context).getSeed(),
-                currency.currency.name,
-                accountSelected.balance!.nativeTokenName!,
-                accountSelected.balance!.tokenPrice!,
-                currentName: accountSelected.name,
-              );
+              await ref.read(SessionProviders.session.notifier).refresh();
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
@@ -101,7 +89,6 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
                             children: <Widget>[
                               /// ACCOUNTS LIST
                               AccountsListWidget(
-                                appWallet: StateContainer.of(context).appWallet,
                                 currencyName: currency.currency.name,
                               )
                             ],

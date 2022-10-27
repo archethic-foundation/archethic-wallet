@@ -29,84 +29,43 @@ class _SystemHash {
   }
 }
 
-String $_accountRepositoryHash() => r'afe2ee1ebe77e5b3ff7bc7e5d6941b52c0712395';
+String $_AccountsNotifierHash() => r'91c85b834910bdbd4074074355570d4acd246fec';
 
-/// See also [_accountRepository].
-final _accountRepositoryProvider = AutoDisposeProvider<AccountRepository>(
-  _accountRepository,
-  name: r'_accountRepositoryProvider',
+/// See also [_AccountsNotifier].
+final _accountsNotifierProvider =
+    NotifierProvider<_AccountsNotifier, List<Account>>(
+  _AccountsNotifier.new,
+  name: r'_accountsNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_accountRepositoryHash,
+      : $_AccountsNotifierHash,
 );
-typedef _AccountRepositoryRef = AutoDisposeProviderRef<AccountRepository>;
-String $_getSelectedAccountHash() =>
-    r'09ee14ce0f831e9e4fc8ac51acc3ed4b39693776';
+typedef _AccountsNotifierRef = NotifierProviderRef<List<Account>>;
 
-/// See also [_getSelectedAccount].
-class _GetSelectedAccountProvider extends AutoDisposeProvider<Account?> {
-  _GetSelectedAccountProvider({
-    required this.context,
-  }) : super(
-          (ref) => _getSelectedAccount(
-            ref,
-            context: context,
-          ),
-          from: _getSelectedAccountProvider,
-          name: r'_getSelectedAccountProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : $_getSelectedAccountHash,
-        );
-
-  final BuildContext context;
-
+abstract class _$AccountsNotifier extends Notifier<List<Account>> {
   @override
-  bool operator ==(Object other) {
-    return other is _GetSelectedAccountProvider && other.context == context;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, context.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
+  List<Account> build();
 }
 
-typedef _GetSelectedAccountRef = AutoDisposeProviderRef<Account?>;
+String $_selectedAccountHash() => r'dd8c0fd844f0eacd4313d8f74a75883dbf30183d';
 
-/// See also [_getSelectedAccount].
-final _getSelectedAccountProvider = _GetSelectedAccountFamily();
+/// See also [_selectedAccount].
+final _selectedAccountProvider = AutoDisposeProvider<Account?>(
+  _selectedAccount,
+  name: r'_selectedAccountProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_selectedAccountHash,
+);
+typedef _SelectedAccountRef = AutoDisposeProviderRef<Account?>;
+String $_sortedAccountsHash() => r'af89aa30403924cdfaf4bb74f0c9932044637e19';
 
-class _GetSelectedAccountFamily extends Family<Account?> {
-  _GetSelectedAccountFamily();
-
-  _GetSelectedAccountProvider call({
-    required BuildContext context,
-  }) {
-    return _GetSelectedAccountProvider(
-      context: context,
-    );
-  }
-
-  @override
-  AutoDisposeProvider<Account?> getProviderOverride(
-    covariant _GetSelectedAccountProvider provider,
-  ) {
-    return call(
-      context: provider.context,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_getSelectedAccountProvider';
-}
+/// See also [_sortedAccounts].
+final _sortedAccountsProvider = AutoDisposeProvider<List<Account>>(
+  _sortedAccounts,
+  name: r'_sortedAccountsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_sortedAccountsHash,
+);
+typedef _SortedAccountsRef = AutoDisposeProviderRef<List<Account>>;

@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
@@ -47,8 +47,7 @@ class NFTTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: [

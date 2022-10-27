@@ -295,14 +295,6 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
       isSwitched: activeNotifications,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveNotifications(isSwitched);
-        if (StateContainer.of(context).timerCheckTransactionInputs != null) {
-          StateContainer.of(context).timerCheckTransactionInputs!.cancel();
-        }
-        if (isSwitched) {
-          StateContainer.of(context).checkTransactionInputs(
-            localizations.transactionInputNotification,
-          );
-        }
       },
     );
   }

@@ -19,6 +19,7 @@ class MainMenuView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -48,10 +49,7 @@ class MainMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.manage),
                       // TODO(reddwarf03): that conditional spacer seems odd.
-                      if (StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain.getAccountSelected()!
-                          .balance!
+                      if (selectedAccount!.balance!
                           .isNativeTokenValuePositive())
                         const _SettingsListItem.spacer()
                       else

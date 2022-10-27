@@ -5,8 +5,6 @@ import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
@@ -397,6 +395,7 @@ class AppService {
   }
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
+    String seed,
     String address,
     DateFormat dateFormat,
     String cryptoCurrency,
@@ -451,11 +450,9 @@ class AppService {
         );
       }
       if (transaction.data!.ownerships != null) {
-        final seed = await StateContainer.of(context).getSeed();
-
         final nameEncoded = Uri.encodeFull(name);
         final serviceName = 'archethic-wallet-$nameEncoded';
-        final keychain = await sl.get<ApiService>().getKeychain(seed!);
+        final keychain = await sl.get<ApiService>().getKeychain(seed);
         final keypair = keychain.deriveKeypair(serviceName);
 
         for (final ownership in transaction.data!.ownerships!) {

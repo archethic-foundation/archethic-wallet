@@ -1,24 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-// Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/main.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/chart_infos.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
-import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Flutter imports:
@@ -53,11 +48,8 @@ class StateContainer extends ConsumerStatefulWidget {
 }
 
 class StateContainerState extends ConsumerState<StateContainer> {
-  AppWallet? appWallet;
   Price? price;
-  Timer? timerCheckTransactionInputs;
   bool recentTransactionsLoading = false;
-  bool balanceLoading = false;
   late NetworksSetting curNetwork;
 
   ChartInfos? chartInfos = ChartInfos();
@@ -90,61 +82,8 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
   @override
   void dispose() {
-    if (timerCheckTransactionInputs != null) {
-      timerCheckTransactionInputs!.cancel();
-    }
     bottomBarPageController!.dispose();
     super.dispose();
-  }
-
-  void checkTransactionInputs(String message) {
-    if (!ref.read(DeviceAbilities.hasNotificationsProvider)) return;
-    if (appWallet == null) return;
-
-    timerCheckTransactionInputs = Timer.periodic(
-      const Duration(seconds: 30),
-      (Timer t) async {
-        final accounts = appWallet!.appKeychain.accounts;
-        for (final account in accounts) {
-          final transactionInputList =
-              await sl.get<AppService>().getTransactionInputs(
-                    account.lastAddress!,
-                    'from, amount, timestamp, tokenAddress ',
-                  );
-
-          if (transactionInputList.isNotEmpty) {
-            for (final transactionInput in transactionInputList) {
-              if (account.lastLoadingTransactionInputs == null ||
-                  transactionInput.timestamp! >
-                      account.lastLoadingTransactionInputs!) {
-                account.updateLastLoadingTransactionInputs();
-                if (transactionInput.from != account.lastAddress) {
-                  var symbol = 'UCO';
-                  if (transactionInput.tokenAddress != null) {
-                    symbol = (await sl
-                            .get<ApiService>()
-                            .getToken(transactionInput.tokenAddress!))
-                        .symbol!;
-                  }
-                  NotificationsUtil.showNotification(
-                    title: 'Archethic',
-                    body: message
-                        .replaceAll(
-                          '%1',
-                          fromBigInt(transactionInput.amount).toString(),
-                        )
-                        .replaceAll('%2', symbol)
-                        .replaceAll('%3', account.name!),
-                    payload: account.name,
-                  );
-                  await requestUpdate(forceUpdateChart: false);
-                }
-              }
-            }
-          }
-        }
-      },
-    );
   }
 
   Future<List<Contact>> getContacts() async {
@@ -174,18 +113,23 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
   // Change currency
   Future<void> updateCurrency() async {
+    final appWallet = ref.read(SessionProviders.session).loggedIn?.wallet;
+
     if (appWallet == null) return;
     final currency = ref.read(CurrencyProviders.selectedCurrency);
 
     final tokenPrice = await Price.getCurrency(currency.currency.name);
-    appWallet!.appKeychain.getAccountSelected()!.balance!.tokenPrice =
+
+    ref.read(AccountProviders.selectedAccount)!.balance!.tokenPrice =
         tokenPrice;
-    appWallet!.save();
+    appWallet.save();
     setState(() {
       price = tokenPrice;
     });
-    await chartInfos!
-        .updateCoinsChart(currency.currency.name, option: idChartOption!);
+    await chartInfos!.updateCoinsChart(
+      currency.currency.name,
+      option: idChartOption!,
+    );
   }
 
   // Change theme
@@ -199,69 +143,41 @@ class StateContainerState extends ConsumerState<StateContainer> {
     }
   }
 
-  void updateState() {
-    setState(() {});
-  }
-
   Future<void> requestUpdate({
-    String? pagingAddress = '',
     bool forceUpdateChart = true,
   }) async {
-    await appWallet!.appKeychain.getAccountSelected()!.updateLastAddress();
+    final selectedAccount = ref.read(AccountProviders.selectedAccount);
+    if (selectedAccount == null) return;
 
-    await appWallet!.appKeychain.getAccountSelected()!.updateFungiblesTokens();
-
-    await appWallet!.appKeychain.getAccountSelected()!.updateNFT();
+    await selectedAccount.updateLastAddress();
+    await selectedAccount.updateFungiblesTokens();
+    await selectedAccount.updateNFT();
 
     setState(() {
-      balanceLoading = true;
       recentTransactionsLoading = true;
     });
 
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
     final tokenPrice = await Price.getCurrency(selectedCurrency.currency.name);
-    await appWallet!.appKeychain.getAccountSelected()!.updateBalance(
-          curNetwork.getNetworkCryptoCurrencyLabel(),
-          selectedCurrency.currency.name,
-          tokenPrice,
-        );
 
-    setState(() {
-      balanceLoading = false;
-    });
+    await selectedAccount.updateBalance(
+      curNetwork.getNetworkCryptoCurrencyLabel(),
+      selectedCurrency.currency.name,
+      tokenPrice,
+    );
 
-    final seed = await getSeed();
-    await appWallet!.appKeychain
-        .getAccountSelected()!
-        .updateRecentTransactions(pagingAddress!, seed!);
-
+    // TODO(Chralu): SessionProviders.recentTransaction should automatically refresh.
     setState(() {
       recentTransactionsLoading = false;
     });
 
-    final preferences = ref.watch(SettingsProviders.settings);
+    final preferences = ref.read(SettingsProviders.settings);
     if (forceUpdateChart && preferences.showPriceChart) {
       await chartInfos!.updateCoinsChart(
         selectedCurrency.currency.name,
         option: idChartOption!,
       );
     }
-  }
-
-  Future<void> logOut() async {
-    if (timerCheckTransactionInputs != null) {
-      timerCheckTransactionInputs!.cancel();
-    }
-    (await Vault.getInstance()).clearAll();
-    (await Preferences.getInstance()).clearAll();
-    sl.get<DBHelper>().clearAll();
-    RestartWidget.restartApp(context);
-  }
-
-  Future<String?> getSeed() async {
-    final vault = await Vault.getInstance();
-    final seed = vault.getSeed();
-    return seed;
   }
 
   /// Simple build method that just passes this state through

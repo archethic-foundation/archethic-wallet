@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
@@ -34,8 +35,7 @@ class TransactionDetail extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.read(AccountProviders.selectedAccount)!;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     String? contactAddress;

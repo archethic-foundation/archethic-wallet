@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -22,15 +23,17 @@ class FungiblesTokensListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final accountTokens = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!
-        .accountTokens;
+    final accountTokens = ref.watch(
+          AccountProviders.selectedAccount
+              .select((value) => value?.accountTokens),
+        ) ??
+        [];
+
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (accountTokens!.isEmpty)
+        if (accountTokens.isEmpty)
           Container(
             alignment: Alignment.center,
             color: Colors.transparent,
@@ -143,8 +146,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                               ref: ref,
                               widget: TransferSheet(
                                 transferType: TransferType.token,
-                                seed: (await StateContainer.of(context)
-                                    .getSeed())!,
                                 accountToken: accountFungibleToken,
                                 recipient: const TransferRecipient.address(
                                   address: Address(''),

@@ -2,7 +2,7 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -148,8 +148,12 @@ class AppLockScreen extends ConsumerWidget {
                                                     .notifier,
                                               )
                                               .selectTheme(ThemeOptions.dark);
-                                          await StateContainer.of(context)
-                                              .logOut();
+                                          await ref
+                                              .read(
+                                                SessionProviders
+                                                    .session.notifier,
+                                              )
+                                              .logout();
                                           Navigator.of(context)
                                               .pushNamedAndRemoveUntil(
                                             '/',

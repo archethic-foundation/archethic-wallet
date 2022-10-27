@@ -1,3 +1,4 @@
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
@@ -6,8 +7,6 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -23,7 +22,6 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -33,9 +31,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountsListWidget extends ConsumerStatefulWidget {
-  const AccountsListWidget({super.key, this.currencyName, this.appWallet});
+  const AccountsListWidget({
+    super.key,
+    this.currencyName,
+  });
   final String? currencyName;
-  final AppWallet? appWallet;
 
   @override
   ConsumerState<AccountsListWidget> createState() => _AccountsListWidgetState();
@@ -46,36 +46,19 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
   final GlobalKey expandedKey = GlobalKey();
   bool? isPressed;
   bool? animationOpen;
-  AppWallet? appWalletLive;
 
   @override
   void initState() {
     super.initState();
     isPressed = false;
     animationOpen = false;
-    appWalletLive = widget.appWallet;
-    appWalletLive!.appKeychain.accounts
-        .sort((a, b) => a.name!.compareTo(b.name!));
-  }
-
-  Future<void> _changeAccount(Account account, StateSetter setState) async {
-    for (final a in appWalletLive!.appKeychain.accounts) {
-      if (a.selected!) {
-        setState(() {
-          a.selected = false;
-        });
-      } else if (account.name == a.name) {
-        setState(() {
-          a.selected = true;
-        });
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final accounts = ref.watch(AccountProviders.sortedAccounts);
     return Container(
       key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
@@ -89,16 +72,16 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
               style: theme.textStyleSize12W400Primary,
             ),
           ),
-          for (int i = 0; i < appWalletLive!.appKeychain.accounts.length; i++)
+          for (int i = 0; i < accounts.length; i++)
             _buildAccountListItem(
               context,
               ref,
-              appWalletLive!.appKeychain.accounts[i],
+              accounts[i],
               setState,
             ),
           Row(
             children: <Widget>[
-              if (appWalletLive!.appKeychain.accounts.length >= kMaxAccounts)
+              if (accounts.length >= kMaxAccounts)
                 const SizedBox()
               else
                 AppButtonTiny(
@@ -208,8 +191,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                             });
                                           } else {
                                             var accountExists = false;
-                                            for (final account in appWalletLive!
-                                                .appKeychain.accounts) {
+                                            for (final account in accounts) {
                                               if (account.name ==
                                                   nameController.text) {
                                                 accountExists = true;
@@ -241,28 +223,16 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                 localizations.yes,
                                                 () async {
                                                   try {
-                                                    await KeychainUtil()
-                                                        .addAccountInKeyChain(
-                                                      StateContainer.of(
-                                                        context,
-                                                      ).appWallet,
-                                                      await StateContainer.of(
-                                                        context,
-                                                      ).getSeed(),
-                                                      nameController.text,
-                                                      ref
-                                                          .read(
-                                                            CurrencyProviders
-                                                                .selectedCurrency,
-                                                          )
-                                                          .currency
-                                                          .name,
-                                                      StateContainer.of(
-                                                        context,
-                                                      )
-                                                          .curNetwork
-                                                          .getNetworkCryptoCurrencyLabel(),
-                                                    );
+                                                    await ref
+                                                        .read(
+                                                          AccountProviders
+                                                              .accounts
+                                                              .notifier,
+                                                        )
+                                                        .addAccount(
+                                                          name: nameController
+                                                              .text,
+                                                        );
                                                   } on ArchethicConnectionException {
                                                     UIUtil.showSnackbar(
                                                       localizations
@@ -317,10 +287,6 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                         );
                       },
                     );
-                    setState(() {
-                      appWalletLive!.appKeychain.accounts
-                          .sort((a, b) => a.name!.compareTo(b.name!));
-                    });
                   },
                 ),
             ],
@@ -330,6 +296,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     );
   }
 
+  // TODO(Chralu): Create a dedicated Widget
   Widget _buildAccountListItem(
     BuildContext context,
     WidgetRef ref,
@@ -348,6 +315,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
       ),
     );
 
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+
     return contact.map(
       data: (data) {
         return Padding(
@@ -360,11 +329,9 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                   );
               ShowSendingAnimation.build(context, theme);
               if (!account.selected!) {
-                _changeAccount(account, setState);
-                StateContainer.of(context).appWallet =
-                    await sl.get<DBHelper>().changeAccount(account);
-                await StateContainer.of(context)
-                    .requestUpdate(forceUpdateChart: false);
+                await ref
+                    .read(AccountProviders.accounts.notifier)
+                    .selectAccount(account);
               }
               StateContainer.of(context).bottomBarCurrentPage = 1;
               StateContainer.of(context)
@@ -535,7 +502,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                           .textStyleSize12W400Primary,
                                                     ),
                                                     AutoSizeText(
-                                                      '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                      '${account.balance!.nativeTokenValueToString()} ${selectedAccount!.balance!.nativeTokenName!}',
                                                       style: theme
                                                           .textStyleSize12W400Primary,
                                                     ),

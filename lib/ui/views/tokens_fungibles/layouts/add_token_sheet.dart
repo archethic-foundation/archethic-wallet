@@ -20,7 +20,7 @@ class AddTokenSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref.watch(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     // The main column that holds everything

@@ -29,7 +29,7 @@ final _addTokenFormProvider =
   },
   dependencies: [
     AddTokenFormProvider.initialAddTokenForm,
-    AccountProviders.getSelectedAccount,
+    AccountProviders.selectedAccount,
     AddTokenFormProvider._repository,
   ],
 );
@@ -102,7 +102,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     required AddTokenFormState formState,
   }) async {
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     late Transaction transaction;
@@ -247,7 +247,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     final localizations = AppLocalization.of(context)!;
 
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     late Transaction transaction;

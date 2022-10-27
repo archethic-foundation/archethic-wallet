@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -24,8 +25,7 @@ class MenuWidgetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(
       ContactProviders.getContactWithName(
@@ -60,10 +60,9 @@ class MenuWidgetWallet extends ConsumerWidget {
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         ref: ref,
-                        widget: TransferSheet(
+                        widget: const TransferSheet(
                           transferType: TransferType.uco,
-                          seed: (await StateContainer.of(context).getSeed())!,
-                          recipient: const TransferRecipient.address(
+                          recipient: TransferRecipient.address(
                             address: Address(''),
                           ),
                         ),

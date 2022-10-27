@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -102,10 +101,9 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = ref.watch(
+      AccountProviders.selectedAccount.select((value) => value?.balance),
+    )!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return RichText(
@@ -122,7 +120,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
           TextSpan(
             text: CurrencyUtil.getConvertedAmount(
               currency.currency.name,
-              accountSelectedBalance!.fiatCurrencyValue!,
+              accountSelectedBalance.fiatCurrencyValue!,
             ),
             style: primary
                 ? theme.textStyleSize16W700Primary
@@ -148,10 +146,10 @@ class _BalanceIndicatorNative extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = ref.watch(
+      AccountProviders.selectedAccount.select((value) => value?.balance),
+    )!;
+
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return RichText(
@@ -167,7 +165,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
             ),
           TextSpan(
             text:
-                '${accountSelectedBalance!.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
+                '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
             style: primary
                 ? theme.textStyleSize16W700Primary
                 : theme.textStyleSize14W700Primary,

@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
@@ -34,11 +35,9 @@ class BalanceInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain
-        .getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = ref.watch(
+      AccountProviders.selectedAccount.select((value) => value?.balance),
+    )!;
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
@@ -73,7 +72,7 @@ class BalanceInfos extends ConsumerWidget {
                             ),
                             if (preferences.showBalances)
                               _BalanceInfosNativeShowed(
-                                accountSelectedBalance: accountSelectedBalance!,
+                                accountSelectedBalance: accountSelectedBalance,
                               )
                             else
                               const _BalanceInfosNotShowed()
@@ -91,7 +90,7 @@ class BalanceInfos extends ConsumerWidget {
                             ),
                             if (preferences.showBalances)
                               _BalanceInfosFiatShowed(
-                                accountSelectedBalance: accountSelectedBalance!,
+                                accountSelectedBalance: accountSelectedBalance,
                               )
                             else
                               const _BalanceInfosNotShowed()
@@ -104,7 +103,7 @@ class BalanceInfos extends ConsumerWidget {
         ),
       ),
       onTapDown: (details) {
-        if (accountSelectedBalance!.fiatCurrencyValue! > 0) {
+        if (accountSelectedBalance.fiatCurrencyValue! > 0) {
           BalanceInfosPopup.getPopup(
             context,
             ref,

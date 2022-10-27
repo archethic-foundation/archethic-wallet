@@ -202,6 +202,12 @@ class DBHelper {
     await box.clear();
   }
 
+  Future<List<Account>> getAccounts() async {
+    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
+    return appWallet.appKeychain.accounts;
+  }
+
   Future<AppWallet> addAccount(Account account) async {
     final box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
@@ -282,7 +288,7 @@ class DBHelper {
   Future<AppWallet?> getAppWallet() async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<AppWallet>(appWalletTable);
-    return box.getAt(0);
+    return box.get(0);
   }
 
   Future<void> clearAll() async {
@@ -304,7 +310,7 @@ class DBHelper {
   Future<Price?> getPrice() async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<Price>(priceTable);
-    return box.getAt(0);
+    return box.get(0);
   }
 
   Future<void> clearPrice() async {
