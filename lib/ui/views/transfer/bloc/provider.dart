@@ -297,7 +297,15 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
 
     if (state.transferType == TransferType.uco) {
-      if (state.amount + feeEstimation >
+      var amountInUCO = state.amount;
+      final primaryCurrency =
+          ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+      if (primaryCurrency.primaryCurrency ==
+          AvailablePrimaryCurrencyEnum.fiat) {
+        amountInUCO = state.amountConverted;
+      }
+
+      if (amountInUCO + feeEstimation >
           accountSelected.balance!.nativeTokenValue!) {
         state = state.copyWith(
           errorAmountText:
@@ -395,10 +403,17 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       AccountProviders.getSelectedAccount(context: context),
     );
 
+    var amountInUCO = state.amount;
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
+      amountInUCO = state.amountConverted;
+    }
+
     transferRepository.send(
       transfer: Transfer.uco(
         accountSelectedName: selectedAccount!.name!,
-        amount: state.amount,
+        amount: amountInUCO,
         message: state.message,
         recipientAddress: state.recipient.address!,
         seed: state.seed,
