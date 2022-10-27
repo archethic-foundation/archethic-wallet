@@ -74,8 +74,7 @@ class _BalanceIndicatorButton extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
-    return // TODO(Chralu): Works only twice
-        IconButton(
+    return IconButton(
       icon: const Icon(Icons.change_circle),
       alignment: Alignment.centerRight,
       color: theme.textFieldIcon,
