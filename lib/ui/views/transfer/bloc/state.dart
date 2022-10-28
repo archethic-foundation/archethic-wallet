@@ -1,4 +1,3 @@
-import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
