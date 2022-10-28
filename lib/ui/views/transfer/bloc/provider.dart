@@ -273,10 +273,21 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     if (state.transferType == TransferType.token &&
         state.accountToken != null &&
         state.accountToken!.amount != null) {
+      final fees = await _calculateFees(
+        context: context,
+        formState: state.copyWith(
+          amount: state.accountToken!.amount!,
+        ),
+      );
+      if (fees == null) {
+        return;
+      }
       state = state.copyWith(
+        feeEstimation: AsyncValue.data(fees),
         amount: state.accountToken!.amount!,
         errorAmountText: '',
       );
+
       return;
     }
 
