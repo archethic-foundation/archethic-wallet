@@ -74,9 +74,12 @@ class _BalanceIndicatorButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     return IconButton(
-      icon: const Icon(UiIcons.primary_currency),
+      icon: primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat
+          ? const Icon(UiIcons.primary_currency)
+          : const Icon(UiIcons.primary_currency_uco),
       alignment: Alignment.centerRight,
       color: theme.textFieldIcon,
       onPressed: () async {
