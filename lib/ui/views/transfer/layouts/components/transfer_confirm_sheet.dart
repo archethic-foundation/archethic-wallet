@@ -250,9 +250,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                   children: <Widget>[
                     AppButton(
                       AppButtonType.primary,
-                      localizations.cancel,
+                      localizations.back,
                       Dimens.buttonBottomDimens,
-                      key: const Key('cancel'),
+                      key: const Key('back'),
                       onPressed: () {
                         transferNotifier.setTransferProcessStep(
                           TransferProcessStep.form,
