@@ -21,6 +21,7 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_form_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';

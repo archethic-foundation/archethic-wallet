@@ -92,7 +92,7 @@ class _TransferTextFieldAddressState
       autocorrect: false,
       labelText: AppLocalization.of(context)!.enterAddress,
       prefixButton: TextFieldButton(
-        icon: FontAwesomeIcons.at,
+        icon: UiIcons.address_book,
         onPressed: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
