@@ -223,7 +223,7 @@
 	"transactionChainExplorerLastAddress": "Dernière adresse",
 	"estimatedFees": "Frais estimés",
 	"estimatedFeesNote": "Note: Les frais seront estimés quand l'adresse et le montant seront spécifiés.",
-	"estimatedFeesCalculationNote": "Le calcul des frais est en cours...",
+	"estimatedFeesCalculationNote": "Le calcul des frais est en cours",
 	"estimatedFeesAddTokenNote": "Note: Les frais seront estimés quand le nom et l'offre initiale seront spécifiés.",
 	"nodeAuthorizationDate": "Authorization date: ",
 	"nodeEnrollmentDate": "Enrollment date: ",

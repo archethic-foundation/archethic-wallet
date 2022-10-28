@@ -134,7 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "estimatedFees" : MessageLookupByLibrary.simpleMessage("Frais estimés"),
     "estimatedFeesAddNFTNote" : MessageLookupByLibrary.simpleMessage("Les frais seront estimés lorsque le NFT sera défini."),
     "estimatedFeesAddTokenNote" : MessageLookupByLibrary.simpleMessage("Note: Les frais seront estimés quand le nom et l\'offre initiale seront spécifiés."),
-    "estimatedFeesCalculationNote" : MessageLookupByLibrary.simpleMessage("Le calcul des frais est en cours..."),
+    "estimatedFeesCalculationNote" : MessageLookupByLibrary.simpleMessage("Le calcul des frais est en cours"),
     "estimatedFeesNote" : MessageLookupByLibrary.simpleMessage("Note: Les frais seront estimés quand l\'adresse et le montant seront spécifiés."),
     "exit" : MessageLookupByLibrary.simpleMessage("Sortie"),
     "fees" : MessageLookupByLibrary.simpleMessage("Fees"),

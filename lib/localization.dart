@@ -524,7 +524,7 @@ class AppLocalization {
   }
 
   String get estimatedFeesCalculationNote {
-    return Intl.message('Fees are being calculated...',
+    return Intl.message('Fees are being calculated',
         name: 'estimatedFeesCalculationNote');
   }
 

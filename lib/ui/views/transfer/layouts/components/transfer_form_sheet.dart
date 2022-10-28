@@ -17,6 +17,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class TransferFormSheet extends ConsumerWidget {
   const TransferFormSheet({
@@ -86,10 +87,27 @@ class TransferFormSheet extends ConsumerWidget {
                                 horizontal: 30,
                               ),
                               child: transfer.feeEstimation.maybeWhen(
-                                loading: () => Text(
-                                  localizations.estimatedFeesCalculationNote,
-                                  style: theme.textStyleSize14W100Primary,
-                                  textAlign: TextAlign.center,
+                                loading: () => Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      localizations
+                                          .estimatedFeesCalculationNote,
+                                      style: theme.textStyleSize14W100Primary,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 3,
+                                        top: 10,
+                                      ),
+                                      child: LoadingAnimationWidget
+                                          .prograssiveDots(
+                                        color: theme.text!,
+                                        size: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 data: (data) {
                                   if (data > 0) {
