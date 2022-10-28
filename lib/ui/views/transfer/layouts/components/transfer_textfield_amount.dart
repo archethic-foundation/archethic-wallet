@@ -73,6 +73,7 @@ class _TransferTextFieldAmountState
       children: [
         AppTextField(
           focusNode: sendAmountFocusNode,
+          autofocus: true,
           controller: sendAmountController,
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
@@ -82,8 +83,7 @@ class _TransferTextFieldAmountState
               maxDecimalDigits: primaryCurrency.primaryCurrency ==
                       AvailablePrimaryCurrencyEnum.native
                   ? 8
-                  : localCurrencyFormat
-                      .decimalDigits!, // TODO(Chralu): `decimalDigits` property seems to never be set.
+                  : localCurrencyFormat.decimalDigits!,
             ),
             LocalCurrencyFormatter(
               active: false,
@@ -107,7 +107,7 @@ class _TransferTextFieldAmountState
                   AvailablePrimaryCurrencyEnum.native
               ? '${localizations.enterAmount} (${transfer.symbol(context)})'
               : '${AppLocalization.of(context)!.enterAmount} (${currency.currency.name.toUpperCase()})',
-          suffixButton: TextFieldButton(
+          prefixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
               transferNotifier.setDefineMaxAmountInProgress(
@@ -133,8 +133,8 @@ class _TransferTextFieldAmountState
               );
             },
           ),
-          fadeSuffixOnCondition: true,
-          suffixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
+          fadePrefixOnCondition: true,
+          prefixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
               (transfer.accountToken == null && transfer.showMaxAmountButton),
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
