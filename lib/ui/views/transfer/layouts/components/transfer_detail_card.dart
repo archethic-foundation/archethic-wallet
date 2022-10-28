@@ -6,16 +6,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class TransferDetailCard extends ConsumerWidget {
   const TransferDetailCard({
     required this.children,
+    this.height,
     super.key,
   });
 
   final List<Widget> children;
+  final double? height;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    return SizedBox(
-      height: 50,
+    return SizedBox.fromSize(
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -26,10 +27,7 @@ class TransferDetailCard extends ConsumerWidget {
         elevation: 0,
         color: theme.backgroundTransferListCard,
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-          ),
+          padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: children,
