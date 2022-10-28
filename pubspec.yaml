@@ -132,9 +132,14 @@ dependencies:
   # Localization
   intl: ^0.17.0
 
-  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.7.0
+
+  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
+
+  # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
+  loading_animation_widget: ^1.2.0+3
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^2.1.2
