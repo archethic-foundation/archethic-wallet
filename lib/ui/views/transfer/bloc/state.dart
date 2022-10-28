@@ -1,8 +1,10 @@
+import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -39,9 +41,23 @@ class TransferFormState with _$TransferFormState {
   bool get canTransfer =>
       feeEstimation.value != null && feeEstimation.value! > 0;
 
-  bool get showMaxAmountButton {
-    final fees = feeEstimation.valueOrNull ?? 0;
-    return (amount + fees) < accountBalance.nativeTokenValue!;
+  bool showMaxAmountButton(AvailablePrimaryCurrency primaryCurrency) {
+    switch (transferType) {
+      case TransferType.uco:
+        final fees = feeEstimation.valueOrNull ?? 0;
+        switch (primaryCurrency.primaryCurrency) {
+          case AvailablePrimaryCurrencyEnum.fiat:
+            // Due to rounding, it can be difficult to obtain the max
+            return true;
+          case AvailablePrimaryCurrencyEnum.native:
+            return (amount + fees) < accountBalance.nativeTokenValue!;
+        }
+      case TransferType.token:
+        return amount != accountToken!.amount!;
+      case TransferType.nft:
+        // TODO: Handle this case.
+        return false;
+    }
   }
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
@@ -49,6 +65,9 @@ class TransferFormState with _$TransferFormState {
   String symbol(BuildContext context) => transferType == TransferType.uco
       ? StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()
       : accountToken!.tokenInformations!.symbol!;
+
+  String symbolFees(BuildContext context) =>
+      StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
 }
 
 @freezed

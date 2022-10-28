@@ -55,7 +55,7 @@ class TokenTransferDetail extends ConsumerWidget {
           TransferDetailCard(
             children: [
               Text(
-                transfer.recipient.format(localizations),
+                '${localizations.txListTo} ${transfer.recipient.format(localizations)}',
                 style: theme.textStyleSize12W400Primary,
               ),
               Text(

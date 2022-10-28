@@ -103,10 +103,12 @@ class _TransferTextFieldAmountState
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: primaryCurrency.primaryCurrency ==
-                  AvailablePrimaryCurrencyEnum.native
-              ? '${localizations.enterAmount} (${transfer.symbol(context)})'
-              : '${AppLocalization.of(context)!.enterAmount} (${currency.currency.name.toUpperCase()})',
+          labelText: transfer.transferType == TransferType.uco
+              ? primaryCurrency.primaryCurrency ==
+                      AvailablePrimaryCurrencyEnum.native
+                  ? '${localizations.enterAmount} (${transfer.symbol(context)})'
+                  : '${AppLocalization.of(context)!.enterAmount} (${currency.currency.name.toUpperCase()})'
+              : '${localizations.enterAmount} (${transfer.symbol(context)})',
           prefixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
@@ -135,7 +137,7 @@ class _TransferTextFieldAmountState
           ),
           fadePrefixOnCondition: true,
           prefixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
-              (transfer.accountToken == null && transfer.showMaxAmountButton),
+              transfer.showMaxAmountButton(primaryCurrency),
           keyboardType: const TextInputType.numberWithOptions(
             signed: true,
             decimal: true,
