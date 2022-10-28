@@ -90,7 +90,10 @@ class CustomizationMenuView extends ConsumerWidget {
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
                         defaultMethod: primaryCurrency,
-                        icon: 'assets/icons/menu/primary-currency.svg',
+                        icon: primaryCurrency.primaryCurrency ==
+                                AvailablePrimaryCurrencyEnum.fiat
+                            ? 'assets/icons/menu/primary-currency.svg'
+                            : 'assets/icons/menu/primary-currency-uco.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: () =>
                             PrimaryCurrencyDialog.getDialog(context, ref),
