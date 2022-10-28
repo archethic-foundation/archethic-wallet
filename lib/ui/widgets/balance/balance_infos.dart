@@ -67,6 +67,7 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
+                                // TODO(chralu): This info is not updated when we switch primary currency
                                 StateContainer.of(context)
                                     .curNetwork
                                     .getNetworkCryptoCurrencyLabel(),
