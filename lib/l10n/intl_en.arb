@@ -12,6 +12,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "back": "Back",
+  "@back": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "close": "Close",
   "@close": {
     "type": "text",

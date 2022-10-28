@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "authMethod" : MessageLookupByLibrary.simpleMessage("Auth. Method"),
     "autoLockHeader" : MessageLookupByLibrary.simpleMessage("Auto Lock"),
     "availableAfterTransfer" : MessageLookupByLibrary.simpleMessage("Available after transfer"),
+    "back" : MessageLookupByLibrary.simpleMessage("Back"),
     "backupSafetyLabel1" : MessageLookupByLibrary.simpleMessage("On the next screen, you will see your recovery phrase."),
     "backupSafetyLabel2" : MessageLookupByLibrary.simpleMessage("What is a recovery phrase?"),
     "backupSafetyLabel3" : MessageLookupByLibrary.simpleMessage("A recovery phrase is essentially a human-readable form of your crypto\'s wallet private key and is displayed as 24 mnemonic words.\n\nAfter mastering the mnemonic words, you can restore your wallet at will.\n\nPlease keep the words properly and don\'t leak them to anyone."),

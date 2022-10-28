@@ -52,6 +52,10 @@ class AppLocalization {
     return Intl.message('Cancel', name: 'cancel');
   }
 
+  String get back {
+    return Intl.message('Back', name: 'back');
+  }
+
   String get close {
     return Intl.message('Close', name: 'close');
   }

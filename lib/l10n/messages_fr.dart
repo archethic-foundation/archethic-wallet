@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "authMethod" : MessageLookupByLibrary.simpleMessage("Méthode d\'authentification"),
     "autoLockHeader" : MessageLookupByLibrary.simpleMessage("Verrouillage automatique"),
     "availableAfterTransfer" : MessageLookupByLibrary.simpleMessage("Disponible après transfert"),
+    "back" : MessageLookupByLibrary.simpleMessage("Retour"),
     "backupSafetyLabel1" : MessageLookupByLibrary.simpleMessage("Dans l\'écran suivant, vous verrez votre phrase secrète."),
     "backupSafetyLabel2" : MessageLookupByLibrary.simpleMessage("Qu\'est-ce qu\'une phrase secrète ?"),
     "backupSafetyLabel3" : MessageLookupByLibrary.simpleMessage("Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots.\n\nAvec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté.\n\nGardez cette liste en sécurité et ne la communiquez à personne."),
