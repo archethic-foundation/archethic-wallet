@@ -55,10 +55,11 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
   }
 
   Future<archethic.Transaction> _buildTransaction(
-    Transfer transfer,
+    var transfer,
   ) async {
     final transferType = transfer.map(
       uco: (value) => TransferType.uco,
+      token: (value) => TransferType.token,
     );
 
     final originPrivateKey = apiService.getOriginKey();
@@ -77,40 +78,40 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
     ))
         .chainLength!;
 
+    var tokenTransferList = <archethic.TokenTransfer>[];
+    var ucoTransferList = <archethic.UCOTransfer>[];
+    switch (transferType) {
+      case TransferType.token:
+        tokenTransferList = <archethic.TokenTransfer>[
+          archethic.TokenTransfer(
+            amount: archethic.toBigInt(transfer.amount),
+            to: transfer.recipientAddress.address,
+            tokenAddress: transfer.tokenAddress,
+            tokenId: 0,
+          )
+        ];
+        break;
+      case TransferType.uco:
+        ucoTransferList = <archethic.UCOTransfer>[
+          archethic.UCOTransfer(
+            amount: archethic.toBigInt(transfer.amount),
+            to: transfer.recipientAddress.address,
+          )
+        ];
+        break;
+      case TransferType.nft:
+        // TODO: Handle this case.
+        break;
+    }
+
     return TransferTransactionBuilder.build(
       message: transfer.message,
       index: index,
       keychain: keychain,
       originPrivateKey: originPrivateKey,
       serviceName: service,
-      tokenTransferList: transferType == TransferType.token
-          ? <archethic.TokenTransfer>[
-              archethic.TokenTransfer(
-                amount: archethic.toBigInt(transfer.amount),
-                to: transfer.recipientAddress.address,
-                tokenAddress: transfer.tokenAddress,
-                tokenId: 0,
-              )
-            ]
-          : transferType == TransferType.nft
-              ? <archethic.TokenTransfer>[
-                  archethic.TokenTransfer(
-                    amount: archethic.toBigInt(transfer.amount),
-                    to: transfer.recipientAddress.address,
-                    tokenAddress: transfer.tokenAddress,
-                    // TODO(reddwarf03): to fix nft management
-                    tokenId: 0,
-                  )
-                ]
-              : <archethic.TokenTransfer>[],
-      ucoTransferList: transferType == TransferType.uco
-          ? <archethic.UCOTransfer>[
-              archethic.UCOTransfer(
-                amount: archethic.toBigInt(transfer.amount),
-                to: transfer.recipientAddress.address,
-              )
-            ]
-          : <archethic.UCOTransfer>[],
+      tokenTransferList: tokenTransferList,
+      ucoTransferList: ucoTransferList,
     );
   }
 

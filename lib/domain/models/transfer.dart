@@ -12,6 +12,14 @@ class Transfer with _$Transfer {
     required String message,
     required double amount, // expressed in UCO
     required Address recipientAddress,
+  }) = _TransferUco;
+
+  const factory Transfer.token({
+    required String seed,
+    required String accountSelectedName,
+    required String message,
+    required double amount, // expressed in token
+    required Address recipientAddress,
     String? tokenAddress,
-  }) = _Transfer;
+  }) = _TransferToken;
 }

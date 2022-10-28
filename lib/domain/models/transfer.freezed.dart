@@ -21,9 +21,11 @@ mixin _$Transfer {
   String get message => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError; // expressed in UCO
   Address get recipientAddress => throw _privateConstructorUsedError;
-  String? get tokenAddress => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String seed, String accountSelectedName,
+            String message, double amount, Address recipientAddress)
+        uco,
     required TResult Function(
             String seed,
             String accountSelectedName,
@@ -31,37 +33,46 @@ mixin _$Transfer {
             double amount,
             Address recipientAddress,
             String? tokenAddress)
-        uco,
+        token,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+            double amount, Address recipientAddress)?
         uco,
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress, String? tokenAddress)?
+        token,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+            double amount, Address recipientAddress)?
         uco,
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress, String? tokenAddress)?
+        token,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Transfer value) uco,
+    required TResult Function(_TransferUco value) uco,
+    required TResult Function(_TransferToken value) token,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Transfer value)? uco,
+    TResult Function(_TransferUco value)? uco,
+    TResult Function(_TransferToken value)? token,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Transfer value)? uco,
+    TResult Function(_TransferUco value)? uco,
+    TResult Function(_TransferToken value)? token,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -80,8 +91,7 @@ abstract class $TransferCopyWith<$Res> {
       String accountSelectedName,
       String message,
       double amount,
-      Address recipientAddress,
-      String? tokenAddress});
+      Address recipientAddress});
 }
 
 /// @nodoc
@@ -99,7 +109,6 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
     Object? message = freezed,
     Object? amount = freezed,
     Object? recipientAddress = freezed,
-    Object? tokenAddress = freezed,
   }) {
     return _then(_value.copyWith(
       seed: seed == freezed
@@ -122,19 +131,236 @@ class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
           ? _value.recipientAddress
           : recipientAddress // ignore: cast_nullable_to_non_nullable
               as Address,
-      tokenAddress: tokenAddress == freezed
-          ? _value.tokenAddress
-          : tokenAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
-  factory _$$_TransferCopyWith(
-          _$_Transfer value, $Res Function(_$_Transfer) then) =
-      __$$_TransferCopyWithImpl<$Res>;
+abstract class _$$_TransferUcoCopyWith<$Res>
+    implements $TransferCopyWith<$Res> {
+  factory _$$_TransferUcoCopyWith(
+          _$_TransferUco value, $Res Function(_$_TransferUco) then) =
+      __$$_TransferUcoCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String seed,
+      String accountSelectedName,
+      String message,
+      double amount,
+      Address recipientAddress});
+}
+
+/// @nodoc
+class __$$_TransferUcoCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
+    implements _$$_TransferUcoCopyWith<$Res> {
+  __$$_TransferUcoCopyWithImpl(
+      _$_TransferUco _value, $Res Function(_$_TransferUco) _then)
+      : super(_value, (v) => _then(v as _$_TransferUco));
+
+  @override
+  _$_TransferUco get _value => super._value as _$_TransferUco;
+
+  @override
+  $Res call({
+    Object? seed = freezed,
+    Object? accountSelectedName = freezed,
+    Object? message = freezed,
+    Object? amount = freezed,
+    Object? recipientAddress = freezed,
+  }) {
+    return _then(_$_TransferUco(
+      seed: seed == freezed
+          ? _value.seed
+          : seed // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountSelectedName: accountSelectedName == freezed
+          ? _value.accountSelectedName
+          : accountSelectedName // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: amount == freezed
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      recipientAddress: recipientAddress == freezed
+          ? _value.recipientAddress
+          : recipientAddress // ignore: cast_nullable_to_non_nullable
+              as Address,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TransferUco extends _TransferUco {
+  const _$_TransferUco(
+      {required this.seed,
+      required this.accountSelectedName,
+      required this.message,
+      required this.amount,
+      required this.recipientAddress})
+      : super._();
+
+  @override
+  final String seed;
+  @override
+  final String accountSelectedName;
+  @override
+  final String message;
+  @override
+  final double amount;
+// expressed in UCO
+  @override
+  final Address recipientAddress;
+
+  @override
+  String toString() {
+    return 'Transfer.uco(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransferUco &&
+            const DeepCollectionEquality().equals(other.seed, seed) &&
+            const DeepCollectionEquality()
+                .equals(other.accountSelectedName, accountSelectedName) &&
+            const DeepCollectionEquality().equals(other.message, message) &&
+            const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality()
+                .equals(other.recipientAddress, recipientAddress));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(seed),
+      const DeepCollectionEquality().hash(accountSelectedName),
+      const DeepCollectionEquality().hash(message),
+      const DeepCollectionEquality().hash(amount),
+      const DeepCollectionEquality().hash(recipientAddress));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TransferUcoCopyWith<_$_TransferUco> get copyWith =>
+      __$$_TransferUcoCopyWithImpl<_$_TransferUco>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String seed, String accountSelectedName,
+            String message, double amount, Address recipientAddress)
+        uco,
+    required TResult Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String? tokenAddress)
+        token,
+  }) {
+    return uco(seed, accountSelectedName, message, amount, recipientAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress)?
+        uco,
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress, String? tokenAddress)?
+        token,
+  }) {
+    return uco?.call(
+        seed, accountSelectedName, message, amount, recipientAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress)?
+        uco,
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress, String? tokenAddress)?
+        token,
+    required TResult orElse(),
+  }) {
+    if (uco != null) {
+      return uco(seed, accountSelectedName, message, amount, recipientAddress);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransferUco value) uco,
+    required TResult Function(_TransferToken value) token,
+  }) {
+    return uco(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransferUco value)? uco,
+    TResult Function(_TransferToken value)? token,
+  }) {
+    return uco?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransferUco value)? uco,
+    TResult Function(_TransferToken value)? token,
+    required TResult orElse(),
+  }) {
+    if (uco != null) {
+      return uco(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TransferUco extends Transfer {
+  const factory _TransferUco(
+      {required final String seed,
+      required final String accountSelectedName,
+      required final String message,
+      required final double amount,
+      required final Address recipientAddress}) = _$_TransferUco;
+  const _TransferUco._() : super._();
+
+  @override
+  String get seed;
+  @override
+  String get accountSelectedName;
+  @override
+  String get message;
+  @override
+  double get amount;
+  @override // expressed in UCO
+  Address get recipientAddress;
+  @override
+  @JsonKey(ignore: true)
+  _$$_TransferUcoCopyWith<_$_TransferUco> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_TransferTokenCopyWith<$Res>
+    implements $TransferCopyWith<$Res> {
+  factory _$$_TransferTokenCopyWith(
+          _$_TransferToken value, $Res Function(_$_TransferToken) then) =
+      __$$_TransferTokenCopyWithImpl<$Res>;
   @override
   $Res call(
       {String seed,
@@ -146,14 +372,14 @@ abstract class _$$_TransferCopyWith<$Res> implements $TransferCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
-    implements _$$_TransferCopyWith<$Res> {
-  __$$_TransferCopyWithImpl(
-      _$_Transfer _value, $Res Function(_$_Transfer) _then)
-      : super(_value, (v) => _then(v as _$_Transfer));
+class __$$_TransferTokenCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
+    implements _$$_TransferTokenCopyWith<$Res> {
+  __$$_TransferTokenCopyWithImpl(
+      _$_TransferToken _value, $Res Function(_$_TransferToken) _then)
+      : super(_value, (v) => _then(v as _$_TransferToken));
 
   @override
-  _$_Transfer get _value => super._value as _$_Transfer;
+  _$_TransferToken get _value => super._value as _$_TransferToken;
 
   @override
   $Res call({
@@ -164,7 +390,7 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
     Object? recipientAddress = freezed,
     Object? tokenAddress = freezed,
   }) {
-    return _then(_$_Transfer(
+    return _then(_$_TransferToken(
       seed: seed == freezed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -195,8 +421,8 @@ class __$$_TransferCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Transfer extends _Transfer {
-  const _$_Transfer(
+class _$_TransferToken extends _TransferToken {
+  const _$_TransferToken(
       {required this.seed,
       required this.accountSelectedName,
       required this.message,
@@ -213,7 +439,7 @@ class _$_Transfer extends _Transfer {
   final String message;
   @override
   final double amount;
-// expressed in UCO
+// expressed in token
   @override
   final Address recipientAddress;
   @override
@@ -221,14 +447,14 @@ class _$_Transfer extends _Transfer {
 
   @override
   String toString() {
-    return 'Transfer.uco(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress, tokenAddress: $tokenAddress)';
+    return 'Transfer.token(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress, tokenAddress: $tokenAddress)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Transfer &&
+            other is _$_TransferToken &&
             const DeepCollectionEquality().equals(other.seed, seed) &&
             const DeepCollectionEquality()
                 .equals(other.accountSelectedName, accountSelectedName) &&
@@ -252,12 +478,15 @@ class _$_Transfer extends _Transfer {
 
   @JsonKey(ignore: true)
   @override
-  _$$_TransferCopyWith<_$_Transfer> get copyWith =>
-      __$$_TransferCopyWithImpl<_$_Transfer>(this, _$identity);
+  _$$_TransferTokenCopyWith<_$_TransferToken> get copyWith =>
+      __$$_TransferTokenCopyWithImpl<_$_TransferToken>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String seed, String accountSelectedName,
+            String message, double amount, Address recipientAddress)
+        uco,
     required TResult Function(
             String seed,
             String accountSelectedName,
@@ -265,9 +494,9 @@ class _$_Transfer extends _Transfer {
             double amount,
             Address recipientAddress,
             String? tokenAddress)
-        uco,
+        token,
   }) {
-    return uco(seed, accountSelectedName, message, amount, recipientAddress,
+    return token(seed, accountSelectedName, message, amount, recipientAddress,
         tokenAddress);
   }
 
@@ -275,10 +504,13 @@ class _$_Transfer extends _Transfer {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+            double amount, Address recipientAddress)?
         uco,
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress, String? tokenAddress)?
+        token,
   }) {
-    return uco?.call(seed, accountSelectedName, message, amount,
+    return token?.call(seed, accountSelectedName, message, amount,
         recipientAddress, tokenAddress);
   }
 
@@ -286,12 +518,15 @@ class _$_Transfer extends _Transfer {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+            double amount, Address recipientAddress)?
         uco,
+    TResult Function(String seed, String accountSelectedName, String message,
+            double amount, Address recipientAddress, String? tokenAddress)?
+        token,
     required TResult orElse(),
   }) {
-    if (uco != null) {
-      return uco(seed, accountSelectedName, message, amount, recipientAddress,
+    if (token != null) {
+      return token(seed, accountSelectedName, message, amount, recipientAddress,
           tokenAddress);
     }
     return orElse();
@@ -300,41 +535,44 @@ class _$_Transfer extends _Transfer {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Transfer value) uco,
+    required TResult Function(_TransferUco value) uco,
+    required TResult Function(_TransferToken value) token,
   }) {
-    return uco(this);
+    return token(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Transfer value)? uco,
+    TResult Function(_TransferUco value)? uco,
+    TResult Function(_TransferToken value)? token,
   }) {
-    return uco?.call(this);
+    return token?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Transfer value)? uco,
+    TResult Function(_TransferUco value)? uco,
+    TResult Function(_TransferToken value)? token,
     required TResult orElse(),
   }) {
-    if (uco != null) {
-      return uco(this);
+    if (token != null) {
+      return token(this);
     }
     return orElse();
   }
 }
 
-abstract class _Transfer extends Transfer {
-  const factory _Transfer(
+abstract class _TransferToken extends Transfer {
+  const factory _TransferToken(
       {required final String seed,
       required final String accountSelectedName,
       required final String message,
       required final double amount,
       required final Address recipientAddress,
-      final String? tokenAddress}) = _$_Transfer;
-  const _Transfer._() : super._();
+      final String? tokenAddress}) = _$_TransferToken;
+  const _TransferToken._() : super._();
 
   @override
   String get seed;
@@ -344,12 +582,11 @@ abstract class _Transfer extends Transfer {
   String get message;
   @override
   double get amount;
-  @override // expressed in UCO
+  @override // expressed in token
   Address get recipientAddress;
-  @override
   String? get tokenAddress;
   @override
   @JsonKey(ignore: true)
-  _$$_TransferCopyWith<_$_Transfer> get copyWith =>
+  _$$_TransferTokenCopyWith<_$_TransferToken> get copyWith =>
       throw _privateConstructorUsedError;
 }

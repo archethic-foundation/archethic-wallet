@@ -51,45 +51,91 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       feeEstimation: const AsyncValue.loading(),
     );
 
-    var amountInUCO = state.amount;
-    final primaryCurrency =
-        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
-      amountInUCO = state.amountConverted;
-    }
-
-    final fees = await Future<double>(
-      () async {
-        if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
-          return 0; // TODO(Chralu): should we use an error class instead ?
+    late final double fees;
+    switch (state.transferType) {
+      case TransferType.uco:
+        var amountInUCO = state.amount;
+        final primaryCurrency =
+            ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+        if (primaryCurrency.primaryCurrency ==
+            AvailablePrimaryCurrencyEnum.fiat) {
+          amountInUCO = state.amountConverted;
         }
 
-        _calculateFeesTask?.cancel();
-        _calculateFeesTask = CancelableTask<double?>(
-          task: () => _calculateFees(
-            context: context,
-            formState: state.copyWith(
-              amount: amountInUCO,
-            ),
-          ),
+        fees = await Future<double>(
+          () async {
+            if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
+              return 0; // TODO(Chralu): should we use an error class instead ?
+            }
+
+            _calculateFeesTask?.cancel();
+            _calculateFeesTask = CancelableTask<double?>(
+              task: () => _calculateFees(
+                context: context,
+                formState: state.copyWith(
+                  amount: amountInUCO,
+                ),
+              ),
+            );
+            final fees = await _calculateFeesTask?.schedule(delay);
+
+            return fees ??
+                0; // TODO(Chralu): should we use an error class instead ?
+          },
         );
-        final fees = await _calculateFeesTask?.schedule(delay);
 
-        return fees ??
-            0; // TODO(Chralu): should we use an error class instead ?
-      },
-    );
+        state = state.copyWith(
+          feeEstimation: AsyncValue.data(fees),
+          errorAmountText:
+              amountInUCO > state.accountBalance.nativeTokenValue! - fees
+                  ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                        '%1',
+                        state.symbol(context),
+                      )
+                  : '',
+        );
+        break;
+      case TransferType.token:
+        fees = await Future<double>(
+          () async {
+            if (state.amount <= 0 || !state.recipient.isAddressValid) {
+              return 0; // TODO(Chralu): should we use an error class instead ?
+            }
 
-    state = state.copyWith(
-      feeEstimation: AsyncValue.data(fees),
-      errorAmountText:
-          amountInUCO > state.accountBalance.nativeTokenValue! - fees
+            _calculateFeesTask?.cancel();
+            _calculateFeesTask = CancelableTask<double?>(
+              task: () => _calculateFees(
+                context: context,
+                formState: state,
+              ),
+            );
+            final fees = await _calculateFeesTask?.schedule(delay);
+
+            return fees ??
+                0; // TODO(Chralu): should we use an error class instead ?
+          },
+        );
+
+        state = state.copyWith(
+          feeEstimation: AsyncValue.data(fees),
+          errorAmountText: state.amount > state.accountToken!.amount!
               ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
                     '%1',
                     state.symbol(context),
                   )
-              : '',
-    );
+              : fees > state.accountBalance.nativeTokenValue!
+                  ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                        '%1',
+                        state.symbolFees(context),
+                      )
+                  : '',
+        );
+        break;
+
+      case TransferType.nft:
+        // TODO: Handle this case.
+        break;
+    }
   }
 
   @override
@@ -186,18 +232,36 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final recipientAddress = formState.recipient.address;
     if (recipientAddress == null) return null;
 
+    late Transfer transfer;
+
+    switch (state.transferType) {
+      case TransferType.token:
+        transfer = Transfer.token(
+          accountSelectedName: selectedAccount!.name!,
+          amount: formState.amount,
+          message: formState.message,
+          recipientAddress: recipientAddress,
+          seed: formState.seed,
+          tokenAddress: formState.accountToken?.tokenInformations!.address,
+        );
+        break;
+      case TransferType.uco:
+        transfer = Transfer.uco(
+          accountSelectedName: selectedAccount!.name!,
+          amount: formState.amount,
+          message: formState.message,
+          recipientAddress: recipientAddress,
+          seed: formState.seed,
+        );
+        break;
+      case TransferType.nft:
+        // TODO: Handle this case.
+        break;
+    }
+
     final calculateFeesResult = await CalculateFeesUsecase(
       repository: ref.read(TransferFormProvider._repository),
-    ).run(
-      Transfer.uco(
-        accountSelectedName: selectedAccount!.name!,
-        amount: formState.amount,
-        message: formState.message,
-        recipientAddress: recipientAddress,
-        seed: formState.seed,
-        tokenAddress: formState.accountToken?.tokenInformations!.address,
-      ),
-    );
+    ).run(transfer);
 
     return calculateFeesResult.valueOrNull;
   }
@@ -206,22 +270,51 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     double? tokenPrice,
   }) async {
+    if (state.transferType == TransferType.token &&
+        state.accountToken != null &&
+        state.accountToken!.amount != null) {
+      state = state.copyWith(
+        amount: state.accountToken!.amount!,
+        errorAmountText: '',
+      );
+      return;
+    }
+
     final balance = state.accountBalance;
 
     final fees = await _calculateFees(
       context: context,
-      formState: state.copyWith(amount: balance.nativeTokenValue!),
+      formState: state.copyWith(amount: balance.nativeTokenValue ?? 0),
     );
 
     if (fees == null) {
       return;
     }
 
-    state = state.copyWith(
-      amount: balance.fiatCurrencyValue! - fees,
-      feeEstimation: AsyncValue.data(fees),
-      errorAmountText: '',
-    );
+    final primaryCurrency =
+        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+
+    switch (primaryCurrency.primaryCurrency) {
+      case AvailablePrimaryCurrencyEnum.fiat:
+        var amountMax = 0.0;
+        if (tokenPrice != null) {
+          amountMax = (balance.nativeTokenValue! - fees) * tokenPrice;
+          state = state.copyWith(
+            amount: amountMax,
+            amountConverted: balance.nativeTokenValue! - fees,
+            feeEstimation: AsyncValue.data(fees),
+            errorAmountText: '',
+          );
+        }
+        break;
+      case AvailablePrimaryCurrencyEnum.native:
+        state = state.copyWith(
+          amount: balance.nativeTokenValue! - fees,
+          feeEstimation: AsyncValue.data(fees),
+          errorAmountText: '',
+        );
+        break;
+    }
   }
 
   Future<void> setAmount({
@@ -229,6 +322,16 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required double amount,
     double? tokenPrice,
   }) async {
+    if (state.transferType == TransferType.token) {
+      state = state.copyWith(
+        amount: amount,
+        amountConverted: 0,
+        errorAmountText: '',
+      );
+      _updateFees(context);
+      return;
+    }
+
     var amountConverted = 0.0;
     if (amount > 0 && tokenPrice != null) {
       final primaryCurrencyNotifier =
@@ -276,8 +379,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   bool controlMaxSend(
     BuildContext context,
   ) {
-    if (state.recipient.address == null ||
-        state.recipient.address!.address.isEmpty) {
+    if (state.transferType == TransferType.uco &&
+        (state.recipient.address == null ||
+            state.recipient.address!.address.isEmpty)) {
       state = state.copyWith(
         errorAmountText: AppLocalization.of(context)!.maxSendRecipientMissing,
       );
@@ -413,15 +517,35 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       amountInUCO = state.amountConverted;
     }
 
+    late Transfer transfer;
+
+    switch (state.transferType) {
+      case TransferType.token:
+        transfer = Transfer.token(
+          accountSelectedName: selectedAccount!.name!,
+          amount: amountInUCO,
+          message: state.message,
+          recipientAddress: state.recipient.address!,
+          seed: state.seed,
+          tokenAddress: state.accountToken?.tokenInformations!.address,
+        );
+        break;
+      case TransferType.uco:
+        transfer = Transfer.uco(
+          accountSelectedName: selectedAccount!.name!,
+          amount: amountInUCO,
+          message: state.message,
+          recipientAddress: state.recipient.address!,
+          seed: state.seed,
+        );
+        break;
+      case TransferType.nft:
+        // TODO: Handle this case.
+        break;
+    }
+
     transferRepository.send(
-      transfer: Transfer.uco(
-        accountSelectedName: selectedAccount!.name!,
-        amount: amountInUCO,
-        message: state.message,
-        recipientAddress: state.recipient.address!,
-        seed: state.seed,
-        tokenAddress: state.accountToken?.tokenInformations!.address,
-      ),
+      transfer: transfer,
       onConfirmation: (confirmation) async {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
