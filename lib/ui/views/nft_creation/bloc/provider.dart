@@ -266,8 +266,8 @@ class NftCreationFormNotifier
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: await preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: await preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
+      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
     );
 
     transactionSender.send(

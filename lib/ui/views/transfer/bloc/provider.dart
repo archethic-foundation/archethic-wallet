@@ -133,7 +133,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         break;
 
       case TransferType.nft:
-        // TODO: Handle this case.
+        // TODO(reddwarf03): Handle this case.
         break;
     }
   }
@@ -255,7 +255,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
         break;
       case TransferType.nft:
-        // TODO: Handle this case.
+        // TODO(reddwarf03): Handle this case.
         break;
     }
 
@@ -551,7 +551,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
         break;
       case TransferType.nft:
-        // TODO: Handle this case.
+        // TODO(reddwarf03): Handle this case.
         break;
     }
 

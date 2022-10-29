@@ -20,8 +20,8 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/category_template_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview.dart';
@@ -480,7 +480,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
       tokenName: nftCreation.name,
       tokenInitialSupply: 1,
       tokenSymbol: '',
-      // TODO(@reddwarf03): to fix
+      // TODO(reddwarf03): to fix
       //tokenProperties: tokenProperties,
     );
 

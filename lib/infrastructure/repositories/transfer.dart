@@ -100,7 +100,7 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
         ];
         break;
       case TransferType.nft:
-        // TODO: Handle this case.
+        // TODO(reddwarf03): Handle this case.
         break;
     }
 

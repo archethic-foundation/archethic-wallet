@@ -9,7 +9,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/get_public_key.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
