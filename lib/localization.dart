@@ -280,6 +280,14 @@ class AppLocalization {
         name: 'enterYubikeyClientAPIKey');
   }
 
+  String get enterYubikeyClientIDEmpty {
+    return Intl.message('The client ID is mandatory', name: 'enterYubikeyClientIDEmpty');
+  }
+
+  String get enterYubikeyAPIKeyEmpty {
+    return Intl.message('The API Key is mandatory', name: 'enterYubikeyAPIKeyEmpty');
+  }
+
   String get yubikeyParamsHeader {
     return Intl.message('Yubikey Params', name: 'yubikeyParamsHeader');
   }

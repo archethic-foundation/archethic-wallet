@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-10-28T11:03:59.313282",
+  "@@last_modified": "2022-10-29T18:20:16.693770",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -320,6 +320,18 @@
   },
   "enterYubikeyClientAPIKey": "Enter the client API Key",
   "@enterYubikeyClientAPIKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterYubikeyClientIDEmpty": "The client ID is mandatory",
+  "@enterYubikeyClientIDEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterYubikeyAPIKeyEmpty": "The API Key is mandatory",
+  "@enterYubikeyAPIKeyEmpty": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
