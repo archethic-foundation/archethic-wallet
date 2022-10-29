@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -7,6 +6,8 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -117,10 +118,8 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                                   activeColor: theme.text,
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  secondary: IconButton(
-                                    icon: const Icon(Icons.read_more),
-                                    iconSize: 30,
-                                    color: theme.backgroundDarkest,
+                                  secondary: TextFieldButton(
+                                    icon: UiIcons.privacy_policy,
                                     onPressed: () {
                                       UIUtil.showWebview(
                                         context,
