@@ -6,7 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.1.0+288
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
 
@@ -42,7 +42,7 @@ dependencies:
   contained_tab_bar_view: ^0.8.0
 
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
-  convert: ^3.0.2
+  convert: ^3.1.1
 
   # Implementations of SHA, MD5, and HMAC cryptographic functions
   crypto: ^3.0.2
@@ -63,7 +63,7 @@ dependencies:
   expandable: ^5.0.1
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.0.1
+  file_picker: ^5.2.2
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
@@ -84,7 +84,7 @@ dependencies:
     sdk: flutter
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.2.10+1
+  flutter_native_splash: ^2.2.12
   
   # State management
   flutter_riverpod: ^2.0.2
@@ -93,7 +93,7 @@ dependencies:
   flutter_secure_storage: ^6.0.0
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
-  flutter_svg: ^1.1.5
+  flutter_svg: ^1.1.6
 
   # A Flutter plugin to vibrate the device
   flutter_vibrate: ^1.3.0
@@ -101,8 +101,10 @@ dependencies:
   # The Font Awesome Icon pack available as set of Flutter Icons.
   font_awesome_flutter: ^10.2.1
 
+  # Annotations for freezed
+  freezed_annotation: ^2.2.0
+
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
-  freezed_annotation: ^2.1.0
   get_it: ^7.2.0
 
   # Ghost CMS API client that closely follows the official implementation
@@ -127,7 +129,7 @@ dependencies:
   icon_font_generator: ^3.2.0
 
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
-  image_picker: ^0.8.5+3
+  image_picker: ^0.8.6
 
   # Localization
   intl: ^0.17.0
@@ -148,13 +150,13 @@ dependencies:
   mime_dart: ^2.0.1
 
   # Flutter plugin for accessing the NFC features on Android and iOS.
-  nfc_manager: ^3.1.1
+  nfc_manager: ^3.2.0
 
   # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
   oktoast: ^3.3.1
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^1.4.3+1
+  package_info_plus: ^3.0.1
 
   # Customizable indicators for your PageViews.
   page_view_indicators: ^2.0.0
@@ -166,7 +168,7 @@ dependencies:
   path: ^1.8.2
 
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
-  pdfx: ^2.2.0
+  pdfx: ^2.3.0
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
   phoenix_socket: ^0.6.1
@@ -187,10 +189,10 @@ dependencies:
   rxdart: ^0.27.5
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^4.1.0
+  share_plus: ^6.1.0
 
   # Tuple data structure
-  tuple: ^2.0.0
+  tuple: ^2.0.1
 
   # Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
   unorm_dart: ^0.2.0
