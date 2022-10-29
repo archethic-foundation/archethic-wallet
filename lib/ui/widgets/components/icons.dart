@@ -33,30 +33,31 @@ class UiIcons {
   static const link_archethic_lab = _UiIconsData(0xf10d, 'link_archethic_lab');
   static const link_archethic_website = _UiIconsData(0xf10e, 'link_archethic_website');
   static const main = _UiIconsData(0xf10f, 'main');
-  static const nft_creation_process_confirmation = _UiIconsData(0xf110, 'nft_creation_process_confirmation');
-  static const nft_creation_process_description = _UiIconsData(0xf111, 'nft_creation_process_description');
-  static const nft_creation_process_import = _UiIconsData(0xf112, 'nft_creation_process_import');
-  static const nft_creation_process_properties = _UiIconsData(0xf113, 'nft_creation_process_properties');
-  static const nft = _UiIconsData(0xf114, 'nft');
-  static const notification_disabled = _UiIconsData(0xf115, 'notification_disabled');
-  static const notification_enabled = _UiIconsData(0xf116, 'notification_enabled');
-  static const notification = _UiIconsData(0xf117, 'notification');
-  static const oracle = _UiIconsData(0xf118, 'oracle');
-  static const pin_swap = _UiIconsData(0xf119, 'pin_swap');
-  static const primary_currency_uco = _UiIconsData(0xf11a, 'primary_currency_uco');
-  static const primary_currency = _UiIconsData(0xf11b, 'primary_currency');
-  static const privacy_policy = _UiIconsData(0xf11c, 'privacy_policy');
-  static const receive = _UiIconsData(0xf11d, 'receive');
-  static const remove_wallet = _UiIconsData(0xf11e, 'remove_wallet');
-  static const security_custom = _UiIconsData(0xf11f, 'security_custom');
-  static const send = _UiIconsData(0xf120, 'send');
-  static const settings = _UiIconsData(0xf121, 'settings');
-  static const show_balance = _UiIconsData(0xf122, 'show_balance');
-  static const show_blog = _UiIconsData(0xf123, 'show_blog');
-  static const show_chart = _UiIconsData(0xf124, 'show_chart');
-  static const theme = _UiIconsData(0xf125, 'theme');
-  static const vault = _UiIconsData(0xf126, 'vault');
-  static const vibration = _UiIconsData(0xf127, 'vibration');
+  static const max = _UiIconsData(0xf110, 'max');
+  static const nft_creation_process_confirmation = _UiIconsData(0xf111, 'nft_creation_process_confirmation');
+  static const nft_creation_process_description = _UiIconsData(0xf112, 'nft_creation_process_description');
+  static const nft_creation_process_import = _UiIconsData(0xf113, 'nft_creation_process_import');
+  static const nft_creation_process_properties = _UiIconsData(0xf114, 'nft_creation_process_properties');
+  static const nft = _UiIconsData(0xf115, 'nft');
+  static const notification_disabled = _UiIconsData(0xf116, 'notification_disabled');
+  static const notification_enabled = _UiIconsData(0xf117, 'notification_enabled');
+  static const notification = _UiIconsData(0xf118, 'notification');
+  static const oracle = _UiIconsData(0xf119, 'oracle');
+  static const pin_swap = _UiIconsData(0xf11a, 'pin_swap');
+  static const primary_currency_uco = _UiIconsData(0xf11b, 'primary_currency_uco');
+  static const primary_currency = _UiIconsData(0xf11c, 'primary_currency');
+  static const privacy_policy = _UiIconsData(0xf11d, 'privacy_policy');
+  static const receive = _UiIconsData(0xf11e, 'receive');
+  static const remove_wallet = _UiIconsData(0xf11f, 'remove_wallet');
+  static const security_custom = _UiIconsData(0xf120, 'security_custom');
+  static const send = _UiIconsData(0xf121, 'send');
+  static const settings = _UiIconsData(0xf122, 'settings');
+  static const show_balance = _UiIconsData(0xf123, 'show_balance');
+  static const show_blog = _UiIconsData(0xf124, 'show_blog');
+  static const show_chart = _UiIconsData(0xf125, 'show_chart');
+  static const theme = _UiIconsData(0xf126, 'theme');
+  static const vault = _UiIconsData(0xf127, 'vault');
+  static const vibration = _UiIconsData(0xf128, 'vibration');
 
   static const all = <String, _UiIconsData>{
     'about': about,
@@ -74,6 +75,7 @@ class UiIcons {
     'link_archethic_lab': link_archethic_lab,
     'link_archethic_website': link_archethic_website,
     'main': main,
+    'max': max,
     'nft_creation_process_confirmation': nft_creation_process_confirmation,
     'nft_creation_process_description': nft_creation_process_description,
     'nft_creation_process_import': nft_creation_process_import,
