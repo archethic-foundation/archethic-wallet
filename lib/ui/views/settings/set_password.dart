@@ -196,7 +196,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
                                   prefixButton: TextFieldButton(
-                                    icon: Icons.shuffle_sharp,
+                                    icon: UiIcons.swap,
                                     onPressed: () {
                                       setPasswordController!.text = '';
                                       final passwordLength =
