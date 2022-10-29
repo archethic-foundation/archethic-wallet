@@ -8,15 +8,13 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
     this.headingStyle,
     this.onPressed,
     this.icon,
-    this.iconColor,
   });
 
   final String heading;
   final String info;
   final TextStyle? headingStyle;
   final Function? onPressed;
-  final String? icon;
-  final Color? iconColor;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,11 +39,10 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
               margin: const EdgeInsetsDirectional.only(end: 13),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: IconWidget(
+                child: IconDataWidget(
                   icon: icon!,
                   width: 30,
                   height: 30,
-                  color: iconColor,
                 ),
               ),
             ),
@@ -90,14 +87,12 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
     required this.heading,
     required this.headingStyle,
     required this.icon,
-    required this.iconColor,
     this.onPressed,
   });
 
   final String heading;
   final TextStyle headingStyle;
-  final String icon;
-  final Color iconColor;
+  final IconData icon;
   final VoidCallback? onPressed;
 
   @override
@@ -121,11 +116,10 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget(
+              child: IconDataWidget(
                 icon: icon,
                 width: 30,
                 height: 30,
-                color: iconColor,
               ),
             ),
             SizedBox(

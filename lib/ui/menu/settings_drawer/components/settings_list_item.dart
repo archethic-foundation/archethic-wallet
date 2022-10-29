@@ -13,8 +13,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
   const factory _SettingsListItem.singleLine({
     required String heading,
     required TextStyle headingStyle,
-    required String icon,
-    required Color iconColor,
+    required IconData icon,
     VoidCallback? onPressed,
   }) = _SettingsListItemSingleLine;
 
@@ -22,8 +21,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
   const factory _SettingsListItem.withDefaultValue({
     required String heading,
     required SettingSelectionItem defaultMethod,
-    required String icon,
-    required Color iconColor,
+    required IconData icon,
     required Function onPressed,
     bool disabled,
   }) = _SettingsListItemWithDefaultValue;
@@ -32,8 +30,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
     required String heading,
     required String info,
     required SettingSelectionItem defaultMethod,
-    required String icon,
-    required Color iconColor,
+    required IconData icon,
     required Function onPressed,
     required bool disabled,
   }) = _SettingsListItemWithDefaultValueWithInfos;
@@ -43,14 +40,12 @@ abstract class _SettingsListItem extends ConsumerWidget {
     required String info,
     TextStyle? headingStyle,
     Function? onPressed,
-    String? icon,
-    Color? iconColor,
+    IconData? icon,
   }) = _SettingsListItemSingleLineWithInfos;
 
   const factory _SettingsListItem.withSwitch({
     required String heading,
-    required String icon,
-    required Color iconColor,
+    required IconData icon,
     required bool isSwitched,
     Function? onChanged,
   }) = _SettingsListItemSwitch;

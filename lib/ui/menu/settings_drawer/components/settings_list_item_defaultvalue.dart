@@ -6,15 +6,13 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
     required this.heading,
     required this.defaultMethod,
     required this.icon,
-    required this.iconColor,
     required this.onPressed,
     this.disabled = false,
   });
 
   final String heading;
   final SettingSelectionItem defaultMethod;
-  final String icon;
-  final Color iconColor;
+  final IconData icon;
   final Function onPressed;
   final bool disabled;
 
@@ -40,11 +38,10 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
             children: <Widget>[
               Container(
                 margin: const EdgeInsetsDirectional.only(end: 13),
-                child: IconWidget(
+                child: IconDataWidget(
                   icon: icon,
                   width: 30,
                   height: 30,
-                  color: iconColor,
                 ),
               ),
               Column(
@@ -85,7 +82,6 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
     required this.info,
     required this.defaultMethod,
     required this.icon,
-    required this.iconColor,
     required this.onPressed,
     required this.disabled,
   });
@@ -93,8 +89,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
   final String heading;
   final String info;
   final SettingSelectionItem defaultMethod;
-  final String icon;
-  final Color iconColor;
+  final IconData icon;
   final Function onPressed;
   final bool disabled;
 
@@ -118,11 +113,10 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget(
+              child: IconDataWidget(
                 icon: icon,
                 width: 30,
                 height: 30,
-                color: iconColor,
               ),
             ),
             Column(

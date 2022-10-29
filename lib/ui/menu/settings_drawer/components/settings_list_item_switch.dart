@@ -5,14 +5,12 @@ class _SettingsListItemSwitch extends _SettingsListItem {
   const _SettingsListItemSwitch({
     required this.heading,
     required this.icon,
-    required this.iconColor,
     required this.isSwitched,
     this.onChanged,
   });
 
   final String heading;
-  final String icon;
-  final Color iconColor;
+  final IconData icon;
   final bool isSwitched;
   final Function? onChanged;
 
@@ -35,11 +33,10 @@ class _SettingsListItemSwitch extends _SettingsListItem {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget(
+              child: IconDataWidget(
                 icon: icon,
                 width: 30,
                 height: 30,
-                color: iconColor,
               ),
             ),
             SizedBox(
