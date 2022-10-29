@@ -10,7 +10,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
