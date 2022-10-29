@@ -10,6 +10,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
@@ -175,8 +176,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                         style: theme.textStyleSize16W700Primary,
                         suffixButton: TextFieldButton(
                           icon: enterPasswordVisible!
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                              ? UiIcons.eye
+                              : UiIcons.eye_hidden,
                           onPressed: () {
                             setState(() {
                               enterPasswordVisible = !enterPasswordVisible!;
