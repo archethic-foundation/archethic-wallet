@@ -116,273 +116,278 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
             ),
             child: Column(
               children: <Widget>[
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsetsDirectional.only(
-                                start: smallScreen(context) ? 15 : 20,
-                              ),
-                              height: 50,
-                              width: 50,
-                              child: BackButton(
-                                key: const Key('back'),
-                                color: theme.text,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsetsDirectional.only(
-                                    start: 15,
-                                  ),
-                                  height: 50,
-                                  width: 50,
-                                  child: TextButton(
-                                    onPressed: () async {
-                                      sl.get<HapticUtil>().feedback(
-                                            FeedbackType.light,
-                                            preferences.activeVibrations,
-                                          );
-
-                                      final preferences_ =
-                                          await Preferences.getInstance();
-                                      preferences_.setLanguageSeed('en');
-                                      setState(() {
-                                        language = 'en';
-                                      });
-                                    },
-                                    child: language == 'en'
-                                        ? Image.asset(
-                                            'assets/icons/languages/united-states.png',
-                                          )
-                                        : Opacity(
-                                            opacity: 0.3,
-                                            child: Image.asset(
-                                              'assets/icons/languages/united-states.png',
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsetsDirectional.only(
-                                    start: 15,
-                                  ),
-                                  height: 50,
-                                  width: 50,
-                                  child: TextButton(
-                                    onPressed: () async {
-                                      sl.get<HapticUtil>().feedback(
-                                            FeedbackType.light,
-                                            preferences.activeVibrations,
-                                          );
-
-                                      final preferences_ =
-                                          await Preferences.getInstance();
-                                      preferences_.setLanguageSeed('fr');
-                                      setState(() {
-                                        language = 'fr';
-                                      });
-                                    },
-                                    child: language == 'fr'
-                                        ? Image.asset(
-                                            'assets/icons/languages/france.png',
-                                          )
-                                        : Opacity(
-                                            opacity: 0.3,
-                                            child: Image.asset(
-                                              'assets/icons/languages/france.png',
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsetsDirectional.only(
+                        start: smallScreen(context) ? 15 : 20,
+                      ),
+                      height: 50,
+                      width: 50,
+                      child: BackButton(
+                        key: const Key('back'),
+                        color: theme.text,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Row(
+                      children: [
                         Container(
-                          margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 30 : 40,
-                            end: smallScreen(context) ? 30 : 40,
-                            top: 10,
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 15,
                           ),
-                          alignment: AlignmentDirectional.centerStart,
-                          child: AutoSizeText(
-                            localizations.importSecretPhrase,
-                            style: theme.textStyleSize28W700Primary,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: smallScreen(context) ? 30 : 40,
-                            right: smallScreen(context) ? 30 : 40,
-                            top: 15,
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            localizations.importSecretPhraseHint,
-                            style: theme.textStyleSize16W600Primary,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        if (_mnemonicError != '')
-                          SizedBox(
-                            height: 40,
-                            child: Text(
-                              _mnemonicError,
-                              style: theme.textStyleSize14W200Primary,
-                            ),
-                          )
-                        else
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(height: 10),
-                              GridView.count(
-                                physics: const NeverScrollableScrollPhysics(),
-                                childAspectRatio: 1.2,
-                                shrinkWrap: true,
-                                crossAxisCount: 4,
-                                children: List.generate(24, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10,
-                                      right: 10,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          (index + 1).toString(),
-                                          style:
-                                              theme.textStyleSize12W100Primary,
-                                        ),
-                                        Autocomplete<String>(
-                                          optionsBuilder: (
-                                            TextEditingValue textEditingValue,
-                                          ) {
-                                            if (textEditingValue.text == '') {
-                                              return const Iterable<
-                                                  String>.empty();
-                                            }
-                                            return AppMnemomics.getLanguage(
-                                              language,
-                                            ).list.where((String option) {
-                                              return option.contains(
-                                                unorm.nfkd(
-                                                  textEditingValue.text
-                                                      .toLowerCase(),
-                                                ),
-                                              );
-                                            });
-                                          },
-                                          onSelected: (String selection) {
-                                            if (!AppMnemomics.isValidWord(
-                                              selection,
-                                              languageCode: language,
-                                            )) {
-                                              setState(() {
-                                                _mnemonicIsValid = false;
-                                                _mnemonicError = localizations
-                                                    .mnemonicInvalidWord
-                                                    .replaceAll(
-                                                  '%1',
-                                                  selection,
-                                                );
-                                              });
-                                            } else {
-                                              phrase[index] = selection;
-                                              setState(() {
-                                                _mnemonicError = '';
-                                                _mnemonicIsValid = true;
-                                              });
-                                            }
-                                          },
-                                          fieldViewBuilder: (
-                                            context,
-                                            textEditingController,
-                                            focusNode,
-                                            onFieldSubmitted,
-                                          ) {
-                                            return Stack(
-                                              alignment:
-                                                  AlignmentDirectional.center,
-                                              children: <Widget>[
-                                                TextFormField(
-                                                  controller:
-                                                      textEditingController,
-                                                  focusNode: focusNode,
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                  autocorrect: false,
-                                                  onChanged: (value) {
-                                                    if (!AppMnemomics
-                                                        .isValidWord(
-                                                      value,
-                                                      languageCode: language,
-                                                    )) {
-                                                      setState(() {
-                                                        _mnemonicIsValid =
-                                                            false;
-                                                        _mnemonicError =
-                                                            localizations
-                                                                .mnemonicInvalidWord
-                                                                .replaceAll(
-                                                          '%1',
-                                                          value,
-                                                        );
-                                                      });
-                                                    } else {
-                                                      phrase[index] = value;
-                                                      setState(() {
-                                                        _mnemonicError = '';
-                                                        _mnemonicIsValid = true;
-                                                      });
-                                                    }
-                                                  },
-                                                ),
-                                                Positioned(
-                                                  bottom: 1,
-                                                  child: Container(
-                                                    height: 1,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    decoration: BoxDecoration(
-                                                      gradient: theme.gradient,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
+                          height: 50,
+                          width: 50,
+                          child: TextButton(
+                            onPressed: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
                                   );
-                                }),
-                              ),
-                            ],
+
+                              final preferences_ =
+                                  await Preferences.getInstance();
+                              preferences_.setLanguageSeed('en');
+                              setState(() {
+                                language = 'en';
+                              });
+                            },
+                            child: language == 'en'
+                                ? Image.asset(
+                                    'assets/icons/languages/united-states.png',
+                                  )
+                                : Opacity(
+                                    opacity: 0.3,
+                                    child: Image.asset(
+                                      'assets/icons/languages/united-states.png',
+                                    ),
+                                  ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 15,
+                          ),
+                          height: 50,
+                          width: 50,
+                          child: TextButton(
+                            onPressed: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+
+                              final preferences_ =
+                                  await Preferences.getInstance();
+                              preferences_.setLanguageSeed('fr');
+                              setState(() {
+                                language = 'fr';
+                              });
+                            },
+                            child: language == 'fr'
+                                ? Image.asset(
+                                    'assets/icons/languages/france.png',
+                                  )
+                                : Opacity(
+                                    opacity: 0.3,
+                                    child: Image.asset(
+                                      'assets/icons/languages/france.png',
+                                    ),
+                                  ),
                           ),
                         ),
                       ],
+                    )
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsetsDirectional.only(
+                    start: smallScreen(context) ? 30 : 40,
+                    end: smallScreen(context) ? 30 : 40,
+                    top: 10,
+                  ),
+                  alignment: AlignmentDirectional.centerStart,
+                  child: AutoSizeText(
+                    localizations.importSecretPhrase,
+                    style: theme.textStyleSize28W700Primary,
+                    maxLines: 1,
+                    stepGranularity: 0.1,
+                  ),
+                ),
+                Expanded(
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: smallScreen(context) ? 30 : 40,
+                              right: smallScreen(context) ? 30 : 40,
+                              top: 15,
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              localizations.importSecretPhraseHint,
+                              style: theme.textStyleSize16W600Primary,
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          if (_mnemonicError != '')
+                            SizedBox(
+                              height: 40,
+                              child: Text(
+                                _mnemonicError,
+                                style: theme.textStyleSize14W200Primary,
+                              ),
+                            )
+                          else
+                            const SizedBox(
+                              height: 40,
+                            ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: Column(
+                              children: <Widget>[
+                                const SizedBox(height: 10),
+                                GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  childAspectRatio: 1.2,
+                                  shrinkWrap: true,
+                                  crossAxisCount: 4,
+                                  children: List.generate(24, (index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                        right: 10,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            (index + 1).toString(),
+                                            style: theme
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                          Autocomplete<String>(
+                                            optionsBuilder: (
+                                              TextEditingValue textEditingValue,
+                                            ) {
+                                              if (textEditingValue.text == '') {
+                                                return const Iterable<
+                                                    String>.empty();
+                                              }
+                                              return AppMnemomics.getLanguage(
+                                                language,
+                                              ).list.where((String option) {
+                                                return option.contains(
+                                                  unorm.nfkd(
+                                                    textEditingValue.text
+                                                        .toLowerCase(),
+                                                  ),
+                                                );
+                                              });
+                                            },
+                                            onSelected: (String selection) {
+                                              if (!AppMnemomics.isValidWord(
+                                                selection,
+                                                languageCode: language,
+                                              )) {
+                                                setState(() {
+                                                  _mnemonicIsValid = false;
+                                                  _mnemonicError = localizations
+                                                      .mnemonicInvalidWord
+                                                      .replaceAll(
+                                                    '%1',
+                                                    selection,
+                                                  );
+                                                });
+                                              } else {
+                                                phrase[index] = selection;
+                                                setState(() {
+                                                  _mnemonicError = '';
+                                                  _mnemonicIsValid = true;
+                                                });
+                                              }
+                                            },
+                                            fieldViewBuilder: (
+                                              context,
+                                              textEditingController,
+                                              focusNode,
+                                              onFieldSubmitted,
+                                            ) {
+                                              return Stack(
+                                                alignment:
+                                                    AlignmentDirectional.center,
+                                                children: <Widget>[
+                                                  TextFormField(
+                                                    controller:
+                                                        textEditingController,
+                                                    focusNode: focusNode,
+                                                    style: theme
+                                                        .textStyleSize12W400Primary,
+                                                    autocorrect: false,
+                                                    onChanged: (value) {
+                                                      if (!AppMnemomics
+                                                          .isValidWord(
+                                                        value,
+                                                        languageCode: language,
+                                                      )) {
+                                                        setState(() {
+                                                          _mnemonicIsValid =
+                                                              false;
+                                                          _mnemonicError =
+                                                              localizations
+                                                                  .mnemonicInvalidWord
+                                                                  .replaceAll(
+                                                            '%1',
+                                                            value,
+                                                          );
+                                                        });
+                                                      } else {
+                                                        phrase[index] = value;
+                                                        setState(() {
+                                                          _mnemonicError = '';
+                                                          _mnemonicIsValid =
+                                                              true;
+                                                        });
+                                                      }
+                                                    },
+                                                  ),
+                                                  Positioned(
+                                                    bottom: 1,
+                                                    child: Container(
+                                                      height: 1,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      decoration: BoxDecoration(
+                                                        gradient:
+                                                            theme.gradient,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

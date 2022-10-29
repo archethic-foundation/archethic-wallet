@@ -7,7 +7,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
-import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -171,11 +170,6 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                           )
                         ],
                       ),
-                      const IconWidget(
-                        icon: 'assets/icons/key-word.png',
-                        width: 90,
-                        height: 90,
-                      ),
                       Container(
                         margin: const EdgeInsetsDirectional.only(
                           top: 10,
@@ -187,8 +181,15 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                       ),
                       if (mnemonic != null)
                         Expanded(
-                          child: SingleChildScrollView(
-                            child: MnemonicDisplay(wordList: mnemonic!),
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: MnemonicDisplay(wordList: mnemonic!),
+                              ),
+                            ),
                           ),
                         )
                       else

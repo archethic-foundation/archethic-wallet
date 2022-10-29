@@ -69,21 +69,24 @@ class AccountsListTab extends ConsumerWidget {
                         opacity: 0.7,
                       ),
                     ),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: kToolbarHeight + kTextTabBarHeight,
-                          bottom: 50,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            /// ACCOUNTS LIST
-                            AccountsListWidget(
-                              appWallet: StateContainer.of(context).appWallet,
-                              currencyName: currency.currency.name,
-                            )
-                          ],
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: kToolbarHeight + kTextTabBarHeight,
+                            bottom: 50,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              /// ACCOUNTS LIST
+                              AccountsListWidget(
+                                appWallet: StateContainer.of(context).appWallet,
+                                currencyName: currency.currency.name,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
