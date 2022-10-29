@@ -108,139 +108,145 @@ class _AddTokenSheetState extends ConsumerState<AddTokenSheet> {
                         child: const SizedBox.expand(),
                       ),
                     ),
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: bottom + 80),
-                        child: Column(
-                          children: <Widget>[
-                            AppTextField(
-                              focusNode: _nameFocusNode,
-                              controller: _nameController,
-                              cursorColor: theme.text,
-                              textInputAction: TextInputAction.next,
-                              labelText: localizations.tokenNameHint,
-                              autocorrect: false,
-                              keyboardType: TextInputType.text,
-                              style: theme.textStyleSize16W600Primary,
-                              inputFormatters: <
-                                  LengthLimitingTextInputFormatter>[
-                                LengthLimitingTextInputFormatter(40),
-                              ],
-                              onChanged: (_) async {
-                                final fee = await getFee(
-                                  accountSelected.name!,
-                                );
-                                // Always reset the error message to be less annoying
-                                setState(() {
-                                  feeEstimation = fee;
-                                });
-                              },
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: Text(
-                                _nameValidationText,
-                                style: theme.textStyleSize14W600Primary,
+                    Scrollbar(
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: bottom + 80),
+                          child: Column(
+                            children: <Widget>[
+                              AppTextField(
+                                focusNode: _nameFocusNode,
+                                controller: _nameController,
+                                cursorColor: theme.text,
+                                textInputAction: TextInputAction.next,
+                                labelText: localizations.tokenNameHint,
+                                autocorrect: false,
+                                keyboardType: TextInputType.text,
+                                style: theme.textStyleSize16W600Primary,
+                                inputFormatters: <
+                                    LengthLimitingTextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(40),
+                                ],
+                                onChanged: (_) async {
+                                  final fee = await getFee(
+                                    accountSelected.name!,
+                                  );
+                                  // Always reset the error message to be less annoying
+                                  setState(() {
+                                    feeEstimation = fee;
+                                  });
+                                },
                               ),
-                            ),
-                            AppTextField(
-                              focusNode: _symbolFocusNode,
-                              controller: _symbolController,
-                              cursorColor: theme.text,
-                              textInputAction: TextInputAction.next,
-                              labelText: localizations.tokenSymbolHint,
-                              autocorrect: false,
-                              keyboardType: TextInputType.text,
-                              style: theme.textStyleSize16W600Primary,
-                              inputFormatters: [
-                                UpperCaseTextFormatter(),
-                                LengthLimitingTextInputFormatter(4),
-                              ],
-                              onChanged: (_) async {
-                                final fee = await getFee(
-                                  accountSelected.name!,
-                                );
-                                // Always reset the error message to be less annoying
-                                setState(() {
-                                  feeEstimation = fee;
-                                });
-                              },
-                            ),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.only(
-                                left: 40,
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              child: Text(
-                                localizations.tokenSymbolMaxNumberCharacter,
-                                style: theme.textStyleSize10W100Primary,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: Text(
-                                _symbolValidationText,
-                                style: theme.textStyleSize14W600Primary,
-                              ),
-                            ),
-                            AppTextField(
-                              focusNode: _initialSupplyFocusNode,
-                              controller: _initialSupplyController,
-                              cursorColor: theme.text,
-                              textInputAction: TextInputAction.next,
-                              labelText: localizations.tokenInitialSupplyHint,
-                              keyboardType: TextInputType.number,
-                              style: theme.textStyleSize16W600Primary,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(23),
-                                FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d+\.?\d{0,8}'),
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: Text(
+                                  _nameValidationText,
+                                  style: theme.textStyleSize14W600Primary,
                                 ),
-                              ],
-                              onChanged: (_) async {
-                                final fee = await getFee(
-                                  accountSelected.name!,
-                                );
-                                // Always reset the error message to be less annoying
-                                setState(() {
-                                  feeEstimation = fee;
-                                });
-                              },
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: Text(
-                                _initialSupplyValidationText,
-                                style: theme.textStyleSize14W600Primary,
                               ),
-                            ),
-                            if (feeEstimation > 0)
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 30,
-                                  right: 30,
+                              AppTextField(
+                                focusNode: _symbolFocusNode,
+                                controller: _symbolController,
+                                cursorColor: theme.text,
+                                textInputAction: TextInputAction.next,
+                                labelText: localizations.tokenSymbolHint,
+                                autocorrect: false,
+                                keyboardType: TextInputType.text,
+                                style: theme.textStyleSize16W600Primary,
+                                inputFormatters: [
+                                  UpperCaseTextFormatter(),
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
+                                onChanged: (_) async {
+                                  final fee = await getFee(
+                                    accountSelected.name!,
+                                  );
+                                  // Always reset the error message to be less annoying
+                                  setState(() {
+                                    feeEstimation = fee;
+                                  });
+                                },
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                margin: const EdgeInsets.only(
+                                  left: 40,
+                                  top: 5,
+                                  bottom: 5,
                                 ),
                                 child: Text(
-                                  '${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                  style: theme.textStyleSize14W100Primary,
-                                  textAlign: TextAlign.justify,
-                                ),
-                              )
-                            else
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 30,
-                                  right: 30,
-                                ),
-                                child: Text(
-                                  localizations.estimatedFeesAddTokenNote,
-                                  style: theme.textStyleSize14W100Primary,
-                                  textAlign: TextAlign.justify,
+                                  localizations.tokenSymbolMaxNumberCharacter,
+                                  style: theme.textStyleSize10W100Primary,
                                 ),
                               ),
-                          ],
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: Text(
+                                  _symbolValidationText,
+                                  style: theme.textStyleSize14W600Primary,
+                                ),
+                              ),
+                              AppTextField(
+                                focusNode: _initialSupplyFocusNode,
+                                controller: _initialSupplyController,
+                                cursorColor: theme.text,
+                                textInputAction: TextInputAction.next,
+                                labelText: localizations.tokenInitialSupplyHint,
+                                keyboardType: TextInputType.number,
+                                style: theme.textStyleSize16W600Primary,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(23),
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,8}'),
+                                  ),
+                                ],
+                                onChanged: (_) async {
+                                  final fee = await getFee(
+                                    accountSelected.name!,
+                                  );
+                                  // Always reset the error message to be less annoying
+                                  setState(() {
+                                    feeEstimation = fee;
+                                  });
+                                },
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: Text(
+                                  _initialSupplyValidationText,
+                                  style: theme.textStyleSize14W600Primary,
+                                ),
+                              ),
+                              if (feeEstimation > 0)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 30,
+                                    right: 30,
+                                  ),
+                                  child: Text(
+                                    '${localizations.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                    style: theme.textStyleSize14W100Primary,
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                )
+                              else
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 30,
+                                    right: 30,
+                                  ),
+                                  child: Text(
+                                    localizations.estimatedFeesAddTokenNote,
+                                    style: theme.textStyleSize14W100Primary,
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

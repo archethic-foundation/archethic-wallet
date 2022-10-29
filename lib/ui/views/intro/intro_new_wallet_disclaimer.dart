@@ -45,112 +45,115 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
             ),
             child: Column(
               children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsetsDirectional.only(
+                        start: smallScreen(context) ? 15 : 20,
+                      ),
+                      height: 50,
+                      width: 50,
+                      child: BackButton(
+                        key: const Key('back'),
+                        color: theme.text,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsetsDirectional.only(
-                                start: smallScreen(context) ? 15 : 20,
-                              ),
-                              height: 50,
-                              width: 50,
-                              child: BackButton(
-                                key: const Key('back'),
-                                color: theme.text,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          IconWidget(
+                            icon: 'assets/icons/warning.png',
+                            width: 90,
+                            height: 90,
+                            color: theme.warning,
+                          ),
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              top: 10,
                             ),
-                          ],
-                        ),
-                        IconWidget(
-                          icon: 'assets/icons/warning.png',
-                          width: 90,
-                          height: 90,
-                          color: theme.warning,
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            top: 10,
+                            child: AutoSizeText(
+                              localizations.warning,
+                              style: theme.textStyleSize28W700Warning,
+                            ),
                           ),
-                          child: AutoSizeText(
-                            localizations.warning,
-                            style: theme.textStyleSize28W700Warning,
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              start: 20,
+                              end: 20,
+                              top: 15,
+                            ),
+                            alignment: Alignment.bottomLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel1,
+                                  style: theme.textStyleSize16W600Primary,
+                                ),
+                                Divider(
+                                  height: 30,
+                                  color: theme.text60,
+                                ),
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel2,
+                                  style: theme.textStyleSize16W600Primary,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel3,
+                                  style: theme.textStyleSize14W600Primary,
+                                  textAlign: TextAlign.justify,
+                                ),
+                                Divider(
+                                  height: 30,
+                                  color: theme.text60,
+                                ),
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel4,
+                                  style: theme.textStyleSize16W600Primary,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel5,
+                                  style: theme.textStyleSize14W600Primary,
+                                  textAlign: TextAlign.justify,
+                                ),
+                                Divider(
+                                  height: 30,
+                                  color: theme.text60,
+                                ),
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel6,
+                                  style: theme.textStyleSize16W600Primary,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                AutoSizeText(
+                                  localizations.backupSafetyLabel7,
+                                  style: theme.textStyleSize14W600Primary,
+                                  textAlign: TextAlign.justify,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          alignment: Alignment.bottomLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              AutoSizeText(
-                                localizations.backupSafetyLabel1,
-                                style: theme.textStyleSize16W600Primary,
-                              ),
-                              Divider(
-                                height: 30,
-                                color: theme.text60,
-                              ),
-                              AutoSizeText(
-                                localizations.backupSafetyLabel2,
-                                style: theme.textStyleSize16W600Primary,
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              AutoSizeText(
-                                localizations.backupSafetyLabel3,
-                                style: theme.textStyleSize14W600Primary,
-                                textAlign: TextAlign.justify,
-                              ),
-                              Divider(
-                                height: 30,
-                                color: theme.text60,
-                              ),
-                              AutoSizeText(
-                                localizations.backupSafetyLabel4,
-                                style: theme.textStyleSize16W600Primary,
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              AutoSizeText(
-                                localizations.backupSafetyLabel5,
-                                style: theme.textStyleSize14W600Primary,
-                                textAlign: TextAlign.justify,
-                              ),
-                              Divider(
-                                height: 30,
-                                color: theme.text60,
-                              ),
-                              AutoSizeText(
-                                localizations.backupSafetyLabel6,
-                                style: theme.textStyleSize16W600Primary,
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              AutoSizeText(
-                                localizations.backupSafetyLabel7,
-                                style: theme.textStyleSize14W600Primary,
-                                textAlign: TextAlign.justify,
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

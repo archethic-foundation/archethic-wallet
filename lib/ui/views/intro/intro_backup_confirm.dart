@@ -16,6 +16,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -267,110 +268,114 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                   ],
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 10,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              start: 20,
+                              end: 20,
+                              top: 10,
+                            ),
+                            alignment: AlignmentDirectional.centerStart,
+                            child: AutoSizeText(
+                              localizations.confirmSecretPhrase,
+                              style: theme.textStyleSize20W700Warning,
+                            ),
                           ),
-                          alignment: AlignmentDirectional.centerStart,
-                          child: AutoSizeText(
-                            localizations.confirmSecretPhrase,
-                            style: theme.textStyleSize20W700Warning,
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              start: 20,
+                              end: 20,
+                              top: 15,
+                            ),
+                            child: AutoSizeText(
+                              localizations.confirmSecretPhraseExplanation,
+                              style: theme.textStyleSize16W600Primary,
+                              textAlign: TextAlign.justify,
+                              maxLines: 6,
+                              stepGranularity: 0.5,
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          child: AutoSizeText(
-                            localizations.confirmSecretPhraseExplanation,
-                            style: theme.textStyleSize16W600Primary,
-                            textAlign: TextAlign.justify,
-                            maxLines: 6,
-                            stepGranularity: 0.5,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          child: Wrap(
-                            spacing: 10,
-                            children: wordListSelected
-                                .asMap()
-                                .entries
-                                .map((MapEntry entry) {
-                              return SizedBox(
-                                height: 35,
-                                child: Chip(
-                                  avatar: CircleAvatar(
-                                    backgroundColor: Colors.grey.shade800,
-                                    child: Text(
-                                      (entry.key + 1).toString(),
-                                      style: theme.textStyleSize12W100Primary60,
-                                    ),
-                                  ),
-                                  label: Text(
-                                    entry.value,
-                                    style: theme.textStyleSize12W400Primary,
-                                  ),
-                                  onDeleted: () {
-                                    setState(() {
-                                      wordListToSelect.add(entry.value);
-                                      wordListSelected.removeAt(entry.key);
-                                    });
-                                  },
-                                  deleteIconColor: Colors.white,
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Divider(
-                          height: 15,
-                          color: theme.text60,
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          child: Wrap(
-                            spacing: 10,
-                            children: wordListToSelect
-                                .asMap()
-                                .entries
-                                .map((MapEntry entry) {
-                              return SizedBox(
-                                height: 35,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    wordListSelected.add(entry.value);
-                                    wordListToSelect.removeAt(entry.key);
-                                    setState(() {});
-                                  },
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              start: 20,
+                              end: 20,
+                              top: 15,
+                            ),
+                            child: Wrap(
+                              spacing: 10,
+                              children: wordListSelected
+                                  .asMap()
+                                  .entries
+                                  .map((MapEntry entry) {
+                                return SizedBox(
+                                  height: 35,
                                   child: Chip(
+                                    avatar: CircleAvatar(
+                                      backgroundColor: Colors.grey.shade800,
+                                      child: Text(
+                                        (entry.key + 1).toString(),
+                                        style:
+                                            theme.textStyleSize12W100Primary60,
+                                      ),
+                                    ),
                                     label: Text(
                                       entry.value,
                                       style: theme.textStyleSize12W400Primary,
                                     ),
+                                    onDeleted: () {
+                                      setState(() {
+                                        wordListToSelect.add(entry.value);
+                                        wordListSelected.removeAt(entry.key);
+                                      });
+                                    },
+                                    deleteIconColor: Colors.white,
                                   ),
-                                ),
-                              );
-                            }).toList(),
+                                );
+                              }).toList(),
+                            ),
                           ),
-                        ),
-                      ],
+                          Divider(
+                            height: 15,
+                            color: theme.text60,
+                          ),
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              start: 20,
+                              end: 20,
+                              top: 15,
+                            ),
+                            child: Wrap(
+                              spacing: 10,
+                              children: wordListToSelect
+                                  .asMap()
+                                  .entries
+                                  .map((MapEntry entry) {
+                                return SizedBox(
+                                  height: 35,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      wordListSelected.add(entry.value);
+                                      wordListToSelect.removeAt(entry.key);
+                                      setState(() {});
+                                    },
+                                    child: Chip(
+                                      label: Text(
+                                        entry.value,
+                                        style: theme.textStyleSize12W400Primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -426,8 +431,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                     ),
                     Row(
                       children: <Widget>[
-                        AppButton(
-                          AppButtonType.primary,
+                        AppButtonTiny(
+                          AppButtonTinyType.primary,
                           localizations.pass,
                           Dimens.buttonBottomDimens,
                           key: const Key('pass'),

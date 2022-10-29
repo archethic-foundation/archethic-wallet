@@ -81,24 +81,32 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                 child: Stack(
                                   children: <Widget>[
                                     //  list
-                                    ListView.builder(
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      padding: const EdgeInsets.only(
-                                        top: 15,
-                                        bottom: 15,
+                                    Scrollbar(
+                                      thumbVisibility: true,
+                                      child: ListView.builder(
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        padding: const EdgeInsets.only(
+                                          top: 15,
+                                          bottom: 15,
+                                        ),
+                                        itemCount: list.data == null
+                                            ? 0
+                                            : list.data!.length,
+                                        itemBuilder: (
+                                          BuildContext context,
+                                          int index,
+                                        ) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10,),
+                                            child: _TransactionBuildInfos(
+                                              transactionInfo:
+                                                  list.data![index],
+                                            ),
+                                          );
+                                        },
                                       ),
-                                      itemCount: list.data == null
-                                          ? 0
-                                          : list.data!.length,
-                                      itemBuilder: (
-                                        BuildContext context,
-                                        int index,
-                                      ) {
-                                        return _TransactionBuildInfos(
-                                          transactionInfo: list.data![index],
-                                        );
-                                      },
                                     ),
                                   ],
                                 ),

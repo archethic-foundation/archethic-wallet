@@ -56,38 +56,41 @@ class TransferFormSheet extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 10),
                 child: Stack(
                   children: <Widget>[
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: bottom + 80),
-                        child: Column(
-                          children: <Widget>[
-                            const SizedBox(height: 25),
-                            if (transfer.transferType != TransferType.nft)
-                              TransferTextFieldAmount(
+                    Scrollbar(
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: bottom + 80),
+                          child: Column(
+                            children: <Widget>[
+                              const SizedBox(height: 25),
+                              if (transfer.transferType != TransferType.nft)
+                                TransferTextFieldAmount(
+                                  seed: seed,
+                                ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  top: 20,
+                                  bottom: 20,
+                                ),
+                                alignment: Alignment.topCenter,
+                                child: TransferTextFieldAddress(
+                                  seed: seed,
+                                ),
+                              ),
+                              FeeInfos(
+                                feeEstimation: transfer.feeEstimation,
+                                tokenPrice: accountSelected
+                                        .balance!.tokenPrice!.amount ??
+                                    0,
+                                currencyName: currency.currency.name,
+                              ),
+                              const SizedBox(height: 10),
+                              TransferTextFieldMessage(
                                 seed: seed,
                               ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                top: 20,
-                                bottom: 20,
-                              ),
-                              alignment: Alignment.topCenter,
-                              child: TransferTextFieldAddress(
-                                seed: seed,
-                              ),
-                            ),
-                            FeeInfos(
-                              feeEstimation: transfer.feeEstimation,
-                              tokenPrice:
-                                  accountSelected.balance!.tokenPrice!.amount ??
-                                      0,
-                              currencyName: currency.currency.name,
-                            ),
-                            const SizedBox(height: 10),
-                            TransferTextFieldMessage(
-                              seed: seed,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
