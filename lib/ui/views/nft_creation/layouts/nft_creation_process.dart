@@ -310,19 +310,19 @@ class _NFTCreationProcessState extends ConsumerState<NFTCreationProcess>
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabDescriptionHeader,
                           icon: const Icon(
-                              UiIcons.nft_creation_process_description),
+                              UiIcons.nft_creation_process_description,),
                         ),
                         Tab(
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabPropertiesHeader,
                           icon: const Icon(
-                              UiIcons.nft_creation_process_properties),
+                              UiIcons.nft_creation_process_properties,),
                         ),
                         Tab(
                           text: AppLocalization.of(context)!
                               .nftCreationProcessTabConfirmationHeader,
                           icon: const Icon(
-                              UiIcons.nft_creation_process_confirmation),
+                              UiIcons.nft_creation_process_confirmation,),
                         ),
                       ],
                       views: [
