@@ -9,6 +9,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
@@ -223,8 +224,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   ),
                                   suffixButton: TextFieldButton(
                                     icon: setPasswordVisible!
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? UiIcons.eye
+                                        : UiIcons.eye_hidden,
                                     onPressed: () {
                                       setState(() {
                                         setPasswordVisible =
@@ -316,8 +317,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   style: theme.textStyleSize16W700Primary,
                                   suffixButton: TextFieldButton(
                                     icon: confirmPasswordVisible!
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? UiIcons.eye
+                                        : UiIcons.eye_hidden,
                                     onPressed: () {
                                       setState(() {
                                         confirmPasswordVisible =
