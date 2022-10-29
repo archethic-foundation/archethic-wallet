@@ -46,6 +46,8 @@ class BalanceInfos extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
     return GestureDetector(
       child: SizedBox(
         height: 60,
@@ -67,7 +69,6 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                // TODO(chralu): This info is not updated when we switch primary currency
                                 StateContainer.of(context)
                                     .curNetwork
                                     .getNetworkCryptoCurrencyLabel(),
@@ -88,13 +89,13 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                accountSelectedBalance!.fiatCurrencyCode!,
+                                currency.currency.name,
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
                             if (preferences.showBalances)
-                              _BalanceInfosNFiatShowed(
-                                accountSelectedBalance: accountSelectedBalance,
+                              _BalanceInfosFiatShowed(
+                                accountSelectedBalance: accountSelectedBalance!,
                               )
                             else
                               const _BalanceInfosNotShowed()
@@ -321,8 +322,8 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
   }
 }
 
-class _BalanceInfosNFiatShowed extends ConsumerWidget {
-  const _BalanceInfosNFiatShowed({
+class _BalanceInfosFiatShowed extends ConsumerWidget {
+  const _BalanceInfosFiatShowed({
     required this.accountSelectedBalance,
   });
   final AccountBalance accountSelectedBalance;
