@@ -211,7 +211,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
           widget.seed!,
           languageCode: preferences.getLanguageSeed(),
         );
-        wordListToSelect.shuffle();
+        wordListToSelect.sort(
+          (a, b) => a.compareTo(b),
+        );
         originalWordsList = AppMnemomics.seedToMnemonic(
           widget.seed!,
           languageCode: preferences.getLanguageSeed(),
