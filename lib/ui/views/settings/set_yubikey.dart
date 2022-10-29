@@ -107,16 +107,19 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                             ),
                           ],
                         ),
-                        const IconWidget(
-                          icon: 'assets/icons/digital-key.png',
-                          width: 90,
-                          height: 90,
-                        ),
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const Align(
+                                  alignment: Alignment.topCenter,
+                                  child: IconWidget(
+                                    icon: 'assets/icons/digital-key.png',
+                                    width: 90,
+                                    height: 90,
+                                  ),
+                                ),
                                 if (widget.header != null)
                                   Container(
                                     margin: const EdgeInsetsDirectional.only(
@@ -274,15 +277,16 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
     if (_clientIDController!.text.isEmpty) {
       if (mounted) {
         setState(() {
-          _clientIDValidationText = AppLocalization.of(context)!.passwordBlank;
+          _clientIDValidationText =
+              AppLocalization.of(context)!.enterYubikeyClientIDEmpty;
         });
       }
     } else {
       if (_clientAPIKeyController!.text.isEmpty) {
         if (mounted) {
           setState(() {
-            _clientIDValidationText =
-                AppLocalization.of(context)!.passwordBlank;
+            _clientAPIKeyValidationText =
+                AppLocalization.of(context)!.enterYubikeyAPIKeyEmpty;
           });
         }
       } else {
