@@ -75,9 +75,11 @@ class StateContainerState extends ConsumerState<StateContainer> {
         setState(
           () {
             updateCurrency().then((_) {
+              final index = preferences.getMainScreenCurrentPage();
               bottomBarPageController = PageController(
-                initialPage: preferences.getMainScreenCurrentPage(),
+                initialPage: index,
               );
+              bottomBarCurrentPage = index;
               curNetwork = preferences.getNetwork();
             });
           },

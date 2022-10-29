@@ -299,6 +299,11 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         );
 
         if (preferences.getLock()) {
+          StateContainer.of(context).bottomBarCurrentPage =
+              preferences.getMainScreenCurrentPage();
+          StateContainer.of(context).bottomBarPageController = PageController(
+            initialPage: StateContainer.of(context).bottomBarCurrentPage,
+          );
           Navigator.of(context).pushReplacementNamed('/home');
 
           AuthFactory.forceAuthenticate(
