@@ -110,7 +110,7 @@ class _TransferTextFieldAmountState
                   : '${AppLocalization.of(context)!.enterAmount} (${currency.currency.name.toUpperCase()})'
               : '${localizations.enterAmount} (${transfer.symbol(context)})',
           prefixButton: TextFieldButton(
-            icon: FontAwesomeIcons.anglesUp,
+            icon: UiIcons.max,
             onPressed: () async {
               transferNotifier.setDefineMaxAmountInProgress(
                 defineMaxAmountInProgress: true,
