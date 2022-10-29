@@ -123,7 +123,7 @@ class AboutMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutPrivacyPolicy,
                         headingStyle: theme.textStyleSize16W600Primary,
-                        icon: 'assets/icons/privacyPolicy.png',
+                        icon: 'assets/icons/menu/privacy-policy.svg',
                         iconColor: theme.iconDrawer!,
                         onPressed: () async {
                           UIUtil.showWebview(
