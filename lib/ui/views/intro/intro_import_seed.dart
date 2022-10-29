@@ -295,6 +295,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                               });
                                             },
                                             onSelected: (String selection) {
+                                              phrase[index] = selection;
                                               if (!AppMnemomics.isValidWord(
                                                 selection,
                                                 languageCode: language,
@@ -309,7 +310,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                   );
                                                 });
                                               } else {
-                                                phrase[index] = selection;
                                                 setState(() {
                                                   _mnemonicError = '';
                                                   _mnemonicIsValid = true;
@@ -334,6 +334,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                         .textStyleSize12W400Primary,
                                                     autocorrect: false,
                                                     onChanged: (value) {
+                                                      phrase[index] = value;
                                                       if (!AppMnemomics
                                                           .isValidWord(
                                                         value,
@@ -351,7 +352,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                           );
                                                         });
                                                       } else {
-                                                        phrase[index] = value;
                                                         setState(() {
                                                           _mnemonicError = '';
                                                           _mnemonicIsValid =
@@ -412,7 +412,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                           final currency =
                               ref.watch(CurrencyProviders.selectedCurrency);
 
-                          _showSendingAnimation(context);
                           setState(() {
                             _mnemonicError = '';
                             isPressed = true;
@@ -436,61 +435,49 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               }
                             }
                           }
-                          if (_mnemonicIsValid == true) {
-                            await sl.get<DBHelper>().clearAppWallet();
-                            StateContainer.of(context).appWallet = null;
-                            final seed = AppMnemomics.mnemonicListToSeed(
-                              phrase,
-                              languageCode: language,
+
+                          if (_mnemonicIsValid == false) {
+                            UIUtil.showSnackbar(
+                              _mnemonicError,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
                             );
-                            final vault = await Vault.getInstance();
-                            vault.setSeed(seed);
-                            final tokenPrice = await Price.getCurrency(
+                            setState(() {
+                              isPressed = false;
+                            });
+                            return;
+                          }
+                          _showSendingAnimation(context);
+                          await sl.get<DBHelper>().clearAppWallet();
+                          StateContainer.of(context).appWallet = null;
+                          final seed = AppMnemomics.mnemonicListToSeed(
+                            phrase,
+                            languageCode: language,
+                          );
+                          final vault = await Vault.getInstance();
+                          vault.setSeed(seed);
+                          final tokenPrice = await Price.getCurrency(
+                            currency.currency.name,
+                          );
+
+                          try {
+                            final appWallet = await KeychainUtil()
+                                .getListAccountsFromKeychain(
+                              StateContainer.of(context).appWallet,
+                              seed,
                               currency.currency.name,
+                              StateContainer.of(context)
+                                  .curNetwork
+                                  .getNetworkCryptoCurrencyLabel(),
+                              tokenPrice,
                             );
 
-                            try {
-                              final appWallet = await KeychainUtil()
-                                  .getListAccountsFromKeychain(
-                                StateContainer.of(context).appWallet,
-                                seed,
-                                currency.currency.name,
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel(),
-                                tokenPrice,
-                              );
+                            StateContainer.of(context).appWallet = appWallet;
+                            final accounts = appWallet!.appKeychain!.accounts;
 
-                              StateContainer.of(context).appWallet = appWallet;
-                              final accounts = appWallet!.appKeychain!.accounts;
-
-                              if (accounts == null || accounts.isEmpty) {
-                                setState(() {
-                                  _mnemonicIsValid = false;
-                                });
-                                UIUtil.showSnackbar(
-                                  localizations.noKeychain,
-                                  context,
-                                  ref,
-                                  theme.text!,
-                                  theme.snackBarShadow!,
-                                );
-                                Navigator.of(context).pop();
-                              } else {
-                                accounts.sort(
-                                  (a, b) => a.name!.compareTo(b.name!),
-                                );
-                                await _accountsDialog(accounts);
-                                await _launchSecurityConfiguration(
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .name!,
-                                  seed,
-                                );
-                              }
-                            } catch (e) {
+                            if (accounts == null || accounts.isEmpty) {
                               setState(() {
                                 _mnemonicIsValid = false;
                               });
@@ -502,7 +489,32 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                 theme.snackBarShadow!,
                               );
                               Navigator.of(context).pop();
+                            } else {
+                              accounts.sort(
+                                (a, b) => a.name!.compareTo(b.name!),
+                              );
+                              await _accountsDialog(accounts);
+                              await _launchSecurityConfiguration(
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .name!,
+                                seed,
+                              );
                             }
+                          } catch (e) {
+                            setState(() {
+                              _mnemonicIsValid = false;
+                            });
+                            UIUtil.showSnackbar(
+                              localizations.noKeychain,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                            );
+                            Navigator.of(context).pop();
                           }
 
                           setState(() {
