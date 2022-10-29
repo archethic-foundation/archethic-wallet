@@ -109,8 +109,7 @@ class SecurityMenuView extends ConsumerWidget {
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,
                         headingStyle: theme.textStyleSize16W600EquinoxRed,
-                        icon: 'assets/icons/menu/remove-wallet.svg',
-                        iconColor: Colors.red,
+                        icon: UiIcons.remove_wallet,
                         onPressed: () {
                           final language =
                               ref.read(LanguageProviders.selectedLanguage);
@@ -169,7 +168,6 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final authenticationMethod = ref.watch(
       AuthenticationProviders.settings.select(
@@ -181,8 +179,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.authMethod,
       defaultMethod: AuthenticationMethod(authenticationMethod),
-      icon: 'assets/icons/menu/authent.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.authent,
       onPressed: asyncHasBiometrics.maybeWhen(
         data: (hasBiometrics) => () => AuthentificationMethodDialog.getDialog(
               context,
@@ -202,7 +199,6 @@ class _LockSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final lock = ref
         .watch(SettingsProviders.settings.select((settings) => settings.lock));
@@ -211,8 +207,7 @@ class _LockSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.lockAppSetting,
       defaultMethod: UnlockSetting(lock),
-      icon: 'assets/icons/menu/authent-at-launch.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.authent_at_launch,
       onPressed: () async {
         final unlockSetting = await LockDialog.getDialog(
           context,
@@ -232,7 +227,6 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final lock = ref.watch(
       SettingsProviders.settings.select((settings) => settings.lock),
@@ -245,8 +239,7 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.autoLockHeader,
       defaultMethod: LockTimeoutSetting(lockTimeout),
-      icon: 'assets/icons/menu/auto-lock.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.auto_lock,
       onPressed: () async {
         final lockTimeoutSetting = await LockTimeoutDialog.getDialog(
           context,
@@ -267,7 +260,6 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final pinPadShuffle = ref.watch(
       AuthenticationProviders.settings.select(
@@ -286,8 +278,7 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
         const _SettingsListItem.spacer(),
         _SettingsListItem.withSwitch(
           heading: localizations.pinPadShuffle,
-          icon: 'assets/icons/menu/pin-swap.svg',
-          iconColor: theme.iconDrawer!,
+          icon: UiIcons.swap,
           isSwitched: pinPadShuffle,
           onChanged: (bool isSwitched) {
             ref
@@ -313,8 +304,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
     return _SettingsListItem.singleLine(
       heading: localizations.backupSecretPhrase,
       headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-      icon: 'assets/icons/menu/vault.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.vault,
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);
         final authenticationSettings = ref.read(

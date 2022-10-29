@@ -92,9 +92,8 @@ class CustomizationMenuView extends ConsumerWidget {
                         defaultMethod: primaryCurrency,
                         icon: primaryCurrency.primaryCurrency ==
                                 AvailablePrimaryCurrencyEnum.fiat
-                            ? 'assets/icons/menu/primary-currency.svg'
-                            : 'assets/icons/menu/primary-currency-uco.svg',
-                        iconColor: theme.iconDrawer!,
+                            ? UiIcons.primary_currency
+                            : UiIcons.primary_currency_uco,
                         onPressed: () =>
                             PrimaryCurrencyDialog.getDialog(context, ref),
                       ),
@@ -150,7 +149,6 @@ class _CurrencySettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return _SettingsListItem.withDefaultValueWithInfos(
       heading: localizations.changeCurrencyHeader,
@@ -159,8 +157,7 @@ class _CurrencySettingsListItem extends ConsumerWidget {
         StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
       ),
       defaultMethod: currency,
-      icon: 'assets/icons/menu/currency.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.currency,
       onPressed: () => CurrencyDialog.getDialog(context, ref),
       disabled: false,
     );
@@ -173,14 +170,12 @@ class _LanguageSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.language,
       defaultMethod: language,
-      icon: 'assets/icons/menu/language.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.language,
       onPressed: () => LanguageDialog.getDialog(context, ref),
     );
   }
@@ -192,14 +187,12 @@ class _ThemeSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final themeOption = ref.watch(ThemeProviders.selectedThemeOption);
     return _SettingsListItem.withDefaultValue(
       heading: localizations.themeHeader,
       defaultMethod: ThemeSetting(themeOption),
-      icon: 'assets/icons/menu/theme.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.theme,
       onPressed: () async {
         final pickedTheme = await ThemeDialog.getDialog(
           context,
@@ -222,15 +215,13 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final showBalancesSetting = ref.watch(
       SettingsProviders.settings.select((settings) => settings.showBalances),
     );
     final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
     return _SettingsListItem.withSwitch(
       heading: localizations.showBalances,
-      icon: 'assets/icons/menu/show-balance.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.show_balance,
       isSwitched: showBalancesSetting,
       onChanged: (showBalances) async {
         await preferencesNotifier.setShowBalances(showBalances);
@@ -245,7 +236,6 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final showBlogSetting = ref.watch(
       SettingsProviders.settings.select((settings) => settings.showBlog),
@@ -254,8 +244,7 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showBlog,
-      icon: 'assets/icons/menu/show-blog.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.show_blog,
       isSwitched: showBlogSetting,
       onChanged: (showBlog) async {
         await preferencesNotifier.setShowBlog(showBlog);
@@ -270,7 +259,6 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final showPriceChart = ref.watch(
       SettingsProviders.settings.select((settings) => settings.showPriceChart),
@@ -279,8 +267,7 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showPriceChart,
-      icon: 'assets/icons/menu/show-chart.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.show_chart,
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
         await preferencesNotifier.setShowPriceChart(showPriceChart);
@@ -295,7 +282,6 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final activeNotifications = ref.watch(
       SettingsProviders.settings
@@ -305,8 +291,7 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateNotifications,
-      icon: 'assets/icons/menu/notification.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.notification,
       isSwitched: activeNotifications,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveNotifications(isSwitched);
@@ -329,7 +314,6 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final activeVibrations = ref.watch(
       SettingsProviders.settings
@@ -339,8 +323,7 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateVibrations,
-      icon: 'assets/icons/menu/vibration.svg',
-      iconColor: theme.iconDrawer!,
+      icon: UiIcons.vibration,
       isSwitched: activeVibrations,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveVibrations(isSwitched);

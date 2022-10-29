@@ -43,18 +43,18 @@ class UiIcons {
   static const notification_enabled = _UiIconsData(0xf117, 'notification_enabled');
   static const notification = _UiIconsData(0xf118, 'notification');
   static const oracle = _UiIconsData(0xf119, 'oracle');
-  static const pin_swap = _UiIconsData(0xf11a, 'pin_swap');
-  static const primary_currency_uco = _UiIconsData(0xf11b, 'primary_currency_uco');
-  static const primary_currency = _UiIconsData(0xf11c, 'primary_currency');
-  static const privacy_policy = _UiIconsData(0xf11d, 'privacy_policy');
-  static const receive = _UiIconsData(0xf11e, 'receive');
-  static const remove_wallet = _UiIconsData(0xf11f, 'remove_wallet');
-  static const security_custom = _UiIconsData(0xf120, 'security_custom');
-  static const send = _UiIconsData(0xf121, 'send');
-  static const settings = _UiIconsData(0xf122, 'settings');
-  static const show_balance = _UiIconsData(0xf123, 'show_balance');
-  static const show_blog = _UiIconsData(0xf124, 'show_blog');
-  static const show_chart = _UiIconsData(0xf125, 'show_chart');
+  static const primary_currency_uco = _UiIconsData(0xf11a, 'primary_currency_uco');
+  static const primary_currency = _UiIconsData(0xf11b, 'primary_currency');
+  static const privacy_policy = _UiIconsData(0xf11c, 'privacy_policy');
+  static const receive = _UiIconsData(0xf11d, 'receive');
+  static const remove_wallet = _UiIconsData(0xf11e, 'remove_wallet');
+  static const security_custom = _UiIconsData(0xf11f, 'security_custom');
+  static const send = _UiIconsData(0xf120, 'send');
+  static const settings = _UiIconsData(0xf121, 'settings');
+  static const show_balance = _UiIconsData(0xf122, 'show_balance');
+  static const show_blog = _UiIconsData(0xf123, 'show_blog');
+  static const show_chart = _UiIconsData(0xf124, 'show_chart');
+  static const swap = _UiIconsData(0xf125, 'swap');
   static const theme = _UiIconsData(0xf126, 'theme');
   static const vault = _UiIconsData(0xf127, 'vault');
   static const vibration = _UiIconsData(0xf128, 'vibration');
@@ -85,7 +85,6 @@ class UiIcons {
     'notification_enabled': notification_enabled,
     'notification': notification,
     'oracle': oracle,
-    'pin_swap': pin_swap,
     'primary_currency_uco': primary_currency_uco,
     'primary_currency': primary_currency,
     'privacy_policy': privacy_policy,
@@ -97,6 +96,7 @@ class UiIcons {
     'show_balance': show_balance,
     'show_blog': show_blog,
     'show_chart': show_chart,
+    'swap': swap,
     'theme': theme,
     'vault': vault,
     'vibration': vibration,

@@ -90,8 +90,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.addressBookHeader,
                         info: localizations.addressBookDesc,
-                        icon: 'assets/icons/menu/address-book.svg',
-                        iconColor: theme.iconDrawer,
+                        icon: UiIcons.address_book,
                         onPressed: showContacts,
                       ),
                       const _SettingsListItem.spacer(),
@@ -101,16 +100,14 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: 'assets/icons/menu/security-custom.svg',
-                        iconColor: theme.iconDrawer!,
+                        icon: UiIcons.security_custom,
                         onPressed: showSecurity,
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: 'assets/icons/menu/app-custom.svg',
-                        iconColor: theme.iconDrawer!,
+                        icon: UiIcons.app_custom,
                         onPressed: showCustom,
                       ),
                       const _SettingsListItem.spacer(),
@@ -120,8 +117,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.aeWebsiteLinkHeader,
                         info: localizations.aeWebsiteLinkDesc,
-                        icon: 'assets/icons/menu/link-archethic-website.svg',
-                        iconColor: theme.iconDrawer,
+                        icon: UiIcons.link_archethic_website,
                         onPressed: () async {
                           UIUtil.showWebview(
                             context,
@@ -134,8 +130,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.labLinkHeader,
                         info: localizations.labLinkDesc,
-                        icon: 'assets/icons/menu/link-archethic-lab.svg',
-                        iconColor: theme.iconDrawer,
+                        icon: UiIcons.link_archethic_lab,
                         onPressed: () async {
                           UIUtil.showWebview(
                             context,
@@ -148,8 +143,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: 'assets/icons/menu/about.svg',
-                        iconColor: theme.iconDrawer!,
+                        icon: UiIcons.about,
                         onPressed: showAbout,
                       ),
                       const _SettingsListItem.spacer(),
