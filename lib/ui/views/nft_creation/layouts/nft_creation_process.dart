@@ -29,6 +29,7 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_p
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_file.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_image.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_property_access.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -445,7 +446,7 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
   }
 
   Future<void> _doAdd() async {
-    final nftCreation = ref.watch(NftCreationProvider.nftCreation);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
 
     _showSendingAnimation(context);
     final seed = await StateContainer.of(context).getSeed();
@@ -479,7 +480,8 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
       tokenName: nftCreation.name,
       tokenInitialSupply: 1,
       tokenSymbol: '',
-      tokenProperties: tokenProperties,
+      // TODO(@reddwarf03): to fix
+      //tokenProperties: tokenProperties,
     );
 
     final preferences = await Preferences.getInstance();
