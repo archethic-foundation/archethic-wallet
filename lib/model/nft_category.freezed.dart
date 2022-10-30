@@ -34,38 +34,42 @@ mixin _$NftCategory {
 abstract class $NftCategoryCopyWith<$Res> {
   factory $NftCategoryCopyWith(
           NftCategory value, $Res Function(NftCategory) then) =
-      _$NftCategoryCopyWithImpl<$Res>;
+      _$NftCategoryCopyWithImpl<$Res, NftCategory>;
+  @useResult
   $Res call({int id, dynamic name, String image});
 }
 
 /// @nodoc
-class _$NftCategoryCopyWithImpl<$Res> implements $NftCategoryCopyWith<$Res> {
+class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
+    implements $NftCategoryCopyWith<$Res> {
   _$NftCategoryCopyWithImpl(this._value, this._then);
 
-  final NftCategory _value;
   // ignore: unused_field
-  final $Res Function(NftCategory) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? image = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? image = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      image: image == freezed
+      image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -76,32 +80,32 @@ abstract class _$$_NftCategoryCopyWith<$Res>
           _$_NftCategory value, $Res Function(_$_NftCategory) then) =
       __$$_NftCategoryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, dynamic name, String image});
 }
 
 /// @nodoc
-class __$$_NftCategoryCopyWithImpl<$Res> extends _$NftCategoryCopyWithImpl<$Res>
+class __$$_NftCategoryCopyWithImpl<$Res>
+    extends _$NftCategoryCopyWithImpl<$Res, _$_NftCategory>
     implements _$$_NftCategoryCopyWith<$Res> {
   __$$_NftCategoryCopyWithImpl(
       _$_NftCategory _value, $Res Function(_$_NftCategory) _then)
-      : super(_value, (v) => _then(v as _$_NftCategory));
+      : super(_value, _then);
 
-  @override
-  _$_NftCategory get _value => super._value as _$_NftCategory;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? image = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? image = null,
   }) {
     return _then(_$_NftCategory(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed ? _value.name : name,
-      image: image == freezed
+      name: null == name ? _value.name : name,
+      image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
@@ -138,21 +142,19 @@ class _$_NftCategory extends _NftCategory {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NftCategory &&
-            const DeepCollectionEquality().equals(other.id, id) &&
+            (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.image, image));
+            (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(image));
+      runtimeType, id, const DeepCollectionEquality().hash(name), image);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NftCategoryCopyWith<_$_NftCategory> get copyWith =>
       __$$_NftCategoryCopyWithImpl<_$_NftCategory>(this, _$identity);
 

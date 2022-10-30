@@ -28,34 +28,38 @@ mixin _$PinAuthenticationState {
 abstract class $PinAuthenticationStateCopyWith<$Res> {
   factory $PinAuthenticationStateCopyWith(PinAuthenticationState value,
           $Res Function(PinAuthenticationState) then) =
-      _$PinAuthenticationStateCopyWithImpl<$Res>;
+      _$PinAuthenticationStateCopyWithImpl<$Res, PinAuthenticationState>;
+  @useResult
   $Res call({int failedAttemptsCount, int maxAttemptsCount});
 }
 
 /// @nodoc
-class _$PinAuthenticationStateCopyWithImpl<$Res>
+class _$PinAuthenticationStateCopyWithImpl<$Res,
+        $Val extends PinAuthenticationState>
     implements $PinAuthenticationStateCopyWith<$Res> {
   _$PinAuthenticationStateCopyWithImpl(this._value, this._then);
 
-  final PinAuthenticationState _value;
   // ignore: unused_field
-  final $Res Function(PinAuthenticationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedAttemptsCount = freezed,
-    Object? maxAttemptsCount = freezed,
+    Object? failedAttemptsCount = null,
+    Object? maxAttemptsCount = null,
   }) {
     return _then(_value.copyWith(
-      failedAttemptsCount: failedAttemptsCount == freezed
+      failedAttemptsCount: null == failedAttemptsCount
           ? _value.failedAttemptsCount
           : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      maxAttemptsCount: maxAttemptsCount == freezed
+      maxAttemptsCount: null == maxAttemptsCount
           ? _value.maxAttemptsCount
           : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -66,32 +70,31 @@ abstract class _$$_PinAuthenticationStateCopyWith<$Res>
           $Res Function(_$_PinAuthenticationState) then) =
       __$$_PinAuthenticationStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int failedAttemptsCount, int maxAttemptsCount});
 }
 
 /// @nodoc
 class __$$_PinAuthenticationStateCopyWithImpl<$Res>
-    extends _$PinAuthenticationStateCopyWithImpl<$Res>
+    extends _$PinAuthenticationStateCopyWithImpl<$Res,
+        _$_PinAuthenticationState>
     implements _$$_PinAuthenticationStateCopyWith<$Res> {
   __$$_PinAuthenticationStateCopyWithImpl(_$_PinAuthenticationState _value,
       $Res Function(_$_PinAuthenticationState) _then)
-      : super(_value, (v) => _then(v as _$_PinAuthenticationState));
+      : super(_value, _then);
 
-  @override
-  _$_PinAuthenticationState get _value =>
-      super._value as _$_PinAuthenticationState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedAttemptsCount = freezed,
-    Object? maxAttemptsCount = freezed,
+    Object? failedAttemptsCount = null,
+    Object? maxAttemptsCount = null,
   }) {
     return _then(_$_PinAuthenticationState(
-      failedAttemptsCount: failedAttemptsCount == freezed
+      failedAttemptsCount: null == failedAttemptsCount
           ? _value.failedAttemptsCount
           : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      maxAttemptsCount: maxAttemptsCount == freezed
+      maxAttemptsCount: null == maxAttemptsCount
           ? _value.maxAttemptsCount
           : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
@@ -121,20 +124,19 @@ class _$_PinAuthenticationState extends _PinAuthenticationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PinAuthenticationState &&
-            const DeepCollectionEquality()
-                .equals(other.failedAttemptsCount, failedAttemptsCount) &&
-            const DeepCollectionEquality()
-                .equals(other.maxAttemptsCount, maxAttemptsCount));
+            (identical(other.failedAttemptsCount, failedAttemptsCount) ||
+                other.failedAttemptsCount == failedAttemptsCount) &&
+            (identical(other.maxAttemptsCount, maxAttemptsCount) ||
+                other.maxAttemptsCount == maxAttemptsCount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(failedAttemptsCount),
-      const DeepCollectionEquality().hash(maxAttemptsCount));
+  int get hashCode =>
+      Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PinAuthenticationStateCopyWith<_$_PinAuthenticationState> get copyWith =>
       __$$_PinAuthenticationStateCopyWithImpl<_$_PinAuthenticationState>(
           this, _$identity);
@@ -170,34 +172,38 @@ mixin _$AuthenticationSettings {
 abstract class $AuthenticationSettingsCopyWith<$Res> {
   factory $AuthenticationSettingsCopyWith(AuthenticationSettings value,
           $Res Function(AuthenticationSettings) then) =
-      _$AuthenticationSettingsCopyWithImpl<$Res>;
+      _$AuthenticationSettingsCopyWithImpl<$Res, AuthenticationSettings>;
+  @useResult
   $Res call({AuthMethod authenticationMethod, bool pinPadShuffle});
 }
 
 /// @nodoc
-class _$AuthenticationSettingsCopyWithImpl<$Res>
+class _$AuthenticationSettingsCopyWithImpl<$Res,
+        $Val extends AuthenticationSettings>
     implements $AuthenticationSettingsCopyWith<$Res> {
   _$AuthenticationSettingsCopyWithImpl(this._value, this._then);
 
-  final AuthenticationSettings _value;
   // ignore: unused_field
-  final $Res Function(AuthenticationSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? authenticationMethod = freezed,
-    Object? pinPadShuffle = freezed,
+    Object? authenticationMethod = null,
+    Object? pinPadShuffle = null,
   }) {
     return _then(_value.copyWith(
-      authenticationMethod: authenticationMethod == freezed
+      authenticationMethod: null == authenticationMethod
           ? _value.authenticationMethod
           : authenticationMethod // ignore: cast_nullable_to_non_nullable
               as AuthMethod,
-      pinPadShuffle: pinPadShuffle == freezed
+      pinPadShuffle: null == pinPadShuffle
           ? _value.pinPadShuffle
           : pinPadShuffle // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -208,32 +214,31 @@ abstract class _$$_AuthenticationSettingsCopyWith<$Res>
           $Res Function(_$_AuthenticationSettings) then) =
       __$$_AuthenticationSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AuthMethod authenticationMethod, bool pinPadShuffle});
 }
 
 /// @nodoc
 class __$$_AuthenticationSettingsCopyWithImpl<$Res>
-    extends _$AuthenticationSettingsCopyWithImpl<$Res>
+    extends _$AuthenticationSettingsCopyWithImpl<$Res,
+        _$_AuthenticationSettings>
     implements _$$_AuthenticationSettingsCopyWith<$Res> {
   __$$_AuthenticationSettingsCopyWithImpl(_$_AuthenticationSettings _value,
       $Res Function(_$_AuthenticationSettings) _then)
-      : super(_value, (v) => _then(v as _$_AuthenticationSettings));
+      : super(_value, _then);
 
-  @override
-  _$_AuthenticationSettings get _value =>
-      super._value as _$_AuthenticationSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? authenticationMethod = freezed,
-    Object? pinPadShuffle = freezed,
+    Object? authenticationMethod = null,
+    Object? pinPadShuffle = null,
   }) {
     return _then(_$_AuthenticationSettings(
-      authenticationMethod: authenticationMethod == freezed
+      authenticationMethod: null == authenticationMethod
           ? _value.authenticationMethod
           : authenticationMethod // ignore: cast_nullable_to_non_nullable
               as AuthMethod,
-      pinPadShuffle: pinPadShuffle == freezed
+      pinPadShuffle: null == pinPadShuffle
           ? _value.pinPadShuffle
           : pinPadShuffle // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -263,20 +268,19 @@ class _$_AuthenticationSettings extends _AuthenticationSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthenticationSettings &&
-            const DeepCollectionEquality()
-                .equals(other.authenticationMethod, authenticationMethod) &&
-            const DeepCollectionEquality()
-                .equals(other.pinPadShuffle, pinPadShuffle));
+            (identical(other.authenticationMethod, authenticationMethod) ||
+                other.authenticationMethod == authenticationMethod) &&
+            (identical(other.pinPadShuffle, pinPadShuffle) ||
+                other.pinPadShuffle == pinPadShuffle));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(authenticationMethod),
-      const DeepCollectionEquality().hash(pinPadShuffle));
+  int get hashCode =>
+      Object.hash(runtimeType, authenticationMethod, pinPadShuffle);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthenticationSettingsCopyWith<_$_AuthenticationSettings> get copyWith =>
       __$$_AuthenticationSettingsCopyWithImpl<_$_AuthenticationSettings>(
           this, _$identity);

@@ -26,10 +26,10 @@ mixin _$AuthenticationResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? wrongCredentials,
-    TResult Function()? notSetup,
-    TResult Function()? tooMuchAttempts,
+    TResult? Function()? success,
+    TResult? Function()? wrongCredentials,
+    TResult? Function()? notSetup,
+    TResult? Function()? tooMuchAttempts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,10 +52,10 @@ mixin _$AuthenticationResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticationResult value)? success,
-    TResult Function(_AuthenticationFailure value)? wrongCredentials,
-    TResult Function(_AuthenticationNotSetup value)? notSetup,
-    TResult Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
+    TResult? Function(_AuthenticationResult value)? success,
+    TResult? Function(_AuthenticationFailure value)? wrongCredentials,
+    TResult? Function(_AuthenticationNotSetup value)? notSetup,
+    TResult? Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,17 +73,19 @@ mixin _$AuthenticationResult {
 abstract class $AuthenticationResultCopyWith<$Res> {
   factory $AuthenticationResultCopyWith(AuthenticationResult value,
           $Res Function(AuthenticationResult) then) =
-      _$AuthenticationResultCopyWithImpl<$Res>;
+      _$AuthenticationResultCopyWithImpl<$Res, AuthenticationResult>;
 }
 
 /// @nodoc
-class _$AuthenticationResultCopyWithImpl<$Res>
+class _$AuthenticationResultCopyWithImpl<$Res,
+        $Val extends AuthenticationResult>
     implements $AuthenticationResultCopyWith<$Res> {
   _$AuthenticationResultCopyWithImpl(this._value, this._then);
 
-  final AuthenticationResult _value;
   // ignore: unused_field
-  final $Res Function(AuthenticationResult) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -95,14 +97,11 @@ abstract class _$$_AuthenticationResultCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AuthenticationResultCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res, _$_AuthenticationResult>
     implements _$$_AuthenticationResultCopyWith<$Res> {
   __$$_AuthenticationResultCopyWithImpl(_$_AuthenticationResult _value,
       $Res Function(_$_AuthenticationResult) _then)
-      : super(_value, (v) => _then(v as _$_AuthenticationResult));
-
-  @override
-  _$_AuthenticationResult get _value => super._value as _$_AuthenticationResult;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -138,10 +137,10 @@ class _$_AuthenticationResult extends _AuthenticationResult {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? wrongCredentials,
-    TResult Function()? notSetup,
-    TResult Function()? tooMuchAttempts,
+    TResult? Function()? success,
+    TResult? Function()? wrongCredentials,
+    TResult? Function()? notSetup,
+    TResult? Function()? tooMuchAttempts,
   }) {
     return success?.call();
   }
@@ -176,10 +175,10 @@ class _$_AuthenticationResult extends _AuthenticationResult {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticationResult value)? success,
-    TResult Function(_AuthenticationFailure value)? wrongCredentials,
-    TResult Function(_AuthenticationNotSetup value)? notSetup,
-    TResult Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
+    TResult? Function(_AuthenticationResult value)? success,
+    TResult? Function(_AuthenticationFailure value)? wrongCredentials,
+    TResult? Function(_AuthenticationNotSetup value)? notSetup,
+    TResult? Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
   }) {
     return success?.call(this);
   }
@@ -214,15 +213,11 @@ abstract class _$$_AuthenticationFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AuthenticationFailureCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res, _$_AuthenticationFailure>
     implements _$$_AuthenticationFailureCopyWith<$Res> {
   __$$_AuthenticationFailureCopyWithImpl(_$_AuthenticationFailure _value,
       $Res Function(_$_AuthenticationFailure) _then)
-      : super(_value, (v) => _then(v as _$_AuthenticationFailure));
-
-  @override
-  _$_AuthenticationFailure get _value =>
-      super._value as _$_AuthenticationFailure;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -258,10 +253,10 @@ class _$_AuthenticationFailure extends _AuthenticationFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? wrongCredentials,
-    TResult Function()? notSetup,
-    TResult Function()? tooMuchAttempts,
+    TResult? Function()? success,
+    TResult? Function()? wrongCredentials,
+    TResult? Function()? notSetup,
+    TResult? Function()? tooMuchAttempts,
   }) {
     return wrongCredentials?.call();
   }
@@ -296,10 +291,10 @@ class _$_AuthenticationFailure extends _AuthenticationFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticationResult value)? success,
-    TResult Function(_AuthenticationFailure value)? wrongCredentials,
-    TResult Function(_AuthenticationNotSetup value)? notSetup,
-    TResult Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
+    TResult? Function(_AuthenticationResult value)? success,
+    TResult? Function(_AuthenticationFailure value)? wrongCredentials,
+    TResult? Function(_AuthenticationNotSetup value)? notSetup,
+    TResult? Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
   }) {
     return wrongCredentials?.call(this);
   }
@@ -334,15 +329,11 @@ abstract class _$$_AuthenticationNotSetupCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AuthenticationNotSetupCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res, _$_AuthenticationNotSetup>
     implements _$$_AuthenticationNotSetupCopyWith<$Res> {
   __$$_AuthenticationNotSetupCopyWithImpl(_$_AuthenticationNotSetup _value,
       $Res Function(_$_AuthenticationNotSetup) _then)
-      : super(_value, (v) => _then(v as _$_AuthenticationNotSetup));
-
-  @override
-  _$_AuthenticationNotSetup get _value =>
-      super._value as _$_AuthenticationNotSetup;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -379,10 +370,10 @@ class _$_AuthenticationNotSetup extends _AuthenticationNotSetup {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? wrongCredentials,
-    TResult Function()? notSetup,
-    TResult Function()? tooMuchAttempts,
+    TResult? Function()? success,
+    TResult? Function()? wrongCredentials,
+    TResult? Function()? notSetup,
+    TResult? Function()? tooMuchAttempts,
   }) {
     return notSetup?.call();
   }
@@ -417,10 +408,10 @@ class _$_AuthenticationNotSetup extends _AuthenticationNotSetup {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticationResult value)? success,
-    TResult Function(_AuthenticationFailure value)? wrongCredentials,
-    TResult Function(_AuthenticationNotSetup value)? notSetup,
-    TResult Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
+    TResult? Function(_AuthenticationResult value)? success,
+    TResult? Function(_AuthenticationFailure value)? wrongCredentials,
+    TResult? Function(_AuthenticationNotSetup value)? notSetup,
+    TResult? Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
   }) {
     return notSetup?.call(this);
   }
@@ -456,16 +447,13 @@ abstract class _$$_AuthenticationTooMuchAttemptsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AuthenticationTooMuchAttemptsCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res,
+        _$_AuthenticationTooMuchAttempts>
     implements _$$_AuthenticationTooMuchAttemptsCopyWith<$Res> {
   __$$_AuthenticationTooMuchAttemptsCopyWithImpl(
       _$_AuthenticationTooMuchAttempts _value,
       $Res Function(_$_AuthenticationTooMuchAttempts) _then)
-      : super(_value, (v) => _then(v as _$_AuthenticationTooMuchAttempts));
-
-  @override
-  _$_AuthenticationTooMuchAttempts get _value =>
-      super._value as _$_AuthenticationTooMuchAttempts;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -502,10 +490,10 @@ class _$_AuthenticationTooMuchAttempts extends _AuthenticationTooMuchAttempts {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? wrongCredentials,
-    TResult Function()? notSetup,
-    TResult Function()? tooMuchAttempts,
+    TResult? Function()? success,
+    TResult? Function()? wrongCredentials,
+    TResult? Function()? notSetup,
+    TResult? Function()? tooMuchAttempts,
   }) {
     return tooMuchAttempts?.call();
   }
@@ -540,10 +528,10 @@ class _$_AuthenticationTooMuchAttempts extends _AuthenticationTooMuchAttempts {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticationResult value)? success,
-    TResult Function(_AuthenticationFailure value)? wrongCredentials,
-    TResult Function(_AuthenticationNotSetup value)? notSetup,
-    TResult Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
+    TResult? Function(_AuthenticationResult value)? success,
+    TResult? Function(_AuthenticationFailure value)? wrongCredentials,
+    TResult? Function(_AuthenticationNotSetup value)? notSetup,
+    TResult? Function(_AuthenticationTooMuchAttempts value)? tooMuchAttempts,
   }) {
     return tooMuchAttempts?.call(this);
   }
@@ -580,8 +568,8 @@ mixin _$UpdatePinResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? pinsDoNotMatch,
+    TResult? Function()? success,
+    TResult? Function()? pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -599,8 +587,8 @@ mixin _$UpdatePinResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_UpdatePinSuccess value)? success,
-    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult? Function(_UpdatePinSuccess value)? success,
+    TResult? Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -616,17 +604,18 @@ mixin _$UpdatePinResult {
 abstract class $UpdatePinResultCopyWith<$Res> {
   factory $UpdatePinResultCopyWith(
           UpdatePinResult value, $Res Function(UpdatePinResult) then) =
-      _$UpdatePinResultCopyWithImpl<$Res>;
+      _$UpdatePinResultCopyWithImpl<$Res, UpdatePinResult>;
 }
 
 /// @nodoc
-class _$UpdatePinResultCopyWithImpl<$Res>
+class _$UpdatePinResultCopyWithImpl<$Res, $Val extends UpdatePinResult>
     implements $UpdatePinResultCopyWith<$Res> {
   _$UpdatePinResultCopyWithImpl(this._value, this._then);
 
-  final UpdatePinResult _value;
   // ignore: unused_field
-  final $Res Function(UpdatePinResult) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -638,14 +627,11 @@ abstract class _$$_UpdatePinSuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$$_UpdatePinSuccessCopyWithImpl<$Res>
-    extends _$UpdatePinResultCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res, _$_UpdatePinSuccess>
     implements _$$_UpdatePinSuccessCopyWith<$Res> {
   __$$_UpdatePinSuccessCopyWithImpl(
       _$_UpdatePinSuccess _value, $Res Function(_$_UpdatePinSuccess) _then)
-      : super(_value, (v) => _then(v as _$_UpdatePinSuccess));
-
-  @override
-  _$_UpdatePinSuccess get _value => super._value as _$_UpdatePinSuccess;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -679,8 +665,8 @@ class _$_UpdatePinSuccess extends _UpdatePinSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? pinsDoNotMatch,
+    TResult? Function()? success,
+    TResult? Function()? pinsDoNotMatch,
   }) {
     return success?.call();
   }
@@ -710,8 +696,8 @@ class _$_UpdatePinSuccess extends _UpdatePinSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_UpdatePinSuccess value)? success,
-    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult? Function(_UpdatePinSuccess value)? success,
+    TResult? Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
   }) {
     return success?.call(this);
   }
@@ -744,14 +730,11 @@ abstract class _$$_UpdatePinsDoNotMatchCopyWith<$Res> {
 
 /// @nodoc
 class __$$_UpdatePinsDoNotMatchCopyWithImpl<$Res>
-    extends _$UpdatePinResultCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res, _$_UpdatePinsDoNotMatch>
     implements _$$_UpdatePinsDoNotMatchCopyWith<$Res> {
   __$$_UpdatePinsDoNotMatchCopyWithImpl(_$_UpdatePinsDoNotMatch _value,
       $Res Function(_$_UpdatePinsDoNotMatch) _then)
-      : super(_value, (v) => _then(v as _$_UpdatePinsDoNotMatch));
-
-  @override
-  _$_UpdatePinsDoNotMatch get _value => super._value as _$_UpdatePinsDoNotMatch;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -785,8 +768,8 @@ class _$_UpdatePinsDoNotMatch extends _UpdatePinsDoNotMatch {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? success,
-    TResult Function()? pinsDoNotMatch,
+    TResult? Function()? success,
+    TResult? Function()? pinsDoNotMatch,
   }) {
     return pinsDoNotMatch?.call();
   }
@@ -816,8 +799,8 @@ class _$_UpdatePinsDoNotMatch extends _UpdatePinsDoNotMatch {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_UpdatePinSuccess value)? success,
-    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult? Function(_UpdatePinSuccess value)? success,
+    TResult? Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
   }) {
     return pinsDoNotMatch?.call(this);
   }

@@ -47,7 +47,8 @@ mixin _$Settings {
 /// @nodoc
 abstract class $SettingsCopyWith<$Res> {
   factory $SettingsCopyWith(Settings value, $Res Function(Settings) then) =
-      _$SettingsCopyWithImpl<$Res>;
+      _$SettingsCopyWithImpl<$Res, Settings>;
+  @useResult
   $Res call(
       {AvailableCurrencyEnum currency,
       AvailablePrimaryCurrency primaryCurrency,
@@ -69,103 +70,106 @@ abstract class $SettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
+class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
+    implements $SettingsCopyWith<$Res> {
   _$SettingsCopyWithImpl(this._value, this._then);
 
-  final Settings _value;
   // ignore: unused_field
-  final $Res Function(Settings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currency = freezed,
-    Object? primaryCurrency = freezed,
-    Object? language = freezed,
-    Object? networks = freezed,
-    Object? languageSeed = freezed,
-    Object? firstLaunch = freezed,
-    Object? showBalances = freezed,
-    Object? showBlog = freezed,
-    Object? activeVibrations = freezed,
-    Object? activeNotifications = freezed,
-    Object? mainScreenCurrentPage = freezed,
-    Object? showPriceChart = freezed,
-    Object? lock = freezed,
-    Object? lockTimeout = freezed,
-    Object? lockAttempts = freezed,
+    Object? currency = null,
+    Object? primaryCurrency = null,
+    Object? language = null,
+    Object? networks = null,
+    Object? languageSeed = null,
+    Object? firstLaunch = null,
+    Object? showBalances = null,
+    Object? showBlog = null,
+    Object? activeVibrations = null,
+    Object? activeNotifications = null,
+    Object? mainScreenCurrentPage = null,
+    Object? showPriceChart = null,
+    Object? lock = null,
+    Object? lockTimeout = null,
+    Object? lockAttempts = null,
     Object? pinLockUntil = freezed,
-    Object? theme = freezed,
+    Object? theme = null,
   }) {
     return _then(_value.copyWith(
-      currency: currency == freezed
+      currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as AvailableCurrencyEnum,
-      primaryCurrency: primaryCurrency == freezed
+      primaryCurrency: null == primaryCurrency
           ? _value.primaryCurrency
           : primaryCurrency // ignore: cast_nullable_to_non_nullable
               as AvailablePrimaryCurrency,
-      language: language == freezed
+      language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as AvailableLanguage,
-      networks: networks == freezed
+      networks: null == networks
           ? _value.networks
           : networks // ignore: cast_nullable_to_non_nullable
               as AvailableNetworks,
-      languageSeed: languageSeed == freezed
+      languageSeed: null == languageSeed
           ? _value.languageSeed
           : languageSeed // ignore: cast_nullable_to_non_nullable
               as String,
-      firstLaunch: firstLaunch == freezed
+      firstLaunch: null == firstLaunch
           ? _value.firstLaunch
           : firstLaunch // ignore: cast_nullable_to_non_nullable
               as bool,
-      showBalances: showBalances == freezed
+      showBalances: null == showBalances
           ? _value.showBalances
           : showBalances // ignore: cast_nullable_to_non_nullable
               as bool,
-      showBlog: showBlog == freezed
+      showBlog: null == showBlog
           ? _value.showBlog
           : showBlog // ignore: cast_nullable_to_non_nullable
               as bool,
-      activeVibrations: activeVibrations == freezed
+      activeVibrations: null == activeVibrations
           ? _value.activeVibrations
           : activeVibrations // ignore: cast_nullable_to_non_nullable
               as bool,
-      activeNotifications: activeNotifications == freezed
+      activeNotifications: null == activeNotifications
           ? _value.activeNotifications
           : activeNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      mainScreenCurrentPage: mainScreenCurrentPage == freezed
+      mainScreenCurrentPage: null == mainScreenCurrentPage
           ? _value.mainScreenCurrentPage
           : mainScreenCurrentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      showPriceChart: showPriceChart == freezed
+      showPriceChart: null == showPriceChart
           ? _value.showPriceChart
           : showPriceChart // ignore: cast_nullable_to_non_nullable
               as bool,
-      lock: lock == freezed
+      lock: null == lock
           ? _value.lock
           : lock // ignore: cast_nullable_to_non_nullable
               as UnlockOption,
-      lockTimeout: lockTimeout == freezed
+      lockTimeout: null == lockTimeout
           ? _value.lockTimeout
           : lockTimeout // ignore: cast_nullable_to_non_nullable
               as LockTimeoutOption,
-      lockAttempts: lockAttempts == freezed
+      lockAttempts: null == lockAttempts
           ? _value.lockAttempts
           : lockAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      pinLockUntil: pinLockUntil == freezed
+      pinLockUntil: freezed == pinLockUntil
           ? _value.pinLockUntil
           : pinLockUntil // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      theme: theme == freezed
+      theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeOptions,
-    ));
+    ) as $Val);
   }
 }
 
@@ -175,6 +179,7 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
           _$_Settings value, $Res Function(_$_Settings) then) =
       __$$_SettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {AvailableCurrencyEnum currency,
       AvailablePrimaryCurrency primaryCurrency,
@@ -196,101 +201,100 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
+class __$$_SettingsCopyWithImpl<$Res>
+    extends _$SettingsCopyWithImpl<$Res, _$_Settings>
     implements _$$_SettingsCopyWith<$Res> {
   __$$_SettingsCopyWithImpl(
       _$_Settings _value, $Res Function(_$_Settings) _then)
-      : super(_value, (v) => _then(v as _$_Settings));
+      : super(_value, _then);
 
-  @override
-  _$_Settings get _value => super._value as _$_Settings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currency = freezed,
-    Object? primaryCurrency = freezed,
-    Object? language = freezed,
-    Object? networks = freezed,
-    Object? languageSeed = freezed,
-    Object? firstLaunch = freezed,
-    Object? showBalances = freezed,
-    Object? showBlog = freezed,
-    Object? activeVibrations = freezed,
-    Object? activeNotifications = freezed,
-    Object? mainScreenCurrentPage = freezed,
-    Object? showPriceChart = freezed,
-    Object? lock = freezed,
-    Object? lockTimeout = freezed,
-    Object? lockAttempts = freezed,
+    Object? currency = null,
+    Object? primaryCurrency = null,
+    Object? language = null,
+    Object? networks = null,
+    Object? languageSeed = null,
+    Object? firstLaunch = null,
+    Object? showBalances = null,
+    Object? showBlog = null,
+    Object? activeVibrations = null,
+    Object? activeNotifications = null,
+    Object? mainScreenCurrentPage = null,
+    Object? showPriceChart = null,
+    Object? lock = null,
+    Object? lockTimeout = null,
+    Object? lockAttempts = null,
     Object? pinLockUntil = freezed,
-    Object? theme = freezed,
+    Object? theme = null,
   }) {
     return _then(_$_Settings(
-      currency: currency == freezed
+      currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as AvailableCurrencyEnum,
-      primaryCurrency: primaryCurrency == freezed
+      primaryCurrency: null == primaryCurrency
           ? _value.primaryCurrency
           : primaryCurrency // ignore: cast_nullable_to_non_nullable
               as AvailablePrimaryCurrency,
-      language: language == freezed
+      language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as AvailableLanguage,
-      networks: networks == freezed
+      networks: null == networks
           ? _value.networks
           : networks // ignore: cast_nullable_to_non_nullable
               as AvailableNetworks,
-      languageSeed: languageSeed == freezed
+      languageSeed: null == languageSeed
           ? _value.languageSeed
           : languageSeed // ignore: cast_nullable_to_non_nullable
               as String,
-      firstLaunch: firstLaunch == freezed
+      firstLaunch: null == firstLaunch
           ? _value.firstLaunch
           : firstLaunch // ignore: cast_nullable_to_non_nullable
               as bool,
-      showBalances: showBalances == freezed
+      showBalances: null == showBalances
           ? _value.showBalances
           : showBalances // ignore: cast_nullable_to_non_nullable
               as bool,
-      showBlog: showBlog == freezed
+      showBlog: null == showBlog
           ? _value.showBlog
           : showBlog // ignore: cast_nullable_to_non_nullable
               as bool,
-      activeVibrations: activeVibrations == freezed
+      activeVibrations: null == activeVibrations
           ? _value.activeVibrations
           : activeVibrations // ignore: cast_nullable_to_non_nullable
               as bool,
-      activeNotifications: activeNotifications == freezed
+      activeNotifications: null == activeNotifications
           ? _value.activeNotifications
           : activeNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      mainScreenCurrentPage: mainScreenCurrentPage == freezed
+      mainScreenCurrentPage: null == mainScreenCurrentPage
           ? _value.mainScreenCurrentPage
           : mainScreenCurrentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      showPriceChart: showPriceChart == freezed
+      showPriceChart: null == showPriceChart
           ? _value.showPriceChart
           : showPriceChart // ignore: cast_nullable_to_non_nullable
               as bool,
-      lock: lock == freezed
+      lock: null == lock
           ? _value.lock
           : lock // ignore: cast_nullable_to_non_nullable
               as UnlockOption,
-      lockTimeout: lockTimeout == freezed
+      lockTimeout: null == lockTimeout
           ? _value.lockTimeout
           : lockTimeout // ignore: cast_nullable_to_non_nullable
               as LockTimeoutOption,
-      lockAttempts: lockAttempts == freezed
+      lockAttempts: null == lockAttempts
           ? _value.lockAttempts
           : lockAttempts // ignore: cast_nullable_to_non_nullable
               as int,
-      pinLockUntil: pinLockUntil == freezed
+      pinLockUntil: freezed == pinLockUntil
           ? _value.pinLockUntil
           : pinLockUntil // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      theme: theme == freezed
+      theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as ThemeOptions,
@@ -370,59 +374,64 @@ class _$_Settings extends _Settings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Settings &&
-            const DeepCollectionEquality().equals(other.currency, currency) &&
-            const DeepCollectionEquality()
-                .equals(other.primaryCurrency, primaryCurrency) &&
-            const DeepCollectionEquality().equals(other.language, language) &&
-            const DeepCollectionEquality().equals(other.networks, networks) &&
-            const DeepCollectionEquality()
-                .equals(other.languageSeed, languageSeed) &&
-            const DeepCollectionEquality()
-                .equals(other.firstLaunch, firstLaunch) &&
-            const DeepCollectionEquality()
-                .equals(other.showBalances, showBalances) &&
-            const DeepCollectionEquality().equals(other.showBlog, showBlog) &&
-            const DeepCollectionEquality()
-                .equals(other.activeVibrations, activeVibrations) &&
-            const DeepCollectionEquality()
-                .equals(other.activeNotifications, activeNotifications) &&
-            const DeepCollectionEquality()
-                .equals(other.mainScreenCurrentPage, mainScreenCurrentPage) &&
-            const DeepCollectionEquality()
-                .equals(other.showPriceChart, showPriceChart) &&
-            const DeepCollectionEquality().equals(other.lock, lock) &&
-            const DeepCollectionEquality()
-                .equals(other.lockTimeout, lockTimeout) &&
-            const DeepCollectionEquality()
-                .equals(other.lockAttempts, lockAttempts) &&
-            const DeepCollectionEquality()
-                .equals(other.pinLockUntil, pinLockUntil) &&
-            const DeepCollectionEquality().equals(other.theme, theme));
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.primaryCurrency, primaryCurrency) ||
+                other.primaryCurrency == primaryCurrency) &&
+            (identical(other.language, language) ||
+                other.language == language) &&
+            (identical(other.networks, networks) ||
+                other.networks == networks) &&
+            (identical(other.languageSeed, languageSeed) ||
+                other.languageSeed == languageSeed) &&
+            (identical(other.firstLaunch, firstLaunch) ||
+                other.firstLaunch == firstLaunch) &&
+            (identical(other.showBalances, showBalances) ||
+                other.showBalances == showBalances) &&
+            (identical(other.showBlog, showBlog) ||
+                other.showBlog == showBlog) &&
+            (identical(other.activeVibrations, activeVibrations) ||
+                other.activeVibrations == activeVibrations) &&
+            (identical(other.activeNotifications, activeNotifications) ||
+                other.activeNotifications == activeNotifications) &&
+            (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
+                other.mainScreenCurrentPage == mainScreenCurrentPage) &&
+            (identical(other.showPriceChart, showPriceChart) ||
+                other.showPriceChart == showPriceChart) &&
+            (identical(other.lock, lock) || other.lock == lock) &&
+            (identical(other.lockTimeout, lockTimeout) ||
+                other.lockTimeout == lockTimeout) &&
+            (identical(other.lockAttempts, lockAttempts) ||
+                other.lockAttempts == lockAttempts) &&
+            (identical(other.pinLockUntil, pinLockUntil) ||
+                other.pinLockUntil == pinLockUntil) &&
+            (identical(other.theme, theme) || other.theme == theme));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(currency),
-      const DeepCollectionEquality().hash(primaryCurrency),
-      const DeepCollectionEquality().hash(language),
-      const DeepCollectionEquality().hash(networks),
-      const DeepCollectionEquality().hash(languageSeed),
-      const DeepCollectionEquality().hash(firstLaunch),
-      const DeepCollectionEquality().hash(showBalances),
-      const DeepCollectionEquality().hash(showBlog),
-      const DeepCollectionEquality().hash(activeVibrations),
-      const DeepCollectionEquality().hash(activeNotifications),
-      const DeepCollectionEquality().hash(mainScreenCurrentPage),
-      const DeepCollectionEquality().hash(showPriceChart),
-      const DeepCollectionEquality().hash(lock),
-      const DeepCollectionEquality().hash(lockTimeout),
-      const DeepCollectionEquality().hash(lockAttempts),
-      const DeepCollectionEquality().hash(pinLockUntil),
-      const DeepCollectionEquality().hash(theme));
+      currency,
+      primaryCurrency,
+      language,
+      networks,
+      languageSeed,
+      firstLaunch,
+      showBalances,
+      showBlog,
+      activeVibrations,
+      activeNotifications,
+      mainScreenCurrentPage,
+      showPriceChart,
+      lock,
+      lockTimeout,
+      lockAttempts,
+      pinLockUntil,
+      theme);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SettingsCopyWith<_$_Settings> get copyWith =>
       __$$_SettingsCopyWithImpl<_$_Settings>(this, _$identity);
 }

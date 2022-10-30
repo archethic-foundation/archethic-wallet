@@ -31,7 +31,8 @@ mixin _$SecuredSettings {
 abstract class $SecuredSettingsCopyWith<$Res> {
   factory $SecuredSettingsCopyWith(
           SecuredSettings value, $Res Function(SecuredSettings) then) =
-      _$SecuredSettingsCopyWithImpl<$Res>;
+      _$SecuredSettingsCopyWithImpl<$Res, SecuredSettings>;
+  @useResult
   $Res call(
       {String? seed,
       String? pin,
@@ -41,14 +42,16 @@ abstract class $SecuredSettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SecuredSettingsCopyWithImpl<$Res>
+class _$SecuredSettingsCopyWithImpl<$Res, $Val extends SecuredSettings>
     implements $SecuredSettingsCopyWith<$Res> {
   _$SecuredSettingsCopyWithImpl(this._value, this._then);
 
-  final SecuredSettings _value;
   // ignore: unused_field
-  final $Res Function(SecuredSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? seed = freezed,
@@ -58,27 +61,27 @@ class _$SecuredSettingsCopyWithImpl<$Res>
     Object? yubikeyClientAPIKey = freezed,
   }) {
     return _then(_value.copyWith(
-      seed: seed == freezed
+      seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String?,
-      pin: pin == freezed
+      pin: freezed == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: password == freezed
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      yubikeyClientID: yubikeyClientID == freezed
+      yubikeyClientID: freezed == yubikeyClientID
           ? _value.yubikeyClientID
           : yubikeyClientID // ignore: cast_nullable_to_non_nullable
               as String?,
-      yubikeyClientAPIKey: yubikeyClientAPIKey == freezed
+      yubikeyClientAPIKey: freezed == yubikeyClientAPIKey
           ? _value.yubikeyClientAPIKey
           : yubikeyClientAPIKey // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -89,6 +92,7 @@ abstract class _$$_SecuredSettingsCopyWith<$Res>
           _$_SecuredSettings value, $Res Function(_$_SecuredSettings) then) =
       __$$_SecuredSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? seed,
       String? pin,
@@ -99,15 +103,13 @@ abstract class _$$_SecuredSettingsCopyWith<$Res>
 
 /// @nodoc
 class __$$_SecuredSettingsCopyWithImpl<$Res>
-    extends _$SecuredSettingsCopyWithImpl<$Res>
+    extends _$SecuredSettingsCopyWithImpl<$Res, _$_SecuredSettings>
     implements _$$_SecuredSettingsCopyWith<$Res> {
   __$$_SecuredSettingsCopyWithImpl(
       _$_SecuredSettings _value, $Res Function(_$_SecuredSettings) _then)
-      : super(_value, (v) => _then(v as _$_SecuredSettings));
+      : super(_value, _then);
 
-  @override
-  _$_SecuredSettings get _value => super._value as _$_SecuredSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? seed = freezed,
@@ -117,23 +119,23 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
     Object? yubikeyClientAPIKey = freezed,
   }) {
     return _then(_$_SecuredSettings(
-      seed: seed == freezed
+      seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String?,
-      pin: pin == freezed
+      pin: freezed == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: password == freezed
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      yubikeyClientID: yubikeyClientID == freezed
+      yubikeyClientID: freezed == yubikeyClientID
           ? _value.yubikeyClientID
           : yubikeyClientID // ignore: cast_nullable_to_non_nullable
               as String?,
-      yubikeyClientAPIKey: yubikeyClientAPIKey == freezed
+      yubikeyClientAPIKey: freezed == yubikeyClientAPIKey
           ? _value.yubikeyClientAPIKey
           : yubikeyClientAPIKey // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -173,26 +175,23 @@ class _$_SecuredSettings extends _SecuredSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SecuredSettings &&
-            const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality().equals(other.pin, pin) &&
-            const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality()
-                .equals(other.yubikeyClientID, yubikeyClientID) &&
-            const DeepCollectionEquality()
-                .equals(other.yubikeyClientAPIKey, yubikeyClientAPIKey));
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.pin, pin) || other.pin == pin) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.yubikeyClientID, yubikeyClientID) ||
+                other.yubikeyClientID == yubikeyClientID) &&
+            (identical(other.yubikeyClientAPIKey, yubikeyClientAPIKey) ||
+                other.yubikeyClientAPIKey == yubikeyClientAPIKey));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(pin),
-      const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(yubikeyClientID),
-      const DeepCollectionEquality().hash(yubikeyClientAPIKey));
+      runtimeType, seed, pin, password, yubikeyClientID, yubikeyClientAPIKey);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SecuredSettingsCopyWith<_$_SecuredSettings> get copyWith =>
       __$$_SecuredSettingsCopyWithImpl<_$_SecuredSettings>(this, _$identity);
 }

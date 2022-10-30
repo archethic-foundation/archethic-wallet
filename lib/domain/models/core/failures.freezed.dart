@@ -25,9 +25,9 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? network,
-    TResult Function()? invalidValue,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function()? network,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NetworkFailure value)? network,
-    TResult Function(_InvalidValue value)? invalidValue,
-    TResult Function(_OtherFailure value)? other,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,16 +65,18 @@ mixin _$Failure {
 /// @nodoc
 abstract class $FailureCopyWith<$Res> {
   factory $FailureCopyWith(Failure value, $Res Function(Failure) then) =
-      _$FailureCopyWithImpl<$Res>;
+      _$FailureCopyWithImpl<$Res, Failure>;
 }
 
 /// @nodoc
-class _$FailureCopyWithImpl<$Res> implements $FailureCopyWith<$Res> {
+class _$FailureCopyWithImpl<$Res, $Val extends Failure>
+    implements $FailureCopyWith<$Res> {
   _$FailureCopyWithImpl(this._value, this._then);
 
-  final Failure _value;
   // ignore: unused_field
-  final $Res Function(Failure) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -85,14 +87,12 @@ abstract class _$$_NetworkFailureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_NetworkFailureCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
+class __$$_NetworkFailureCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_NetworkFailure>
     implements _$$_NetworkFailureCopyWith<$Res> {
   __$$_NetworkFailureCopyWithImpl(
       _$_NetworkFailure _value, $Res Function(_$_NetworkFailure) _then)
-      : super(_value, (v) => _then(v as _$_NetworkFailure));
-
-  @override
-  _$_NetworkFailure get _value => super._value as _$_NetworkFailure;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -127,9 +127,9 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? network,
-    TResult Function()? invalidValue,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function()? network,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return network?.call();
   }
@@ -161,9 +161,9 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NetworkFailure value)? network,
-    TResult Function(_InvalidValue value)? invalidValue,
-    TResult Function(_OtherFailure value)? other,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
   }) {
     return network?.call(this);
   }
@@ -196,14 +196,12 @@ abstract class _$$_InvalidValueCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InvalidValueCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
+class __$$_InvalidValueCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_InvalidValue>
     implements _$$_InvalidValueCopyWith<$Res> {
   __$$_InvalidValueCopyWithImpl(
       _$_InvalidValue _value, $Res Function(_$_InvalidValue) _then)
-      : super(_value, (v) => _then(v as _$_InvalidValue));
-
-  @override
-  _$_InvalidValue get _value => super._value as _$_InvalidValue;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -238,9 +236,9 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? network,
-    TResult Function()? invalidValue,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function()? network,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return invalidValue?.call();
   }
@@ -272,9 +270,9 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NetworkFailure value)? network,
-    TResult Function(_InvalidValue value)? invalidValue,
-    TResult Function(_OtherFailure value)? other,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
   }) {
     return invalidValue?.call(this);
   }
@@ -304,27 +302,27 @@ abstract class _$$_OtherFailureCopyWith<$Res> {
   factory _$$_OtherFailureCopyWith(
           _$_OtherFailure value, $Res Function(_$_OtherFailure) then) =
       __$$_OtherFailureCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object? cause, StackTrace? stack});
 }
 
 /// @nodoc
-class __$$_OtherFailureCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
+class __$$_OtherFailureCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_OtherFailure>
     implements _$$_OtherFailureCopyWith<$Res> {
   __$$_OtherFailureCopyWithImpl(
       _$_OtherFailure _value, $Res Function(_$_OtherFailure) _then)
-      : super(_value, (v) => _then(v as _$_OtherFailure));
+      : super(_value, _then);
 
-  @override
-  _$_OtherFailure get _value => super._value as _$_OtherFailure;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? cause = freezed,
     Object? stack = freezed,
   }) {
     return _then(_$_OtherFailure(
-      cause: cause == freezed ? _value.cause : cause,
-      stack: stack == freezed
+      cause: freezed == cause ? _value.cause : cause,
+      stack: freezed == stack
           ? _value.stack
           : stack // ignore: cast_nullable_to_non_nullable
               as StackTrace?,
@@ -353,17 +351,16 @@ class _$_OtherFailure extends _OtherFailure {
         (other.runtimeType == runtimeType &&
             other is _$_OtherFailure &&
             const DeepCollectionEquality().equals(other.cause, cause) &&
-            const DeepCollectionEquality().equals(other.stack, stack));
+            (identical(other.stack, stack) || other.stack == stack));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(cause),
-      const DeepCollectionEquality().hash(stack));
+      runtimeType, const DeepCollectionEquality().hash(cause), stack);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_OtherFailureCopyWith<_$_OtherFailure> get copyWith =>
       __$$_OtherFailureCopyWithImpl<_$_OtherFailure>(this, _$identity);
 
@@ -380,9 +377,9 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? network,
-    TResult Function()? invalidValue,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function()? network,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return other?.call(cause, stack);
   }
@@ -414,9 +411,9 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NetworkFailure value)? network,
-    TResult Function(_InvalidValue value)? invalidValue,
-    TResult Function(_OtherFailure value)? other,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
   }) {
     return other?.call(this);
   }
