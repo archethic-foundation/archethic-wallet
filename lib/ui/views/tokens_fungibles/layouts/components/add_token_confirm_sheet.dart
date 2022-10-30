@@ -1,9 +1,5 @@
-// ignore_for_file: cancel_subscriptions, avoid_unnecessary_containers
-
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-
-// Project imports:
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -22,15 +18,10 @@ import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/preferences.dart';
-// Package imports:
 import 'package:event_taxi/event_taxi.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-// Project imports:
 
 class AddTokenConfirmSheet extends ConsumerStatefulWidget {
   const AddTokenConfirmSheet({

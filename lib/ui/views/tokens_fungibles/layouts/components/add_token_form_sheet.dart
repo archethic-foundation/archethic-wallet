@@ -1,4 +1,4 @@
-// Project imports:
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -15,8 +15,6 @@ import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
-// Package imports:
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
