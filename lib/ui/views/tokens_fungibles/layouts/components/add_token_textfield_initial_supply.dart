@@ -24,7 +24,7 @@ class _AddTokenTextFieldInitialSupplyState
     initialSupplyController = TextEditingController(
         text: addToken.initialSupply == 0
             ? ''
-            : addToken.initialSupply.toString());
+            : addToken.initialSupply.toString(),);
   }
 
   @override
