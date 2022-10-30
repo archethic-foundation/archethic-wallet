@@ -145,7 +145,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 
