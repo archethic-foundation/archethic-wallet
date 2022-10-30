@@ -82,7 +82,7 @@ class AddTokenSheetBody extends ConsumerWidget {
     );
 
     if (addToken.addTokenProcessStep == AddTokenProcessStep.form) {
-      return AddTokenFormSheet(seed: seed);
+      return const AddTokenFormSheet();
     } else {
       return const AddTokenConfirmSheet();
     }

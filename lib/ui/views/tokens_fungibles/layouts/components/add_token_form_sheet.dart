@@ -25,11 +25,8 @@ part 'add_token_textfield_initial_supply.dart';
 
 class AddTokenFormSheet extends ConsumerWidget {
   const AddTokenFormSheet({
-    required this.seed,
     super.key,
   });
-
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,31 +57,39 @@ class AddTokenFormSheet extends ConsumerWidget {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                child: Stack(
-                  children: <Widget>[
-                    Scrollbar(
-                      thumbVisibility: true,
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: bottom + 80),
-                          child: Column(
-                            children: <Widget>[
-                              const AddTokenTextFieldName(),
-                              const AddTokenTextFieldSymbol(),
-                              const AddTokenTextFieldInitialSupply(),
-                              FeeInfos(
-                                feeEstimation: addToken.feeEstimation,
-                                tokenPrice: accountSelected
-                                        .balance!.tokenPrice!.amount ??
-                                    0,
-                                currencyName: currency.currency.name,
-                              ),
-                            ],
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: bottom + 80),
+                      child: Column(
+                        children: <Widget>[
+                          const Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: AddTokenTextFieldName(),
                           ),
-                        ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: AddTokenTextFieldSymbol(),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: AddTokenTextFieldInitialSupply(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: FeeInfos(
+                              feeEstimation: addToken.feeEstimation,
+                              tokenPrice:
+                                  accountSelected.balance!.tokenPrice!.amount ??
+                                      0,
+                              currencyName: currency.currency.name,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -99,11 +104,14 @@ class AddTokenFormSheet extends ConsumerWidget {
                         Dimens.buttonBottomDimens,
                         key: const Key('createToken'),
                         onPressed: () async {
-                          addTokenNotifier.controlName(context);
-                          addTokenNotifier.controlSymbol(context);
-                          addTokenNotifier.controlInitialSupply(context);
+                          final isNameOk =
+                              addTokenNotifier.controlName(context);
+                          final isSymbolOk =
+                              addTokenNotifier.controlSymbol(context);
+                          final isInitialSupplyOk =
+                              addTokenNotifier.controlInitialSupply(context);
 
-                          if (addToken.isControlsOk) {
+                          if (isNameOk && isSymbolOk && isInitialSupplyOk) {
                             addTokenNotifier.setAddTokenProcessStep(
                               AddTokenProcessStep.confirmation,
                             );
