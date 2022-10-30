@@ -38,10 +38,10 @@ mixin _$Transfer {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String seed, String accountSelectedName, String message,
+    TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult Function(String seed, String accountSelectedName, String message,
+    TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress, String? tokenAddress)?
         token,
   }) =>
@@ -65,8 +65,8 @@ mixin _$Transfer {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferUco value)? uco,
-    TResult Function(_TransferToken value)? token,
+    TResult? Function(_TransferUco value)? uco,
+    TResult? Function(_TransferToken value)? token,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,7 +85,8 @@ mixin _$Transfer {
 /// @nodoc
 abstract class $TransferCopyWith<$Res> {
   factory $TransferCopyWith(Transfer value, $Res Function(Transfer) then) =
-      _$TransferCopyWithImpl<$Res>;
+      _$TransferCopyWithImpl<$Res, Transfer>;
+  @useResult
   $Res call(
       {String seed,
       String accountSelectedName,
@@ -95,43 +96,46 @@ abstract class $TransferCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransferCopyWithImpl<$Res> implements $TransferCopyWith<$Res> {
+class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
+    implements $TransferCopyWith<$Res> {
   _$TransferCopyWithImpl(this._value, this._then);
 
-  final Transfer _value;
   // ignore: unused_field
-  final $Res Function(Transfer) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = freezed,
-    Object? accountSelectedName = freezed,
-    Object? message = freezed,
-    Object? amount = freezed,
-    Object? recipientAddress = freezed,
+    Object? seed = null,
+    Object? accountSelectedName = null,
+    Object? message = null,
+    Object? amount = null,
+    Object? recipientAddress = null,
   }) {
     return _then(_value.copyWith(
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      accountSelectedName: accountSelectedName == freezed
+      accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
               as String,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      recipientAddress: recipientAddress == freezed
+      recipientAddress: null == recipientAddress
           ? _value.recipientAddress
           : recipientAddress // ignore: cast_nullable_to_non_nullable
               as Address,
-    ));
+    ) as $Val);
   }
 }
 
@@ -142,6 +146,7 @@ abstract class _$$_TransferUcoCopyWith<$Res>
           _$_TransferUco value, $Res Function(_$_TransferUco) then) =
       __$$_TransferUcoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String seed,
       String accountSelectedName,
@@ -151,41 +156,40 @@ abstract class _$$_TransferUcoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransferUcoCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
+class __$$_TransferUcoCopyWithImpl<$Res>
+    extends _$TransferCopyWithImpl<$Res, _$_TransferUco>
     implements _$$_TransferUcoCopyWith<$Res> {
   __$$_TransferUcoCopyWithImpl(
       _$_TransferUco _value, $Res Function(_$_TransferUco) _then)
-      : super(_value, (v) => _then(v as _$_TransferUco));
+      : super(_value, _then);
 
-  @override
-  _$_TransferUco get _value => super._value as _$_TransferUco;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = freezed,
-    Object? accountSelectedName = freezed,
-    Object? message = freezed,
-    Object? amount = freezed,
-    Object? recipientAddress = freezed,
+    Object? seed = null,
+    Object? accountSelectedName = null,
+    Object? message = null,
+    Object? amount = null,
+    Object? recipientAddress = null,
   }) {
     return _then(_$_TransferUco(
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      accountSelectedName: accountSelectedName == freezed
+      accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
               as String,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      recipientAddress: recipientAddress == freezed
+      recipientAddress: null == recipientAddress
           ? _value.recipientAddress
           : recipientAddress // ignore: cast_nullable_to_non_nullable
               as Address,
@@ -226,26 +230,22 @@ class _$_TransferUco extends _TransferUco {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransferUco &&
-            const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality()
-                .equals(other.accountSelectedName, accountSelectedName) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality()
-                .equals(other.recipientAddress, recipientAddress));
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.accountSelectedName, accountSelectedName) ||
+                other.accountSelectedName == accountSelectedName) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.recipientAddress, recipientAddress) ||
+                other.recipientAddress == recipientAddress));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(accountSelectedName),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(amount),
-      const DeepCollectionEquality().hash(recipientAddress));
+  int get hashCode => Object.hash(runtimeType, seed, accountSelectedName,
+      message, amount, recipientAddress);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransferUcoCopyWith<_$_TransferUco> get copyWith =>
       __$$_TransferUcoCopyWithImpl<_$_TransferUco>(this, _$identity);
 
@@ -270,10 +270,10 @@ class _$_TransferUco extends _TransferUco {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String seed, String accountSelectedName, String message,
+    TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult Function(String seed, String accountSelectedName, String message,
+    TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress, String? tokenAddress)?
         token,
   }) {
@@ -310,8 +310,8 @@ class _$_TransferUco extends _TransferUco {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferUco value)? uco,
-    TResult Function(_TransferToken value)? token,
+    TResult? Function(_TransferUco value)? uco,
+    TResult? Function(_TransferToken value)? token,
   }) {
     return uco?.call(this);
   }
@@ -362,6 +362,7 @@ abstract class _$$_TransferTokenCopyWith<$Res>
           _$_TransferToken value, $Res Function(_$_TransferToken) then) =
       __$$_TransferTokenCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String seed,
       String accountSelectedName,
@@ -372,46 +373,45 @@ abstract class _$$_TransferTokenCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransferTokenCopyWithImpl<$Res> extends _$TransferCopyWithImpl<$Res>
+class __$$_TransferTokenCopyWithImpl<$Res>
+    extends _$TransferCopyWithImpl<$Res, _$_TransferToken>
     implements _$$_TransferTokenCopyWith<$Res> {
   __$$_TransferTokenCopyWithImpl(
       _$_TransferToken _value, $Res Function(_$_TransferToken) _then)
-      : super(_value, (v) => _then(v as _$_TransferToken));
+      : super(_value, _then);
 
-  @override
-  _$_TransferToken get _value => super._value as _$_TransferToken;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = freezed,
-    Object? accountSelectedName = freezed,
-    Object? message = freezed,
-    Object? amount = freezed,
-    Object? recipientAddress = freezed,
+    Object? seed = null,
+    Object? accountSelectedName = null,
+    Object? message = null,
+    Object? amount = null,
+    Object? recipientAddress = null,
     Object? tokenAddress = freezed,
   }) {
     return _then(_$_TransferToken(
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      accountSelectedName: accountSelectedName == freezed
+      accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
               as String,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      recipientAddress: recipientAddress == freezed
+      recipientAddress: null == recipientAddress
           ? _value.recipientAddress
           : recipientAddress // ignore: cast_nullable_to_non_nullable
               as Address,
-      tokenAddress: tokenAddress == freezed
+      tokenAddress: freezed == tokenAddress
           ? _value.tokenAddress
           : tokenAddress // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -455,29 +455,24 @@ class _$_TransferToken extends _TransferToken {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransferToken &&
-            const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality()
-                .equals(other.accountSelectedName, accountSelectedName) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality()
-                .equals(other.recipientAddress, recipientAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.tokenAddress, tokenAddress));
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.accountSelectedName, accountSelectedName) ||
+                other.accountSelectedName == accountSelectedName) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.recipientAddress, recipientAddress) ||
+                other.recipientAddress == recipientAddress) &&
+            (identical(other.tokenAddress, tokenAddress) ||
+                other.tokenAddress == tokenAddress));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(accountSelectedName),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(amount),
-      const DeepCollectionEquality().hash(recipientAddress),
-      const DeepCollectionEquality().hash(tokenAddress));
+  int get hashCode => Object.hash(runtimeType, seed, accountSelectedName,
+      message, amount, recipientAddress, tokenAddress);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransferTokenCopyWith<_$_TransferToken> get copyWith =>
       __$$_TransferTokenCopyWithImpl<_$_TransferToken>(this, _$identity);
 
@@ -503,10 +498,10 @@ class _$_TransferToken extends _TransferToken {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String seed, String accountSelectedName, String message,
+    TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult Function(String seed, String accountSelectedName, String message,
+    TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress, String? tokenAddress)?
         token,
   }) {
@@ -544,8 +539,8 @@ class _$_TransferToken extends _TransferToken {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferUco value)? uco,
-    TResult Function(_TransferToken value)? token,
+    TResult? Function(_TransferUco value)? uco,
+    TResult? Function(_TransferToken value)? token,
   }) {
     return token?.call(this);
   }

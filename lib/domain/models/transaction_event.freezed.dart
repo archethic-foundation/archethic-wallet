@@ -28,12 +28,12 @@ mixin _$TransactionError {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,13 +61,13 @@ mixin _$TransactionError {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -88,17 +88,18 @@ mixin _$TransactionError {
 abstract class $TransactionErrorCopyWith<$Res> {
   factory $TransactionErrorCopyWith(
           TransactionError value, $Res Function(TransactionError) then) =
-      _$TransactionErrorCopyWithImpl<$Res>;
+      _$TransactionErrorCopyWithImpl<$Res, TransactionError>;
 }
 
 /// @nodoc
-class _$TransactionErrorCopyWithImpl<$Res>
+class _$TransactionErrorCopyWithImpl<$Res, $Val extends TransactionError>
     implements $TransactionErrorCopyWith<$Res> {
   _$TransactionErrorCopyWithImpl(this._value, this._then);
 
-  final TransactionError _value;
   // ignore: unused_field
-  final $Res Function(TransactionError) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -110,14 +111,11 @@ abstract class _$$_TransactionTimeoutCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionTimeoutCopyWithImpl<$Res>
-    extends _$TransactionErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res, _$_TransactionTimeout>
     implements _$$_TransactionTimeoutCopyWith<$Res> {
   __$$_TransactionTimeoutCopyWithImpl(
       _$_TransactionTimeout _value, $Res Function(_$_TransactionTimeout) _then)
-      : super(_value, (v) => _then(v as _$_TransactionTimeout));
-
-  @override
-  _$_TransactionTimeout get _value => super._value as _$_TransactionTimeout;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -155,12 +153,12 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) {
     return timeout?.call();
   }
@@ -200,13 +198,13 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) {
     return timeout?.call(this);
   }
@@ -245,16 +243,12 @@ abstract class _$$_TransactionConnectionErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionConnectionErrorCopyWithImpl<$Res>
-    extends _$TransactionErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res, _$_TransactionConnectionError>
     implements _$$_TransactionConnectionErrorCopyWith<$Res> {
   __$$_TransactionConnectionErrorCopyWithImpl(
       _$_TransactionConnectionError _value,
       $Res Function(_$_TransactionConnectionError) _then)
-      : super(_value, (v) => _then(v as _$_TransactionConnectionError));
-
-  @override
-  _$_TransactionConnectionError get _value =>
-      super._value as _$_TransactionConnectionError;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -293,12 +287,12 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) {
     return connectivity?.call();
   }
@@ -338,13 +332,13 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) {
     return connectivity?.call(this);
   }
@@ -382,14 +376,11 @@ abstract class _$$_TransactionInvalidCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionInvalidCopyWithImpl<$Res>
-    extends _$TransactionErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res, _$_TransactionInvalid>
     implements _$$_TransactionInvalidCopyWith<$Res> {
   __$$_TransactionInvalidCopyWithImpl(
       _$_TransactionInvalid _value, $Res Function(_$_TransactionInvalid) _then)
-      : super(_value, (v) => _then(v as _$_TransactionInvalid));
-
-  @override
-  _$_TransactionInvalid get _value => super._value as _$_TransactionInvalid;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -427,12 +418,12 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) {
     return invalidTransaction?.call();
   }
@@ -472,13 +463,13 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) {
     return invalidTransaction?.call(this);
   }
@@ -517,16 +508,13 @@ abstract class _$$_TransactionInvalidConfirmationCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionInvalidConfirmationCopyWithImpl<$Res>
-    extends _$TransactionErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res,
+        _$_TransactionInvalidConfirmation>
     implements _$$_TransactionInvalidConfirmationCopyWith<$Res> {
   __$$_TransactionInvalidConfirmationCopyWithImpl(
       _$_TransactionInvalidConfirmation _value,
       $Res Function(_$_TransactionInvalidConfirmation) _then)
-      : super(_value, (v) => _then(v as _$_TransactionInvalidConfirmation));
-
-  @override
-  _$_TransactionInvalidConfirmation get _value =>
-      super._value as _$_TransactionInvalidConfirmation;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -566,12 +554,12 @@ class _$_TransactionInvalidConfirmation
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) {
     return invalidConfirmation?.call();
   }
@@ -611,13 +599,13 @@ class _$_TransactionInvalidConfirmation
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) {
     return invalidConfirmation?.call(this);
   }
@@ -657,16 +645,13 @@ abstract class _$$_TransactionInsufficientFundsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionInsufficientFundsCopyWithImpl<$Res>
-    extends _$TransactionErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res,
+        _$_TransactionInsufficientFunds>
     implements _$$_TransactionInsufficientFundsCopyWith<$Res> {
   __$$_TransactionInsufficientFundsCopyWithImpl(
       _$_TransactionInsufficientFunds _value,
       $Res Function(_$_TransactionInsufficientFunds) _then)
-      : super(_value, (v) => _then(v as _$_TransactionInsufficientFunds));
-
-  @override
-  _$_TransactionInsufficientFunds get _value =>
-      super._value as _$_TransactionInsufficientFunds;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -705,12 +690,12 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) {
     return insufficientFunds?.call();
   }
@@ -750,13 +735,13 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) {
     return insufficientFunds?.call(this);
   }
@@ -791,27 +776,25 @@ abstract class _$$_TransactionOtherErrorCopyWith<$Res> {
   factory _$$_TransactionOtherErrorCopyWith(_$_TransactionOtherError value,
           $Res Function(_$_TransactionOtherError) then) =
       __$$_TransactionOtherErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? reason});
 }
 
 /// @nodoc
 class __$$_TransactionOtherErrorCopyWithImpl<$Res>
-    extends _$TransactionErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res, _$_TransactionOtherError>
     implements _$$_TransactionOtherErrorCopyWith<$Res> {
   __$$_TransactionOtherErrorCopyWithImpl(_$_TransactionOtherError _value,
       $Res Function(_$_TransactionOtherError) _then)
-      : super(_value, (v) => _then(v as _$_TransactionOtherError));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionOtherError get _value =>
-      super._value as _$_TransactionOtherError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? reason = freezed,
   }) {
     return _then(_$_TransactionOtherError(
-      reason: reason == freezed
+      reason: freezed == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -837,15 +820,15 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionOtherError &&
-            const DeepCollectionEquality().equals(other.reason, reason));
+            (identical(other.reason, reason) || other.reason == reason));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(reason));
+  int get hashCode => Object.hash(runtimeType, reason);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionOtherErrorCopyWith<_$_TransactionOtherError> get copyWith =>
       __$$_TransactionOtherErrorCopyWithImpl<_$_TransactionOtherError>(
           this, _$identity);
@@ -866,12 +849,12 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? timeout,
-    TResult Function()? connectivity,
-    TResult Function()? invalidTransaction,
-    TResult Function()? invalidConfirmation,
-    TResult Function()? insufficientFunds,
-    TResult Function(String? reason)? other,
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
   }) {
     return other?.call(reason);
   }
@@ -911,13 +894,13 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionTimeout value)? timeout,
-    TResult Function(_TransactionConnectionError value)? connectivity,
-    TResult Function(_TransactionInvalid value)? invalidTransaction,
-    TResult Function(_TransactionInvalidConfirmation value)?
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
-    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
-    TResult Function(_TransactionOtherError value)? other,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
   }) {
     return other?.call(this);
   }
@@ -967,40 +950,44 @@ mixin _$TransactionConfirmation {
 abstract class $TransactionConfirmationCopyWith<$Res> {
   factory $TransactionConfirmationCopyWith(TransactionConfirmation value,
           $Res Function(TransactionConfirmation) then) =
-      _$TransactionConfirmationCopyWithImpl<$Res>;
+      _$TransactionConfirmationCopyWithImpl<$Res, TransactionConfirmation>;
+  @useResult
   $Res call(
       {String transactionAddress, int nbConfirmations, int maxConfirmations});
 }
 
 /// @nodoc
-class _$TransactionConfirmationCopyWithImpl<$Res>
+class _$TransactionConfirmationCopyWithImpl<$Res,
+        $Val extends TransactionConfirmation>
     implements $TransactionConfirmationCopyWith<$Res> {
   _$TransactionConfirmationCopyWithImpl(this._value, this._then);
 
-  final TransactionConfirmation _value;
   // ignore: unused_field
-  final $Res Function(TransactionConfirmation) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactionAddress = freezed,
-    Object? nbConfirmations = freezed,
-    Object? maxConfirmations = freezed,
+    Object? transactionAddress = null,
+    Object? nbConfirmations = null,
+    Object? maxConfirmations = null,
   }) {
     return _then(_value.copyWith(
-      transactionAddress: transactionAddress == freezed
+      transactionAddress: null == transactionAddress
           ? _value.transactionAddress
           : transactionAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      nbConfirmations: nbConfirmations == freezed
+      nbConfirmations: null == nbConfirmations
           ? _value.nbConfirmations
           : nbConfirmations // ignore: cast_nullable_to_non_nullable
               as int,
-      maxConfirmations: maxConfirmations == freezed
+      maxConfirmations: null == maxConfirmations
           ? _value.maxConfirmations
           : maxConfirmations // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1011,38 +998,37 @@ abstract class _$$_TransactionConfirmationCopyWith<$Res>
           $Res Function(_$_TransactionConfirmation) then) =
       __$$_TransactionConfirmationCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String transactionAddress, int nbConfirmations, int maxConfirmations});
 }
 
 /// @nodoc
 class __$$_TransactionConfirmationCopyWithImpl<$Res>
-    extends _$TransactionConfirmationCopyWithImpl<$Res>
+    extends _$TransactionConfirmationCopyWithImpl<$Res,
+        _$_TransactionConfirmation>
     implements _$$_TransactionConfirmationCopyWith<$Res> {
   __$$_TransactionConfirmationCopyWithImpl(_$_TransactionConfirmation _value,
       $Res Function(_$_TransactionConfirmation) _then)
-      : super(_value, (v) => _then(v as _$_TransactionConfirmation));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionConfirmation get _value =>
-      super._value as _$_TransactionConfirmation;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactionAddress = freezed,
-    Object? nbConfirmations = freezed,
-    Object? maxConfirmations = freezed,
+    Object? transactionAddress = null,
+    Object? nbConfirmations = null,
+    Object? maxConfirmations = null,
   }) {
     return _then(_$_TransactionConfirmation(
-      transactionAddress: transactionAddress == freezed
+      transactionAddress: null == transactionAddress
           ? _value.transactionAddress
           : transactionAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      nbConfirmations: nbConfirmations == freezed
+      nbConfirmations: null == nbConfirmations
           ? _value.nbConfirmations
           : nbConfirmations // ignore: cast_nullable_to_non_nullable
               as int,
-      maxConfirmations: maxConfirmations == freezed
+      maxConfirmations: null == maxConfirmations
           ? _value.maxConfirmations
           : maxConfirmations // ignore: cast_nullable_to_non_nullable
               as int,
@@ -1078,23 +1064,21 @@ class _$_TransactionConfirmation extends _TransactionConfirmation {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionConfirmation &&
-            const DeepCollectionEquality()
-                .equals(other.transactionAddress, transactionAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.nbConfirmations, nbConfirmations) &&
-            const DeepCollectionEquality()
-                .equals(other.maxConfirmations, maxConfirmations));
+            (identical(other.transactionAddress, transactionAddress) ||
+                other.transactionAddress == transactionAddress) &&
+            (identical(other.nbConfirmations, nbConfirmations) ||
+                other.nbConfirmations == nbConfirmations) &&
+            (identical(other.maxConfirmations, maxConfirmations) ||
+                other.maxConfirmations == maxConfirmations));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(transactionAddress),
-      const DeepCollectionEquality().hash(nbConfirmations),
-      const DeepCollectionEquality().hash(maxConfirmations));
+      runtimeType, transactionAddress, nbConfirmations, maxConfirmations);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionConfirmationCopyWith<_$_TransactionConfirmation>
       get copyWith =>
           __$$_TransactionConfirmationCopyWithImpl<_$_TransactionConfirmation>(

@@ -41,7 +41,8 @@ mixin _$NftCreationFormState {
 abstract class $NftCreationFormStateCopyWith<$Res> {
   factory $NftCreationFormStateCopyWith(NftCreationFormState value,
           $Res Function(NftCreationFormState) then) =
-      _$NftCreationFormStateCopyWithImpl<$Res>;
+      _$NftCreationFormStateCopyWithImpl<$Res, NftCreationFormState>;
+  @useResult
   $Res call(
       {Map<File, List<String>>? file,
       FileImportType? fileImportType,
@@ -60,14 +61,17 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NftCreationFormStateCopyWithImpl<$Res>
+class _$NftCreationFormStateCopyWithImpl<$Res,
+        $Val extends NftCreationFormState>
     implements $NftCreationFormStateCopyWith<$Res> {
   _$NftCreationFormStateCopyWithImpl(this._value, this._then);
 
-  final NftCreationFormState _value;
   // ignore: unused_field
-  final $Res Function(NftCreationFormState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? file = freezed,
@@ -75,74 +79,74 @@ class _$NftCreationFormStateCopyWithImpl<$Res>
     Object? fileDecoded = freezed,
     Object? fileDecodedForPreview = freezed,
     Object? fileTypeMime = freezed,
-    Object? fileSize = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? properties = freezed,
-    Object? canAddProperty = freezed,
-    Object? canCreateNFT = freezed,
-    Object? canAddAccess = freezed,
-    Object? symbol = freezed,
+    Object? fileSize = null,
+    Object? name = null,
+    Object? description = null,
+    Object? properties = null,
+    Object? canAddProperty = null,
+    Object? canCreateNFT = null,
+    Object? canAddAccess = null,
+    Object? symbol = null,
     Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
-      file: file == freezed
+      file: freezed == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as Map<File, List<String>>?,
-      fileImportType: fileImportType == freezed
+      fileImportType: freezed == fileImportType
           ? _value.fileImportType
           : fileImportType // ignore: cast_nullable_to_non_nullable
               as FileImportType?,
-      fileDecoded: fileDecoded == freezed
+      fileDecoded: freezed == fileDecoded
           ? _value.fileDecoded
           : fileDecoded // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      fileDecodedForPreview: fileDecodedForPreview == freezed
+      fileDecodedForPreview: freezed == fileDecodedForPreview
           ? _value.fileDecodedForPreview
           : fileDecodedForPreview // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      fileTypeMime: fileTypeMime == freezed
+      fileTypeMime: freezed == fileTypeMime
           ? _value.fileTypeMime
           : fileTypeMime // ignore: cast_nullable_to_non_nullable
               as String?,
-      fileSize: fileSize == freezed
+      fileSize: null == fileSize
           ? _value.fileSize
           : fileSize // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      properties: properties == freezed
+      properties: null == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<NftCreationFormStateProperty>,
-      canAddProperty: canAddProperty == freezed
+      canAddProperty: null == canAddProperty
           ? _value.canAddProperty
           : canAddProperty // ignore: cast_nullable_to_non_nullable
               as bool,
-      canCreateNFT: canCreateNFT == freezed
+      canCreateNFT: null == canCreateNFT
           ? _value.canCreateNFT
           : canCreateNFT // ignore: cast_nullable_to_non_nullable
               as bool,
-      canAddAccess: canAddAccess == freezed
+      canAddAccess: null == canAddAccess
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
               as bool,
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-      transaction: transaction == freezed
+      transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
               as Transaction?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -153,6 +157,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
           $Res Function(_$_NftCreationFormState) then) =
       __$$_NftCreationFormStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Map<File, List<String>>? file,
       FileImportType? fileImportType,
@@ -172,15 +177,13 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_NftCreationFormStateCopyWithImpl<$Res>
-    extends _$NftCreationFormStateCopyWithImpl<$Res>
+    extends _$NftCreationFormStateCopyWithImpl<$Res, _$_NftCreationFormState>
     implements _$$_NftCreationFormStateCopyWith<$Res> {
   __$$_NftCreationFormStateCopyWithImpl(_$_NftCreationFormState _value,
       $Res Function(_$_NftCreationFormState) _then)
-      : super(_value, (v) => _then(v as _$_NftCreationFormState));
+      : super(_value, _then);
 
-  @override
-  _$_NftCreationFormState get _value => super._value as _$_NftCreationFormState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? file = freezed,
@@ -188,70 +191,70 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? fileDecoded = freezed,
     Object? fileDecodedForPreview = freezed,
     Object? fileTypeMime = freezed,
-    Object? fileSize = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? properties = freezed,
-    Object? canAddProperty = freezed,
-    Object? canCreateNFT = freezed,
-    Object? canAddAccess = freezed,
-    Object? symbol = freezed,
+    Object? fileSize = null,
+    Object? name = null,
+    Object? description = null,
+    Object? properties = null,
+    Object? canAddProperty = null,
+    Object? canCreateNFT = null,
+    Object? canAddAccess = null,
+    Object? symbol = null,
     Object? transaction = freezed,
   }) {
     return _then(_$_NftCreationFormState(
-      file: file == freezed
+      file: freezed == file
           ? _value._file
           : file // ignore: cast_nullable_to_non_nullable
               as Map<File, List<String>>?,
-      fileImportType: fileImportType == freezed
+      fileImportType: freezed == fileImportType
           ? _value.fileImportType
           : fileImportType // ignore: cast_nullable_to_non_nullable
               as FileImportType?,
-      fileDecoded: fileDecoded == freezed
+      fileDecoded: freezed == fileDecoded
           ? _value.fileDecoded
           : fileDecoded // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      fileDecodedForPreview: fileDecodedForPreview == freezed
+      fileDecodedForPreview: freezed == fileDecodedForPreview
           ? _value.fileDecodedForPreview
           : fileDecodedForPreview // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      fileTypeMime: fileTypeMime == freezed
+      fileTypeMime: freezed == fileTypeMime
           ? _value.fileTypeMime
           : fileTypeMime // ignore: cast_nullable_to_non_nullable
               as String?,
-      fileSize: fileSize == freezed
+      fileSize: null == fileSize
           ? _value.fileSize
           : fileSize // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      properties: properties == freezed
+      properties: null == properties
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<NftCreationFormStateProperty>,
-      canAddProperty: canAddProperty == freezed
+      canAddProperty: null == canAddProperty
           ? _value.canAddProperty
           : canAddProperty // ignore: cast_nullable_to_non_nullable
               as bool,
-      canCreateNFT: canCreateNFT == freezed
+      canCreateNFT: null == canCreateNFT
           ? _value.canCreateNFT
           : canCreateNFT // ignore: cast_nullable_to_non_nullable
               as bool,
-      canAddAccess: canAddAccess == freezed
+      canAddAccess: null == canAddAccess
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
               as bool,
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-      transaction: transaction == freezed
+      transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
               as Transaction?,
@@ -342,51 +345,53 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         (other.runtimeType == runtimeType &&
             other is _$_NftCreationFormState &&
             const DeepCollectionEquality().equals(other._file, _file) &&
-            const DeepCollectionEquality()
-                .equals(other.fileImportType, fileImportType) &&
+            (identical(other.fileImportType, fileImportType) ||
+                other.fileImportType == fileImportType) &&
             const DeepCollectionEquality()
                 .equals(other.fileDecoded, fileDecoded) &&
             const DeepCollectionEquality()
                 .equals(other.fileDecodedForPreview, fileDecodedForPreview) &&
-            const DeepCollectionEquality()
-                .equals(other.fileTypeMime, fileTypeMime) &&
-            const DeepCollectionEquality().equals(other.fileSize, fileSize) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
+            (identical(other.fileTypeMime, fileTypeMime) ||
+                other.fileTypeMime == fileTypeMime) &&
+            (identical(other.fileSize, fileSize) ||
+                other.fileSize == fileSize) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             const DeepCollectionEquality()
                 .equals(other._properties, _properties) &&
-            const DeepCollectionEquality()
-                .equals(other.canAddProperty, canAddProperty) &&
-            const DeepCollectionEquality()
-                .equals(other.canCreateNFT, canCreateNFT) &&
-            const DeepCollectionEquality()
-                .equals(other.canAddAccess, canAddAccess) &&
-            const DeepCollectionEquality().equals(other.symbol, symbol) &&
-            const DeepCollectionEquality()
-                .equals(other.transaction, transaction));
+            (identical(other.canAddProperty, canAddProperty) ||
+                other.canAddProperty == canAddProperty) &&
+            (identical(other.canCreateNFT, canCreateNFT) ||
+                other.canCreateNFT == canCreateNFT) &&
+            (identical(other.canAddAccess, canAddAccess) ||
+                other.canAddAccess == canAddAccess) &&
+            (identical(other.symbol, symbol) || other.symbol == symbol) &&
+            (identical(other.transaction, transaction) ||
+                other.transaction == transaction));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_file),
-      const DeepCollectionEquality().hash(fileImportType),
+      fileImportType,
       const DeepCollectionEquality().hash(fileDecoded),
       const DeepCollectionEquality().hash(fileDecodedForPreview),
-      const DeepCollectionEquality().hash(fileTypeMime),
-      const DeepCollectionEquality().hash(fileSize),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(description),
+      fileTypeMime,
+      fileSize,
+      name,
+      description,
       const DeepCollectionEquality().hash(_properties),
-      const DeepCollectionEquality().hash(canAddProperty),
-      const DeepCollectionEquality().hash(canCreateNFT),
-      const DeepCollectionEquality().hash(canAddAccess),
-      const DeepCollectionEquality().hash(symbol),
-      const DeepCollectionEquality().hash(transaction));
+      canAddProperty,
+      canCreateNFT,
+      canAddAccess,
+      symbol,
+      transaction);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NftCreationFormStateCopyWith<_$_NftCreationFormState> get copyWith =>
       __$$_NftCreationFormStateCopyWithImpl<_$_NftCreationFormState>(
           this, _$identity);
@@ -460,40 +465,45 @@ abstract class $NftCreationFormStatePropertyCopyWith<$Res> {
   factory $NftCreationFormStatePropertyCopyWith(
           NftCreationFormStateProperty value,
           $Res Function(NftCreationFormStateProperty) then) =
-      _$NftCreationFormStatePropertyCopyWithImpl<$Res>;
+      _$NftCreationFormStatePropertyCopyWithImpl<$Res,
+          NftCreationFormStateProperty>;
+  @useResult
   $Res call(
       {String propertyName, String propertyValue, List<String> publicKeys});
 }
 
 /// @nodoc
-class _$NftCreationFormStatePropertyCopyWithImpl<$Res>
+class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
+        $Val extends NftCreationFormStateProperty>
     implements $NftCreationFormStatePropertyCopyWith<$Res> {
   _$NftCreationFormStatePropertyCopyWithImpl(this._value, this._then);
 
-  final NftCreationFormStateProperty _value;
   // ignore: unused_field
-  final $Res Function(NftCreationFormStateProperty) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? propertyName = freezed,
-    Object? propertyValue = freezed,
-    Object? publicKeys = freezed,
+    Object? propertyName = null,
+    Object? propertyValue = null,
+    Object? publicKeys = null,
   }) {
     return _then(_value.copyWith(
-      propertyName: propertyName == freezed
+      propertyName: null == propertyName
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: propertyValue == freezed
+      propertyValue: null == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as String,
-      publicKeys: publicKeys == freezed
+      publicKeys: null == publicKeys
           ? _value.publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -505,39 +515,38 @@ abstract class _$$_NftCreationFormStatePropertyCopyWith<$Res>
           $Res Function(_$_NftCreationFormStateProperty) then) =
       __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String propertyName, String propertyValue, List<String> publicKeys});
 }
 
 /// @nodoc
 class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
-    extends _$NftCreationFormStatePropertyCopyWithImpl<$Res>
+    extends _$NftCreationFormStatePropertyCopyWithImpl<$Res,
+        _$_NftCreationFormStateProperty>
     implements _$$_NftCreationFormStatePropertyCopyWith<$Res> {
   __$$_NftCreationFormStatePropertyCopyWithImpl(
       _$_NftCreationFormStateProperty _value,
       $Res Function(_$_NftCreationFormStateProperty) _then)
-      : super(_value, (v) => _then(v as _$_NftCreationFormStateProperty));
+      : super(_value, _then);
 
-  @override
-  _$_NftCreationFormStateProperty get _value =>
-      super._value as _$_NftCreationFormStateProperty;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? propertyName = freezed,
-    Object? propertyValue = freezed,
-    Object? publicKeys = freezed,
+    Object? propertyName = null,
+    Object? propertyValue = null,
+    Object? publicKeys = null,
   }) {
     return _then(_$_NftCreationFormStateProperty(
-      propertyName: propertyName == freezed
+      propertyName: null == propertyName
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: propertyValue == freezed
+      propertyValue: null == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as String,
-      publicKeys: publicKeys == freezed
+      publicKeys: null == publicKeys
           ? _value._publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -579,23 +588,21 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NftCreationFormStateProperty &&
-            const DeepCollectionEquality()
-                .equals(other.propertyName, propertyName) &&
-            const DeepCollectionEquality()
-                .equals(other.propertyValue, propertyValue) &&
+            (identical(other.propertyName, propertyName) ||
+                other.propertyName == propertyName) &&
+            (identical(other.propertyValue, propertyValue) ||
+                other.propertyValue == propertyValue) &&
             const DeepCollectionEquality()
                 .equals(other._publicKeys, _publicKeys));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(propertyName),
-      const DeepCollectionEquality().hash(propertyValue),
+  int get hashCode => Object.hash(runtimeType, propertyName, propertyValue,
       const DeepCollectionEquality().hash(_publicKeys));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NftCreationFormStatePropertyCopyWith<_$_NftCreationFormStateProperty>
       get copyWith => __$$_NftCreationFormStatePropertyCopyWithImpl<
           _$_NftCreationFormStateProperty>(this, _$identity);

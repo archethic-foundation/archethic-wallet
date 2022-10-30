@@ -24,7 +24,7 @@ mixin _$Credentials {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String pin)? pin,
+    TResult? Function(String pin)? pin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$Credentials {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(PinCredentials value)? pin,
+    TResult? Function(PinCredentials value)? pin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,28 +59,32 @@ mixin _$Credentials {
 abstract class $CredentialsCopyWith<$Res> {
   factory $CredentialsCopyWith(
           Credentials value, $Res Function(Credentials) then) =
-      _$CredentialsCopyWithImpl<$Res>;
+      _$CredentialsCopyWithImpl<$Res, Credentials>;
+  @useResult
   $Res call({String pin});
 }
 
 /// @nodoc
-class _$CredentialsCopyWithImpl<$Res> implements $CredentialsCopyWith<$Res> {
+class _$CredentialsCopyWithImpl<$Res, $Val extends Credentials>
+    implements $CredentialsCopyWith<$Res> {
   _$CredentialsCopyWithImpl(this._value, this._then);
 
-  final Credentials _value;
   // ignore: unused_field
-  final $Res Function(Credentials) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pin = freezed,
+    Object? pin = null,
   }) {
     return _then(_value.copyWith(
-      pin: pin == freezed
+      pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -91,26 +95,25 @@ abstract class _$$PinCredentialsCopyWith<$Res>
           _$PinCredentials value, $Res Function(_$PinCredentials) then) =
       __$$PinCredentialsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String pin});
 }
 
 /// @nodoc
 class __$$PinCredentialsCopyWithImpl<$Res>
-    extends _$CredentialsCopyWithImpl<$Res>
+    extends _$CredentialsCopyWithImpl<$Res, _$PinCredentials>
     implements _$$PinCredentialsCopyWith<$Res> {
   __$$PinCredentialsCopyWithImpl(
       _$PinCredentials _value, $Res Function(_$PinCredentials) _then)
-      : super(_value, (v) => _then(v as _$PinCredentials));
+      : super(_value, _then);
 
-  @override
-  _$PinCredentials get _value => super._value as _$PinCredentials;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pin = freezed,
+    Object? pin = null,
   }) {
     return _then(_$PinCredentials(
-      pin: pin == freezed
+      pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String,
@@ -136,15 +139,15 @@ class _$PinCredentials extends PinCredentials {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PinCredentials &&
-            const DeepCollectionEquality().equals(other.pin, pin));
+            (identical(other.pin, pin) || other.pin == pin));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(pin));
+  int get hashCode => Object.hash(runtimeType, pin);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$PinCredentialsCopyWith<_$PinCredentials> get copyWith =>
       __$$PinCredentialsCopyWithImpl<_$PinCredentials>(this, _$identity);
 
@@ -159,7 +162,7 @@ class _$PinCredentials extends PinCredentials {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String pin)? pin,
+    TResult? Function(String pin)? pin,
   }) {
     return pin?.call(this.pin);
   }
@@ -187,7 +190,7 @@ class _$PinCredentials extends PinCredentials {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(PinCredentials value)? pin,
+    TResult? Function(PinCredentials value)? pin,
   }) {
     return pin?.call(this);
   }
