@@ -32,9 +32,12 @@ class AddTokenDetail extends ConsumerWidget {
                 localizations.tokenName,
                 style: theme.textStyleSize12W400Primary,
               ),
-              Text(
-                addToken.name,
-                style: theme.textStyleSize12W400Primary,
+              Expanded(
+                child: Text(
+                  addToken.name,
+                  style: theme.textStyleSize12W400Primary,
+                  textAlign: TextAlign.end,
+                ),
               ),
             ],
           ),
