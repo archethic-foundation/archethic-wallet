@@ -57,6 +57,7 @@ class AddTokenFormSheet extends ConsumerWidget {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
+                // TODO(chralu): Scrollbar doesn't work with desktop
                 child: Scrollbar(
                   thumbVisibility: true,
                   child: SingleChildScrollView(
