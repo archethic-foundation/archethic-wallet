@@ -1,7 +1,7 @@
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 extension NftTransactionBuilder on Transaction {
-  /// Builds a Token transfer Transaction
+  /// Builds a NFT Creation Transaction
   static Transaction build({
     required String? tokenName,
     required String? tokenSymbol,

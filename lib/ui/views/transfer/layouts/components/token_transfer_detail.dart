@@ -8,7 +8,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/transfer/layouts/components/transfer_detail_card.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 // Package imports:
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class TokenTransferDetail extends ConsumerWidget {
               ),
             ),
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 '${localizations.txListFrom} ${accountSelected!.name!}',
@@ -52,7 +52,7 @@ class TokenTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 '${localizations.txListTo} ${transfer.recipient.format(localizations)}',
@@ -67,7 +67,7 @@ class TokenTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 localizations.estimatedFees,
@@ -84,7 +84,7 @@ class TokenTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 localizations.availableAfterTransfer,
@@ -100,7 +100,7 @@ class TokenTransferDetail extends ConsumerWidget {
             ],
           ),
           if (transfer.message.isNotEmpty)
-            TransferDetailCard(
+            SheetDetailCard(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

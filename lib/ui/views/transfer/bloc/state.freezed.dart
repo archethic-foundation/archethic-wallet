@@ -42,7 +42,8 @@ mixin _$TransferFormState {
 abstract class $TransferFormStateCopyWith<$Res> {
   factory $TransferFormStateCopyWith(
           TransferFormState value, $Res Function(TransferFormState) then) =
-      _$TransferFormStateCopyWithImpl<$Res>;
+      _$TransferFormStateCopyWithImpl<$Res, TransferFormState>;
+  @useResult
   $Res call(
       {TransferType transferType,
       String seed,
@@ -63,95 +64,98 @@ abstract class $TransferFormStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransferFormStateCopyWithImpl<$Res>
+class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     implements $TransferFormStateCopyWith<$Res> {
   _$TransferFormStateCopyWithImpl(this._value, this._then);
 
-  final TransferFormState _value;
   // ignore: unused_field
-  final $Res Function(TransferFormState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transferType = freezed,
-    Object? seed = freezed,
-    Object? transferProcessStep = freezed,
-    Object? feeEstimation = freezed,
-    Object? defineMaxAmountInProgress = freezed,
-    Object? amount = freezed,
-    Object? amountConverted = freezed,
-    Object? accountBalance = freezed,
-    Object? recipient = freezed,
+    Object? transferType = null,
+    Object? seed = null,
+    Object? transferProcessStep = null,
+    Object? feeEstimation = null,
+    Object? defineMaxAmountInProgress = null,
+    Object? amount = null,
+    Object? amountConverted = null,
+    Object? accountBalance = null,
+    Object? recipient = null,
     Object? accountToken = freezed,
-    Object? message = freezed,
-    Object? errorAddressText = freezed,
-    Object? errorAmountText = freezed,
-    Object? errorMessageText = freezed,
+    Object? message = null,
+    Object? errorAddressText = null,
+    Object? errorAmountText = null,
+    Object? errorMessageText = null,
   }) {
     return _then(_value.copyWith(
-      transferType: transferType == freezed
+      transferType: null == transferType
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
               as TransferType,
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      transferProcessStep: transferProcessStep == freezed
+      transferProcessStep: null == transferProcessStep
           ? _value.transferProcessStep
           : transferProcessStep // ignore: cast_nullable_to_non_nullable
               as TransferProcessStep,
-      feeEstimation: feeEstimation == freezed
+      feeEstimation: null == feeEstimation
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
               as AsyncValue<double>,
-      defineMaxAmountInProgress: defineMaxAmountInProgress == freezed
+      defineMaxAmountInProgress: null == defineMaxAmountInProgress
           ? _value.defineMaxAmountInProgress
           : defineMaxAmountInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      amountConverted: amountConverted == freezed
+      amountConverted: null == amountConverted
           ? _value.amountConverted
           : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
-      accountBalance: accountBalance == freezed
+      accountBalance: null == accountBalance
           ? _value.accountBalance
           : accountBalance // ignore: cast_nullable_to_non_nullable
               as AccountBalance,
-      recipient: recipient == freezed
+      recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as TransferRecipient,
-      accountToken: accountToken == freezed
+      accountToken: freezed == accountToken
           ? _value.accountToken
           : accountToken // ignore: cast_nullable_to_non_nullable
               as AccountToken?,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      errorAddressText: errorAddressText == freezed
+      errorAddressText: null == errorAddressText
           ? _value.errorAddressText
           : errorAddressText // ignore: cast_nullable_to_non_nullable
               as String,
-      errorAmountText: errorAmountText == freezed
+      errorAmountText: null == errorAmountText
           ? _value.errorAmountText
           : errorAmountText // ignore: cast_nullable_to_non_nullable
               as String,
-      errorMessageText: errorMessageText == freezed
+      errorMessageText: null == errorMessageText
           ? _value.errorMessageText
           : errorMessageText // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TransferRecipientCopyWith<$Res> get recipient {
     return $TransferRecipientCopyWith<$Res>(_value.recipient, (value) {
-      return _then(_value.copyWith(recipient: value));
+      return _then(_value.copyWith(recipient: value) as $Val);
     });
   }
 }
@@ -163,6 +167,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
           $Res Function(_$_TransferFormState) then) =
       __$$_TransferFormStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {TransferType transferType,
       String seed,
@@ -185,86 +190,84 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_TransferFormStateCopyWithImpl<$Res>
-    extends _$TransferFormStateCopyWithImpl<$Res>
+    extends _$TransferFormStateCopyWithImpl<$Res, _$_TransferFormState>
     implements _$$_TransferFormStateCopyWith<$Res> {
   __$$_TransferFormStateCopyWithImpl(
       _$_TransferFormState _value, $Res Function(_$_TransferFormState) _then)
-      : super(_value, (v) => _then(v as _$_TransferFormState));
+      : super(_value, _then);
 
-  @override
-  _$_TransferFormState get _value => super._value as _$_TransferFormState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transferType = freezed,
-    Object? seed = freezed,
-    Object? transferProcessStep = freezed,
-    Object? feeEstimation = freezed,
-    Object? defineMaxAmountInProgress = freezed,
-    Object? amount = freezed,
-    Object? amountConverted = freezed,
-    Object? accountBalance = freezed,
-    Object? recipient = freezed,
+    Object? transferType = null,
+    Object? seed = null,
+    Object? transferProcessStep = null,
+    Object? feeEstimation = null,
+    Object? defineMaxAmountInProgress = null,
+    Object? amount = null,
+    Object? amountConverted = null,
+    Object? accountBalance = null,
+    Object? recipient = null,
     Object? accountToken = freezed,
-    Object? message = freezed,
-    Object? errorAddressText = freezed,
-    Object? errorAmountText = freezed,
-    Object? errorMessageText = freezed,
+    Object? message = null,
+    Object? errorAddressText = null,
+    Object? errorAmountText = null,
+    Object? errorMessageText = null,
   }) {
     return _then(_$_TransferFormState(
-      transferType: transferType == freezed
+      transferType: null == transferType
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
               as TransferType,
-      seed: seed == freezed
+      seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      transferProcessStep: transferProcessStep == freezed
+      transferProcessStep: null == transferProcessStep
           ? _value.transferProcessStep
           : transferProcessStep // ignore: cast_nullable_to_non_nullable
               as TransferProcessStep,
-      feeEstimation: feeEstimation == freezed
+      feeEstimation: null == feeEstimation
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
               as AsyncValue<double>,
-      defineMaxAmountInProgress: defineMaxAmountInProgress == freezed
+      defineMaxAmountInProgress: null == defineMaxAmountInProgress
           ? _value.defineMaxAmountInProgress
           : defineMaxAmountInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      amountConverted: amountConverted == freezed
+      amountConverted: null == amountConverted
           ? _value.amountConverted
           : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
-      accountBalance: accountBalance == freezed
+      accountBalance: null == accountBalance
           ? _value.accountBalance
           : accountBalance // ignore: cast_nullable_to_non_nullable
               as AccountBalance,
-      recipient: recipient == freezed
+      recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as TransferRecipient,
-      accountToken: accountToken == freezed
+      accountToken: freezed == accountToken
           ? _value.accountToken
           : accountToken // ignore: cast_nullable_to_non_nullable
               as AccountToken?,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      errorAddressText: errorAddressText == freezed
+      errorAddressText: null == errorAddressText
           ? _value.errorAddressText
           : errorAddressText // ignore: cast_nullable_to_non_nullable
               as String,
-      errorAmountText: errorAmountText == freezed
+      errorAmountText: null == errorAmountText
           ? _value.errorAmountText
           : errorAmountText // ignore: cast_nullable_to_non_nullable
               as String,
-      errorMessageText: errorMessageText == freezed
+      errorMessageText: null == errorMessageText
           ? _value.errorMessageText
           : errorMessageText // ignore: cast_nullable_to_non_nullable
               as String,
@@ -341,52 +344,55 @@ class _$_TransferFormState extends _TransferFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransferFormState &&
-            const DeepCollectionEquality()
-                .equals(other.transferType, transferType) &&
-            const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality()
-                .equals(other.transferProcessStep, transferProcessStep) &&
-            const DeepCollectionEquality()
-                .equals(other.feeEstimation, feeEstimation) &&
-            const DeepCollectionEquality().equals(
-                other.defineMaxAmountInProgress, defineMaxAmountInProgress) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality()
-                .equals(other.amountConverted, amountConverted) &&
-            const DeepCollectionEquality()
-                .equals(other.accountBalance, accountBalance) &&
-            const DeepCollectionEquality().equals(other.recipient, recipient) &&
-            const DeepCollectionEquality()
-                .equals(other.accountToken, accountToken) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality()
-                .equals(other.errorAddressText, errorAddressText) &&
-            const DeepCollectionEquality()
-                .equals(other.errorAmountText, errorAmountText) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessageText, errorMessageText));
+            (identical(other.transferType, transferType) ||
+                other.transferType == transferType) &&
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.transferProcessStep, transferProcessStep) ||
+                other.transferProcessStep == transferProcessStep) &&
+            (identical(other.feeEstimation, feeEstimation) ||
+                other.feeEstimation == feeEstimation) &&
+            (identical(other.defineMaxAmountInProgress,
+                    defineMaxAmountInProgress) ||
+                other.defineMaxAmountInProgress == defineMaxAmountInProgress) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.amountConverted, amountConverted) ||
+                other.amountConverted == amountConverted) &&
+            (identical(other.accountBalance, accountBalance) ||
+                other.accountBalance == accountBalance) &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient) &&
+            (identical(other.accountToken, accountToken) ||
+                other.accountToken == accountToken) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.errorAddressText, errorAddressText) ||
+                other.errorAddressText == errorAddressText) &&
+            (identical(other.errorAmountText, errorAmountText) ||
+                other.errorAmountText == errorAmountText) &&
+            (identical(other.errorMessageText, errorMessageText) ||
+                other.errorMessageText == errorMessageText));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(transferType),
-      const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(transferProcessStep),
-      const DeepCollectionEquality().hash(feeEstimation),
-      const DeepCollectionEquality().hash(defineMaxAmountInProgress),
-      const DeepCollectionEquality().hash(amount),
-      const DeepCollectionEquality().hash(amountConverted),
-      const DeepCollectionEquality().hash(accountBalance),
-      const DeepCollectionEquality().hash(recipient),
-      const DeepCollectionEquality().hash(accountToken),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(errorAddressText),
-      const DeepCollectionEquality().hash(errorAmountText),
-      const DeepCollectionEquality().hash(errorMessageText));
+      transferType,
+      seed,
+      transferProcessStep,
+      feeEstimation,
+      defineMaxAmountInProgress,
+      amount,
+      amountConverted,
+      accountBalance,
+      recipient,
+      accountToken,
+      message,
+      errorAddressText,
+      errorAmountText,
+      errorMessageText);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransferFormStateCopyWith<_$_TransferFormState> get copyWith =>
       __$$_TransferFormStateCopyWithImpl<_$_TransferFormState>(
           this, _$identity);
@@ -455,9 +461,9 @@ mixin _$TransferRecipient {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
-    TResult Function(String name)? unknownContact,
+    TResult? Function(Address address)? address,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -478,9 +484,9 @@ mixin _$TransferRecipient {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
-    TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
+    TResult? Function(_TransferDestinationAddress value)? address,
+    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -497,17 +503,18 @@ mixin _$TransferRecipient {
 abstract class $TransferRecipientCopyWith<$Res> {
   factory $TransferRecipientCopyWith(
           TransferRecipient value, $Res Function(TransferRecipient) then) =
-      _$TransferRecipientCopyWithImpl<$Res>;
+      _$TransferRecipientCopyWithImpl<$Res, TransferRecipient>;
 }
 
 /// @nodoc
-class _$TransferRecipientCopyWithImpl<$Res>
+class _$TransferRecipientCopyWithImpl<$Res, $Val extends TransferRecipient>
     implements $TransferRecipientCopyWith<$Res> {
   _$TransferRecipientCopyWithImpl(this._value, this._then);
 
-  final TransferRecipient _value;
   // ignore: unused_field
-  final $Res Function(TransferRecipient) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -516,28 +523,26 @@ abstract class _$$_TransferDestinationAddressCopyWith<$Res> {
           _$_TransferDestinationAddress value,
           $Res Function(_$_TransferDestinationAddress) then) =
       __$$_TransferDestinationAddressCopyWithImpl<$Res>;
+  @useResult
   $Res call({Address address});
 }
 
 /// @nodoc
 class __$$_TransferDestinationAddressCopyWithImpl<$Res>
-    extends _$TransferRecipientCopyWithImpl<$Res>
+    extends _$TransferRecipientCopyWithImpl<$Res, _$_TransferDestinationAddress>
     implements _$$_TransferDestinationAddressCopyWith<$Res> {
   __$$_TransferDestinationAddressCopyWithImpl(
       _$_TransferDestinationAddress _value,
       $Res Function(_$_TransferDestinationAddress) _then)
-      : super(_value, (v) => _then(v as _$_TransferDestinationAddress));
+      : super(_value, _then);
 
-  @override
-  _$_TransferDestinationAddress get _value =>
-      super._value as _$_TransferDestinationAddress;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
+    Object? address = null,
   }) {
     return _then(_$_TransferDestinationAddress(
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
@@ -563,15 +568,15 @@ class _$_TransferDestinationAddress extends _TransferDestinationAddress {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransferDestinationAddress &&
-            const DeepCollectionEquality().equals(other.address, address));
+            (identical(other.address, address) || other.address == address));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(address));
+  int get hashCode => Object.hash(runtimeType, address);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransferDestinationAddressCopyWith<_$_TransferDestinationAddress>
       get copyWith => __$$_TransferDestinationAddressCopyWithImpl<
           _$_TransferDestinationAddress>(this, _$identity);
@@ -589,9 +594,9 @@ class _$_TransferDestinationAddress extends _TransferDestinationAddress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
-    TResult Function(String name)? unknownContact,
+    TResult? Function(Address address)? address,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
   }) {
     return address?.call(this.address);
   }
@@ -624,9 +629,9 @@ class _$_TransferDestinationAddress extends _TransferDestinationAddress {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
-    TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
+    TResult? Function(_TransferDestinationAddress value)? address,
+    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) {
     return address?.call(this);
   }
@@ -663,28 +668,26 @@ abstract class _$$_TransferDestinationContactCopyWith<$Res> {
           _$_TransferDestinationContact value,
           $Res Function(_$_TransferDestinationContact) then) =
       __$$_TransferDestinationContactCopyWithImpl<$Res>;
+  @useResult
   $Res call({Contact contact});
 }
 
 /// @nodoc
 class __$$_TransferDestinationContactCopyWithImpl<$Res>
-    extends _$TransferRecipientCopyWithImpl<$Res>
+    extends _$TransferRecipientCopyWithImpl<$Res, _$_TransferDestinationContact>
     implements _$$_TransferDestinationContactCopyWith<$Res> {
   __$$_TransferDestinationContactCopyWithImpl(
       _$_TransferDestinationContact _value,
       $Res Function(_$_TransferDestinationContact) _then)
-      : super(_value, (v) => _then(v as _$_TransferDestinationContact));
+      : super(_value, _then);
 
-  @override
-  _$_TransferDestinationContact get _value =>
-      super._value as _$_TransferDestinationContact;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contact = freezed,
+    Object? contact = null,
   }) {
     return _then(_$_TransferDestinationContact(
-      contact: contact == freezed
+      contact: null == contact
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
               as Contact,
@@ -710,15 +713,15 @@ class _$_TransferDestinationContact extends _TransferDestinationContact {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransferDestinationContact &&
-            const DeepCollectionEquality().equals(other.contact, contact));
+            (identical(other.contact, contact) || other.contact == contact));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(contact));
+  int get hashCode => Object.hash(runtimeType, contact);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransferDestinationContactCopyWith<_$_TransferDestinationContact>
       get copyWith => __$$_TransferDestinationContactCopyWithImpl<
           _$_TransferDestinationContact>(this, _$identity);
@@ -736,9 +739,9 @@ class _$_TransferDestinationContact extends _TransferDestinationContact {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
-    TResult Function(String name)? unknownContact,
+    TResult? Function(Address address)? address,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
   }) {
     return contact?.call(this.contact);
   }
@@ -771,9 +774,9 @@ class _$_TransferDestinationContact extends _TransferDestinationContact {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
-    TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
+    TResult? Function(_TransferDestinationAddress value)? address,
+    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) {
     return contact?.call(this);
   }
@@ -810,28 +813,27 @@ abstract class _$$_TransferDestinationUnknownContactCopyWith<$Res> {
           _$_TransferDestinationUnknownContact value,
           $Res Function(_$_TransferDestinationUnknownContact) then) =
       __$$_TransferDestinationUnknownContactCopyWithImpl<$Res>;
+  @useResult
   $Res call({String name});
 }
 
 /// @nodoc
 class __$$_TransferDestinationUnknownContactCopyWithImpl<$Res>
-    extends _$TransferRecipientCopyWithImpl<$Res>
+    extends _$TransferRecipientCopyWithImpl<$Res,
+        _$_TransferDestinationUnknownContact>
     implements _$$_TransferDestinationUnknownContactCopyWith<$Res> {
   __$$_TransferDestinationUnknownContactCopyWithImpl(
       _$_TransferDestinationUnknownContact _value,
       $Res Function(_$_TransferDestinationUnknownContact) _then)
-      : super(_value, (v) => _then(v as _$_TransferDestinationUnknownContact));
+      : super(_value, _then);
 
-  @override
-  _$_TransferDestinationUnknownContact get _value =>
-      super._value as _$_TransferDestinationUnknownContact;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
   }) {
     return _then(_$_TransferDestinationUnknownContact(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -858,15 +860,15 @@ class _$_TransferDestinationUnknownContact
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransferDestinationUnknownContact &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.name, name) || other.name == name));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransferDestinationUnknownContactCopyWith<
           _$_TransferDestinationUnknownContact>
       get copyWith => __$$_TransferDestinationUnknownContactCopyWithImpl<
@@ -885,9 +887,9 @@ class _$_TransferDestinationUnknownContact
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
-    TResult Function(String name)? unknownContact,
+    TResult? Function(Address address)? address,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
   }) {
     return unknownContact?.call(name);
   }
@@ -920,9 +922,9 @@ class _$_TransferDestinationUnknownContact
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransferDestinationAddress value)? address,
-    TResult Function(_TransferDestinationContact value)? contact,
-    TResult Function(_TransferDestinationUnknownContact value)? unknownContact,
+    TResult? Function(_TransferDestinationAddress value)? address,
+    TResult? Function(_TransferDestinationContact value)? contact,
+    TResult? Function(_TransferDestinationUnknownContact value)? unknownContact,
   }) {
     return unknownContact?.call(this);
   }
