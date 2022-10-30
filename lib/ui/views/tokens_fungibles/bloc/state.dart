@@ -1,3 +1,4 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:flutter/material.dart';
