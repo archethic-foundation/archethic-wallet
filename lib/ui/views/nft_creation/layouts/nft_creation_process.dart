@@ -10,6 +10,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/infrastructure/repositories/transaction_builder.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 // ignore: unused_import
@@ -29,7 +30,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_p
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_file.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_image.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_property_access.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/bloc/transaction_builder.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -420,25 +420,6 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
     }
     try {
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
-      StateContainer.of(context).getSeed().then((String? seed) {
-        sl
-            .get<AppService>()
-            .getFeesEstimationCreateToken(
-              originPrivateKey,
-              seed!,
-              token,
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .name!,
-            )
-            .then((value) {
-          setState(() {
-            fee = value;
-          });
-        });
-      });
     } catch (e) {
       fee = 0;
     }
@@ -472,7 +453,8 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
       tokenProperties[element.propertyName] = element.propertyValue;
     }
 
-    final transaction = TokenTransactionBuilder.build(
+    // TODO(reddwarf03): to fix
+    final transaction = AddTokenTransactionBuilder.build(
       keychain: keychain,
       index: index,
       originPrivateKey: originPrivateKey,
@@ -480,7 +462,6 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
       tokenName: nftCreation.name,
       tokenInitialSupply: 1,
       tokenSymbol: '',
-      // TODO(reddwarf03): to fix
       //tokenProperties: tokenProperties,
     );
 

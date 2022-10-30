@@ -2,10 +2,11 @@ import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
-import 'package:aewallet/domain/repositories/transfer.dart';
+import 'package:aewallet/domain/repositories/transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
-import 'package:aewallet/infrastructure/repositories/transfer.dart';
+import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -232,26 +233,30 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final recipientAddress = formState.recipient.address;
     if (recipientAddress == null) return null;
 
-    late Transfer transfer;
+    late Transaction transaction;
 
     switch (state.transferType) {
       case TransferType.token:
-        transfer = Transfer.token(
-          accountSelectedName: selectedAccount!.name!,
-          amount: formState.amount,
-          message: formState.message,
-          recipientAddress: recipientAddress,
-          seed: formState.seed,
-          tokenAddress: formState.accountToken?.tokenInformations!.address,
+        transaction = Transaction.transfer(
+          transfer: Transfer.token(
+            accountSelectedName: selectedAccount!.name!,
+            amount: formState.amount,
+            message: formState.message,
+            recipientAddress: recipientAddress,
+            seed: formState.seed,
+            tokenAddress: formState.accountToken?.tokenInformations!.address,
+          ),
         );
         break;
       case TransferType.uco:
-        transfer = Transfer.uco(
-          accountSelectedName: selectedAccount!.name!,
-          amount: formState.amount,
-          message: formState.message,
-          recipientAddress: recipientAddress,
-          seed: formState.seed,
+        transaction = Transaction.transfer(
+          transfer: Transfer.uco(
+            accountSelectedName: selectedAccount!.name!,
+            amount: formState.amount,
+            message: formState.message,
+            recipientAddress: recipientAddress,
+            seed: formState.seed,
+          ),
         );
         break;
       case TransferType.nft:
@@ -261,7 +266,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final calculateFeesResult = await CalculateFeesUsecase(
       repository: ref.read(TransferFormProvider._repository),
-    ).run(transfer);
+    ).run(transaction);
 
     return calculateFeesResult.valueOrNull;
   }
@@ -528,26 +533,30 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       amountInUCO = state.amountConverted;
     }
 
-    late Transfer transfer;
+    late Transaction transaction;
 
     switch (state.transferType) {
       case TransferType.token:
-        transfer = Transfer.token(
-          accountSelectedName: selectedAccount!.name!,
-          amount: amountInUCO,
-          message: state.message,
-          recipientAddress: state.recipient.address!,
-          seed: state.seed,
-          tokenAddress: state.accountToken?.tokenInformations!.address,
+        transaction = Transaction.transfer(
+          transfer: Transfer.token(
+            accountSelectedName: selectedAccount!.name!,
+            amount: amountInUCO,
+            message: state.message,
+            recipientAddress: state.recipient.address!,
+            seed: state.seed,
+            tokenAddress: state.accountToken?.tokenInformations!.address,
+          ),
         );
         break;
       case TransferType.uco:
-        transfer = Transfer.uco(
-          accountSelectedName: selectedAccount!.name!,
-          amount: amountInUCO,
-          message: state.message,
-          recipientAddress: state.recipient.address!,
-          seed: state.seed,
+        transaction = Transaction.transfer(
+          transfer: Transfer.uco(
+            accountSelectedName: selectedAccount!.name!,
+            amount: amountInUCO,
+            message: state.message,
+            recipientAddress: state.recipient.address!,
+            seed: state.seed,
+          ),
         );
         break;
       case TransferType.nft:
@@ -556,7 +565,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
 
     transferRepository.send(
-      transfer: transfer,
+      transaction: transaction,
       onConfirmation: (confirmation) async {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
@@ -626,14 +635,14 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 }
 
 abstract class TransferFormProvider {
-  static final _repository = Provider<TransferRepositoryInterface>(
+  static final _repository = Provider<TransactionRepositoryInterface>(
     (ref) {
       final networkSettings = ref
           .watch(
             SettingsProviders.localSettingsRepository,
           )
           .getNetwork();
-      return ArchethicTransferRepository(
+      return ArchethicTransactionRepository(
         phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
         websocketEndpoint: networkSettings.getWebsocketUri(),
       );

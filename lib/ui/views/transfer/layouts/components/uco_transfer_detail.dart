@@ -10,7 +10,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/transfer/layouts/components/transfer_detail_card.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 // Package imports:
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
             ),
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 '${localizations.txListFrom} ${accountSelected!.name!}',
@@ -61,7 +61,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 '${localizations.txListTo} ${transfer.recipient.format(localizations)}',
@@ -76,7 +76,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 localizations.estimatedFees,
@@ -93,7 +93,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 localizations.total,
@@ -110,7 +110,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
             ],
           ),
-          TransferDetailCard(
+          SheetDetailCard(
             children: [
               Text(
                 localizations.availableAfterTransfer,
@@ -127,7 +127,7 @@ class UCOTransferDetail extends ConsumerWidget {
             ],
           ),
           if (transfer.message.isNotEmpty)
-            TransferDetailCard(
+            SheetDetailCard(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

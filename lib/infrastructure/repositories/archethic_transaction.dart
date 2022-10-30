@@ -1,15 +1,16 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/models/token.dart';
+import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
-import 'package:aewallet/domain/repositories/transfer.dart';
+import 'package:aewallet/domain/repositories/transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction_builder.dart';
-import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
-class ArchethicTransferRepository implements TransferRepositoryInterface {
-  ArchethicTransferRepository({
+class ArchethicTransactionRepository implements TransactionRepositoryInterface {
+  ArchethicTransactionRepository({
     required this.phoenixHttpEndpoint,
     required this.websocketEndpoint,
   });
@@ -22,12 +23,14 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
   final String websocketEndpoint;
 
   @override
-  Future<Result<double, Failure>> calculateFees(Transfer transfer) async {
+  Future<Result<double, Failure>> calculateFees(
+    Transaction transaction,
+  ) async {
     try {
-      final transaction = await _buildTransaction(transfer);
+      final transactionBuilt = await _buildTransaction(transaction);
 
       final transactionFee = await apiService.getTransactionFee(
-        transaction,
+        transactionBuilt,
       );
       if (transactionFee.errors != null) {
         return const Result.failure(
@@ -54,14 +57,9 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
     }
   }
 
-  Future<archethic.Transaction> _buildTransaction(
-    var transfer,
+  Future<archethic.Transaction> _buildTransactionTransfer(
+    Transfer transfer,
   ) async {
-    final transferType = transfer.map(
-      uco: (value) => TransferType.uco,
-      token: (value) => TransferType.token,
-    );
-
     final originPrivateKey = apiService.getOriginKey();
     final keychain = await apiService.getKeychain(transfer.seed);
 
@@ -80,44 +78,85 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
 
     var tokenTransferList = <archethic.TokenTransfer>[];
     var ucoTransferList = <archethic.UCOTransfer>[];
-    switch (transferType) {
-      case TransferType.token:
+
+    transfer.map(
+      token: (token) {
         tokenTransferList = <archethic.TokenTransfer>[
           archethic.TokenTransfer(
-            amount: archethic.toBigInt(transfer.amount),
-            to: transfer.recipientAddress.address,
-            tokenAddress: transfer.tokenAddress,
+            amount: archethic.toBigInt(token.amount),
+            to: token.recipientAddress.address,
+            tokenAddress: token.tokenAddress,
             tokenId: 0,
           )
         ];
-        break;
-      case TransferType.uco:
+      },
+      uco: (uco) {
         ucoTransferList = <archethic.UCOTransfer>[
           archethic.UCOTransfer(
-            amount: archethic.toBigInt(transfer.amount),
-            to: transfer.recipientAddress.address,
+            amount: archethic.toBigInt(uco.amount),
+            to: uco.recipientAddress.address,
           )
         ];
-        break;
-      case TransferType.nft:
-        // TODO(reddwarf03): Handle this case.
-        break;
-    }
+      },
+    );
 
     return TransferTransactionBuilder.build(
-      message: transfer.message,
       index: index,
       keychain: keychain,
       originPrivateKey: originPrivateKey,
       serviceName: service,
       tokenTransferList: tokenTransferList,
       ucoTransferList: ucoTransferList,
+      message: transfer.message,
+    );
+  }
+
+  Future<archethic.Transaction> _buildTransactionToken(
+    Token token,
+  ) async {
+    final originPrivateKey = apiService.getOriginKey();
+    final keychain = await apiService.getKeychain(token.seed);
+
+    final nameEncoded = Uri.encodeFull(
+      token.accountSelectedName,
+    );
+    final service = 'archethic-wallet-$nameEncoded';
+    final index = (await apiService.getTransactionIndex(
+      archethic.uint8ListToHex(
+        keychain.deriveAddress(
+          service,
+        ),
+      ),
+    ))
+        .chainLength!;
+
+    return AddTokenTransactionBuilder.build(
+      tokenName: token.name,
+      tokenSymbol: token.symbol,
+      tokenInitialSupply: token.initialSupply,
+      index: index,
+      keychain: keychain,
+      originPrivateKey: originPrivateKey,
+      serviceName: service,
+    );
+  }
+
+  Future<archethic.Transaction> _buildTransaction(
+    Transaction transaction,
+  ) async {
+    return await transaction.map(
+      transfer: (transfer) async {
+        return _buildTransactionTransfer(transfer.transfer);
+      },
+      token: (token) async {
+        return _buildTransactionToken(token.token);
+      },
     );
   }
 
   @override
   Future<void> send({
-    required Transfer transfer,
+    required Transaction transaction,
     Duration timeout = const Duration(seconds: 10),
     required TransactionConfirmationHandler onConfirmation,
     required TransactionErrorHandler onError,
@@ -128,11 +167,21 @@ class ArchethicTransferRepository implements TransferRepositoryInterface {
       websocketEndpoint: websocketEndpoint,
     );
 
-    final transaction = await _buildTransaction(transfer);
-    transactionSender.send(
-      transaction: transaction,
-      onConfirmation: onConfirmation,
-      onError: onError,
+    transaction.map(
+      transfer: (transfer) async {
+        transactionSender.send(
+          transaction: await _buildTransaction(transfer),
+          onConfirmation: onConfirmation,
+          onError: onError,
+        );
+      },
+      token: (token) async {
+        transactionSender.send(
+          transaction: await _buildTransaction(token),
+          onConfirmation: onConfirmation,
+          onError: onError,
+        );
+      },
     );
   }
 }

@@ -702,45 +702,6 @@ class AppService {
     return fromBigInt(transactionFee.fee).toDouble();
   }
 
-  Future<double> getFeesEstimationCreateToken(
-    String originPrivateKey,
-    String seed,
-    Token token,
-    String accountName,
-  ) async {
-    final keychain = await sl.get<ApiService>().getKeychain(seed);
-    final nameEncoded = Uri.encodeFull(accountName);
-    final service = 'archethic-wallet-$nameEncoded';
-    final index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(keychain.deriveAddress(service)),
-            ))
-        .chainLength!;
-
-    var transactionFee = TransactionFee();
-    try {
-      final content = tokenToJsonForTxDataContent(
-        Token(
-          name: token.name,
-          supply: token.supply,
-          symbol: token.symbol,
-          type: token.type,
-          tokenProperties: token.tokenProperties,
-        ),
-      );
-      final transaction =
-          Transaction(type: 'token', data: Transaction.initData())
-              .setContent(content);
-      final signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
-
-      transactionFee = await sl.get<ApiService>().getTransactionFee(signedTx);
-    } catch (e) {
-      dev.log(e.toString());
-    }
-    return fromBigInt(transactionFee.fee).toDouble();
-  }
-
   Future<Keychain> getKeychain(String seed) async {
     // Keychain keychain;
     // try {

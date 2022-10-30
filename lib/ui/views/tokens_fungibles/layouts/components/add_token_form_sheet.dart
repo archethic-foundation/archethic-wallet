@@ -1,31 +1,37 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
+// Project imports:
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
-import 'package:aewallet/ui/views/transfer/bloc/state.dart';
-import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
+import 'package:aewallet/ui/util/formatters.dart';
+import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
+// Package imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransferFormSheet extends ConsumerWidget {
-  const TransferFormSheet({
+part 'add_token_textfield_name.dart';
+part 'add_token_textfield_symbol.dart';
+part 'add_token_textfield_initial_supply.dart';
+
+class AddTokenFormSheet extends ConsumerWidget {
+  const AddTokenFormSheet({
     required this.seed,
-    this.actionButtonTitle,
-    required this.title,
     super.key,
   });
 
-  final String? actionButtonTitle;
   final String seed;
-  final String title;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,9 +42,9 @@ class TransferFormSheet extends ConsumerWidget {
         .appKeychain!
         .getAccountSelected()!;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final transfer = ref.watch(TransferFormProvider.transferForm);
-    final transferNotifier =
-        ref.watch(TransferFormProvider.transferForm.notifier);
+    final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
+    final addTokenNotifier =
+        ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -47,9 +53,11 @@ class TransferFormSheet extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: title,
+              title: localizations.createFungibleToken,
               widgetBeforeTitle: const NetworkIndicator(),
-              widgetAfterTitle: const BalanceIndicatorWidget(),
+              widgetAfterTitle: const BalanceIndicatorWidget(
+                displaySwitchButton: false,
+              ),
             ),
             Expanded(
               child: Container(
@@ -63,31 +71,15 @@ class TransferFormSheet extends ConsumerWidget {
                           padding: EdgeInsets.only(bottom: bottom + 80),
                           child: Column(
                             children: <Widget>[
-                              const SizedBox(height: 25),
-                              if (transfer.transferType != TransferType.nft)
-                                TransferTextFieldAmount(
-                                  seed: seed,
-                                ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  top: 20,
-                                  bottom: 20,
-                                ),
-                                alignment: Alignment.topCenter,
-                                child: TransferTextFieldAddress(
-                                  seed: seed,
-                                ),
-                              ),
+                              const AddTokenTextFieldName(),
+                              const AddTokenTextFieldSymbol(),
+                              const AddTokenTextFieldInitialSupply(),
                               FeeInfos(
-                                feeEstimation: transfer.feeEstimation,
+                                feeEstimation: addToken.feeEstimation,
                                 tokenPrice: accountSelected
                                         .balance!.tokenPrice!.amount ??
                                     0,
                                 currencyName: currency.currency.name,
-                              ),
-                              const SizedBox(height: 10),
-                              TransferTextFieldMessage(
-                                seed: seed,
                               ),
                             ],
                           ),
@@ -102,27 +94,20 @@ class TransferFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (transfer.canTransfer)
+                    if (addToken.canAddToken)
                       AppButton(
                         AppButtonType.primary,
-                        actionButtonTitle ?? localizations.send,
+                        localizations.createToken,
                         Dimens.buttonBottomDimens,
-                        key: const Key('send'),
+                        key: const Key('createToken'),
                         onPressed: () async {
-                          // TODO(reddwarf03): Use isControl method from provider
-                          final isAddressOk =
-                              await transferNotifier.controlAddress(
-                            context,
-                            accountSelected,
-                          );
-                          final isAmountOk = transferNotifier.controlAmount(
-                            context,
-                            accountSelected,
-                          );
+                          addTokenNotifier.controlName(context);
+                          addTokenNotifier.controlSymbol(context);
+                          addTokenNotifier.controlInitialSupply(context);
 
-                          if (isAddressOk && isAmountOk) {
-                            transferNotifier.setTransferProcessStep(
-                              TransferProcessStep.confirmation,
+                          if (addToken.isControlsOk) {
+                            addTokenNotifier.setAddTokenProcessStep(
+                              AddTokenProcessStep.confirmation,
                             );
                           }
                         },
@@ -130,9 +115,9 @@ class TransferFormSheet extends ConsumerWidget {
                     else
                       AppButton(
                         AppButtonType.primaryOutline,
-                        actionButtonTitle ?? localizations.send,
+                        localizations.createToken,
                         Dimens.buttonBottomDimens,
-                        key: const Key('send'),
+                        key: const Key('createToken'),
                         onPressed: () {},
                       ),
                   ],
