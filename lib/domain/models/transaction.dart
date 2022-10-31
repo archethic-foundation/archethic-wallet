@@ -4,8 +4,6 @@ import 'package:aewallet/domain/models/transfer.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'transaction.freezed.dart';
 
-enum TransactionType { transfer, token }
-
 /// Represents a transaction, blockchain agnostic.
 @freezed
 class Transaction with _$Transaction {
