@@ -10,7 +10,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/infrastructure/repositories/transaction_builder.dart';
+import 'package:aewallet/infrastructure/repositories/transaction_token_builder.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 // ignore: unused_import

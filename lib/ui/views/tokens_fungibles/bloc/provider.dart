@@ -48,27 +48,31 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late final double fees;
 
-    fees = await Future<double>(
-      () async {
-        if (state.initialSupply <= 0 ||
-            state.name.isEmpty ||
-            state.symbol.isEmpty) {
-          return 0; // TODO(Chralu): should we use an error class instead ?
-        }
+    try {
+      fees = await Future<double>(
+        () async {
+          if (state.initialSupply <= 0 ||
+              state.name.isEmpty ||
+              state.symbol.isEmpty) {
+            return 0; // TODO(Chralu): should we use an error class instead ?
+          }
 
-        _calculateFeesTask?.cancel();
-        _calculateFeesTask = CancelableTask<double?>(
-          task: () => _calculateFees(
-            context: context,
-            formState: state,
-          ),
-        );
-        final fees = await _calculateFeesTask?.schedule(delay);
+          _calculateFeesTask?.cancel();
+          _calculateFeesTask = CancelableTask<double?>(
+            task: () => _calculateFees(
+              context: context,
+              formState: state,
+            ),
+          );
+          final fees = await _calculateFeesTask?.schedule(delay);
 
-        return fees ??
-            0; // TODO(Chralu): should we use an error class instead ?
-      },
-    );
+          return fees ??
+              0; // TODO(Chralu): should we use an error class instead ?
+        },
+      );
+    } on CanceledTask {
+      return;
+    }
 
     state = state.copyWith(
       feeEstimation: AsyncValue.data(fees),
