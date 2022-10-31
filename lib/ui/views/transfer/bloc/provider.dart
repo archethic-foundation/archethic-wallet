@@ -63,27 +63,31 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           amountInUCO = state.amountConverted;
         }
 
-        fees = await Future<double>(
-          () async {
-            if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
-              return 0; // TODO(Chralu): should we use an error class instead ?
-            }
+        try {
+          fees = await Future<double>(
+            () async {
+              if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
+                return 0; // TODO(Chralu): should we use an error class instead ?
+              }
 
-            _calculateFeesTask?.cancel();
-            _calculateFeesTask = CancelableTask<double?>(
-              task: () => _calculateFees(
-                context: context,
-                formState: state.copyWith(
-                  amount: amountInUCO,
+              _calculateFeesTask?.cancel();
+              _calculateFeesTask = CancelableTask<double?>(
+                task: () => _calculateFees(
+                  context: context,
+                  formState: state.copyWith(
+                    amount: amountInUCO,
+                  ),
                 ),
-              ),
-            );
-            final fees = await _calculateFeesTask?.schedule(delay);
+              );
+              final fees = await _calculateFeesTask?.schedule(delay);
 
-            return fees ??
-                0; // TODO(Chralu): should we use an error class instead ?
-          },
-        );
+              return fees ??
+                  0; // TODO(Chralu): should we use an error class instead ?
+            },
+          );
+        } on CanceledTask {
+          return;
+        }
 
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
@@ -97,25 +101,29 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
         break;
       case TransferType.token:
-        fees = await Future<double>(
-          () async {
-            if (state.amount <= 0 || !state.recipient.isAddressValid) {
-              return 0; // TODO(Chralu): should we use an error class instead ?
-            }
+        try {
+          fees = await Future<double>(
+            () async {
+              if (state.amount <= 0 || !state.recipient.isAddressValid) {
+                return 0; // TODO(Chralu): should we use an error class instead ?
+              }
 
-            _calculateFeesTask?.cancel();
-            _calculateFeesTask = CancelableTask<double?>(
-              task: () => _calculateFees(
-                context: context,
-                formState: state,
-              ),
-            );
-            final fees = await _calculateFeesTask?.schedule(delay);
+              _calculateFeesTask?.cancel();
+              _calculateFeesTask = CancelableTask<double?>(
+                task: () => _calculateFees(
+                  context: context,
+                  formState: state,
+                ),
+              );
+              final fees = await _calculateFeesTask?.schedule(delay);
 
-            return fees ??
-                0; // TODO(Chralu): should we use an error class instead ?
-          },
-        );
+              return fees ??
+                  0; // TODO(Chralu): should we use an error class instead ?
+            },
+          );
+        } on CanceledTask {
+          return;
+        }
 
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
