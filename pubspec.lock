@@ -535,7 +535,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -1263,21 +1263,21 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.1"
   riverpod_annotation:
     dependency: "direct main"
     description:
       name: riverpod_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.6"
   riverpod_generator:
     dependency: "direct dev"
     description:
       name: riverpod_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.6"
   rxdart:
     dependency: "direct main"
     description:
