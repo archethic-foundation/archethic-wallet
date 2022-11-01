@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -9,7 +8,7 @@ import 'package:aewallet/util/nfc.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, ApiService, AddressService, OracleService;
-// Package imports:
+import 'package:coingecko_api/coingecko_api.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {
@@ -22,6 +21,11 @@ Future<void> setupServiceLocator() async {
     sl.unregister<ApiCoinsService>();
   }
   sl.registerLazySingleton<ApiCoinsService>(ApiCoinsService.new);
+
+  if (sl.isRegistered<CoinGeckoApi>()) {
+    sl.unregister<CoinGeckoApi>();
+  }
+  sl.registerLazySingleton<CoinGeckoApi>(CoinGeckoApi.new);
 
   if (sl.isRegistered<DBHelper>()) {
     sl.unregister<DBHelper>();
