@@ -158,7 +158,6 @@ enum AnimationType {
 class AnimationLoadingOverlay extends ModalRoute<void> {
   AnimationLoadingOverlay(
     this.type,
-    this.overlay85,
     this.overlay70, {
     this.onPoppedCallback,
     this.title,
@@ -166,7 +165,6 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
 
   AnimationType type;
   Function? onPoppedCallback;
-  Color overlay85;
   Color overlay70;
   String? title;
 

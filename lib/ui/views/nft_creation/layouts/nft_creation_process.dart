@@ -36,6 +36,7 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -201,22 +202,15 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
     _sendTxSub?.cancel();
   }
 
-  void _showSendingAnimation(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    Navigator.of(context).push(
-      AnimationLoadingOverlay(
-        AnimationType.send,
-        theme.animationOverlayStrong!,
-        theme.animationOverlayMedium!,
-      ),
-    );
-  }
-
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) async {
-      _showSendingAnimation(context);
+      final theme = ref.watch(ThemeProviders.selectedTheme);
+      ShowSendingAnimation.build(
+        context,
+        theme,
+      );
       final nftCreationNotifier =
           ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
       final seed = await StateContainer.of(context).getSeed();
@@ -428,8 +422,11 @@ class _NFTCreationProcessBodyState extends ConsumerState<NFTCreationProcessBody>
 
   Future<void> _doAdd() async {
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
-
-    _showSendingAnimation(context);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    ShowSendingAnimation.build(
+      context,
+      theme,
+    );
     final seed = await StateContainer.of(context).getSeed();
     final originPrivateKey = sl.get<ApiService>().getOriginKey();
     final keychain = await sl.get<ApiService>().getKeychain(seed!);

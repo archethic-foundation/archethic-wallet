@@ -20,6 +20,7 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -55,7 +56,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     isPressed = false;
     animationOpen = false;
     appWalletLive = widget.appWallet;
-    appWalletLive!.appKeychain.accounts.sort((a, b) => a.name!.compareTo(b.name!));
+    appWalletLive!.appKeychain.accounts
+        .sort((a, b) => a.name!.compareTo(b.name!));
   }
 
   Future<void> _changeAccount(Account account, StateSetter setState) async {
@@ -317,7 +319,8 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                       },
                     );
                     setState(() {
-                      appWalletLive!.appKeychain.accounts.sort((a, b) => a.name!.compareTo(b.name!));
+                      appWalletLive!.appKeychain.accounts
+                          .sort((a, b) => a.name!.compareTo(b.name!));
                     });
                   },
                 ),
@@ -349,7 +352,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                 FeedbackType.light,
                 ref.watch(SettingsProviders.settings).activeVibrations,
               );
-          _showSendingAnimation(context);
+          ShowSendingAnimation.build(context, theme);
           if (!account.selected!) {
             _changeAccount(account, setState);
             StateContainer.of(context).appWallet =
@@ -583,19 +586,6 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  void _showSendingAnimation(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    animationOpen = true;
-    Navigator.of(context).push(
-      AnimationLoadingOverlay(
-        AnimationType.send,
-        theme.animationOverlayStrong!,
-        theme.animationOverlayMedium!,
-        onPoppedCallback: () => animationOpen = false,
       ),
     );
   }

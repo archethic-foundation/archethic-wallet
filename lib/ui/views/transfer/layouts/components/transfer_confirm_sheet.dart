@@ -21,8 +21,8 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 // Package imports:
@@ -55,7 +55,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      _showSendingAnimation(context);
+      final theme = ref.watch(ThemeProviders.selectedTheme);
+      ShowSendingAnimation.build(
+        context,
+        theme,
+      );
       final transferNotifier =
           ref.watch(TransferFormProvider.transferForm.notifier);
       transferNotifier.send(context);
@@ -127,7 +131,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           );
       StateContainer.of(context)
           .appWallet!
-          .appKeychain.getAccountSelected()!
+          .appKeychain
+          .getAccountSelected()!
           .removeftInfosOffChain(token.id);
     }
     setState(() {
@@ -167,19 +172,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     _authSub?.cancel();
     _sendTxSub?.cancel();
     super.dispose();
-  }
-
-  void _showSendingAnimation(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    animationOpen = true;
-    Navigator.of(context).push(
-      AnimationLoadingOverlay(
-        AnimationType.send,
-        theme.animationOverlayStrong!,
-        theme.animationOverlayMedium!,
-        onPoppedCallback: () => animationOpen = false,
-      ),
-    );
   }
 
   @override

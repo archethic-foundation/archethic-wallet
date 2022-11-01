@@ -19,6 +19,7 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
@@ -544,21 +545,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     return securityConfiguration;
   }
 
-  void _showSendingAnimation(BuildContext context) {
+  Future<void> createKeychain() async {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    Navigator.of(context).push(
-      AnimationLoadingOverlay(
-        AnimationType.send,
-        theme.animationOverlayStrong!,
-        theme.animationOverlayMedium!,
-        title: localizations.appWalletInitInProgress,
-      ),
+    ShowSendingAnimation.build(
+      context,
+      theme,
+      title: localizations.appWalletInitInProgress,
     );
-  }
-
-  Future<void> createKeychain() async {
-    _showSendingAnimation(context);
 
     var error = false;
 
