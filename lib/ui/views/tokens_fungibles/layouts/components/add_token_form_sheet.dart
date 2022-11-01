@@ -83,6 +83,8 @@ class AddTokenFormSheet extends ConsumerWidget {
                                   accountSelected.balance!.tokenPrice!.amount ??
                                       0,
                               currencyName: currency.currency.name,
+                              estimatedFeesNote:
+                                  localizations.estimatedFeesAddTokenNote,
                             ),
                           ),
                         ],

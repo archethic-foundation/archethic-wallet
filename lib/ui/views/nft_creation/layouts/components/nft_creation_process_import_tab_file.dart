@@ -1,15 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
-
-import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+part of '../nft_creation_process_sheet.dart';
 
 class NFTCreationProcessImportTabFile extends ConsumerWidget {
   const NFTCreationProcessImportTabFile({super.key});

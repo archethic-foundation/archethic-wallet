@@ -82,6 +82,8 @@ class TransferFormSheet extends ConsumerWidget {
                                         .balance!.tokenPrice!.amount ??
                                     0,
                                 currencyName: currency.currency.name,
+                                estimatedFeesNote:
+                                    localizations.estimatedFeesNote,
                               ),
                               const SizedBox(height: 10),
                               TransferTextFieldMessage(

@@ -2,23 +2,22 @@
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_property_apptextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CategoryTemplateForm extends ConsumerWidget {
   const CategoryTemplateForm({
-    required this.currentNftCategoryIndex,
     super.key,
   });
-  final int currentNftCategoryIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
-
-    switch (currentNftCategoryIndex) {
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    switch (nftCreation.currentNftCategoryIndex) {
       case 4:
         final nftPropertyAuthorFocusNode = FocusNode();
         final nftPropertyAuthorController = TextEditingController();
