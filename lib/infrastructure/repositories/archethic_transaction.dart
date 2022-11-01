@@ -136,6 +136,7 @@ class ArchethicTransactionRepository implements TransactionRepositoryInterface {
       tokenName: token.name,
       tokenSymbol: token.symbol,
       tokenInitialSupply: token.initialSupply,
+      tokenType: token.type,
       index: index,
       keychain: keychain,
       originPrivateKey: originPrivateKey,

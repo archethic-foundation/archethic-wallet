@@ -113,6 +113,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
         seed: formState.seed,
+        type: 'fungible',
       ),
     );
 
@@ -233,6 +234,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         initialSupply: state.initialSupply,
         accountSelectedName: selectedAccount!.name!,
         seed: state.seed,
+        type: 'fungible',
       ),
     );
 

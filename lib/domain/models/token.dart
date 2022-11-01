@@ -11,6 +11,7 @@ class Token with _$Token {
     required String name,
     required String symbol,
     required double initialSupply,
+    required String type,
   }) = _Token;
   const Token._();
 }

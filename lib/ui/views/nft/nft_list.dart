@@ -30,9 +30,8 @@ class NFTList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!;
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCategories = ref.read(
       NftCategoryProviders.fetchNftCategory(
@@ -170,7 +169,9 @@ class NFTList extends ConsumerWidget {
                   Navigator.of(context).pushNamed(
                     '/nft_creation',
                     arguments: {
-                      'currentNftCategoryIndex': currentNftCategoryIndex,
+                      'seed': (await StateContainer.of(
+                        context,
+                      ).getSeed())!,
                     },
                   );
                 },

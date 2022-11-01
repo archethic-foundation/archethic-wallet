@@ -11,6 +11,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     required archethic.Keychain keychain,
     required int index,
     required String originPrivateKey,
+    required String tokenType,
   }) {
     final transaction = archethic.Transaction(
       type: 'token',
@@ -20,7 +21,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     final token = archethic.Token(
       name: tokenName,
       supply: archethic.toBigInt(tokenInitialSupply),
-      type: 'fungible',
+      type: tokenType,
       symbol: tokenSymbol,
       tokenProperties: {},
     );

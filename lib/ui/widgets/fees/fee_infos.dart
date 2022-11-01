@@ -15,12 +15,14 @@ class FeeInfos extends ConsumerWidget {
     required this.feeEstimation,
     required this.tokenPrice,
     required this.currencyName,
+    required this.estimatedFeesNote,
     super.key,
   });
 
   final AsyncValue<double> feeEstimation;
   final double tokenPrice;
   final String currencyName;
+  final String estimatedFeesNote;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,7 +63,7 @@ class FeeInfos extends ConsumerWidget {
             );
           }
           return Text(
-            localizations.estimatedFeesNote,
+            estimatedFeesNote,
             style: theme.textStyleSize14W100Primary,
           );
         },

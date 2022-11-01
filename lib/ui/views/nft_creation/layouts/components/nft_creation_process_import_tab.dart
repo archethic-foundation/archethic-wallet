@@ -1,15 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'nft_creation_process.dart';
+part of '../nft_creation_process_sheet.dart';
 
 class NFTCreationProcessImportTab extends ConsumerStatefulWidget {
   const NFTCreationProcessImportTab({
     super.key,
-    required this.tabActiveIndex,
-    required this.currentNftCategoryIndex,
   });
-
-  final int tabActiveIndex;
-  final int currentNftCategoryIndex;
 
   @override
   ConsumerState<NFTCreationProcessImportTab> createState() =>
@@ -41,7 +36,7 @@ class _NFTCreationProcessImportTabState
                   ref.read(
                     NftCategoryProviders.getDescriptionHeader(
                       context: context,
-                      id: widget.currentNftCategoryIndex,
+                      id: nftCreation.currentNftCategoryIndex,
                     ),
                   ),
                   style: theme.textStyleSize12W100Primary,

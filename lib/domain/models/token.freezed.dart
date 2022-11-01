@@ -21,6 +21,7 @@ mixin _$Token {
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   double get initialSupply => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TokenCopyWith<Token> get copyWith => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $TokenCopyWith<$Res> {
       String accountSelectedName,
       String name,
       String symbol,
-      double initialSupply});
+      double initialSupply,
+      String type});
 }
 
 /// @nodoc
@@ -57,6 +59,7 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
     Object? name = null,
     Object? symbol = null,
     Object? initialSupply = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       seed: null == seed
@@ -79,6 +82,10 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
           ? _value.initialSupply
           : initialSupply // ignore: cast_nullable_to_non_nullable
               as double,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -94,7 +101,8 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
       String accountSelectedName,
       String name,
       String symbol,
-      double initialSupply});
+      double initialSupply,
+      String type});
 }
 
 /// @nodoc
@@ -111,6 +119,7 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
     Object? name = null,
     Object? symbol = null,
     Object? initialSupply = null,
+    Object? type = null,
   }) {
     return _then(_$_Token(
       seed: null == seed
@@ -133,6 +142,10 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
           ? _value.initialSupply
           : initialSupply // ignore: cast_nullable_to_non_nullable
               as double,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -145,7 +158,8 @@ class _$_Token extends _Token {
       required this.accountSelectedName,
       required this.name,
       required this.symbol,
-      required this.initialSupply})
+      required this.initialSupply,
+      required this.type})
       : super._();
 
   @override
@@ -158,10 +172,12 @@ class _$_Token extends _Token {
   final String symbol;
   @override
   final double initialSupply;
+  @override
+  final String type;
 
   @override
   String toString() {
-    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply)';
+    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type)';
   }
 
   @override
@@ -175,12 +191,13 @@ class _$_Token extends _Token {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.initialSupply, initialSupply) ||
-                other.initialSupply == initialSupply));
+                other.initialSupply == initialSupply) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, seed, accountSelectedName, name, symbol, initialSupply);
+  int get hashCode => Object.hash(runtimeType, seed, accountSelectedName, name,
+      symbol, initialSupply, type);
 
   @JsonKey(ignore: true)
   @override
@@ -195,7 +212,8 @@ abstract class _Token extends Token {
       required final String accountSelectedName,
       required final String name,
       required final String symbol,
-      required final double initialSupply}) = _$_Token;
+      required final double initialSupply,
+      required final String type}) = _$_Token;
   const _Token._() : super._();
 
   @override
@@ -208,6 +226,8 @@ abstract class _Token extends Token {
   String get symbol;
   @override
   double get initialSupply;
+  @override
+  String get type;
   @override
   @JsonKey(ignore: true)
   _$$_TokenCopyWith<_$_Token> get copyWith =>
