@@ -17,6 +17,7 @@ import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -42,6 +43,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
+      _showSendingAnimation(context);
       final addTokenNotifier =
           ref.watch(AddTokenFormProvider.addTokenForm.notifier);
       addTokenNotifier.send(context);
@@ -139,6 +141,19 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
     _authSub?.cancel();
     _sendTxSub?.cancel();
     super.dispose();
+  }
+
+  void _showSendingAnimation(BuildContext context) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    animationOpen = true;
+    Navigator.of(context).push(
+      AnimationLoadingOverlay(
+        AnimationType.send,
+        theme.animationOverlayStrong!,
+        theme.animationOverlayMedium!,
+        onPoppedCallback: () => animationOpen = false,
+      ),
+    );
   }
 
   @override
