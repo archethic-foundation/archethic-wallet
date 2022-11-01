@@ -17,8 +17,8 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -449,7 +449,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             });
                             return;
                           }
-                          _showSendingAnimation(context);
+                          ShowSendingAnimation.build(context, theme);
                           await sl.get<DBHelper>().clearAppWallet();
                           StateContainer.of(context).appWallet = null;
                           final seed = AppMnemomics.mnemonicListToSeed(
@@ -673,16 +673,5 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
           .appKeychain
           .setAccountSelected(selection);
     }
-  }
-
-  void _showSendingAnimation(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    Navigator.of(context).push(
-      AnimationLoadingOverlay(
-        AnimationType.send,
-        theme.animationOverlayStrong!,
-        theme.animationOverlayMedium!,
-      ),
-    );
   }
 }
