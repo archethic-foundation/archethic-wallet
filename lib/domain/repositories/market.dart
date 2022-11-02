@@ -8,6 +8,8 @@ abstract class MarketRepositoryInterface {
 
   bool useOracle = false;
 
+  bool canHandleCurrency(String currency);
+
   Future<Result<MarketPrice, Failure>> getUCOMarketPrice(
     String currency,
   );

@@ -8,10 +8,15 @@ import 'package:aewallet/domain/usecases/usecase.dart';
 class GetUCOMarketPriceUsecase
     implements UseCase<String, Result<MarketPrice, Failure>> {
   const GetUCOMarketPriceUsecase({
-    required this.repository,
+    required this.repositories,
   });
 
-  final MarketRepositoryInterface repository;
+  final List<MarketRepositoryInterface> repositories;
+
+  MarketRepositoryInterface _findRepo(String currency) =>
+      repositories.firstWhere(
+        (repository) => repository.canHandleCurrency(currency),
+      );
 
   @override
   Future<Result<MarketPrice, Failure>> run(String currency) async {
@@ -19,6 +24,8 @@ class GetUCOMarketPriceUsecase
       return const Result.failure(Failure.invalidValue());
     }
 
-    return repository.getUCOMarketPrice(currency);
+    final repo = _findRepo(currency);
+
+    return repo.getUCOMarketPrice(currency);
   }
 }

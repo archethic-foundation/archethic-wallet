@@ -29,24 +29,21 @@ class _SystemHash {
   }
 }
 
-String $_marketPriceRepositoryHash() =>
-    r'4d696077766b2b62620a67805e57212c93470547';
+String $_repositoriesHash() => r'9b3461425f8937b45a2b68e2135b244445c3bb9a';
 
-/// See also [_marketPriceRepository].
-final _marketPriceRepositoryProvider =
-    AutoDisposeProvider<MarketPriceRepository>(
-  _marketPriceRepository,
-  name: r'_marketPriceRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_marketPriceRepositoryHash,
+/// See also [_repositories].
+final _repositoriesProvider = Provider<List<MarketRepositoryInterface>>(
+  _repositories,
+  name: r'_repositoriesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : $_repositoriesHash,
 );
-typedef _MarketPriceRepositoryRef
-    = AutoDisposeProviderRef<MarketPriceRepository>;
-String $_getUCOMarketPriceHash() => r'fbff76c4ffd04a20fe5a566d48572924ffde28e0';
+typedef _RepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
+String $_getUCOMarketPriceHash() => r'36fff79b39838f8776499d9b0bc80df816a2a5c0';
 
 /// See also [_getUCOMarketPrice].
-class _GetUCOMarketPriceProvider extends AutoDisposeProvider<MarketPrice?> {
+class _GetUCOMarketPriceProvider
+    extends AutoDisposeFutureProvider<MarketPrice?> {
   _GetUCOMarketPriceProvider({
     required this.currency,
   }) : super(
@@ -78,12 +75,12 @@ class _GetUCOMarketPriceProvider extends AutoDisposeProvider<MarketPrice?> {
   }
 }
 
-typedef _GetUCOMarketPriceRef = AutoDisposeProviderRef<MarketPrice?>;
+typedef _GetUCOMarketPriceRef = AutoDisposeFutureProviderRef<MarketPrice?>;
 
 /// See also [_getUCOMarketPrice].
 final _getUCOMarketPriceProvider = _GetUCOMarketPriceFamily();
 
-class _GetUCOMarketPriceFamily extends Family<MarketPrice?> {
+class _GetUCOMarketPriceFamily extends Family<AsyncValue<MarketPrice?>> {
   _GetUCOMarketPriceFamily();
 
   _GetUCOMarketPriceProvider call({
@@ -95,7 +92,7 @@ class _GetUCOMarketPriceFamily extends Family<MarketPrice?> {
   }
 
   @override
-  AutoDisposeProvider<MarketPrice?> getProviderOverride(
+  AutoDisposeFutureProvider<MarketPrice?> getProviderOverride(
     covariant _GetUCOMarketPriceProvider provider,
   ) {
     return call(
