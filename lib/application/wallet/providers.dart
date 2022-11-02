@@ -1,6 +1,7 @@
 part of 'wallet.dart';
 
-class SessionNotifier extends Notifier<Session> {
+@Riverpod(keepAlive: true)
+class _SessionNotifier extends Notifier<Session> {
   Vault? __vault;
   Future<Vault> get _vault async => __vault ??= await Vault.getInstance();
 
@@ -107,7 +108,6 @@ class SessionNotifier extends Notifier<Session> {
         return null;
       }
 
-      // StateContainer.of(context).appWallet = appWallet;
       final accounts = appWallet.appKeychain.accounts;
 
       if (accounts.isEmpty) {
@@ -128,23 +128,15 @@ class SessionNotifier extends Notifier<Session> {
   }
 }
 
-@Riverpod(keepAlive: false)
-Future<List<RecentTransaction>> _recentTransactions(
-  _RecentTransactionsRef ref, {
-  required String pagingAddress,
-}) async {
-  final session = ref.watch<Session>(SessionProviders.session).loggedIn;
-  if (session == null) {
-    return [];
-  }
-
-  final selectedAccount = ref.watch(AccountProviders.selectedAccount);
-
-  if (selectedAccount == null) return [];
-  selectedAccount.updateRecentTransactions(pagingAddress, session.seed);
-
-  return selectedAccount.recentTransactions ?? [];
-}
+// TODO(Chralu): create Providers for the following
+//    await selectedAccount.updateLastAddress();
+// await selectedAccount.updateFungiblesTokens();
+// await selectedAccount.updateNFT();
+// await selectedAccount.updateBalance(
+//   curNetwork.getNetworkCryptoCurrencyLabel(),
+//   selectedCurrency.currency.name,
+//   tokenPrice,
+// );
 
 @riverpod
 Future<Keychain?> _archethicWalletKeychain(Ref ref) async {
@@ -155,11 +147,7 @@ Future<Keychain?> _archethicWalletKeychain(Ref ref) async {
 }
 
 abstract class SessionProviders {
-  static final session = NotifierProvider<SessionNotifier, Session>(
-    SessionNotifier.new,
-  );
-
-  static final recentTransactions = _recentTransactionsProvider;
+  static final session = _sessionNotifierProvider;
 
   static final archethicWalletKeychain = _archethicWalletKeychainProvider;
 }

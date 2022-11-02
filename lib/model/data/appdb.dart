@@ -208,6 +208,15 @@ class DBHelper {
     return appWallet.appKeychain.accounts;
   }
 
+  Future<Account?> getAccount(String name) async {
+    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
+    for (final account in appWallet.appKeychain.accounts) {
+      if (account.name == name) return account;
+    }
+    return null;
+  }
+
   Future<AppWallet> addAccount(Account account) async {
     final box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;

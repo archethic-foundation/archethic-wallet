@@ -26,7 +26,37 @@ class Account extends HiveObject {
     this.recentTransactions,
     this.accountTokens,
     this.accountNFT,
+    this.nftInfosOffChainList,
+    this.nftCategoryList,
   });
+
+  Account copyWith({
+    String? name,
+    String? genesisAddress,
+    int? lastLoadingTransactionInputs,
+    bool? selected,
+    String? lastAddress,
+    AccountBalance? balance,
+    List<RecentTransaction>? recentTransactions,
+    List<AccountToken>? accountTokens,
+    List<AccountToken>? accountNFT,
+    List<NftInfosOffChain>? nftInfosOffChainList,
+    List<int>? nftCategoryList,
+  }) =>
+      Account(
+        name: name ?? this.name,
+        genesisAddress: genesisAddress ?? this.genesisAddress,
+        lastLoadingTransactionInputs:
+            lastLoadingTransactionInputs ?? this.lastLoadingTransactionInputs,
+        selected: selected ?? this.selected,
+        lastAddress: lastAddress ?? this.lastAddress,
+        balance: balance ?? this.balance,
+        recentTransactions: recentTransactions ?? this.recentTransactions,
+        accountTokens: accountTokens ?? this.accountTokens,
+        accountNFT: accountNFT ?? this.accountNFT,
+        nftInfosOffChainList: nftInfosOffChainList ?? this.nftInfosOffChainList,
+        nftCategoryList: nftCategoryList ?? this.nftCategoryList,
+      );
 
   /// Account name - Primary Key
   @HiveField(0)
@@ -154,7 +184,6 @@ class Account extends HiveObject {
   }
 
   Future<void> updateRecentTransactions(
-    String pagingAddress,
     String seed,
   ) async {
     recentTransactions = await sl

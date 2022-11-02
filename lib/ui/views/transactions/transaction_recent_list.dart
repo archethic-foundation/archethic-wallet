@@ -1,9 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/recent_transactions.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_detail.dart';
 // Package imports:
@@ -15,34 +14,50 @@ class TxList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = ref.read(AccountProviders.selectedAccount)!;
+    final recentTransactionsAsyncValue = ref.watch(
+      RecentTransactionProviders.recentTransactions,
+    );
+    final recentTransactions = recentTransactionsAsyncValue.valueOrNull;
+
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        if (accountSelected.recentTransactions!.isEmpty)
-          Container(
-            alignment: Alignment.center,
-            color: Colors.transparent,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 26),
-              child: Text(
-                AppLocalization.of(context)!.recentTransactionsNoTransactionYet,
-                style: theme.textStyleSize14W600Primary,
+      children: [
+        if (recentTransactionsAsyncValue.isLoading)
+          SizedBox(
+            height: 78,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: theme.text,
+                strokeWidth: 1,
               ),
             ),
           ),
-        _TxListLine(num: 0, accountSelected: accountSelected),
-        _TxListLine(num: 1, accountSelected: accountSelected),
-        _TxListLine(num: 2, accountSelected: accountSelected),
-        _TxListLine(num: 3, accountSelected: accountSelected),
-        _TxListLine(num: 4, accountSelected: accountSelected),
-        _TxListLine(num: 5, accountSelected: accountSelected),
-        _TxListLine(num: 6, accountSelected: accountSelected),
-        _TxListLine(num: 7, accountSelected: accountSelected),
-        _TxListLine(num: 8, accountSelected: accountSelected),
-        _TxListLine(num: 9, accountSelected: accountSelected)
+        if (recentTransactions != null)
+          recentTransactions.isEmpty
+              ? Container(
+                  alignment: Alignment.center,
+                  color: Colors.transparent,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 26),
+                    child: Text(
+                      AppLocalization.of(context)!
+                          .recentTransactionsNoTransactionYet,
+                      style: theme.textStyleSize14W600Primary,
+                    ),
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: recentTransactions
+                      .map(
+                        (recentTransaction) => _TxListLine(
+                          recentTransaction: recentTransaction,
+                        ),
+                      )
+                      .toList(),
+                ),
       ],
     );
   }
@@ -50,29 +65,20 @@ class TxList extends ConsumerWidget {
 
 class _TxListLine extends ConsumerWidget {
   const _TxListLine({
-    required this.num,
-    required this.accountSelected,
+    required this.recentTransaction,
   });
 
-  final int num;
-  final Account accountSelected;
+  final RecentTransaction recentTransaction;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      color: Colors.transparent,
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-        child: (accountSelected.recentTransactions!.isNotEmpty &&
-                    accountSelected.recentTransactions!.length > num) ||
-                (StateContainer.of(context).recentTransactionsLoading == true &&
-                    accountSelected.recentTransactions!.length > num)
-            ? TransactionDetail(
-                transaction: accountSelected.recentTransactions![num],
-              )
-            : const SizedBox(),
-      ),
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) => Container(
+        color: Colors.transparent,
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+          child: TransactionDetail(
+            transaction: recentTransaction,
+          ),
+        ),
+      );
 }

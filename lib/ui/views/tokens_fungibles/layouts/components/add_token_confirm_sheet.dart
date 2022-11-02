@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
+import 'package:aewallet/application/recent_transactions.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -107,6 +109,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
     );
+
+    ref.invalidate(RecentTransactionProviders.recentTransactions);
 
     setState(() {
       StateContainer.of(context).requestUpdate();

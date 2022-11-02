@@ -2,7 +2,7 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction.dart';
+import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 
 class CalculateFeesUsecase
@@ -11,7 +11,7 @@ class CalculateFeesUsecase
     required this.repository,
   });
 
-  final TransactionRepositoryInterface repository;
+  final TransactionRemoteRepositoryInterface repository;
 
   @override
   Future<Result<double, Failure>> run(Transaction transaction) async {

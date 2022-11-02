@@ -5,6 +5,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/recent_transactions.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -129,10 +130,13 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             request: 'id',
           );
 
-      ref
+      await ref
           .read(AccountProviders.selectedAccount)!
           .removeftInfosOffChain(token.id);
     }
+
+    ref.invalidate(RecentTransactionProviders.recentTransactions);
+
     setState(() {
       StateContainer.of(context).requestUpdate();
     });

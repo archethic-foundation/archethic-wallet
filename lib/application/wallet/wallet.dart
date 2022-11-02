@@ -6,7 +6,6 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';

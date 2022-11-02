@@ -21,7 +21,8 @@ class LoggedInSession implements Session {
     required this.wallet,
   });
 
-  final String seed;
+  final String
+      seed; // TODO(Chralu): degage. La seed est dans le AppWallet seulement
   final AppWallet wallet;
 
   @override

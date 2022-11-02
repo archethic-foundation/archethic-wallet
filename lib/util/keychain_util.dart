@@ -345,9 +345,9 @@ class KeychainUtil {
           await accounts[i].updateBalance(tokenName, currency, tokenPrice);
           await accounts[i].updateFungiblesTokens();
         }
-        if (loadRecentTransactions) {
-          await accounts[i].updateRecentTransactions('', seed);
-        }
+        // if (loadRecentTransactions) {
+        //   await accounts[i].updateRecentTransactions(seed);
+        // }
       }
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);

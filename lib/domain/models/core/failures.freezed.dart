@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -25,6 +26,7 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -32,6 +34,7 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -40,6 +43,7 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
@@ -47,6 +51,7 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
@@ -54,6 +59,7 @@ mixin _$Failure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
@@ -77,6 +83,121 @@ class _$FailureCopyWithImpl<$Res, $Val extends Failure>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_LoggedOutCopyWith<$Res> {
+  factory _$$_LoggedOutCopyWith(
+          _$_LoggedOut value, $Res Function(_$_LoggedOut) then) =
+      __$$_LoggedOutCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LoggedOutCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_LoggedOut>
+    implements _$$_LoggedOutCopyWith<$Res> {
+  __$$_LoggedOutCopyWithImpl(
+      _$_LoggedOut _value, $Res Function(_$_LoggedOut) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_LoggedOut extends _LoggedOut {
+  const _$_LoggedOut() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.loggedOut()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_LoggedOut);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function() invalidValue,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return loggedOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return loggedOut?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function()? invalidValue,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (loggedOut != null) {
+      return loggedOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return loggedOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return loggedOut?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (loggedOut != null) {
+      return loggedOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoggedOut extends Failure {
+  const factory _LoggedOut() = _$_LoggedOut;
+  const _LoggedOut._() : super._();
 }
 
 /// @nodoc
@@ -117,6 +238,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -127,6 +249,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -137,6 +260,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -151,6 +275,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
@@ -161,6 +286,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
@@ -171,6 +297,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
@@ -226,6 +353,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -236,6 +364,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -246,6 +375,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -260,6 +390,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
@@ -270,6 +401,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
@@ -280,6 +412,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
@@ -367,6 +500,7 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -377,6 +511,7 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -387,6 +522,7 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -401,6 +537,7 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
@@ -411,6 +548,7 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
@@ -421,6 +559,7 @@ class _$_OtherFailure extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,

@@ -29,79 +29,21 @@ class _SystemHash {
   }
 }
 
-String $_recentTransactionsHash() =>
-    r'794db0bda5288da921d3d6d2e44d1f649ef87a06';
+String $_SessionNotifierHash() => r'722b648072cabec6db5955501b12b1d41aedfbb6';
 
-/// See also [_recentTransactions].
-class _RecentTransactionsProvider
-    extends AutoDisposeFutureProvider<List<RecentTransaction>> {
-  _RecentTransactionsProvider({
-    required this.pagingAddress,
-  }) : super(
-          (ref) => _recentTransactions(
-            ref,
-            pagingAddress: pagingAddress,
-          ),
-          from: _recentTransactionsProvider,
-          name: r'_recentTransactionsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : $_recentTransactionsHash,
-        );
+/// See also [_SessionNotifier].
+final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
+  _SessionNotifier.new,
+  name: r'_sessionNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_SessionNotifierHash,
+);
+typedef _SessionNotifierRef = NotifierProviderRef<Session>;
 
-  final String pagingAddress;
-
+abstract class _$SessionNotifier extends Notifier<Session> {
   @override
-  bool operator ==(Object other) {
-    return other is _RecentTransactionsProvider &&
-        other.pagingAddress == pagingAddress;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, pagingAddress.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-typedef _RecentTransactionsRef
-    = AutoDisposeFutureProviderRef<List<RecentTransaction>>;
-
-/// See also [_recentTransactions].
-final _recentTransactionsProvider = _RecentTransactionsFamily();
-
-class _RecentTransactionsFamily
-    extends Family<AsyncValue<List<RecentTransaction>>> {
-  _RecentTransactionsFamily();
-
-  _RecentTransactionsProvider call({
-    required String pagingAddress,
-  }) {
-    return _RecentTransactionsProvider(
-      pagingAddress: pagingAddress,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<List<RecentTransaction>> getProviderOverride(
-    covariant _RecentTransactionsProvider provider,
-  ) {
-    return call(
-      pagingAddress: provider.pagingAddress,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_recentTransactionsProvider';
+  Session build();
 }
 
 String $_archethicWalletKeychainHash() =>

@@ -3,14 +3,16 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/recent_transaction.dart';
 
 typedef TransactionConfirmationHandler = Future<void> Function(
   TransactionConfirmation confirmation,
 );
 typedef TransactionErrorHandler = Future<void> Function(TransactionError error);
 
-abstract class TransactionRepositoryInterface {
-  const TransactionRepositoryInterface();
+abstract class TransactionRemoteRepositoryInterface {
+  const TransactionRemoteRepositoryInterface();
 
   Future<Result<double, Failure>> calculateFees(Transaction transaction);
 
@@ -19,5 +21,14 @@ abstract class TransactionRepositoryInterface {
     Duration timeout = const Duration(seconds: 10),
     required TransactionConfirmationHandler onConfirmation,
     required TransactionErrorHandler onError,
+  });
+
+  Future<String?> getLastTransactionAddress({
+    required String genesisAddress,
+  });
+
+  Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
+    required Account account,
+    required String walletSeed,
   });
 }

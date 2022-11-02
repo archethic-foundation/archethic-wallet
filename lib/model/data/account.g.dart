@@ -26,9 +26,9 @@ class AccountAdapter extends TypeAdapter<Account> {
       recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
       accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
       accountNFT: (fields[8] as List?)?.cast<AccountToken>(),
-    )
-      ..nftInfosOffChainList = (fields[10] as List?)?.cast<NftInfosOffChain>()
-      ..nftCategoryList = (fields[11] as List?)?.cast<int>();
+      nftInfosOffChainList: (fields[10] as List?)?.cast<NftInfosOffChain>(),
+      nftCategoryList: (fields[11] as List?)?.cast<int>(),
+    );
   }
 
   @override

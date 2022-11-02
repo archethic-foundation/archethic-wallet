@@ -6,8 +6,8 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'account.g.dart';
@@ -63,13 +63,16 @@ class _AccountsNotifier extends Notifier<List<Account>> {
   }
 }
 
-@riverpod
-Account? _selectedAccount(Ref ref) {
-  final accounts = ref.watch(AccountProviders.accounts);
-  for (final account in accounts) {
-    if (account.selected == true) return account;
+@Riverpod(keepAlive: true)
+class _SelectedAccountNotifier extends Notifier<Account?> {
+  @override
+  Account? build() {
+    final accounts = ref.watch(AccountProviders.accounts);
+    for (final account in accounts) {
+      if (account.selected == true) return account;
+    }
+    return null;
   }
-  return null;
 }
 
 @riverpod
@@ -87,5 +90,5 @@ List<Account> _sortedAccounts(Ref ref) {
 abstract class AccountProviders {
   static final accounts = _accountsNotifierProvider;
   static final sortedAccounts = _sortedAccountsProvider;
-  static final selectedAccount = _selectedAccountProvider;
+  static final selectedAccount = _selectedAccountNotifierProvider;
 }

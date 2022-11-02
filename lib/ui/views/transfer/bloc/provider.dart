@@ -4,7 +4,7 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
-import 'package:aewallet/domain/repositories/transaction.dart';
+import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
@@ -737,7 +737,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 }
 
 abstract class TransferFormProvider {
-  static final _repository = Provider<TransactionRepositoryInterface>(
+  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
     (ref) {
       final networkSettings = ref
           .watch(

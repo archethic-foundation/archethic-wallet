@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_AccountsNotifierHash() => r'91c85b834910bdbd4074074355570d4acd246fec';
+String $_AccountsNotifierHash() => r'cbc13d53d0a67840ebafa9594c62b1560cec492f';
 
 /// See also [_AccountsNotifier].
 final _accountsNotifierProvider =
@@ -47,17 +47,25 @@ abstract class _$AccountsNotifier extends Notifier<List<Account>> {
   List<Account> build();
 }
 
-String $_selectedAccountHash() => r'dd8c0fd844f0eacd4313d8f74a75883dbf30183d';
+String $_SelectedAccountNotifierHash() =>
+    r'e7deb2cda941e9166be25bce6ba6a4e82c80043d';
 
-/// See also [_selectedAccount].
-final _selectedAccountProvider = AutoDisposeProvider<Account?>(
-  _selectedAccount,
-  name: r'_selectedAccountProvider',
+/// See also [_SelectedAccountNotifier].
+final _selectedAccountNotifierProvider =
+    NotifierProvider<_SelectedAccountNotifier, Account?>(
+  _SelectedAccountNotifier.new,
+  name: r'_selectedAccountNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_selectedAccountHash,
+      : $_SelectedAccountNotifierHash,
 );
-typedef _SelectedAccountRef = AutoDisposeProviderRef<Account?>;
+typedef _SelectedAccountNotifierRef = NotifierProviderRef<Account?>;
+
+abstract class _$SelectedAccountNotifier extends Notifier<Account?> {
+  @override
+  Account? build();
+}
+
 String $_sortedAccountsHash() => r'af89aa30403924cdfaf4bb74f0c9932044637e19';
 
 /// See also [_sortedAccounts].
