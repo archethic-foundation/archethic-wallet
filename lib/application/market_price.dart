@@ -1,88 +1,31 @@
 import 'package:aewallet/domain/models/market_price.dart';
-import 'package:aewallet/ui/util/delayed_task.dart';
+import 'package:aewallet/domain/repositories/market.dart';
+import 'package:aewallet/domain/usecases/market/get_market_price.dart';
+import 'package:aewallet/infrastructure/repositories/archethic_oracle_uco_market.dart';
+import 'package:aewallet/infrastructure/repositories/coingecko_uco_market.dart';
+import 'package:aewallet/util/functional_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'market_price.g.dart';
 
-@riverpod
-MarketPriceRepository _marketPriceRepository(_MarketPriceRepositoryRef ref) =>
-    MarketPriceRepository();
+@Riverpod(keepAlive: true)
+List<MarketRepositoryInterface> _repositories(_RepositoriesRef ref) => [
+      ArchethicOracleUCOMarketRepository(),
+      CoingeckoUCOMarketRepository(),
+    ];
 
 @riverpod
-MarketPrice? _getUCOMarketPrice(
+Future<MarketPrice?> _getUCOMarketPrice(
   _GetUCOMarketPriceRef ref, {
   required String currency,
-}) {
-  return ref.read(_marketPriceRepositoryProvider).getUCOMarketPrice(currency);
-}
-
-class MarketPriceRepository {
-  MarketPrice? getUCOMarketPrice(
-    String currency, {
-    Duration delay = const Duration(milliseconds: 800),
-  }) async {
-    if (currency.isEmpty) {
-      return MarketPrice(
-        amount: 0,
-        useOracle: false,
-        lastLoading: DateTime.now().millisecondsSinceEpoch ~/
-            Duration.millisecondsPerSecond,
-      );
-    }
-
-    CancelableTask<MarketPrice?>? _getUCOMarketPriceTask;
-
-    late final MarketPrice ucoMarketPrice;
-
-    if (currency == 'eur' || currency == 'usd') {
-      try {
-        ucoMarketPrice = await Future<MarketPrice>(
-          () async {
-            _getUCOMarketPriceTask?.cancel();
-            _getUCOMarketPriceTask = CancelableTask<MarketPrice?>(
-              task: () => _getUCOMarketPrice(currency: currency),
-            );
-            final ucoMarketPrice =
-                await _getUCOMarketPriceTask?.schedule(delay);
-
-            return ucoMarketPrice ??
-                MarketPrice(
-                  amount: 0,
-                  useOracle: false,
-                  lastLoading: DateTime.now().millisecondsSinceEpoch ~/
-                      Duration.millisecondsPerSecond,
-                );
-          },
-        );
-      } on CanceledTask {
-        return;
-      }
-    }
-
-    Future<MarketPrice> _getUCOMarketPrice(
-      String currency, {
-      Duration delay = const Duration(milliseconds: 800),
-    }) async {
-      ref = ref.copyWith(
-        feeEstimation: const AsyncValue.loading(),
-      );
-
-      state = state.copyWith(
-        feeEstimation: AsyncValue.data(fees),
-        errorNameText: '',
-      );
-      if (state.feeEstimationOrZero >
-          state.accountBalance.nativeTokenValue! - fees) {
-        state = state.copyWith(
-          errorNameText:
-              AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbolFees(context),
-                  ),
-        );
-      }
-    }
-  }
+}) async {
+  final marketPriceResult = await GetUCOMarketPriceUsecase(
+    repositories: ref.watch(_repositoriesProvider),
+  ).run(currency);
+  return marketPriceResult.map(
+    success: id,
+    failure: (_) => null,
+  );
 }
 
 abstract class MarketPriceProviders {

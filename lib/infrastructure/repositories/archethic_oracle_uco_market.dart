@@ -17,19 +17,18 @@ class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
       _archethicOracleApi ??= sl.get<archethic.OracleService>();
 
   @override
+  bool canHandleCurrency(String currency) {
+    return currency == 'eur' || currency == 'usd';
+  }
+
+  @override
   Future<Result<MarketPrice, Failure>> getUCOMarketPrice(
     String currency,
   ) async {
     try {
-      final oracleData = await archethicOracleApi.getOracleData();
-
-      // TODO(reddwarf03): find a way to know which currencies are managed by the blockchain with an oracle
       // TODO(reddwarf03): Provide a way to get the last value of an oracle #451
-      if (currency != 'eur' && currency != 'usd') {
-        return const Result.failure(
-          Failure.invalidValue(),
-        );
-      }
+
+      final oracleData = await archethicOracleApi.getOracleData();
 
       if (oracleData.uco == null || oracleData.uco!.eur == 0) {
         return const Result.failure(

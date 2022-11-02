@@ -18,6 +18,11 @@ class CoingeckoUCOMarketRepository implements MarketRepositoryInterface {
   bool useOracle = false;
 
   @override
+  bool canHandleCurrency(String currency) {
+    return currency != 'eur' && currency != 'usd';
+  }
+
+  @override
   Future<Result<MarketPrice, Failure>> getUCOMarketPrice(
     String currency,
   ) async {
