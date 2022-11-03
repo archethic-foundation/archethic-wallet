@@ -83,7 +83,9 @@ class TransferFormSheet extends ConsumerWidget {
                                     0,
                                 currencyName: currency.currency.name,
                                 estimatedFeesNote:
-                                    localizations.estimatedFeesNote,
+                                    transfer.transferType == TransferType.nft
+                                        ? localizations.estimatedFeesNoteNFT
+                                        : localizations.estimatedFeesNote,
                               ),
                               const SizedBox(height: 10),
                               TransferTextFieldMessage(
@@ -109,7 +111,6 @@ class TransferFormSheet extends ConsumerWidget {
                         Dimens.buttonBottomDimens,
                         key: const Key('send'),
                         onPressed: () async {
-                          // TODO(reddwarf03): Use isControl method from provider
                           final isAddressOk =
                               await transferNotifier.controlAddress(
                             context,

@@ -73,6 +73,7 @@ class TransferSheet extends ConsumerWidget {
             seed: seed,
             recipient: recipient,
             accountBalance: selectedAccount!.balance!,
+            amount: transferType == TransferType.nft ? 1 : 0,
           ),
         ),
       ],

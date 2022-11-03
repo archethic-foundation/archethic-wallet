@@ -31,6 +31,7 @@ class DBHelper {
     Hive.registerAdapter(PriceAdapter());
     Hive.registerAdapter(AccountTokenAdapter());
     Hive.registerAdapter(TokenInformationsAdapter());
+    // TODO(chralu): How to remove this adapter annd the unused hive class
     Hive.registerAdapter(TokenInformationsPropertyAdapter());
     Hive.registerAdapter(NftInfosOffChainAdapter());
   }

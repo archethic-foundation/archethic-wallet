@@ -42,8 +42,8 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
     return AppTextField(
       focusNode: nftDescriptionFocusNode,
       controller: nftDescriptionController,
+      textAlign: TextAlign.start,
       cursorColor: theme.text,
-      textInputAction: TextInputAction.next,
       labelText: AppLocalization.of(context)!.nftDescriptionHint,
       autocorrect: false,
       keyboardType: TextInputType.multiline,

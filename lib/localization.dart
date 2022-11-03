@@ -535,6 +535,12 @@ class AppLocalization {
     return Intl.message('Available after mint', name: 'availableAfterMint');
   }
 
+  String get estimatedFeesNoteNFT {
+    return Intl.message(
+        'Note: The fees will be estimated when the address is specified.',
+        name: 'estimatedFeesNoteNFT');
+  }
+
   String get estimatedFeesNote {
     return Intl.message(
         'Note: The fees will be estimated when the address and the amount are specified.',

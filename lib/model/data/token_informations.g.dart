@@ -23,7 +23,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       supply: fields[9] as double?,
       type: fields[3] as String?,
       symbol: fields[4] as String?,
-      tokenProperties: (fields[11] as List?)?.cast<TokenInformationsProperty>(),
+      tokenProperties: (fields[12] as Map?)?.cast<String, dynamic>(),
       onChain: fields[7] as bool?,
     );
   }
@@ -46,7 +46,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..write(obj.supply)
       ..writeByte(10)
       ..write(obj.id)
-      ..writeByte(11)
+      ..writeByte(12)
       ..write(obj.tokenProperties);
   }
 

@@ -88,7 +88,7 @@ class ArchethicTransactionRepository implements TransactionRepositoryInterface {
             amount: archethic.toBigInt(token.amount),
             to: token.recipientAddress.address,
             tokenAddress: token.tokenAddress,
-            tokenId: 0,
+            tokenId: token.tokenId,
           )
         ];
       },

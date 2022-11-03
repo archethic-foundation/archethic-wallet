@@ -120,7 +120,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       duration: const Duration(milliseconds: 5000),
     );
     final transfer = ref.read(TransferFormProvider.transferForm);
-    if (transfer.transferType == TransferType.token) {
+    if (transfer.transferType == TransferType.nft) {
       final transaction = await sl
           .get<ApiService>()
           .getLastTransaction(event.transactionAddress!);
@@ -199,7 +199,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                   SizedBox(
                     child: transfer.transferType == TransferType.uco
                         ? const UCOTransferDetail()
-                        : transfer.transferType == TransferType.token
+                        : transfer.transferType == TransferType.token ||
+                                transfer.transferType == TransferType.nft
                             ? const TokenTransferDetail()
                             : const SizedBox(),
                   ),

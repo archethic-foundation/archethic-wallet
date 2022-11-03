@@ -30,6 +30,8 @@ class _NFTCreationProcessPropertiesTabTextfieldSearchState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final nftCreationNotifier =
+        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
 
     return Container(
       padding: const EdgeInsets.only(left: 15, right: 15),
@@ -39,6 +41,9 @@ class _NFTCreationProcessPropertiesTabTextfieldSearchState
         labelText: AppLocalization.of(context)!.searchField,
         keyboardType: TextInputType.text,
         style: theme.textStyleSize16W600Primary,
+        onChanged: (text) {
+          nftCreationNotifier.setPropertySearch(text);
+        },
       ),
     );
   }

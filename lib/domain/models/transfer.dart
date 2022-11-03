@@ -21,6 +21,9 @@ class Transfer with _$Transfer {
     required String message,
     required double amount, // expressed in token
     required Address recipientAddress,
-    String? tokenAddress,
+    required String type,
+    required String? tokenAddress,
+    required int? tokenId,
+    required Map<String, dynamic> properties,
   }) = _TransferToken;
 }

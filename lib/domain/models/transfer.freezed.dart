@@ -32,7 +32,10 @@ mixin _$Transfer {
             String message,
             double amount,
             Address recipientAddress,
-            String? tokenAddress)
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)
         token,
   }) =>
       throw _privateConstructorUsedError;
@@ -41,8 +44,16 @@ mixin _$Transfer {
     TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult? Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+    TResult? Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)?
         token,
   }) =>
       throw _privateConstructorUsedError;
@@ -51,8 +62,16 @@ mixin _$Transfer {
     TResult Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+    TResult Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)?
         token,
     required TResult orElse(),
   }) =>
@@ -261,7 +280,10 @@ class _$_TransferUco extends _TransferUco {
             String message,
             double amount,
             Address recipientAddress,
-            String? tokenAddress)
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)
         token,
   }) {
     return uco(seed, accountSelectedName, message, amount, recipientAddress);
@@ -273,8 +295,16 @@ class _$_TransferUco extends _TransferUco {
     TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult? Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+    TResult? Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)?
         token,
   }) {
     return uco?.call(
@@ -287,8 +317,16 @@ class _$_TransferUco extends _TransferUco {
     TResult Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+    TResult Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)?
         token,
     required TResult orElse(),
   }) {
@@ -369,7 +407,10 @@ abstract class _$$_TransferTokenCopyWith<$Res>
       String message,
       double amount,
       Address recipientAddress,
-      String? tokenAddress});
+      String type,
+      String? tokenAddress,
+      int? tokenId,
+      Map<String, dynamic> properties});
 }
 
 /// @nodoc
@@ -388,7 +429,10 @@ class __$$_TransferTokenCopyWithImpl<$Res>
     Object? message = null,
     Object? amount = null,
     Object? recipientAddress = null,
+    Object? type = null,
     Object? tokenAddress = freezed,
+    Object? tokenId = freezed,
+    Object? properties = null,
   }) {
     return _then(_$_TransferToken(
       seed: null == seed
@@ -411,10 +455,22 @@ class __$$_TransferTokenCopyWithImpl<$Res>
           ? _value.recipientAddress
           : recipientAddress // ignore: cast_nullable_to_non_nullable
               as Address,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       tokenAddress: freezed == tokenAddress
           ? _value.tokenAddress
           : tokenAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      tokenId: freezed == tokenId
+          ? _value.tokenId
+          : tokenId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      properties: null == properties
+          ? _value._properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
     ));
   }
 }
@@ -428,8 +484,12 @@ class _$_TransferToken extends _TransferToken {
       required this.message,
       required this.amount,
       required this.recipientAddress,
-      this.tokenAddress})
-      : super._();
+      required this.type,
+      required this.tokenAddress,
+      required this.tokenId,
+      required final Map<String, dynamic> properties})
+      : _properties = properties,
+        super._();
 
   @override
   final String seed;
@@ -443,11 +503,21 @@ class _$_TransferToken extends _TransferToken {
   @override
   final Address recipientAddress;
   @override
+  final String type;
+  @override
   final String? tokenAddress;
+  @override
+  final int? tokenId;
+  final Map<String, dynamic> _properties;
+  @override
+  Map<String, dynamic> get properties {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_properties);
+  }
 
   @override
   String toString() {
-    return 'Transfer.token(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress, tokenAddress: $tokenAddress)';
+    return 'Transfer.token(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress, type: $type, tokenAddress: $tokenAddress, tokenId: $tokenId, properties: $properties)';
   }
 
   @override
@@ -462,13 +532,26 @@ class _$_TransferToken extends _TransferToken {
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.recipientAddress, recipientAddress) ||
                 other.recipientAddress == recipientAddress) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.tokenAddress, tokenAddress) ||
-                other.tokenAddress == tokenAddress));
+                other.tokenAddress == tokenAddress) &&
+            (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
+            const DeepCollectionEquality()
+                .equals(other._properties, _properties));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, seed, accountSelectedName,
-      message, amount, recipientAddress, tokenAddress);
+  int get hashCode => Object.hash(
+      runtimeType,
+      seed,
+      accountSelectedName,
+      message,
+      amount,
+      recipientAddress,
+      type,
+      tokenAddress,
+      tokenId,
+      const DeepCollectionEquality().hash(_properties));
 
   @JsonKey(ignore: true)
   @override
@@ -488,11 +571,14 @@ class _$_TransferToken extends _TransferToken {
             String message,
             double amount,
             Address recipientAddress,
-            String? tokenAddress)
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)
         token,
   }) {
     return token(seed, accountSelectedName, message, amount, recipientAddress,
-        tokenAddress);
+        type, tokenAddress, tokenId, properties);
   }
 
   @override
@@ -501,12 +587,20 @@ class _$_TransferToken extends _TransferToken {
     TResult? Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult? Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+    TResult? Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)?
         token,
   }) {
     return token?.call(seed, accountSelectedName, message, amount,
-        recipientAddress, tokenAddress);
+        recipientAddress, type, tokenAddress, tokenId, properties);
   }
 
   @override
@@ -515,14 +609,22 @@ class _$_TransferToken extends _TransferToken {
     TResult Function(String seed, String accountSelectedName, String message,
             double amount, Address recipientAddress)?
         uco,
-    TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress, String? tokenAddress)?
+    TResult Function(
+            String seed,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress,
+            String type,
+            String? tokenAddress,
+            int? tokenId,
+            Map<String, dynamic> properties)?
         token,
     required TResult orElse(),
   }) {
     if (token != null) {
       return token(seed, accountSelectedName, message, amount, recipientAddress,
-          tokenAddress);
+          type, tokenAddress, tokenId, properties);
     }
     return orElse();
   }
@@ -566,7 +668,10 @@ abstract class _TransferToken extends Transfer {
       required final String message,
       required final double amount,
       required final Address recipientAddress,
-      final String? tokenAddress}) = _$_TransferToken;
+      required final String type,
+      required final String? tokenAddress,
+      required final int? tokenId,
+      required final Map<String, dynamic> properties}) = _$_TransferToken;
   const _TransferToken._() : super._();
 
   @override
@@ -579,7 +684,10 @@ abstract class _TransferToken extends Transfer {
   double get amount;
   @override // expressed in token
   Address get recipientAddress;
+  String get type;
   String? get tokenAddress;
+  int? get tokenId;
+  Map<String, dynamic> get properties;
   @override
   @JsonKey(ignore: true)
   _$$_TransferTokenCopyWith<_$_TransferToken> get copyWith =>

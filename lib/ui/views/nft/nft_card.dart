@@ -31,7 +31,7 @@ class NFTCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
+    final typeMime = tokenInformations.tokenProperties!['type/mime'];
     return Column(
       children: <Widget>[
         Expanded(
@@ -86,8 +86,27 @@ class NFTCard extends ConsumerWidget {
                           ),
                         );
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: theme.backgroundDark,
+                              border: Border.all(),
+                            ),
+                            child: SizedBox(
+                              width: 200,
+                              height: 130,
+                              child: SizedBox(
+                                height: 78,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: theme.text,
+                                    strokeWidth: 1,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         );
                       }
                     },
@@ -120,9 +139,8 @@ class NFTCardBottom extends ConsumerStatefulWidget {
 class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!;
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final nftInfosOffChain =
         accountSelected.getftInfosOffChain(widget.tokenInformations.id);
     final preferences = ref.watch(SettingsProviders.settings);

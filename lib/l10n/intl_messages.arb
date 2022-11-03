@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-03T16:17:31.316251",
+  "@@last_modified": "2022-11-03T22:00:04.104796",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -638,6 +638,12 @@
   },
   "availableAfterMint": "Available after mint",
   "@availableAfterMint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "estimatedFeesNoteNFT": "Note: The fees will be estimated when the address is specified.",
+  "@estimatedFeesNoteNFT": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

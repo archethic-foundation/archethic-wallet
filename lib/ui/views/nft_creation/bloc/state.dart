@@ -35,8 +35,10 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default(0) int fileSize,
     @Default('') String name,
     @Default('') String description,
+    @Default('') String propertyName,
+    @Default('') String propertyValue,
+    @Default('') String propertySearch,
     @Default([]) List<NftCreationFormStateProperty> properties,
-    @Default(false) bool canAddProperty,
     @Default(false) bool canAddAccess,
     @Default('') String error,
     @Default('') String symbol,
@@ -50,6 +52,9 @@ class NftCreationFormState with _$NftCreationFormState {
 
   bool get canCreateNFT =>
       feeEstimation.value != null && feeEstimation.value! > 0;
+
+  bool get canAddProperty =>
+      propertyName.isNotEmpty && propertyValue.isNotEmpty;
 
   String symbolFees(BuildContext context) =>
       StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();

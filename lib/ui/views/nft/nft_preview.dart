@@ -37,9 +37,8 @@ class NFTPreviewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final description =
-        TokenUtil.getPropertyValue(tokenInformations, 'description');
-    final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
+    final description = tokenInformations.tokenProperties!['description'] ?? '';
+    final typeMime = tokenInformations.tokenProperties!['type/mime'] ?? '';
 
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -76,7 +75,25 @@ class NFTPreviewWidget extends ConsumerWidget {
                         ),
                       );
                     } else {
-                      return const Center(child: CircularProgressIndicator());
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: theme.backgroundDark,
+                          border: Border.all(),
+                        ),
+                        child: SizedBox(
+                          width: 200,
+                          height: 130,
+                          child: SizedBox(
+                            height: 78,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: theme.text,
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   },
                 )

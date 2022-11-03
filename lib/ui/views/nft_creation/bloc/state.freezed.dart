@@ -31,9 +31,11 @@ mixin _$NftCreationFormState {
   int get fileSize => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get propertyName => throw _privateConstructorUsedError;
+  String get propertyValue => throw _privateConstructorUsedError;
+  String get propertySearch => throw _privateConstructorUsedError;
   List<NftCreationFormStateProperty> get properties =>
       throw _privateConstructorUsedError;
-  bool get canAddProperty => throw _privateConstructorUsedError;
   bool get canAddAccess => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
@@ -65,8 +67,10 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       int fileSize,
       String name,
       String description,
+      String propertyName,
+      String propertyValue,
+      String propertySearch,
       List<NftCreationFormStateProperty> properties,
-      bool canAddProperty,
       bool canAddAccess,
       String error,
       String symbol,
@@ -101,8 +105,10 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? fileSize = null,
     Object? name = null,
     Object? description = null,
+    Object? propertyName = null,
+    Object? propertyValue = null,
+    Object? propertySearch = null,
     Object? properties = null,
-    Object? canAddProperty = null,
     Object? canAddAccess = null,
     Object? error = null,
     Object? symbol = null,
@@ -165,14 +171,22 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      propertyName: null == propertyName
+          ? _value.propertyName
+          : propertyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      propertyValue: null == propertyValue
+          ? _value.propertyValue
+          : propertyValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      propertySearch: null == propertySearch
+          ? _value.propertySearch
+          : propertySearch // ignore: cast_nullable_to_non_nullable
+              as String,
       properties: null == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<NftCreationFormStateProperty>,
-      canAddProperty: null == canAddProperty
-          ? _value.canAddProperty
-          : canAddProperty // ignore: cast_nullable_to_non_nullable
-              as bool,
       canAddAccess: null == canAddAccess
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
@@ -216,8 +230,10 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       int fileSize,
       String name,
       String description,
+      String propertyName,
+      String propertyValue,
+      String propertySearch,
       List<NftCreationFormStateProperty> properties,
-      bool canAddProperty,
       bool canAddAccess,
       String error,
       String symbol,
@@ -249,8 +265,10 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? fileSize = null,
     Object? name = null,
     Object? description = null,
+    Object? propertyName = null,
+    Object? propertyValue = null,
+    Object? propertySearch = null,
     Object? properties = null,
-    Object? canAddProperty = null,
     Object? canAddAccess = null,
     Object? error = null,
     Object? symbol = null,
@@ -313,14 +331,22 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      propertyName: null == propertyName
+          ? _value.propertyName
+          : propertyName // ignore: cast_nullable_to_non_nullable
+              as String,
+      propertyValue: null == propertyValue
+          ? _value.propertyValue
+          : propertyValue // ignore: cast_nullable_to_non_nullable
+              as String,
+      propertySearch: null == propertySearch
+          ? _value.propertySearch
+          : propertySearch // ignore: cast_nullable_to_non_nullable
+              as String,
       properties: null == properties
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<NftCreationFormStateProperty>,
-      canAddProperty: null == canAddProperty
-          ? _value.canAddProperty
-          : canAddProperty // ignore: cast_nullable_to_non_nullable
-              as bool,
       canAddAccess: null == canAddAccess
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
@@ -359,8 +385,10 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       this.fileSize = 0,
       this.name = '',
       this.description = '',
+      this.propertyName = '',
+      this.propertyValue = '',
+      this.propertySearch = '',
       final List<NftCreationFormStateProperty> properties = const [],
-      this.canAddProperty = false,
       this.canAddAccess = false,
       this.error = '',
       this.symbol = '',
@@ -411,6 +439,15 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @override
   @JsonKey()
   final String description;
+  @override
+  @JsonKey()
+  final String propertyName;
+  @override
+  @JsonKey()
+  final String propertyValue;
+  @override
+  @JsonKey()
+  final String propertySearch;
   final List<NftCreationFormStateProperty> _properties;
   @override
   @JsonKey()
@@ -419,9 +456,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
     return EqualUnmodifiableListView(_properties);
   }
 
-  @override
-  @JsonKey()
-  final bool canAddProperty;
   @override
   @JsonKey()
   final bool canAddAccess;
@@ -436,7 +470,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
 
   @override
   String toString() {
-    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canAddAccess: $canAddAccess, error: $error, symbol: $symbol, transaction: $transaction)';
+    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, properties: $properties, canAddAccess: $canAddAccess, error: $error, symbol: $symbol, transaction: $transaction)';
   }
 
   @override
@@ -470,10 +504,14 @@ class _$_NftCreationFormState extends _NftCreationFormState {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.propertyName, propertyName) ||
+                other.propertyName == propertyName) &&
+            (identical(other.propertyValue, propertyValue) ||
+                other.propertyValue == propertyValue) &&
+            (identical(other.propertySearch, propertySearch) ||
+                other.propertySearch == propertySearch) &&
             const DeepCollectionEquality()
                 .equals(other._properties, _properties) &&
-            (identical(other.canAddProperty, canAddProperty) ||
-                other.canAddProperty == canAddProperty) &&
             (identical(other.canAddAccess, canAddAccess) ||
                 other.canAddAccess == canAddAccess) &&
             (identical(other.error, error) || other.error == error) &&
@@ -499,8 +537,10 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         fileSize,
         name,
         description,
+        propertyName,
+        propertyValue,
+        propertySearch,
         const DeepCollectionEquality().hash(_properties),
-        canAddProperty,
         canAddAccess,
         error,
         symbol,
@@ -531,8 +571,10 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final int fileSize,
       final String name,
       final String description,
+      final String propertyName,
+      final String propertyValue,
+      final String propertySearch,
       final List<NftCreationFormStateProperty> properties,
-      final bool canAddProperty,
       final bool canAddAccess,
       final String error,
       final String symbol,
@@ -568,9 +610,13 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   @override
   String get description;
   @override
-  List<NftCreationFormStateProperty> get properties;
+  String get propertyName;
   @override
-  bool get canAddProperty;
+  String get propertyValue;
+  @override
+  String get propertySearch;
+  @override
+  List<NftCreationFormStateProperty> get properties;
   @override
   bool get canAddAccess;
   @override

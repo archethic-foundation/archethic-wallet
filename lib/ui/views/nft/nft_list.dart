@@ -105,7 +105,7 @@ class NFTList extends ConsumerWidget {
                                             context: context,
                                             ref: ref,
                                             widget: TransferSheet(
-                                              transferType: TransferType.token,
+                                              transferType: TransferType.nft,
                                               seed: (await StateContainer.of(
                                                 context,
                                               ).getSeed())!,

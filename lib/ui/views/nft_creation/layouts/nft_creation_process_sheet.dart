@@ -48,6 +48,7 @@ part 'components/nft_creation_process_properties_tab.dart';
 part 'components/nft_creation_process_properties_tab_textfield_name.dart';
 part 'components/nft_creation_process_properties_tab_textfield_value.dart';
 part 'components/nft_creation_process_properties_tab_textfield_search.dart';
+part 'components/nft_creation_process_properties_list.dart';
 
 class NftCreationProcessSheet extends ConsumerWidget {
   const NftCreationProcessSheet({
