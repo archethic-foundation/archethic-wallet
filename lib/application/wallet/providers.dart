@@ -115,7 +115,7 @@ class _SessionNotifier extends Notifier<Session> {
       }
 
       accounts.sort(
-        (a, b) => a.name!.compareTo(b.name!),
+        (a, b) => a.name.compareTo(b.name),
       );
 
       return state = LoggedInSession(

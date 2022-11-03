@@ -30,7 +30,7 @@ class ContactsDialog {
 
     for (final contact in contacts) {
       if (contact.format.toUpperCase() !=
-          accountSelected!.name!.toUpperCase()) {
+          accountSelected!.name.toUpperCase()) {
         pickerItemsList.add(
           PickerItem(
             contact.name.substring(1),
@@ -81,7 +81,7 @@ class ContactsDialog {
                       contacts.removeWhere(
                         (element) =>
                             element.format.toUpperCase() ==
-                            accountSelected!.name!.toUpperCase(),
+                            accountSelected!.name.toUpperCase(),
                       );
                       setState(
                         () {

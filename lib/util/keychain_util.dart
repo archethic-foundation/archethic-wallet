@@ -223,7 +223,7 @@ class KeychainUtil {
     );
 
     appWallet!.appKeychain.accounts.add(selectedAcct);
-    appWallet.appKeychain.accounts.sort((a, b) => a.name!.compareTo(b.name!));
+    appWallet.appKeychain.accounts.sort((a, b) => a.name.compareTo(b.name));
 
     final lastTransactionKeychainAddress = await sl
         .get<ApiService>()
@@ -319,7 +319,7 @@ class KeychainUtil {
           accounts.add(account);
 
           try {
-            await sl.get<DBHelper>().getContactWithName(account.name!);
+            await sl.get<DBHelper>().getContactWithName(account.name);
           } catch (e) {
             final newContact = Contact(
               name: '@$nameDecoded',
@@ -337,7 +337,7 @@ class KeychainUtil {
       for (var i = 0; i < accounts.length; i++) {
         final lastAddress = await sl
             .get<AddressService>()
-            .lastAddressFromAddress(accounts[i].genesisAddress!);
+            .lastAddressFromAddress(accounts[i].genesisAddress);
         if (lastAddress.isNotEmpty) {
           accounts[i].lastAddress = lastAddress;
         }
@@ -356,7 +356,7 @@ class KeychainUtil {
           .get<ApiService>()
           .getLastTransaction(genesisAddressKeychain, request: 'address');
       currentAppWallet.appKeychain.address = lastTransactionKeychain.address!;
-      accounts.sort((a, b) => a.name!.compareTo(b.name!));
+      accounts.sort((a, b) => a.name.compareTo(b.name));
       currentAppWallet.appKeychain.accounts = accounts;
 
       await currentAppWallet.save();

@@ -43,12 +43,12 @@ class GetRecentTransactions extends GetFromRemoteFirstStrategy<
   ) async {
     final lastTransactionAddress =
         await accountLocalRepository.getLastTransactionAddress(
-      command.account.name!,
+      command.account.name,
     );
     if (lastTransactionAddress == null) return null;
     final localTransactions =
         await accountLocalRepository.getRecentTransactions(
-      command.account.name!,
+      command.account.name,
     );
     return GetRecentTransactionsResult(
       lastTransactionAddress: lastTransactionAddress,
@@ -62,7 +62,7 @@ class GetRecentTransactions extends GetFromRemoteFirstStrategy<
   ) async {
     final lastTransactionAddress =
         await transactionRepository.getLastTransactionAddress(
-      genesisAddress: command.account.genesisAddress!,
+      genesisAddress: command.account.genesisAddress,
     );
 
     if (lastTransactionAddress == null) {
@@ -94,7 +94,7 @@ class GetRecentTransactions extends GetFromRemoteFirstStrategy<
     GetRecentTransactionsResult value,
   ) async {
     await accountLocalRepository.saveRecentTransactions(
-      accountName: command.account.name!,
+      accountName: command.account.name,
       lastAddress: value.lastTransactionAddress,
       recentTransactions: value.recentTransactions,
     );

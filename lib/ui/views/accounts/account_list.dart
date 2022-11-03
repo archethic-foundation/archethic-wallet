@@ -311,7 +311,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final contact = ref.watch(
       ContactProviders.getContactWithName(
-        account.name!,
+        account.name,
       ),
     );
 
@@ -418,7 +418,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                                       left: 20,
                                                     ),
                                                     child: AutoSizeText(
-                                                      account.name!,
+                                                      account.name,
                                                       style: theme
                                                           .textStyleSize12W400Primary,
                                                     ),

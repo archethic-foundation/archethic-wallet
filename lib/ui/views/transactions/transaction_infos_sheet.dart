@@ -67,7 +67,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                   .curNetwork
                   .getNetworkCryptoCurrencyLabel(),
               context,
-              selectedAccount.name!,
+              selectedAccount.name,
             ),
         builder: (
           BuildContext context,

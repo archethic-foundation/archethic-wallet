@@ -29,7 +29,7 @@ class MenuWidgetWallet extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(
       ContactProviders.getContactWithName(
-        accountSelected.name!,
+        accountSelected.name,
       ),
     );
 

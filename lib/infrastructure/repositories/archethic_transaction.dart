@@ -54,10 +54,10 @@ class ArchethicTransactionRepository
     return Result.guard(
       () async {
         return _appService.getRecentTransactions(
-          account.genesisAddress!,
+          account.genesisAddress,
           account.lastAddress!,
           walletSeed,
-          account.name!,
+          account.name,
         );
       },
     );

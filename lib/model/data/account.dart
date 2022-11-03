@@ -17,8 +17,8 @@ part 'account.g.dart';
 @HiveType(typeId: 1)
 class Account extends HiveObject {
   Account({
-    this.name,
-    this.genesisAddress,
+    required this.name,
+    required this.genesisAddress,
     this.lastLoadingTransactionInputs,
     this.selected = false,
     this.lastAddress,
@@ -60,11 +60,11 @@ class Account extends HiveObject {
 
   /// Account name - Primary Key
   @HiveField(0)
-  String? name;
+  final String name;
 
   /// Genesis Address
   @HiveField(1)
-  String? genesisAddress;
+  final String genesisAddress;
 
   /// Last loading of transaction inputs
   @HiveField(2)
@@ -104,9 +104,9 @@ class Account extends HiveObject {
 
   Future<void> updateLastAddress() async {
     final lastAddressFromAddress =
-        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
+        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
     lastAddress =
-        lastAddressFromAddress == '' ? genesisAddress! : lastAddressFromAddress;
+        lastAddressFromAddress == '' ? genesisAddress: lastAddressFromAddress;
     await updateAccount();
   }
 
@@ -188,7 +188,7 @@ class Account extends HiveObject {
   ) async {
     recentTransactions = await sl
         .get<AppService>()
-        .getRecentTransactions(genesisAddress!, lastAddress!, seed, name!);
+        .getRecentTransactions(genesisAddress, lastAddress!, seed, name);
     await updateLastLoadingTransactionInputs();
     await updateAccount();
   }

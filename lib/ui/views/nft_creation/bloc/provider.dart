@@ -8,7 +8,7 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction.dart';
+import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
@@ -40,7 +40,7 @@ final _nftCreationFormProvider = NotifierProvider.autoDispose.family<
     return NftCreationFormNotifier();
   },
   dependencies: [
-    AccountProviders.getSelectedAccount,
+    AccountProviders.selectedAccount,
     NftCreationFormProvider._repository,
   ],
 );
@@ -130,14 +130,14 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     required NftCreationFormState formState,
   }) async {
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     late Transaction transaction;
 
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount!.name!,
+        accountSelectedName: selectedAccount!.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: 1,
@@ -472,7 +472,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     final localizations = AppLocalization.of(context)!;
 
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     late Transaction transaction;
@@ -482,7 +482,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
         name: state.name,
         symbol: state.symbol,
         initialSupply: 1,
-        accountSelectedName: selectedAccount!.name!,
+        accountSelectedName: selectedAccount!.name,
         seed: state.seed,
         type: 'non-fungible',
         properties: state.propertiesConverted,
@@ -560,7 +560,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
 }
 
 abstract class NftCreationFormProvider {
-  static final _repository = Provider<TransactionRepositoryInterface>(
+  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
     (ref) {
       final networkSettings = ref
           .watch(

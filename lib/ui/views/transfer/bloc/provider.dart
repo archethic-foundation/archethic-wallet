@@ -279,7 +279,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.token:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
@@ -296,7 +296,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.uco:
         transaction = Transaction.transfer(
           transfer: Transfer.uco(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
@@ -307,7 +307,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.nft:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
@@ -624,7 +624,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.token:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
@@ -640,7 +640,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.uco:
         transaction = Transaction.transfer(
           transfer: Transfer.uco(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
@@ -651,7 +651,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.nft:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,

@@ -109,7 +109,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount!.name!,
+        accountSelectedName: selectedAccount!.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
@@ -257,7 +257,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         name: state.name,
         symbol: state.symbol,
         initialSupply: state.initialSupply,
-        accountSelectedName: selectedAccount!.name!,
+        accountSelectedName: selectedAccount!.name,
         seed: state.seed,
         type: 'fungible',
         properties: {},

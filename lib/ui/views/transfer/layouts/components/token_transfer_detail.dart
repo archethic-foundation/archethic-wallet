@@ -50,7 +50,7 @@ class TokenTransferDetail extends ConsumerWidget {
           SheetDetailCard(
             children: [
               Text(
-                '${localizations.txListFrom} ${accountSelected!.name!}',
+                '${localizations.txListFrom} ${accountSelected!.name}',
                 style: theme.textStyleSize12W400Primary,
               ),
             ],

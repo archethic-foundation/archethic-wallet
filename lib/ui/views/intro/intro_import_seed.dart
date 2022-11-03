@@ -473,7 +473,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             newSession.wallet.appKeychain.accounts,
                           );
                           await _launchSecurityConfiguration(
-                            ref.read(AccountProviders.selectedAccount)!.name!,
+                            ref.read(AccountProviders.selectedAccount)!.name,
                             newSession.seed,
                           );
 
@@ -575,7 +575,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final account in accounts) {
       pickerItemsList
-          .add(PickerItem(account.name!, null, null, null, account, true));
+          .add(PickerItem(account.name, null, null, null, account, true));
     }
 
     final selection = await showDialog<Account>(
