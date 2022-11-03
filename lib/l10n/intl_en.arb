@@ -750,6 +750,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "createNFTConfirmationMessage": "Do you confirm the mint of the following NFT?",
+  "@createNFTConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "TokenHeader": "Token",
   "@TokenHeader": {
     "type": "text",
@@ -1368,7 +1374,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "currencyOracleInfo": "This icon means that the conversion will use an oracle provided by Archethic.",
+  "currencyOracleInfo": "This icon means that the conversion uses an oracle provided by Archethic.",
   "@currencyOracleInfo": {
     "type": "text",
     "placeholders_order": [],
@@ -1394,6 +1400,12 @@
   },
   "availableAfterTransfer": "Available after transfer",
   "@availableAfterTransfer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "availableAfterMint": "Available after mint",
+  "@availableAfterMint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2052,8 +2064,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreationProcessTabConfirmationHeader": "Confirmation",
-  "@nftCreationProcessTabConfirmationHeader": {
+  "nftCreationProcessTabSummaryHeader": "Summary",
+  "@nftCreationProcessTabSummaryHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
