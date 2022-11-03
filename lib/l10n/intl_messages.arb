@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-10-29T18:20:16.693770",
+  "@@last_modified": "2022-11-03T16:17:31.316251",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -632,6 +632,12 @@
   },
   "availableAfterTransfer": "Available after transfer",
   "@availableAfterTransfer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "availableAfterMint": "Available after mint",
+  "@availableAfterMint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1328,6 +1334,12 @@
   },
   "addTokenConfirmationMessage": "Do you confirm the creation of the following Token?",
   "@addTokenConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createNFTConfirmationMessage": "Do you confirm the mint of the following NFT?",
+  "@createNFTConfirmationMessage": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2202,8 +2214,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreationProcessTabConfirmationHeader": "Confirmation",
-  "@nftCreationProcessTabConfirmationHeader": {
+  "nftCreationProcessTabSummaryHeader": "Summary",
+  "@nftCreationProcessTabSummaryHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
