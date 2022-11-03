@@ -27,6 +27,7 @@ mixin _$AddTokenFormState {
   String get errorNameText => throw _privateConstructorUsedError;
   String get errorSymbolText => throw _privateConstructorUsedError;
   String get errorInitialSupplyText => throw _privateConstructorUsedError;
+  String get errorAmountText => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddTokenFormStateCopyWith<AddTokenFormState> get copyWith =>
@@ -49,7 +50,8 @@ abstract class $AddTokenFormStateCopyWith<$Res> {
       double initialSupply,
       String errorNameText,
       String errorSymbolText,
-      String errorInitialSupplyText});
+      String errorInitialSupplyText,
+      String errorAmountText});
 }
 
 /// @nodoc
@@ -75,6 +77,7 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
     Object? errorNameText = null,
     Object? errorSymbolText = null,
     Object? errorInitialSupplyText = null,
+    Object? errorAmountText = null,
   }) {
     return _then(_value.copyWith(
       seed: null == seed
@@ -117,6 +120,10 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
           ? _value.errorInitialSupplyText
           : errorInitialSupplyText // ignore: cast_nullable_to_non_nullable
               as String,
+      errorAmountText: null == errorAmountText
+          ? _value.errorAmountText
+          : errorAmountText // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -139,7 +146,8 @@ abstract class _$$_AddTokenFormStateCopyWith<$Res>
       double initialSupply,
       String errorNameText,
       String errorSymbolText,
-      String errorInitialSupplyText});
+      String errorInitialSupplyText,
+      String errorAmountText});
 }
 
 /// @nodoc
@@ -163,6 +171,7 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
     Object? errorNameText = null,
     Object? errorSymbolText = null,
     Object? errorInitialSupplyText = null,
+    Object? errorAmountText = null,
   }) {
     return _then(_$_AddTokenFormState(
       seed: null == seed
@@ -205,6 +214,10 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
           ? _value.errorInitialSupplyText
           : errorInitialSupplyText // ignore: cast_nullable_to_non_nullable
               as String,
+      errorAmountText: null == errorAmountText
+          ? _value.errorAmountText
+          : errorAmountText // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -222,7 +235,8 @@ class _$_AddTokenFormState extends _AddTokenFormState {
       this.initialSupply = 0.0,
       this.errorNameText = '',
       this.errorSymbolText = '',
-      this.errorInitialSupplyText = ''})
+      this.errorInitialSupplyText = '',
+      this.errorAmountText = ''})
       : super._();
 
   @override
@@ -252,10 +266,13 @@ class _$_AddTokenFormState extends _AddTokenFormState {
   @override
   @JsonKey()
   final String errorInitialSupplyText;
+  @override
+  @JsonKey()
+  final String errorAmountText;
 
   @override
   String toString() {
-    return 'AddTokenFormState(seed: $seed, addTokenProcessStep: $addTokenProcessStep, feeEstimation: $feeEstimation, accountBalance: $accountBalance, name: $name, symbol: $symbol, initialSupply: $initialSupply, errorNameText: $errorNameText, errorSymbolText: $errorSymbolText, errorInitialSupplyText: $errorInitialSupplyText)';
+    return 'AddTokenFormState(seed: $seed, addTokenProcessStep: $addTokenProcessStep, feeEstimation: $feeEstimation, accountBalance: $accountBalance, name: $name, symbol: $symbol, initialSupply: $initialSupply, errorNameText: $errorNameText, errorSymbolText: $errorSymbolText, errorInitialSupplyText: $errorInitialSupplyText, errorAmountText: $errorAmountText)';
   }
 
   @override
@@ -279,7 +296,9 @@ class _$_AddTokenFormState extends _AddTokenFormState {
             (identical(other.errorSymbolText, errorSymbolText) ||
                 other.errorSymbolText == errorSymbolText) &&
             (identical(other.errorInitialSupplyText, errorInitialSupplyText) ||
-                other.errorInitialSupplyText == errorInitialSupplyText));
+                other.errorInitialSupplyText == errorInitialSupplyText) &&
+            (identical(other.errorAmountText, errorAmountText) ||
+                other.errorAmountText == errorAmountText));
   }
 
   @override
@@ -294,7 +313,8 @@ class _$_AddTokenFormState extends _AddTokenFormState {
       initialSupply,
       errorNameText,
       errorSymbolText,
-      errorInitialSupplyText);
+      errorInitialSupplyText,
+      errorAmountText);
 
   @JsonKey(ignore: true)
   @override
@@ -315,7 +335,8 @@ abstract class _AddTokenFormState extends AddTokenFormState {
       final double initialSupply,
       final String errorNameText,
       final String errorSymbolText,
-      final String errorInitialSupplyText}) = _$_AddTokenFormState;
+      final String errorInitialSupplyText,
+      final String errorAmountText}) = _$_AddTokenFormState;
   const _AddTokenFormState._() : super._();
 
   @override
@@ -338,6 +359,8 @@ abstract class _AddTokenFormState extends AddTokenFormState {
   String get errorSymbolText;
   @override
   String get errorInitialSupplyText;
+  @override
+  String get errorAmountText;
   @override
   @JsonKey(ignore: true)
   _$$_AddTokenFormStateCopyWith<_$_AddTokenFormState> get copyWith =>

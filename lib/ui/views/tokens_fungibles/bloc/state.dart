@@ -22,13 +22,15 @@ class AddTokenFormState with _$AddTokenFormState {
     @Default('') String errorNameText,
     @Default('') String errorSymbolText,
     @Default('') String errorInitialSupplyText,
+    @Default('') String errorAmountText,
   }) = _AddTokenFormState;
   const AddTokenFormState._();
 
   bool get isControlsOk =>
       errorNameText == '' &&
       errorSymbolText == '' &&
-      errorInitialSupplyText == '';
+      errorInitialSupplyText == '' &&
+      errorAmountText == '';
 
   bool get canAddToken =>
       feeEstimation.value != null && feeEstimation.value! > 0;
