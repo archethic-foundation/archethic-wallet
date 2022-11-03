@@ -11,7 +11,6 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -320,25 +319,13 @@ class AppService {
         final token =
             await sl.get<ApiService>().getToken(balance.token![i].address!);
         if (token.type == 'fungible') {
-          final propertiesList =
-              List<TokenInformationsProperty>.empty(growable: true);
-          if (token.tokenProperties != null &&
-              token.tokenProperties!.isNotEmpty) {
-            token.tokenProperties!.forEach((key, value) {
-              final tokenInformationsProperty = TokenInformationsProperty();
-              tokenInformationsProperty.name = key;
-              tokenInformationsProperty.value = value;
-              propertiesList.add(tokenInformationsProperty);
-            });
-          }
-
           final tokenInformations = TokenInformations(
             address: balance.token![i].address,
             name: token.name,
             type: token.type,
             supply: fromBigInt(token.supply).toDouble(),
             symbol: token.symbol,
-            tokenProperties: propertiesList,
+            tokenProperties: token.tokenProperties,
             onChain: true,
           );
           final accountFungibleToken = AccountToken(
@@ -366,20 +353,8 @@ class AppService {
           final token =
               await sl.get<ApiService>().getToken(balance.token![i].address!);
           if (token.type == 'non-fungible') {
-            final propertiesList =
-                List<TokenInformationsProperty>.empty(growable: true);
-            if (token.tokenProperties != null &&
-                token.tokenProperties!.isNotEmpty) {
-              token.tokenProperties!.forEach((key, value) {
-                final tokenInformationsProperty = TokenInformationsProperty();
-                if (key != 'file') {
-                  tokenInformationsProperty.name = key;
-                  tokenInformationsProperty.value = value;
-                  propertiesList.add(tokenInformationsProperty);
-                }
-              });
-            }
-
+            final tokenWithoutFile = token.tokenProperties!;
+            tokenWithoutFile.removeWhere((key, value) => key == 'file');
             final tokenInformations = TokenInformations(
               address: balance.token![i].address,
               id: token.id,
@@ -387,7 +362,7 @@ class AppService {
               type: token.type,
               supply: fromBigInt(token.supply).toDouble(),
               symbol: token.symbol,
-              tokenProperties: propertiesList,
+              tokenProperties: tokenWithoutFile,
               onChain: true,
             );
             final accountNFT = AccountToken(

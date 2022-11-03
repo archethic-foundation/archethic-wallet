@@ -132,18 +132,6 @@ class NftCreationFormNotifier
     return calculateFeesResult.valueOrNull;
   }
 
-  void canAddProperty(String propertyName, String propertyValue) {
-    if (propertyName.isNotEmpty && propertyValue.isNotEmpty) {
-      state = state.copyWith(
-        canAddProperty: true,
-      );
-    } else {
-      state = state.copyWith(
-        canAddProperty: false,
-      );
-    }
-  }
-
   void setNftCreationProcessStep(
     NftCreationProcessStep nftCreationProcessStep,
   ) {
@@ -239,6 +227,8 @@ class NftCreationFormNotifier
     propertiesToSet.sort((a, b) => a.propertyName.compareTo(b.propertyName));
     state = state.copyWith(
       properties: propertiesToSet,
+      propertyName: '',
+      propertyValue: '',
     );
   }
 
@@ -250,6 +240,26 @@ class NftCreationFormNotifier
   void setDescription(String description) {
     state = state.copyWith(description: description);
     setProperty('description', description);
+  }
+
+  void setPropertyName(String propertyName) {
+    state = state.copyWith(
+      propertyName: propertyName,
+      error: '',
+    );
+  }
+
+  void setPropertyValue(String propertyValue) {
+    state = state.copyWith(
+      propertyValue: propertyValue,
+      error: '',
+    );
+  }
+
+  void setPropertySearch(String propertySearch) {
+    state = state.copyWith(
+      propertySearch: propertySearch,
+    );
   }
 
   Future<void> setFileProperties(
@@ -357,13 +367,19 @@ class NftCreationFormNotifier
   bool controlAddNFTProperty(
     BuildContext context,
   ) {
-    // TODO(reddwarf03): Add control
-    /* if (nftCreation.properties.where(element) =>
-          element.propertyName!.compareTo(nftPropertyNameController.text)) {
-        addNFTPropertyMessage = localizations.nftPropertyExists;
-        return false;
-      }*/
+    final localizations = AppLocalization.of(context)!;
+    if (state.properties
+        .where((element) => element.propertyName == state.propertyName)
+        .isNotEmpty) {
+      state = state.copyWith(
+        error: localizations.nftPropertyExists,
+      );
+      return false;
+    }
 
+    state = state.copyWith(
+      error: '',
+    );
     return true;
   }
 

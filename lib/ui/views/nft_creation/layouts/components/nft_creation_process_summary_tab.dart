@@ -86,32 +86,7 @@ class _NFTCreationProcessSummaryTabState
                   readOnly: true,
                 ),
               ),
-              if (nftCreation.properties.isNotEmpty)
-                Wrap(
-                  children:
-                      List.generate(nftCreation.properties.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 5,
-                        right: 5,
-                      ),
-                      child: NFTCreationProcessPropertyAccess(
-                        propertyName:
-                            nftCreation.properties[index].propertyName,
-                        propertyValue:
-                            nftCreation.properties[index].propertyValue,
-                        publicKeys: nftCreation.properties[index].publicKeys,
-                        propertiesHidden: const [
-                          'file',
-                          'type/mime',
-                          'name',
-                          'description'
-                        ],
-                        readOnly: true,
-                      ),
-                    );
-                  }),
-                ),
+              const NFTCreationProcessPropertiesList(),
             ],
           ),
         ),

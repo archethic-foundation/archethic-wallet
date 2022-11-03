@@ -4,12 +4,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Project imports:
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:collection/collection.dart';
 import 'package:pdfx/pdfx.dart';
 
 RegExp _base64 = RegExp(
@@ -51,22 +49,5 @@ class TokenUtil {
       }
     }
     return imageDecoded;
-  }
-
-  static String getPropertyValue(
-    TokenInformations tokenInformations,
-    String nameProperty,
-  ) {
-    var value = '';
-    if (tokenInformations.tokenProperties != null &&
-        tokenInformations.tokenProperties!
-                .firstWhereOrNull((element) => element.name == nameProperty) !=
-            null) {
-      value = tokenInformations.tokenProperties!
-          .where((element) => element.name == nameProperty)
-          .first
-          .value!;
-    }
-    return value;
   }
 }

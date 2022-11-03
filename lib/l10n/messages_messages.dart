@@ -141,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "estimatedFeesAddTokenNote" : MessageLookupByLibrary.simpleMessage("Note: The fees will be estimated when the name and the initial supply are specified."),
     "estimatedFeesCalculationNote" : MessageLookupByLibrary.simpleMessage("Fees are being calculated"),
     "estimatedFeesNote" : MessageLookupByLibrary.simpleMessage("Note: The fees will be estimated when the address and the amount are specified."),
+    "estimatedFeesNoteNFT" : MessageLookupByLibrary.simpleMessage("Note: The fees will be estimated when the address is specified."),
     "exit" : MessageLookupByLibrary.simpleMessage("Exit"),
     "fees" : MessageLookupByLibrary.simpleMessage("Fees"),
     "fingerprintSeedBackup" : MessageLookupByLibrary.simpleMessage("Authenticate to backup seed."),

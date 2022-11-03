@@ -142,7 +142,39 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         break;
 
       case TransferType.nft:
-        // TODO(reddwarf03): Handle this case.
+        try {
+          fees = await Future<double>(
+            () async {
+              if (!state.recipient.isAddressValid) {
+                return 0; // TODO(Chralu): should we use an error class instead ?
+              }
+
+              _calculateFeesTask?.cancel();
+              _calculateFeesTask = CancelableTask<double?>(
+                task: () => _calculateFees(
+                  context: context,
+                  formState: state,
+                ),
+              );
+              final fees = await _calculateFeesTask?.schedule(delay);
+
+              return fees ??
+                  0; // TODO(Chralu): should we use an error class instead ?
+            },
+          );
+        } on CanceledTask {
+          return;
+        }
+
+        state = state.copyWith(
+          feeEstimation: AsyncValue.data(fees),
+          errorAmountText: fees > state.accountBalance.nativeTokenValue!
+              ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbolFees(context),
+                  )
+              : '',
+        );
         break;
     }
   }
@@ -253,6 +285,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             recipientAddress: recipientAddress,
             seed: formState.seed,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
+            type: 'fungible',
+            tokenId: 0,
+            properties:
+                formState.accountToken?.tokenInformations!.tokenProperties ??
+                    {},
           ),
         );
         break;
@@ -268,7 +305,21 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
         break;
       case TransferType.nft:
-        // TODO(reddwarf03): Handle this case.
+        transaction = Transaction.transfer(
+          transfer: Transfer.token(
+            accountSelectedName: selectedAccount!.name!,
+            amount: formState.amount,
+            message: formState.message,
+            recipientAddress: recipientAddress,
+            seed: formState.seed,
+            tokenAddress: formState.accountToken?.tokenInformations!.address,
+            type: 'non-fungible',
+            tokenId: 1,
+            properties:
+                formState.accountToken?.tokenInformations!.tokenProperties ??
+                    {},
+          ),
+        );
         break;
     }
 
@@ -427,48 +478,74 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
 
-    if (state.transferType == TransferType.uco) {
-      var amountInUCO = state.amount;
-      final primaryCurrency =
-          ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-      if (primaryCurrency.primaryCurrency ==
-          AvailablePrimaryCurrencyEnum.fiat) {
-        amountInUCO = state.amountConverted;
-      }
+    switch (state.transferType) {
+      case TransferType.uco:
+        var amountInUCO = state.amount;
+        final primaryCurrency =
+            ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+        if (primaryCurrency.primaryCurrency ==
+            AvailablePrimaryCurrencyEnum.fiat) {
+          amountInUCO = state.amountConverted;
+        }
 
-      if (amountInUCO + feeEstimation >
-          accountSelected.balance!.nativeTokenValue!) {
-        state = state.copyWith(
-          errorAmountText:
-              AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  ),
-        );
-        return false;
-      }
-    } else {
-      if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
-        state = state.copyWith(
-          errorAmountText:
-              AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  ),
-        );
-        return false;
-      }
+        if (amountInUCO + feeEstimation >
+            accountSelected.balance!.nativeTokenValue!) {
+          state = state.copyWith(
+            errorAmountText:
+                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                      '%1',
+                      state.symbol(context),
+                    ),
+          );
+          return false;
+        }
+        break;
+      case TransferType.token:
+        if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+          state = state.copyWith(
+            errorAmountText:
+                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                      '%1',
+                      state.symbol(context),
+                    ),
+          );
+          return false;
+        }
 
-      if (state.amount > state.accountToken!.amount!) {
-        state = state.copyWith(
-          errorAmountText:
-              AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  ),
-        );
-        return false;
-      }
+        if (state.amount > state.accountToken!.amount!) {
+          state = state.copyWith(
+            errorAmountText:
+                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                      '%1',
+                      state.symbol(context),
+                    ),
+          );
+          return false;
+        }
+        break;
+      case TransferType.nft:
+        if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+          state = state.copyWith(
+            errorAmountText:
+                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                      '%1',
+                      state.symbolFees(context),
+                    ),
+          );
+          return false;
+        }
+
+        if (state.amount > state.accountToken!.amount!) {
+          state = state.copyWith(
+            errorAmountText:
+                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                      '%1',
+                      'NFT',
+                    ),
+          );
+          return false;
+        }
+        break;
     }
 
     state = state.copyWith(
@@ -553,6 +630,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             recipientAddress: state.recipient.address!,
             seed: state.seed,
             tokenAddress: state.accountToken?.tokenInformations!.address,
+            type: 'fungible',
+            tokenId: 0,
+            properties:
+                state.accountToken?.tokenInformations!.tokenProperties ?? {},
           ),
         );
         break;
@@ -568,7 +649,20 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
         break;
       case TransferType.nft:
-        // TODO(reddwarf03): Handle this case.
+        transaction = Transaction.transfer(
+          transfer: Transfer.token(
+            accountSelectedName: selectedAccount!.name!,
+            amount: amountInUCO,
+            message: state.message,
+            recipientAddress: state.recipient.address!,
+            seed: state.seed,
+            tokenAddress: state.accountToken?.tokenInformations!.address,
+            type: 'non-fungible',
+            tokenId: 1,
+            properties:
+                state.accountToken?.tokenInformations!.tokenProperties ?? {},
+          ),
+        );
         break;
     }
 
