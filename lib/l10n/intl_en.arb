@@ -1620,8 +1620,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "introNewWalletGetFirstInfosNetworkHeader": "On which network do you want to use your wallet?",
+  "introNewWalletGetFirstInfosNetworkHeader": "If you want to create a wallet in the test or development networks, please click here...",
   "@introNewWalletGetFirstInfosNetworkHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "introNewWalletGetFirstInfosNetworkChoice": "Current network:",
+  "@introNewWalletGetFirstInfosNetworkChoice": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

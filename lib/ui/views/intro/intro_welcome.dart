@@ -149,14 +149,6 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                           key: const Key('newWallet'),
                           onPressed: () async {
                             if (checkedValue) {
-                              await _networkDialog();
-                              // TODO(reddwarf03): to implement, https://github.com/archethic-foundation/archethic-wallet/issues/144
-                              /* setState(() {
-                                  _curNetworksSetting = NetworksSetting(
-                                      AvailableNetworks.archethicTestNet);
-                                  StateContainer.of(context).curNetwork =
-                                      _curNetworksSetting;
-                                });*/
                               Navigator.of(context).pushNamed(
                                 '/intro_welcome_get_first_infos',
                               );
@@ -184,7 +176,15 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                                   StateContainer.of(context).curNetwork =
                                       _curNetworksSetting;
                                 });*/
-                              await _networkDialog();
+                              await NetworkDialog.getDialog(
+                                context,
+                                ref,
+                                ref
+                                    .read(
+                                      SettingsProviders.localSettingsRepository,
+                                    )
+                                    .getNetwork(),
+                              );
                               Navigator.of(context).pushNamed('/intro_import');
                             }
                           },
@@ -199,13 +199,5 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
         ),
       ),
     );
-  }
-
-  Future<void> _networkDialog() async {
-    (await NetworkDialog.getDialog(
-      context,
-      ref,
-      ref.read(SettingsProviders.localSettingsRepository).getNetwork(),
-    ))!;
   }
 }

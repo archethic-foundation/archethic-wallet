@@ -77,7 +77,9 @@ class NetworkDialog {
                 networkDevEndpoint: networkDevEndpoint,
               );
 
-              ref.read(SettingsProviders.localSettingsRepository).setNetwork(
+              await ref
+                  .read(SettingsProviders.localSettingsRepository)
+                  .setNetwork(
                     selectedNetworkSettings,
                   );
 
@@ -196,7 +198,8 @@ class NetworkDialog {
                                             );
                                           });
                                         } else {
-                                          preferences.setNetworkDevEndpoint(
+                                          await preferences
+                                              .setNetworkDevEndpoint(
                                             endpointController.text,
                                           );
                                           Navigator.pop(context);

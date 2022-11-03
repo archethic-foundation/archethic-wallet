@@ -281,11 +281,13 @@ class AppLocalization {
   }
 
   String get enterYubikeyClientIDEmpty {
-    return Intl.message('The client ID is mandatory', name: 'enterYubikeyClientIDEmpty');
+    return Intl.message('The client ID is mandatory',
+        name: 'enterYubikeyClientIDEmpty');
   }
 
   String get enterYubikeyAPIKeyEmpty {
-    return Intl.message('The API Key is mandatory', name: 'enterYubikeyAPIKeyEmpty');
+    return Intl.message('The API Key is mandatory',
+        name: 'enterYubikeyAPIKeyEmpty');
   }
 
   String get yubikeyParamsHeader {
@@ -1493,8 +1495,14 @@ class AppLocalization {
   }
 
   String get introNewWalletGetFirstInfosNetworkHeader {
-    return Intl.message('On which network do you want to use your wallet?',
+    return Intl.message(
+        'If you want to create a wallet in the test or development networks, please click here...',
         name: 'introNewWalletGetFirstInfosNetworkHeader');
+  }
+
+  String get introNewWalletGetFirstInfosNetworkChoice {
+    return Intl.message('Current network:',
+        name: 'introNewWalletGetFirstInfosNetworkChoice');
   }
 
   String get accountHeader {

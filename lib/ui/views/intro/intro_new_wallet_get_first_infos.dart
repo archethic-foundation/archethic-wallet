@@ -1,12 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +27,34 @@ class IntroNewWalletGetFirstInfos extends ConsumerStatefulWidget {
 
 class _IntroNewWalletDisclaimerState
     extends ConsumerState<IntroNewWalletGetFirstInfos> {
-  FocusNode nameFocusNode = FocusNode();
-  TextEditingController nameController = TextEditingController();
-  String? nameError;
+  late FocusNode nameFocusNode;
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameFocusNode = FocusNode();
+    nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nameFocusNode.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final network = ref
+        .watch(
+          SettingsProviders.localSettingsRepository,
+        )
+        .getNetwork();
+
+    FocusScope.of(context).requestFocus(nameFocusNode);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -89,9 +113,6 @@ class _IntroNewWalletDisclaimerState
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const SizedBox(
-                                height: 30,
-                              ),
                               AutoSizeText(
                                 localizations
                                     .introNewWalletGetFirstInfosWelcome,
@@ -120,18 +141,9 @@ class _IntroNewWalletDisclaimerState
                                   UpperCaseTextFormatter(),
                                 ],
                               ),
-                              if (nameError != null)
-                                SizedBox(
-                                  height: 40,
-                                  child: Text(
-                                    nameError!,
-                                    style: theme.textStyleSize14W600Primary,
-                                  ),
-                                )
-                              else
-                                const SizedBox(
-                                  height: 40,
-                                ),
+                              const SizedBox(
+                                height: 40,
+                              ),
                               AutoSizeText(
                                 localizations
                                     .introNewWalletGetFirstInfosNameInfos,
@@ -140,6 +152,57 @@ class _IntroNewWalletDisclaimerState
                               ),
                               const SizedBox(
                                 height: 30,
+                              ),
+                              Divider(
+                                height: 5,
+                                color: theme.text15,
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  await NetworkDialog.getDialog(
+                                    context,
+                                    ref,
+                                    network,
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 15,
+                                          ),
+                                          child: Icon(
+                                            UiIcons.about,
+                                            size: 15,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: AutoSizeText(
+                                            localizations
+                                                .introNewWalletGetFirstInfosNetworkHeader,
+                                            style: theme
+                                                .textStyleSize12W100Primary,
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    // TODO(chralu): Bug. Why the text is updated when the user click on the screen and not automatically
+                                    Text(
+                                      '${localizations.introNewWalletGetFirstInfosNetworkChoice} ${network.getDisplayName(context)}',
+                                      style: theme.textStyleSize12W400Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                height: 5,
+                                color: theme.text15,
                               ),
                             ],
                           ),
@@ -156,14 +219,15 @@ class _IntroNewWalletDisclaimerState
                       localizations.ok,
                       Dimens.buttonBottomDimens,
                       key: const Key('okButton'),
-                      onPressed: () async {
-                        nameError = '';
+                      onPressed: () {
                         if (nameController.text.isEmpty) {
-                          setState(() {
-                            nameError = localizations
-                                .introNewWalletGetFirstInfosNameBlank;
-                            FocusScope.of(context).requestFocus(nameFocusNode);
-                          });
+                          UIUtil.showSnackbar(
+                            localizations.introNewWalletGetFirstInfosNameBlank,
+                            context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
+                          );
                         } else {
                           AppDialogs.showConfirmDialog(
                             context,

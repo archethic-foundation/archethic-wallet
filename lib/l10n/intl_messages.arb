@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-10-29T18:20:16.693770",
+  "@@last_modified": "2022-11-04T00:30:40.597572",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1926,8 +1926,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "introNewWalletGetFirstInfosNetworkHeader": "On which network do you want to use your wallet?",
+  "introNewWalletGetFirstInfosNetworkHeader": "If you want to create a wallet in the test or development networks, please click here...",
   "@introNewWalletGetFirstInfosNetworkHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "introNewWalletGetFirstInfosNetworkChoice": "Current network:",
+  "@introNewWalletGetFirstInfosNetworkChoice": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
