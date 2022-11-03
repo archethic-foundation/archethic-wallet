@@ -22,6 +22,7 @@ mixin _$Token {
   String get symbol => throw _privateConstructorUsedError;
   double get initialSupply => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  Map<String, dynamic> get properties => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TokenCopyWith<Token> get copyWith => throw _privateConstructorUsedError;
@@ -38,7 +39,8 @@ abstract class $TokenCopyWith<$Res> {
       String name,
       String symbol,
       double initialSupply,
-      String type});
+      String type,
+      Map<String, dynamic> properties});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
     Object? symbol = null,
     Object? initialSupply = null,
     Object? type = null,
+    Object? properties = null,
   }) {
     return _then(_value.copyWith(
       seed: null == seed
@@ -86,6 +89,10 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      properties: null == properties
+          ? _value.properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
     ) as $Val);
   }
 }
@@ -102,7 +109,8 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
       String name,
       String symbol,
       double initialSupply,
-      String type});
+      String type,
+      Map<String, dynamic> properties});
 }
 
 /// @nodoc
@@ -120,6 +128,7 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
     Object? symbol = null,
     Object? initialSupply = null,
     Object? type = null,
+    Object? properties = null,
   }) {
     return _then(_$_Token(
       seed: null == seed
@@ -146,6 +155,10 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      properties: null == properties
+          ? _value._properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
     ));
   }
 }
@@ -159,8 +172,10 @@ class _$_Token extends _Token {
       required this.name,
       required this.symbol,
       required this.initialSupply,
-      required this.type})
-      : super._();
+      required this.type,
+      required final Map<String, dynamic> properties})
+      : _properties = properties,
+        super._();
 
   @override
   final String seed;
@@ -174,10 +189,16 @@ class _$_Token extends _Token {
   final double initialSupply;
   @override
   final String type;
+  final Map<String, dynamic> _properties;
+  @override
+  Map<String, dynamic> get properties {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_properties);
+  }
 
   @override
   String toString() {
-    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type)';
+    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties)';
   }
 
   @override
@@ -192,12 +213,21 @@ class _$_Token extends _Token {
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.initialSupply, initialSupply) ||
                 other.initialSupply == initialSupply) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            const DeepCollectionEquality()
+                .equals(other._properties, _properties));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, seed, accountSelectedName, name,
-      symbol, initialSupply, type);
+  int get hashCode => Object.hash(
+      runtimeType,
+      seed,
+      accountSelectedName,
+      name,
+      symbol,
+      initialSupply,
+      type,
+      const DeepCollectionEquality().hash(_properties));
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +243,8 @@ abstract class _Token extends Token {
       required final String name,
       required final String symbol,
       required final double initialSupply,
-      required final String type}) = _$_Token;
+      required final String type,
+      required final Map<String, dynamic> properties}) = _$_Token;
   const _Token._() : super._();
 
   @override
@@ -228,6 +259,8 @@ abstract class _Token extends Token {
   double get initialSupply;
   @override
   String get type;
+  @override
+  Map<String, dynamic> get properties;
   @override
   @JsonKey(ignore: true)
   _$$_TokenCopyWith<_$_Token> get copyWith =>

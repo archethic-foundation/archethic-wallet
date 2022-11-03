@@ -43,7 +43,7 @@ part 'components/nft_creation_process_import_tab_file.dart';
 part 'components/nft_creation_process_infos_tab.dart';
 part 'components/nft_creation_process_infos_tab_textfield_description.dart';
 part 'components/nft_creation_process_infos_tab_textfield_name.dart';
-part 'components/nft_creation_process_confirmation_tab.dart';
+part 'components/nft_creation_process_summary_tab.dart';
 part 'components/nft_creation_process_properties_tab.dart';
 part 'components/nft_creation_process_properties_tab_textfield_name.dart';
 part 'components/nft_creation_process_properties_tab_textfield_value.dart';
@@ -52,10 +52,12 @@ part 'components/nft_creation_process_properties_tab_textfield_search.dart';
 class NftCreationProcessSheet extends ConsumerWidget {
   const NftCreationProcessSheet({
     required this.seed,
+    required this.currentNftCategoryIndex,
     super.key,
   });
 
   final String seed;
+  final int currentNftCategoryIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,6 +73,7 @@ class NftCreationProcessSheet extends ConsumerWidget {
             feeEstimation: const AsyncValue.data(0),
             seed: seed,
             accountBalance: selectedAccount!.balance!,
+            currentNftCategoryIndex: currentNftCategoryIndex,
           ),
         ),
       ],

@@ -20,6 +20,7 @@ mixin _$NftCreationFormState {
   NftCreationProcessStep get nftCreationProcessStep =>
       throw _privateConstructorUsedError;
   int get currentNftCategoryIndex => throw _privateConstructorUsedError;
+  int get indexTab => throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   AccountBalance get accountBalance => throw _privateConstructorUsedError;
   Map<File, List<String>>? get file => throw _privateConstructorUsedError;
@@ -33,7 +34,6 @@ mixin _$NftCreationFormState {
   List<NftCreationFormStateProperty> get properties =>
       throw _privateConstructorUsedError;
   bool get canAddProperty => throw _privateConstructorUsedError;
-  bool get canCreateNFT => throw _privateConstructorUsedError;
   bool get canAddAccess => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
@@ -54,6 +54,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       {String seed,
       NftCreationProcessStep nftCreationProcessStep,
       int currentNftCategoryIndex,
+      int indexTab,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
       Map<File, List<String>>? file,
@@ -66,7 +67,6 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       String description,
       List<NftCreationFormStateProperty> properties,
       bool canAddProperty,
-      bool canCreateNFT,
       bool canAddAccess,
       String error,
       String symbol,
@@ -90,6 +90,7 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? seed = null,
     Object? nftCreationProcessStep = null,
     Object? currentNftCategoryIndex = null,
+    Object? indexTab = null,
     Object? feeEstimation = null,
     Object? accountBalance = null,
     Object? file = freezed,
@@ -102,7 +103,6 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? description = null,
     Object? properties = null,
     Object? canAddProperty = null,
-    Object? canCreateNFT = null,
     Object? canAddAccess = null,
     Object? error = null,
     Object? symbol = null,
@@ -120,6 +120,10 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
       currentNftCategoryIndex: null == currentNftCategoryIndex
           ? _value.currentNftCategoryIndex
           : currentNftCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      indexTab: null == indexTab
+          ? _value.indexTab
+          : indexTab // ignore: cast_nullable_to_non_nullable
               as int,
       feeEstimation: null == feeEstimation
           ? _value.feeEstimation
@@ -169,10 +173,6 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.canAddProperty
           : canAddProperty // ignore: cast_nullable_to_non_nullable
               as bool,
-      canCreateNFT: null == canCreateNFT
-          ? _value.canCreateNFT
-          : canCreateNFT // ignore: cast_nullable_to_non_nullable
-              as bool,
       canAddAccess: null == canAddAccess
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
@@ -205,6 +205,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       {String seed,
       NftCreationProcessStep nftCreationProcessStep,
       int currentNftCategoryIndex,
+      int indexTab,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
       Map<File, List<String>>? file,
@@ -217,7 +218,6 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       String description,
       List<NftCreationFormStateProperty> properties,
       bool canAddProperty,
-      bool canCreateNFT,
       bool canAddAccess,
       String error,
       String symbol,
@@ -238,6 +238,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? seed = null,
     Object? nftCreationProcessStep = null,
     Object? currentNftCategoryIndex = null,
+    Object? indexTab = null,
     Object? feeEstimation = null,
     Object? accountBalance = null,
     Object? file = freezed,
@@ -250,7 +251,6 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? description = null,
     Object? properties = null,
     Object? canAddProperty = null,
-    Object? canCreateNFT = null,
     Object? canAddAccess = null,
     Object? error = null,
     Object? symbol = null,
@@ -268,6 +268,10 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
       currentNftCategoryIndex: null == currentNftCategoryIndex
           ? _value.currentNftCategoryIndex
           : currentNftCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      indexTab: null == indexTab
+          ? _value.indexTab
+          : indexTab // ignore: cast_nullable_to_non_nullable
               as int,
       feeEstimation: null == feeEstimation
           ? _value.feeEstimation
@@ -317,10 +321,6 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
           ? _value.canAddProperty
           : canAddProperty // ignore: cast_nullable_to_non_nullable
               as bool,
-      canCreateNFT: null == canCreateNFT
-          ? _value.canCreateNFT
-          : canCreateNFT // ignore: cast_nullable_to_non_nullable
-              as bool,
       canAddAccess: null == canAddAccess
           ? _value.canAddAccess
           : canAddAccess // ignore: cast_nullable_to_non_nullable
@@ -348,6 +348,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       {required this.seed,
       this.nftCreationProcessStep = NftCreationProcessStep.form,
       this.currentNftCategoryIndex = 0,
+      this.indexTab = 0,
       required this.feeEstimation,
       required this.accountBalance,
       final Map<File, List<String>>? file,
@@ -360,7 +361,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       this.description = '',
       final List<NftCreationFormStateProperty> properties = const [],
       this.canAddProperty = false,
-      this.canCreateNFT = false,
       this.canAddAccess = false,
       this.error = '',
       this.symbol = '',
@@ -377,6 +377,9 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @override
   @JsonKey()
   final int currentNftCategoryIndex;
+  @override
+  @JsonKey()
+  final int indexTab;
   @override
   final AsyncValue<double> feeEstimation;
   @override
@@ -421,9 +424,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   final bool canAddProperty;
   @override
   @JsonKey()
-  final bool canCreateNFT;
-  @override
-  @JsonKey()
   final bool canAddAccess;
   @override
   @JsonKey()
@@ -436,7 +436,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
 
   @override
   String toString() {
-    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canCreateNFT: $canCreateNFT, canAddAccess: $canAddAccess, error: $error, symbol: $symbol, transaction: $transaction)';
+    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, properties: $properties, canAddProperty: $canAddProperty, canAddAccess: $canAddAccess, error: $error, symbol: $symbol, transaction: $transaction)';
   }
 
   @override
@@ -450,6 +450,8 @@ class _$_NftCreationFormState extends _NftCreationFormState {
             (identical(
                     other.currentNftCategoryIndex, currentNftCategoryIndex) ||
                 other.currentNftCategoryIndex == currentNftCategoryIndex) &&
+            (identical(other.indexTab, indexTab) ||
+                other.indexTab == indexTab) &&
             (identical(other.feeEstimation, feeEstimation) ||
                 other.feeEstimation == feeEstimation) &&
             (identical(other.accountBalance, accountBalance) ||
@@ -472,8 +474,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
                 .equals(other._properties, _properties) &&
             (identical(other.canAddProperty, canAddProperty) ||
                 other.canAddProperty == canAddProperty) &&
-            (identical(other.canCreateNFT, canCreateNFT) ||
-                other.canCreateNFT == canCreateNFT) &&
             (identical(other.canAddAccess, canAddAccess) ||
                 other.canAddAccess == canAddAccess) &&
             (identical(other.error, error) || other.error == error) &&
@@ -488,6 +488,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         seed,
         nftCreationProcessStep,
         currentNftCategoryIndex,
+        indexTab,
         feeEstimation,
         accountBalance,
         const DeepCollectionEquality().hash(_file),
@@ -500,7 +501,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         description,
         const DeepCollectionEquality().hash(_properties),
         canAddProperty,
-        canCreateNFT,
         canAddAccess,
         error,
         symbol,
@@ -520,6 +520,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       {required final String seed,
       final NftCreationProcessStep nftCreationProcessStep,
       final int currentNftCategoryIndex,
+      final int indexTab,
       required final AsyncValue<double> feeEstimation,
       required final AccountBalance accountBalance,
       final Map<File, List<String>>? file,
@@ -532,7 +533,6 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final String description,
       final List<NftCreationFormStateProperty> properties,
       final bool canAddProperty,
-      final bool canCreateNFT,
       final bool canAddAccess,
       final String error,
       final String symbol,
@@ -545,6 +545,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   NftCreationProcessStep get nftCreationProcessStep;
   @override
   int get currentNftCategoryIndex;
+  @override
+  int get indexTab;
   @override
   AsyncValue<double> get feeEstimation;
   @override
@@ -569,8 +571,6 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   List<NftCreationFormStateProperty> get properties;
   @override
   bool get canAddProperty;
-  @override
-  bool get canCreateNFT;
   @override
   bool get canAddAccess;
   @override

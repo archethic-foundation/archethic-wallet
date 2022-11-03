@@ -1,18 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of '../nft_creation_process_sheet.dart';
 
-class NFTCreationProcessConfirmationTab extends ConsumerStatefulWidget {
-  const NFTCreationProcessConfirmationTab({
+class NFTCreationProcessSummaryTab extends ConsumerStatefulWidget {
+  const NFTCreationProcessSummaryTab({
     super.key,
   });
 
   @override
-  ConsumerState<NFTCreationProcessConfirmationTab> createState() =>
-      _NFTCreationProcessConfirmationTabState();
+  ConsumerState<NFTCreationProcessSummaryTab> createState() =>
+      _NFTCreationProcessSummaryTabState();
 }
 
-class _NFTCreationProcessConfirmationTabState
-    extends ConsumerState<NFTCreationProcessConfirmationTab> {
+class _NFTCreationProcessSummaryTabState
+    extends ConsumerState<NFTCreationProcessSummaryTab> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
@@ -79,8 +79,8 @@ class _NFTCreationProcessConfirmationTabState
               const Padding(
                 padding: EdgeInsets.only(
                   top: 10,
-                  left: 5,
-                  right: 5,
+                  left: 10,
+                  right: 10,
                 ),
                 child: NFTCreationProcessFileAccess(
                   readOnly: true,

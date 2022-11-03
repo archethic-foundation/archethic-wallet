@@ -141,6 +141,7 @@ class ArchethicTransactionRepository implements TransactionRepositoryInterface {
       keychain: keychain,
       originPrivateKey: originPrivateKey,
       serviceName: service,
+      tokenProperties: token.properties,
     );
   }
 

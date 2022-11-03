@@ -201,6 +201,8 @@ class _AppState extends ConsumerState<App> {
               return MaterialPageRoute<NftCreationProcessSheet>(
                 builder: (_) => NftCreationProcessSheet(
                   seed: args['seed'] as String,
+                  currentNftCategoryIndex:
+                      args['currentNftCategoryIndex'] as int,
                 ),
                 settings: settings,
               );

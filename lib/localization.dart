@@ -281,11 +281,13 @@ class AppLocalization {
   }
 
   String get enterYubikeyClientIDEmpty {
-    return Intl.message('The client ID is mandatory', name: 'enterYubikeyClientIDEmpty');
+    return Intl.message('The client ID is mandatory',
+        name: 'enterYubikeyClientIDEmpty');
   }
 
   String get enterYubikeyAPIKeyEmpty {
-    return Intl.message('The API Key is mandatory', name: 'enterYubikeyAPIKeyEmpty');
+    return Intl.message('The API Key is mandatory',
+        name: 'enterYubikeyAPIKeyEmpty');
   }
 
   String get yubikeyParamsHeader {
@@ -527,6 +529,10 @@ class AppLocalization {
   String get availableAfterTransfer {
     return Intl.message('Available after transfer',
         name: 'availableAfterTransfer');
+  }
+
+  String get availableAfterMint {
+    return Intl.message('Available after mint', name: 'availableAfterMint');
   }
 
   String get estimatedFeesNote {
@@ -1053,6 +1059,11 @@ class AppLocalization {
   String get addTokenConfirmationMessage {
     return Intl.message('Do you confirm the creation of the following Token?',
         name: 'addTokenConfirmationMessage');
+  }
+
+  String get createNFTConfirmationMessage {
+    return Intl.message('Do you confirm the mint of the following NFT?',
+        name: 'createNFTConfirmationMessage');
   }
 
   String get tokensHeader {
@@ -1694,9 +1705,8 @@ class AppLocalization {
         name: 'nftCreationProcessTabPropertiesHeader');
   }
 
-  String get nftCreationProcessTabConfirmationHeader {
-    return Intl.message('Confirmation',
-        name: 'nftCreationProcessTabConfirmationHeader');
+  String get nftCreationProcessTabSummaryHeader {
+    return Intl.message('Summary', name: 'nftCreationProcessTabSummaryHeader');
   }
 
   String get createNFTConfirmation {
