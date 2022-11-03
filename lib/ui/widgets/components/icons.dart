@@ -5,8 +5,9 @@ import 'package:flutter/widgets.dart';
 // ignore_for_file: constant_identifier_names
 @immutable
 class _UiIconsData extends IconData {
-  const _UiIconsData(super.codePoint, this.name)
+  const _UiIconsData(int codePoint, this.name)
       : super(
+          codePoint,
           fontFamily: 'UiIcons',
         );
 
@@ -33,10 +34,10 @@ class UiIcons {
   static const link_archethic_website = _UiIconsData(0xf10e, 'link_archethic_website');
   static const main = _UiIconsData(0xf10f, 'main');
   static const max = _UiIconsData(0xf110, 'max');
-  static const nft_creation_process_confirmation = _UiIconsData(0xf111, 'nft_creation_process_confirmation');
-  static const nft_creation_process_description = _UiIconsData(0xf112, 'nft_creation_process_description');
-  static const nft_creation_process_import = _UiIconsData(0xf113, 'nft_creation_process_import');
-  static const nft_creation_process_properties = _UiIconsData(0xf114, 'nft_creation_process_properties');
+  static const nft_creation_process_description = _UiIconsData(0xf111, 'nft_creation_process_description');
+  static const nft_creation_process_import = _UiIconsData(0xf112, 'nft_creation_process_import');
+  static const nft_creation_process_properties = _UiIconsData(0xf113, 'nft_creation_process_properties');
+  static const nft_creation_process_summary = _UiIconsData(0xf114, 'nft_creation_process_summary');
   static const nft = _UiIconsData(0xf115, 'nft');
   static const notification_disabled = _UiIconsData(0xf116, 'notification_disabled');
   static const notification_enabled = _UiIconsData(0xf117, 'notification_enabled');
@@ -75,10 +76,10 @@ class UiIcons {
     'link_archethic_website': link_archethic_website,
     'main': main,
     'max': max,
-    'nft_creation_process_confirmation': nft_creation_process_confirmation,
     'nft_creation_process_description': nft_creation_process_description,
     'nft_creation_process_import': nft_creation_process_import,
     'nft_creation_process_properties': nft_creation_process_properties,
+    'nft_creation_process_summary': nft_creation_process_summary,
     'nft': nft,
     'notification_disabled': notification_disabled,
     'notification_enabled': notification_enabled,

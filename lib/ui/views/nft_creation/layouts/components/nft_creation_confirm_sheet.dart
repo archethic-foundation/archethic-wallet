@@ -10,10 +10,12 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -67,6 +69,16 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
             event.nbConfirmations!,
             event.maxConfirmations!,
           )) {
+        final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+        await StateContainer.of(context)
+            .appWallet!
+            .appKeychain
+            .getAccountSelected()!
+            .updateNftInfosOffChain(
+              tokenAddress: event.transactionAddress,
+              categoryNftIndex: nftCreation.currentNftCategoryIndex,
+            );
+
         await _showSendSucceed(event, theme);
         return;
       }
@@ -149,84 +161,108 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreationNotifier =
         ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
 
-    return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: Column(
-        children: <Widget>[
-          SheetHeader(
-            title: localizations.createToken,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background3Small!,
+            ),
+            fit: BoxFit.fitHeight,
           ),
-          /*    Expanded(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[theme.backgroundDark!, theme.background!],
+          ),
+        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: Text(
-                    localizations.nftCreationConfirmationMessage,
-                    style: theme.textStyleSize14W600Primary,
+                SheetHeader(
+                  title: localizations.createNFT,
+                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30, right: 30),
+                        child: Text(
+                          localizations.createNFTConfirmationMessage,
+                          style: theme.textStyleSize14W600Primary,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const NftCreationDetail(),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const NftCreationDetail(),
-              ],
-            ),
-          ),*/
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
-                      localizations.confirm,
-                      Dimens.buttonTopDimens,
-                      key: const Key('confirm'),
-                      onPressed: () async {
-                        // Authenticate
-                        final preferences = await Preferences.getInstance();
-                        final authMethod = preferences.getAuthMethod();
-                        final auth = await AuthFactory.authenticate(
-                          context,
-                          ref,
-                          authMethod: authMethod,
-                          activeVibrations: ref
-                              .watch(SettingsProviders.settings)
-                              .activeVibrations,
-                        );
-                        if (auth) {
-                          EventTaxiImpl.singleton().fire(AuthenticatedEvent());
-                        }
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
-                      localizations.cancel,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('cancel'),
-                      onPressed: () {
-                        nftCreationNotifier.setNftCreationProcessStep(
-                          NftCreationProcessStep.form,
-                        );
-                      },
-                    ),
-                  ],
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          AppButton(
+                            AppButtonType.primary,
+                            localizations.confirm,
+                            Dimens.buttonTopDimens,
+                            key: const Key('confirm'),
+                            onPressed: () async {
+                              // Authenticate
+                              final preferences =
+                                  await Preferences.getInstance();
+                              final authMethod = preferences.getAuthMethod();
+                              final auth = await AuthFactory.authenticate(
+                                context,
+                                ref,
+                                authMethod: authMethod,
+                                activeVibrations: ref
+                                    .watch(SettingsProviders.settings)
+                                    .activeVibrations,
+                              );
+                              if (auth) {
+                                EventTaxiImpl.singleton()
+                                    .fire(AuthenticatedEvent());
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          AppButton(
+                            AppButtonType.primary,
+                            localizations.cancel,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('cancel'),
+                            onPressed: () {
+                              nftCreationNotifier
+                                  .setIndexTab(NftCreationTab.summary.index);
+                              nftCreationNotifier.setNftCreationProcessStep(
+                                NftCreationProcessStep.form,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

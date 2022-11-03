@@ -5,6 +5,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -114,6 +115,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                   child: Container(
                     constraints: const BoxConstraints.expand(height: 100),
                     child: ContainedTabBarView(
+                      initialIndex: nftCreation.indexTab,
                       tabBarViewProperties: const TabBarViewProperties(
                         physics: NeverScrollableScrollPhysics(),
                       ),
@@ -144,10 +146,10 @@ class NftCreationFormSheet extends ConsumerWidget {
                           ),
                         ),
                         Tab(
-                          text: localizations
-                              .nftCreationProcessTabConfirmationHeader,
+                          text:
+                              localizations.nftCreationProcessTabSummaryHeader,
                           icon: const Icon(
-                            UiIcons.nft_creation_process_confirmation,
+                            UiIcons.nft_creation_process_summary,
                           ),
                         ),
                       ],
@@ -155,8 +157,23 @@ class NftCreationFormSheet extends ConsumerWidget {
                         NFTCreationProcessImportTab(),
                         NFTCreationProcessInfosTab(),
                         NFTCreationProcessPropertiesTab(),
-                        NFTCreationProcessConfirmationTab(),
+                        NFTCreationProcessSummaryTab(),
                       ],
+                      onChange: (index) {
+                        final nftCreationNotifier = ref.watch(
+                          NftCreationFormProvider.nftCreationForm.notifier,
+                        );
+                        nftCreationNotifier.setIndexTab(index);
+                        if (index == NftCreationTab.summary.index) {
+                          final nftCreationNotifier = ref.watch(
+                            NftCreationFormProvider.nftCreationForm.notifier,
+                          );
+                          nftCreationNotifier.setFees(
+                            context,
+                          );
+                          return;
+                        }
+                      },
                     ),
                   ),
                 ),

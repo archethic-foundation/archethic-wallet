@@ -15,6 +15,8 @@ enum FileImportType { file, image, camera }
 
 enum NftCreationProcessStep { form, confirmation }
 
+enum NftCreationTab { import, infos, properties, summary }
+
 @freezed
 class NftCreationFormState with _$NftCreationFormState {
   const factory NftCreationFormState({
@@ -22,6 +24,7 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default(NftCreationProcessStep.form)
         NftCreationProcessStep nftCreationProcessStep,
     @Default(0) int currentNftCategoryIndex,
+    @Default(0) int indexTab,
     required AsyncValue<double> feeEstimation,
     required AccountBalance accountBalance,
     Map<File, List<String>>? file,
@@ -50,6 +53,14 @@ class NftCreationFormState with _$NftCreationFormState {
 
   String symbolFees(BuildContext context) =>
       StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
+
+  Map<String, dynamic> get propertiesConverted {
+    final propertiesConverted = <String, dynamic>{};
+    for (final element in properties) {
+      propertiesConverted[element.propertyName] = element.propertyValue;
+    }
+    return propertiesConverted;
+  }
 }
 
 @freezed

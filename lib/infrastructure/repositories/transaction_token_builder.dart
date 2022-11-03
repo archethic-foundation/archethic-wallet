@@ -12,6 +12,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     required int index,
     required String originPrivateKey,
     required String tokenType,
+    required Map<String, dynamic> tokenProperties,
   }) {
     final transaction = archethic.Transaction(
       type: 'token',
@@ -23,7 +24,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
       supply: archethic.toBigInt(tokenInitialSupply),
       type: tokenType,
       symbol: tokenSymbol,
-      tokenProperties: {},
+      tokenProperties: tokenProperties,
     );
 
     final content = archethic.tokenToJsonForTxDataContent(

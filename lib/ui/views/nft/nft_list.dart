@@ -156,26 +156,36 @@ class NFTList extends ConsumerWidget {
           ),
           Row(
             children: <Widget>[
-              AppButton(
-                AppButtonType.primary,
-                localizations.createNFT,
-                Dimens.buttonBottomDimens,
-                key: const Key('createNFT'),
-                onPressed: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  Navigator.of(context).pushNamed(
-                    '/nft_creation',
-                    arguments: {
-                      'seed': (await StateContainer.of(
-                        context,
-                      ).getSeed())!,
-                    },
-                  );
-                },
-              ),
+              if (accountSelected.balance!.isNativeTokenValuePositive())
+                AppButton(
+                  AppButtonType.primary,
+                  localizations.createNFT,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('createNFT'),
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    Navigator.of(context).pushNamed(
+                      '/nft_creation',
+                      arguments: {
+                        'seed': await StateContainer.of(
+                          context,
+                        ).getSeed(),
+                        'currentNftCategoryIndex': currentNftCategoryIndex,
+                      },
+                    );
+                  },
+                )
+              else
+                AppButton(
+                  AppButtonType.primaryOutline,
+                  localizations.createNFT,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('createNFT'),
+                  onPressed: () {},
+                ),
             ],
           ),
         ],

@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
@@ -17,7 +19,17 @@ class CategoryTemplateForm extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
-    switch (nftCreation.currentNftCategoryIndex) {
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+
+    final listNftCategory = ref.watch(
+      NftCategoryProviders.fetchNftCategory(
+        context: context,
+        account: accountSelected,
+      ),
+    );
+
+    switch (listNftCategory[nftCreation.currentNftCategoryIndex].id) {
       case 4:
         final nftPropertyAuthorFocusNode = FocusNode();
         final nftPropertyAuthorController = TextEditingController();

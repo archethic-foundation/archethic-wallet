@@ -12,6 +12,7 @@ class Token with _$Token {
     required String symbol,
     required double initialSupply,
     required String type,
+    required Map<String, dynamic> properties,
   }) = _Token;
   const Token._();
 }

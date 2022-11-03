@@ -46,7 +46,8 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
       textInputAction: TextInputAction.next,
       labelText: AppLocalization.of(context)!.nftDescriptionHint,
       autocorrect: false,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.multiline,
+      maxLines: 4,
       style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
         LengthLimitingTextInputFormatter(40),

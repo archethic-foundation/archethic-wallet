@@ -121,6 +121,7 @@ class NftCreationFormNotifier
         initialSupply: 1,
         seed: formState.seed,
         type: 'non-fungible',
+        properties: formState.propertiesConverted,
       ),
     );
 
@@ -143,17 +144,6 @@ class NftCreationFormNotifier
     }
   }
 
-  void canCreateNFT() {
-    if (state.name.isNotEmpty && state.file != null) {
-      state = state.copyWith(
-        canCreateNFT: true,
-      );
-    }
-    state = state.copyWith(
-      canCreateNFT: false,
-    );
-  }
-
   void setNftCreationProcessStep(
     NftCreationProcessStep nftCreationProcessStep,
   ) {
@@ -162,10 +152,21 @@ class NftCreationFormNotifier
     );
   }
 
-  void changeStateCreateNFTButton(bool nexStateButton) {
+  void setIndexTab(
+    int indexTab,
+  ) {
     state = state.copyWith(
-      canCreateNFT: nexStateButton,
+      indexTab: indexTab,
     );
+  }
+
+  Future<void> setFees(
+    BuildContext context,
+  ) async {
+    _updateFees(
+      context,
+    );
+    return;
   }
 
   void addPublicKey(String propertyName, String publicKey) {
@@ -385,6 +386,7 @@ class NftCreationFormNotifier
         accountSelectedName: selectedAccount!.name!,
         seed: state.seed,
         type: 'non-fungible',
+        properties: state.propertiesConverted,
       ),
     );
 
