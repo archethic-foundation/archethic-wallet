@@ -8,6 +8,7 @@ import 'package:aewallet/domain/repositories/transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -214,6 +215,29 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return false;
     }
 
+    return true;
+  }
+
+  bool controlAmount(
+    BuildContext context,
+    Account accountSelected,
+  ) {
+    final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
+
+    if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+      state = state.copyWith(
+        errorAmountText:
+            AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                  '%1',
+                  state.symbolFees(context),
+                ),
+      );
+      return false;
+    }
+
+    state = state.copyWith(
+      errorAmountText: '',
+    );
     return true;
   }
 
