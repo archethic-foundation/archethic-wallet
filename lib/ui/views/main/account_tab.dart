@@ -1,8 +1,10 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/blog.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/main/menu_widget_wallet.dart';
@@ -36,7 +38,14 @@ class AccountTab extends ConsumerWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              StateContainer.of(context).requestUpdate();
+
+              // TODO(Chralu): reload everything
+              ref
+                  .read(AccountProviders.selectedAccount.notifier)
+                  .updateAll(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
+              ref.invalidate(BlogProviders.fetchArticles);
+              ref.invalidate(ContactProviders.fetchContacts);
+              ref.invalidate(AccountProviders.selectedAccount);
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

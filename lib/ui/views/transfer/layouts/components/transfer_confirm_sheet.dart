@@ -4,11 +4,9 @@
 import 'dart:async';
 
 // Project imports:
-import 'package:aewallet/application/account.dart';
-import 'package:aewallet/application/recent_transactions.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
@@ -135,11 +133,14 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           .removeftInfosOffChain(token.id);
     }
 
-    ref.invalidate(RecentTransactionProviders.recentTransactions);
+    ref
+        .read(AccountProviders.selectedAccount.notifier)
+        .updateRecentTransactions();
 
-    setState(() {
-      StateContainer.of(context).requestUpdate();
-    });
+    // TODO(reddwarf03): ensure that reload is not necessary
+    // setState(() {
+    //   StateContainer.of(context).requestUpdate();
+    // });
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
   }
 

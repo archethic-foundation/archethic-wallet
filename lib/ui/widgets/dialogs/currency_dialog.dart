@@ -1,11 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_currency.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
@@ -74,16 +72,9 @@ class CurrencyDialog {
                   CurrencyProviders.selectCurrency(currency: currency).future,
                 );
 
-                final tokenPrice = await Price.getCurrency(
-                  currency.currency.name,
-                );
-                await accountSelected.updateBalance(
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
-                  currency.currency.name,
-                  tokenPrice,
-                );
+                ref
+                    .read(AccountProviders.selectedAccount.notifier)
+                    .updateBalance();
                 accountSelected.balance!.fiatCurrencyCode =
                     currency.currency.name;
                 Navigator.pop(context, value.value);

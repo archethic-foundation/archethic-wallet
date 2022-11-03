@@ -233,11 +233,11 @@ class DBHelper {
     return appWallet;
   }
 
-  Future<AppWallet> changeAccount(Account account) async {
+  Future<AppWallet> changeAccount(String accountName) async {
     final box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
     for (var i = 0; i < appWallet.appKeychain.accounts.length; i++) {
-      if (appWallet.appKeychain.accounts[i].name == account.name) {
+      if (appWallet.appKeychain.accounts[i].name == accountName) {
         appWallet.appKeychain.accounts[i].selected = true;
       } else {
         appWallet.appKeychain.accounts[i].selected = false;
@@ -268,14 +268,13 @@ class DBHelper {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<AppWallet>(appWalletTable);
     final appWallet = box.get(0)!;
-    final accounts = appWallet.appKeychain.accounts;
-    for (var account in accounts) {
-      if (selectedAccount.name == account.name) {
-        account = selectedAccount;
-        await box.putAt(0, appWallet);
-        return;
-      }
-    }
+    appWallet.appKeychain.accounts = appWallet.appKeychain.accounts.map(
+      (account) {
+        if (account.name == selectedAccount.name) return selectedAccount;
+        return account;
+      },
+    ).toList();
+    await box.putAt(0, appWallet);
   }
 
   Future<void> clearAppWallet() async {

@@ -343,7 +343,7 @@ class KeychainUtil {
         }
         if (loadBalance) {
           await accounts[i].updateBalance(tokenName, currency, tokenPrice);
-          await accounts[i].updateFungiblesTokens();
+          // await accounts[i].updateFungiblesTokens();
         }
         // if (loadRecentTransactions) {
         //   await accounts[i].updateRecentTransactions(seed);

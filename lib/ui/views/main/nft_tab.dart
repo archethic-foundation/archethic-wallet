@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -59,7 +59,9 @@ class NFTTab extends ConsumerWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              await accountSelected.updateNFT();
+              await ref
+                  .read(AccountProviders.selectedAccount.notifier)
+                  .updateNonFungibleTokens();
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

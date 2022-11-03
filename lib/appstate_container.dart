@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -149,22 +149,11 @@ class StateContainerState extends ConsumerState<StateContainer> {
     final selectedAccount = ref.read(AccountProviders.selectedAccount);
     if (selectedAccount == null) return;
 
-    await selectedAccount.updateLastAddress();
-    await selectedAccount.updateFungiblesTokens();
-    await selectedAccount.updateNFT();
-
     setState(() {
       recentTransactionsLoading = true;
     });
 
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
-    final tokenPrice = await Price.getCurrency(selectedCurrency.currency.name);
-
-    await selectedAccount.updateBalance(
-      curNetwork.getNetworkCryptoCurrencyLabel(),
-      selectedCurrency.currency.name,
-      tokenPrice,
-    );
 
     // TODO(Chralu): SessionProviders.recentTransaction should automatically refresh.
     setState(() {

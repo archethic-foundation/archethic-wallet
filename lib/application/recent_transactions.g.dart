@@ -30,11 +30,11 @@ class _SystemHash {
 }
 
 String $_RecentTransactionsNotifierHash() =>
-    r'5f478f0931e75f5d2069056b977b6a37e5f12e00';
+    r'f2e7e88265ea68269525e043d782c228969b2ad3';
 
 /// See also [_RecentTransactionsNotifier].
-final _recentTransactionsNotifierProvider =
-    AsyncNotifierProvider<_RecentTransactionsNotifier, List<RecentTransaction>>(
+final _recentTransactionsNotifierProvider = AutoDisposeAsyncNotifierProvider<
+    _RecentTransactionsNotifier, List<RecentTransaction>>(
   _RecentTransactionsNotifier.new,
   name: r'_recentTransactionsNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -42,10 +42,10 @@ final _recentTransactionsNotifierProvider =
       : $_RecentTransactionsNotifierHash,
 );
 typedef _RecentTransactionsNotifierRef
-    = AsyncNotifierProviderRef<List<RecentTransaction>>;
+    = AutoDisposeAsyncNotifierProviderRef<List<RecentTransaction>>;
 
 abstract class _$RecentTransactionsNotifier
-    extends AsyncNotifier<List<RecentTransaction>> {
+    extends AutoDisposeAsyncNotifier<List<RecentTransaction>> {
   @override
   FutureOr<List<RecentTransaction>> build();
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/model/data/app_wallet.dart';

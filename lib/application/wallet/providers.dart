@@ -108,16 +108,6 @@ class _SessionNotifier extends Notifier<Session> {
         return null;
       }
 
-      final accounts = appWallet.appKeychain.accounts;
-
-      if (accounts.isEmpty) {
-        return null;
-      }
-
-      accounts.sort(
-        (a, b) => a.name.compareTo(b.name),
-      );
-
       return state = LoggedInSession(
         seed: seed,
         wallet: appWallet,
@@ -127,16 +117,6 @@ class _SessionNotifier extends Notifier<Session> {
     }
   }
 }
-
-// TODO(Chralu): create Providers for the following
-//    await selectedAccount.updateLastAddress();
-// await selectedAccount.updateFungiblesTokens();
-// await selectedAccount.updateNFT();
-// await selectedAccount.updateBalance(
-//   curNetwork.getNetworkCryptoCurrencyLabel(),
-//   selectedCurrency.currency.name,
-//   tokenPrice,
-// );
 
 @riverpod
 Future<Keychain?> _archethicWalletKeychain(Ref ref) async {

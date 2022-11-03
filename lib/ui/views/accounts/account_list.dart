@@ -1,4 +1,6 @@
-import 'package:aewallet/application/account.dart';
+// Flutter imports:
+// Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
@@ -30,37 +32,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListWidget extends ConsumerStatefulWidget {
+class AccountsListWidget extends ConsumerWidget {
   const AccountsListWidget({
     super.key,
     this.currencyName,
   });
   final String? currencyName;
-
-  @override
-  ConsumerState<AccountsListWidget> createState() => _AccountsListWidgetState();
-}
-
-class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
   static const int kMaxAccounts = 50;
-  final GlobalKey expandedKey = GlobalKey();
-  bool? isPressed;
-  bool? animationOpen;
 
   @override
-  void initState() {
-    super.initState();
-    isPressed = false;
-    animationOpen = false;
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accounts = ref.watch(AccountProviders.sortedAccounts);
+    final accounts = ref.watch(AccountProviders.sortedAccounts).valueOrNull ??
+        []; // TODO(Chralu) : show a loading screen ?
     return Container(
-      key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
       child: Column(
         children: <Widget>[
@@ -73,236 +60,242 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
             ),
           ),
           for (int i = 0; i < accounts.length; i++)
-            _buildAccountListItem(
-              context,
-              ref,
-              accounts[i],
-              setState,
+            _AccountListItem(
+              account: accounts[i],
             ),
-          Row(
-            children: <Widget>[
-              if (accounts.length >= kMaxAccounts)
-                const SizedBox()
-              else
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addAccount,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addAccount'),
-                  onPressed: () async {
-                    final nameFocusNode = FocusNode();
-                    final nameController = TextEditingController();
-                    String? nameError;
-                    await showDialog(
-                      context: expandedKey.currentContext!,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(
-                          builder: (context, setState) {
-                            FocusScope.of(context).requestFocus(nameFocusNode);
-                            return AlertDialog(
-                              title: Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      localizations
-                                          .introNewWalletGetFirstInfosNameRequest,
-                                      style: theme.textStyleSize12W400Primary,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
-                                side: BorderSide(
-                                  color: theme.text45!,
-                                ),
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      AppTextField(
-                                        leftMargin: 0,
-                                        rightMargin: 0,
-                                        focusNode: nameFocusNode,
-                                        autocorrect: false,
-                                        controller: nameController,
-                                        keyboardType: TextInputType.text,
-                                        style: theme.textStyleSize12W600Primary,
-                                        inputFormatters: <TextInputFormatter>[
-                                          LengthLimitingTextInputFormatter(
-                                            20,
-                                          ),
-                                          UpperCaseTextFormatter(),
-                                        ],
-                                      ),
-                                      if (nameError != null)
-                                        SizedBox(
-                                          height: 40,
-                                          child: Text(
-                                            nameError!,
-                                            style: theme
-                                                .textStyleSize12W600Primary,
-                                          ),
-                                        )
-                                      else
-                                        const SizedBox(
-                                          height: 40,
-                                        ),
-                                      Text(
-                                        localizations
-                                            .introNewWalletGetFirstInfosNameInfos,
-                                        style: theme.textStyleSize12W600Primary,
-                                        textAlign: TextAlign.justify,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    children: [
-                                      AppButtonTiny(
-                                        isPressed == false
-                                            ? AppButtonTinyType.primary
-                                            : AppButtonTinyType.primaryOutline,
-                                        localizations.ok,
-                                        Dimens.buttonBottomDimens,
-                                        key: const Key('addName'),
-                                        onPressed: () async {
-                                          if (isPressed == true) {
-                                            return;
-                                          }
-                                          nameError = '';
-                                          if (nameController.text.isEmpty) {
-                                            setState(() {
-                                              nameError = localizations
-                                                  .introNewWalletGetFirstInfosNameBlank;
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                nameFocusNode,
-                                              );
-                                            });
-                                          } else {
-                                            var accountExists = false;
-                                            for (final account in accounts) {
-                                              if (account.name ==
-                                                  nameController.text) {
-                                                accountExists = true;
-                                              }
-                                            }
-                                            if (accountExists == true) {
-                                              setState(() {
-                                                nameError = localizations
-                                                    .addAccountExists;
-                                                FocusScope.of(context)
-                                                    .requestFocus(
-                                                  nameFocusNode,
-                                                );
-                                              });
-                                            } else {
-                                              setState(() {
-                                                isPressed = true;
-                                              });
-                                              AppDialogs.showConfirmDialog(
-                                                context,
-                                                ref,
-                                                localizations.addAccount,
-                                                localizations
-                                                    .addAccountConfirmation
-                                                    .replaceAll(
-                                                  '%1',
-                                                  nameController.text,
-                                                ),
-                                                localizations.yes,
-                                                () async {
-                                                  try {
-                                                    await ref
-                                                        .read(
-                                                          AccountProviders
-                                                              .accounts
-                                                              .notifier,
-                                                        )
-                                                        .addAccount(
-                                                          name: nameController
-                                                              .text,
-                                                        );
-                                                  } on ArchethicConnectionException {
-                                                    UIUtil.showSnackbar(
-                                                      localizations
-                                                          .noConnection,
-                                                      context,
-                                                      ref,
-                                                      theme.text!,
-                                                      theme.snackBarShadow!,
-                                                      duration: const Duration(
-                                                        seconds: 5,
-                                                      ),
-                                                    );
-                                                  } on Exception {
-                                                    UIUtil.showSnackbar(
-                                                      localizations
-                                                          .keychainNotExistWarning,
-                                                      context,
-                                                      ref,
-                                                      theme.text!,
-                                                      theme.snackBarShadow!,
-                                                      duration: const Duration(
-                                                        seconds: 5,
-                                                      ),
-                                                    );
-                                                  }
-
-                                                  setState(() {
-                                                    isPressed = false;
-                                                  });
-                                                  Navigator.pop(
-                                                    context,
-                                                    true,
-                                                  );
-                                                },
-                                                cancelText: localizations.no,
-                                                cancelAction: () {
-                                                  setState(() {
-                                                    isPressed = false;
-                                                  });
-                                                },
-                                              );
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
-            ],
-          ),
+          if (accounts.length < kMaxAccounts)
+            Row(
+              children: const [
+                _AddAccountButton(),
+              ],
+            ),
         ],
       ),
     );
   }
+}
 
-  // TODO(Chralu): Create a dedicated Widget
-  Widget _buildAccountListItem(
-    BuildContext context,
-    WidgetRef ref,
-    Account account,
-    StateSetter setState,
-  ) {
+class _AddAccountButton extends ConsumerStatefulWidget {
+  const _AddAccountButton();
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      __AddAccountButtonState();
+}
+
+class __AddAccountButtonState extends ConsumerState<_AddAccountButton> {
+  bool? isPressed = false;
+  final GlobalKey expandedKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final accounts =
+        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
+
+    return AppButtonTiny(
+      AppButtonTinyType.primary,
+      localizations.addAccount,
+      Dimens.buttonBottomDimens,
+      key: const Key('addAccount'),
+      onPressed: () async {
+        final nameFocusNode = FocusNode();
+        final nameController = TextEditingController();
+        String? nameError;
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: [
+                        Text(
+                          localizations.introNewWalletGetFirstInfosNameRequest,
+                          style: theme.textStyleSize12W400Primary,
+                        ),
+                      ],
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                    side: BorderSide(
+                      color: theme.text45!,
+                    ),
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          AppTextField(
+                            leftMargin: 0,
+                            rightMargin: 0,
+                            focusNode: nameFocusNode,
+                            autocorrect: false,
+                            controller: nameController,
+                            keyboardType: TextInputType.text,
+                            style: theme.textStyleSize12W600Primary,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(
+                                20,
+                              ),
+                              UpperCaseTextFormatter(),
+                            ],
+                          ),
+                          if (nameError != null)
+                            SizedBox(
+                              height: 40,
+                              child: Text(
+                                nameError!,
+                                style: theme.textStyleSize12W600Primary,
+                              ),
+                            )
+                          else
+                            const SizedBox(
+                              height: 40,
+                            ),
+                          Text(
+                            localizations.introNewWalletGetFirstInfosNameInfos,
+                            style: theme.textStyleSize12W600Primary,
+                            textAlign: TextAlign.justify,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          AppButtonTiny(
+                            isPressed == false
+                                ? AppButtonTinyType.primary
+                                : AppButtonTinyType.primaryOutline,
+                            localizations.ok,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('addName'),
+                            onPressed: () async {
+                              if (isPressed == true) {
+                                return;
+                              }
+                              nameError = '';
+                              if (nameController.text.isEmpty) {
+                                setState(() {
+                                  nameError = localizations
+                                      .introNewWalletGetFirstInfosNameBlank;
+                                  FocusScope.of(context).requestFocus(
+                                    nameFocusNode,
+                                  );
+                                });
+                              } else {
+                                var accountExists = false;
+                                for (final account in accounts) {
+                                  if (account.name == nameController.text) {
+                                    accountExists = true;
+                                  }
+                                }
+                                if (accountExists == true) {
+                                  setState(() {
+                                    nameError = localizations.addAccountExists;
+                                    FocusScope.of(context).requestFocus(
+                                      nameFocusNode,
+                                    );
+                                  });
+                                } else {
+                                  setState(() {
+                                    isPressed = true;
+                                  });
+                                  AppDialogs.showConfirmDialog(
+                                    context,
+                                    ref,
+                                    localizations.addAccount,
+                                    localizations.addAccountConfirmation
+                                        .replaceAll(
+                                      '%1',
+                                      nameController.text,
+                                    ),
+                                    localizations.yes,
+                                    () async {
+                                      try {
+                                        await ref
+                                            .read(
+                                              AccountProviders
+                                                  .accounts.notifier,
+                                            )
+                                            .addAccount(
+                                              name: nameController.text,
+                                            );
+                                      } on ArchethicConnectionException {
+                                        UIUtil.showSnackbar(
+                                          localizations.noConnection,
+                                          context,
+                                          ref,
+                                          theme.text!,
+                                          theme.snackBarShadow!,
+                                          duration: const Duration(
+                                            seconds: 5,
+                                          ),
+                                        );
+                                      } on Exception {
+                                        UIUtil.showSnackbar(
+                                          localizations.keychainNotExistWarning,
+                                          context,
+                                          ref,
+                                          theme.text!,
+                                          theme.snackBarShadow!,
+                                          duration: const Duration(
+                                            seconds: 5,
+                                          ),
+                                        );
+                                      }
+
+                                      setState(() {
+                                        isPressed = false;
+                                      });
+                                      Navigator.pop(
+                                        context,
+                                        true,
+                                      );
+                                    },
+                                    cancelText: localizations.no,
+                                    cancelAction: () {
+                                      setState(() {
+                                        isPressed = false;
+                                      });
+                                    },
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _AccountListItem extends ConsumerWidget {
+  const _AccountListItem({
+    required this.account,
+  });
+  final Account account;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
@@ -325,7 +318,11 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
             onTap: () async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    ref.watch(SettingsProviders.settings).activeVibrations,
+                    ref.read(
+                      SettingsProviders.settings.select(
+                        (value) => value.activeVibrations,
+                      ),
+                    ),
                   );
               ShowSendingAnimation.build(context, theme);
               if (!account.selected!) {
@@ -343,7 +340,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
               );
               Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
             },
-            onLongPress: () async {
+            onLongPress: () {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
                     preferences.activeVibrations,
@@ -356,10 +353,9 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                   contact: data.value,
                 ),
                 onDisposed: () {
-                  setState(() {
-                    StateContainer.of(context)
-                        .requestUpdate(forceUpdateChart: false);
-                  });
+                  ref
+                      .read(AccountProviders.selectedAccount.notifier)
+                      .updateRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
                 },
               );
             },
@@ -553,6 +549,28 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                                   ),
                                 ],
                               ),
+                              AutoSizeText(
+                                CurrencyUtil.getConvertedAmount(
+                                  currency.currency.name,
+                                  account.balance!.fiatCurrencyValue!,
+                                ),
+                                textAlign: TextAlign.center,
+                                style: theme.textStyleSize12W400Primary,
+                              ),
+                              if (account.accountTokens != null &&
+                                  account.accountTokens!.isNotEmpty)
+                                AutoSizeText(
+                                  account.accountTokens!.length > 1
+                                      ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                      : '${account.accountTokens!.length} ${localizations.token}',
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                              if (account.accountNFT != null &&
+                                  account.accountNFT!.isNotEmpty)
+                                AutoSizeText(
+                                  '${account.accountNFT!.length} ${localizations.nft}',
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
                             ],
                           ),
                         ),

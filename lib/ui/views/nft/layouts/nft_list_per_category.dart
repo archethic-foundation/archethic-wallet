@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
@@ -23,8 +23,7 @@ class NFTListPerCategory extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final accountSelected = ref.read(AccountProviders.selectedAccount);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -75,9 +74,11 @@ class NFTListPerCategory extends ConsumerWidget {
                           Navigator.of(context).pushNamed(
                             '/nft_creation',
                             arguments: {
-                              'seed': await StateContainer.of(
-                                context,
-                              ).getSeed(),
+                              'seed': ref
+                                  .read(SessionProviders.session)
+                                  .loggedIn!
+                                  .wallet
+                                  .seed,
                               'currentNftCategoryIndex':
                                   currentNftCategoryIndex,
                             },

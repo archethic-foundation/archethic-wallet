@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'wallet.dart';
+part of 'fungible_tokens.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,32 +29,23 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'd8503bab51cb04acb6f61cc18639f4e872be87dd';
+String $_FungibleTokensNotifierHash() =>
+    r'0677e56f1d7fa95fb8f2f56819e1c5767578ffd6';
 
-/// See also [_SessionNotifier].
-final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
-  _SessionNotifier.new,
-  name: r'_sessionNotifierProvider',
+/// See also [_FungibleTokensNotifier].
+final _fungibleTokensNotifierProvider = AutoDisposeAsyncNotifierProvider<
+    _FungibleTokensNotifier, List<AccountToken>>(
+  _FungibleTokensNotifier.new,
+  name: r'_fungibleTokensNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_SessionNotifierHash,
+      : $_FungibleTokensNotifierHash,
 );
-typedef _SessionNotifierRef = NotifierProviderRef<Session>;
+typedef _FungibleTokensNotifierRef
+    = AutoDisposeAsyncNotifierProviderRef<List<AccountToken>>;
 
-abstract class _$SessionNotifier extends Notifier<Session> {
+abstract class _$FungibleTokensNotifier
+    extends AutoDisposeAsyncNotifier<List<AccountToken>> {
   @override
-  Session build();
+  FutureOr<List<AccountToken>> build();
 }
-
-String $_archethicWalletKeychainHash() =>
-    r'7b944e97107af41e54c05f9f8e86e05bb2b75bfe';
-
-/// See also [_archethicWalletKeychain].
-final _archethicWalletKeychainProvider = AutoDisposeFutureProvider<Keychain?>(
-  _archethicWalletKeychain,
-  name: r'_archethicWalletKeychainProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_archethicWalletKeychainHash,
-);
-typedef _ArchethicWalletKeychainRef = AutoDisposeFutureProviderRef<Keychain?>;

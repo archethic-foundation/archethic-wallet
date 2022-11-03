@@ -2,7 +2,7 @@
 import 'dart:developer';
 
 // Project imports:
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';

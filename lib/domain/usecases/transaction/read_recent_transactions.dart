@@ -1,13 +1,13 @@
 import 'package:aewallet/domain/repositories/transaction_local.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/domain/usecases/get_from_remote_first.dart';
+import 'package:aewallet/domain/usecases/read_usecases.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class GetRecentTransactionsCommand {
-  const GetRecentTransactionsCommand({
+class ReadRecentTransactionsCommand {
+  const ReadRecentTransactionsCommand({
     required this.account,
     required this.walletSeed,
   });
@@ -17,8 +17,8 @@ class GetRecentTransactionsCommand {
 }
 
 @immutable
-class GetRecentTransactionsResult {
-  const GetRecentTransactionsResult({
+class ReadRecentTransactionsResult {
+  const ReadRecentTransactionsResult({
     required this.lastTransactionAddress,
     required this.recentTransactions,
   });
@@ -27,38 +27,41 @@ class GetRecentTransactionsResult {
   final List<RecentTransaction> recentTransactions;
 }
 
-class GetRecentTransactions extends GetFromRemoteFirstStrategy<
-    GetRecentTransactionsCommand, GetRecentTransactionsResult> {
-  GetRecentTransactions({
+class ReadRecentTransactionsUseCases
+    with
+        ReadStrategy<ReadRecentTransactionsCommand,
+            ReadRecentTransactionsResult> {
+  ReadRecentTransactionsUseCases({
     required this.transactionRepository,
-    required this.accountLocalRepository,
+    required this.transactionLocalRepository,
   });
 
   final TransactionRemoteRepositoryInterface transactionRepository;
-  final TransactionLocalRepositoryInterface accountLocalRepository;
+  final TransactionLocalRepositoryInterface transactionLocalRepository;
 
   @override
-  Future<GetRecentTransactionsResult?> getLocal(
-    GetRecentTransactionsCommand command,
+  Future<ReadRecentTransactionsResult?> getLocal(
+    ReadRecentTransactionsCommand command,
   ) async {
     final lastTransactionAddress =
-        await accountLocalRepository.getLastTransactionAddress(
+        await transactionLocalRepository.getLastTransactionAddress(
       command.account.name,
     );
     if (lastTransactionAddress == null) return null;
+
     final localTransactions =
-        await accountLocalRepository.getRecentTransactions(
+        await transactionLocalRepository.getRecentTransactions(
       command.account.name,
     );
-    return GetRecentTransactionsResult(
+    return ReadRecentTransactionsResult(
       lastTransactionAddress: lastTransactionAddress,
       recentTransactions: localTransactions,
     );
   }
 
   @override
-  Future<GetRecentTransactionsResult?> getRemote(
-    GetRecentTransactionsCommand command,
+  Future<ReadRecentTransactionsResult?> getRemote(
+    ReadRecentTransactionsCommand command,
   ) async {
     final lastTransactionAddress =
         await transactionRepository.getLastTransactionAddress(
@@ -82,7 +85,7 @@ class GetRecentTransactions extends GetFromRemoteFirstStrategy<
       return null;
     }
 
-    return GetRecentTransactionsResult(
+    return ReadRecentTransactionsResult(
       lastTransactionAddress: lastTransactionAddress,
       recentTransactions: remoteRecentTransactions,
     );
@@ -90,10 +93,10 @@ class GetRecentTransactions extends GetFromRemoteFirstStrategy<
 
   @override
   Future<void> saveLocal(
-    GetRecentTransactionsCommand command,
-    GetRecentTransactionsResult value,
+    ReadRecentTransactionsCommand command,
+    ReadRecentTransactionsResult value,
   ) async {
-    await accountLocalRepository.saveRecentTransactions(
+    await transactionLocalRepository.saveRecentTransactions(
       accountName: command.account.name,
       lastAddress: value.lastTransactionAddress,
       recentTransactions: value.recentTransactions,

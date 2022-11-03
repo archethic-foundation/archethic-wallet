@@ -16,8 +16,7 @@ class _NFTCreationProcessSummaryTabState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,

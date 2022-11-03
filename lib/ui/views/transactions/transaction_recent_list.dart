@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/recent_transactions.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
@@ -15,24 +15,16 @@ class TxList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final recentTransactionsAsyncValue = ref.watch(
-      RecentTransactionProviders.recentTransactions,
+      AccountProviders.selectedAccount.select(
+        (account) => account?.recentTransactions,
+      ),
     );
-    final recentTransactions = recentTransactionsAsyncValue.valueOrNull;
+    final recentTransactions = recentTransactionsAsyncValue;
 
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Column(
       children: [
-        if (recentTransactionsAsyncValue.isLoading)
-          SizedBox(
-            height: 78,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: theme.text,
-                strokeWidth: 1,
-              ),
-            ),
-          ),
         if (recentTransactions != null)
           recentTransactions.isEmpty
               ? Container(

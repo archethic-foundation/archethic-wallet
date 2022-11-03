@@ -106,7 +106,7 @@ class Account extends HiveObject {
     final lastAddressFromAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
     lastAddress =
-        lastAddressFromAddress == '' ? genesisAddress: lastAddressFromAddress;
+        lastAddressFromAddress == '' ? genesisAddress : lastAddressFromAddress;
     await updateAccount();
   }
 
