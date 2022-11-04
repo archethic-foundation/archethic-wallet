@@ -54,7 +54,6 @@ class TransferFormState with _$TransferFormState {
       case TransferType.token:
         return amount != accountToken!.amount!;
       case TransferType.nft:
-        // TODO(reddwarf03): Handle this case.
         return false;
     }
   }

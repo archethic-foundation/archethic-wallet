@@ -112,7 +112,7 @@ class AddTokenFormSheet extends ConsumerWidget {
                           final isInitialSupplyOk =
                               addTokenNotifier.controlInitialSupply(context);
                           final isAmountOk = addTokenNotifier.controlAmount(
-                              context, accountSelected);
+                              context, accountSelected,);
                           if (isNameOk &&
                               isSymbolOk &&
                               isInitialSupplyOk &&

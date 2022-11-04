@@ -184,6 +184,9 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
+            minimum: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.035,
+            ),
             child: Column(
               children: <Widget>[
                 SheetHeader(
