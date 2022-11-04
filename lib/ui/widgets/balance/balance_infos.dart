@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Project imports:
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
@@ -11,8 +9,8 @@ import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
+import 'package:aewallet/ui/widgets/balance/components/balance_infos_popup.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
@@ -20,11 +18,9 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +36,8 @@ class BalanceInfos extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelectedBalance = StateContainer.of(context)
         .appWallet!
-        .appKeychain.getAccountSelected()!
+        .appKeychain
+        .getAccountSelected()!
         .balance;
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
@@ -108,184 +105,10 @@ class BalanceInfos extends ConsumerWidget {
       ),
       onTapDown: (details) {
         if (accountSelectedBalance!.fiatCurrencyValue! > 0) {
-          showPopUpMenuAtPosition(
-            context,
-            ref,
-            details,
-            accountSelectedBalance,
-          );
+          BalanceInfosPopup.getPopup(
+              context, ref, details, accountSelectedBalance,);
         }
       },
-    );
-  }
-
-  // TODO(Chralu): Extract to [Widget] subclass
-  void showPopUpMenuAtPosition(
-    BuildContext context,
-    WidgetRef ref,
-    TapDownDetails details,
-    AccountBalance accountSelectedBalance,
-  ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-
-    showMenu(
-      color: theme.backgroundDark,
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20).copyWith(topRight: Radius.zero),
-      ),
-      context: context,
-      position: RelativeRect.fromLTRB(
-        details.globalPosition.dx,
-        details.globalPosition.dy,
-        details.globalPosition.dx,
-        details.globalPosition.dy,
-      ),
-      items: primaryCurrency.primaryCurrency ==
-              AvailablePrimaryCurrencyEnum.native
-          ? [
-              PopupMenuItem(
-                value: '1',
-                onTap: () {
-                  copyAmount(
-                    context,
-                    ref,
-                    accountSelectedBalance.nativeTokenValueToString(),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.copy,
-                          size: 20,
-                          color: theme.text,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          accountSelectedBalance.nativeTokenValueToString(),
-                          style: theme.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: '2',
-                onTap: () {
-                  copyAmount(
-                    context,
-                    ref,
-                    accountSelectedBalance.fiatCurrencyValue!.toString(),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.copy,
-                          size: 20,
-                          color: theme.text,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          accountSelectedBalance.fiatCurrencyValue!.toString(),
-                          style: theme.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ]
-          : [
-              PopupMenuItem(
-                value: '2',
-                onTap: () {
-                  copyAmount(
-                    context,
-                    ref,
-                    accountSelectedBalance.fiatCurrencyValue!.toString(),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.copy,
-                          size: 20,
-                          color: theme.text,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          accountSelectedBalance.fiatCurrencyValue!.toString(),
-                          style: theme.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: '1',
-                onTap: () {
-                  copyAmount(
-                    context,
-                    ref,
-                    accountSelectedBalance.nativeTokenValueToString(),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.copy,
-                          size: 20,
-                          color: theme.text,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          accountSelectedBalance.nativeTokenValueToString(),
-                          style: theme.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-    );
-  }
-
-  void copyAmount(BuildContext context, WidgetRef ref, String amount) {
-    Clipboard.setData(ClipboardData(text: amount));
-    final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    UIUtil.showSnackbar(
-      localizations.amountCopied,
-      context,
-      ref,
-      theme.text!,
-      theme.snackBarShadow!,
     );
   }
 }
