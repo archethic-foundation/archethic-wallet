@@ -74,7 +74,7 @@ class NumberUtil {
           sanitized = sanitized + inputSplitted[i];
         }
       } catch (e) {
-        // TODO(Chralu): shouldn't we return default value ? or maybe null ?
+        return sanitized;
       }
     }
     return sanitized;
