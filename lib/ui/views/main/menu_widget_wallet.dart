@@ -5,9 +5,10 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
-import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -24,9 +25,8 @@ class MenuWidgetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!;
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final preferences = ref.watch(SettingsProviders.settings);
 
     return StatefulBuilder(
@@ -73,18 +73,22 @@ class MenuWidgetWallet extends ConsumerWidget {
                     enabled: false,
                   ),
                 _ActionButton(
-                  text: localizations.receive,
+                  text: localizations.infos,
                   icon: UiIcons.receive,
-                  onTap: () {
+                  onTap: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
+                    // TODO(reddwarf03): Provider ?
+                    final contact = await sl.get<DBHelper>().getContactWithName(
+                          accountSelected.name!,
+                        );
                     Sheets.showAppHeightNineSheet(
                       context: context,
                       ref: ref,
-                      widget: ReceiveSheet(
-                        address: accountSelected.lastAddress,
+                      widget: ContactDetail(
+                        contact: contact,
                       ),
                       onDisposed: () {
                         setState(() {

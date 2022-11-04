@@ -78,6 +78,7 @@ class _TransferTextFieldAmountState
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
           inputFormatters: [
+            ThousandsSeparatorInputFormatter(),
             LengthLimitingTextInputFormatter(16),
             CurrencyFormatter(
               maxDecimalDigits: primaryCurrency.primaryCurrency ==

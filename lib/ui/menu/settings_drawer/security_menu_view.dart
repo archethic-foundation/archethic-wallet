@@ -109,7 +109,7 @@ class SecurityMenuView extends ConsumerWidget {
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,
                         headingStyle: theme.textStyleSize16W600EquinoxRed,
-                        icon: UiIcons.remove_wallet,
+                        icon: UiIcons.trash,
                         onPressed: () {
                           final language =
                               ref.read(LanguageProviders.selectedLanguage);

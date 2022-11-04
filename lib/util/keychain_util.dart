@@ -236,7 +236,8 @@ class KeychainUtil {
     final newContact = Contact(
       name: '@$name',
       address: uint8ListToHex(genesisAddress),
-      type: 'keychainService',
+      type: ContactType.keychainService.name,
+      publicKey: '',
     );
     await sl.get<DBHelper>().saveContact(newContact);
 
@@ -322,7 +323,8 @@ class KeychainUtil {
             final newContact = Contact(
               name: '@$nameDecoded',
               address: uint8ListToHex(genesisAddress),
-              type: 'keychainService',
+              type: ContactType.keychainService.name,
+              publicKey: '',
             );
             await sl.get<DBHelper>().saveContact(newContact);
           }

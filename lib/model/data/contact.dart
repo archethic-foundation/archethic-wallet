@@ -5,12 +5,15 @@ import 'package:hive/hive.dart';
 
 part 'contact.g.dart';
 
+enum ContactType { keychainService, externalContact }
+
 @HiveType(typeId: 0)
 class Contact extends HiveObject {
   Contact({
     required this.name,
     required this.address,
     required this.type,
+    required this.publicKey,
   });
 
   /// Name
@@ -24,4 +27,8 @@ class Contact extends HiveObject {
   /// Type contact - Keychain Service / External contact
   @HiveField(4)
   String type;
+
+  /// Public Key
+  @HiveField(5)
+  String publicKey;
 }

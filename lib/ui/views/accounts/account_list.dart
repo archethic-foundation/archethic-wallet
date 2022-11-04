@@ -13,7 +13,7 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
+import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -367,15 +367,21 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
           );
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         },
-        onLongPress: () {
+        onLongPress: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
+          // TODO(reddwarf03): Provider ?
+          final contact = await sl.get<DBHelper>().getContactWithName(
+                account.name!,
+              );
           Sheets.showAppHeightNineSheet(
             context: context,
             ref: ref,
-            widget: ReceiveSheet(address: account.lastAddress),
+            widget: ContactDetail(
+              contact: contact,
+            ),
             onDisposed: () {
               setState(() {
                 StateContainer.of(context)

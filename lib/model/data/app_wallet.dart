@@ -62,7 +62,8 @@ class AppWallet extends HiveObject {
     final newContact = Contact(
       name: '@$name',
       address: uint8ListToHex(genesisAddress),
-      type: 'keychainService',
+      type: ContactType.keychainService.name,
+      publicKey: uint8ListToHex(keychain.deriveKeypair(kServiceName).publicKey),
     );
     await sl.get<DBHelper>().saveContact(newContact);
 

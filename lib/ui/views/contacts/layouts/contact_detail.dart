@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -10,20 +9,20 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/transfer/bloc/state.dart';
-import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
+import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_address.dart';
+import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_public_key.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
@@ -37,11 +36,8 @@ class ContactDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
-    );
     final preferences = ref.watch(SettingsProviders.settings);
-
+    var infoToShare = contact.address.toUpperCase();
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -59,7 +55,7 @@ class ContactDetail extends ConsumerWidget {
                   top: 10,
                   start: 10,
                 ),
-                child: contact.type == 'keychainService'
+                child: contact.type == ContactType.keychainService.name
                     ? const SizedBox()
                     : TextButton(
                         onPressed: () {
@@ -100,7 +96,7 @@ class ContactDetail extends ConsumerWidget {
                           );
                         },
                         child: FaIcon(
-                          FontAwesomeIcons.trash,
+                          UiIcons.trash,
                           size: 24,
                           color: theme.text,
                         ),
@@ -114,7 +110,7 @@ class ContactDetail extends ConsumerWidget {
                 child: Column(
                   children: <Widget>[
                     AutoSizeText(
-                      localizations.contactHeader,
+                      contact.format,
                       style: theme.textStyleSize24W700EquinoxPrimary,
                       textAlign: TextAlign.center,
                       maxLines: 1,
@@ -123,144 +119,110 @@ class ContactDetail extends ConsumerWidget {
                   ],
                 ),
               ),
-              Container(
+              const SizedBox(
                 width: 50,
                 height: 50,
-                margin: const EdgeInsetsDirectional.only(
-                  top: 10,
-                  start: 10,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    Clipboard.setData(
-                      ClipboardData(text: contact.address),
-                    );
-                    UIUtil.showSnackbar(
-                      localizations.addressCopied,
-                      context,
-                      ref,
-                      theme.text!,
-                      theme.snackBarShadow!,
-                    );
-                  },
-                  child: FaIcon(
-                    FontAwesomeIcons.paste,
-                    size: 24,
-                    color: theme.text,
-                  ),
-                ),
               ),
             ],
           ),
           Expanded(
             child: Container(
-              padding: const EdgeInsetsDirectional.only(
-                top: 4,
-                bottom: 12,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
+              padding: const EdgeInsets.all(8),
+              color: Colors.transparent,
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              child: ContainedTabBarView(
+                tabBarProperties: TabBarProperties(
+                  indicatorColor: theme.backgroundDarkest,
+                ),
+                tabs: [
                   Text(
-                    contact.format,
+                    localizations.contactAddressTabHeader,
+                    style: theme.textStyleSize14W600EquinoxPrimary,
                     textAlign: TextAlign.center,
-                    style: theme.textStyleSize16W600Primary,
                   ),
-                  const SizedBox(height: 5),
-                  Container(
-                    padding: const EdgeInsetsDirectional.only(
-                      top: 4,
-                      bottom: 12,
-                    ),
-                    margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.105,
-                      right: MediaQuery.of(context).size.width * 0.105,
-                    ),
-                    height: 1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      gradient: theme.gradient,
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  GestureDetector(
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      Clipboard.setData(
-                        ClipboardData(text: contact.address),
-                      );
-                      UIUtil.showSnackbar(
-                        localizations.addressCopied,
-                        context,
-                        ref,
-                        theme.text!,
-                        theme.snackBarShadow!,
-                      );
-                    },
-                    child: UIUtil.threeLinetextStyleSmallestW400Text(
-                      context,
-                      ref,
-                      contact.address,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Container(
-                    padding: const EdgeInsetsDirectional.only(
-                      top: 4,
-                      bottom: 12,
-                    ),
-                    margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.105,
-                      right: MediaQuery.of(context).size.width * 0.105,
-                    ),
-                    height: 1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      gradient: theme.gradient,
-                    ),
+                  Text(
+                    localizations.contactPublicKeyTabHeader,
+                    style: theme.textStyleSize14W600EquinoxPrimary,
+                    textAlign: TextAlign.center,
                   ),
                 ],
+                views: [
+                  ContactDetailAddress(
+                    contact: contact,
+                  ),
+                  ContactDetailPublicKey(contact: contact),
+                ],
+                onChange: (p0) {
+                  switch (p0) {
+                    case 0:
+                      infoToShare = contact.address.toUpperCase();
+                      break;
+                    case 1:
+                      infoToShare = contact.publicKey.toUpperCase();
+                      break;
+                  }
+                },
               ),
             ),
           ),
-          if (accountSelected!.name != contact.format)
+          if (contact.name != contact.format)
             Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    // Send Button
-                    if (StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain.getAccountSelected()!
-                        .balance!
-                        .isNativeTokenValuePositive())
+                    AppButton(
+                      AppButtonType.primary,
+                      localizations.viewExplorer,
+                      Dimens.buttonTopDimens,
+                      icon: Icon(
+                        Icons.more_horiz,
+                        color: theme.text,
+                      ),
+                      key: const Key('viewExplorer'),
+                      onPressed: () async {
+                        UIUtil.showWebview(
+                          context,
+                          '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${contact.address}',
+                          '',
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    // TODO(reddwarf03): Provider pour gérer juste cette mécanique ?
+                    if (infoToShare.isEmpty)
                       AppButton(
                         AppButtonType.primary,
-                        localizations.send,
-                        Dimens.buttonTopDimens,
-                        key: const Key('send'),
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          Sheets.showAppHeightNineSheet(
-                            context: context,
-                            ref: ref,
-                            widget: TransferSheet(
-                              transferType: TransferType.uco,
-                              seed:
-                                  (await StateContainer.of(context).getSeed())!,
-                              recipient: TransferRecipient.contact(
-                                contact: contact,
-                              ),
-                            ),
+                        localizations.share,
+                        Dimens.buttonBottomDimens,
+                        icon: Icon(
+                          Icons.share,
+                          color: theme.text,
+                        ),
+                        key: const Key('share'),
+                        onPressed: () {
+                          final box = context.findRenderObject() as RenderBox?;
+                          Share.share(
+                            infoToShare,
+                            sharePositionOrigin:
+                                box!.localToGlobal(Offset.zero) & box.size,
                           );
                         },
+                      )
+                    else
+                      AppButton(
+                        AppButtonType.primaryOutline,
+                        localizations.share,
+                        Dimens.buttonBottomDimens,
+                        icon: Icon(
+                          Icons.share,
+                          color: theme.text30,
+                        ),
+                        key: const Key('share'),
+                        onPressed: () {},
                       ),
                   ],
                 ),

@@ -197,12 +197,12 @@ class AppLocalization {
     return Intl.message('No token yet', name: 'fungiblesTokensListNoTokenYet');
   }
 
-  String get fungiblesTokensListHeader {
-    return Intl.message('Tokens', name: 'fungiblesTokensListHeader');
-  }
-
   String get addressCopied {
     return Intl.message('Address Copied', name: 'addressCopied');
+  }
+
+  String get publicKeyCopied {
+    return Intl.message('Public key Copied', name: 'publicKeyCopied');
   }
 
   String get amountCopied {
@@ -318,8 +318,40 @@ class AppLocalization {
         name: 'removeContactConfirmation');
   }
 
+  String get contactAddressTabHeader {
+    return Intl.message('Address', name: 'contactAddressTabHeader');
+  }
+
+  String get contactPublicKeyTabHeader {
+    return Intl.message('Public Key', name: 'contactPublicKeyTabHeader');
+  }
+
   String get addressBookHeader {
     return Intl.message('Address book', name: 'addressBookHeader');
+  }
+
+  String get contactAddressInfoKeychainService {
+    return Intl.message(
+        'The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can:\n- either scan the QR Code above,\n- or click on it to copy the address.',
+        name: 'contactAddressInfoKeychainService');
+  }
+
+  String get contactPublicKeyInfoKeychainService {
+    return Intl.message(
+        'The following QR Code contains the public key of your account.\n\nYou can use this public key\n- to give him access rights to information that you want to protect (specific properties associated with NFTs, messages, ...).\n- to verify the authenticity of an information by checking that it comes from this account.\n\nTo use it, you can\n- either scan the QR Code above,\n- or click on it to copy the public key.',
+        name: 'contactPublicKeyInfoKeychainService');
+  }
+
+  String get contactAddressInfoExternalContact {
+    return Intl.message(
+        'The following QR Code contains the address of your contact.\n\nYou can use this address to send funds or tokens to your contact.\n\nTo use it, you can:\n- either scan the QR Code above,\n- or click on it to copy the address.',
+        name: 'contactAddressInfoExternalContact');
+  }
+
+  String get contactPublicKeyInfoExternalContact {
+    return Intl.message(
+        'The following QR Code contains the public key of your contact.\n\nYou can use this public key\n- to give him access rights to information that you want to protect (specific properties associated with NFTs, messages, ...).\n- to verify the authenticity of an information by checking that it comes from this contact.\n\nTo use it, you can\n- either scan the QR Code above,\n- or click on it to copy the public key.',
+        name: 'contactPublicKeyInfoExternalContact');
   }
 
   String get contactHeader {
@@ -1395,8 +1427,8 @@ class AppLocalization {
     return Intl.message('Transactions', name: 'transactionsAllListHeader');
   }
 
-  String get receive {
-    return Intl.message('Receive', name: 'receive');
+  String get infos {
+    return Intl.message('Infos', name: 'infos');
   }
 
   String get buy {
