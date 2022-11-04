@@ -1,36 +1,34 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-
-// Project imports:
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTCard extends ConsumerWidget {
-  const NFTCard({
+class NFTListDetail extends ConsumerWidget {
+  const NFTListDetail({
     super.key,
-    required this.onTap,
     required this.tokenInformations,
+    required this.index,
   });
 
-  final VoidCallback onTap;
-
   final TokenInformations tokenInformations;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(SettingsProviders.settings);
     final typeMime = tokenInformations.tokenProperties!['type/mime'];
     return Column(
       children: <Widget>[
@@ -49,7 +47,18 @@ class NFTCard extends ConsumerWidget {
           ),
         ),
         GestureDetector(
-          onTap: onTap,
+          onTap: () {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
+            Sheets.showAppHeightNineSheet(
+              context: context,
+              ref: ref,
+              widget:
+                  NFTDetail(tokenInformations: tokenInformations, index: index),
+            );
+          },
           child: Card(
             elevation: 5,
             shadowColor: Colors.black,
@@ -78,6 +87,7 @@ class NFTCard extends ConsumerWidget {
                               color: theme.text,
                               border: Border.all(),
                             ),
+                            // TODO(chralu): Cache management ?
                             child: Image.memory(
                               snapshot.data!,
                               height: 130,

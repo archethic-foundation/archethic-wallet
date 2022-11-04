@@ -11,7 +11,7 @@ class NFTHeader extends ConsumerWidget {
   const NFTHeader(
       {super.key,
       required this.currentNftCategoryIndex,
-      this.displayCategoryName = false});
+      this.displayCategoryName = false,});
   final int currentNftCategoryIndex;
   final bool displayCategoryName;
 

@@ -23,7 +23,7 @@ import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
-import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
+import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
