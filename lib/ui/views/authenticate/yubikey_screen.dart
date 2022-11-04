@@ -85,6 +85,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   Future<void> _verifyOTP(String otp) async {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    // TODO(chralu): utilisation provider ?
     final preferences = await Preferences.getInstance();
     final vault = await Vault.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
