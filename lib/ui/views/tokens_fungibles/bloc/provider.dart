@@ -206,7 +206,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return false;
     }
 
-    // TODO(@reddwarf03): Pb avec la gestion des bigint à régler
+    // TODO(reddwarf03): Pb avec la gestion des bigint à régler
     if (state.initialSupply > 9999999999) {
       state = state.copyWith(
         errorInitialSupplyText:

@@ -1,7 +1,4 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
@@ -22,16 +19,8 @@ class NftCreationFormSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
 
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
-    final listNftCategory = ref.watch(
-      NftCategoryProviders.fetchNftCategory(
-        context: context,
-        account: accountSelected,
-      ),
-    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
