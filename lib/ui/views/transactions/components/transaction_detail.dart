@@ -10,7 +10,7 @@ import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/contacts/add_contact.dart';
+import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -34,9 +34,8 @@ class TransactionDetail extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!;
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     String? contactAddress;

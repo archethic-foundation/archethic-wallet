@@ -1,13 +1,14 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-// Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -19,9 +20,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -315,7 +314,8 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                           final newContact = Contact(
                             name: '@${_nameController!.text}',
                             address: widget.address ?? _addressController!.text,
-                            type: 'externalContact',
+                            type: ContactType.externalContact.name,
+                            publicKey: '',
                           );
                           ref.read(
                             ContactProviders.saveContact(contact: newContact),
@@ -324,7 +324,7 @@ class _AddContactSheetState extends ConsumerState<AddContactSheet> {
                               .requestUpdate(forceUpdateChart: false);
                           UIUtil.showSnackbar(
                             localizations.contactAdded
-                                .replaceAll('%1', newContact.name),
+                                .replaceAll('%1', newContact.format),
                             context,
                             ref,
                             theme.text!,

@@ -1,6 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
-
-// Project imports:
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
@@ -9,14 +8,12 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/configure_category_list.dart';
+import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

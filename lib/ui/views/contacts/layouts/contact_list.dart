@@ -7,15 +7,13 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/contacts/add_contact.dart';
-import 'package:aewallet/ui/views/contacts/contact_details.dart';
+import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
+import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -240,7 +238,7 @@ class _SingleContact extends ConsumerWidget {
               children: <Widget>[
                 Expanded(
                   child: Container(
-                    height: 30,
+                    height: 40,
                     margin: const EdgeInsetsDirectional.only(start: 2),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +246,8 @@ class _SingleContact extends ConsumerWidget {
                       children: <Widget>[
                         Row(
                           children: [
-                            if (contact.type == 'keychainService')
+                            if (contact.type ==
+                                ContactType.keychainService.name)
                               Icon(
                                 UiIcons.keychain,
                                 color: theme.iconDrawer,
@@ -263,9 +262,11 @@ class _SingleContact extends ConsumerWidget {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text(
-                              contact.format,
-                              style: theme.textStyleSize14W600Primary,
+                            Expanded(
+                              child: Text(
+                                contact.format,
+                                style: theme.textStyleSize14W600Primary,
+                              ),
                             ),
                           ],
                         ),
