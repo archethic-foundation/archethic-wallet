@@ -1660,8 +1660,17 @@ class AppLocalization {
     return Intl.message('Size: ', name: 'nftAddFileSize');
   }
 
+  String get nftCategoryChangeCategory {
+    return Intl.message('Move to a new category...',
+        name: 'nftCategoryChangeCategory');
+  }
+
   String get nftWithoutCategory {
     return Intl.message('Without category', name: 'nftWithoutCategory');
+  }
+
+  String get nftCategory {
+    return Intl.message('Category', name: 'nftCategory');
   }
 
   String get nftCategoryArt {

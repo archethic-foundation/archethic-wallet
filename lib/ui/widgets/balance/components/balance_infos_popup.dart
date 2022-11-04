@@ -25,7 +25,10 @@ class BalanceInfosPopup {
       color: theme.backgroundDark,
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20).copyWith(topRight: Radius.zero),
+        borderRadius: BorderRadius.circular(20).copyWith(topLeft: Radius.zero),
+        side: BorderSide(
+          color: theme.text60!,
+        ),
       ),
       context: context,
       position: RelativeRect.fromLTRB(

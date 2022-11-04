@@ -2094,8 +2094,20 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftCategoryChangeCategory": "Move to a new category...",
+  "@nftCategoryChangeCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftWithoutCategory": "Without category",
   "@nftWithoutCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategory": "Category",
+  "@nftCategory": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
