@@ -4,6 +4,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/nft/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
@@ -54,58 +55,8 @@ class NftCreationFormSheet extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 15 : 20,
-                          ),
-                          height: 50,
-                          width: 50,
-                          child: BackButton(
-                            key: const Key('back'),
-                            color: theme.text,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const BalanceIndicatorWidget(
-                      displaySwitchButton: false,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10, top: 10),
-                      child: Column(
-                        children: [
-                          Card(
-                            elevation: 5,
-                            shadowColor: Colors.black,
-                            color: theme.backgroundDark,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: const BorderSide(
-                                color: Colors.white10,
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                listNftCategory[
-                                        nftCreation.currentNftCategoryIndex]
-                                    .image,
-                                width: 40,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                NFTHeader(
+                  currentNftCategoryIndex: nftCreation.currentNftCategoryIndex,
                 ),
                 Divider(
                   height: 2,
