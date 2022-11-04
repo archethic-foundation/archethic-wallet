@@ -1,5 +1,3 @@
-// Flutter imports:
-// Project imports:
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
@@ -26,7 +24,6 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/preferences.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -397,7 +394,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
           elevation: 0,
           color: theme.backgroundAccountsListCardSelected,
           child: Container(
-            height: 80,
+            height: 85,
             color: account.selected!
                 ? theme.backgroundAccountsListCardSelected
                 : theme.backgroundAccountsListCard,
