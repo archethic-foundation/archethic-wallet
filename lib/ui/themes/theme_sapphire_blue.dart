@@ -239,4 +239,7 @@ class SapphireBlueTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Color? favoriteIconColor = Colors.yellow[800];
 }

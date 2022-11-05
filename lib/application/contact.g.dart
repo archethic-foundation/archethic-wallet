@@ -110,6 +110,77 @@ class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
   String? get name => r'_fetchContactsProvider';
 }
 
+String $_getContactWithNameHash() =>
+    r'7272ba74ac24402574cf64136acc86fa939f3ca3';
+
+/// See also [_getContactWithName].
+class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
+  _GetContactWithNameProvider(
+    this.name,
+  ) : super(
+          (ref) => _getContactWithName(
+            ref,
+            name,
+          ),
+          from: _getContactWithNameProvider,
+          name: r'_getContactWithNameProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_getContactWithNameHash,
+        );
+
+  final String name;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetContactWithNameProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _GetContactWithNameRef = AutoDisposeFutureProviderRef<Contact>;
+
+/// See also [_getContactWithName].
+final _getContactWithNameProvider = _GetContactWithNameFamily();
+
+class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
+  _GetContactWithNameFamily();
+
+  _GetContactWithNameProvider call(
+    String name,
+  ) {
+    return _GetContactWithNameProvider(
+      name,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<Contact> getProviderOverride(
+    covariant _GetContactWithNameProvider provider,
+  ) {
+    return call(
+      provider.name,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_getContactWithNameProvider';
+}
+
 String $_saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
 
 /// See also [_saveContact].
@@ -248,4 +319,218 @@ class _DeleteContactFamily extends Family<AsyncValue<void>> {
 
   @override
   String? get name => r'_deleteContactProvider';
+}
+
+String $_isContactExistsWithNameHash() =>
+    r'af7f5b8a34da3b3530efd34c75a5a930c0576100';
+
+/// See also [_isContactExistsWithName].
+class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
+  _IsContactExistsWithNameProvider({
+    this.name,
+  }) : super(
+          (ref) => _isContactExistsWithName(
+            ref,
+            name: name,
+          ),
+          from: _isContactExistsWithNameProvider,
+          name: r'_isContactExistsWithNameProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_isContactExistsWithNameHash,
+        );
+
+  final String? name;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _IsContactExistsWithNameProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _IsContactExistsWithNameRef = AutoDisposeFutureProviderRef<bool>;
+
+/// See also [_isContactExistsWithName].
+final _isContactExistsWithNameProvider = _IsContactExistsWithNameFamily();
+
+class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
+  _IsContactExistsWithNameFamily();
+
+  _IsContactExistsWithNameProvider call({
+    String? name,
+  }) {
+    return _IsContactExistsWithNameProvider(
+      name: name,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<bool> getProviderOverride(
+    covariant _IsContactExistsWithNameProvider provider,
+  ) {
+    return call(
+      name: provider.name,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_isContactExistsWithNameProvider';
+}
+
+String $_getContacWithNameHash() => r'6fad69e450c2e26d41fce078bd853884867826db';
+
+/// See also [_getContacWithName].
+class _GetContacWithNameProvider extends AutoDisposeFutureProvider<bool> {
+  _GetContacWithNameProvider(
+    this.name,
+  ) : super(
+          (ref) => _getContacWithName(
+            ref,
+            name,
+          ),
+          from: _getContacWithNameProvider,
+          name: r'_getContacWithNameProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_getContacWithNameHash,
+        );
+
+  final String? name;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetContacWithNameProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _GetContacWithNameRef = AutoDisposeFutureProviderRef<bool>;
+
+/// See also [_getContacWithName].
+final _getContacWithNameProvider = _GetContacWithNameFamily();
+
+class _GetContacWithNameFamily extends Family<AsyncValue<bool>> {
+  _GetContacWithNameFamily();
+
+  _GetContacWithNameProvider call(
+    String? name,
+  ) {
+    return _GetContacWithNameProvider(
+      name,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<bool> getProviderOverride(
+    covariant _GetContacWithNameProvider provider,
+  ) {
+    return call(
+      provider.name,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_getContacWithNameProvider';
+}
+
+String $_isContactExistsWithAddressHash() =>
+    r'4a2281e577a2bfa9fee0005c51763af7ad2b687b';
+
+/// See also [_isContactExistsWithAddress].
+class _IsContactExistsWithAddressProvider
+    extends AutoDisposeFutureProvider<bool> {
+  _IsContactExistsWithAddressProvider({
+    this.address,
+  }) : super(
+          (ref) => _isContactExistsWithAddress(
+            ref,
+            address: address,
+          ),
+          from: _isContactExistsWithAddressProvider,
+          name: r'_isContactExistsWithAddressProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_isContactExistsWithAddressHash,
+        );
+
+  final String? address;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _IsContactExistsWithAddressProvider &&
+        other.address == address;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _IsContactExistsWithAddressRef = AutoDisposeFutureProviderRef<bool>;
+
+/// See also [_isContactExistsWithAddress].
+final _isContactExistsWithAddressProvider = _IsContactExistsWithAddressFamily();
+
+class _IsContactExistsWithAddressFamily extends Family<AsyncValue<bool>> {
+  _IsContactExistsWithAddressFamily();
+
+  _IsContactExistsWithAddressProvider call({
+    String? address,
+  }) {
+    return _IsContactExistsWithAddressProvider(
+      address: address,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<bool> getProviderOverride(
+    covariant _IsContactExistsWithAddressProvider provider,
+  ) {
+    return call(
+      address: provider.address,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_isContactExistsWithAddressProvider';
 }

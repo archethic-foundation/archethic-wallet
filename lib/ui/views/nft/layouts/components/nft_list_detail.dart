@@ -157,6 +157,7 @@ class NFTCardBottom extends ConsumerStatefulWidget {
 class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelected =
         StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final nftInfosOffChain =
@@ -205,12 +206,12 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
                           nftInfosOffChain.favorite == false
                       ? Icon(
                           Icons.favorite_border,
-                          color: Colors.yellow[800],
+                          color: theme.favoriteIconColor,
                           size: 18,
                         )
                       : Icon(
                           Icons.favorite,
-                          color: Colors.yellow[800],
+                          color: theme.favoriteIconColor,
                           size: 18,
                         ),
                 ),

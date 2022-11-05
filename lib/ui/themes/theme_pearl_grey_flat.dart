@@ -239,4 +239,7 @@ class PearlGreyFlatTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Color? favoriteIconColor = Colors.yellow[800];
 }

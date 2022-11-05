@@ -239,4 +239,7 @@ class FireRedFlatTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Color? favoriteIconColor = Colors.yellow[800];
 }

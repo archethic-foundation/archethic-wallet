@@ -217,6 +217,10 @@ class AppLocalization {
     return Intl.message('Enter Address', name: 'addressHint');
   }
 
+  String get publicKeyHint {
+    return Intl.message('Enter Public Key', name: 'publicKeyHint');
+  }
+
   String get scanQrCode {
     return Intl.message('Scan QR Code', name: 'scanQrCode');
   }
@@ -361,6 +365,12 @@ class AppLocalization {
   String get addressBookDesc {
     return Intl.message('Create and manage frequently-used addresses',
         name: 'addressBookDesc');
+  }
+
+  String get addContactDescription {
+    return Intl.message(
+        'To create a contact, you must specify a name and address.\n\nConcerning the address, it allows to send funds or tokens to your contact. You can either type it, copy and paste it or get it from a QR Code.\n\nThe public key is automatically retrieved unless your contact has never made a transaction on the Archethic network. In this case, you just have to ask him/her and either enter it, copy and paste it or retrieve it from a QR Code.\nThe public key allows you to give your contact access rights to information that you want to protect (specific properties associated with NFTs, messages, ...).or to verify the authenticity of an information by checking that it comes from this contact.',
+        name: 'addContactDescription');
   }
 
   String get addContact {

@@ -237,7 +237,8 @@ class KeychainUtil {
       name: '@$name',
       address: uint8ListToHex(genesisAddress),
       type: ContactType.keychainService.name,
-      publicKey: '',
+      publicKey: uint8ListToHex(keychain.deriveKeypair(kServiceName).publicKey)
+          .toUpperCase(),
     );
     await sl.get<DBHelper>().saveContact(newContact);
 
@@ -324,7 +325,9 @@ class KeychainUtil {
               name: '@$nameDecoded',
               address: uint8ListToHex(genesisAddress),
               type: ContactType.keychainService.name,
-              publicKey: '',
+              publicKey:
+                  uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey)
+                      .toUpperCase(),
             );
             await sl.get<DBHelper>().saveContact(newContact);
           }
