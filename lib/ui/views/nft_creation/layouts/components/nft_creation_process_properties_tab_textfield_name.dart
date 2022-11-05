@@ -91,7 +91,9 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
                   );
                   return;
                 } else {
-                  nftPropertyNameController.text = scanResult;
+                  nftCreationNotifier.setPropertyName(
+                    scanResult,
+                  );
                 }
               },
             )

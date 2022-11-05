@@ -240,4 +240,7 @@ class FlatTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Color? favoriteIconColor = Colors.yellow[800];
 }

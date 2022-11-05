@@ -239,4 +239,7 @@ class HoneyOrangeTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Color? favoriteIconColor = Colors.yellow[800];
 }

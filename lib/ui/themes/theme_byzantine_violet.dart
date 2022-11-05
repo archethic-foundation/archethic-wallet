@@ -244,4 +244,7 @@ class ByzantineVioletTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Color? favoriteIconColor = Colors.yellow[800];
 }

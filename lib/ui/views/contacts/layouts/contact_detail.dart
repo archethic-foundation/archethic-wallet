@@ -9,8 +9,8 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_address.dart';
-import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_public_key.dart';
+import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
+import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -37,6 +37,11 @@ class ContactDetail extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final _contact = ref.watch(
+      ContactProviders.getContactWithName(
+        contact.name,
+      ),
+    );
     var infoToShare = contact.address.toUpperCase();
     return SafeArea(
       minimum: EdgeInsets.only(
@@ -119,10 +124,57 @@ class ContactDetail extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                width: 50,
-                height: 50,
-              ),
+              if (contact.type == ContactType.keychainService.name)
+                const SizedBox(
+                  width: 50,
+                  height: 50,
+                )
+              else
+                Container(
+                  width: 50,
+                  height: 50,
+                  margin: const EdgeInsetsDirectional.only(
+                    top: 10,
+                    start: 10,
+                  ),
+                  child: InkWell(
+                    onTap: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      final updatedContact = contact;
+                      if (contact.favorite == null) {
+                        updatedContact.favorite = true;
+                      } else {
+                        updatedContact.favorite = !contact.favorite!;
+                      }
+
+                      ref.read(
+                        ContactProviders.saveContact(
+                          contact: updatedContact,
+                        ),
+                      );
+                    },
+                    child: _contact.maybeWhen(
+                      data: (data) {
+                        return data.favorite == false
+                            ? Icon(
+                                Icons.favorite_border,
+                                color: theme.favoriteIconColor,
+                                size: 18,
+                              )
+                            : Icon(
+                                Icons.favorite,
+                                color: theme.favoriteIconColor,
+                                size: 18,
+                              );
+                      },
+                      loading: () => const SizedBox(),
+                      orElse: () => const SizedBox(),
+                    ),
+                  ),
+                ),
             ],
           ),
           Expanded(
@@ -148,10 +200,20 @@ class ContactDetail extends ConsumerWidget {
                   ),
                 ],
                 views: [
-                  ContactDetailAddress(
-                    contact: contact,
+                  ContactDetailTab(
+                    infoQRCode: contact.address,
+                    description:
+                        contact.type == ContactType.keychainService.name
+                            ? localizations.contactAddressInfoKeychainService
+                            : localizations.contactAddressInfoExternalContact,
                   ),
-                  ContactDetailPublicKey(contact: contact),
+                  ContactDetailTab(
+                    infoQRCode: contact.publicKey!,
+                    description:
+                        contact.type == ContactType.keychainService.name
+                            ? localizations.contactPublicKeyInfoKeychainService
+                            : localizations.contactPublicKeyInfoExternalContact,
+                  ),
                 ],
                 onChange: (p0) {
                   switch (p0) {
@@ -159,7 +221,7 @@ class ContactDetail extends ConsumerWidget {
                       infoToShare = contact.address.toUpperCase();
                       break;
                     case 1:
-                      infoToShare = contact.publicKey.toUpperCase();
+                      infoToShare = contact.publicKey!.toUpperCase();
                       break;
                   }
                 },

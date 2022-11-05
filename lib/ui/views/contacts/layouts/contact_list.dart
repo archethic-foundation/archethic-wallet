@@ -254,10 +254,21 @@ class _SingleContact extends ConsumerWidget {
                                 size: 30,
                               )
                             else
-                              Icon(
-                                UiIcons.main,
-                                color: theme.iconDrawer,
-                                size: 30,
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Icon(
+                                    UiIcons.main,
+                                    color: theme.iconDrawer,
+                                    size: 30,
+                                  ),
+                                  if (contact.favorite == true)
+                                    Icon(
+                                      Icons.favorite,
+                                      color: theme.favoriteIconColor,
+                                      size: 12,
+                                    ),
+                                ],
                               ),
                             const SizedBox(
                               width: 10,

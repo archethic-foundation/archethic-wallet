@@ -13,7 +13,8 @@ class Contact extends HiveObject {
     required this.name,
     required this.address,
     required this.type,
-    required this.publicKey,
+    this.publicKey,
+    this.favorite,
   });
 
   /// Name
@@ -28,7 +29,12 @@ class Contact extends HiveObject {
   @HiveField(4)
   String type;
 
+  // TODO(reddwarf03): How to create required properties with hive... ?
   /// Public Key
   @HiveField(5)
-  String publicKey;
+  String? publicKey;
+
+  /// Favorite
+  @HiveField(6)
+  bool? favorite;
 }

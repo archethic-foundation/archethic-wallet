@@ -119,4 +119,6 @@ abstract class BaseTheme {
   Decoration getDecorationBalance();
 
   Decoration getDecorationSheet();
+
+  Color? favoriteIconColor;
 }

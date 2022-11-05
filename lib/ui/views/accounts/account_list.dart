@@ -114,6 +114,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                       builder: (BuildContext context) {
                         return StatefulBuilder(
                           builder: (context, setState) {
+                            FocusScope.of(context).requestFocus(nameFocusNode);
                             return AlertDialog(
                               title: Padding(
                                 padding: const EdgeInsets.only(bottom: 10),

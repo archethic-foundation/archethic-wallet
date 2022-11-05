@@ -25,6 +25,16 @@ Future<List<Contact>> _fetchContacts(
 }
 
 @riverpod
+Future<Contact> _getContactWithName(
+  _GetContactWithNameRef ref,
+  String name,
+) async {
+  final searchedContact =
+      await ref.watch(_contactRepositoryProvider).getContactWithName(name);
+  return searchedContact;
+}
+
+@riverpod
 Future<void> _saveContact(
   _SaveContactRef ref, {
   Contact? contact,
@@ -46,6 +56,41 @@ Future<void> _deleteContact(
   }
   ref.watch(_contactRepositoryProvider).deleteContact(contact);
   ref.invalidate(_contactRepositoryProvider);
+}
+
+@riverpod
+Future<bool> _isContactExistsWithName(
+  _IsContactExistsWithNameRef ref, {
+  String? name,
+}) async {
+  if (name == null) {
+    throw Exception('Name is null');
+  }
+  return ref.watch(_contactRepositoryProvider).isContactExistsWithName(name);
+}
+
+@riverpod
+Future<bool> _getContacWithName(
+  _GetContacWithNameRef ref,
+  String? name,
+) async {
+  if (name == null) {
+    throw Exception('Name is null');
+  }
+  return ref.watch(_contactRepositoryProvider).isContactExistsWithName(name);
+}
+
+@riverpod
+Future<bool> _isContactExistsWithAddress(
+  _IsContactExistsWithAddressRef ref, {
+  String? address,
+}) async {
+  if (address == null) {
+    throw Exception('Address is null');
+  }
+  return ref
+      .watch(_contactRepositoryProvider)
+      .isContactExistsWithAddress(address);
 }
 
 class ContactRepository {
@@ -70,10 +115,25 @@ class ContactRepository {
   Future<void> deleteContact(Contact newContact) async {
     await sl.get<DBHelper>().deleteContact(newContact);
   }
+
+  Future<bool> isContactExistsWithName(String name) async {
+    return sl.get<DBHelper>().contactExistsWithName('@$name');
+  }
+
+  Future<Contact> getContactWithName(String name) async {
+    return sl.get<DBHelper>().getContactWithName(name);
+  }
+
+  Future<bool> isContactExistsWithAddress(String address) async {
+    return sl.get<DBHelper>().contactExistsWithAddress(address);
+  }
 }
 
 abstract class ContactProviders {
   static final fetchContacts = _fetchContactsProvider;
+  static final isContactExistsWithName = _isContactExistsWithNameProvider;
+  static final isContactExistsWithAddress = _isContactExistsWithAddressProvider;
   static final saveContact = _saveContactProvider;
   static final deleteContact = _deleteContactProvider;
+  static final getContactWithName = _getContactWithNameProvider;
 }
