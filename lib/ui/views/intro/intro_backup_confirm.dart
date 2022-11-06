@@ -54,6 +54,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   bool keychainAccessRequested = false;
   bool newWalletRequested = false;
 
+  late ScrollController scrollController;
+
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
@@ -199,12 +201,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   @override
   void dispose() {
     _destroyBus();
+    scrollController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
+    scrollController = ScrollController();
     _registerBus();
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
@@ -272,8 +276,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                 ),
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollController,
                     thumbVisibility: true,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

@@ -15,7 +15,7 @@ import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransferFormSheet extends ConsumerWidget {
+class TransferFormSheet extends ConsumerStatefulWidget {
   const TransferFormSheet({
     required this.seed,
     this.actionButtonTitle,
@@ -28,7 +28,26 @@ class TransferFormSheet extends ConsumerWidget {
   final String title;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TransferFormSheet> createState() => _TransferFormSheetState();
+}
+
+class _TransferFormSheetState extends ConsumerState<TransferFormSheet> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -45,7 +64,7 @@ class TransferFormSheet extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: title,
+              title: widget.title,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: const BalanceIndicatorWidget(),
             ),
@@ -55,8 +74,10 @@ class TransferFormSheet extends ConsumerWidget {
                 child: Stack(
                   children: <Widget>[
                     Scrollbar(
+                      controller: scrollController,
                       thumbVisibility: true,
                       child: SingleChildScrollView(
+                        controller: scrollController,
                         child: Padding(
                           padding: EdgeInsets.only(bottom: bottom + 80),
                           child: Column(
@@ -64,7 +85,7 @@ class TransferFormSheet extends ConsumerWidget {
                               const SizedBox(height: 25),
                               if (transfer.transferType != TransferType.nft)
                                 TransferTextFieldAmount(
-                                  seed: seed,
+                                  seed: widget.seed,
                                 ),
                               Container(
                                 padding: const EdgeInsets.only(
@@ -73,7 +94,7 @@ class TransferFormSheet extends ConsumerWidget {
                                 ),
                                 alignment: Alignment.topCenter,
                                 child: TransferTextFieldAddress(
-                                  seed: seed,
+                                  seed: widget.seed,
                                 ),
                               ),
                               FeeInfos(
@@ -89,7 +110,7 @@ class TransferFormSheet extends ConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               TransferTextFieldMessage(
-                                seed: seed,
+                                seed: widget.seed,
                               ),
                             ],
                           ),
@@ -107,7 +128,7 @@ class TransferFormSheet extends ConsumerWidget {
                     if (transfer.canTransfer)
                       AppButton(
                         AppButtonType.primary,
-                        actionButtonTitle ?? localizations.send,
+                        widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonBottomDimens,
                         key: const Key('send'),
                         onPressed: () async {
@@ -131,7 +152,7 @@ class TransferFormSheet extends ConsumerWidget {
                     else
                       AppButton(
                         AppButtonType.primaryOutline,
-                        actionButtonTitle ?? localizations.send,
+                        widget.actionButtonTitle ?? localizations.send,
                         Dimens.buttonBottomDimens,
                         key: const Key('send'),
                         onPressed: () {},

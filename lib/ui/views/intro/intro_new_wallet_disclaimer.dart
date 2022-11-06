@@ -11,12 +11,33 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroNewWalletDisclaimer extends ConsumerWidget {
+class IntroNewWalletDisclaimer extends ConsumerStatefulWidget {
   const IntroNewWalletDisclaimer({super.key, this.name});
   final String? name;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<IntroNewWalletDisclaimer> createState() =>
+      _IntroNewWalletDisclaimerState();
+}
+
+class _IntroNewWalletDisclaimerState
+    extends ConsumerState<IntroNewWalletDisclaimer> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
@@ -65,8 +86,10 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                 ),
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollController,
                     thumbVisibility: true,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       child: Column(
                         children: <Widget>[
                           IconWidget(
@@ -169,7 +192,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                       key: const Key('understandButton'),
                       onPressed: () {
                         Navigator.of(context)
-                            .pushNamed('/intro_backup', arguments: name);
+                            .pushNamed('/intro_backup', arguments: widget.name);
                       },
                     ),
                   ],

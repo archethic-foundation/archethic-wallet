@@ -32,15 +32,23 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   bool? isPressed;
   String language = 'en';
 
+  late ScrollController scrollController;
+
   @override
   void initState() {
     super.initState();
-
+    scrollController = ScrollController();
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
     Preferences.getInstance()
         .then((Preferences preferences) => preferences.setLanguageSeed('en'));
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -182,8 +190,10 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                       if (mnemonic != null)
                         Expanded(
                           child: Scrollbar(
+                            controller: scrollController,
                             thumbVisibility: true,
                             child: SingleChildScrollView(
+                              controller: scrollController,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(left: 10, right: 10),

@@ -23,13 +23,32 @@ part 'add_token_textfield_name.dart';
 part 'add_token_textfield_symbol.dart';
 part 'add_token_textfield_initial_supply.dart';
 
-class AddTokenFormSheet extends ConsumerWidget {
+class AddTokenFormSheet extends ConsumerStatefulWidget {
   const AddTokenFormSheet({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AddTokenFormSheet> createState() => _AddTokenFormSheetState();
+}
+
+class _AddTokenFormSheetState extends ConsumerState<AddTokenFormSheet> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -55,10 +74,11 @@ class AddTokenFormSheet extends ConsumerWidget {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                // TODO(chralu): Scrollbar doesn't work with desktop
                 child: Scrollbar(
+                  controller: scrollController,
                   thumbVisibility: true,
                   child: SingleChildScrollView(
+                    controller: scrollController,
                     child: Padding(
                       padding: EdgeInsets.only(bottom: bottom + 80),
                       child: Column(
@@ -112,7 +132,9 @@ class AddTokenFormSheet extends ConsumerWidget {
                           final isInitialSupplyOk =
                               addTokenNotifier.controlInitialSupply(context);
                           final isAmountOk = addTokenNotifier.controlAmount(
-                              context, accountSelected,);
+                            context,
+                            accountSelected,
+                          );
                           if (isNameOk &&
                               isSymbolOk &&
                               isInitialSupplyOk &&
