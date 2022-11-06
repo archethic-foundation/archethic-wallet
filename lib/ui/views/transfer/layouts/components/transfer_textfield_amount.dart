@@ -4,10 +4,7 @@ part of '../transfer_sheet.dart';
 class TransferTextFieldAmount extends ConsumerStatefulWidget {
   const TransferTextFieldAmount({
     super.key,
-    required this.seed,
   });
-
-  final String seed;
 
   @override
   ConsumerState<TransferTextFieldAmount> createState() =>

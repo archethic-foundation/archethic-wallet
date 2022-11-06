@@ -5,10 +5,7 @@ part of '../transfer_sheet.dart';
 class TransferTextFieldAddress extends ConsumerStatefulWidget {
   const TransferTextFieldAddress({
     super.key,
-    required this.seed,
   });
-
-  final String seed;
 
   @override
   ConsumerState<TransferTextFieldAddress> createState() =>
@@ -26,7 +23,7 @@ class _TransferTextFieldAddressState
 
     sendAddressFocusNode = FocusNode();
     sendAddressController = TextEditingController();
-    _updateAmountTextController();
+    _updateAdressTextController();
 
     sendAddressFocusNode.addListener(() {
       if (sendAddressFocusNode.hasFocus) {
@@ -54,7 +51,7 @@ class _TransferTextFieldAddressState
     super.dispose();
   }
 
-  void _updateAmountTextController() {
+  void _updateAdressTextController() {
     final recipient = ref.read(TransferFormProvider.transferForm).recipient;
     sendAddressController.text = recipient.when(
       address: (address) => address.address,
@@ -106,7 +103,7 @@ class _TransferTextFieldAddressState
             contact: TransferRecipient.contact(contact: contact),
           );
 
-          _updateAmountTextController();
+          _updateAdressTextController();
         },
       ),
       fadePrefixOnCondition: true,
@@ -149,7 +146,7 @@ class _TransferTextFieldAddressState
                     context: context,
                     address: address,
                   );
-                  _updateAmountTextController();
+                  _updateAdressTextController();
                 }
               },
             )

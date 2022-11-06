@@ -78,7 +78,6 @@ class TransferSheet extends ConsumerWidget {
         ),
       ],
       child: TransferSheetBody(
-        seed: seed,
         actionButtonTitle: actionButtonTitle,
       ),
     );
@@ -87,13 +86,11 @@ class TransferSheet extends ConsumerWidget {
 
 class TransferSheetBody extends ConsumerWidget {
   const TransferSheetBody({
-    required this.seed,
     this.actionButtonTitle,
     super.key,
   });
 
   final String? actionButtonTitle;
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -149,7 +146,6 @@ class TransferSheetBody extends ConsumerWidget {
 
     if (transfer.transferProcessStep == TransferProcessStep.form) {
       return TransferFormSheet(
-        seed: seed,
         title: title(),
         actionButtonTitle: actionButtonTitle,
       );
