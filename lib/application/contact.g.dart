@@ -181,6 +181,151 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
   String? get name => r'_getContactWithNameProvider';
 }
 
+String $_getContactWithAddressHash() =>
+    r'09373b9a966bc5a2a532e371d9bf3f5d9ece465a';
+
+/// See also [_getContactWithAddress].
+class _GetContactWithAddressProvider
+    extends AutoDisposeFutureProvider<Contact> {
+  _GetContactWithAddressProvider(
+    this.address,
+  ) : super(
+          (ref) => _getContactWithAddress(
+            ref,
+            address,
+          ),
+          from: _getContactWithAddressProvider,
+          name: r'_getContactWithAddressProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_getContactWithAddressHash,
+        );
+
+  final String address;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetContactWithAddressProvider && other.address == address;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _GetContactWithAddressRef = AutoDisposeFutureProviderRef<Contact>;
+
+/// See also [_getContactWithAddress].
+final _getContactWithAddressProvider = _GetContactWithAddressFamily();
+
+class _GetContactWithAddressFamily extends Family<AsyncValue<Contact>> {
+  _GetContactWithAddressFamily();
+
+  _GetContactWithAddressProvider call(
+    String address,
+  ) {
+    return _GetContactWithAddressProvider(
+      address,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<Contact> getProviderOverride(
+    covariant _GetContactWithAddressProvider provider,
+  ) {
+    return call(
+      provider.address,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_getContactWithAddressProvider';
+}
+
+String $_getContactWithPublicKeyHash() =>
+    r'62108be30a37c84a8cde033d6705e9aecf8b355f';
+
+/// See also [_getContactWithPublicKey].
+class _GetContactWithPublicKeyProvider
+    extends AutoDisposeFutureProvider<Contact> {
+  _GetContactWithPublicKeyProvider(
+    this.publicKey,
+  ) : super(
+          (ref) => _getContactWithPublicKey(
+            ref,
+            publicKey,
+          ),
+          from: _getContactWithPublicKeyProvider,
+          name: r'_getContactWithPublicKeyProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_getContactWithPublicKeyHash,
+        );
+
+  final String publicKey;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetContactWithPublicKeyProvider &&
+        other.publicKey == publicKey;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, publicKey.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _GetContactWithPublicKeyRef = AutoDisposeFutureProviderRef<Contact>;
+
+/// See also [_getContactWithPublicKey].
+final _getContactWithPublicKeyProvider = _GetContactWithPublicKeyFamily();
+
+class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact>> {
+  _GetContactWithPublicKeyFamily();
+
+  _GetContactWithPublicKeyProvider call(
+    String publicKey,
+  ) {
+    return _GetContactWithPublicKeyProvider(
+      publicKey,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<Contact> getProviderOverride(
+    covariant _GetContactWithPublicKeyProvider provider,
+  ) {
+    return call(
+      provider.publicKey,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_getContactWithPublicKeyProvider';
+}
+
 String $_saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
 
 /// See also [_saveContact].
@@ -390,76 +535,6 @@ class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
 
   @override
   String? get name => r'_isContactExistsWithNameProvider';
-}
-
-String $_getContacWithNameHash() => r'6fad69e450c2e26d41fce078bd853884867826db';
-
-/// See also [_getContacWithName].
-class _GetContacWithNameProvider extends AutoDisposeFutureProvider<bool> {
-  _GetContacWithNameProvider(
-    this.name,
-  ) : super(
-          (ref) => _getContacWithName(
-            ref,
-            name,
-          ),
-          from: _getContacWithNameProvider,
-          name: r'_getContacWithNameProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : $_getContacWithNameHash,
-        );
-
-  final String? name;
-
-  @override
-  bool operator ==(Object other) {
-    return other is _GetContacWithNameProvider && other.name == name;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-typedef _GetContacWithNameRef = AutoDisposeFutureProviderRef<bool>;
-
-/// See also [_getContacWithName].
-final _getContacWithNameProvider = _GetContacWithNameFamily();
-
-class _GetContacWithNameFamily extends Family<AsyncValue<bool>> {
-  _GetContacWithNameFamily();
-
-  _GetContacWithNameProvider call(
-    String? name,
-  ) {
-    return _GetContacWithNameProvider(
-      name,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<bool> getProviderOverride(
-    covariant _GetContacWithNameProvider provider,
-  ) {
-    return call(
-      provider.name,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_getContacWithNameProvider';
 }
 
 String $_isContactExistsWithAddressHash() =>

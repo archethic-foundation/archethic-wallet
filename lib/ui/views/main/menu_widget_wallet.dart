@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
@@ -17,7 +17,6 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class MenuWidgetWallet extends ConsumerWidget {
@@ -28,6 +27,11 @@ class MenuWidgetWallet extends ConsumerWidget {
     final accountSelected =
         StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final preferences = ref.watch(SettingsProviders.settings);
+    final contact = ref.watch(
+      ContactProviders.getContactWithName(
+        accountSelected.name!,
+      ),
+    );
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -72,32 +76,39 @@ class MenuWidgetWallet extends ConsumerWidget {
                     icon: UiIcons.send,
                     enabled: false,
                   ),
-                _ActionButton(
-                  text: localizations.infos,
-                  icon: UiIcons.receive,
-                  onTap: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
+                contact.map(
+                  data: (data) {
+                    return _ActionButton(
+                      text: localizations.infos,
+                      icon: UiIcons.receive,
+                      onTap: () async {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              preferences.activeVibrations,
+                            );
+
+                        return Sheets.showAppHeightNineSheet(
+                          context: context,
+                          ref: ref,
+                          widget: ContactDetail(
+                            contact: data.value,
+                          ),
+                          onDisposed: () {
+                            setState(() {
+                              StateContainer.of(context)
+                                  .requestUpdate(forceUpdateChart: false);
+                            });
+                          },
                         );
-                    // TODO(reddwarf03): Provider ?
-                    final contact = await sl.get<DBHelper>().getContactWithName(
-                          accountSelected.name!,
-                        );
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: ContactDetail(
-                        contact: contact,
-                      ),
-                      onDisposed: () {
-                        setState(() {
-                          StateContainer.of(context)
-                              .requestUpdate(forceUpdateChart: false);
-                        });
                       },
                     );
                   },
+                  error: (error) => const SizedBox(),
+                  loading: (loading) => _ActionButton(
+                    text: localizations.infos,
+                    icon: UiIcons.receive,
+                    enabled: false,
+                  ),
                 ),
                 _ActionButton(
                   text: localizations.buy,

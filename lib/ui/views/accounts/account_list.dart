@@ -1,3 +1,4 @@
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
@@ -341,256 +342,272 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final contact = ref.watch(
+      ContactProviders.getContactWithName(
+        account.name!,
+      ),
+    );
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
-      child: GestureDetector(
-        onTap: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                ref.watch(SettingsProviders.settings).activeVibrations,
-              );
-          ShowSendingAnimation.build(context, theme);
-          if (!account.selected!) {
-            _changeAccount(account, setState);
-            StateContainer.of(context).appWallet =
-                await sl.get<DBHelper>().changeAccount(account);
-            await StateContainer.of(context)
-                .requestUpdate(forceUpdateChart: false);
-          }
-          StateContainer.of(context).bottomBarCurrentPage = 1;
-          StateContainer.of(context)
-              .bottomBarPageController!
-              .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
-          final preferences_ = await Preferences.getInstance();
-          preferences_.setMainScreenCurrentPage(
-            StateContainer.of(context).bottomBarCurrentPage,
-          );
-          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-        },
-        onLongPress: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-          // TODO(reddwarf03): Provider ?
-          final contact = await sl.get<DBHelper>().getContactWithName(
-                account.name!,
-              );
-          Sheets.showAppHeightNineSheet(
-            context: context,
-            ref: ref,
-            widget: ContactDetail(
-              contact: contact,
-            ),
-            onDisposed: () {
-              setState(() {
-                StateContainer.of(context)
+    return contact.map(
+      data: (data) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
+          child: GestureDetector(
+            onTap: () async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    ref.watch(SettingsProviders.settings).activeVibrations,
+                  );
+              ShowSendingAnimation.build(context, theme);
+              if (!account.selected!) {
+                _changeAccount(account, setState);
+                StateContainer.of(context).appWallet =
+                    await sl.get<DBHelper>().changeAccount(account);
+                await StateContainer.of(context)
                     .requestUpdate(forceUpdateChart: false);
-              });
+              }
+              StateContainer.of(context).bottomBarCurrentPage = 1;
+              StateContainer.of(context)
+                  .bottomBarPageController!
+                  .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
+              final preferences_ = await Preferences.getInstance();
+              preferences_.setMainScreenCurrentPage(
+                StateContainer.of(context).bottomBarCurrentPage,
+              );
+              Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
             },
-          );
-        },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: theme.backgroundAccountsListCardSelected!,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          color: theme.backgroundAccountsListCardSelected,
-          child: Container(
-            height: 85,
-            color: account.selected!
-                ? theme.backgroundAccountsListCardSelected
-                : theme.backgroundAccountsListCard,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      margin:
-                          const EdgeInsetsDirectional.only(bottom: 10, top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Row(
-                                children: <Widget>[
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width - 80,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 20,
-                                                ),
-                                                child: AutoSizeText(
-                                                  account.name!,
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                ),
+            onLongPress: () async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+
+              Sheets.showAppHeightNineSheet(
+                context: context,
+                ref: ref,
+                widget: ContactDetail(
+                  contact: data.value,
+                ),
+                onDisposed: () {
+                  setState(() {
+                    StateContainer.of(context)
+                        .requestUpdate(forceUpdateChart: false);
+                  });
+                },
+              );
+            },
+            child: Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: theme.backgroundAccountsListCardSelected!,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 0,
+              color: theme.backgroundAccountsListCardSelected,
+              child: Container(
+                height: 85,
+                color: account.selected!
+                    ? theme.backgroundAccountsListCardSelected
+                    : theme.backgroundAccountsListCard,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                              bottom: 10, top: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                80,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      left: 20,
+                                                    ),
+                                                    child: AutoSizeText(
+                                                      account.name!,
+                                                      style: theme
+                                                          .textStyleSize12W400Primary,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        if (preferences.showBalances)
-                                          primaryCurrency.primaryCurrency ==
-                                                  AvailablePrimaryCurrencyEnum
-                                                      .native
-                                              ? Expanded(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: <Widget>[
-                                                      AutoSizeText(
-                                                        '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                        style: theme
-                                                            .textStyleSize12W400Primary,
-                                                      ),
-                                                      AutoSizeText(
-                                                        CurrencyUtil
-                                                            .getConvertedAmount(
-                                                          currency
-                                                              .currency.name,
-                                                          account.balance!
-                                                              .fiatCurrencyValue!,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: theme
-                                                            .textStyleSize12W400Primary,
-                                                      ),
-                                                      if (account.accountTokens !=
-                                                              null &&
-                                                          account.accountTokens!
-                                                              .isNotEmpty)
-                                                        AutoSizeText(
-                                                          account.accountTokens!
-                                                                      .length >
-                                                                  1
-                                                              ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                                              : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: theme
-                                                              .textStyleSize12W400Primary,
-                                                        ),
-                                                      if (account.accountNFT !=
-                                                              null &&
-                                                          account.accountNFT!
-                                                              .isNotEmpty)
-                                                        AutoSizeText(
-                                                          '${account.accountNFT!.length} ${localizations.nft}',
-                                                          style: theme
-                                                              .textStyleSize12W400Primary,
-                                                        ),
-                                                    ],
-                                                  ),
-                                                )
-                                              : Expanded(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: <Widget>[
-                                                      AutoSizeText(
-                                                        CurrencyUtil
-                                                            .getConvertedAmount(
-                                                          currency
-                                                              .currency.name,
-                                                          account.balance!
-                                                              .fiatCurrencyValue!,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: theme
-                                                            .textStyleSize12W400Primary,
-                                                      ),
-                                                      AutoSizeText(
-                                                        '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                        style: theme
-                                                            .textStyleSize12W400Primary,
-                                                      ),
-                                                      if (account.accountTokens !=
-                                                              null &&
-                                                          account.accountTokens!
-                                                              .isNotEmpty)
-                                                        AutoSizeText(
-                                                          account.accountTokens!
-                                                                      .length >
-                                                                  1
-                                                              ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                                              : '${account.accountTokens!.length} ${localizations.token}',
-                                                          style: theme
-                                                              .textStyleSize12W400Primary,
-                                                        ),
-                                                    ],
-                                                  ),
-                                                )
-                                        else
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: <Widget>[
-                                                AutoSizeText(
-                                                  '···········',
-                                                  textAlign: TextAlign.center,
-                                                  style: theme
-                                                      .textStyleSize12W600Primary60,
-                                                ),
-                                                AutoSizeText(
-                                                  '···········',
-                                                  style: theme
-                                                      .textStyleSize12W600Primary60,
-                                                ),
-                                                AutoSizeText(
-                                                  '···········',
-                                                  style: theme
-                                                      .textStyleSize12W600Primary60,
-                                                ),
-                                              ],
                                             ),
-                                          )
-                                      ],
-                                    ),
+                                            if (preferences.showBalances)
+                                              primaryCurrency.primaryCurrency ==
+                                                      AvailablePrimaryCurrencyEnum
+                                                          .native
+                                                  ? Expanded(
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: <Widget>[
+                                                          AutoSizeText(
+                                                            '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
+                                                            style: theme
+                                                                .textStyleSize12W400Primary,
+                                                          ),
+                                                          AutoSizeText(
+                                                            CurrencyUtil
+                                                                .getConvertedAmount(
+                                                              currency.currency
+                                                                  .name,
+                                                              account.balance!
+                                                                  .fiatCurrencyValue!,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: theme
+                                                                .textStyleSize12W400Primary,
+                                                          ),
+                                                          if (account.accountTokens !=
+                                                                  null &&
+                                                              account
+                                                                  .accountTokens!
+                                                                  .isNotEmpty)
+                                                            AutoSizeText(
+                                                              account.accountTokens!
+                                                                          .length >
+                                                                      1
+                                                                  ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                                                  : '${account.accountTokens!.length} ${localizations.token}',
+                                                              style: theme
+                                                                  .textStyleSize12W400Primary,
+                                                            ),
+                                                          if (account.accountNFT !=
+                                                                  null &&
+                                                              account
+                                                                  .accountNFT!
+                                                                  .isNotEmpty)
+                                                            AutoSizeText(
+                                                              '${account.accountNFT!.length} ${localizations.nft}',
+                                                              style: theme
+                                                                  .textStyleSize12W400Primary,
+                                                            ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Expanded(
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: <Widget>[
+                                                          AutoSizeText(
+                                                            CurrencyUtil
+                                                                .getConvertedAmount(
+                                                              currency.currency
+                                                                  .name,
+                                                              account.balance!
+                                                                  .fiatCurrencyValue!,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: theme
+                                                                .textStyleSize12W400Primary,
+                                                          ),
+                                                          AutoSizeText(
+                                                            '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                            style: theme
+                                                                .textStyleSize12W400Primary,
+                                                          ),
+                                                          if (account.accountTokens !=
+                                                                  null &&
+                                                              account
+                                                                  .accountTokens!
+                                                                  .isNotEmpty)
+                                                            AutoSizeText(
+                                                              account.accountTokens!
+                                                                          .length >
+                                                                      1
+                                                                  ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                                                  : '${account.accountTokens!.length} ${localizations.token}',
+                                                              style: theme
+                                                                  .textStyleSize12W400Primary,
+                                                            ),
+                                                        ],
+                                                      ),
+                                                    )
+                                            else
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    AutoSizeText(
+                                                      '···········',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: theme
+                                                          .textStyleSize12W600Primary60,
+                                                    ),
+                                                    AutoSizeText(
+                                                      '···········',
+                                                      style: theme
+                                                          .textStyleSize12W600Primary60,
+                                                    ),
+                                                    AutoSizeText(
+                                                      '···········',
+                                                      style: theme
+                                                          .textStyleSize12W600Primary60,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
+      error: (error) => const SizedBox(),
+      loading: (loading) => const SizedBox(),
     );
   }
 }
