@@ -12,10 +12,12 @@ import 'package:aewallet/domain/repositories/transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -157,30 +159,91 @@ class NftCreationFormNotifier
     return;
   }
 
-  void addPublicKey(String propertyName, String publicKey) {
-    if (publicKey.length < 68 ||
-        !archethic.isHex(
-          publicKey,
-        )) {
-      state = state.copyWith(
-        canAddAccess: false,
+  void addPublicKey(String propertyName, PropertyAccessRecipient publicKey) {
+    final updatedNftCreationProperties = state.properties.map(
+      (property) {
+        if (property.propertyName != propertyName) return property;
+
+        return property.copyWith(
+          publicKeys: [...property.publicKeys, publicKey],
+        );
+      },
+    ).toList();
+
+    // TODO(reddwarf03): don't work...
+    state = state.copyWith(
+      properties: updatedNftCreationProperties,
+      propertyAccessRecipient:
+          const PropertyAccessRecipient.publicKey(publicKey: PublicKey('')),
+    );
+  }
+
+  void _setPropertyAccessRecipient({
+    required PropertyAccessRecipient recipient,
+  }) {
+    state = state.copyWith(
+      propertyAccessRecipient: recipient,
+      error: '',
+    );
+  }
+
+  Future<void> setPropertyAccessRecipientNameOrAddress({
+    required BuildContext context,
+    required String text,
+  }) async {
+    if (!text.startsWith('@')) {
+      _setPropertyAccessRecipient(
+        recipient:
+            PropertyAccessRecipient.publicKey(publicKey: PublicKey(text)),
       );
-    } else {
-      final updatedNftCreationProperties = state.properties.map(
-        (property) {
-          if (property.propertyName != propertyName) return property;
+      return;
+    }
 
-          return property.copyWith(
-            publicKeys: [...property.publicKeys, publicKey],
-          );
-        },
-      ).toList();
-
-      state = state.copyWith(
-        canAddAccess: true,
-        properties: updatedNftCreationProperties,
+    try {
+      final contact = await sl.get<DBHelper>().getContactWithName(text);
+      _setPropertyAccessRecipient(
+        recipient: PropertyAccessRecipient.contact(
+          contact: contact,
+        ),
+      );
+    } catch (e) {
+      _setPropertyAccessRecipient(
+        recipient: PropertyAccessRecipient.unknownContact(
+          name: text,
+        ),
       );
     }
+  }
+
+  Future<void> setContactPublicKey({
+    required BuildContext context,
+    required PublicKey publicKey,
+  }) async {
+    // TODO(reddwarf03): fix it with pk acess
+    final contact = await sl.get<DBHelper>().getContactWithPublicKey(
+          '',
+        );
+
+    if (contact != null) {
+      _setPropertyAccessRecipient(
+        recipient: PropertyAccessRecipient.contact(contact: contact),
+      );
+    } else {
+      _setPropertyAccessRecipient(
+        recipient: PropertyAccessRecipient.publicKey(
+          publicKey: publicKey,
+        ),
+      );
+    }
+  }
+
+  Future<void> setPropertyAccessRecipient({
+    required BuildContext context,
+    required PropertyAccessRecipient contact,
+  }) async {
+    _setPropertyAccessRecipient(
+      recipient: contact,
+    );
   }
 
   void removeFileProperties() {

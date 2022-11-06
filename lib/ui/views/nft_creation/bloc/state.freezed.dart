@@ -34,9 +34,10 @@ mixin _$NftCreationFormState {
   String get propertyName => throw _privateConstructorUsedError;
   String get propertyValue => throw _privateConstructorUsedError;
   String get propertySearch => throw _privateConstructorUsedError;
+  PropertyAccessRecipient get propertyAccessRecipient =>
+      throw _privateConstructorUsedError;
   List<NftCreationFormStateProperty> get properties =>
       throw _privateConstructorUsedError;
-  bool get canAddAccess => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   Transaction? get transaction => throw _privateConstructorUsedError;
@@ -70,11 +71,13 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       String propertyName,
       String propertyValue,
       String propertySearch,
+      PropertyAccessRecipient propertyAccessRecipient,
       List<NftCreationFormStateProperty> properties,
-      bool canAddAccess,
       String error,
       String symbol,
       Transaction? transaction});
+
+  $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
 }
 
 /// @nodoc
@@ -108,8 +111,8 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? propertyName = null,
     Object? propertyValue = null,
     Object? propertySearch = null,
+    Object? propertyAccessRecipient = null,
     Object? properties = null,
-    Object? canAddAccess = null,
     Object? error = null,
     Object? symbol = null,
     Object? transaction = freezed,
@@ -183,14 +186,14 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.propertySearch
           : propertySearch // ignore: cast_nullable_to_non_nullable
               as String,
+      propertyAccessRecipient: null == propertyAccessRecipient
+          ? _value.propertyAccessRecipient
+          : propertyAccessRecipient // ignore: cast_nullable_to_non_nullable
+              as PropertyAccessRecipient,
       properties: null == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<NftCreationFormStateProperty>,
-      canAddAccess: null == canAddAccess
-          ? _value.canAddAccess
-          : canAddAccess // ignore: cast_nullable_to_non_nullable
-              as bool,
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -204,6 +207,15 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           : transaction // ignore: cast_nullable_to_non_nullable
               as Transaction?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient {
+    return $PropertyAccessRecipientCopyWith<$Res>(
+        _value.propertyAccessRecipient, (value) {
+      return _then(_value.copyWith(propertyAccessRecipient: value) as $Val);
+    });
   }
 }
 
@@ -233,11 +245,14 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       String propertyName,
       String propertyValue,
       String propertySearch,
+      PropertyAccessRecipient propertyAccessRecipient,
       List<NftCreationFormStateProperty> properties,
-      bool canAddAccess,
       String error,
       String symbol,
       Transaction? transaction});
+
+  @override
+  $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
 }
 
 /// @nodoc
@@ -268,8 +283,8 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? propertyName = null,
     Object? propertyValue = null,
     Object? propertySearch = null,
+    Object? propertyAccessRecipient = null,
     Object? properties = null,
-    Object? canAddAccess = null,
     Object? error = null,
     Object? symbol = null,
     Object? transaction = freezed,
@@ -343,14 +358,14 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
           ? _value.propertySearch
           : propertySearch // ignore: cast_nullable_to_non_nullable
               as String,
+      propertyAccessRecipient: null == propertyAccessRecipient
+          ? _value.propertyAccessRecipient
+          : propertyAccessRecipient // ignore: cast_nullable_to_non_nullable
+              as PropertyAccessRecipient,
       properties: null == properties
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<NftCreationFormStateProperty>,
-      canAddAccess: null == canAddAccess
-          ? _value.canAddAccess
-          : canAddAccess // ignore: cast_nullable_to_non_nullable
-              as bool,
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -388,8 +403,8 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       this.propertyName = '',
       this.propertyValue = '',
       this.propertySearch = '',
+      required this.propertyAccessRecipient,
       final List<NftCreationFormStateProperty> properties = const [],
-      this.canAddAccess = false,
       this.error = '',
       this.symbol = '',
       this.transaction})
@@ -448,6 +463,8 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @override
   @JsonKey()
   final String propertySearch;
+  @override
+  final PropertyAccessRecipient propertyAccessRecipient;
   final List<NftCreationFormStateProperty> _properties;
   @override
   @JsonKey()
@@ -456,9 +473,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
     return EqualUnmodifiableListView(_properties);
   }
 
-  @override
-  @JsonKey()
-  final bool canAddAccess;
   @override
   @JsonKey()
   final String error;
@@ -470,7 +484,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
 
   @override
   String toString() {
-    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, properties: $properties, canAddAccess: $canAddAccess, error: $error, symbol: $symbol, transaction: $transaction)';
+    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, transaction: $transaction)';
   }
 
   @override
@@ -510,10 +524,11 @@ class _$_NftCreationFormState extends _NftCreationFormState {
                 other.propertyValue == propertyValue) &&
             (identical(other.propertySearch, propertySearch) ||
                 other.propertySearch == propertySearch) &&
+            (identical(
+                    other.propertyAccessRecipient, propertyAccessRecipient) ||
+                other.propertyAccessRecipient == propertyAccessRecipient) &&
             const DeepCollectionEquality()
                 .equals(other._properties, _properties) &&
-            (identical(other.canAddAccess, canAddAccess) ||
-                other.canAddAccess == canAddAccess) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.transaction, transaction) ||
@@ -540,8 +555,8 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         propertyName,
         propertyValue,
         propertySearch,
+        propertyAccessRecipient,
         const DeepCollectionEquality().hash(_properties),
-        canAddAccess,
         error,
         symbol,
         transaction
@@ -574,8 +589,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final String propertyName,
       final String propertyValue,
       final String propertySearch,
+      required final PropertyAccessRecipient propertyAccessRecipient,
       final List<NftCreationFormStateProperty> properties,
-      final bool canAddAccess,
       final String error,
       final String symbol,
       final Transaction? transaction}) = _$_NftCreationFormState;
@@ -616,9 +631,9 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   @override
   String get propertySearch;
   @override
-  List<NftCreationFormStateProperty> get properties;
+  PropertyAccessRecipient get propertyAccessRecipient;
   @override
-  bool get canAddAccess;
+  List<NftCreationFormStateProperty> get properties;
   @override
   String get error;
   @override
@@ -635,7 +650,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
 mixin _$NftCreationFormStateProperty {
   String get propertyName => throw _privateConstructorUsedError;
   String get propertyValue => throw _privateConstructorUsedError;
-  List<String> get publicKeys => throw _privateConstructorUsedError;
+  List<PropertyAccessRecipient> get publicKeys =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NftCreationFormStatePropertyCopyWith<NftCreationFormStateProperty>
@@ -651,7 +667,9 @@ abstract class $NftCreationFormStatePropertyCopyWith<$Res> {
           NftCreationFormStateProperty>;
   @useResult
   $Res call(
-      {String propertyName, String propertyValue, List<String> publicKeys});
+      {String propertyName,
+      String propertyValue,
+      List<PropertyAccessRecipient> publicKeys});
 }
 
 /// @nodoc
@@ -684,7 +702,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
       publicKeys: null == publicKeys
           ? _value.publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<PropertyAccessRecipient>,
     ) as $Val);
   }
 }
@@ -699,7 +717,9 @@ abstract class _$$_NftCreationFormStatePropertyCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String propertyName, String propertyValue, List<String> publicKeys});
+      {String propertyName,
+      String propertyValue,
+      List<PropertyAccessRecipient> publicKeys});
 }
 
 /// @nodoc
@@ -731,7 +751,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
       publicKeys: null == publicKeys
           ? _value._publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<PropertyAccessRecipient>,
     ));
   }
 }
@@ -742,7 +762,7 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   const _$_NftCreationFormStateProperty(
       {this.propertyName = '',
       this.propertyValue = '',
-      final List<String> publicKeys = const []})
+      final List<PropertyAccessRecipient> publicKeys = const []})
       : _publicKeys = publicKeys,
         super._();
 
@@ -752,10 +772,10 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   @override
   @JsonKey()
   final String propertyValue;
-  final List<String> _publicKeys;
+  final List<PropertyAccessRecipient> _publicKeys;
   @override
   @JsonKey()
-  List<String> get publicKeys {
+  List<PropertyAccessRecipient> get publicKeys {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_publicKeys);
   }
@@ -793,9 +813,10 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
 abstract class _NftCreationFormStateProperty
     extends NftCreationFormStateProperty {
   const factory _NftCreationFormStateProperty(
-      {final String propertyName,
-      final String propertyValue,
-      final List<String> publicKeys}) = _$_NftCreationFormStateProperty;
+          {final String propertyName,
+          final String propertyValue,
+          final List<PropertyAccessRecipient> publicKeys}) =
+      _$_NftCreationFormStateProperty;
   const _NftCreationFormStateProperty._() : super._();
 
   @override
@@ -803,9 +824,513 @@ abstract class _NftCreationFormStateProperty
   @override
   String get propertyValue;
   @override
-  List<String> get publicKeys;
+  List<PropertyAccessRecipient> get publicKeys;
   @override
   @JsonKey(ignore: true)
   _$$_NftCreationFormStatePropertyCopyWith<_$_NftCreationFormStateProperty>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$PropertyAccessRecipient {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Contact contact) contact,
+    required TResult Function(String name) unknownContact,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Contact contact)? contact,
+    TResult Function(String name)? unknownContact,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessContact value) contact,
+    required TResult Function(_PropertyAccessUnknownContact value)
+        unknownContact,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessContact value)? contact,
+    TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessContact value)? contact,
+    TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PropertyAccessRecipientCopyWith<$Res> {
+  factory $PropertyAccessRecipientCopyWith(PropertyAccessRecipient value,
+          $Res Function(PropertyAccessRecipient) then) =
+      _$PropertyAccessRecipientCopyWithImpl<$Res, PropertyAccessRecipient>;
+}
+
+/// @nodoc
+class _$PropertyAccessRecipientCopyWithImpl<$Res,
+        $Val extends PropertyAccessRecipient>
+    implements $PropertyAccessRecipientCopyWith<$Res> {
+  _$PropertyAccessRecipientCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_PropertyAccessPublicKeyCopyWith<$Res> {
+  factory _$$_PropertyAccessPublicKeyCopyWith(_$_PropertyAccessPublicKey value,
+          $Res Function(_$_PropertyAccessPublicKey) then) =
+      __$$_PropertyAccessPublicKeyCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PublicKey publicKey});
+}
+
+/// @nodoc
+class __$$_PropertyAccessPublicKeyCopyWithImpl<$Res>
+    extends _$PropertyAccessRecipientCopyWithImpl<$Res,
+        _$_PropertyAccessPublicKey>
+    implements _$$_PropertyAccessPublicKeyCopyWith<$Res> {
+  __$$_PropertyAccessPublicKeyCopyWithImpl(_$_PropertyAccessPublicKey _value,
+      $Res Function(_$_PropertyAccessPublicKey) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? publicKey = null,
+  }) {
+    return _then(_$_PropertyAccessPublicKey(
+      publicKey: null == publicKey
+          ? _value.publicKey
+          : publicKey // ignore: cast_nullable_to_non_nullable
+              as PublicKey,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PropertyAccessPublicKey extends _PropertyAccessPublicKey {
+  const _$_PropertyAccessPublicKey({required this.publicKey}) : super._();
+
+  @override
+  final PublicKey publicKey;
+
+  @override
+  String toString() {
+    return 'PropertyAccessRecipient.publicKey(publicKey: $publicKey)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PropertyAccessPublicKey &&
+            (identical(other.publicKey, publicKey) ||
+                other.publicKey == publicKey));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, publicKey);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PropertyAccessPublicKeyCopyWith<_$_PropertyAccessPublicKey>
+      get copyWith =>
+          __$$_PropertyAccessPublicKeyCopyWithImpl<_$_PropertyAccessPublicKey>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Contact contact) contact,
+    required TResult Function(String name) unknownContact,
+  }) {
+    return publicKey(this.publicKey);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
+  }) {
+    return publicKey?.call(this.publicKey);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Contact contact)? contact,
+    TResult Function(String name)? unknownContact,
+    required TResult orElse(),
+  }) {
+    if (publicKey != null) {
+      return publicKey(this.publicKey);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessContact value) contact,
+    required TResult Function(_PropertyAccessUnknownContact value)
+        unknownContact,
+  }) {
+    return publicKey(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessContact value)? contact,
+    TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
+  }) {
+    return publicKey?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessContact value)? contact,
+    TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
+    required TResult orElse(),
+  }) {
+    if (publicKey != null) {
+      return publicKey(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PropertyAccessPublicKey extends PropertyAccessRecipient {
+  const factory _PropertyAccessPublicKey({required final PublicKey publicKey}) =
+      _$_PropertyAccessPublicKey;
+  const _PropertyAccessPublicKey._() : super._();
+
+  PublicKey get publicKey;
+  @JsonKey(ignore: true)
+  _$$_PropertyAccessPublicKeyCopyWith<_$_PropertyAccessPublicKey>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_PropertyAccessContactCopyWith<$Res> {
+  factory _$$_PropertyAccessContactCopyWith(_$_PropertyAccessContact value,
+          $Res Function(_$_PropertyAccessContact) then) =
+      __$$_PropertyAccessContactCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Contact contact});
+}
+
+/// @nodoc
+class __$$_PropertyAccessContactCopyWithImpl<$Res>
+    extends _$PropertyAccessRecipientCopyWithImpl<$Res,
+        _$_PropertyAccessContact>
+    implements _$$_PropertyAccessContactCopyWith<$Res> {
+  __$$_PropertyAccessContactCopyWithImpl(_$_PropertyAccessContact _value,
+      $Res Function(_$_PropertyAccessContact) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? contact = null,
+  }) {
+    return _then(_$_PropertyAccessContact(
+      contact: null == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as Contact,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PropertyAccessContact extends _PropertyAccessContact {
+  const _$_PropertyAccessContact({required this.contact}) : super._();
+
+  @override
+  final Contact contact;
+
+  @override
+  String toString() {
+    return 'PropertyAccessRecipient.contact(contact: $contact)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PropertyAccessContact &&
+            (identical(other.contact, contact) || other.contact == contact));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, contact);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PropertyAccessContactCopyWith<_$_PropertyAccessContact> get copyWith =>
+      __$$_PropertyAccessContactCopyWithImpl<_$_PropertyAccessContact>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Contact contact) contact,
+    required TResult Function(String name) unknownContact,
+  }) {
+    return contact(this.contact);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
+  }) {
+    return contact?.call(this.contact);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Contact contact)? contact,
+    TResult Function(String name)? unknownContact,
+    required TResult orElse(),
+  }) {
+    if (contact != null) {
+      return contact(this.contact);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessContact value) contact,
+    required TResult Function(_PropertyAccessUnknownContact value)
+        unknownContact,
+  }) {
+    return contact(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessContact value)? contact,
+    TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
+  }) {
+    return contact?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessContact value)? contact,
+    TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
+    required TResult orElse(),
+  }) {
+    if (contact != null) {
+      return contact(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PropertyAccessContact extends PropertyAccessRecipient {
+  const factory _PropertyAccessContact({required final Contact contact}) =
+      _$_PropertyAccessContact;
+  const _PropertyAccessContact._() : super._();
+
+  Contact get contact;
+  @JsonKey(ignore: true)
+  _$$_PropertyAccessContactCopyWith<_$_PropertyAccessContact> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_PropertyAccessUnknownContactCopyWith<$Res> {
+  factory _$$_PropertyAccessUnknownContactCopyWith(
+          _$_PropertyAccessUnknownContact value,
+          $Res Function(_$_PropertyAccessUnknownContact) then) =
+      __$$_PropertyAccessUnknownContactCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String name});
+}
+
+/// @nodoc
+class __$$_PropertyAccessUnknownContactCopyWithImpl<$Res>
+    extends _$PropertyAccessRecipientCopyWithImpl<$Res,
+        _$_PropertyAccessUnknownContact>
+    implements _$$_PropertyAccessUnknownContactCopyWith<$Res> {
+  __$$_PropertyAccessUnknownContactCopyWithImpl(
+      _$_PropertyAccessUnknownContact _value,
+      $Res Function(_$_PropertyAccessUnknownContact) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+  }) {
+    return _then(_$_PropertyAccessUnknownContact(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PropertyAccessUnknownContact extends _PropertyAccessUnknownContact {
+  const _$_PropertyAccessUnknownContact({required this.name}) : super._();
+
+  @override
+  final String name;
+
+  @override
+  String toString() {
+    return 'PropertyAccessRecipient.unknownContact(name: $name)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PropertyAccessUnknownContact &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PropertyAccessUnknownContactCopyWith<_$_PropertyAccessUnknownContact>
+      get copyWith => __$$_PropertyAccessUnknownContactCopyWithImpl<
+          _$_PropertyAccessUnknownContact>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Contact contact) contact,
+    required TResult Function(String name) unknownContact,
+  }) {
+    return unknownContact(name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Contact contact)? contact,
+    TResult? Function(String name)? unknownContact,
+  }) {
+    return unknownContact?.call(name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Contact contact)? contact,
+    TResult Function(String name)? unknownContact,
+    required TResult orElse(),
+  }) {
+    if (unknownContact != null) {
+      return unknownContact(name);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessContact value) contact,
+    required TResult Function(_PropertyAccessUnknownContact value)
+        unknownContact,
+  }) {
+    return unknownContact(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessContact value)? contact,
+    TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
+  }) {
+    return unknownContact?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessContact value)? contact,
+    TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
+    required TResult orElse(),
+  }) {
+    if (unknownContact != null) {
+      return unknownContact(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PropertyAccessUnknownContact extends PropertyAccessRecipient {
+  const factory _PropertyAccessUnknownContact({required final String name}) =
+      _$_PropertyAccessUnknownContact;
+  const _PropertyAccessUnknownContact._() : super._();
+
+  String get name;
+  @JsonKey(ignore: true)
+  _$$_PropertyAccessUnknownContactCopyWith<_$_PropertyAccessUnknownContact>
       get copyWith => throw _privateConstructorUsedError;
 }

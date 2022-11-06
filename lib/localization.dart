@@ -525,6 +525,10 @@ class AppLocalization {
     return Intl.message('Enter Address', name: 'enterAddress');
   }
 
+  String get enterPublicKey {
+    return Intl.message('Enter Public Key', name: 'enterPublicKey');
+  }
+
   String get invalidAddress {
     return Intl.message('Address entered is invalid', name: 'invalidAddress');
   }

@@ -4,6 +4,8 @@ import 'dart:typed_data';
 
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/public_key.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,8 +40,8 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default('') String propertyName,
     @Default('') String propertyValue,
     @Default('') String propertySearch,
+    required PropertyAccessRecipient propertyAccessRecipient,
     @Default([]) List<NftCreationFormStateProperty> properties,
-    @Default(false) bool canAddAccess,
     @Default('') String error,
     @Default('') String symbol,
     Transaction? transaction,
@@ -55,6 +57,12 @@ class NftCreationFormState with _$NftCreationFormState {
 
   bool get canAddProperty =>
       propertyName.isNotEmpty && propertyValue.isNotEmpty;
+
+  bool get canAddAccess => propertyAccessRecipient.when(
+        publicKey: (publicKey) => publicKey.publicKey.isNotEmpty,
+        contact: (contact) => contact.name.isNotEmpty,
+        unknownContact: (name) => false,
+      );
 
   String symbolFees(BuildContext context) =>
       StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
@@ -73,7 +81,29 @@ class NftCreationFormStateProperty with _$NftCreationFormStateProperty {
   const factory NftCreationFormStateProperty({
     @Default('') String propertyName,
     @Default('') String propertyValue,
-    @Default([]) List<String> publicKeys,
+    @Default([]) List<PropertyAccessRecipient> publicKeys,
   }) = _NftCreationFormStateProperty;
   const NftCreationFormStateProperty._();
+}
+
+@freezed
+class PropertyAccessRecipient with _$PropertyAccessRecipient {
+  const PropertyAccessRecipient._();
+  const factory PropertyAccessRecipient.publicKey({
+    required PublicKey publicKey,
+  }) = _PropertyAccessPublicKey;
+  const factory PropertyAccessRecipient.contact({
+    required Contact contact,
+  }) = _PropertyAccessContact;
+  const factory PropertyAccessRecipient.unknownContact({
+    required String name,
+  }) = _PropertyAccessUnknownContact;
+
+  PublicKey? get publicKey => when(
+        publicKey: (publicKey) => publicKey,
+        contact: (contact) => PublicKey(contact.publicKey ?? ''),
+        unknownContact: (_) => null,
+      );
+
+  bool get isPublicKeyValid => (publicKey ?? const PublicKey('')).isValid;
 }

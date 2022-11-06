@@ -8,6 +8,7 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -73,6 +74,8 @@ class NftCreationProcessSheet extends ConsumerWidget {
           NftCreationFormState(
             feeEstimation: const AsyncValue.data(0),
             seed: seed,
+            propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
+                publicKey: PublicKey('')),
             accountBalance: selectedAccount!.balance!,
             currentNftCategoryIndex: currentNftCategoryIndex,
           ),
