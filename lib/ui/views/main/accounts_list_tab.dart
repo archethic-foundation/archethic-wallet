@@ -14,14 +14,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListTab extends ConsumerWidget {
+class AccountsListTab extends ConsumerStatefulWidget {
   const AccountsListTab({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!;
+  ConsumerState<AccountsListTab> createState() => _AccountsListTabState();
+}
+
+class _AccountsListTabState extends ConsumerState<AccountsListTab> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final accountSelected =
+        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
@@ -69,8 +87,10 @@ class AccountsListTab extends ConsumerWidget {
                       ),
                     ),
                     child: Scrollbar(
+                      controller: scrollController,
                       thumbVisibility: true,
                       child: SingleChildScrollView(
+                        controller: scrollController,
                         physics: const AlwaysScrollableScrollPhysics(),
                         child: Padding(
                           padding: const EdgeInsets.only(

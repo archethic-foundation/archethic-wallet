@@ -33,6 +33,20 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
   List<TransactionInfos> transactionInfos =
       List<TransactionInfos>.empty(growable: true);
 
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
@@ -51,7 +65,8 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
               context,
               StateContainer.of(context)
                   .appWallet!
-                  .appKeychain.getAccountSelected()!
+                  .appKeychain
+                  .getAccountSelected()!
                   .name!,
             ),
         builder: (
@@ -82,7 +97,9 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                     //  list
                                     Scrollbar(
                                       thumbVisibility: true,
+                                      controller: scrollController,
                                       child: ListView.builder(
+                                        controller: scrollController,
                                         physics:
                                             const AlwaysScrollableScrollPhysics(),
                                         padding: const EdgeInsets.only(
@@ -98,7 +115,8 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                         ) {
                                           return Padding(
                                             padding: const EdgeInsets.only(
-                                                right: 10,),
+                                              right: 10,
+                                            ),
                                             child: _TransactionBuildInfos(
                                               transactionInfo:
                                                   list.data![index],

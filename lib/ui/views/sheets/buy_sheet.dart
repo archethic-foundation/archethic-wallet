@@ -9,11 +9,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_svg/svg.dart';
 
-class BuySheet extends ConsumerWidget {
+class BuySheet extends ConsumerStatefulWidget {
   const BuySheet({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BuySheet> createState() => _BuySheetState();
+}
+
+class _BuySheetState extends ConsumerState<BuySheet> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
@@ -29,8 +48,10 @@ class BuySheet extends ConsumerWidget {
                   top: 50,
                 ),
                 child: Scrollbar(
+                  controller: scrollController,
                   thumbVisibility: true,
                   child: SingleChildScrollView(
+                    controller: scrollController,
                     child: Column(
                       children: <Widget>[
                         InkWell(

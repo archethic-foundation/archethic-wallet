@@ -39,10 +39,19 @@ class _IntroConfigureSecurityState
   PickerItem? _accessModesSelected;
   bool? animationOpen;
 
+  late ScrollController scrollController;
+
   @override
   void initState() {
     animationOpen = false;
+    scrollController = ScrollController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -91,8 +100,10 @@ class _IntroConfigureSecurityState
                 ),
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollController,
                     thumbVisibility: true,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       child: Column(
                         children: <Widget>[
                           Container(

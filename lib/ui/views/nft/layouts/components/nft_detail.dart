@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTDetail extends ConsumerWidget {
+class NFTDetail extends ConsumerStatefulWidget {
   const NFTDetail({
     super.key,
     required this.tokenInformations,
@@ -31,7 +31,26 @@ class NFTDetail extends ConsumerWidget {
   final int index;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NFTDetail> createState() => _NFTDetailState();
+}
+
+class _NFTDetailState extends ConsumerState<NFTDetail> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
@@ -43,7 +62,7 @@ class NFTDetail extends ConsumerWidget {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          SheetHeader(title: tokenInformations.name!),
+          SheetHeader(title: widget.tokenInformations.name!),
           Expanded(
             child: Center(
               child: SizedBox(
@@ -55,12 +74,14 @@ class NFTDetail extends ConsumerWidget {
                     top: 50,
                   ),
                   child: Scrollbar(
+                    controller: scrollController,
                     thumbVisibility: true,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       child: Column(
                         children: <Widget>[
                           NFTPreviewWidget(
-                            tokenInformations: tokenInformations,
+                            tokenInformations: widget.tokenInformations,
                             nftPropertiesDeleteAction: false,
                           ),
                           const SizedBox(
@@ -94,7 +115,7 @@ class NFTDetail extends ConsumerWidget {
                       seed: (await StateContainer.of(
                         context,
                       ).getSeed())!,
-                      accountToken: accountSelected!.accountNFT![index],
+                      accountToken: accountSelected!.accountNFT![widget.index],
                       recipient: const TransferRecipient.address(
                         address: Address(''),
                       ),
@@ -118,7 +139,7 @@ class NFTDetail extends ConsumerWidget {
                 onPressed: () async {
                   UIUtil.showWebview(
                     context,
-                    '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${tokenInformations.address}',
+                    '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
                     '',
                   );
                 },

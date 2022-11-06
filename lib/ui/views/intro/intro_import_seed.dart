@@ -51,9 +51,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
 
+  late ScrollController scrollController;
+
   @override
   void initState() {
     isPressed = false;
+    scrollController = ScrollController();
     _registerBus();
     Preferences.getInstance()
         .then((Preferences preferences) => preferences.setLanguageSeed('en'));
@@ -83,6 +86,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   @override
   void dispose() {
     _destroyBus();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -219,8 +223,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                 ),
                 Expanded(
                   child: Scrollbar(
+                    controller: scrollController,
                     thumbVisibility: true,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Column(
                         children: <Widget>[
