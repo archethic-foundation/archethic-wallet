@@ -39,18 +39,18 @@ class ContactCreationFormNotifier
     state = state.copyWith(name: name, error: '');
   }
 
-  Future<void> setAddress(String address) async {
+  Future<void> setAddress(String address, BuildContext context) async {
     state = state.copyWith(address: address, error: '');
 
-    // TODO(reddwarf03): How to refresh public key field
     final publicKey = (await sl
             .get<ApiService>()
             .getLastTransaction(address, request: 'previousPublicKey'))
         .previousPublicKey;
     if (publicKey != null) {
-      state = state.copyWith(publicKey: publicKey);
+      state = state.copyWith(publicKeyRecovered: publicKey);
     } else {
-      state = state.copyWith(error: 'Public key not found');
+      state =
+          state.copyWith(publicKeyRecovered: '', error: 'Public key not found');
     }
   }
 

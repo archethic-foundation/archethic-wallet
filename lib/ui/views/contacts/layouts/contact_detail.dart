@@ -9,7 +9,6 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -158,7 +157,7 @@ class ContactDetail extends ConsumerWidget {
                     },
                     child: _contact.maybeWhen(
                       data: (data) {
-                        return data.favorite == false
+                        return data.favorite == null || data.favorite == false
                             ? Icon(
                                 Icons.favorite_border,
                                 color: theme.favoriteIconColor,
