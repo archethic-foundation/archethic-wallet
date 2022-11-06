@@ -35,6 +35,28 @@ Future<Contact> _getContactWithName(
 }
 
 @riverpod
+Future<Contact> _getContactWithAddress(
+  _GetContactWithAddressRef ref,
+  String address,
+) async {
+  final searchedContact = await ref
+      .watch(_contactRepositoryProvider)
+      .getContactWithAddress(address);
+  return searchedContact;
+}
+
+@riverpod
+Future<Contact> _getContactWithPublicKey(
+  _GetContactWithPublicKeyRef ref,
+  String publicKey,
+) async {
+  final searchedContact = await ref
+      .watch(_contactRepositoryProvider)
+      .getContactWithPublicKey(publicKey);
+  return searchedContact;
+}
+
+@riverpod
 Future<void> _saveContact(
   _SaveContactRef ref, {
   Contact? contact,
@@ -63,17 +85,6 @@ Future<bool> _isContactExistsWithName(
   _IsContactExistsWithNameRef ref, {
   String? name,
 }) async {
-  if (name == null) {
-    throw Exception('Name is null');
-  }
-  return ref.watch(_contactRepositoryProvider).isContactExistsWithName(name);
-}
-
-@riverpod
-Future<bool> _getContacWithName(
-  _GetContacWithNameRef ref,
-  String? name,
-) async {
   if (name == null) {
     throw Exception('Name is null');
   }
@@ -124,8 +135,16 @@ class ContactRepository {
     return sl.get<DBHelper>().getContactWithName(name);
   }
 
+  Future<Contact> getContactWithAddress(String address) async {
+    return sl.get<DBHelper>().getContactWithAddress(address);
+  }
+
   Future<bool> isContactExistsWithAddress(String address) async {
     return sl.get<DBHelper>().contactExistsWithAddress(address);
+  }
+
+  Future<Contact> getContactWithPublicKey(String publicKey) async {
+    return sl.get<DBHelper>().getContactWithPublicKey(publicKey);
   }
 }
 
@@ -136,4 +155,6 @@ abstract class ContactProviders {
   static final saveContact = _saveContactProvider;
   static final deleteContact = _deleteContactProvider;
   static final getContactWithName = _getContactWithNameProvider;
+  static final getContactWithAddress = _getContactWithAddressProvider;
+  static final getContactWithPublicKey = _getContactWithPublicKeyProvider;
 }
