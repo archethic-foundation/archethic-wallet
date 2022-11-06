@@ -85,6 +85,7 @@ class _AddContactTextFieldAddressState
                 } else {
                   contactCreationNotifier.setAddress(
                     scanResult,
+                    context,
                   );
                 }
               },
@@ -99,18 +100,23 @@ class _AddContactTextFieldAddressState
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
+          // TODO(reddwarf03): PB refresh textfield
           final data = await UserDataUtil.getClipboardText(
             DataType.address,
           );
           contactCreationNotifier.setAddress(
             data!,
+            context,
           );
         },
       ),
       fadeSuffixOnCondition: true,
       suffixShowFirstCondition: true,
       onChanged: (String text) async {
-        await contactCreationNotifier.setAddress(text);
+        await contactCreationNotifier.setAddress(
+          text,
+          context,
+        );
       },
     );
   }

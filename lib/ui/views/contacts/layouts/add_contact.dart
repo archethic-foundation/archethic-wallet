@@ -13,6 +13,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
+import 'package:aewallet/ui/views/contacts/layouts/components/add_contact_public_key_recovered.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -21,7 +22,6 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,8 +130,17 @@ class _AddContactSheetBodyState extends ConsumerState<AddContactSheetBody> {
                     child: Column(
                       children: <Widget>[
                         const AddContactTextFieldName(),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         const AddContactTextFieldAddress(),
-                        const AddContactTextFieldPublicKey(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (contactCreation.publicKeyRecovered.isEmpty)
+                          const AddContactTextFieldPublicKey()
+                        else
+                          const AddContactPublicKeyRecovered(),
                         const SizedBox(
                           height: 20,
                         ),
@@ -182,7 +191,8 @@ class _AddContactSheetBodyState extends ConsumerState<AddContactSheetBody> {
                               name: '@${contactCreation.name}',
                               address: contactCreation.address,
                               type: ContactType.externalContact.name,
-                              publicKey: contactCreation.publicKey,
+                              publicKey: contactCreation.publicKeyToStore,
+                              favorite: false,
                             );
                             ref.read(
                               ContactProviders.saveContact(contact: newContact),

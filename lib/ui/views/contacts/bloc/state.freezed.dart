@@ -19,6 +19,7 @@ mixin _$ContactCreationFormState {
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get publicKey => throw _privateConstructorUsedError;
+  String get publicKeyRecovered => throw _privateConstructorUsedError;
   bool get favorite => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
 
@@ -37,6 +38,7 @@ abstract class $ContactCreationFormStateCopyWith<$Res> {
       {String name,
       String address,
       String publicKey,
+      String publicKeyRecovered,
       bool favorite,
       String error});
 }
@@ -58,6 +60,7 @@ class _$ContactCreationFormStateCopyWithImpl<$Res,
     Object? name = null,
     Object? address = null,
     Object? publicKey = null,
+    Object? publicKeyRecovered = null,
     Object? favorite = null,
     Object? error = null,
   }) {
@@ -73,6 +76,10 @@ class _$ContactCreationFormStateCopyWithImpl<$Res,
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      publicKeyRecovered: null == publicKeyRecovered
+          ? _value.publicKeyRecovered
+          : publicKeyRecovered // ignore: cast_nullable_to_non_nullable
               as String,
       favorite: null == favorite
           ? _value.favorite
@@ -99,6 +106,7 @@ abstract class _$$_ContactCreationFormStateCopyWith<$Res>
       {String name,
       String address,
       String publicKey,
+      String publicKeyRecovered,
       bool favorite,
       String error});
 }
@@ -118,6 +126,7 @@ class __$$_ContactCreationFormStateCopyWithImpl<$Res>
     Object? name = null,
     Object? address = null,
     Object? publicKey = null,
+    Object? publicKeyRecovered = null,
     Object? favorite = null,
     Object? error = null,
   }) {
@@ -133,6 +142,10 @@ class __$$_ContactCreationFormStateCopyWithImpl<$Res>
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      publicKeyRecovered: null == publicKeyRecovered
+          ? _value.publicKeyRecovered
+          : publicKeyRecovered // ignore: cast_nullable_to_non_nullable
               as String,
       favorite: null == favorite
           ? _value.favorite
@@ -153,6 +166,7 @@ class _$_ContactCreationFormState extends _ContactCreationFormState {
       {this.name = '',
       this.address = '',
       this.publicKey = '',
+      this.publicKeyRecovered = '',
       this.favorite = false,
       this.error = ''})
       : super._();
@@ -168,6 +182,9 @@ class _$_ContactCreationFormState extends _ContactCreationFormState {
   final String publicKey;
   @override
   @JsonKey()
+  final String publicKeyRecovered;
+  @override
+  @JsonKey()
   final bool favorite;
   @override
   @JsonKey()
@@ -175,7 +192,7 @@ class _$_ContactCreationFormState extends _ContactCreationFormState {
 
   @override
   String toString() {
-    return 'ContactCreationFormState(name: $name, address: $address, publicKey: $publicKey, favorite: $favorite, error: $error)';
+    return 'ContactCreationFormState(name: $name, address: $address, publicKey: $publicKey, publicKeyRecovered: $publicKeyRecovered, favorite: $favorite, error: $error)';
   }
 
   @override
@@ -187,14 +204,16 @@ class _$_ContactCreationFormState extends _ContactCreationFormState {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.publicKey, publicKey) ||
                 other.publicKey == publicKey) &&
+            (identical(other.publicKeyRecovered, publicKeyRecovered) ||
+                other.publicKeyRecovered == publicKeyRecovered) &&
             (identical(other.favorite, favorite) ||
                 other.favorite == favorite) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, address, publicKey, favorite, error);
+  int get hashCode => Object.hash(runtimeType, name, address, publicKey,
+      publicKeyRecovered, favorite, error);
 
   @JsonKey(ignore: true)
   @override
@@ -209,6 +228,7 @@ abstract class _ContactCreationFormState extends ContactCreationFormState {
       {final String name,
       final String address,
       final String publicKey,
+      final String publicKeyRecovered,
       final bool favorite,
       final String error}) = _$_ContactCreationFormState;
   const _ContactCreationFormState._() : super._();
@@ -219,6 +239,8 @@ abstract class _ContactCreationFormState extends ContactCreationFormState {
   String get address;
   @override
   String get publicKey;
+  @override
+  String get publicKeyRecovered;
   @override
   bool get favorite;
   @override
