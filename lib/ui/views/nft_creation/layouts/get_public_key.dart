@@ -43,7 +43,8 @@ class GetPublicKeys extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(5),
                   child: PublicKeyLine(
-                    publicKey: propertySelected.publicKeys[index],
+                    publicKey:
+                        propertySelected.publicKeys[index].publicKey!.publicKey,
                   ),
                 );
               },
