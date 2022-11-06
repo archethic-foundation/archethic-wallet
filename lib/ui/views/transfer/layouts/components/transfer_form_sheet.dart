@@ -17,14 +17,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransferFormSheet extends ConsumerStatefulWidget {
   const TransferFormSheet({
-    required this.seed,
     this.actionButtonTitle,
     required this.title,
     super.key,
   });
 
   final String? actionButtonTitle;
-  final String seed;
   final String title;
 
   @override
@@ -84,18 +82,14 @@ class _TransferFormSheetState extends ConsumerState<TransferFormSheet> {
                             children: <Widget>[
                               const SizedBox(height: 25),
                               if (transfer.transferType != TransferType.nft)
-                                TransferTextFieldAmount(
-                                  seed: widget.seed,
-                                ),
+                                const TransferTextFieldAmount(),
                               Container(
                                 padding: const EdgeInsets.only(
                                   top: 20,
                                   bottom: 20,
                                 ),
                                 alignment: Alignment.topCenter,
-                                child: TransferTextFieldAddress(
-                                  seed: widget.seed,
-                                ),
+                                child: const TransferTextFieldAddress(),
                               ),
                               FeeInfos(
                                 feeEstimation: transfer.feeEstimation,
@@ -109,9 +103,7 @@ class _TransferFormSheetState extends ConsumerState<TransferFormSheet> {
                                         : localizations.estimatedFeesNote,
                               ),
                               const SizedBox(height: 10),
-                              TransferTextFieldMessage(
-                                seed: widget.seed,
-                              ),
+                              const TransferTextFieldMessage(),
                             ],
                           ),
                         ),
