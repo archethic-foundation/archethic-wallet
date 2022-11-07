@@ -182,11 +182,11 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
 }
 
 String $_getContactWithAddressHash() =>
-    r'09373b9a966bc5a2a532e371d9bf3f5d9ece465a';
+    r'5d7e119dd654939aebe4963994fc8b0888a944c4';
 
 /// See also [_getContactWithAddress].
 class _GetContactWithAddressProvider
-    extends AutoDisposeFutureProvider<Contact> {
+    extends AutoDisposeFutureProvider<Contact?> {
   _GetContactWithAddressProvider(
     this.address,
   ) : super(
@@ -218,12 +218,12 @@ class _GetContactWithAddressProvider
   }
 }
 
-typedef _GetContactWithAddressRef = AutoDisposeFutureProviderRef<Contact>;
+typedef _GetContactWithAddressRef = AutoDisposeFutureProviderRef<Contact?>;
 
 /// See also [_getContactWithAddress].
 final _getContactWithAddressProvider = _GetContactWithAddressFamily();
 
-class _GetContactWithAddressFamily extends Family<AsyncValue<Contact>> {
+class _GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
   _GetContactWithAddressFamily();
 
   _GetContactWithAddressProvider call(
@@ -235,7 +235,7 @@ class _GetContactWithAddressFamily extends Family<AsyncValue<Contact>> {
   }
 
   @override
-  AutoDisposeFutureProvider<Contact> getProviderOverride(
+  AutoDisposeFutureProvider<Contact?> getProviderOverride(
     covariant _GetContactWithAddressProvider provider,
   ) {
     return call(

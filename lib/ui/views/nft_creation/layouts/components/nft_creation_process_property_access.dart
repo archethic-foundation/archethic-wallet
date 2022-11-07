@@ -4,10 +4,10 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/add_public_key.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/get_public_key.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_access_label.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access_add_button.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access_remove_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -19,7 +19,6 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
   const NFTCreationProcessPropertyAccess({
     required this.propertyName,
     required this.propertyValue,
-    required this.publicKeys,
     this.readOnly = false,
     this.propertiesHidden,
     super.key,
@@ -29,7 +28,6 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
   final String propertyValue;
   final bool readOnly;
   final List<String>? propertiesHidden;
-  final List<String> publicKeys;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,13 +38,25 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreationArgs = ref.read(
+      NftCreationFormProvider.nftCreationFormArgs,
+    );
+    final nftCreation =
+        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        nftCreationArgs,
+      ).notifier,
+    );
+    final fileProperty = nftCreation.properties
+        .where((element) => element.propertyName == propertyName)
+        .toList();
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
         shape: RoundedRectangleBorder(
-          side: publicKeys.isNotEmpty
+          side: fileProperty[0].publicKeys.isNotEmpty
               ? const BorderSide(
                   color: Colors.redAccent,
                   width: 2,
@@ -64,178 +74,67 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
             bottom: 10,
             right: 5,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: AutoSizeText(
+                          propertyName,
+                          style: theme.textStyleSize12W600Primary,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: AutoSizeText(
+                          propertyValue,
+                          style: theme.textStyleSize12W400Primary,
+                        ),
+                      ),
+                    ],
+                  ),
                   Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: AutoSizeText(
+                      NFTCreationProcessFileAccessAddButton(
+                        propertyName: propertyName,
+                        propertyValue: propertyValue,
+                        readOnly: readOnly,
+                      ),
+                      NFTCreationProcessFileAccessRemoveButton(
+                        onPressed: () {
+                          AppDialogs.showConfirmDialog(
+                              context,
+                              ref,
+                              localizations.deleteProperty,
+                              localizations.areYouSure,
+                              AppLocalization.of(context)!.deleteOption, () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            nftCreationNotifier.removeProperty(
                               propertyName,
-                              style: theme.textStyleSize12W600Primary,
-                            ),
-                          ),
-                          Container(
-                            width: 200,
-                            padding: const EdgeInsets.only(left: 20),
-                            child: AutoSizeText(
-                              propertyValue,
-                              style: theme.textStyleSize12W400Primary,
-                            ),
-                          ),
-                          if (publicKeys.isNotEmpty)
-                            if (publicKeys.length == 1)
-                              Container(
-                                width: MediaQuery.of(context).size.width - 180,
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                ),
-                                child: AutoSizeText(
-                                  localizations.nftPropertyProtected1PublicKey,
-                                  style: theme.textStyleSize12W400Primary,
-                                ),
-                              )
-                            else
-                              Container(
-                                width: MediaQuery.of(context).size.width - 180,
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                ),
-                                child: AutoSizeText(
-                                  localizations.nftPropertyProtectedPublicKeys
-                                      .replaceAll(
-                                    '%1',
-                                    publicKeys.length.toString(),
-                                  ),
-                                  style: theme.textStyleSize12W400Primary,
-                                ),
-                              )
-                          else
-                            Container(
-                              width: MediaQuery.of(context).size.width - 180,
-                              padding: const EdgeInsets.only(left: 20),
-                              child: AutoSizeText(
-                                localizations.nftPropertyNotProtected,
-                                style: theme.textStyleSize12W400Primary,
-                              ),
-                            ),
-                        ],
+                            );
+                          });
+                        },
+                        readOnly: readOnly,
                       ),
                     ],
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  if (publicKeys.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: theme.backgroundDark!.withOpacity(0.3),
-                          border: Border.all(
-                            color: theme.backgroundDarkest!.withOpacity(0.2),
-                            width: 2,
-                          ),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.key,
-                            color: theme.backgroundDarkest,
-                            size: 21,
-                          ),
-                          onPressed: () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            if (readOnly) {
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                widget: GetPublicKeys(
-                                  propertyName: propertyName,
-                                  propertyValue: propertyValue,
-                                ),
-                              );
-                            } else {
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                overrides: [
-                                  NftCreationFormProvider.initialNftCreationForm
-                                      .overrideWithValue(
-                                    nftCreation,
-                                  ),
-                                ],
-                                widget: AddPublicKey(
-                                  propertyName: propertyName,
-                                  propertyValue: propertyValue,
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  if (readOnly == false)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: theme.backgroundDark!.withOpacity(0.3),
-                          border: Border.all(
-                            color: theme.backgroundDarkest!.withOpacity(0.2),
-                            width: 2,
-                          ),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: theme.backgroundDarkest,
-                            size: 21,
-                          ),
-                          onPressed: () {
-                            final nftCreationNotifier = ref.watch(
-                              NftCreationFormProvider.nftCreationForm.notifier,
-                            );
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            AppDialogs.showConfirmDialog(
-                                context,
-                                ref,
-                                localizations.deleteProperty,
-                                localizations.areYouSure,
-                                AppLocalization.of(context)!.deleteOption, () {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
-                              nftCreationNotifier.removeProperty(
-                                propertyName,
-                              );
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: NFTCreationProcessAccessLabel(
+                      publicKeysLength: fileProperty[0].publicKeys.length),
+                ),
               ),
             ],
           ),

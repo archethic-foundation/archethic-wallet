@@ -51,10 +51,12 @@ class Sheets {
                     center: const FractionalOffset(0.95, 0.95),
                   ).createShader(rect);
                 },
-                child: ProviderScope(
-                  overrides: overrides,
-                  child: widget,
-                ),
+                child: overrides.isEmpty
+                    ? widget
+                    : ProviderScope(
+                        overrides: overrides,
+                        child: widget,
+                      ),
               );
             },
           ),

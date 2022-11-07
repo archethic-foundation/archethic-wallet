@@ -8,7 +8,6 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -67,42 +66,40 @@ class NftCreationProcessSheet extends ConsumerWidget {
       AccountProviders.getSelectedAccount(context: context),
     );
 
-    // The main column that holds everything
     return ProviderScope(
       overrides: [
-        NftCreationFormProvider.initialNftCreationForm.overrideWithValue(
-          NftCreationFormState(
-            feeEstimation: const AsyncValue.data(0),
-            seed: seed,
-            propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
-                publicKey: PublicKey('')),
-            accountBalance: selectedAccount!.balance!,
+        NftCreationFormProvider.nftCreationFormArgs.overrideWithValue(
+          NftCreationFormNotifierParams(
             currentNftCategoryIndex: currentNftCategoryIndex,
+            seed: seed,
+            selectedAccount: selectedAccount!,
           ),
         ),
       ],
-      child: NftCreationSheetBody(
-        seed: seed,
-      ),
+      child: const NftCreationSheetBody(),
     );
   }
 }
 
 class NftCreationSheetBody extends ConsumerWidget {
   const NftCreationSheetBody({
-    required this.seed,
     super.key,
   });
-
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreationProvider = NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    );
+    final nftCreation = ref.watch(
+      nftCreationProvider,
+    );
 
     ref.listen<NftCreationFormState>(
-      NftCreationFormProvider.nftCreationForm,
+      nftCreationProvider,
       (_, nftCreation) {
         if (nftCreation.isControlsOk) return;
 

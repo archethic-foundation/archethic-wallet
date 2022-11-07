@@ -31,7 +31,11 @@ class _NFTCreationProcessPropertiesTabTextfieldSearchState
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    ).notifier,);
 
     return Container(
       padding: const EdgeInsets.only(left: 15, right: 15),

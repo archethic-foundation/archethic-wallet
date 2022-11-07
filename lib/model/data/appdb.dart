@@ -60,7 +60,7 @@ class DBHelper {
     return contactsListSelected;
   }
 
-  Future<Contact> getContactWithAddress(String address) async {
+  Future<Contact?> getContactWithAddress(String address) async {
     var lastAddress = (await sl
             .get<ApiService>()
             .getLastTransaction(address, request: 'address'))
@@ -88,11 +88,7 @@ class DBHelper {
         contactSelected = contact;
       }
     }
-    if (contactSelected == null) {
-      throw Exception();
-    } else {
-      return contactSelected;
-    }
+    return contactSelected;
   }
 
   Future<Contact> getContactWithPublicKey(String publicKey) async {

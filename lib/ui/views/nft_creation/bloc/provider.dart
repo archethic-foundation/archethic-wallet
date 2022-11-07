@@ -12,6 +12,7 @@ import 'package:aewallet/domain/repositories/transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -24,31 +25,55 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mime_dart/mime_dart.dart';
 import 'package:path/path.dart' as path;
 import 'package:pdfx/pdfx.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _initialNftCreationFormProvider = Provider<NftCreationFormState>(
+final _nftCreationFormProviderArgs = Provider<NftCreationFormNotifierParams>(
   (ref) {
     throw UnimplementedError();
   },
 );
 
-final _nftCreationFormProvider =
-    NotifierProvider.autoDispose<NftCreationFormNotifier, NftCreationFormState>(
+final _nftCreationFormProvider = NotifierProvider.autoDispose.family<
+    NftCreationFormNotifier,
+    NftCreationFormState,
+    NftCreationFormNotifierParams>(
   () {
     return NftCreationFormNotifier();
   },
   dependencies: [
-    NftCreationFormProvider.initialNftCreationForm,
     AccountProviders.getSelectedAccount,
     NftCreationFormProvider._repository,
   ],
 );
 
-class NftCreationFormNotifier
-    extends AutoDisposeNotifier<NftCreationFormState> {
+class NftCreationFormNotifierParams {
+  const NftCreationFormNotifierParams({
+    required this.seed,
+    required this.selectedAccount,
+    required this.currentNftCategoryIndex,
+  });
+  final String seed;
+  final Account selectedAccount;
+  final int currentNftCategoryIndex;
+}
+
+class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
+    NftCreationFormState, NftCreationFormNotifierParams> {
   NftCreationFormNotifier();
 
   CancelableTask<double?>? _calculateFeesTask;
+
+  @override
+  NftCreationFormState build(NftCreationFormNotifierParams arg) {
+    return NftCreationFormState(
+      feeEstimation: const AsyncValue.data(0),
+      seed: arg.seed,
+      propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
+        publicKey: PublicKey(''),
+      ),
+      accountBalance: arg.selectedAccount.balance!,
+      currentNftCategoryIndex: arg.currentNftCategoryIndex,
+    );
+  }
 
   Future<void> _updateFees(
     BuildContext context, {
@@ -98,11 +123,6 @@ class NftCreationFormNotifier
       );
     }
   }
-
-  @override
-  NftCreationFormState build() => ref.watch(
-        NftCreationFormProvider.initialNftCreationForm,
-      );
 
   // TODO(Chralu): That operation should be delayed to avoid to spam backend.
   Future<double?> _calculateFees({
@@ -553,6 +573,7 @@ abstract class NftCreationFormProvider {
       );
     },
   );
-  static final initialNftCreationForm = _initialNftCreationFormProvider;
+  static final nftCreationFormArgs = _nftCreationFormProviderArgs;
+  // static final initialNftCreationForm = _initialNftCreationFormProvider;
   static final nftCreationForm = _nftCreationFormProvider;
 }

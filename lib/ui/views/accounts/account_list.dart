@@ -417,7 +417,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              bottom: 10, top: 10),
+                              bottom: 10, top: 10,),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[

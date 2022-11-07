@@ -35,7 +35,7 @@ Future<Contact> _getContactWithName(
 }
 
 @riverpod
-Future<Contact> _getContactWithAddress(
+Future<Contact?> _getContactWithAddress(
   _GetContactWithAddressRef ref,
   String address,
 ) async {
@@ -135,7 +135,7 @@ class ContactRepository {
     return sl.get<DBHelper>().getContactWithName(name);
   }
 
-  Future<Contact> getContactWithAddress(String address) async {
+  Future<Contact?> getContactWithAddress(String address) async {
     return sl.get<DBHelper>().getContactWithAddress(address);
   }
 
