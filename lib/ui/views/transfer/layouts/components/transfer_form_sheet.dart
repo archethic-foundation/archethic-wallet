@@ -69,47 +69,43 @@ class _TransferFormSheetState extends ConsumerState<TransferFormSheet> {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                child: Stack(
-                  children: <Widget>[
-                    Scrollbar(
-                      controller: scrollController,
-                      thumbVisibility: true,
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: bottom + 80),
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(height: 25),
-                              if (transfer.transferType != TransferType.nft)
-                                const TransferTextFieldAmount(),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  top: 20,
-                                  bottom: 20,
-                                ),
-                                alignment: Alignment.topCenter,
-                                child: const TransferTextFieldAddress(),
-                              ),
-                              FeeInfos(
-                                feeEstimation: transfer.feeEstimation,
-                                tokenPrice: accountSelected
-                                        .balance!.tokenPrice!.amount ??
-                                    0,
-                                currencyName: currency.currency.name,
-                                estimatedFeesNote:
-                                    transfer.transferType == TransferType.nft
-                                        ? localizations.estimatedFeesNoteNFT
-                                        : localizations.estimatedFeesNote,
-                              ),
-                              const SizedBox(height: 10),
-                              const TransferTextFieldMessage(),
-                            ],
+                child: Scrollbar(
+                  controller: scrollController,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: bottom + 80),
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 25),
+                          if (transfer.transferType != TransferType.nft)
+                            const TransferTextFieldAmount(),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              bottom: 20,
+                            ),
+                            alignment: Alignment.topCenter,
+                            child: const TransferTextFieldAddress(),
                           ),
-                        ),
+                          FeeInfos(
+                            feeEstimation: transfer.feeEstimation,
+                            tokenPrice:
+                                accountSelected.balance!.tokenPrice!.amount ??
+                                    0,
+                            currencyName: currency.currency.name,
+                            estimatedFeesNote:
+                                transfer.transferType == TransferType.nft
+                                    ? localizations.estimatedFeesNoteNFT
+                                    : localizations.estimatedFeesNote,
+                          ),
+                          const SizedBox(height: 10),
+                          const TransferTextFieldMessage(),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),

@@ -19,9 +19,14 @@ class _NFTCreationProcessSummaryTabState
     final accountSelected =
         StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
-    final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
+    final nftCreationArgs = ref.read(
+      NftCreationFormProvider.nftCreationFormArgs,
+    );
+    final nftCreation =
+        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+    );
 
     if (nftCreation.file != null) {
       return SingleChildScrollView(
@@ -76,17 +81,12 @@ class _NFTCreationProcessSummaryTabState
                 ),
               ),
               const NFTCreationProcessFilePreview(),
-              const Padding(
-                padding: EdgeInsets.only(
-                  top: 10,
-                  left: 10,
-                  right: 10,
-                ),
-                child: NFTCreationProcessFileAccess(
-                  readOnly: true,
-                ),
+              const NFTCreationProcessFileAccess(
+                readOnly: true,
               ),
-              const NFTCreationProcessPropertiesList(),
+              const NFTCreationProcessPropertiesList(
+                readOnly: true,
+              ),
             ],
           ),
         ),

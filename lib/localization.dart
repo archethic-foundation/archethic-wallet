@@ -1820,6 +1820,12 @@ class AppLocalization {
         name: 'propertyAccessDescription');
   }
 
+  String get propertyAccessDescriptionReadOnly {
+    return Intl.message(
+        'The following list contains the public keys that can access this element.',
+        name: 'propertyAccessDescriptionReadOnly');
+  }
+
   String get propertyAccessAddAccess {
     return Intl.message('Add access', name: 'propertyAccessAddAccess');
   }

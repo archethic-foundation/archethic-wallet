@@ -18,7 +18,11 @@ class CategoryTemplateForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    ),);
     final accountSelected =
         StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
 

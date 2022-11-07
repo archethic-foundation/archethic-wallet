@@ -19,7 +19,11 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
 
   @override
   void initState() {
-    final nftCreation = ref.read(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.read(NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    ),);
     nftPropertyNameFocusNode = FocusNode();
     nftPropertyNameController =
         TextEditingController(text: nftCreation.propertyName);
@@ -40,7 +44,11 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    ).notifier,);
 
     return AppTextField(
       focusNode: nftPropertyNameFocusNode,

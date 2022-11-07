@@ -17,7 +17,11 @@ class GetPublicKeys extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    ),);
     final property = nftCreation.properties;
     if (property.isEmpty) {
       return const SizedBox();

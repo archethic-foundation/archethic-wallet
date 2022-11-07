@@ -13,7 +13,13 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
     if (nftCreation.file == null ||
         nftCreation.file!.keys.isEmpty ||
         (MimeUtil.isImage(nftCreation.fileTypeMime) == false &&
@@ -24,24 +30,26 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Align(
-            child: Text(
-              nftCreation.name,
-              style: theme.textStyleSize16W400Primary,
+        if (nftCreation.name.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Align(
+              child: Text(
+                nftCreation.name,
+                style: theme.textStyleSize16W400Primary,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          child: Align(
-            child: Text(
-              nftCreation.description,
-              style: theme.textStyleSize12W400Primary,
+        if (nftCreation.description.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Align(
+              child: Text(
+                nftCreation.description,
+                style: theme.textStyleSize12W400Primary,
+              ),
             ),
           ),
-        ),
         DecoratedBox(
           decoration: BoxDecoration(
             color: theme.text,

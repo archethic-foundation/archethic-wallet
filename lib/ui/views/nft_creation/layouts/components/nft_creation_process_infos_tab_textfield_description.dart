@@ -36,7 +36,11 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
+        ref.watch(NftCreationFormProvider.nftCreationForm(
+      ref.read(
+        NftCreationFormProvider.nftCreationFormArgs,
+      ),
+    ).notifier,);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     return AppTextField(

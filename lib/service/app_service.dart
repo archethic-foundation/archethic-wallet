@@ -502,9 +502,7 @@ class AppService {
             final contact = await sl.get<DBHelper>().getContactWithAddress(
                   transaction.data!.ledger!.uco!.transfers![i].to!,
                 );
-            if (contact != null) {
-              recipientContactName = contact.name.substring(1);
-            }
+            recipientContactName = contact!.name.substring(1);
 
             if (recipientContactName.isEmpty) {
               transactionsInfos.add(

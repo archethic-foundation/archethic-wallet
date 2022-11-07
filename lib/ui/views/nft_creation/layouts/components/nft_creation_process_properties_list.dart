@@ -4,11 +4,20 @@ part of '../nft_creation_process_sheet.dart';
 class NFTCreationProcessPropertiesList extends ConsumerWidget {
   const NFTCreationProcessPropertiesList({
     super.key,
+    this.readOnly = false,
   });
+
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
+    final nftCreation = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
 
     var propertiesFiltered = [];
     if (nftCreation.propertySearch.isEmpty) {
@@ -35,13 +44,13 @@ class NFTCreationProcessPropertiesList extends ConsumerWidget {
             child: NFTCreationProcessPropertyAccess(
               propertyName: propertiesFiltered[index].propertyName,
               propertyValue: propertiesFiltered[index].propertyValue,
-              publicKeys: propertiesFiltered[index].publicKeys,
               propertiesHidden: const [
                 'file',
                 'type/mime',
                 'name',
                 'description'
               ],
+              readOnly: readOnly,
             ),
           );
         }),

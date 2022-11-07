@@ -14,9 +14,13 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
-    final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm.notifier);
+    final nftCreationArgs = ref.read(
+      NftCreationFormProvider.nftCreationFormArgs,
+    );
+    final nftCreation =
+        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreationNotifier = ref.watch(
+        NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,);
     return Column(
       children: [
         SizedBox(

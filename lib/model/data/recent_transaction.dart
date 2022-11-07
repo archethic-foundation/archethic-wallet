@@ -112,18 +112,14 @@ class RecentTransaction extends HiveObject {
     if (typeTx == RecentTransaction.transferInput) {
       if (recipient != null) {
         final contact = await sl.get<DBHelper>().getContactWithAddress(from!);
-        if (contact != null) {
-          contactInformations = contact;
-        }
+        contactInformations = contact;
       }
     } else {
       if (typeTx == RecentTransaction.transferOutput) {
         if (from != null) {
           final contact =
               await sl.get<DBHelper>().getContactWithAddress(recipient!);
-          if (contact != null) {
-            contactInformations = contact;
-          }
+          contactInformations = contact;
         }
       }
     }
