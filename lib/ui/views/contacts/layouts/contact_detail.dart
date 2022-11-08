@@ -86,7 +86,7 @@ class ContactDetail extends ConsumerWidget {
 
                               ref
                                   .read(
-                                      AccountProviders.selectedAccount.notifier)
+                                      AccountProviders.selectedAccount.notifier,)
                                   .refreshRecentTransactions();
                               UIUtil.showSnackbar(
                                 localizations.contactRemoved.replaceAll(

@@ -144,44 +144,21 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithName(String name) async {
-    final box = await Hive.openBox<Contact>(contactsTable);
-    final contactsList = box.values.toList();
-    var contactExists = false;
-    for (final contact in contactsList) {
-      if (contact.name.toLowerCase() == name.toLowerCase()) {
-        contactExists = true;
-      }
+    try {
+      await getContactWithName(name);
+      return true;
+    } catch (_) {
+      return false;
     }
-    return contactExists;
   }
 
   Future<bool> contactExistsWithAddress(String address) async {
-    var lastAddress = (await sl
-            .get<ApiService>()
-            .getLastTransaction(address, request: 'address'))
-        .address;
-    if (lastAddress == null || lastAddress == '') {
-      lastAddress = address;
+    // TODO(reddwarf03): Create similar behaviour with contactExistsWithName
+    final _contact = await getContactWithAddress(address);
+    if (_contact == null) {
+      return false;
     }
-
-    final box = await Hive.openBox<Contact>(contactsTable);
-    final contactsList = box.values.toList();
-    var contactExists = false;
-    for (final contact in contactsList) {
-      var lastAddressContact = (await sl
-              .get<ApiService>()
-              .getLastTransaction(contact.address, request: 'address'))
-          .address!;
-      if (lastAddressContact == '') {
-        lastAddressContact = contact.address;
-      }
-      if (lastAddressContact
-          .toLowerCase()
-          .contains(lastAddress.toLowerCase())) {
-        contactExists = true;
-      }
-    }
-    return contactExists;
+    return true;
   }
 
   Future<void> saveContact(Contact contact) async {
