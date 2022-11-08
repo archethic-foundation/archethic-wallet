@@ -128,7 +128,7 @@ class ContactRepository {
   }
 
   Future<bool> isContactExistsWithName(String name) async {
-    return sl.get<DBHelper>().contactExistsWithName('@$name');
+    return sl.get<DBHelper>().contactExistsWithName(name);
   }
 
   Future<Contact> getContactWithName(String name) async {

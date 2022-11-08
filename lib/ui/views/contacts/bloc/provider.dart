@@ -71,21 +71,15 @@ class ContactCreationFormNotifier
       );
       return false;
     }
-    final nameExists = ref.read(
-      ContactProviders.isContactExistsWithName(name: '@${state.name}'),
+    final nameExists = await ref.read(
+      ContactProviders.isContactExistsWithName(name: '@${state.name}').future,
     );
-
-    nameExists.maybeWhen(
-      data: (data) {
-        if (data) {
-          state = state.copyWith(
-            error: AppLocalization.of(context)!.contactExistsName,
-          );
-        }
-      },
-      loading: () {},
-      orElse: () {},
-    );
+    if (nameExists) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.contactExistsName,
+      );
+      return false;
+    }
 
     return true;
   }
@@ -107,22 +101,17 @@ class ContactCreationFormNotifier
       return false;
     }
 
-    final addressExists = ref.read(
-      ContactProviders.isContactExistsWithAddress(address: state.address),
+    final addressExists = await ref.read(
+      ContactProviders.isContactExistsWithAddress(address: state.address)
+          .future,
     );
 
-    addressExists.maybeWhen(
-      data: (data) {
-        if (data) {
-          state = state.copyWith(
-            error: AppLocalization.of(context)!.contactExistsAddress,
-          );
-        }
-      },
-      loading: () {},
-      orElse: () {},
-    );
-
+    if (addressExists) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.contactExistsAddress,
+      );
+      return false;
+    }
     return true;
   }
 }
