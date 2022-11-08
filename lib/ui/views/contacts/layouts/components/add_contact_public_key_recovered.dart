@@ -28,7 +28,7 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
       child: Column(
         children: [
           Text(
-            'La clé publique associée à cette adresse a été récupérée: ',
+            localizations.contactPublicKeyGetAuto,
             textAlign: TextAlign.left,
             style: theme.textStyleSize12W100Primary,
           ),

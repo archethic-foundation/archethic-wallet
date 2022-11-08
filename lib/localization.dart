@@ -313,6 +313,12 @@ class AppLocalization {
         name: 'yubikeyConnectHoldNearDevice');
   }
 
+  String get contactPublicKeyGetAuto {
+    return Intl.message(
+        'The public key associated with this address has been recovered: ',
+        name: 'contactPublicKeyGetAuto');
+  }
+
   String get removeContact {
     return Intl.message('Remove Contact', name: 'removeContact');
   }
