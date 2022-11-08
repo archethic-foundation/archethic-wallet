@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -81,8 +80,6 @@ class NetworkDialog {
                     selectedNetworkSettings,
                   );
 
-              StateContainer.of(context).curNetwork = selectedNetworkSettings;
-
               if (value.value as AvailableNetworks ==
                   AvailableNetworks.archethicDevNet) {
                 endpointController.text = preferences.getNetworkDevEndpoint();
@@ -102,8 +99,9 @@ class NetworkDialog {
                                   height: 30,
                                 ),
                                 Text(
-                                  StateContainer.of(context)
-                                      .curNetwork
+                                  ref
+                                      .read(SettingsProviders.settings)
+                                      .network
                                       .getDisplayName(context),
                                   style: theme.textStyleSize10W100Primary,
                                 ),

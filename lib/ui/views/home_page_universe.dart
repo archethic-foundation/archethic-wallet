@@ -24,7 +24,6 @@ import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
 // Package imports:
@@ -218,11 +217,11 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
   // TODO(reddwarf03): WIP, https://github.com/archethic-foundation/archethic-wallet/issues/144
   // ignore: unused_element
   Future<void> _networkDialog() async {
-    StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
-      context,
-      ref,
-      StateContainer.of(context).curNetwork,
-    ))!;
+    // StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
+    //   context,
+    //   ref,
+    //   StateContainer.of(context).curNetwork,
+    // ))!;
     await StateContainer.of(context).requestUpdate();
     setState(() {});
   }

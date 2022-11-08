@@ -3,7 +3,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
@@ -144,7 +143,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                     onPressed: () async {
                                       UIUtil.showWebview(
                                         context,
-                                        '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.txAddress}',
+                                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.txAddress}',
                                         '',
                                       );
                                     },

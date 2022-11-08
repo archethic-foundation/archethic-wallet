@@ -2,7 +2,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/token_informations.dart';
@@ -135,7 +134,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 onPressed: () async {
                   UIUtil.showWebview(
                     context,
-                    '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
                     '',
                   );
                 },
