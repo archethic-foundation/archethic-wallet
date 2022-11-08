@@ -1,17 +1,16 @@
-// Flutter imports:
-// Project imports:
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountsListTab extends ConsumerStatefulWidget {
@@ -62,7 +61,6 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
               ),
               child: Column(
                 children: <Widget>[
-                  /// BACKGROUND IMAGE
                   Container(
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
@@ -74,25 +72,20 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
                         opacity: 0.7,
                       ),
                     ),
-                    child: Scrollbar(
-                      controller: scrollController,
-                      thumbVisibility: true,
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: kToolbarHeight + kTextTabBarHeight,
-                            bottom: 50,
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              /// ACCOUNTS LIST
-                              AccountsListWidget(
-                                currencyName: currency.currency.name,
-                              )
-                            ],
-                          ),
+                    child: ScrollBar(
+                      scrollPhysics: const AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: kToolbarHeight + kTextTabBarHeight,
+                          bottom: 50,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            /// ACCOUNTS LIST
+                            AccountsListWidget(
+                              currencyName: currency.currency.name,
+                            )
+                          ],
                         ),
                       ),
                     ),

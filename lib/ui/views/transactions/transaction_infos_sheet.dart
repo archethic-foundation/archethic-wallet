@@ -14,7 +14,6 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,9 +30,6 @@ class TransactionInfosSheet extends ConsumerStatefulWidget {
 }
 
 class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
-  List<TransactionInfos> transactionInfos =
-      List<TransactionInfos>.empty(growable: true);
-
   late ScrollController scrollController;
 
   @override

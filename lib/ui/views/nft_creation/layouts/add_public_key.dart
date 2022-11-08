@@ -17,6 +17,7 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
@@ -84,89 +85,84 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                child: Scrollbar(
-                  controller: scrollController,
-                  thumbVisibility: true,
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      children: <Widget>[
+                child: ScrollBar(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        widget.propertyName,
+                      ),
+                      if (widget.propertyValue.isNotEmpty)
                         Text(
-                          widget.propertyName,
+                          widget.propertyValue,
                         ),
-                        if (widget.propertyValue.isNotEmpty)
-                          Text(
-                            widget.propertyValue,
+                      if (widget.readOnly == false)
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            localizations.propertyAccessDescription,
+                            style: theme.textStyleSize12W100Primary,
+                            textAlign: TextAlign.justify,
                           ),
-                        if (widget.readOnly == false)
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              localizations.propertyAccessDescription,
-                              style: theme.textStyleSize12W100Primary,
-                              textAlign: TextAlign.justify,
-                            ),
-                          )
-                        else
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              localizations.propertyAccessDescriptionReadOnly,
-                              style: theme.textStyleSize12W100Primary,
-                              textAlign: TextAlign.justify,
-                            ),
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            localizations.propertyAccessDescriptionReadOnly,
+                            style: theme.textStyleSize12W100Primary,
+                            textAlign: TextAlign.justify,
                           ),
-                        if (widget.readOnly == false)
-                          const AddPublicKeyTextFieldPk(),
-                        if (widget.readOnly == false)
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        if (widget.readOnly == false)
-                          Row(
-                            children: <Widget>[
-                              if (nftCreation.canAddAccess)
-                                AppButtonTiny(
-                                  AppButtonTinyType.primary,
-                                  localizations.propertyAccessAddAccess,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('addPublicKey'),
-                                  onPressed: () async {
-                                    sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          preferences.activeVibrations,
-                                        );
+                        ),
+                      if (widget.readOnly == false)
+                        const AddPublicKeyTextFieldPk(),
+                      if (widget.readOnly == false)
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      if (widget.readOnly == false)
+                        Row(
+                          children: <Widget>[
+                            if (nftCreation.canAddAccess)
+                              AppButtonTiny(
+                                AppButtonTinyType.primary,
+                                localizations.propertyAccessAddAccess,
+                                Dimens.buttonBottomDimens,
+                                key: const Key('addPublicKey'),
+                                onPressed: () async {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
 
-                                    final nftCreationNotifier = ref.watch(
-                                      NftCreationFormProvider.nftCreationForm(
-                                        ref.read(
-                                          NftCreationFormProvider
-                                              .nftCreationFormArgs,
-                                        ),
-                                      ).notifier,
-                                    );
-                                    nftCreationNotifier.addPublicKey(
-                                      widget.propertyName,
-                                      nftCreation.propertyAccessRecipient,
-                                    );
-                                  },
-                                )
-                              else
-                                AppButtonTiny(
-                                  AppButtonTinyType.primaryOutline,
-                                  localizations.propertyAccessAddAccess,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('addPublicKey'),
-                                  onPressed: () {},
-                                ),
-                            ],
-                          ),
-                        GetPublicKeys(
-                          propertyName: widget.propertyName,
-                          propertyValue: widget.propertyValue,
+                                  final nftCreationNotifier = ref.watch(
+                                    NftCreationFormProvider.nftCreationForm(
+                                      ref.read(
+                                        NftCreationFormProvider
+                                            .nftCreationFormArgs,
+                                      ),
+                                    ).notifier,
+                                  );
+                                  nftCreationNotifier.addPublicKey(
+                                    widget.propertyName,
+                                    nftCreation.propertyAccessRecipient,
+                                  );
+                                },
+                              )
+                            else
+                              AppButtonTiny(
+                                AppButtonTinyType.primaryOutline,
+                                localizations.propertyAccessAddAccess,
+                                Dimens.buttonBottomDimens,
+                                key: const Key('addPublicKey'),
+                                onPressed: () {},
+                              ),
+                          ],
                         ),
-                      ],
-                    ),
+                      GetPublicKeys(
+                        propertyName: widget.propertyName,
+                        propertyValue: widget.propertyValue,
+                      ),
+                    ],
                   ),
                 ),
               ),

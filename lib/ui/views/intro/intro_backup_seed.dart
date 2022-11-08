@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -7,12 +6,12 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/seeds.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,23 +31,14 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   bool? isPressed;
   String language = 'en';
 
-  late ScrollController scrollController;
-
   @override
   void initState() {
     super.initState();
-    scrollController = ScrollController();
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
     Preferences.getInstance()
         .then((Preferences preferences) => preferences.setLanguageSeed('en'));
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -189,16 +179,11 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                       ),
                       if (mnemonic != null)
                         Expanded(
-                          child: Scrollbar(
-                            controller: scrollController,
-                            thumbVisibility: true,
-                            child: SingleChildScrollView(
-                              controller: scrollController,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: MnemonicDisplay(wordList: mnemonic!),
-                              ),
+                          child: ScrollBar(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: MnemonicDisplay(wordList: mnemonic!),
                             ),
                           ),
                         )

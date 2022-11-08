@@ -12,6 +12,7 @@ import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
@@ -23,32 +24,13 @@ part 'add_token_textfield_initial_supply.dart';
 part 'add_token_textfield_name.dart';
 part 'add_token_textfield_symbol.dart';
 
-class AddTokenFormSheet extends ConsumerStatefulWidget {
+class AddTokenFormSheet extends ConsumerWidget {
   const AddTokenFormSheet({
     super.key,
   });
 
   @override
-  ConsumerState<AddTokenFormSheet> createState() => _AddTokenFormSheetState();
-}
-
-class _AddTokenFormSheetState extends ConsumerState<AddTokenFormSheet> {
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
@@ -73,41 +55,36 @@ class _AddTokenFormSheetState extends ConsumerState<AddTokenFormSheet> {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                child: Scrollbar(
-                  controller: scrollController,
-                  thumbVisibility: true,
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: bottom + 80),
-                      child: Column(
-                        children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: AddTokenTextFieldName(),
+                child: ScrollBar(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: bottom + 80),
+                    child: Column(
+                      children: <Widget>[
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: AddTokenTextFieldName(),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: AddTokenTextFieldSymbol(),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: AddTokenTextFieldInitialSupply(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: FeeInfos(
+                            feeEstimation: addToken.feeEstimation,
+                            tokenPrice:
+                                accountSelected.balance!.tokenPrice!.amount ??
+                                    0,
+                            currencyName: currency.currency.name,
+                            estimatedFeesNote:
+                                localizations.estimatedFeesAddTokenNote,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: AddTokenTextFieldSymbol(),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: AddTokenTextFieldInitialSupply(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: FeeInfos(
-                              feeEstimation: addToken.feeEstimation,
-                              tokenPrice:
-                                  accountSelected.balance!.tokenPrice!.amount ??
-                                      0,
-                              currencyName: currency.currency.name,
-                              estimatedFeesNote:
-                                  localizations.estimatedFeesAddTokenNote,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
