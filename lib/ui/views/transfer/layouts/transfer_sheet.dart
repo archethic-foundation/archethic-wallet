@@ -61,7 +61,7 @@ class TransferSheet extends ConsumerWidget {
       AccountProviders.selectedAccount,
     );
 
-    final seed = ref.watch(SessionProviders.session).loggedIn!.seed;
+    final seed = ref.watch(SessionProviders.session).loggedIn!.wallet.seed;
 
     // The main column that holds everything
     return ProviderScope(

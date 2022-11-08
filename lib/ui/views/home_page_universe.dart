@@ -339,7 +339,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                       context: context,
                       ref: ref,
                       widget: AddTokenSheet(
-                        seed: session.seed,
+                        seed: session.wallet.seed,
                       ),
                     );
                   },

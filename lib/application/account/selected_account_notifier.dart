@@ -24,7 +24,7 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
 
   Future<void> _updateRecentTransactions(Account account) async {
     final session = ref.read(SessionProviders.session).loggedIn!;
-    await account.updateRecentTransactions(session.seed);
+    await account.updateRecentTransactions(session.wallet.seed);
   }
 
   Future<void> _updateBalance(Account account) async {
@@ -44,18 +44,6 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
       tokenPrice,
     );
   }
-
-  Future<void> updateAll() => _update(
-        (account) async {
-          await account.updateLastAddress();
-
-          await _updateRecentTransactions(account);
-          await account.updateFungiblesTokens();
-
-          await _updateBalance(account);
-          await account.updateNFT();
-        },
-      );
 
   Future<void> updateRecentTransactions() => _update(
         (account) async {

@@ -65,7 +65,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     if (enterPasswordController!.text ==
         stringDecryptBase64(
           vault.getPassword()!,
-          ref.read(SessionProviders.session).loggedIn?.seed,
+          ref.read(SessionProviders.session).loggedIn?.wallet.seed,
         )) {
       preferences.resetLockAttempts();
       Navigator.of(context).pop(true);

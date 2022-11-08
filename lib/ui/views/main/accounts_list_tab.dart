@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
+import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
@@ -44,8 +45,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
       children: [
         Expanded(
           /// REFRESH
-          child: RefreshIndicator(
-            backgroundColor: theme.backgroundDark,
+          child: ArchethicRefreshIndicator(
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,

@@ -19,7 +19,7 @@ class AppWallet extends HiveObject {
   });
 
   /// Seed
-  @HiveField(0)
+  // @HiveField(0) // TODO(reddwarf03): seed is only stored in Vault
   String seed;
 
   /// Keychain
@@ -70,4 +70,13 @@ class AppWallet extends HiveObject {
 
     return appWallet;
   }
+
+  AppWallet copyWith({
+    AppKeychain? appKeychain,
+    String? seed,
+  }) =>
+      AppWallet(
+        appKeychain: appKeychain ?? this.appKeychain,
+        seed: seed ?? this.seed,
+      );
 }

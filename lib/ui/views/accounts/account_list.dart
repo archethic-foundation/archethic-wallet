@@ -46,7 +46,7 @@ class AccountsListWidget extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accounts = ref.watch(AccountProviders.sortedAccounts).valueOrNull ??
-        []; // TODO(Chralu) : show a loading screen ?
+        []; // TODO(Chralu): show a loading screen ?
     return Container(
       padding: const EdgeInsets.only(top: 40, bottom: 50),
       child: Column(

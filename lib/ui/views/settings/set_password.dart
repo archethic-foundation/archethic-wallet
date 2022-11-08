@@ -389,7 +389,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
       }
     } else {
       final vault = await Vault.getInstance();
-      final seed = ref.read(SessionProviders.session).loggedIn?.seed;
+      final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
       vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, seed),
       );

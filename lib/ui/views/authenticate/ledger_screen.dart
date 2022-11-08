@@ -192,7 +192,7 @@ class _SignTransactionButton extends StatelessWidget {
               request: 'chainLength',
             );
         final transactionChainSeed =
-            ref.read(SessionProviders.session).loggedIn?.seed;
+            ref.read(SessionProviders.session).loggedIn?.wallet.seed;
         final originPrivateKey = sl.get<ApiService>().getOriginKey();
         transaction
             .build(

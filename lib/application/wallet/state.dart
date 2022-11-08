@@ -3,7 +3,6 @@ part of 'wallet.dart';
 @immutable
 abstract class Session {
   const factory Session.loggedIn({
-    required String seed,
     required AppWallet wallet,
   }) = LoggedInSession;
 
@@ -17,12 +16,9 @@ abstract class Session {
 
 class LoggedInSession implements Session {
   const LoggedInSession({
-    required this.seed,
     required this.wallet,
   });
 
-  final String
-      seed; // TODO(Chralu): degage. La seed est dans le AppWallet seulement
   final AppWallet wallet;
 
   @override

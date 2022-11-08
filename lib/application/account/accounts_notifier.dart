@@ -50,7 +50,7 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
 
     await KeychainUtil().addAccountInKeyChain(
       loggedInSession.wallet,
-      loggedInSession.seed,
+      loggedInSession.wallet.seed,
       name,
       currencyName,
       currentNetwork.getNetworkCryptoCurrencyLabel(),

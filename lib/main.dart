@@ -348,7 +348,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
 
   void updateDefaultLocale() {
     ref
-        .read(LanguageProviders.defaultLocale.state)
+        .read(LanguageProviders.defaultLocale.notifier)
         .update((state) => Localizations.localeOf(context));
   }
 

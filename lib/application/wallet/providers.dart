@@ -22,8 +22,9 @@ class _SessionNotifier extends Notifier<Session> {
     }
 
     state = Session.loggedIn(
-      seed: seed,
-      wallet: appWallet,
+      wallet: appWallet.copyWith(
+        seed: seed,
+      ),
     );
   }
 
@@ -36,7 +37,7 @@ class _SessionNotifier extends Notifier<Session> {
 
     final newWallet = await KeychainUtil().getListAccountsFromKeychain(
       loggedInState.wallet,
-      loggedInState.seed,
+      loggedInState.wallet.seed,
       selectedCurrency.currency.name,
       selectedAccount.balance!.nativeTokenName!,
       selectedAccount.balance!.tokenPrice!,
@@ -45,8 +46,9 @@ class _SessionNotifier extends Notifier<Session> {
     if (newWallet == null) return;
 
     state = Session.loggedIn(
-      seed: loggedInState.seed,
-      wallet: newWallet,
+      wallet: newWallet.copyWith(
+        seed: loggedInState.wallet.seed,
+      ),
     );
   }
 
@@ -72,7 +74,6 @@ class _SessionNotifier extends Notifier<Session> {
       name,
     );
     state = Session.loggedIn(
-      seed: seed,
       wallet: newAppWallet,
     );
   }
@@ -109,7 +110,6 @@ class _SessionNotifier extends Notifier<Session> {
       }
 
       return state = LoggedInSession(
-        seed: seed,
         wallet: appWallet,
       );
     } catch (e) {
@@ -123,7 +123,7 @@ Future<Keychain?> _archethicWalletKeychain(Ref ref) async {
   final loggedInSession = ref.watch(SessionProviders.session).loggedIn;
   if (loggedInSession == null) return null;
 
-  return sl.get<ApiService>().getKeychain(loggedInSession.seed);
+  return sl.get<ApiService>().getKeychain(loggedInSession.wallet.seed);
 }
 
 abstract class SessionProviders {
