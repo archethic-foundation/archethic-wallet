@@ -78,13 +78,8 @@ class NetworkDialog {
               );
 
               await ref
-                  .read(SettingsProviders.localSettingsRepository)
-                  .setNetwork(
-                    selectedNetworkSettings,
-                  );
-
-              StateContainer.of(context).curNetwork = selectedNetworkSettings;
-
+                  .read(SettingsProviders.settings.notifier)
+                  .setNetwork(selectedNetworkSettings);
               if (value.value as AvailableNetworks ==
                   AvailableNetworks.archethicDevNet) {
                 endpointController.text = preferences.getNetworkDevEndpoint();
@@ -198,10 +193,23 @@ class NetworkDialog {
                                             );
                                           });
                                         } else {
-                                          await preferences
-                                              .setNetworkDevEndpoint(
-                                            endpointController.text,
+                                          final selectedNetworkSettings =
+                                              NetworksSetting(
+                                            network: value.value
+                                                as AvailableNetworks,
+                                            networkDevEndpoint:
+                                                endpointController.text,
                                           );
+
+                                          await ref
+                                              .read(
+                                                SettingsProviders
+                                                    .settings.notifier,
+                                              )
+                                              .setNetwork(
+                                                selectedNetworkSettings,
+                                              );
+
                                           Navigator.pop(context);
                                         }
                                       }
