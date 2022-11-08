@@ -20,7 +20,9 @@ class _AddContactTextFieldAddressState
   void initState() {
     super.initState();
     addressFocusNode = FocusNode();
-    addressController = TextEditingController();
+    final contactCreation =
+        ref.read(ContactCreationFormProvider.contactCreationForm);
+    addressController = TextEditingController(text: contactCreation.address);
   }
 
   @override

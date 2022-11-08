@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -173,8 +173,10 @@ class AddContactSheetBody extends ConsumerWidget {
                             ref.read(
                               ContactProviders.saveContact(contact: newContact),
                             );
-                            StateContainer.of(context)
-                                .requestUpdate(forceUpdateChart: false);
+
+                            ref
+                                .read(AccountProviders.selectedAccount.notifier)
+                                .refreshRecentTransactions();
                             UIUtil.showSnackbar(
                               localizations.contactAdded
                                   .replaceAll('%1', newContact.format),
