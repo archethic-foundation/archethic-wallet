@@ -4,7 +4,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -96,10 +95,9 @@ class MenuWidgetWallet extends ConsumerWidget {
                             contact: data.value,
                           ),
                           onDisposed: () {
-                            setState(() {
-                              StateContainer.of(context)
-                                  .requestUpdate(forceUpdateChart: false);
-                            });
+                            ref
+                                .read(AccountProviders.selectedAccount.notifier)
+                                .refreshRecentTransactions();
                           },
                         );
                       },

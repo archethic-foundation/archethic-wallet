@@ -131,16 +131,19 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       await ref
           .read(AccountProviders.selectedAccount)!
           .removeftInfosOffChain(token.id);
+
+      ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
     }
 
     ref
         .read(AccountProviders.selectedAccount.notifier)
         .refreshRecentTransactions();
+    if (transfer.transferType == TransferType.token) {
+      ref
+          .read(AccountProviders.selectedAccount.notifier)
+          .refreshFungibleTokens();
+    }
 
-    // TODO(reddwarf03): ensure that reload is not necessary
-    // setState(() {
-    //   StateContainer.of(context).requestUpdate();
-    // });
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
   }
 
