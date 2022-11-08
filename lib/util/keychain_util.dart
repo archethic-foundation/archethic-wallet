@@ -224,6 +224,7 @@ class KeychainUtil {
 
     appWallet!.appKeychain.accounts.add(selectedAcct);
     appWallet.appKeychain.accounts.sort((a, b) => a.name.compareTo(b.name));
+    appWallet.appKeychain.accounts.sort((a, b) => a.name.compareTo(b.name));
 
     final lastTransactionKeychainAddress = await sl
         .get<ApiService>()
@@ -231,7 +232,7 @@ class KeychainUtil {
     appWallet.appKeychain.address = lastTransactionKeychainAddress
         .address!; // TODO(Chralu): Transaction.address should be non-nullable
 
-    await appWallet.save();
+    await sl.get<DBHelper>().saveAppWallet(appWallet);
 
     final newContact = Contact(
       name: '@$name',
@@ -249,9 +250,7 @@ class KeychainUtil {
     AppWallet? appWallet,
     String? seed,
     String currency,
-    String tokenName,
-    Price tokenPrice, {
-    String? currentName = '',
+    String tokenName, {
     bool loadBalance = true,
     bool loadRecentTransactions = true,
   }) async {
@@ -275,6 +274,8 @@ class KeychainUtil {
       } else {
         currentAppWallet = appWallet;
       }
+
+      final selectedAccount = currentAppWallet.appKeychain.getAccountSelected();
 
       const kDerivationPathWithoutService = "m/650'/archethic-wallet-";
 
@@ -310,7 +311,7 @@ class KeychainUtil {
             ),
             recentTransactions: [],
           );
-          if (currentName == nameDecoded) {
+          if (selectedAccount != null && selectedAccount.name == nameDecoded) {
             account.selected = true;
           } else {
             account.selected = false;
@@ -343,11 +344,11 @@ class KeychainUtil {
         }
         if (loadBalance) {
           await accounts[i].updateBalance(tokenName, currency, tokenPrice);
-          // await accounts[i].updateFungiblesTokens();
+          await accounts[i].updateFungiblesTokens();
         }
-        // if (loadRecentTransactions) {
-        //   await accounts[i].updateRecentTransactions(seed);
-        // }
+        if (loadRecentTransactions) {
+          await accounts[i].updateRecentTransactions(seed);
+        }
       }
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
@@ -359,7 +360,7 @@ class KeychainUtil {
       accounts.sort((a, b) => a.name.compareTo(b.name));
       currentAppWallet.appKeychain.accounts = accounts;
 
-      await currentAppWallet.save();
+      await sl.get<DBHelper>().saveAppWallet(currentAppWallet);
     } catch (e) {
       throw Exception();
     }

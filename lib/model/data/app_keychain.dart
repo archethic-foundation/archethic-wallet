@@ -24,14 +24,14 @@ class AppKeychain extends HiveObject {
   @HiveField(2, defaultValue: [])
   List<Account> accounts;
 
-  // Account? getAccountSelected() {
-  //   for (final account in accounts) {
-  //     if (account.selected!) {
-  //       return account;
-  //     }
-  //   }
-  //   return null;
-  // }
+  Account? getAccountSelected() {
+    for (final account in accounts) {
+      if (account.selected!) {
+        return account;
+      }
+    }
+    return null;
+  }
 
   Account? getAccount(Account accountToSelected) {
     for (final account in accounts) {

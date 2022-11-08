@@ -299,6 +299,11 @@ class DBHelper {
     return box.get(0);
   }
 
+  Future<void> saveAppWallet(AppWallet wallet) async {
+    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    return box.putAt(0, wallet);
+  }
+
   Future<void> clearAll() async {
     await clearAppWallet();
     await clearContacts();

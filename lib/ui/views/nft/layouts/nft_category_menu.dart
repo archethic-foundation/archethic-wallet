@@ -18,12 +18,16 @@ class NftCategoryMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final selectedAccount = ref.read(AccountProviders.selectedAccount);
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
     final preferences = ref.watch(SettingsProviders.settings);
+
+    if (selectedAccount == null) {
+      return const SliverToBoxAdapter();
+    }
     final nftCategories = ref.watch(
       NftCategoryProviders.fetchNftCategory(
         context: context,
-        account: selectedAccount!,
+        account: selectedAccount,
       ),
     );
 

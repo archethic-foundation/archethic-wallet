@@ -33,15 +33,17 @@ class _SessionNotifier extends Notifier<Session> {
 
     final loggedInState = state.loggedIn!;
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
-    final selectedAccount = ref.read(AccountProviders.selectedAccount)!;
+    final curNetwork = ref.read(
+      SettingsProviders.settings.select(
+        (settings) => settings.network,
+      ),
+    );
 
     final newWallet = await KeychainUtil().getListAccountsFromKeychain(
       loggedInState.wallet,
       loggedInState.wallet.seed,
       selectedCurrency.currency.name,
-      selectedAccount.balance!.nativeTokenName!,
-      selectedAccount.balance!.tokenPrice!,
-      currentName: selectedAccount.name,
+      curNetwork.getNetworkCryptoCurrencyLabel(),
     );
     if (newWallet == null) return;
 
@@ -92,9 +94,6 @@ class _SessionNotifier extends Notifier<Session> {
     );
     final vault = await Vault.getInstance();
     vault.setSeed(seed);
-    final tokenPrice = await Price.getCurrency(
-      settings.currency.name,
-    );
 
     try {
       final appWallet = await KeychainUtil().getListAccountsFromKeychain(
@@ -102,7 +101,6 @@ class _SessionNotifier extends Notifier<Session> {
         seed,
         settings.currency.name,
         settings.network.getNetworkCryptoCurrencyLabel(),
-        tokenPrice,
       );
 
       if (appWallet == null) {
