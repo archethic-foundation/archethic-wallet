@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
-
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
@@ -16,7 +15,7 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
-import 'package:aewallet/ui/views/home_page_universe.dart';
+import 'package:aewallet/ui/views/home_page.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
@@ -26,11 +25,9 @@ import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/util/preferences.dart';
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -131,13 +128,13 @@ class _AppState extends ConsumerState<App> {
                 settings: settings,
               );
             case '/home':
-              return NoTransitionRoute<AppHomePageUniverse>(
-                builder: (_) => const AppHomePageUniverse(),
+              return NoTransitionRoute<HomePage>(
+                builder: (_) => const HomePage(),
                 settings: settings,
               );
             case '/home_transition':
-              return NoPopTransitionRoute<AppHomePageUniverse>(
-                builder: (_) => const AppHomePageUniverse(),
+              return NoPopTransitionRoute<HomePage>(
+                builder: (_) => const HomePage(),
                 settings: settings,
               );
             case '/intro_welcome':
