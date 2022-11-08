@@ -102,6 +102,7 @@ class _AddContactTextFieldPublicKeyState
           final data = await UserDataUtil.getClipboardText(
             DataType.raw,
           );
+          // TODO(chralu): Refresh issue
           contactCreationNotifier.setPublicKey(
             data!,
           );
