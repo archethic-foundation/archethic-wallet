@@ -106,7 +106,7 @@ class _AddContactTextFieldAddressState
           final data = await UserDataUtil.getClipboardText(
             DataType.address,
           );
-          contactCreationNotifier.setAddress(
+          await contactCreationNotifier.setAddress(
             data!,
             context,
           );
