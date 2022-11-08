@@ -25,8 +25,11 @@ class MenuWidgetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
+    final accountSelected = ref.watch(AccountProviders.selectedAccount);
     final preferences = ref.watch(SettingsProviders.settings);
+
+    if (accountSelected == null) return const SizedBox();
+
     final contact = ref.watch(
       ContactProviders.getContactWithName(
         accountSelected.name,

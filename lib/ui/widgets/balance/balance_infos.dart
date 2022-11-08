@@ -37,11 +37,13 @@ class BalanceInfos extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelectedBalance = ref.watch(
       AccountProviders.selectedAccount.select((value) => value?.balance),
-    )!;
+    );
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
+    if (accountSelectedBalance == null) return const SizedBox();
 
     return GestureDetector(
       child: SizedBox(
@@ -137,7 +139,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
             currency.currency.name,
-            accountSelectedBalance.fiatCurrencyValue!,
+            accountSelectedBalance.fiatCurrencyValue ?? 0,
           ),
           textAlign: TextAlign.center,
           style: theme.textStyleSize12W600Primary,
