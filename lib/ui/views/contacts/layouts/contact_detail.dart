@@ -244,7 +244,7 @@ class ContactDetail extends ConsumerWidget {
                       onPressed: () async {
                         UIUtil.showWebview(
                           context,
-                          '${StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${contact.address}',
+                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
                           '',
                         );
                       },

@@ -5,7 +5,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -50,7 +49,6 @@ class StateContainer extends ConsumerStatefulWidget {
 class StateContainerState extends ConsumerState<StateContainer> {
   Price? price;
   bool recentTransactionsLoading = false;
-  late NetworksSetting curNetwork;
 
   ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1h';
@@ -72,7 +70,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
                 initialPage: index,
               );
               bottomBarCurrentPage = index;
-              curNetwork = preferences.getNetwork();
             });
           },
         );
