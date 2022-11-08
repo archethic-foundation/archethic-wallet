@@ -205,6 +205,7 @@ class ContactDetail extends ConsumerWidget {
                         contact.type == ContactType.keychainService.name
                             ? localizations.contactAddressInfoKeychainService
                             : localizations.contactAddressInfoExternalContact,
+                    messageCopied: localizations.addressCopied,
                   ),
                   ContactDetailTab(
                     infoQRCode: contact.publicKey!,
@@ -212,6 +213,7 @@ class ContactDetail extends ConsumerWidget {
                         contact.type == ContactType.keychainService.name
                             ? localizations.contactPublicKeyInfoKeychainService
                             : localizations.contactPublicKeyInfoExternalContact,
+                    messageCopied: localizations.publicKeyCopied,
                   ),
                 ],
                 onChange: (p0) {
