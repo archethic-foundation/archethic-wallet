@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -23,7 +23,7 @@ class ContactsDialog {
     final searchNameController = TextEditingController();
 
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-    var contacts = await StateContainer.of(context).getContacts();
+    var contacts = await ref.read(ContactProviders.fetchContacts().future);
     final accountSelected = ref.read(
       AccountProviders.selectedAccount,
     );
@@ -76,7 +76,9 @@ class ContactsDialog {
                       LengthLimitingTextInputFormatter(20)
                     ],
                     onChanged: (text) async {
-                      contacts = await StateContainer.of(context).getContacts();
+                      contacts = await ref.read(
+                        ContactProviders.fetchContacts().future,
+                      );
                       contacts.removeWhere(
                         (element) =>
                             element.format.toUpperCase() ==

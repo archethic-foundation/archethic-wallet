@@ -7,8 +7,6 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/chart_infos.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
@@ -78,10 +76,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
   void dispose() {
     bottomBarPageController!.dispose();
     super.dispose();
-  }
-
-  Future<List<Contact>> getContacts() async {
-    return sl.get<DBHelper>().getContacts();
   }
 
   Future<List<Token>> getTokenFungibles() async {
