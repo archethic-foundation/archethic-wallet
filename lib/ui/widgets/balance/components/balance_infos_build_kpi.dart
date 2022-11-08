@@ -16,6 +16,8 @@ class BalanceInfosKpi extends ConsumerWidget {
 
     final preferences = ref.watch(SettingsProviders.settings);
 
+    if (accountSelectedBalance == null) return const SizedBox();
+
     if (chartInfos?.data == null) {
       return const SizedBox(
         height: 30,
@@ -33,7 +35,7 @@ class BalanceInfosKpi extends ConsumerWidget {
           child: Row(
             children: <Widget>[
               AutoSizeText(
-                '1 ${accountSelectedBalance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelectedBalance.fiatCurrencyCode!, accountSelectedBalance.tokenPrice!.amount!)}',
+                '1 ${accountSelectedBalance.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelectedBalance.fiatCurrencyCode!, accountSelectedBalance.tokenPrice!.amount!)}',
                 style: theme.textStyleSize12W100Primary,
               ),
               const SizedBox(
