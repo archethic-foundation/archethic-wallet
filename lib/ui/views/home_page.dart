@@ -1,9 +1,5 @@
 // ignore_for_file: cancel_subscriptions, prefer_const_constructors
-
-// Dart imports:
 import 'dart:async';
-
-// Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -26,22 +22,19 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
-// Package imports:
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:event_taxi/event_taxi.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppHomePageUniverse extends ConsumerStatefulWidget {
-  const AppHomePageUniverse({super.key});
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({super.key});
 
   @override
-  ConsumerState<AppHomePageUniverse> createState() =>
-      _AppHomePageUniverseState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
+class _HomePageState extends ConsumerState<HomePage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   bool _lockDisabled = false; // whether we should avoid locking the app
 
