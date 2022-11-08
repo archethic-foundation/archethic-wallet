@@ -28,18 +28,11 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
   }
 
   Future<void> _updateBalance(Account account) async {
-    final curNetwork = ref.read(
-      SettingsProviders.settings.select(
-        (settings) => settings.network,
-      ),
-    );
-
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
     final tokenPrice = await Price.getCurrency(
       selectedCurrency.currency.name,
     );
     await account.updateBalance(
-      curNetwork.getNetworkCryptoCurrencyLabel(),
       selectedCurrency.currency.name,
       tokenPrice,
     );

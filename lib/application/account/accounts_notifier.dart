@@ -42,18 +42,13 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
     final currencyName = ref.read(
       CurrencyProviders.selectedCurrency.select((value) => value.currency.name),
     );
-    final currentNetwork = ref.read(
-      SettingsProviders.settings.select(
-        (value) => value.network,
-      ),
-    );
 
     await KeychainUtil().addAccountInKeyChain(
       loggedInSession.wallet,
       loggedInSession.wallet.seed,
       name,
       currencyName,
-      currentNetwork.getNetworkCryptoCurrencyLabel(),
+      AccountBalance.cryptoCurrencyLabel,
     );
 
     ref.invalidate(AccountProviders.accounts);

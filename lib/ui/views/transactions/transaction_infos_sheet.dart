@@ -5,6 +5,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -63,9 +64,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
               session.wallet.seed,
               widget.txAddress,
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-              StateContainer.of(context)
-                  .curNetwork
-                  .getNetworkCryptoCurrencyLabel(),
+              AccountBalance.cryptoCurrencyLabel,
               context,
               selectedAccount.name,
             ),

@@ -6,9 +6,9 @@ import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -131,9 +131,7 @@ class TransferSheetBody extends ConsumerWidget {
         case TransferType.uco:
           return localizations.transferTokens.replaceAll(
             '%1',
-            StateContainer.of(context)
-                .curNetwork
-                .getNetworkCryptoCurrencyLabel(),
+            AccountBalance.cryptoCurrencyLabel,
           );
         case TransferType.token:
           return localizations.transferTokens.replaceAll(

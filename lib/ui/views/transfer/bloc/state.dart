@@ -1,4 +1,3 @@
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -7,6 +6,7 @@ import 'package:aewallet/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'state.freezed.dart';
 
 enum TransferType { uco, token, nft }
@@ -61,11 +61,10 @@ class TransferFormState with _$TransferFormState {
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
   String symbol(BuildContext context) => transferType == TransferType.uco
-      ? StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()
+      ? AccountBalance.cryptoCurrencyLabel
       : accountToken!.tokenInformations!.symbol!;
 
-  String symbolFees(BuildContext context) =>
-      StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
+  String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 }
 
 @freezed

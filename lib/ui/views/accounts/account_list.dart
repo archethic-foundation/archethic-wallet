@@ -360,6 +360,7 @@ class _AccountListItem extends ConsumerWidget {
               );
             },
             child: Card(
+              clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   color: theme.backgroundAccountsListCardSelected!,
@@ -379,6 +380,7 @@ class _AccountListItem extends ConsumerWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
                       child: AutoSizeText(
@@ -390,7 +392,6 @@ class _AccountListItem extends ConsumerWidget {
                       primaryCurrency.primaryCurrency ==
                               AvailablePrimaryCurrencyEnum.native
                           ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 AutoSizeText(
@@ -425,7 +426,6 @@ class _AccountListItem extends ConsumerWidget {
                               ],
                             )
                           : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 AutoSizeText(

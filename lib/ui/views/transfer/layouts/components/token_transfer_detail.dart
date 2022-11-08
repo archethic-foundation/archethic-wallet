@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
@@ -88,9 +88,7 @@ class TokenTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standardSmallValue(
                   transfer.feeEstimation.valueOrNull ?? 0,
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  AccountBalance.cryptoCurrencyLabel,
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),

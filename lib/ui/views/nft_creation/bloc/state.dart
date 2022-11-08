@@ -2,7 +2,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
@@ -64,8 +63,7 @@ class NftCreationFormState with _$NftCreationFormState {
         unknownContact: (name) => false,
       );
 
-  String symbolFees(BuildContext context) =>
-      StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
+  String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 
   Map<String, dynamic> get propertiesConverted {
     final propertiesConverted = <String, dynamic>{};

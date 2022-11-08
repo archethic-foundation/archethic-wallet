@@ -152,10 +152,8 @@ class _CurrencySettingsListItem extends ConsumerWidget {
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return _SettingsListItem.withDefaultValueWithInfos(
       heading: localizations.changeCurrencyHeader,
-      info: localizations.changeCurrencyDesc.replaceAll(
-        '%1',
-        StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
-      ),
+      info: localizations.changeCurrencyDesc
+          .replaceAll('%1', AccountBalance.cryptoCurrencyLabel),
       defaultMethod: currency,
       icon: UiIcons.currency,
       onPressed: () => CurrencyDialog.getDialog(context, ref),

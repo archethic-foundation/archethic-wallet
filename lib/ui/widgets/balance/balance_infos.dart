@@ -66,9 +66,7 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel(),
+                                AccountBalance.cryptoCurrencyLabel,
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),

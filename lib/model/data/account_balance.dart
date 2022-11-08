@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:hive/hive.dart';
@@ -15,6 +14,7 @@ class AccountBalance extends HiveObject {
     this.fiatCurrencyCode,
     this.tokenPrice,
   });
+  static const String cryptoCurrencyLabel = 'UCO';
 
   /// Native Token - Value
   @HiveField(0)

@@ -21,6 +21,8 @@ class MainMenuView extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount = ref.watch(AccountProviders.selectedAccount);
 
+    if (selectedAccount == null) return const SizedBox();
+
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.drawerBackground,
@@ -49,8 +51,7 @@ class MainMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.manage),
                       // TODO(reddwarf03): that conditional spacer seems odd.
-                      if (selectedAccount!.balance!
-                          .isNativeTokenValuePositive())
+                      if (selectedAccount.balance!.isNativeTokenValuePositive())
                         const _SettingsListItem.spacer()
                       else
                         const SizedBox(),

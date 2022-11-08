@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
 
@@ -58,17 +57,6 @@ class NetworksSetting extends SettingSelectionItem {
         return 'wss://testnet.archethic.net/socket/websocket';
       case AvailableNetworks.archethicDevNet:
         return '${networkDevEndpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket';
-    }
-  }
-
-  String getNetworkCryptoCurrencyLabel() {
-    switch (network) {
-      case AvailableNetworks.archethicMainNet:
-        return 'UCO';
-      case AvailableNetworks.archethicTestNet:
-        return 'UCO';
-      case AvailableNetworks.archethicDevNet:
-        return 'UCO';
     }
   }
 

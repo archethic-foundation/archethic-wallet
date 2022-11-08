@@ -2,8 +2,8 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -81,9 +81,7 @@ class UCOTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standardSmallValue(
                   transfer.feeEstimationOrZero,
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  AccountBalance.cryptoCurrencyLabel,
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),
@@ -98,9 +96,7 @@ class UCOTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standard(
                   transfer.feeEstimationOrZero + amountInUco,
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  AccountBalance.cryptoCurrencyLabel,
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),

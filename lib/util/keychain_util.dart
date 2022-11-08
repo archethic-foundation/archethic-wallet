@@ -270,7 +270,7 @@ class KeychainUtil {
 
         currentAppWallet = await sl
             .get<DBHelper>()
-            .createAppWallet('', lastTransaction.address!);
+            .createAppWallet(seed, lastTransaction.address!);
       } else {
         currentAppWallet = appWallet;
       }
@@ -343,7 +343,7 @@ class KeychainUtil {
           accounts[i].lastAddress = lastAddress;
         }
         if (loadBalance) {
-          await accounts[i].updateBalance(tokenName, currency, tokenPrice);
+          await accounts[i].updateBalance(currency, tokenPrice);
           await accounts[i].updateFungiblesTokens();
         }
         if (loadRecentTransactions) {
@@ -361,7 +361,7 @@ class KeychainUtil {
       currentAppWallet.appKeychain.accounts = accounts;
 
       await sl.get<DBHelper>().saveAppWallet(currentAppWallet);
-    } catch (e) {
+    } catch (e, stack) {
       throw Exception();
     }
 

@@ -154,7 +154,6 @@ class Account extends HiveObject {
   }
 
   Future<void> updateBalance(
-    String tokenName,
     String fiatCurrencyCode,
     Price price,
   ) async {
@@ -165,7 +164,7 @@ class Account extends HiveObject {
       fiatCurrencyValue = fromBigInt(balanceGetResponse.uco) * price.amount!;
     }
     final accountBalance = AccountBalance(
-      nativeTokenName: tokenName,
+      nativeTokenName: AccountBalance.cryptoCurrencyLabel,
       nativeTokenValue: balanceGetResponse.uco == null
           ? 0
           : fromBigInt(balanceGetResponse.uco).toDouble(),

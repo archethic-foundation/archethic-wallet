@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/price.dart';
