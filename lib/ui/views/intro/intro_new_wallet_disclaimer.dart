@@ -1,43 +1,21 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
-// Package imports:
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroNewWalletDisclaimer extends ConsumerStatefulWidget {
+class IntroNewWalletDisclaimer extends ConsumerWidget {
   const IntroNewWalletDisclaimer({super.key, this.name});
   final String? name;
 
   @override
-  ConsumerState<IntroNewWalletDisclaimer> createState() =>
-      _IntroNewWalletDisclaimerState();
-}
-
-class _IntroNewWalletDisclaimerState
-    extends ConsumerState<IntroNewWalletDisclaimer> {
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
@@ -85,103 +63,96 @@ class _IntroNewWalletDisclaimerState
                   ],
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: <Widget>[
-                          IconWidget(
-                            icon: 'assets/icons/warning.png',
-                            width: 90,
-                            height: 90,
-                            color: theme.warning,
+                  child: ScrollBar(
+                    child: Column(
+                      children: <Widget>[
+                        IconWidget(
+                          icon: 'assets/icons/warning.png',
+                          width: 90,
+                          height: 90,
+                          color: theme.warning,
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            top: 10,
                           ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              top: 10,
-                            ),
-                            child: AutoSizeText(
-                              localizations.warning,
-                              style: theme.textStyleSize28W700Warning,
-                            ),
+                          child: AutoSizeText(
+                            localizations.warning,
+                            style: theme.textStyleSize28W700Warning,
                           ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
-                              top: 15,
-                            ),
-                            alignment: Alignment.bottomLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel1,
-                                  style: theme.textStyleSize16W600Primary,
-                                ),
-                                Divider(
-                                  height: 30,
-                                  color: theme.text60,
-                                ),
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel2,
-                                  style: theme.textStyleSize16W600Primary,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel3,
-                                  style: theme.textStyleSize14W600Primary,
-                                  textAlign: TextAlign.justify,
-                                ),
-                                Divider(
-                                  height: 30,
-                                  color: theme.text60,
-                                ),
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel4,
-                                  style: theme.textStyleSize16W600Primary,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel5,
-                                  style: theme.textStyleSize14W600Primary,
-                                  textAlign: TextAlign.justify,
-                                ),
-                                Divider(
-                                  height: 30,
-                                  color: theme.text60,
-                                ),
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel6,
-                                  style: theme.textStyleSize16W600Primary,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                AutoSizeText(
-                                  localizations.backupSafetyLabel7,
-                                  style: theme.textStyleSize14W600Primary,
-                                  textAlign: TextAlign.justify,
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                              ],
-                            ),
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 15,
                           ),
-                        ],
-                      ),
+                          alignment: Alignment.bottomLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AutoSizeText(
+                                localizations.backupSafetyLabel1,
+                                style: theme.textStyleSize16W600Primary,
+                              ),
+                              Divider(
+                                height: 30,
+                                color: theme.text60,
+                              ),
+                              AutoSizeText(
+                                localizations.backupSafetyLabel2,
+                                style: theme.textStyleSize16W600Primary,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              AutoSizeText(
+                                localizations.backupSafetyLabel3,
+                                style: theme.textStyleSize14W600Primary,
+                                textAlign: TextAlign.justify,
+                              ),
+                              Divider(
+                                height: 30,
+                                color: theme.text60,
+                              ),
+                              AutoSizeText(
+                                localizations.backupSafetyLabel4,
+                                style: theme.textStyleSize16W600Primary,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              AutoSizeText(
+                                localizations.backupSafetyLabel5,
+                                style: theme.textStyleSize14W600Primary,
+                                textAlign: TextAlign.justify,
+                              ),
+                              Divider(
+                                height: 30,
+                                color: theme.text60,
+                              ),
+                              AutoSizeText(
+                                localizations.backupSafetyLabel6,
+                                style: theme.textStyleSize16W600Primary,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              AutoSizeText(
+                                localizations.backupSafetyLabel7,
+                                style: theme.textStyleSize14W600Primary,
+                                textAlign: TextAlign.justify,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-
-                // Next Screen Button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -192,7 +163,7 @@ class _IntroNewWalletDisclaimerState
                       key: const Key('understandButton'),
                       onPressed: () {
                         Navigator.of(context)
-                            .pushNamed('/intro_backup', arguments: widget.name);
+                            .pushNamed('/intro_backup', arguments: name);
                       },
                     ),
                   ],

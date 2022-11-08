@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-
-// Project imports:
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -19,6 +17,7 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -26,11 +25,9 @@ import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,8 +50,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
   bool keychainAccessRequested = false;
   bool newWalletRequested = false;
-
-  late ScrollController scrollController;
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -201,14 +196,12 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   @override
   void dispose() {
     _destroyBus();
-    scrollController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    scrollController = ScrollController();
     _registerBus();
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
@@ -275,116 +268,110 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                   ],
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
-                              top: 10,
-                            ),
-                            alignment: AlignmentDirectional.centerStart,
-                            child: AutoSizeText(
-                              localizations.confirmSecretPhrase,
-                              style: theme.textStyleSize20W700Warning,
-                            ),
+                  child: ScrollBar(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 10,
                           ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
-                              top: 15,
-                            ),
-                            child: AutoSizeText(
-                              localizations.confirmSecretPhraseExplanation,
-                              style: theme.textStyleSize16W600Primary,
-                              textAlign: TextAlign.justify,
-                              maxLines: 6,
-                              stepGranularity: 0.5,
-                            ),
+                          alignment: AlignmentDirectional.centerStart,
+                          child: AutoSizeText(
+                            localizations.confirmSecretPhrase,
+                            style: theme.textStyleSize20W700Warning,
                           ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
-                              top: 15,
-                            ),
-                            child: Wrap(
-                              spacing: 10,
-                              children: wordListSelected
-                                  .asMap()
-                                  .entries
-                                  .map((MapEntry entry) {
-                                return SizedBox(
-                                  height: 35,
-                                  child: Chip(
-                                    avatar: CircleAvatar(
-                                      backgroundColor: Colors.grey.shade800,
-                                      child: Text(
-                                        (entry.key + 1).toString(),
-                                        style:
-                                            theme.textStyleSize12W100Primary60,
-                                      ),
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 15,
+                          ),
+                          child: AutoSizeText(
+                            localizations.confirmSecretPhraseExplanation,
+                            style: theme.textStyleSize16W600Primary,
+                            textAlign: TextAlign.justify,
+                            maxLines: 6,
+                            stepGranularity: 0.5,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 15,
+                          ),
+                          child: Wrap(
+                            spacing: 10,
+                            children: wordListSelected
+                                .asMap()
+                                .entries
+                                .map((MapEntry entry) {
+                              return SizedBox(
+                                height: 35,
+                                child: Chip(
+                                  avatar: CircleAvatar(
+                                    backgroundColor: Colors.grey.shade800,
+                                    child: Text(
+                                      (entry.key + 1).toString(),
+                                      style: theme.textStyleSize12W100Primary60,
                                     ),
+                                  ),
+                                  label: Text(
+                                    entry.value,
+                                    style: theme.textStyleSize12W400Primary,
+                                  ),
+                                  onDeleted: () {
+                                    setState(() {
+                                      wordListToSelect.add(entry.value);
+                                      wordListSelected.removeAt(entry.key);
+                                    });
+                                  },
+                                  deleteIconColor: Colors.white,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        Divider(
+                          height: 15,
+                          color: theme.text60,
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 15,
+                          ),
+                          child: Wrap(
+                            spacing: 10,
+                            children: wordListToSelect
+                                .asMap()
+                                .entries
+                                .map((MapEntry entry) {
+                              return SizedBox(
+                                height: 35,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    wordListSelected.add(entry.value);
+                                    wordListToSelect.removeAt(entry.key);
+                                    setState(() {});
+                                  },
+                                  child: Chip(
                                     label: Text(
                                       entry.value,
                                       style: theme.textStyleSize12W400Primary,
                                     ),
-                                    onDeleted: () {
-                                      setState(() {
-                                        wordListToSelect.add(entry.value);
-                                        wordListSelected.removeAt(entry.key);
-                                      });
-                                    },
-                                    deleteIconColor: Colors.white,
                                   ),
-                                );
-                              }).toList(),
-                            ),
+                                ),
+                              );
+                            }).toList(),
                           ),
-                          Divider(
-                            height: 15,
-                            color: theme.text60,
-                          ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
-                              top: 15,
-                            ),
-                            child: Wrap(
-                              spacing: 10,
-                              children: wordListToSelect
-                                  .asMap()
-                                  .entries
-                                  .map((MapEntry entry) {
-                                return SizedBox(
-                                  height: 35,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      wordListSelected.add(entry.value);
-                                      wordListToSelect.removeAt(entry.key);
-                                      setState(() {});
-                                    },
-                                    child: Chip(
-                                      label: Text(
-                                        entry.value,
-                                        style: theme.textStyleSize12W400Primary,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

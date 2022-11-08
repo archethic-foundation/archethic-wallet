@@ -8,10 +8,10 @@ import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -38,19 +38,10 @@ class _IntroConfigureSecurityState
   PickerItem? _accessModesSelected;
   bool? animationOpen;
 
-  late ScrollController scrollController;
-
   @override
   void initState() {
     animationOpen = false;
-    scrollController = ScrollController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -98,131 +89,126 @@ class _IntroConfigureSecurityState
                   ],
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: <Widget>[
+                  child: ScrollBar(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 10,
+                          ),
+                          alignment: AlignmentDirectional.centerStart,
+                          child: AutoSizeText(
+                            localizations.configureSecurityIntro,
+                            style: theme.textStyleSize20W700Warning,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 15,
+                          ),
+                          child: AutoSizeText(
+                            localizations.configureSecurityExplanation,
+                            style: theme.textStyleSize16W600Primary,
+                            textAlign: TextAlign.justify,
+                            maxLines: 6,
+                            stepGranularity: 0.5,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (widget.accessModes != null)
                           Container(
                             margin: const EdgeInsetsDirectional.only(
                               start: 20,
                               end: 20,
-                              top: 10,
                             ),
-                            alignment: AlignmentDirectional.centerStart,
-                            child: AutoSizeText(
-                              localizations.configureSecurityIntro,
-                              style: theme.textStyleSize20W700Warning,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
-                              top: 15,
-                            ),
-                            child: AutoSizeText(
-                              localizations.configureSecurityExplanation,
-                              style: theme.textStyleSize16W600Primary,
-                              textAlign: TextAlign.justify,
-                              maxLines: 6,
-                              stepGranularity: 0.5,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          if (widget.accessModes != null)
-                            Container(
-                              margin: const EdgeInsetsDirectional.only(
-                                start: 20,
-                                end: 20,
-                              ),
-                              child: PickerWidget(
-                                pickerItems: widget.accessModes,
-                                onSelected: (value) async {
-                                  setState(() {
-                                    _accessModesSelected = value;
-                                  });
-                                  if (_accessModesSelected == null) return;
-                                  final authMethod =
-                                      _accessModesSelected!.value as AuthMethod;
-                                  var authenticated = false;
-                                  switch (authMethod) {
-                                    case AuthMethod.biometrics:
-                                      authenticated = await sl
-                                          .get<BiometricUtil>()
-                                          .authenticateWithBiometrics(
-                                            context,
-                                            localizations.unlockBiometrics,
+                            child: PickerWidget(
+                              pickerItems: widget.accessModes,
+                              onSelected: (value) async {
+                                setState(() {
+                                  _accessModesSelected = value;
+                                });
+                                if (_accessModesSelected == null) return;
+                                final authMethod =
+                                    _accessModesSelected!.value as AuthMethod;
+                                var authenticated = false;
+                                switch (authMethod) {
+                                  case AuthMethod.biometrics:
+                                    authenticated = await sl
+                                        .get<BiometricUtil>()
+                                        .authenticateWithBiometrics(
+                                          context,
+                                          localizations.unlockBiometrics,
+                                        );
+                                    break;
+                                  case AuthMethod.password:
+                                    authenticated =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return SetPassword(
+                                            header:
+                                                localizations.setPasswordHeader,
+                                            description: AppLocalization.of(
+                                              context,
+                                            )!
+                                                .configureSecurityExplanationPassword,
                                           );
-                                      break;
-                                    case AuthMethod.password:
-                                      authenticated =
-                                          await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return SetPassword(
-                                              header: localizations
-                                                  .setPasswordHeader,
-                                              description: AppLocalization.of(
-                                                context,
-                                              )!
-                                                  .configureSecurityExplanationPassword,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                      break;
-                                    case AuthMethod.pin:
-                                      authenticated =
-                                          await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return const PinScreen(
-                                              PinOverlayType.newPin,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                      break;
-                                    case AuthMethod.yubikeyWithYubicloud:
-                                      authenticated =
-                                          await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return SetYubikey(
-                                              header: localizations
-                                                  .seYubicloudHeader,
-                                              description: localizations
-                                                  .seYubicloudDescription,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                      break;
-                                    case AuthMethod.biometricsUniris:
-                                      break;
-                                    case AuthMethod.ledger:
-                                      break;
-                                  }
-                                  if (authenticated) {
-                                    await Preferences.initWallet(
-                                      AuthenticationMethod(authMethod),
+                                        },
+                                      ),
                                     );
-                                    EventTaxiImpl.singleton()
-                                        .fire(AuthenticatedEvent());
-                                  }
-                                },
-                              ),
+                                    break;
+                                  case AuthMethod.pin:
+                                    authenticated =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return const PinScreen(
+                                            PinOverlayType.newPin,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                    break;
+                                  case AuthMethod.yubikeyWithYubicloud:
+                                    authenticated =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return SetYubikey(
+                                            header:
+                                                localizations.seYubicloudHeader,
+                                            description: localizations
+                                                .seYubicloudDescription,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                    break;
+                                  case AuthMethod.biometricsUniris:
+                                    break;
+                                  case AuthMethod.ledger:
+                                    break;
+                                }
+                                if (authenticated) {
+                                  await Preferences.initWallet(
+                                    AuthenticationMethod(authMethod),
+                                  );
+                                  EventTaxiImpl.singleton()
+                                      .fire(AuthenticatedEvent());
+                                }
+                              },
                             ),
-                          const SizedBox(
-                            height: 20,
                           ),
-                        ],
-                      ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
                   ),
                 ),

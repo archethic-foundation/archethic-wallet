@@ -11,6 +11,7 @@ import 'package:aewallet/ui/views/nft/layouts/components/nft_preview.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -71,22 +72,17 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                     bottom: MediaQuery.of(context).size.height * 0.035,
                     top: 50,
                   ),
-                  child: Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: <Widget>[
-                          NFTPreviewWidget(
-                            tokenInformations: widget.tokenInformations,
-                            nftPropertiesDeleteAction: false,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
+                  child: ScrollBar(
+                    child: Column(
+                      children: <Widget>[
+                        NFTPreviewWidget(
+                          tokenInformations: widget.tokenInformations,
+                          nftPropertiesDeleteAction: false,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
                   ),
                 ),

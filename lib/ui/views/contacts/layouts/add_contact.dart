@@ -17,6 +17,7 @@ import 'package:aewallet/ui/views/contacts/layouts/components/add_contact_public
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -53,33 +54,13 @@ class AddContactSheet extends ConsumerWidget {
   }
 }
 
-class AddContactSheetBody extends ConsumerStatefulWidget {
+class AddContactSheetBody extends ConsumerWidget {
   const AddContactSheetBody({
     super.key,
   });
 
   @override
-  ConsumerState<AddContactSheetBody> createState() =>
-      _AddContactSheetBodyState();
-}
-
-class _AddContactSheetBodyState extends ConsumerState<AddContactSheetBody> {
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final contactCreation =
@@ -119,48 +100,43 @@ class _AddContactSheetBodyState extends ConsumerState<AddContactSheetBody> {
             ),
             const SizedBox(height: 30),
             Expanded(
-              child: Scrollbar(
-                controller: scrollController,
-                thumbVisibility: true,
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10, right: 10, bottom: 30),
-                    child: Column(
-                      children: <Widget>[
-                        const AddContactTextFieldName(),
-                        const SizedBox(
-                          height: 20,
+              child: ScrollBar(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                  child: Column(
+                    children: <Widget>[
+                      const AddContactTextFieldName(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const AddContactTextFieldAddress(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (contactCreation.publicKeyRecovered.isEmpty)
+                        const AddContactTextFieldPublicKey()
+                      else
+                        const AddContactPublicKeyRecovered(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Icon(
+                          UiIcons.about,
+                          color: theme.text,
+                          size: 20,
                         ),
-                        const AddContactTextFieldAddress(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        if (contactCreation.publicKeyRecovered.isEmpty)
-                          const AddContactTextFieldPublicKey()
-                        else
-                          const AddContactPublicKeyRecovered(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Icon(
-                            UiIcons.about,
-                            color: theme.text,
-                            size: 20,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          localizations.addContactDescription,
-                          style: theme.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        localizations.addContactDescription,
+                        style: theme.textStyleSize12W100Primary,
+                      ),
+                    ],
                   ),
                 ),
               ),

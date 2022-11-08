@@ -17,6 +17,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -48,12 +49,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
 
-  late ScrollController scrollController;
-
   @override
   void initState() {
     isPressed = false;
-    scrollController = ScrollController();
     _registerBus();
     Preferences.getInstance()
         .then((Preferences preferences) => preferences.setLanguageSeed('en'));
@@ -80,7 +78,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   @override
   void dispose() {
     _destroyBus();
-    scrollController.dispose();
     super.dispose();
   }
 
@@ -216,178 +213,170 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                   ),
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: smallScreen(context) ? 30 : 40,
-                              right: smallScreen(context) ? 30 : 40,
-                              top: 15,
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              localizations.importSecretPhraseHint,
-                              style: theme.textStyleSize16W600Primary,
-                              textAlign: TextAlign.start,
-                            ),
+                  child: ScrollBar(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: smallScreen(context) ? 30 : 40,
+                            right: smallScreen(context) ? 30 : 40,
+                            top: 15,
                           ),
-                          const SizedBox(
-                            height: 25,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            localizations.importSecretPhraseHint,
+                            style: theme.textStyleSize16W600Primary,
+                            textAlign: TextAlign.start,
                           ),
-                          if (_mnemonicError != '')
-                            SizedBox(
-                              height: 40,
-                              child: Text(
-                                _mnemonicError,
-                                style: theme.textStyleSize14W200Primary,
-                              ),
-                            )
-                          else
-                            const SizedBox(
-                              height: 40,
-                            ),
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        if (_mnemonicError != '')
                           SizedBox(
-                            height: MediaQuery.of(context).size.height,
-                            child: Column(
-                              children: <Widget>[
-                                const SizedBox(height: 10),
-                                GridView.count(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  childAspectRatio: 1.2,
-                                  shrinkWrap: true,
-                                  crossAxisCount: 4,
-                                  children: List.generate(24, (index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 10,
-                                        right: 10,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            (index + 1).toString(),
-                                            style: theme
-                                                .textStyleSize12W100Primary,
-                                          ),
-                                          Autocomplete<String>(
-                                            optionsBuilder: (
-                                              TextEditingValue textEditingValue,
-                                            ) {
-                                              if (textEditingValue.text == '') {
-                                                return const Iterable<
-                                                    String>.empty();
-                                              }
-                                              return AppMnemomics.getLanguage(
-                                                language,
-                                              ).list.where((String option) {
-                                                return option.contains(
-                                                  unorm.nfkd(
-                                                    textEditingValue.text
-                                                        .toLowerCase(),
-                                                  ),
+                            height: 40,
+                            child: Text(
+                              _mnemonicError,
+                              style: theme.textStyleSize14W200Primary,
+                            ),
+                          )
+                        else
+                          const SizedBox(
+                            height: 40,
+                          ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: Column(
+                            children: <Widget>[
+                              const SizedBox(height: 10),
+                              GridView.count(
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 1.2,
+                                shrinkWrap: true,
+                                crossAxisCount: 4,
+                                children: List.generate(24, (index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          (index + 1).toString(),
+                                          style:
+                                              theme.textStyleSize12W100Primary,
+                                        ),
+                                        Autocomplete<String>(
+                                          optionsBuilder: (
+                                            TextEditingValue textEditingValue,
+                                          ) {
+                                            if (textEditingValue.text == '') {
+                                              return const Iterable<
+                                                  String>.empty();
+                                            }
+                                            return AppMnemomics.getLanguage(
+                                              language,
+                                            ).list.where((String option) {
+                                              return option.contains(
+                                                unorm.nfkd(
+                                                  textEditingValue.text
+                                                      .toLowerCase(),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          onSelected: (String selection) {
+                                            phrase[index] = selection;
+                                            if (!AppMnemomics.isValidWord(
+                                              selection,
+                                              languageCode: language,
+                                            )) {
+                                              setState(() {
+                                                _mnemonicIsValid = false;
+                                                _mnemonicError = localizations
+                                                    .mnemonicInvalidWord
+                                                    .replaceAll(
+                                                  '%1',
+                                                  selection,
                                                 );
                                               });
-                                            },
-                                            onSelected: (String selection) {
-                                              phrase[index] = selection;
-                                              if (!AppMnemomics.isValidWord(
-                                                selection,
-                                                languageCode: language,
-                                              )) {
-                                                setState(() {
-                                                  _mnemonicIsValid = false;
-                                                  _mnemonicError = localizations
-                                                      .mnemonicInvalidWord
-                                                      .replaceAll(
-                                                    '%1',
-                                                    selection,
-                                                  );
-                                                });
-                                              } else {
-                                                setState(() {
-                                                  _mnemonicError = '';
-                                                  _mnemonicIsValid = true;
-                                                });
-                                              }
-                                            },
-                                            fieldViewBuilder: (
-                                              context,
-                                              textEditingController,
-                                              focusNode,
-                                              onFieldSubmitted,
-                                            ) {
-                                              return Stack(
-                                                alignment:
-                                                    AlignmentDirectional.center,
-                                                children: <Widget>[
-                                                  TextFormField(
-                                                    controller:
-                                                        textEditingController,
-                                                    focusNode: focusNode,
-                                                    style: theme
-                                                        .textStyleSize12W400Primary,
-                                                    autocorrect: false,
-                                                    onChanged: (value) {
-                                                      phrase[index] = value;
-                                                      if (!AppMnemomics
-                                                          .isValidWord(
-                                                        value,
-                                                        languageCode: language,
-                                                      )) {
-                                                        setState(() {
-                                                          _mnemonicIsValid =
-                                                              false;
-                                                          _mnemonicError =
-                                                              localizations
-                                                                  .mnemonicInvalidWord
-                                                                  .replaceAll(
-                                                            '%1',
-                                                            value,
-                                                          );
-                                                        });
-                                                      } else {
-                                                        setState(() {
-                                                          _mnemonicError = '';
-                                                          _mnemonicIsValid =
-                                                              true;
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                  Positioned(
-                                                    bottom: 1,
-                                                    child: Container(
-                                                      height: 1,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      decoration: BoxDecoration(
-                                                        gradient:
-                                                            theme.gradient,
-                                                      ),
+                                            } else {
+                                              setState(() {
+                                                _mnemonicError = '';
+                                                _mnemonicIsValid = true;
+                                              });
+                                            }
+                                          },
+                                          fieldViewBuilder: (
+                                            context,
+                                            textEditingController,
+                                            focusNode,
+                                            onFieldSubmitted,
+                                          ) {
+                                            return Stack(
+                                              alignment:
+                                                  AlignmentDirectional.center,
+                                              children: <Widget>[
+                                                TextFormField(
+                                                  controller:
+                                                      textEditingController,
+                                                  focusNode: focusNode,
+                                                  style: theme
+                                                      .textStyleSize12W400Primary,
+                                                  autocorrect: false,
+                                                  onChanged: (value) {
+                                                    phrase[index] = value;
+                                                    if (!AppMnemomics
+                                                        .isValidWord(
+                                                      value,
+                                                      languageCode: language,
+                                                    )) {
+                                                      setState(() {
+                                                        _mnemonicIsValid =
+                                                            false;
+                                                        _mnemonicError =
+                                                            localizations
+                                                                .mnemonicInvalidWord
+                                                                .replaceAll(
+                                                          '%1',
+                                                          value,
+                                                        );
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        _mnemonicError = '';
+                                                        _mnemonicIsValid = true;
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                                Positioned(
+                                                  bottom: 1,
+                                                  child: Container(
+                                                    height: 1,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    decoration: BoxDecoration(
+                                                      gradient: theme.gradient,
                                                     ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ],
-                            ),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -472,6 +461,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                           await _accountsDialog(
                             newSession.wallet.appKeychain.accounts,
                           );
+
+                          // TODO(chralu): The provider is not updated
                           await _launchSecurityConfiguration(
                             ref.read(AccountProviders.selectedAccount)!.name,
                             newSession.wallet.seed,
