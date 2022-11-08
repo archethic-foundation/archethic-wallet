@@ -1734,6 +1734,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "contactPublicKeyNotFound": "No public key was found automatically. Please ask your contact for it.",
+  "@contactPublicKeyNotFound": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "keychainHeader": "Keychain",
   "@keychainHeader": {
     "type": "text",

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-08T21:54:23.296894",
+  "@@last_modified": "2022-11-08T23:24:33.124685",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -494,6 +494,12 @@
   },
   "contactExistsAddress": "You already have a contact with this address",
   "@contactExistsAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "contactPublicKeyNotFound": "No public key was found automatically. Please ask your contact for it.",
+  "@contactPublicKeyNotFound": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

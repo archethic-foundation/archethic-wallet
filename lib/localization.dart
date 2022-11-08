@@ -421,6 +421,12 @@ class AppLocalization {
         name: 'contactExistsAddress');
   }
 
+  String get contactPublicKeyNotFound {
+    return Intl.message(
+        'No public key was found automatically. Please ask your contact for it.',
+        name: 'contactPublicKeyNotFound');
+  }
+
   String get transferSuccess {
     return Intl.message('The transaction was sent successfully',
         name: 'transferSuccess');
