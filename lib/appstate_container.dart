@@ -47,9 +47,6 @@ class StateContainer extends ConsumerStatefulWidget {
 }
 
 class StateContainerState extends ConsumerState<StateContainer> {
-  Price? price;
-  bool recentTransactionsLoading = false;
-
   ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1h';
   int bottomBarCurrentPage = 1;
@@ -120,9 +117,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
     ref.read(AccountProviders.selectedAccount)!.balance!.tokenPrice =
         tokenPrice;
     appWallet.save();
-    setState(() {
-      price = tokenPrice;
-    });
     await chartInfos!.updateCoinsChart(
       currency.currency.name,
       option: idChartOption!,
@@ -146,16 +140,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
     final selectedAccount = ref.read(AccountProviders.selectedAccount);
     if (selectedAccount == null) return;
 
-    setState(() {
-      recentTransactionsLoading = true;
-    });
-
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
-
-    // TODO(Chralu): SessionProviders.recentTransaction should automatically refresh.
-    setState(() {
-      recentTransactionsLoading = false;
-    });
 
     final preferences = ref.read(SettingsProviders.settings);
     if (forceUpdateChart && preferences.showPriceChart) {
