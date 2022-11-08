@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-05T22:17:28.070392",
+  "@@last_modified": "2022-11-08T21:54:23.296894",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -366,6 +366,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "contactPublicKeyGetAuto": "The public key associated with this address has been recovered: ",
+  "@contactPublicKeyGetAuto": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "removeContact": "Remove Contact",
   "@removeContact": {
     "type": "text",
@@ -614,6 +620,12 @@
   },
   "enterAddress": "Enter Address",
   "@enterAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterPublicKey": "Enter Public Key",
+  "@enterPublicKey": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2336,6 +2348,12 @@
   },
   "propertyAccessDescription": "Add or remove public keys that can access this property.",
   "@propertyAccessDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "propertyAccessDescriptionReadOnly": "The following list contains the public keys that can access this element.",
+  "@propertyAccessDescriptionReadOnly": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

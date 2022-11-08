@@ -342,6 +342,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "enterPublicKey": "Enter Public Key",
+  "@enterPublicKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "invalidAddress": "Address entered is invalid",
   "@invalidAddress": {
     "type": "text",
@@ -1488,6 +1494,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "contactPublicKeyGetAuto": "The public key associated with this address has been recovered: ",
+  "@contactPublicKeyGetAuto": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "seYubicloudConfirmHeader": "Please, confirm your client identity and client API key.",
   "@seYubicloudConfirmHeader": {
     "type": "text",
@@ -2240,6 +2252,12 @@
   },
   "propertyAccessDescription": "Add or remove public keys that can access this property.",
   "@propertyAccessDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "propertyAccessDescriptionReadOnly": "The following list contains the public keys that can access this element.",
+  "@propertyAccessDescriptionReadOnly": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
