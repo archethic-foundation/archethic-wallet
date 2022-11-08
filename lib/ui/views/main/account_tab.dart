@@ -7,7 +7,7 @@ import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
-import 'package:aewallet/ui/views/home_page_universe.dart';
+import 'package:aewallet/ui/views/home_page.dart';
 import 'package:aewallet/ui/views/main/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
