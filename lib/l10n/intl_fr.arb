@@ -292,6 +292,7 @@
 	"blogHeader": "Le blog d'Archethic",
 	"contactExistsName": "Vous possédez déjà un contact avec ce nom",
 	"contactExistsAddress": "Vous possédez déjà un contact avec cette adresse",
+	"contactPublicKeyNotFound": "Aucune clé publique n'a été trouvée automatiquement. Veuillez la demander à votre contact.",
 	"keychainHeader": "Porte-clés",
 	"newAccount": "Nouveau compte",
 	"addAccount": "Ajout d'un compte",

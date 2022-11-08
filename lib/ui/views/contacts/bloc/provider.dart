@@ -49,8 +49,10 @@ class ContactCreationFormNotifier
     if (publicKey != null) {
       state = state.copyWith(publicKeyRecovered: publicKey);
     } else {
-      state =
-          state.copyWith(publicKeyRecovered: '', error: 'Public key not found');
+      state = state.copyWith(
+        publicKeyRecovered: '',
+        error: AppLocalization.of(context)!.contactPublicKeyNotFound,
+      );
     }
   }
 
