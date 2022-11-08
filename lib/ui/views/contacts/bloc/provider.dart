@@ -42,17 +42,19 @@ class ContactCreationFormNotifier
   Future<void> setAddress(String address, BuildContext context) async {
     state = state.copyWith(address: address, error: '');
 
-    final publicKey = (await sl
-            .get<ApiService>()
-            .getLastTransaction(address, request: 'previousPublicKey'))
-        .previousPublicKey;
-    if (publicKey != null) {
-      state = state.copyWith(publicKeyRecovered: publicKey);
-    } else {
-      state = state.copyWith(
-        publicKeyRecovered: '',
-        error: AppLocalization.of(context)!.contactPublicKeyNotFound,
-      );
+    if (Address(address).isValid) {
+      final publicKey = (await sl
+              .get<ApiService>()
+              .getLastTransaction(address, request: 'previousPublicKey'))
+          .previousPublicKey;
+      if (publicKey != null) {
+        state = state.copyWith(publicKeyRecovered: publicKey);
+      } else {
+        state = state.copyWith(
+          publicKeyRecovered: '',
+          error: AppLocalization.of(context)!.contactPublicKeyNotFound,
+        );
+      }
     }
   }
 
@@ -114,6 +116,7 @@ class ContactCreationFormNotifier
       );
       return false;
     }
+    state = state.copyWith(error: '');
     return true;
   }
 }
