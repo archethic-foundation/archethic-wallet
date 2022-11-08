@@ -94,11 +94,7 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
       setState(() {
-        StateContainer.of(context).recentTransactionsLoading = true;
-
         StateContainer.of(context).requestUpdate();
-
-        StateContainer.of(context).recentTransactionsLoading = false;
       });
 
       if (event.delayPop) {
@@ -113,11 +109,8 @@ class _AppHomePageUniverseState extends ConsumerState<AppHomePageUniverse>
     _notificationsSub = EventTaxiImpl.singleton()
         .registerTo<NotificationsEvent>()
         .listen((NotificationsEvent event) async {
-      StateContainer.of(context).recentTransactionsLoading = true;
-
       await StateContainer.of(context).requestUpdate();
 
-      StateContainer.of(context).recentTransactionsLoading = false;
       Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
     });
   }
