@@ -60,7 +60,7 @@ class NFTTab extends ConsumerWidget {
                   );
               await ref
                   .read(AccountProviders.selectedAccount.notifier)
-                  .updateNonFungibleTokens();
+                  .refreshNFTs();
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

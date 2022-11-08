@@ -135,7 +135,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
     ref
         .read(AccountProviders.selectedAccount.notifier)
-        .updateRecentTransactions();
+        .refreshRecentTransactions();
 
     // TODO(reddwarf03): ensure that reload is not necessary
     // setState(() {

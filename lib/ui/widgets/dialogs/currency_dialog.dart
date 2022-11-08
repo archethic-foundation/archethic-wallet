@@ -74,7 +74,7 @@ class CurrencyDialog {
 
                 ref
                     .read(AccountProviders.selectedAccount.notifier)
-                    .updateBalance();
+                    .refreshBalance();
                 accountSelected.balance!.fiatCurrencyCode =
                     currency.currency.name;
                 Navigator.pop(context, value.value);

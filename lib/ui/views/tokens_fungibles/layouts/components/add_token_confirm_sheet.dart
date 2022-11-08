@@ -111,7 +111,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
 
     ref
         .read(AccountProviders.selectedAccount.notifier)
-        .updateRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
+        .refreshRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
     // TODO(reddwarf03): ensure that reload is not necessary
     // setState(() {
     //   StateContainer.of(context).requestUpdate();

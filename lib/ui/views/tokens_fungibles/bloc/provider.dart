@@ -270,7 +270,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         if (confirmation.isFullyConfirmed) {
           ref
               .read(AccountProviders.selectedAccount.notifier)
-              .updateFungibleTokens();
+              .refreshFungibleTokens();
         }
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(

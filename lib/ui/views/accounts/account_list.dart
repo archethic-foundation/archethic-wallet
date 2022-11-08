@@ -355,7 +355,7 @@ class _AccountListItem extends ConsumerWidget {
                 onDisposed: () {
                   ref
                       .read(AccountProviders.selectedAccount.notifier)
-                      .updateRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
+                      .refreshRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
                 },
               );
             },

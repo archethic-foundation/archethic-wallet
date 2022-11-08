@@ -11,23 +11,25 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
     return null;
   }
 
-  Future<void> _update(Future<void> Function(Account account) doUpdate) async {
+  Future<void> _refresh(
+    Future<void> Function(Account account) doRefresh,
+  ) async {
     final account = state;
     if (account == null) return;
     await account.updateLastAddress();
 
-    await doUpdate(account);
+    await doRefresh(account);
 
     state = account.copyWith();
     ref.invalidate(AccountProviders.account(account.name));
   }
 
-  Future<void> _updateRecentTransactions(Account account) async {
+  Future<void> _refreshRecentTransactions(Account account) async {
     final session = ref.read(SessionProviders.session).loggedIn!;
     await account.updateRecentTransactions(session.wallet.seed);
   }
 
-  Future<void> _updateBalance(Account account) async {
+  Future<void> _refreshBalance(Account account) async {
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
     final tokenPrice = await Price.getCurrency(
       selectedCurrency.currency.name,
@@ -38,43 +40,26 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
     );
   }
 
-  Future<void> updateRecentTransactions() => _update(
+  Future<void> refreshRecentTransactions() => _refresh(
         (account) async {
-          await account.updateLastAddress();
-
-          await _updateRecentTransactions(account);
-          await _updateBalance(account);
+          await _refreshRecentTransactions(account);
+          await _refreshBalance(account);
         },
       );
 
-  Future<void> updateFungibleTokens() => _update(
+  Future<void> refreshFungibleTokens() => _refresh(
         (account) async {
-          await account.updateLastAddress();
           await account.updateFungiblesTokens();
-          await _updateBalance(account);
+          await _refreshBalance(account);
         },
       );
 
-  Future<void> updateNonFungibleTokens() => _update(
+  Future<void> refreshNFTs() => _refresh(
         (account) async {
-          await account.updateLastAddress();
           await account.updateNFT();
-          await _updateBalance(account);
+          await _refreshBalance(account);
         },
       );
 
-  Future<void> updateNft({
-    required String tokenAddress,
-    required int categoryIndex,
-  }) =>
-      _update(
-        (account) async {
-          await account.updateNftInfosOffChain(
-            tokenAddress: tokenAddress,
-            categoryNftIndex: categoryIndex,
-          );
-        },
-      );
-
-  Future<void> updateBalance() => _update(_updateBalance);
+  Future<void> refreshBalance() => _refresh(_refreshBalance);
 }
