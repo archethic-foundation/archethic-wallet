@@ -5,14 +5,10 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -94,17 +90,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
       currency.currency.name,
       option: idChartOption!,
     );
-  }
-
-  // Change theme
-  Future<void> updateTheme(ThemeSetting theme) async {
-    final currency = ref.read(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
-
-    if (preferences.showPriceChart && chartInfos != null) {
-      await chartInfos!
-          .updateCoinsChart(currency.currency.name, option: idChartOption!);
-    }
   }
 
   Future<void> requestUpdate({

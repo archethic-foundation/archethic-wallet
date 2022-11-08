@@ -1,9 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math';
 
-// Project imports:
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -53,9 +51,9 @@ class ThemeDialog {
                 final selectedThemeSettings =
                     ThemeSetting(value.value as ThemeOptions);
                 if (curThemeSetting != selectedThemeSettings) {
-                  preferences.setTheme(selectedThemeSettings);
-                  await StateContainer.of(context)
-                      .updateTheme(selectedThemeSettings);
+                  ref
+                      .read(ThemeProviders.selectedThemeOption.notifier)
+                      .selectTheme(selectedThemeSettings.theme);
                 }
                 Navigator.pop(context, selectedThemeSettings);
               },
