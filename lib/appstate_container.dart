@@ -78,27 +78,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
     super.dispose();
   }
 
-  Future<List<Token>> getTokenFungibles() async {
-    final tokensFungibles = <Token>[];
-    final transactions = await sl
-        .get<ApiService>()
-        .networkTransactions('token', 1, request: 'address, data { content }');
-
-    for (final transaction in transactions) {
-      final token = tokenFromJson(transaction.data!.content!);
-      tokensFungibles.add(
-        Token(
-          address: transaction.address,
-          name: token.name,
-          supply: token.supply,
-          type: 'fungible',
-          symbol: token.symbol,
-        ),
-      );
-    }
-    return tokensFungibles;
-  }
-
   // Change currency
   Future<void> updateCurrency() async {
     final appWallet = ref.read(SessionProviders.session).loggedIn?.wallet;
