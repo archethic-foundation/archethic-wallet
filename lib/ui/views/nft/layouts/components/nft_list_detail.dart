@@ -62,13 +62,14 @@ class NFTListDetail extends ConsumerWidget {
                   NFTDetail(tokenInformations: tokenInformations, index: index),
             );
           },
-          onLongPressEnd: (details) {
+          // TODO(reddwarf03): Finish this feature
+          /*onLongPressEnd: (details) {
             NFTListDetailPopup.getPopup(
               context,
               ref,
               details,
             );
-          },
+          },*/
           child: Card(
             elevation: 5,
             shadowColor: Colors.black,
