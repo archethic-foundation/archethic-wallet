@@ -133,7 +133,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: NFTCreationProcessAccessLabel(
-                      publicKeysLength: fileProperty[0].publicKeys.length),
+                      publicKeysLength: fileProperty[0].publicKeys.length,),
                 ),
               ),
             ],
