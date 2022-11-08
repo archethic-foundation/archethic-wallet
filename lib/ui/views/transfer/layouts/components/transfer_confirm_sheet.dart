@@ -2,9 +2,11 @@
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
+// Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
@@ -125,15 +127,20 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
             request: 'id',
           );
-      StateContainer.of(context)
-          .appWallet!
-          .appKeychain
-          .getAccountSelected()!
+
+      await ref
+          .read(AccountProviders.selectedAccount)!
           .removeftInfosOffChain(token.id);
     }
-    setState(() {
-      StateContainer.of(context).requestUpdate();
-    });
+
+    ref
+        .read(AccountProviders.selectedAccount.notifier)
+        .refreshRecentTransactions();
+
+    // TODO(reddwarf03): ensure that reload is not necessary
+    // setState(() {
+    //   StateContainer.of(context).requestUpdate();
+    // });
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
   }
 

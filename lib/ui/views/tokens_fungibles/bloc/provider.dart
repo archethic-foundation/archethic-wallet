@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction.dart';
+import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
@@ -29,7 +29,7 @@ final _addTokenFormProvider =
   },
   dependencies: [
     AddTokenFormProvider.initialAddTokenForm,
-    AccountProviders.getSelectedAccount,
+    AccountProviders.selectedAccount,
     AddTokenFormProvider._repository,
   ],
 );
@@ -102,14 +102,14 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     required AddTokenFormState formState,
   }) async {
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     late Transaction transaction;
 
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount!.name!,
+        accountSelectedName: selectedAccount!.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
@@ -247,7 +247,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     final localizations = AppLocalization.of(context)!;
 
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     late Transaction transaction;
@@ -257,7 +257,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         name: state.name,
         symbol: state.symbol,
         initialSupply: state.initialSupply,
-        accountSelectedName: selectedAccount!.name!,
+        accountSelectedName: selectedAccount!.name,
         seed: state.seed,
         type: 'fungible',
         properties: {},
@@ -267,6 +267,11 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
+        if (confirmation.isFullyConfirmed) {
+          ref
+              .read(AccountProviders.selectedAccount.notifier)
+              .refreshFungibleTokens();
+        }
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
             transactionType: TransactionSendEventType.token,
@@ -335,7 +340,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 }
 
 abstract class AddTokenFormProvider {
-  static final _repository = Provider<TransactionRepositoryInterface>(
+  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
     (ref) {
       final networkSettings = ref
           .watch(

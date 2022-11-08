@@ -21,7 +21,7 @@ mixin _$Settings {
   AvailablePrimaryCurrency get primaryCurrency =>
       throw _privateConstructorUsedError;
   AvailableLanguage get language => throw _privateConstructorUsedError;
-  AvailableNetworks get networks => throw _privateConstructorUsedError;
+  NetworksSetting get network => throw _privateConstructorUsedError;
   String get languageSeed => throw _privateConstructorUsedError;
   bool get firstLaunch =>
       throw _privateConstructorUsedError; // required bool pinPadShuffle,
@@ -53,7 +53,7 @@ abstract class $SettingsCopyWith<$Res> {
       {AvailableCurrencyEnum currency,
       AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
-      AvailableNetworks networks,
+      NetworksSetting network,
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
@@ -85,7 +85,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? currency = null,
     Object? primaryCurrency = null,
     Object? language = null,
-    Object? networks = null,
+    Object? network = null,
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
@@ -113,10 +113,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as AvailableLanguage,
-      networks: null == networks
-          ? _value.networks
-          : networks // ignore: cast_nullable_to_non_nullable
-              as AvailableNetworks,
+      network: null == network
+          ? _value.network
+          : network // ignore: cast_nullable_to_non_nullable
+              as NetworksSetting,
       languageSeed: null == languageSeed
           ? _value.languageSeed
           : languageSeed // ignore: cast_nullable_to_non_nullable
@@ -184,7 +184,7 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
       {AvailableCurrencyEnum currency,
       AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
-      AvailableNetworks networks,
+      NetworksSetting network,
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
@@ -214,7 +214,7 @@ class __$$_SettingsCopyWithImpl<$Res>
     Object? currency = null,
     Object? primaryCurrency = null,
     Object? language = null,
-    Object? networks = null,
+    Object? network = null,
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
@@ -242,10 +242,10 @@ class __$$_SettingsCopyWithImpl<$Res>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as AvailableLanguage,
-      networks: null == networks
-          ? _value.networks
-          : networks // ignore: cast_nullable_to_non_nullable
-              as AvailableNetworks,
+      network: null == network
+          ? _value.network
+          : network // ignore: cast_nullable_to_non_nullable
+              as NetworksSetting,
       languageSeed: null == languageSeed
           ? _value.languageSeed
           : languageSeed // ignore: cast_nullable_to_non_nullable
@@ -309,7 +309,7 @@ class _$_Settings extends _Settings {
       {required this.currency,
       required this.primaryCurrency,
       required this.language,
-      required this.networks,
+      required this.network,
       required this.languageSeed,
       required this.firstLaunch,
       required this.showBalances,
@@ -333,7 +333,7 @@ class _$_Settings extends _Settings {
   @override
   final AvailableLanguage language;
   @override
-  final AvailableNetworks networks;
+  final NetworksSetting network;
   @override
   final String languageSeed;
   @override
@@ -366,7 +366,7 @@ class _$_Settings extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, networks: $networks, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, lock: $lock, lockTimeout: $lockTimeout, lockAttempts: $lockAttempts, pinLockUntil: $pinLockUntil, theme: $theme)';
+    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, lock: $lock, lockTimeout: $lockTimeout, lockAttempts: $lockAttempts, pinLockUntil: $pinLockUntil, theme: $theme)';
   }
 
   @override
@@ -380,8 +380,7 @@ class _$_Settings extends _Settings {
                 other.primaryCurrency == primaryCurrency) &&
             (identical(other.language, language) ||
                 other.language == language) &&
-            (identical(other.networks, networks) ||
-                other.networks == networks) &&
+            (identical(other.network, network) || other.network == network) &&
             (identical(other.languageSeed, languageSeed) ||
                 other.languageSeed == languageSeed) &&
             (identical(other.firstLaunch, firstLaunch) ||
@@ -414,7 +413,7 @@ class _$_Settings extends _Settings {
       currency,
       primaryCurrency,
       language,
-      networks,
+      network,
       languageSeed,
       firstLaunch,
       showBalances,
@@ -441,7 +440,7 @@ abstract class _Settings extends Settings {
       {required final AvailableCurrencyEnum currency,
       required final AvailablePrimaryCurrency primaryCurrency,
       required final AvailableLanguage language,
-      required final AvailableNetworks networks,
+      required final NetworksSetting network,
       required final String languageSeed,
       required final bool firstLaunch,
       required final bool showBalances,
@@ -464,7 +463,7 @@ abstract class _Settings extends Settings {
   @override
   AvailableLanguage get language;
   @override
-  AvailableNetworks get networks;
+  NetworksSetting get network;
   @override
   String get languageSeed;
   @override

@@ -152,10 +152,8 @@ class _CurrencySettingsListItem extends ConsumerWidget {
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     return _SettingsListItem.withDefaultValueWithInfos(
       heading: localizations.changeCurrencyHeader,
-      info: localizations.changeCurrencyDesc.replaceAll(
-        '%1',
-        StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel(),
-      ),
+      info: localizations.changeCurrencyDesc
+          .replaceAll('%1', AccountBalance.cryptoCurrencyLabel),
       defaultMethod: currency,
       icon: UiIcons.currency,
       onPressed: () => CurrencyDialog.getDialog(context, ref),
@@ -295,14 +293,6 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
       isSwitched: activeNotifications,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveNotifications(isSwitched);
-        if (StateContainer.of(context).timerCheckTransactionInputs != null) {
-          StateContainer.of(context).timerCheckTransactionInputs!.cancel();
-        }
-        if (isSwitched) {
-          StateContainer.of(context).checkTransactionInputs(
-            localizations.transactionInputNotification,
-          );
-        }
       },
     );
   }

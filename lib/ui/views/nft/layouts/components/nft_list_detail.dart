@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
+
+// Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
@@ -158,10 +160,10 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
-    final nftInfosOffChain =
-        accountSelected.getftInfosOffChain(widget.tokenInformations.id);
+    final selectedAccount = ref.read(AccountProviders.selectedAccount)!;
+    final nftInfosOffChain = selectedAccount.getftInfosOffChain(
+      widget.tokenInformations.id,
+    );
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
@@ -197,7 +199,7 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
                           preferences.activeVibrations,
                         );
 
-                    await accountSelected.updateNftInfosOffChainFavorite(
+                    await selectedAccount.updateNftInfosOffChainFavorite(
                       widget.tokenInformations.id,
                     );
                     setState(() {});

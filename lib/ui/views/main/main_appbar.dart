@@ -1,9 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
+
+// Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -34,7 +38,12 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         StateContainer.of(context).bottomBarCurrentPage;
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
-
+    final keychain = ref.watch(
+      SessionProviders.session.select(
+        (value) => value.loggedIn?.wallet.appKeychain,
+      ),
+    );
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
       child: ClipRRect(
@@ -77,11 +86,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           );
                       Clipboard.setData(
                         ClipboardData(
-                          text: StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain
-                              .address
-                              .toUpperCase(),
+                          text: keychain?.address.toUpperCase(),
                         ),
                       );
                       UIUtil.showSnackbar(
@@ -101,11 +106,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain
-                              .getAccountSelected()!
-                              .name!,
+                          selectedAccount?.name ?? ' ',
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )
@@ -181,11 +182,9 @@ class MainAppBarIconNotificationEnabled extends ConsumerWidget {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        if (StateContainer.of(context).timerCheckTransactionInputs != null) {
-          StateContainer.of(context).timerCheckTransactionInputs!.cancel();
-        }
-        final preferencesNotifier =
-            ref.read(SettingsProviders.settings.notifier);
+        final preferencesNotifier = ref.read(
+          SettingsProviders.settings.notifier,
+        );
         await preferencesNotifier.setActiveNotifications(false);
       },
     );
@@ -206,12 +205,6 @@ class MainAppBarIconNotificationDisabled extends ConsumerWidget {
               preferences.activeVibrations,
             );
 
-        if (StateContainer.of(context).timerCheckTransactionInputs != null) {
-          StateContainer.of(context).timerCheckTransactionInputs!.cancel();
-        }
-        StateContainer.of(context).checkTransactionInputs(
-          AppLocalization.of(context)!.transactionInputNotification,
-        );
         final preferencesNotifier =
             ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setActiveNotifications(true);

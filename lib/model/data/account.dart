@@ -17,8 +17,8 @@ part 'account.g.dart';
 @HiveType(typeId: 1)
 class Account extends HiveObject {
   Account({
-    this.name,
-    this.genesisAddress,
+    required this.name,
+    required this.genesisAddress,
     this.lastLoadingTransactionInputs,
     this.selected = false,
     this.lastAddress,
@@ -26,15 +26,45 @@ class Account extends HiveObject {
     this.recentTransactions,
     this.accountTokens,
     this.accountNFT,
+    this.nftInfosOffChainList,
+    this.nftCategoryList,
   });
+
+  Account copyWith({
+    String? name,
+    String? genesisAddress,
+    int? lastLoadingTransactionInputs,
+    bool? selected,
+    String? lastAddress,
+    AccountBalance? balance,
+    List<RecentTransaction>? recentTransactions,
+    List<AccountToken>? accountTokens,
+    List<AccountToken>? accountNFT,
+    List<NftInfosOffChain>? nftInfosOffChainList,
+    List<int>? nftCategoryList,
+  }) =>
+      Account(
+        name: name ?? this.name,
+        genesisAddress: genesisAddress ?? this.genesisAddress,
+        lastLoadingTransactionInputs:
+            lastLoadingTransactionInputs ?? this.lastLoadingTransactionInputs,
+        selected: selected ?? this.selected,
+        lastAddress: lastAddress ?? this.lastAddress,
+        balance: balance ?? this.balance,
+        recentTransactions: recentTransactions ?? this.recentTransactions,
+        accountTokens: accountTokens ?? this.accountTokens,
+        accountNFT: accountNFT ?? this.accountNFT,
+        nftInfosOffChainList: nftInfosOffChainList ?? this.nftInfosOffChainList,
+        nftCategoryList: nftCategoryList ?? this.nftCategoryList,
+      );
 
   /// Account name - Primary Key
   @HiveField(0)
-  String? name;
+  final String name;
 
   /// Genesis Address
   @HiveField(1)
-  String? genesisAddress;
+  final String genesisAddress;
 
   /// Last loading of transaction inputs
   @HiveField(2)
@@ -74,9 +104,9 @@ class Account extends HiveObject {
 
   Future<void> updateLastAddress() async {
     final lastAddressFromAddress =
-        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
+        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
     lastAddress =
-        lastAddressFromAddress == '' ? genesisAddress! : lastAddressFromAddress;
+        lastAddressFromAddress == '' ? genesisAddress : lastAddressFromAddress;
     await updateAccount();
   }
 
@@ -124,7 +154,6 @@ class Account extends HiveObject {
   }
 
   Future<void> updateBalance(
-    String tokenName,
     String fiatCurrencyCode,
     Price price,
   ) async {
@@ -135,7 +164,7 @@ class Account extends HiveObject {
       fiatCurrencyValue = fromBigInt(balanceGetResponse.uco) * price.amount!;
     }
     final accountBalance = AccountBalance(
-      nativeTokenName: tokenName,
+      nativeTokenName: AccountBalance.cryptoCurrencyLabel,
       nativeTokenValue: balanceGetResponse.uco == null
           ? 0
           : fromBigInt(balanceGetResponse.uco).toDouble(),
@@ -154,12 +183,11 @@ class Account extends HiveObject {
   }
 
   Future<void> updateRecentTransactions(
-    String pagingAddress,
     String seed,
   ) async {
     recentTransactions = await sl
         .get<AppService>()
-        .getRecentTransactions(genesisAddress!, lastAddress!, seed, name!);
+        .getRecentTransactions(genesisAddress, lastAddress!, seed, name);
     await updateLastLoadingTransactionInputs();
     await updateAccount();
   }

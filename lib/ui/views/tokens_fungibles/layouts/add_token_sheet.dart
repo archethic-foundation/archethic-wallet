@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
@@ -20,7 +20,7 @@ class AddTokenSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref.watch(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     // The main column that holds everything

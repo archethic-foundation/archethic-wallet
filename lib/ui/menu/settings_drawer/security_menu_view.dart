@@ -139,7 +139,10 @@ class SecurityMenuView extends ConsumerWidget {
                                           .selectedThemeOption.notifier,
                                     )
                                     .selectTheme(ThemeOptions.dark);
-                                await StateContainer.of(context).logOut();
+
+                                ref
+                                    .read(SessionProviders.session.notifier)
+                                    .logout();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                   '/',
                                   (Route<dynamic> route) => false,
@@ -320,7 +323,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
-          final seed = await StateContainer.of(context).getSeed();
+          final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
           final mnemonic = AppMnemomics.seedToMnemonic(
             seed!,
             languageCode: preferences.languageSeed,

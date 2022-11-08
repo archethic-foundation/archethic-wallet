@@ -1,8 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -57,7 +56,7 @@ class FeeInfos extends ConsumerWidget {
         data: (data) {
           if (data > 0) {
             return Text(
-              '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(data, StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel())}\n(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currencyName, tokenPrice, feeEstimation.valueOrNull ?? 0, 8)})',
+              '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(data, AccountBalance.cryptoCurrencyLabel)}\n(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currencyName, tokenPrice, feeEstimation.valueOrNull ?? 0, 8)})',
               style: theme.textStyleSize14W100Primary,
               textAlign: TextAlign.center,
             );

@@ -1,13 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -42,7 +43,6 @@ part 'components/transfer_textfield_message.dart';
 
 class TransferSheet extends ConsumerWidget {
   const TransferSheet({
-    required this.seed,
     required this.transferType,
     required this.recipient,
     this.actionButtonTitle,
@@ -54,13 +54,14 @@ class TransferSheet extends ConsumerWidget {
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final TransferType transferType;
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref.watch(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
+
+    final seed = ref.watch(SessionProviders.session).loggedIn!.wallet.seed;
 
     // The main column that holds everything
     return ProviderScope(
@@ -130,9 +131,7 @@ class TransferSheetBody extends ConsumerWidget {
         case TransferType.uco:
           return localizations.transferTokens.replaceAll(
             '%1',
-            StateContainer.of(context)
-                .curNetwork
-                .getNetworkCryptoCurrencyLabel(),
+            AccountBalance.cryptoCurrencyLabel,
           );
         case TransferType.token:
           return localizations.transferTokens.replaceAll(

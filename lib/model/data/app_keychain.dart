@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:hive/hive.dart';
 
 part 'app_keychain.g.dart';
@@ -33,10 +31,6 @@ class AppKeychain extends HiveObject {
       }
     }
     return null;
-  }
-
-  Future<void> setAccountSelected(Account accountToSelected) async {
-    await sl.get<DBHelper>().changeAccount(accountToSelected);
   }
 
   Account? getAccount(Account accountToSelected) {

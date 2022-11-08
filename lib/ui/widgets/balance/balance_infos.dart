@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
@@ -34,15 +35,15 @@ class BalanceInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain
-        .getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = ref.watch(
+      AccountProviders.selectedAccount.select((value) => value?.balance),
+    );
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
+    if (accountSelectedBalance == null) return const SizedBox();
 
     return GestureDetector(
       child: SizedBox(
@@ -65,15 +66,13 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel(),
+                                AccountBalance.cryptoCurrencyLabel,
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
                             if (preferences.showBalances)
                               _BalanceInfosNativeShowed(
-                                accountSelectedBalance: accountSelectedBalance!,
+                                accountSelectedBalance: accountSelectedBalance,
                               )
                             else
                               const _BalanceInfosNotShowed()
@@ -91,7 +90,7 @@ class BalanceInfos extends ConsumerWidget {
                             ),
                             if (preferences.showBalances)
                               _BalanceInfosFiatShowed(
-                                accountSelectedBalance: accountSelectedBalance!,
+                                accountSelectedBalance: accountSelectedBalance,
                               )
                             else
                               const _BalanceInfosNotShowed()
@@ -104,9 +103,13 @@ class BalanceInfos extends ConsumerWidget {
         ),
       ),
       onTapDown: (details) {
-        if (accountSelectedBalance!.fiatCurrencyValue! > 0) {
+        if (accountSelectedBalance.fiatCurrencyValue! > 0) {
           BalanceInfosPopup.getPopup(
-              context, ref, details, accountSelectedBalance,);
+            context,
+            ref,
+            details,
+            accountSelectedBalance,
+          );
         }
       },
     );
@@ -134,7 +137,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
             currency.currency.name,
-            accountSelectedBalance.fiatCurrencyValue!,
+            accountSelectedBalance.fiatCurrencyValue ?? 0,
           ),
           textAlign: TextAlign.center,
           style: theme.textStyleSize12W600Primary,

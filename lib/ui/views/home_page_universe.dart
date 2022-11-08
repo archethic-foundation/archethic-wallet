@@ -5,6 +5,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
@@ -269,6 +270,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final session = ref.watch(SessionProviders.session).loggedIn!;
     return Column(
       children: [
         Container(
@@ -337,7 +339,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                       context: context,
                       ref: ref,
                       widget: AddTokenSheet(
-                        seed: (await StateContainer.of(context).getSeed())!,
+                        seed: session.wallet.seed,
                       ),
                     );
                   },

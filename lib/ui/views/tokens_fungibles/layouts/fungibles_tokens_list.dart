@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -22,31 +22,34 @@ class FungiblesTokensListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final accountTokens = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!
-        .accountTokens;
+    final fungibleTokensAsyncValue = ref.watch(
+          AccountProviders.selectedAccount
+              .select((value) => value?.accountTokens),
+        ) ??
+        [];
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    if (fungibleTokensAsyncValue.isEmpty == true) {
+      return Container(
+        alignment: Alignment.center,
+        color: Colors.transparent,
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 26),
+          child: Text(
+            localizations.fungiblesTokensListNoTokenYet,
+            style: theme.textStyleSize14W600Primary,
+          ),
+        ),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (accountTokens!.isEmpty)
-          Container(
-            alignment: Alignment.center,
-            color: Colors.transparent,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 26),
-              child: Text(
-                localizations.fungiblesTokensListNoTokenYet,
-                style: theme.textStyleSize14W600Primary,
-              ),
-            ),
-          ),
-        for (int i = 0; i < accountTokens.length; i++)
+        for (final accountToken in fungibleTokensAsyncValue)
           _FungiblesTokensLine(
-            num: i,
-            accountTokens: accountTokens,
+            accountToken: accountToken,
           )
       ],
     );
@@ -54,10 +57,11 @@ class FungiblesTokensListWidget extends ConsumerWidget {
 }
 
 class _FungiblesTokensLine extends StatelessWidget {
-  const _FungiblesTokensLine({required this.num, required this.accountTokens});
+  const _FungiblesTokensLine({
+    required this.accountToken,
+  });
 
-  final int num;
-  final List<AccountToken> accountTokens;
+  final AccountToken accountToken;
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +70,9 @@ class _FungiblesTokensLine extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-        child: (accountTokens.isNotEmpty && accountTokens.length > num) ||
-                (StateContainer.of(context).recentTransactionsLoading == true &&
-                    accountTokens.length > num)
-            ? _FungiblesTokensDetailTransfer(
-                accountFungibleToken: accountTokens[num],
-              )
-            : const SizedBox(),
+        child: _FungiblesTokensDetailTransfer(
+          accountFungibleToken: accountToken,
+        ),
       ),
     );
   }
@@ -143,8 +143,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                               ref: ref,
                               widget: TransferSheet(
                                 transferType: TransferType.token,
-                                seed: (await StateContainer.of(context)
-                                    .getSeed())!,
                                 accountToken: accountFungibleToken,
                                 recipient: const TransferRecipient.address(
                                   address: Address(''),

@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -25,12 +25,11 @@ class ContactsDialog {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     var contacts = await StateContainer.of(context).getContacts();
     final accountSelected = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     for (final contact in contacts) {
-      if (contact.format.toUpperCase() !=
-          accountSelected!.name!.toUpperCase()) {
+      if (contact.format.toUpperCase() != accountSelected!.name.toUpperCase()) {
         pickerItemsList.add(
           PickerItem(
             contact.name.substring(1),
@@ -81,7 +80,7 @@ class ContactsDialog {
                       contacts.removeWhere(
                         (element) =>
                             element.format.toUpperCase() ==
-                            accountSelected!.name!.toUpperCase(),
+                            accountSelected!.name.toUpperCase(),
                       );
                       setState(
                         () {

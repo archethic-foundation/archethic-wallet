@@ -19,7 +19,7 @@ class AppWallet extends HiveObject {
   });
 
   /// Seed
-  @HiveField(0)
+  // @HiveField(0) // TODO(reddwarf03): seed is only stored in Vault
   String seed;
 
   /// Keychain
@@ -27,12 +27,12 @@ class AppWallet extends HiveObject {
   AppKeychain appKeychain;
 
   static Future<AppWallet> createNewAppWallet(
+    String seed,
     String keychainAddress,
     Keychain keychain,
     String? name,
   ) async {
     Account? selectedAcct;
-    const seed = '';
 
     var appWallet =
         await sl.get<DBHelper>().createAppWallet(seed, keychainAddress);
@@ -51,7 +51,7 @@ class AppWallet extends HiveObject {
       balance: AccountBalance(
         fiatCurrencyCode: '',
         fiatCurrencyValue: 0,
-        nativeTokenName: '',
+        nativeTokenName: AccountBalance.cryptoCurrencyLabel,
         nativeTokenValue: 0,
       ),
       selected: true,
@@ -70,4 +70,13 @@ class AppWallet extends HiveObject {
 
     return appWallet;
   }
+
+  AppWallet copyWith({
+    AppKeychain? appKeychain,
+    String? seed,
+  }) =>
+      AppWallet(
+        appKeychain: appKeychain ?? this.appKeychain,
+        seed: seed ?? this.seed,
+      );
 }

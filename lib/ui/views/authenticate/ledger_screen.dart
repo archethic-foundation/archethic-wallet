@@ -2,8 +2,9 @@
 import 'dart:developer';
 
 // Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -122,83 +123,12 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                           ),
                           if (kIsWeb)
                             method == 'getPubKey'
-                                ? ElevatedButton(
-                                    child: Text(
-                                      'Ledger - Get Public Key',
-                                      style: theme.textStyleSize16W200Primary,
-                                    ),
-                                    onPressed: () async {
-                                      method = 'getPubKey';
-                                      await sl
-                                          .get<LedgerNanoSImpl>()
-                                          .connectLedger(getPubKeyAPDU());
-                                    },
-                                  )
+                                ? const _GetPublicKeyButton()
                                 : method == 'signTxn'
-                                    ? ElevatedButton(
-                                        child: Text(
-                                          'Ledger - Verify transaction',
-                                          style:
-                                              theme.textStyleSize16W200Primary,
-                                        ),
-                                        onPressed: () async {
-                                          const addressIndex = '';
-
-                                          /*String addressIndex =
-                                                StateContainer.of(context)
-                                                    .selectedAccount
-                                                    .index!
-                                                    .toRadixString(16)
-                                                    .padLeft(8, '0');*/
-                                          final transaction = Transaction(
-                                            type: 'transfer',
-                                            data: Transaction.initData(),
-                                          );
-                                          for (final transfer
-                                              in widget.ucoTransferList!) {
-                                            transaction.addUCOTransfer(
-                                              transfer.to,
-                                              transfer.amount!,
-                                            );
-                                          }
-                                          final lastTransaction = await sl
-                                              .get<ApiService>()
-                                              .getLastTransaction(
-                                                StateContainer.of(
-                                                  context,
-                                                )
-                                                    .appWallet!
-                                                    .appKeychain.getAccountSelected()!
-                                                    .lastAddress!,
-                                                request: 'chainLength',
-                                              );
-                                          final transactionChainSeed =
-                                              await StateContainer.of(context)
-                                                  .getSeed();
-                                          final originPrivateKey = sl
-                                              .get<ApiService>()
-                                              .getOriginKey();
-                                          transaction
-                                              .build(
-                                                transactionChainSeed!,
-                                                lastTransaction.chainLength!,
-                                              )
-                                              .originSign(originPrivateKey);
-                                          final onChainWalletData =
-                                              walletEncoder(originPubKey);
-
-                                          const hashType = 0;
-                                          final signTxn = getSignTxnAPDU(
-                                            onChainWalletData,
-                                            transaction,
-                                            hashType,
-                                            int.tryParse(addressIndex)!,
-                                          );
-                                          log('signTxn:${uint8ListToHex(signTxn)}');
-                                          await sl
-                                              .get<LedgerNanoSImpl>()
-                                              .connectLedger(signTxn);
-                                        },
+                                    ? _SignTransactionButton(
+                                        ucoTransferList: widget.ucoTransferList,
+                                        ref: ref,
+                                        originPubKey: originPubKey,
                                       )
                                     : const SizedBox()
                           else
@@ -213,6 +143,94 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SignTransactionButton extends StatelessWidget {
+  const _SignTransactionButton({
+    required this.ucoTransferList,
+    required this.ref,
+    required this.originPubKey,
+  });
+
+  final List<UCOTransfer>? ucoTransferList;
+
+  final WidgetRef ref;
+  final String originPubKey;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+    return ElevatedButton(
+      child: Text(
+        'Ledger - Verify transaction',
+        style: theme.textStyleSize16W200Primary,
+      ),
+      onPressed: () async {
+        const addressIndex = '';
+
+        /*String addressIndex =
+                StateContainer.of(context)
+                    .selectedAccount
+                    .index!
+                    .toRadixString(16)
+                    .padLeft(8, '0');*/
+        final transaction = Transaction(
+          type: 'transfer',
+          data: Transaction.initData(),
+        );
+        for (final transfer in ucoTransferList!) {
+          transaction.addUCOTransfer(
+            transfer.to,
+            transfer.amount!,
+          );
+        }
+        final lastTransaction = await sl.get<ApiService>().getLastTransaction(
+              selectedAccount!.lastAddress!,
+              request: 'chainLength',
+            );
+        final transactionChainSeed =
+            ref.read(SessionProviders.session).loggedIn?.wallet.seed;
+        final originPrivateKey = sl.get<ApiService>().getOriginKey();
+        transaction
+            .build(
+              transactionChainSeed!,
+              lastTransaction.chainLength!,
+            )
+            .originSign(originPrivateKey);
+        final onChainWalletData = walletEncoder(originPubKey);
+
+        const hashType = 0;
+        final signTxn = getSignTxnAPDU(
+          onChainWalletData,
+          transaction,
+          hashType,
+          int.tryParse(addressIndex)!,
+        );
+        log('signTxn:${uint8ListToHex(signTxn)}');
+        await sl.get<LedgerNanoSImpl>().connectLedger(signTxn);
+      },
+    );
+  }
+}
+
+class _GetPublicKeyButton extends ConsumerWidget {
+  const _GetPublicKeyButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return ElevatedButton(
+      child: Text(
+        'Ledger - Get Public Key',
+        style: theme.textStyleSize16W200Primary,
+      ),
+      onPressed: () async {
+        await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());
+      },
     );
   }
 }

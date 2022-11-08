@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,6 +36,5 @@ class AddTokenFormState with _$AddTokenFormState {
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
-  String symbolFees(BuildContext context) =>
-      StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
+  String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 }

@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -82,7 +82,7 @@ class SelectedPrimaryCurrencyNotifier
       );
       return localCurrencyFormat.format(amountConverted);
     } else {
-      return '${amountConverted.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}';
+      return '${amountConverted.toStringAsFixed(8)} ${AccountBalance.cryptoCurrencyLabel}';
     }
   }
 }

@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
@@ -18,13 +18,16 @@ class NftCategoryMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected =
-        ref.read(AccountProviders.getSelectedAccount(context: context));
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
     final preferences = ref.watch(SettingsProviders.settings);
+
+    if (selectedAccount == null) {
+      return const SliverToBoxAdapter();
+    }
     final nftCategories = ref.watch(
       NftCategoryProviders.fetchNftCategory(
         context: context,
-        account: accountSelected!,
+        account: selectedAccount,
       ),
     );
 
@@ -42,7 +45,7 @@ class NftCategoryMenu extends ConsumerWidget {
             var count = 0;
             count = ref.read(
               NftCategoryProviders.getNbNFTInCategory(
-                account: accountSelected,
+                account: selectedAccount,
                 categoryNftIndex: nftCategories[index].id,
               ),
             );

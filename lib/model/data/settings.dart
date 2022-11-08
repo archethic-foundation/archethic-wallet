@@ -16,7 +16,7 @@ class Settings with _$Settings {
     required AvailableCurrencyEnum currency,
     required AvailablePrimaryCurrency primaryCurrency,
     required AvailableLanguage language,
-    required AvailableNetworks networks,
+    required NetworksSetting network,
     required String languageSeed,
     required bool firstLaunch,
     // required bool pinPadShuffle,

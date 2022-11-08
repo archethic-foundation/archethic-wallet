@@ -1,3 +1,6 @@
+// Flutter imports:
+// Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
@@ -6,8 +9,6 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -23,7 +24,6 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -32,52 +32,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListWidget extends ConsumerStatefulWidget {
-  const AccountsListWidget({super.key, this.currencyName, this.appWallet});
+class AccountsListWidget extends ConsumerWidget {
+  const AccountsListWidget({
+    super.key,
+    this.currencyName,
+  });
   final String? currencyName;
-  final AppWallet? appWallet;
-
-  @override
-  ConsumerState<AccountsListWidget> createState() => _AccountsListWidgetState();
-}
-
-class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
   static const int kMaxAccounts = 50;
-  final GlobalKey expandedKey = GlobalKey();
-  bool? isPressed;
-  bool? animationOpen;
-  AppWallet? appWalletLive;
 
   @override
-  void initState() {
-    super.initState();
-    isPressed = false;
-    animationOpen = false;
-    appWalletLive = widget.appWallet;
-    appWalletLive!.appKeychain.accounts
-        .sort((a, b) => a.name!.compareTo(b.name!));
-  }
-
-  Future<void> _changeAccount(Account account, StateSetter setState) async {
-    for (final a in appWalletLive!.appKeychain.accounts) {
-      if (a.selected!) {
-        setState(() {
-          a.selected = false;
-        });
-      } else if (account.name == a.name) {
-        setState(() {
-          a.selected = true;
-        });
-      }
-    }
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final accounts = ref.watch(AccountProviders.sortedAccounts).valueOrNull ??
+        []; // TODO(Chralu): show a loading screen ?
     return Container(
-      key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
       child: Column(
         children: <Widget>[
@@ -89,253 +59,243 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
               style: theme.textStyleSize12W400Primary,
             ),
           ),
-          for (int i = 0; i < appWalletLive!.appKeychain.accounts.length; i++)
-            _buildAccountListItem(
-              context,
-              ref,
-              appWalletLive!.appKeychain.accounts[i],
-              setState,
+          for (int i = 0; i < accounts.length; i++)
+            _AccountListItem(
+              account: accounts[i],
             ),
-          Row(
-            children: <Widget>[
-              if (appWalletLive!.appKeychain.accounts.length >= kMaxAccounts)
-                const SizedBox()
-              else
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addAccount,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addAccount'),
-                  onPressed: () async {
-                    final nameFocusNode = FocusNode();
-                    final nameController = TextEditingController();
-                    String? nameError;
-                    await showDialog(
-                      context: expandedKey.currentContext!,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(
-                          builder: (context, setState) {
-                            FocusScope.of(context).requestFocus(nameFocusNode);
-                            return AlertDialog(
-                              title: Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      localizations
-                                          .introNewWalletGetFirstInfosNameRequest,
-                                      style: theme.textStyleSize12W400Primary,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
-                                side: BorderSide(
-                                  color: theme.text45!,
-                                ),
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      AppTextField(
-                                        leftMargin: 0,
-                                        rightMargin: 0,
-                                        focusNode: nameFocusNode,
-                                        autocorrect: false,
-                                        controller: nameController,
-                                        keyboardType: TextInputType.text,
-                                        style: theme.textStyleSize12W600Primary,
-                                        inputFormatters: <TextInputFormatter>[
-                                          LengthLimitingTextInputFormatter(
-                                            20,
-                                          ),
-                                          UpperCaseTextFormatter(),
-                                        ],
-                                      ),
-                                      if (nameError != null)
-                                        SizedBox(
-                                          height: 40,
-                                          child: Text(
-                                            nameError!,
-                                            style: theme
-                                                .textStyleSize12W600Primary,
-                                          ),
-                                        )
-                                      else
-                                        const SizedBox(
-                                          height: 40,
-                                        ),
-                                      Text(
-                                        localizations
-                                            .introNewWalletGetFirstInfosNameInfos,
-                                        style: theme.textStyleSize12W600Primary,
-                                        textAlign: TextAlign.justify,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    children: [
-                                      AppButtonTiny(
-                                        isPressed == false
-                                            ? AppButtonTinyType.primary
-                                            : AppButtonTinyType.primaryOutline,
-                                        localizations.ok,
-                                        Dimens.buttonBottomDimens,
-                                        key: const Key('addName'),
-                                        onPressed: () async {
-                                          if (isPressed == true) {
-                                            return;
-                                          }
-                                          nameError = '';
-                                          if (nameController.text.isEmpty) {
-                                            setState(() {
-                                              nameError = localizations
-                                                  .introNewWalletGetFirstInfosNameBlank;
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                nameFocusNode,
-                                              );
-                                            });
-                                          } else {
-                                            var accountExists = false;
-                                            for (final account in appWalletLive!
-                                                .appKeychain.accounts) {
-                                              if (account.name ==
-                                                  nameController.text) {
-                                                accountExists = true;
-                                              }
-                                            }
-                                            if (accountExists == true) {
-                                              setState(() {
-                                                nameError = localizations
-                                                    .addAccountExists;
-                                                FocusScope.of(context)
-                                                    .requestFocus(
-                                                  nameFocusNode,
-                                                );
-                                              });
-                                            } else {
-                                              setState(() {
-                                                isPressed = true;
-                                              });
-                                              AppDialogs.showConfirmDialog(
-                                                context,
-                                                ref,
-                                                localizations.addAccount,
-                                                localizations
-                                                    .addAccountConfirmation
-                                                    .replaceAll(
-                                                  '%1',
-                                                  nameController.text,
-                                                ),
-                                                localizations.yes,
-                                                () async {
-                                                  try {
-                                                    await KeychainUtil()
-                                                        .addAccountInKeyChain(
-                                                      StateContainer.of(
-                                                        context,
-                                                      ).appWallet,
-                                                      await StateContainer.of(
-                                                        context,
-                                                      ).getSeed(),
-                                                      nameController.text,
-                                                      ref
-                                                          .read(
-                                                            CurrencyProviders
-                                                                .selectedCurrency,
-                                                          )
-                                                          .currency
-                                                          .name,
-                                                      StateContainer.of(
-                                                        context,
-                                                      )
-                                                          .curNetwork
-                                                          .getNetworkCryptoCurrencyLabel(),
-                                                    );
-                                                  } on ArchethicConnectionException {
-                                                    UIUtil.showSnackbar(
-                                                      localizations
-                                                          .noConnection,
-                                                      context,
-                                                      ref,
-                                                      theme.text!,
-                                                      theme.snackBarShadow!,
-                                                      duration: const Duration(
-                                                        seconds: 5,
-                                                      ),
-                                                    );
-                                                  } on Exception {
-                                                    UIUtil.showSnackbar(
-                                                      localizations
-                                                          .keychainNotExistWarning,
-                                                      context,
-                                                      ref,
-                                                      theme.text!,
-                                                      theme.snackBarShadow!,
-                                                      duration: const Duration(
-                                                        seconds: 5,
-                                                      ),
-                                                    );
-                                                  }
-
-                                                  setState(() {
-                                                    isPressed = false;
-                                                  });
-                                                  Navigator.pop(
-                                                    context,
-                                                    true,
-                                                  );
-                                                },
-                                                cancelText: localizations.no,
-                                                cancelAction: () {
-                                                  setState(() {
-                                                    isPressed = false;
-                                                  });
-                                                },
-                                              );
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                    setState(() {
-                      appWalletLive!.appKeychain.accounts
-                          .sort((a, b) => a.name!.compareTo(b.name!));
-                    });
-                  },
-                ),
-            ],
-          ),
+          if (accounts.length < kMaxAccounts)
+            Row(
+              children: const [
+                _AddAccountButton(),
+              ],
+            ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildAccountListItem(
-    BuildContext context,
-    WidgetRef ref,
-    Account account,
-    StateSetter setState,
-  ) {
+class _AddAccountButton extends ConsumerStatefulWidget {
+  const _AddAccountButton();
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      __AddAccountButtonState();
+}
+
+class __AddAccountButtonState extends ConsumerState<_AddAccountButton> {
+  bool? isPressed = false;
+  final GlobalKey expandedKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final accounts =
+        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
+
+    return AppButtonTiny(
+      AppButtonTinyType.primary,
+      localizations.addAccount,
+      Dimens.buttonBottomDimens,
+      key: const Key('addAccount'),
+      onPressed: () async {
+        final nameFocusNode = FocusNode();
+        final nameController = TextEditingController();
+        String? nameError;
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: [
+                        Text(
+                          localizations.introNewWalletGetFirstInfosNameRequest,
+                          style: theme.textStyleSize12W400Primary,
+                        ),
+                      ],
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                    side: BorderSide(
+                      color: theme.text45!,
+                    ),
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          AppTextField(
+                            leftMargin: 0,
+                            rightMargin: 0,
+                            focusNode: nameFocusNode,
+                            autocorrect: false,
+                            controller: nameController,
+                            keyboardType: TextInputType.text,
+                            style: theme.textStyleSize12W600Primary,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(
+                                20,
+                              ),
+                              UpperCaseTextFormatter(),
+                            ],
+                          ),
+                          if (nameError != null)
+                            SizedBox(
+                              height: 40,
+                              child: Text(
+                                nameError!,
+                                style: theme.textStyleSize12W600Primary,
+                              ),
+                            )
+                          else
+                            const SizedBox(
+                              height: 40,
+                            ),
+                          Text(
+                            localizations.introNewWalletGetFirstInfosNameInfos,
+                            style: theme.textStyleSize12W600Primary,
+                            textAlign: TextAlign.justify,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          AppButtonTiny(
+                            isPressed == false
+                                ? AppButtonTinyType.primary
+                                : AppButtonTinyType.primaryOutline,
+                            localizations.ok,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('addName'),
+                            onPressed: () async {
+                              if (isPressed == true) {
+                                return;
+                              }
+                              nameError = '';
+                              if (nameController.text.isEmpty) {
+                                setState(() {
+                                  nameError = localizations
+                                      .introNewWalletGetFirstInfosNameBlank;
+                                  FocusScope.of(context).requestFocus(
+                                    nameFocusNode,
+                                  );
+                                });
+                              } else {
+                                var accountExists = false;
+                                for (final account in accounts) {
+                                  if (account.name == nameController.text) {
+                                    accountExists = true;
+                                  }
+                                }
+                                if (accountExists == true) {
+                                  setState(() {
+                                    nameError = localizations.addAccountExists;
+                                    FocusScope.of(context).requestFocus(
+                                      nameFocusNode,
+                                    );
+                                  });
+                                } else {
+                                  setState(() {
+                                    isPressed = true;
+                                  });
+                                  AppDialogs.showConfirmDialog(
+                                    context,
+                                    ref,
+                                    localizations.addAccount,
+                                    localizations.addAccountConfirmation
+                                        .replaceAll(
+                                      '%1',
+                                      nameController.text,
+                                    ),
+                                    localizations.yes,
+                                    () async {
+                                      try {
+                                        await ref
+                                            .read(
+                                              AccountProviders
+                                                  .accounts.notifier,
+                                            )
+                                            .addAccount(
+                                              name: nameController.text,
+                                            );
+                                      } on ArchethicConnectionException {
+                                        UIUtil.showSnackbar(
+                                          localizations.noConnection,
+                                          context,
+                                          ref,
+                                          theme.text!,
+                                          theme.snackBarShadow!,
+                                          duration: const Duration(
+                                            seconds: 5,
+                                          ),
+                                        );
+                                      } on Exception {
+                                        UIUtil.showSnackbar(
+                                          localizations.keychainNotExistWarning,
+                                          context,
+                                          ref,
+                                          theme.text!,
+                                          theme.snackBarShadow!,
+                                          duration: const Duration(
+                                            seconds: 5,
+                                          ),
+                                        );
+                                      }
+
+                                      setState(() {
+                                        isPressed = false;
+                                      });
+                                      Navigator.pop(
+                                        context,
+                                        true,
+                                      );
+                                    },
+                                    cancelText: localizations.no,
+                                    cancelAction: () {
+                                      setState(() {
+                                        isPressed = false;
+                                      });
+                                    },
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _AccountListItem extends ConsumerWidget {
+  const _AccountListItem({
+    required this.account,
+  });
+  final Account account;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
@@ -344,9 +304,11 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final contact = ref.watch(
       ContactProviders.getContactWithName(
-        account.name!,
+        account.name,
       ),
     );
+
+    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
 
     return contact.map(
       data: (data) {
@@ -356,15 +318,17 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
             onTap: () async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    ref.watch(SettingsProviders.settings).activeVibrations,
+                    ref.read(
+                      SettingsProviders.settings.select(
+                        (value) => value.activeVibrations,
+                      ),
+                    ),
                   );
               ShowSendingAnimation.build(context, theme);
               if (!account.selected!) {
-                _changeAccount(account, setState);
-                StateContainer.of(context).appWallet =
-                    await sl.get<DBHelper>().changeAccount(account);
-                await StateContainer.of(context)
-                    .requestUpdate(forceUpdateChart: false);
+                await ref
+                    .read(AccountProviders.accounts.notifier)
+                    .selectAccount(account);
               }
               StateContainer.of(context).bottomBarCurrentPage = 1;
               StateContainer.of(context)
@@ -376,7 +340,7 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
               );
               Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
             },
-            onLongPress: () async {
+            onLongPress: () {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
                     preferences.activeVibrations,
@@ -389,14 +353,14 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                   contact: data.value,
                 ),
                 onDisposed: () {
-                  setState(() {
-                    StateContainer.of(context)
-                        .requestUpdate(forceUpdateChart: false);
-                  });
+                  ref
+                      .read(AccountProviders.selectedAccount.notifier)
+                      .refreshRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
                 },
               );
             },
             child: Card(
+              clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   color: theme.backgroundAccountsListCardSelected!,
@@ -410,195 +374,113 @@ class _AccountsListWidgetState extends ConsumerState<AccountsListWidget> {
                 color: account.selected!
                     ? theme.backgroundAccountsListCardSelected
                     : theme.backgroundAccountsListCard,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                              bottom: 10, top: 10,),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                80,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 20,
-                                                    ),
-                                                    child: AutoSizeText(
-                                                      account.name!,
-                                                      style: theme
-                                                          .textStyleSize12W400Primary,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            if (preferences.showBalances)
-                                              primaryCurrency.primaryCurrency ==
-                                                      AvailablePrimaryCurrencyEnum
-                                                          .native
-                                                  ? Expanded(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: <Widget>[
-                                                          AutoSizeText(
-                                                            '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          AutoSizeText(
-                                                            CurrencyUtil
-                                                                .getConvertedAmount(
-                                                              currency.currency
-                                                                  .name,
-                                                              account.balance!
-                                                                  .fiatCurrencyValue!,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          if (account.accountTokens !=
-                                                                  null &&
-                                                              account
-                                                                  .accountTokens!
-                                                                  .isNotEmpty)
-                                                            AutoSizeText(
-                                                              account.accountTokens!
-                                                                          .length >
-                                                                      1
-                                                                  ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                                                  : '${account.accountTokens!.length} ${localizations.token}',
-                                                              style: theme
-                                                                  .textStyleSize12W400Primary,
-                                                            ),
-                                                          if (account.accountNFT !=
-                                                                  null &&
-                                                              account
-                                                                  .accountNFT!
-                                                                  .isNotEmpty)
-                                                            AutoSizeText(
-                                                              '${account.accountNFT!.length} ${localizations.nft}',
-                                                              style: theme
-                                                                  .textStyleSize12W400Primary,
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Expanded(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: <Widget>[
-                                                          AutoSizeText(
-                                                            CurrencyUtil
-                                                                .getConvertedAmount(
-                                                              currency.currency
-                                                                  .name,
-                                                              account.balance!
-                                                                  .fiatCurrencyValue!,
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          AutoSizeText(
-                                                            '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                            style: theme
-                                                                .textStyleSize12W400Primary,
-                                                          ),
-                                                          if (account.accountTokens !=
-                                                                  null &&
-                                                              account
-                                                                  .accountTokens!
-                                                                  .isNotEmpty)
-                                                            AutoSizeText(
-                                                              account.accountTokens!
-                                                                          .length >
-                                                                      1
-                                                                  ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                                                  : '${account.accountTokens!.length} ${localizations.token}',
-                                                              style: theme
-                                                                  .textStyleSize12W400Primary,
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    )
-                                            else
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: <Widget>[
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: theme
-                                                          .textStyleSize12W600Primary60,
-                                                    ),
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      style: theme
-                                                          .textStyleSize12W600Primary60,
-                                                    ),
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      style: theme
-                                                          .textStyleSize12W600Primary60,
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: AutoSizeText(
+                        account.name,
+                        style: theme.textStyleSize12W400Primary,
+                      ),
                     ),
+                    if (preferences.showBalances)
+                      primaryCurrency.primaryCurrency ==
+                              AvailablePrimaryCurrencyEnum.native
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                AutoSizeText(
+                                  '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                                AutoSizeText(
+                                  CurrencyUtil.getConvertedAmount(
+                                    currency.currency.name,
+                                    account.balance!.fiatCurrencyValue!,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                                if (account.accountTokens != null &&
+                                    account.accountTokens!.isNotEmpty)
+                                  AutoSizeText(
+                                    account.accountTokens!.length > 1
+                                        ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                        : '${account.accountTokens!.length} ${localizations.token}',
+                                    style: theme.textStyleSize12W400Primary,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                if (account.accountNFT != null &&
+                                    account.accountNFT!.isNotEmpty)
+                                  AutoSizeText(
+                                    '${account.accountNFT!.length} ${localizations.nft}',
+                                    style: theme.textStyleSize12W400Primary,
+                                    textAlign: TextAlign.end,
+                                  ),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                AutoSizeText(
+                                  CurrencyUtil.getConvertedAmount(
+                                    currency.currency.name,
+                                    account.balance!.fiatCurrencyValue!,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                                AutoSizeText(
+                                  '${account.balance!.nativeTokenValueToString()} ${selectedAccount!.balance!.nativeTokenName!}',
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                                if (account.accountTokens != null &&
+                                    account.accountTokens!.isNotEmpty)
+                                  AutoSizeText(
+                                    account.accountTokens!.length > 1
+                                        ? '${account.accountTokens!.length} ${localizations.tokens}'
+                                        : '${account.accountTokens!.length} ${localizations.token}',
+                                    style: theme.textStyleSize12W400Primary,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                if (account.accountNFT != null &&
+                                    account.accountNFT!.isNotEmpty)
+                                  AutoSizeText(
+                                    '${account.accountNFT!.length} ${localizations.nft}',
+                                    style: theme.textStyleSize12W400Primary,
+                                    textAlign: TextAlign.end,
+                                  ),
+                              ],
+                            )
+                    else
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              '···········',
+                              textAlign: TextAlign.center,
+                              style: theme.textStyleSize12W600Primary60,
+                            ),
+                            AutoSizeText(
+                              '···········',
+                              style: theme.textStyleSize12W600Primary60,
+                            ),
+                            AutoSizeText(
+                              '···········',
+                              style: theme.textStyleSize12W600Primary60,
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),

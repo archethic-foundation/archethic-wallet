@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -49,12 +51,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         context,
         theme,
       );
-      final nftCreationNotifier =
-          ref.watch(NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,);
+      final nftCreationNotifier = ref.watch(
+        NftCreationFormProvider.nftCreationForm(
+          ref.read(
+            NftCreationFormProvider.nftCreationFormArgs,
+          ),
+        ).notifier,
+      );
       nftCreationNotifier.send(context);
     });
 
@@ -73,19 +76,21 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
             event.nbConfirmations!,
             event.maxConfirmations!,
           )) {
-        final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm(
-          ref.read(
-            NftCreationFormProvider.nftCreationFormArgs,
+        final nftCreation = ref.watch(
+          NftCreationFormProvider.nftCreationForm(
+            ref.read(
+              NftCreationFormProvider.nftCreationFormArgs,
+            ),
           ),
-        ),);
-        await StateContainer.of(context)
-            .appWallet!
-            .appKeychain
-            .getAccountSelected()!
-            .updateNftInfosOffChain(
-              tokenAddress: event.transactionAddress,
-              categoryNftIndex: nftCreation.currentNftCategoryIndex,
-            );
+        );
+
+        final selectedAccount = ref.read(AccountProviders.selectedAccount);
+        await selectedAccount?.updateNftInfosOffChain(
+          tokenAddress: event.transactionAddress,
+          categoryNftIndex: nftCreation.currentNftCategoryIndex,
+        );
+
+        await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
 
         await _showSendSucceed(event, theme);
         return;
@@ -170,12 +175,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
-      ),
-    ).notifier,);
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ).notifier,
+    );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

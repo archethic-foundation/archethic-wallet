@@ -3,11 +3,11 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
 
-// Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
@@ -25,7 +25,6 @@ import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -226,7 +225,7 @@ class Splash extends ConsumerStatefulWidget {
 }
 
 class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
-  late bool _hasCheckedLoggedIn;
+  // late bool _hasCheckedLoggedIn;
 
   Future<void> checkLoggedIn() async {
     final preferences = await Preferences.getInstance();
@@ -260,11 +259,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       }
     }*/
 
-    if (!_hasCheckedLoggedIn) {
-      _hasCheckedLoggedIn = true;
-    } else {
-      return;
-    }
     try {
       // iOS key store is persistent, so if this is first launch
       // then we will clear the keystore
@@ -276,72 +270,51 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       }
       await preferences.setFirstLaunch(false);
       */
-      var isLoggedIn = false;
 
-      final seed = await StateContainer.of(context).getSeed();
+      await ref.read(SessionProviders.session.notifier).restore();
 
-      if (seed != null) {
-        isLoggedIn = true;
+      final session = ref.read(SessionProviders.session);
+
+      if (session.isLoggedOut) {
+        await _goToIntroScreen();
+        FlutterNativeSplash.remove();
+        return;
       }
 
-      if (isLoggedIn) {
-        StateContainer.of(context).appWallet =
-            await sl.get<DBHelper>().getAppWallet();
-        if (StateContainer.of(context).appWallet == null) {
-          await StateContainer.of(context).logOut();
-          // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
-          await ref
-              .read(ThemeProviders.selectedThemeOption.notifier)
-              .selectTheme(ThemeOptions.dark);
-          Navigator.of(context).pushReplacementNamed('/intro_welcome');
-        }
-        StateContainer.of(context).checkTransactionInputs(
-          AppLocalization.of(context)!.transactionInputNotification,
+      if (preferences.getLock()) {
+        Navigator.of(context).pushReplacementNamed('/home');
+
+        AuthFactory.forceAuthenticate(
+          context,
+          ref,
+          authMethod: ref.read(
+            AuthenticationProviders.preferedAuthMethod,
+          ),
+          canCancel: false,
         );
-
-        if (preferences.getLock()) {
-          StateContainer.of(context).bottomBarCurrentPage =
-              preferences.getMainScreenCurrentPage();
-          StateContainer.of(context).bottomBarPageController = PageController(
-            initialPage: StateContainer.of(context).bottomBarCurrentPage,
-          );
-          Navigator.of(context).pushReplacementNamed('/home');
-
-          AuthFactory.forceAuthenticate(
-            context,
-            ref,
-            authMethod: ref.read(
-              AuthenticationProviders.preferedAuthMethod,
-            ),
-            canCancel: false,
-          );
-        } else {
-          await StateContainer.of(context).requestUpdate();
-          Navigator.of(context).pushReplacementNamed('/home');
-        }
       } else {
-        await ref
-            .read(ThemeProviders.selectedThemeOption.notifier)
-            .selectTheme(ThemeOptions.dark);
-        Navigator.of(context).pushReplacementNamed('/intro_welcome');
+        await StateContainer.of(context).requestUpdate();
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     } catch (e) {
       dev.log(e.toString());
-      await StateContainer.of(context).logOut();
-      // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
-      await ref
-          .read(ThemeProviders.selectedThemeOption.notifier)
-          .selectTheme(ThemeOptions.dark);
-      Navigator.of(context).pushReplacementNamed('/intro_welcome');
+      _goToIntroScreen();
     }
     FlutterNativeSplash.remove();
+  }
+
+  Future<void> _goToIntroScreen() async {
+    // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
+    await ref
+        .read(ThemeProviders.selectedThemeOption.notifier)
+        .selectTheme(ThemeOptions.dark);
+    Navigator.of(context).pushReplacementNamed('/intro_welcome');
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _hasCheckedLoggedIn = false;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => checkLoggedIn(),
     );
@@ -375,7 +348,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
 
   void updateDefaultLocale() {
     ref
-        .read(LanguageProviders.defaultLocale.state)
+        .read(LanguageProviders.defaultLocale.notifier)
         .update((state) => Localizations.localeOf(context));
   }
 

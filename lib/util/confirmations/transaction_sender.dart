@@ -4,7 +4,7 @@ import 'dart:developer' as dev;
 
 // Project imports:
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/repositories/transaction.dart';
+import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';

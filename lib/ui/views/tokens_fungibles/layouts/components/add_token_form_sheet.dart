@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -19,9 +19,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+part 'add_token_textfield_initial_supply.dart';
 part 'add_token_textfield_name.dart';
 part 'add_token_textfield_symbol.dart';
-part 'add_token_textfield_initial_supply.dart';
 
 class AddTokenFormSheet extends ConsumerStatefulWidget {
   const AddTokenFormSheet({
@@ -51,8 +51,7 @@ class _AddTokenFormSheetState extends ConsumerState<AddTokenFormSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final addTokenNotifier =

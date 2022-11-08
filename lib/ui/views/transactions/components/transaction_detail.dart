@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -34,8 +35,7 @@ class TransactionDetail extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
+    final accountSelected = ref.read(AccountProviders.selectedAccount)!;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     String? contactAddress;
@@ -119,12 +119,12 @@ class TransactionDetail extends ConsumerWidget {
                                             null)
                                           transaction.amount! > 1000000
                                               ? AutoSizeText(
-                                                  '-${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                  '-${NumberUtil.formatThousands(transaction.amount!.round())} ${AccountBalance.cryptoCurrencyLabel}',
                                                   style: theme
                                                       .textStyleSize12W400Primary,
                                                 )
                                               : AutoSizeText(
-                                                  '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                  '-${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
                                                   style: theme
                                                       .textStyleSize12W400Primary,
                                                 )
@@ -144,12 +144,12 @@ class TransactionDetail extends ConsumerWidget {
                                           null)
                                         transaction.amount! > 1000000
                                             ? AutoSizeText(
-                                                '${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                '${NumberUtil.formatThousands(transaction.amount!.round())} ${AccountBalance.cryptoCurrencyLabel}',
                                                 style: theme
                                                     .textStyleSize12W400Primary,
                                               )
                                             : AutoSizeText(
-                                                '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                '${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
                                                 style: theme
                                                     .textStyleSize12W400Primary,
                                               )
@@ -220,7 +220,7 @@ class TransactionDetail extends ConsumerWidget {
                                         if (transaction.tokenInformations ==
                                             null)
                                           AutoSizeText(
-                                            '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                            '-${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
                                             style: theme
                                                 .textStyleSize12W400Primary,
                                           )
@@ -233,7 +233,7 @@ class TransactionDetail extends ConsumerWidget {
                                       else if (transaction.tokenInformations ==
                                           null)
                                         AutoSizeText(
-                                          '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                          '${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
                                           style:
                                               theme.textStyleSize12W400Primary,
                                         )
@@ -337,11 +337,11 @@ class TransactionDetail extends ConsumerWidget {
                               primaryCurrency.primaryCurrency ==
                                       AvailablePrimaryCurrencyEnum.native
                                   ? Text(
-                                      '${localizations.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                      '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                                   : Text(
-                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                             else

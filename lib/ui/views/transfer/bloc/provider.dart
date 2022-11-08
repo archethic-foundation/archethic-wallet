@@ -1,10 +1,10 @@
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
-import 'package:aewallet/domain/repositories/transaction.dart';
+import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
@@ -33,7 +33,7 @@ final _transferFormProvider =
   },
   dependencies: [
     TransferFormProvider.initialTransferForm,
-    AccountProviders.getSelectedAccount,
+    AccountProviders.selectedAccount,
     TransferFormProvider._repository,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
   ],
@@ -268,7 +268,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required TransferFormState formState,
   }) async {
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
     final recipientAddress = formState.recipient.address;
     if (recipientAddress == null) return null;
@@ -279,7 +279,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.token:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
@@ -296,7 +296,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.uco:
         transaction = Transaction.transfer(
           transfer: Transfer.uco(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
@@ -307,7 +307,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.nft:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
@@ -608,7 +608,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final localizations = AppLocalization.of(context)!;
 
     final selectedAccount = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     var amountInUCO = state.amount;
@@ -624,7 +624,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.token:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
@@ -640,7 +640,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.uco:
         transaction = Transaction.transfer(
           transfer: Transfer.uco(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
@@ -651,7 +651,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.nft:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount!.name!,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
@@ -737,7 +737,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 }
 
 abstract class TransferFormProvider {
-  static final _repository = Provider<TransactionRepositoryInterface>(
+  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
     (ref) {
       final networkSettings = ref
           .watch(

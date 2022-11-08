@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
@@ -108,9 +109,13 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       duration: const Duration(milliseconds: 5000),
     );
 
-    setState(() {
-      StateContainer.of(context).requestUpdate();
-    });
+    ref
+        .read(AccountProviders.selectedAccount.notifier)
+        .refreshRecentTransactions(); // TODO(reddwarf03): Faudrait il recharger autre chose ?
+    // TODO(reddwarf03): ensure that reload is not necessary
+    // setState(() {
+    //   StateContainer.of(context).requestUpdate();
+    // });
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
   }
 

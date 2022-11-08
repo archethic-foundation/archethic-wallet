@@ -265,7 +265,10 @@ class Preferences {
         lockAttempts: getLockAttempts(),
         lockTimeout: getLockTimeout().setting,
         mainScreenCurrentPage: getMainScreenCurrentPage(),
-        networks: getNetwork().network,
+        network: NetworksSetting(
+          network: getNetwork().network,
+          networkDevEndpoint: getNetworkDevEndpoint(),
+        ),
         primaryCurrency: getPrimaryCurrency(),
         showBalances: getShowBalances(),
         showBlog: getShowBlog(),

@@ -17,8 +17,8 @@ class AccountAdapter extends TypeAdapter<Account> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Account(
-      name: fields[0] as String?,
-      genesisAddress: fields[1] as String?,
+      name: fields[0] as String,
+      genesisAddress: fields[1] as String,
       lastLoadingTransactionInputs: fields[2] as int?,
       selected: fields[3] as bool?,
       lastAddress: fields[4] as String?,
@@ -26,9 +26,9 @@ class AccountAdapter extends TypeAdapter<Account> {
       recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
       accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
       accountNFT: (fields[8] as List?)?.cast<AccountToken>(),
-    )
-      ..nftInfosOffChainList = (fields[10] as List?)?.cast<NftInfosOffChain>()
-      ..nftCategoryList = (fields[11] as List?)?.cast<int>();
+      nftInfosOffChainList: (fields[10] as List?)?.cast<NftInfosOffChain>(),
+      nftCategoryList: (fields[11] as List?)?.cast<int>(),
+    );
   }
 
   @override

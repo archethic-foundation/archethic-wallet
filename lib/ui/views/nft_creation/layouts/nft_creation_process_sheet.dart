@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -37,18 +36,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'components/nft_creation_process_import_tab.dart';
-part 'components/nft_creation_process_import_tab_image.dart';
 part 'components/nft_creation_process_import_tab_camera.dart';
 part 'components/nft_creation_process_import_tab_file.dart';
+part 'components/nft_creation_process_import_tab_image.dart';
 part 'components/nft_creation_process_infos_tab.dart';
 part 'components/nft_creation_process_infos_tab_textfield_description.dart';
 part 'components/nft_creation_process_infos_tab_textfield_name.dart';
-part 'components/nft_creation_process_summary_tab.dart';
+part 'components/nft_creation_process_properties_list.dart';
 part 'components/nft_creation_process_properties_tab.dart';
 part 'components/nft_creation_process_properties_tab_textfield_name.dart';
-part 'components/nft_creation_process_properties_tab_textfield_value.dart';
 part 'components/nft_creation_process_properties_tab_textfield_search.dart';
-part 'components/nft_creation_process_properties_list.dart';
+part 'components/nft_creation_process_properties_tab_textfield_value.dart';
+part 'components/nft_creation_process_summary_tab.dart';
 
 class NftCreationProcessSheet extends ConsumerWidget {
   const NftCreationProcessSheet({
@@ -63,7 +62,7 @@ class NftCreationProcessSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref.watch(
-      AccountProviders.getSelectedAccount(context: context),
+      AccountProviders.selectedAccount,
     );
 
     return ProviderScope(

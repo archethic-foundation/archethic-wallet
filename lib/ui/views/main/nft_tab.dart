@@ -1,14 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_category_menu.dart';
+import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
@@ -46,20 +48,19 @@ class NFTTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected =
-        StateContainer.of(context).appWallet!.appKeychain.getAccountSelected()!;
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: [
         Expanded(
-          child: RefreshIndicator(
-            backgroundColor: theme.backgroundDark,
+          child: ArchethicRefreshIndicator(
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              await accountSelected.updateNFT();
+              await ref
+                  .read(AccountProviders.selectedAccount.notifier)
+                  .refreshNFTs();
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

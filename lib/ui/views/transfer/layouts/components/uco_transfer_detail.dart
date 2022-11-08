@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/account.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -26,16 +25,13 @@ class UCOTransferDetail extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final accountSelected = ref.read(
-      AccountProviders.getSelectedAccount(context: context),
-    );
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final accountSelected = ref.watch(AccountProviders.selectedAccount);
     var amountInUco = transfer.amount;
     if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
       amountInUco = transfer.amountConverted;
     }
-
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -56,7 +52,7 @@ class UCOTransferDetail extends ConsumerWidget {
           SheetDetailCard(
             children: [
               Text(
-                '${localizations.txListFrom} ${accountSelected!.name!}',
+                '${localizations.txListFrom} ${accountSelected!.name}',
                 style: theme.textStyleSize12W400Primary,
               ),
             ],
@@ -85,9 +81,7 @@ class UCOTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standardSmallValue(
                   transfer.feeEstimationOrZero,
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  AccountBalance.cryptoCurrencyLabel,
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),
@@ -102,9 +96,7 @@ class UCOTransferDetail extends ConsumerWidget {
               Text(
                 AmountFormatters.standard(
                   transfer.feeEstimationOrZero + amountInUco,
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel(),
+                  AccountBalance.cryptoCurrencyLabel,
                 ),
                 style: theme.textStyleSize12W400Primary,
               ),

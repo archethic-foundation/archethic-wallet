@@ -10,10 +10,10 @@ class BalanceInfosKpi extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final chartInfos = StateContainer.of(context).chartInfos;
-    final accountSelectedBalance = StateContainer.of(context)
-        .appWallet!
-        .appKeychain.getAccountSelected()!
-        .balance;
+    final accountSelectedBalance = ref.watch(
+      AccountProviders.selectedAccount.select((value) => value?.balance),
+    );
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     if (chartInfos?.data == null) {

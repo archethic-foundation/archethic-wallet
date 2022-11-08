@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -51,23 +53,20 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final session = ref.watch(SessionProviders.session).loggedIn!;
+    final selectedAccount = ref.read(AccountProviders.selectedAccount)!;
 
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: FutureBuilder<List<TransactionInfos>>(
         future: sl.get<AppService>().getTransactionAllInfos(
+              session.wallet.seed,
               widget.txAddress,
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-              StateContainer.of(context)
-                  .curNetwork
-                  .getNetworkCryptoCurrencyLabel(),
+              AccountBalance.cryptoCurrencyLabel,
               context,
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain
-                  .getAccountSelected()!
-                  .name!,
+              selectedAccount.name,
             ),
         builder: (
           BuildContext context,

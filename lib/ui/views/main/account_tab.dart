@@ -1,20 +1,23 @@
 // Flutter imports:
 // Project imports:
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/blog.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/main/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
+import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountTab extends ConsumerWidget {
@@ -29,14 +32,17 @@ class AccountTab extends ConsumerWidget {
       children: [
         Expanded(
           /// REFRESH
-          child: RefreshIndicator(
-            backgroundColor: theme.backgroundDark,
-            onRefresh: () => Future<void>.sync(() {
+          child: ArchethicRefreshIndicator(
+            onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              StateContainer.of(context).requestUpdate();
+
+              await ref.read(SessionProviders.session.notifier).refresh();
+              ref.invalidate(BlogProviders.fetchArticles);
+              ref.invalidate(ContactProviders.fetchContacts);
+              ref.invalidate(AccountProviders.selectedAccount);
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

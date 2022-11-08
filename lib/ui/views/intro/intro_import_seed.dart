@@ -2,16 +2,15 @@
 import 'dart:async';
 
 // Project imports:
-import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -22,10 +21,8 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -69,9 +66,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         .listen((AuthenticatedEvent event) async {
       await StateContainer.of(context).requestUpdate();
 
-      StateContainer.of(context).checkTransactionInputs(
-        AppLocalization.of(context)!.transactionInputNotification,
-      );
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (Route<dynamic> route) => false,
@@ -415,9 +409,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                         Dimens.buttonTopDimens,
                         key: const Key('ok'),
                         onPressed: () async {
-                          final currency =
-                              ref.watch(CurrencyProviders.selectedCurrency);
-
                           setState(() {
                             _mnemonicError = '';
                             isPressed = true;
@@ -442,7 +433,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             }
                           }
 
-                          if (_mnemonicIsValid == false) {
+                          if (!_mnemonicIsValid) {
                             UIUtil.showSnackbar(
                               _mnemonicError,
                               context,
@@ -456,60 +447,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             return;
                           }
                           ShowSendingAnimation.build(context, theme);
-                          await sl.get<DBHelper>().clearAppWallet();
-                          StateContainer.of(context).appWallet = null;
-                          final seed = AppMnemomics.mnemonicListToSeed(
-                            phrase,
-                            languageCode: language,
-                          );
-                          final vault = await Vault.getInstance();
-                          vault.setSeed(seed);
-                          final tokenPrice = await Price.getCurrency(
-                            currency.currency.name,
-                          );
-
-                          try {
-                            final appWallet = await KeychainUtil()
-                                .getListAccountsFromKeychain(
-                              StateContainer.of(context).appWallet,
-                              seed,
-                              currency.currency.name,
-                              StateContainer.of(context)
-                                  .curNetwork
-                                  .getNetworkCryptoCurrencyLabel(),
-                              tokenPrice,
-                            );
-
-                            StateContainer.of(context).appWallet = appWallet;
-                            final accounts = appWallet!.appKeychain.accounts;
-
-                            if (accounts.isEmpty) {
-                              setState(() {
-                                _mnemonicIsValid = false;
-                              });
-                              UIUtil.showSnackbar(
-                                localizations.noKeychain,
-                                context,
-                                ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                          final newSession = await ref
+                              .read(SessionProviders.session.notifier)
+                              .restoreFromMnemonics(
+                                mnemonics: phrase,
+                                languageCode: language,
                               );
-                              Navigator.of(context).pop();
-                            } else {
-                              accounts.sort(
-                                (a, b) => a.name!.compareTo(b.name!),
-                              );
-                              await _accountsDialog(accounts);
-                              await _launchSecurityConfiguration(
-                                StateContainer.of(context)
-                                    .appWallet!
-                                    .appKeychain
-                                    .getAccountSelected()!
-                                    .name!,
-                                seed,
-                              );
-                            }
-                          } catch (e) {
+
+                          if (newSession == null) {
                             setState(() {
                               _mnemonicIsValid = false;
                             });
@@ -521,7 +466,16 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               theme.snackBarShadow!,
                             );
                             Navigator.of(context).pop();
+                            return;
                           }
+
+                          await _accountsDialog(
+                            newSession.wallet.appKeychain.accounts,
+                          );
+                          await _launchSecurityConfiguration(
+                            ref.read(AccountProviders.selectedAccount)!.name,
+                            newSession.wallet.seed,
+                          );
 
                           setState(() {
                             isPressed = false;
@@ -621,7 +575,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final account in accounts) {
       pickerItemsList
-          .add(PickerItem(account.name!, null, null, null, account, true));
+          .add(PickerItem(account.name, null, null, null, account, true));
     }
 
     final selection = await showDialog<Account>(
@@ -674,10 +628,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       },
     );
     if (selection != null) {
-      await StateContainer.of(context)
-          .appWallet!
-          .appKeychain
-          .setAccountSelected(selection);
+      await ref
+          .read(AccountProviders.accounts.notifier)
+          .selectAccount(selection);
     }
   }
 }
