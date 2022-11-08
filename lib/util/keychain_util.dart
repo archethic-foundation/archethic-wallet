@@ -361,7 +361,7 @@ class KeychainUtil {
       currentAppWallet.appKeychain.accounts = accounts;
 
       await sl.get<DBHelper>().saveAppWallet(currentAppWallet);
-    } catch (e, stack) {
+    } catch (e) {
       throw Exception();
     }
 

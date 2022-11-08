@@ -262,7 +262,10 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final session = ref.watch(SessionProviders.session).loggedIn!;
+    final session = ref.watch(SessionProviders.session).loggedIn;
+
+    if (session == null) return SizedBox();
+
     return Column(
       children: [
         Container(
