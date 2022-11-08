@@ -19,11 +19,13 @@ class ContactDetailTab extends ConsumerStatefulWidget {
   const ContactDetailTab({
     required this.infoQRCode,
     required this.description,
+    required this.messageCopied,
     super.key,
   });
 
   final String infoQRCode;
   final String description;
+  final String messageCopied;
 
   @override
   ConsumerState<ContactDetailTab> createState() => _ContactDetailTabState();
@@ -46,7 +48,6 @@ class _ContactDetailTabState extends ConsumerState<ContactDetailTab> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
@@ -77,7 +78,7 @@ class _ContactDetailTabState extends ConsumerState<ContactDetailTab> {
                           ClipboardData(text: widget.infoQRCode),
                         );
                         UIUtil.showSnackbar(
-                          localizations.publicKeyCopied,
+                          widget.messageCopied,
                           context,
                           ref,
                           theme.text!,
