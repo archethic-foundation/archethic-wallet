@@ -8,7 +8,6 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
