@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -19,13 +18,17 @@ class NFTHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accountSelected = ref.read(AccountProviders.selectedAccount);
-    final nftCategories = ref.read(
-      NftCategoryProviders.fetchNftCategory(
-        context: context,
-        account: accountSelected!,
-      ),
-    );
+
+    final nftCategories = ref
+        .watch(
+          NftCategoryProviders.selectedAccountNftCategories(
+            context: context,
+          ),
+        )
+        .valueOrNull;
+
+    if (nftCategories == null) return const SizedBox();
+
     final nftCategory = nftCategories
         .where(
           (element) => element.id == currentNftCategoryIndex,

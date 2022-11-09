@@ -19,9 +19,13 @@ class AddTokenSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount = ref.watch(
-      AccountProviders.selectedAccount,
-    );
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    if (selectedAccount == null) return const SizedBox();
 
     // The main column that holds everything
     return ProviderScope(
@@ -30,7 +34,7 @@ class AddTokenSheet extends ConsumerWidget {
           AddTokenFormState(
             feeEstimation: const AsyncValue.data(0),
             seed: seed,
-            accountBalance: selectedAccount!.balance!,
+            accountBalance: selectedAccount.balance!,
           ),
         ),
       ],

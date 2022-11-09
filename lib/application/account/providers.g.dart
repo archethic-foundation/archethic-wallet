@@ -29,76 +29,6 @@ class _SystemHash {
   }
 }
 
-String $_accountHash() => r'3ad56afffd864e0b5be2faf9af694b0dec0db458';
-
-/// See also [_account].
-class _AccountProvider extends AutoDisposeFutureProvider<Account> {
-  _AccountProvider(
-    this.name,
-  ) : super(
-          (ref) => _account(
-            ref,
-            name,
-          ),
-          from: _accountProvider,
-          name: r'_accountProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : $_accountHash,
-        );
-
-  final String name;
-
-  @override
-  bool operator ==(Object other) {
-    return other is _AccountProvider && other.name == name;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-typedef _AccountRef = AutoDisposeFutureProviderRef<Account>;
-
-/// See also [_account].
-final _accountProvider = _AccountFamily();
-
-class _AccountFamily extends Family<AsyncValue<Account>> {
-  _AccountFamily();
-
-  _AccountProvider call(
-    String name,
-  ) {
-    return _AccountProvider(
-      name,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<Account> getProviderOverride(
-    covariant _AccountProvider provider,
-  ) {
-    return call(
-      provider.name,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_accountProvider';
-}
-
 String $_sortedAccountsHash() => r'890718a09341a058dd459b77bc4e8472b7a6bd92';
 
 /// See also [_sortedAccounts].
@@ -110,7 +40,7 @@ final _sortedAccountsProvider = AutoDisposeFutureProvider<List<Account>>(
       : $_sortedAccountsHash,
 );
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
-String $_AccountsNotifierHash() => r'ecab9635938445913bad331d0f4cb24140da1d59';
+String $_AccountsNotifierHash() => r'bb46807e617c85b91f94aa75b0c09f9649f7f557';
 
 /// See also [_AccountsNotifier].
 final _accountsNotifierProvider =
@@ -131,20 +61,35 @@ abstract class _$AccountsNotifier
 }
 
 String $_SelectedAccountNotifierHash() =>
-    r'd69ab61b59b433762ceb204f0f5b53a56b60ffe9';
+    r'e9781499f376aec00dfef02eb652a216c5630ebe';
 
 /// See also [_SelectedAccountNotifier].
 final _selectedAccountNotifierProvider =
-    AutoDisposeNotifierProvider<_SelectedAccountNotifier, Account?>(
+    AutoDisposeAsyncNotifierProvider<_SelectedAccountNotifier, Account?>(
   _SelectedAccountNotifier.new,
   name: r'_selectedAccountNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_SelectedAccountNotifierHash,
 );
-typedef _SelectedAccountNotifierRef = AutoDisposeNotifierProviderRef<Account?>;
+typedef _SelectedAccountNotifierRef
+    = AutoDisposeAsyncNotifierProviderRef<Account?>;
 
-abstract class _$SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
+abstract class _$SelectedAccountNotifier
+    extends AutoDisposeAsyncNotifier<Account?> {
   @override
-  Account? build();
+  FutureOr<Account?> build();
 }
+
+String $_selectedAccountNameHash() =>
+    r'ed92e55365a9b6566dfdec965483b9f54e6bcaf3';
+
+/// See also [_selectedAccountName].
+final _selectedAccountNameProvider = AutoDisposeFutureProvider<String?>(
+  _selectedAccountName,
+  name: r'_selectedAccountNameProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_selectedAccountNameHash,
+);
+typedef _SelectedAccountNameRef = AutoDisposeFutureProviderRef<String?>;

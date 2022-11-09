@@ -43,7 +43,83 @@ final _nftCategoryRepositoryProvider =
 );
 typedef _NftCategoryRepositoryRef
     = AutoDisposeProviderRef<NFTCategoryRepository>;
-String $_fetchNftCategoryHash() => r'5d5f3a4ae7adcb91bbf6f18be01db1e7578f8a2c';
+String $_selectedAccountNftCategoriesHash() =>
+    r'181fb845351532f193c9a2a0450baea059a78d8f';
+
+/// See also [_selectedAccountNftCategories].
+class _SelectedAccountNftCategoriesProvider
+    extends AutoDisposeFutureProvider<List<NftCategory>> {
+  _SelectedAccountNftCategoriesProvider({
+    required this.context,
+  }) : super(
+          (ref) => _selectedAccountNftCategories(
+            ref,
+            context: context,
+          ),
+          from: _selectedAccountNftCategoriesProvider,
+          name: r'_selectedAccountNftCategoriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_selectedAccountNftCategoriesHash,
+        );
+
+  final BuildContext context;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _SelectedAccountNftCategoriesProvider &&
+        other.context == context;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, context.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _SelectedAccountNftCategoriesRef
+    = AutoDisposeFutureProviderRef<List<NftCategory>>;
+
+/// See also [_selectedAccountNftCategories].
+final _selectedAccountNftCategoriesProvider =
+    _SelectedAccountNftCategoriesFamily();
+
+class _SelectedAccountNftCategoriesFamily
+    extends Family<AsyncValue<List<NftCategory>>> {
+  _SelectedAccountNftCategoriesFamily();
+
+  _SelectedAccountNftCategoriesProvider call({
+    required BuildContext context,
+  }) {
+    return _SelectedAccountNftCategoriesProvider(
+      context: context,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<List<NftCategory>> getProviderOverride(
+    covariant _SelectedAccountNftCategoriesProvider provider,
+  ) {
+    return call(
+      context: provider.context,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_selectedAccountNftCategoriesProvider';
+}
+
+String $_fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
 
 /// See also [_fetchNftCategory].
 class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {

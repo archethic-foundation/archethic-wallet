@@ -35,7 +35,8 @@ class TransactionDetail extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected = ref.read(AccountProviders.selectedAccount)!;
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     String? contactAddress;
@@ -46,6 +47,9 @@ class TransactionDetail extends ConsumerWidget {
         contactAddress = transaction.from;
       }
     }
+
+    if (accountSelected == null) return const SizedBox();
+
     return GestureDetector(
       onTap: () {
         sl.get<HapticUtil>().feedback(

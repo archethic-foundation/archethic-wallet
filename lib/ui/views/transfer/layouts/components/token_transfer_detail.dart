@@ -23,9 +23,14 @@ class TokenTransferDetail extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final accountSelected = ref.watch(
-      AccountProviders.selectedAccount,
-    );
+    final accountSelected = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    if (accountSelected == null) return const SizedBox();
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -50,7 +55,7 @@ class TokenTransferDetail extends ConsumerWidget {
           SheetDetailCard(
             children: [
               Text(
-                '${localizations.txListFrom} ${accountSelected!.name}',
+                '${localizations.txListFrom} ${accountSelected.name}',
                 style: theme.textStyleSize12W400Primary,
               ),
             ],

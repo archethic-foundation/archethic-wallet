@@ -49,7 +49,10 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final session = ref.watch(SessionProviders.session).loggedIn!;
-    final selectedAccount = ref.read(AccountProviders.selectedAccount)!;
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+
+    if (selectedAccount == null) return const SizedBox();
 
     return SafeArea(
       minimum:

@@ -18,18 +18,21 @@ class NftCategoryMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final expandedKey = GlobalKey();
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final preferences = ref.watch(SettingsProviders.settings);
 
-    if (selectedAccount == null) {
+    final nftCategories = ref
+        .watch(
+          NftCategoryProviders.selectedAccountNftCategories(
+            context: context,
+          ),
+        )
+        .valueOrNull;
+
+    if (selectedAccount == null || nftCategories == null) {
       return const SliverToBoxAdapter();
     }
-    final nftCategories = ref.watch(
-      NftCategoryProviders.fetchNftCategory(
-        context: context,
-        account: selectedAccount,
-      ),
-    );
 
     return SliverPadding(
       key: expandedKey,

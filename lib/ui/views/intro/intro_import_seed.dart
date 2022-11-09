@@ -463,8 +463,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                           );
 
                           // TODO(chralu): The provider is not updated
+                          final selectedAccount = await ref.read(
+                            AccountProviders.selectedAccount.future,
+                          );
                           await _launchSecurityConfiguration(
-                            ref.read(AccountProviders.selectedAccount)!.name,
+                            selectedAccount!.name,
                             newSession.wallet.seed,
                           );
 

@@ -61,9 +61,13 @@ class NftCreationProcessSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount = ref.watch(
-      AccountProviders.selectedAccount,
-    );
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    if (selectedAccount == null) return const SizedBox();
 
     return ProviderScope(
       overrides: [
@@ -71,7 +75,7 @@ class NftCreationProcessSheet extends ConsumerWidget {
           NftCreationFormNotifierParams(
             currentNftCategoryIndex: currentNftCategoryIndex,
             seed: seed,
-            selectedAccount: selectedAccount!,
+            selectedAccount: selectedAccount,
           ),
         ),
       ],

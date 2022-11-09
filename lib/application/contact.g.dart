@@ -110,6 +110,18 @@ class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
   String? get name => r'_fetchContactsProvider';
 }
 
+String $_getSelectedContactHash() =>
+    r'c7007a7b315479cced6245a02482fb73e0ad6b65';
+
+/// See also [_getSelectedContact].
+final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>(
+  _getSelectedContact,
+  name: r'_getSelectedContactProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_getSelectedContactHash,
+);
+typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact>;
 String $_getContactWithNameHash() =>
     r'7272ba74ac24402574cf64136acc86fa939f3ca3';
 

@@ -54,8 +54,10 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected = ref.read(AccountProviders.selectedAccount);
+    final accountSelected =
+        ref.read(AccountProviders.selectedAccount).valueOrNull;
 
+    if (accountSelected == null) return const SizedBox();
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -106,7 +108,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                     ref: ref,
                     widget: TransferSheet(
                       transferType: TransferType.nft,
-                      accountToken: accountSelected!.accountNFT![widget.index],
+                      accountToken: accountSelected.accountNFT![widget.index],
                       recipient: const TransferRecipient.address(
                         address: Address(''),
                       ),

@@ -30,11 +30,14 @@ class TransferFormSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
+
+    if (accountSelected == null) return const SizedBox();
 
     return TapOutsideUnfocus(
       child: SafeArea(

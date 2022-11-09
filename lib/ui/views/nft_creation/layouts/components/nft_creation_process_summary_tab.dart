@@ -16,7 +16,8 @@ class _NFTCreationProcessSummaryTabState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,
@@ -26,6 +27,8 @@ class _NFTCreationProcessSummaryTabState
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
     );
+
+    if (accountSelected == null) return const SizedBox();
 
     if (nftCreation.file != null) {
       return SingleChildScrollView(

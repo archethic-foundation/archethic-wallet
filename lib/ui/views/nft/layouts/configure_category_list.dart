@@ -27,15 +27,23 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final accountSelected = ref.watch(
-      AccountProviders.selectedAccount,
-    );
-    final listNftCategory = ref.watch(
-      NftCategoryProviders.fetchNftCategory(
-        context: context,
-        account: accountSelected!,
-      ),
-    );
+    final accountSelected = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    final listNftCategory = ref
+        .watch(
+          NftCategoryProviders.selectedAccountNftCategories(
+            context: context,
+          ),
+        )
+        .valueOrNull;
+
+    if (accountSelected == null || listNftCategory == null) {
+      return const SizedBox();
+    }
 
     return Column(
       children: <Widget>[

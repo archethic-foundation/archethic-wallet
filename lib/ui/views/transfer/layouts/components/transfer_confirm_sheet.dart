@@ -128,11 +128,15 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             request: 'id',
           );
 
-      await ref
-          .read(AccountProviders.selectedAccount)!
-          .removeftInfosOffChain(token.id);
+      final selectedAccount = await ref.read(
+        AccountProviders.selectedAccount.future,
+      );
 
-      ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+      await selectedAccount!.removeftInfosOffChain(
+        token.id,
+      ); // TODO(Chralu): we should not interact directly with data source. Use Providers instead.
+
+      await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
     }
 
     ref

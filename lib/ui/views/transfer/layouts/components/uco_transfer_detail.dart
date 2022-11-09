@@ -27,7 +27,11 @@ class UCOTransferDetail extends ConsumerWidget {
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final accountSelected = ref.watch(AccountProviders.selectedAccount);
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+
+    if (accountSelected == null) return const SizedBox();
+
     var amountInUco = transfer.amount;
     if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
       amountInUco = transfer.amountConverted;
@@ -52,7 +56,7 @@ class UCOTransferDetail extends ConsumerWidget {
           SheetDetailCard(
             children: [
               Text(
-                '${localizations.txListFrom} ${accountSelected!.name}',
+                '${localizations.txListFrom} ${accountSelected.name}',
                 style: theme.textStyleSize12W400Primary,
               ),
             ],

@@ -11,14 +11,19 @@ class NFTList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
-    final nftCategories = ref.read(
-      NftCategoryProviders.fetchNftCategory(
-        context: context,
-        account: accountSelected,
-      ),
-    );
+    final nftCategories = ref
+        .read(
+          NftCategoryProviders.selectedAccountNftCategories(
+            context: context,
+          ),
+        )
+        .valueOrNull;
+
+    if (nftCategories == null) return const SizedBox();
+
     final nftCategory = nftCategories
         .where(
           (element) => element.id == currentNftCategoryIndex,
@@ -26,7 +31,7 @@ class NFTList extends ConsumerWidget {
         .first;
 
     final accountTokenList =
-        accountSelected.getAccountNFTFiltered(nftCategory.id);
+        accountSelected?.getAccountNFTFiltered(nftCategory.id) ?? [];
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 10),

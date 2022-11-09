@@ -1,10 +1,19 @@
 part of 'providers.dart';
 
 @riverpod
-class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
+Future<String?> _selectedAccountName(_SelectedAccountNameRef ref) async {
+  final accounts = await ref.watch(AccountProviders.accounts.future);
+  for (final account in accounts) {
+    if (account.selected == true) return account.name;
+  }
+  return null;
+}
+
+@riverpod
+class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
   @override
-  Account? build() {
-    final accounts = ref.watch(AccountProviders.accounts).valueOrNull ?? [];
+  FutureOr<Account?> build() async {
+    final accounts = await ref.watch(AccountProviders.accounts.future);
     for (final account in accounts) {
       if (account.selected == true) return account;
     }
@@ -12,63 +21,34 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
   }
 
   Future<void> _refresh(
-    Future<void> Function(Account account) doRefresh,
+    Future<void> Function(_AccountNotifier accountNotifier) doRefresh,
   ) async {
-    final account = state;
-    if (account == null) return;
-    await account.updateLastAddress();
-
-    await doRefresh(account);
-
-    state = account.copyWith();
-    ref.invalidate(AccountProviders.account(account.name));
-  }
-
-  Future<void> _refreshRecentTransactions(Account account) async {
-    final session = ref.read(SessionProviders.session).loggedIn!;
-    await account.updateRecentTransactions(session.wallet.seed);
-  }
-
-  Future<void> _refreshBalance(Account account) async {
-    final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
-    final tokenPrice = await Price.getCurrency(
-      selectedCurrency.currency.name,
+    final accountName = state.valueOrNull?.name;
+    if (accountName == null) return;
+    final accountNotifier = ref.read(
+      AccountProviders.account(accountName).notifier,
     );
-    await account.updateBalance(
-      selectedCurrency.currency.name,
-      tokenPrice,
-    );
+
+    return doRefresh(accountNotifier);
   }
 
   Future<void> refreshRecentTransactions() => _refresh(
-        (account) async {
-          await _refreshRecentTransactions(account);
-          await _refreshBalance(account);
-        },
+        (accountNotifier) => accountNotifier.refreshRecentTransactions(),
       );
 
   Future<void> refreshFungibleTokens() => _refresh(
-        (account) async {
-          await account.updateFungiblesTokens();
-          await _refreshBalance(account);
-        },
+        (accountNotifier) => accountNotifier.refreshFungibleTokens(),
       );
 
   Future<void> refreshNFTs() => _refresh(
-        (account) async {
-          await account.updateNFT();
-          await _refreshBalance(account);
-        },
+        (accountNotifier) => accountNotifier.refreshNFTs(),
       );
 
-  Future<void> refreshBalance() => _refresh(_refreshBalance);
+  Future<void> refreshBalance() => _refresh(
+        (accountNotifier) => accountNotifier.refreshBalance(),
+      );
 
   Future<void> refreshAll() => _refresh(
-        (account) async {
-          await _refreshRecentTransactions(account);
-          await _refreshBalance(account);
-          await account.updateFungiblesTokens();
-          await account.updateNFT();
-        },
+        (accountNotifier) => accountNotifier.refreshAll(),
       );
 }

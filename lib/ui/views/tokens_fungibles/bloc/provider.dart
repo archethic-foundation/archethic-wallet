@@ -101,8 +101,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     required BuildContext context,
     required AddTokenFormState formState,
   }) async {
-    final selectedAccount = ref.read(
-      AccountProviders.selectedAccount,
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
     );
 
     late Transaction transaction;
@@ -246,8 +246,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     final localizations = AppLocalization.of(context)!;
 
-    final selectedAccount = ref.read(
-      AccountProviders.selectedAccount,
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
     );
 
     late Transaction transaction;

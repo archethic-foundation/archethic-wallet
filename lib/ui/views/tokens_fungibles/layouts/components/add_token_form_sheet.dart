@@ -33,11 +33,14 @@ class AddTokenFormSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
+
+    if (accountSelected == null) return const SizedBox();
 
     return TapOutsideUnfocus(
       child: SafeArea(

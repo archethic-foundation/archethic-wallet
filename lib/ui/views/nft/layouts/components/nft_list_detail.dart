@@ -160,8 +160,10 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final selectedAccount = ref.read(AccountProviders.selectedAccount)!;
+    final selectedAccount =
+        ref.read(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
+      // TODO(Chralu): we should not interact directly with Hive DTOs. Use providers instead.
       widget.tokenInformations.id,
     );
     final preferences = ref.watch(SettingsProviders.settings);
