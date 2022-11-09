@@ -1,5 +1,6 @@
 // Package imports:
 // Project imports:
+import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
@@ -9,33 +10,38 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
-part 'app_wallet.g.dart';
+part 'hive_app_wallet_dto.g.dart';
 
 @HiveType(typeId: 4)
-class AppWallet extends HiveObject {
-  AppWallet({
-    required this.seed,
+class HiveAppWalletDTO extends HiveObject {
+  HiveAppWalletDTO({
     required this.appKeychain,
   });
 
-  /// Seed
-  // @HiveField(0) // TODO(reddwarf03): seed is only stored in Vault
-  String seed;
+  factory HiveAppWalletDTO.fromModel(AppWallet appWallet) => HiveAppWalletDTO(
+        appKeychain: appWallet.appKeychain,
+      );
+
+  AppWallet toModel({
+    required String seed,
+  }) =>
+      AppWallet(
+        appKeychain: appKeychain,
+        seed: seed,
+      );
 
   /// Keychain
   @HiveField(1)
   AppKeychain appKeychain;
 
-  static Future<AppWallet> createNewAppWallet(
-    String seed,
+  static Future<HiveAppWalletDTO> createNewAppWallet(
     String keychainAddress,
     Keychain keychain,
     String? name,
   ) async {
     Account? selectedAcct;
 
-    var appWallet =
-        await sl.get<DBHelper>().createAppWallet(seed, keychainAddress);
+    var appWallet = await sl.get<DBHelper>().createAppWallet(keychainAddress);
 
     final nameEncoded = Uri.encodeFull(name!);
 
@@ -71,12 +77,10 @@ class AppWallet extends HiveObject {
     return appWallet;
   }
 
-  AppWallet copyWith({
+  HiveAppWalletDTO copyWith({
     AppKeychain? appKeychain,
-    String? seed,
   }) =>
-      AppWallet(
+      HiveAppWalletDTO(
         appKeychain: appKeychain ?? this.appKeychain,
-        seed: seed ?? this.seed,
       );
 }

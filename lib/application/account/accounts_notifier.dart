@@ -44,7 +44,7 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
     );
 
     await KeychainUtil().addAccountInKeyChain(
-      loggedInSession.wallet,
+      HiveAppWalletDTO.fromModel(loggedInSession.wallet),
       loggedInSession.wallet.seed,
       name,
       currencyName,
