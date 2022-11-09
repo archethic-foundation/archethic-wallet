@@ -574,6 +574,5 @@ abstract class NftCreationFormProvider {
     },
   );
   static final nftCreationFormArgs = _nftCreationFormProviderArgs;
-  // static final initialNftCreationForm = _initialNftCreationFormProvider;
   static final nftCreationForm = _nftCreationFormProvider;
 }
