@@ -330,16 +330,8 @@ class _AccountListItem extends ConsumerWidget {
                     .read(AccountProviders.accounts.notifier)
                     .selectAccount(account);
               }
-              ref
-                  .read(AccountProviders.selectedAccount.notifier)
-                  .refreshBalance();
-              ref
-                  .read(AccountProviders.selectedAccount.notifier)
-                  .refreshRecentTransactions();
-              ref
-                  .read(AccountProviders.selectedAccount.notifier)
-                  .refreshFungibleTokens();
-              ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+              ref.read(AccountProviders.selectedAccount.notifier).refreshAll();
+
               StateContainer.of(context).bottomBarCurrentPage = 1;
               StateContainer.of(context)
                   .bottomBarPageController!
