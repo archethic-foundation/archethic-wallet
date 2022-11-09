@@ -102,14 +102,24 @@ class _AddContactTextFieldAddressState
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
-          // TODO(reddwarf03): PB refresh textfield
           final data = await UserDataUtil.getClipboardText(
             DataType.address,
           );
+          if (data == null) {
+            UIUtil.showSnackbar(
+              localizations.invalidPasteAddress,
+              context,
+              ref,
+              theme.text!,
+              theme.snackBarShadow!,
+            );
+            return;
+          }
           await contactCreationNotifier.setAddress(
-            data!,
+            data,
             context,
           );
+          addressController.text = data;
         },
       ),
       fadeSuffixOnCondition: true,

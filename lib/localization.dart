@@ -545,6 +545,11 @@ class AppLocalization {
     return Intl.message('Address entered is invalid', name: 'invalidAddress');
   }
 
+  String get invalidPasteAddress {
+    return Intl.message('The address you want to paste is not valid.',
+        name: 'invalidPasteAddress');
+  }
+
   String get addressMissing {
     return Intl.message('Please Enter an Address', name: 'addressMissing');
   }

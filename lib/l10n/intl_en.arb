@@ -354,6 +354,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "invalidPasteAddress": "The address you want to paste is not valid.",
+  "@invalidPasteAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "addressMissing": "Please Enter an Address",
   "@addressMissing": {
     "type": "text",
