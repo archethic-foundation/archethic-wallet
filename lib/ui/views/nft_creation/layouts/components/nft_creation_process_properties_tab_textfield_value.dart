@@ -19,11 +19,13 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
 
   @override
   void initState() {
-    final nftCreation = ref.read(NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
+    final nftCreation = ref.read(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
       ),
-    ),);
+    );
     nftPropertyValueFocusNode = FocusNode();
     nftPropertyValueController =
         TextEditingController(text: nftCreation.propertyValue);
@@ -42,12 +44,26 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ).notifier,
+    );
+
+    ref.listen<NftCreationFormState>(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
       ),
-    ).notifier,);
+      (_, nftCreation) {
+        if (nftCreation.propertyValue != nftPropertyValueController.text) {
+          nftPropertyValueController.text = nftCreation.propertyValue;
+        }
+      },
+    );
 
     return AppTextField(
       focusNode: nftPropertyValueFocusNode,
