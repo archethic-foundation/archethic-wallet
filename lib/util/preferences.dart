@@ -120,6 +120,7 @@ class Preferences {
         networkDevEndpoint: getNetworkDevEndpoint(),
       );
 
+  // TODO(chralu): is it necessary ?
   Future<void> setNetworkDevEndpoint(String s) =>
       _setValue(curNetworkDevEndpoint, s);
 

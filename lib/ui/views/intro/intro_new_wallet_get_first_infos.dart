@@ -5,12 +5,12 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
+import 'package:aewallet/ui/util/network_choice_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +52,7 @@ class _IntroNewWalletDisclaimerState
     final network = NetworksSetting(
       network: settings.networks,
       networkDevEndpoint: ref
-          .read(SettingsProviders.localSettingsRepository)
+          .watch(SettingsProviders.localSettingsRepository)
           .getNetworkDevEndpoint(),
     );
 
@@ -158,9 +158,9 @@ class _IntroNewWalletDisclaimerState
                                 height: 5,
                                 color: theme.text15,
                               ),
-                              InkWell(
-                                onTap: () async {
-                                  await NetworkDialog.getDialog(
+                              NetworkChoiceInfos(
+                                onTap: () {
+                                  NetworkDialog.getDialog(
                                     context,
                                     ref,
                                     network,
@@ -168,39 +168,6 @@ class _IntroNewWalletDisclaimerState
                                   FocusScope.of(context)
                                       .requestFocus(nameFocusNode);
                                 },
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Padding(
-                                          padding: EdgeInsets.only(
-                                            right: 15,
-                                          ),
-                                          child: Icon(
-                                            UiIcons.about,
-                                            size: 15,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: AutoSizeText(
-                                            localizations
-                                                .introNewWalletGetFirstInfosNetworkHeader,
-                                            style: theme
-                                                .textStyleSize12W100Primary,
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${localizations.introNewWalletGetFirstInfosNetworkChoice} ${network.getDisplayName(context)}',
-                                      style: theme.textStyleSize12W400Primary,
-                                    ),
-                                  ],
-                                ),
                               ),
                               Divider(
                                 height: 5,

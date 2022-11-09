@@ -74,7 +74,7 @@ class NetworkDialog {
             onSelected: (value) async {
               final selectedNetworkSettings = NetworksSetting(
                 network: value.value as AvailableNetworks,
-                networkDevEndpoint: networkDevEndpoint,
+                networkDevEndpoint: '',
               );
 
               await ref

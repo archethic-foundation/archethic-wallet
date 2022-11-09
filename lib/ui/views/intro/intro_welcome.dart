@@ -2,6 +2,7 @@
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -9,7 +10,6 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -149,6 +149,15 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                           key: const Key('newWallet'),
                           onPressed: () async {
                             if (checkedValue) {
+                              await ref
+                                  .read(SettingsProviders.settings.notifier)
+                                  .setNetwork(
+                                    const NetworksSetting(
+                                      network:
+                                          AvailableNetworks.archethicMainNet,
+                                      networkDevEndpoint: '',
+                                    ),
+                                  );
                               Navigator.of(context).pushNamed(
                                 '/intro_welcome_get_first_infos',
                               );
