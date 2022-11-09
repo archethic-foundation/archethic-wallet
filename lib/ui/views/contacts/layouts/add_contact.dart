@@ -100,7 +100,7 @@ class AddContactSheetBody extends ConsumerWidget {
             ),
             const SizedBox(height: 30),
             Expanded(
-              child: ScrollBar(
+              child: ArchethicScrollbar(
                 child: Padding(
                   padding:
                       const EdgeInsets.only(left: 10, right: 10, bottom: 30),

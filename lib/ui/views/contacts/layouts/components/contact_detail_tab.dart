@@ -42,7 +42,7 @@ class ContactDetailTab extends ConsumerWidget {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: ScrollBar(
+            child: ArchethicScrollbar(
               child: Column(
                 children: <Widget>[
                   GestureDetector(

@@ -89,7 +89,7 @@ class _IntroConfigureSecurityState
                   ],
                 ),
                 Expanded(
-                  child: ScrollBar(
+                  child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
                         Container(

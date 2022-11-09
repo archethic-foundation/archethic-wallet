@@ -268,7 +268,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                   ],
                 ),
                 Expanded(
-                  child: ScrollBar(
+                  child: ArchethicScrollbar(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

@@ -213,7 +213,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                   ),
                 ),
                 Expanded(
-                  child: ScrollBar(
+                  child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
                         Container(

@@ -63,7 +63,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                   ],
                 ),
                 Expanded(
-                  child: ScrollBar(
+                  child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
                         IconWidget(

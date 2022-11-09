@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ScrollBar extends StatefulWidget {
-  const ScrollBar({
+class ArchethicScrollbar extends StatefulWidget {
+  const ArchethicScrollbar({
     super.key,
     required this.child,
     this.scrollPhysics,
@@ -11,10 +11,10 @@ class ScrollBar extends StatefulWidget {
   final ScrollPhysics? scrollPhysics;
 
   @override
-  State<ScrollBar> createState() => _ScrollBarState();
+  State<ArchethicScrollbar> createState() => _ArchethicScrollbarState();
 }
 
-class _ScrollBarState extends State<ScrollBar> {
+class _ArchethicScrollbarState extends State<ArchethicScrollbar> {
   late ScrollController scrollController;
 
   @override
