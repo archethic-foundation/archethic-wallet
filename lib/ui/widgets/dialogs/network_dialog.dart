@@ -8,7 +8,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,8 +26,11 @@ class NetworkDialog {
     final endpointController = TextEditingController();
     String? endpointError;
 
-    final preferences = await Preferences.getInstance();
-    final networkDevEndpoint = preferences.getNetworkDevEndpoint();
+    final networkDevEndpoint = ref.watch(
+      SettingsProviders.settings.select(
+        (value) => value.network.networkDevEndpoint,
+      ),
+    );
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableNetworks.values) {
       final networkSetting = NetworksSetting(
@@ -76,13 +78,13 @@ class NetworkDialog {
                 networkDevEndpoint: networkDevEndpoint,
               );
 
-              ref.read(SettingsProviders.localSettingsRepository).setNetwork(
+              ref.read(SettingsProviders.settings.notifier).setNetwork(
                     selectedNetworkSettings,
                   );
 
               if (value.value as AvailableNetworks ==
                   AvailableNetworks.archethicDevNet) {
-                endpointController.text = preferences.getNetworkDevEndpoint();
+                endpointController.text = networkDevEndpoint;
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
                   context: context,
@@ -194,9 +196,14 @@ class NetworkDialog {
                                             );
                                           });
                                         } else {
-                                          preferences.setNetworkDevEndpoint(
-                                            endpointController.text,
-                                          );
+                                          ref
+                                              .read(
+                                                SettingsProviders
+                                                    .settings.notifier,
+                                              )
+                                              .setNetworkDevEndpoint(
+                                                endpointController.text,
+                                              );
                                           Navigator.pop(context);
                                         }
                                       }

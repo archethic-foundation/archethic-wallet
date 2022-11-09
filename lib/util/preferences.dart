@@ -109,24 +109,30 @@ class Preferences {
         )],
       );
 
-  Future<void> setNetwork(NetworksSetting network) =>
-      _setValue(curNetwork, network.getIndex());
+  Future<void> setNetwork(NetworksSetting network) async {
+    await _setValue(curNetwork, network.getIndex());
+    await _setValue(curNetworkDevEndpoint, network.networkDevEndpoint);
+  }
 
   NetworksSetting getNetwork() => NetworksSetting(
         network: AvailableNetworks.values[_getValue(
           curNetwork,
           defaultValue: AvailableNetworks.archethicMainNet.index,
         )],
-        networkDevEndpoint: getNetworkDevEndpoint(),
+        networkDevEndpoint: _getValue(
+          curNetworkDevEndpoint,
+          defaultValue: 'http://localhost:4000',
+        ),
       );
 
-  Future<void> setNetworkDevEndpoint(String s) =>
-      _setValue(curNetworkDevEndpoint, s);
+  // Future<void> setNetworkDevEndpoint(String s) {
+  //   return _setValue(curNetworkDevEndpoint, s);
+  // }
 
-  String getNetworkDevEndpoint() => _getValue(
-        curNetworkDevEndpoint,
-        defaultValue: 'http://localhost:4000',
-      );
+  // String getNetworkDevEndpoint() => _getValue(
+  //       curNetworkDevEndpoint,
+  //       defaultValue: 'http://localhost:4000',
+  //     );
 
   Future<void> setLanguageSeed(String v) => _setValue(languageSeed, v);
 
@@ -265,10 +271,7 @@ class Preferences {
         lockAttempts: getLockAttempts(),
         lockTimeout: getLockTimeout().setting,
         mainScreenCurrentPage: getMainScreenCurrentPage(),
-        network: NetworksSetting(
-          network: getNetwork().network,
-          networkDevEndpoint: getNetworkDevEndpoint(),
-        ),
+        network: getNetwork(),
         primaryCurrency: getPrimaryCurrency(),
         showBalances: getShowBalances(),
         showBlog: getShowBlog(),

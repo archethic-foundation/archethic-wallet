@@ -1,3 +1,4 @@
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/settings.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
@@ -72,5 +73,19 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> setActiveVibrations(bool activeVibrations) async {
     await preferences.setActiveVibrations(activeVibrations);
     state = state.copyWith(activeVibrations: activeVibrations);
+  }
+
+  Future<void> setNetwork(NetworksSetting selectedNetworkSettings) async {
+    await preferences.setNetwork(selectedNetworkSettings);
+    state = state.copyWith(network: selectedNetworkSettings);
+  }
+
+  Future<void> setNetworkDevEndpoint(String networkDevEndpoint) async {
+    final network = NetworksSetting(
+      network: state.network.network,
+      networkDevEndpoint: networkDevEndpoint,
+    );
+    await preferences.setNetwork(network);
+    state = state.copyWith(network: network);
   }
 }
