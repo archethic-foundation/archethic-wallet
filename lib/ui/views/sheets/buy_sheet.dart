@@ -27,7 +27,7 @@ class BuySheet extends ConsumerWidget {
                   bottom: MediaQuery.of(context).size.height * 0.035,
                   top: 50,
                 ),
-                child: ScrollBar(
+                child: ArchethicScrollbar(
                   child: Column(
                     children: <Widget>[
                       InkWell(

@@ -179,7 +179,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                       ),
                       if (mnemonic != null)
                         Expanded(
-                          child: ScrollBar(
+                          child: ArchethicScrollbar(
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),

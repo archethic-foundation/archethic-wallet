@@ -72,7 +72,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
                         opacity: 0.7,
                       ),
                     ),
-                    child: ScrollBar(
+                    child: ArchethicScrollbar(
                       scrollPhysics: const AlwaysScrollableScrollPhysics(),
                       child: Padding(
                         padding: const EdgeInsets.only(

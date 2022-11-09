@@ -50,7 +50,7 @@ class TransferFormSheet extends ConsumerWidget {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                child: ScrollBar(
+                child: ArchethicScrollbar(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: bottom + 80),
                     child: Column(

@@ -85,7 +85,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                child: ScrollBar(
+                child: ArchethicScrollbar(
                   child: Column(
                     children: <Widget>[
                       Text(
