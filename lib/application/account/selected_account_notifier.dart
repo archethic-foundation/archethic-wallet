@@ -62,4 +62,13 @@ class _SelectedAccountNotifier extends AutoDisposeNotifier<Account?> {
       );
 
   Future<void> refreshBalance() => _refresh(_refreshBalance);
+
+  Future<void> refreshAll() => _refresh(
+        (account) async {
+          await _refreshRecentTransactions(account);
+          await _refreshBalance(account);
+          await account.updateFungiblesTokens();
+          await account.updateNFT();
+        },
+      );
 }
