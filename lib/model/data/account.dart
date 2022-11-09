@@ -237,11 +237,11 @@ class Account extends HiveObject {
     if (nftInfosOffChainList == null) {
       return;
     }
-    for (final nftInfosOffChain in nftInfosOffChainList!) {
-      if (nftInfosOffChain.id == tokenId) {
-        nftInfosOffChain.delete();
-      }
-    }
+
+    nftInfosOffChainList!.removeWhere(
+      (element) => element.id == tokenId,
+    );
+
     await updateAccount();
   }
 
