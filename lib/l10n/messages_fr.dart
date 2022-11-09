@@ -175,6 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "introNewWalletGetFirstInfosWelcome" : MessageLookupByLibrary.simpleMessage("Bienvenue dans le Wallet Archethic."),
     "invalidAddress" : MessageLookupByLibrary.simpleMessage("L\'adresse saisie n\'est pas valide"),
     "invalidPassword" : MessageLookupByLibrary.simpleMessage("Le mot de passe est invalide"),
+    "invalidPasteAddress" : MessageLookupByLibrary.simpleMessage("L\'adresse que vous souhaitez coller n\'est pas valide."),
     "iveBackedItUp" : MessageLookupByLibrary.simpleMessage("Je l\'ai sauvegardé"),
     "keychainAccessCreationTransactionConfirmed" : MessageLookupByLibrary.simpleMessage("Les accès à votre porte-clés ont été créés avec %1 confirmations sur %2"),
     "keychainAccessCreationTransactionConfirmed1" : MessageLookupByLibrary.simpleMessage("Les accès à votre porte-clés ont été créés avec %1 confirmation sur %2"),
