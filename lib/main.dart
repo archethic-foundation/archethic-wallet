@@ -50,7 +50,7 @@ Future<void> main() async {
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
     );
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.waitUntilReadyToShow(windowOptions, () async {
       windowManager.setResizable(false);
       await windowManager.show();
       await windowManager.focus();
@@ -60,7 +60,7 @@ Future<void> main() async {
   final localPreferencesRepository = await Preferences.getInstance();
 
   // Run app
-  SystemChrome.setPreferredOrientations(
+  await SystemChrome.setPreferredOrientations(
     <DeviceOrientation>[DeviceOrientation.portraitUp],
   ).then((_) {
     runApp(
@@ -271,17 +271,17 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       await ref.read(SessionProviders.session.notifier).restore();
 
       final session = ref.read(SessionProviders.session);
+      FlutterNativeSplash.remove();
 
       if (session.isLoggedOut) {
         await _goToIntroScreen();
-        FlutterNativeSplash.remove();
         return;
       }
 
       if (preferences.getLock()) {
-        Navigator.of(context).pushReplacementNamed('/home');
+        await Navigator.of(context).pushReplacementNamed('/home');
 
-        AuthFactory.forceAuthenticate(
+        await AuthFactory.forceAuthenticate(
           context,
           ref,
           authMethod: ref.read(
@@ -291,13 +291,13 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         );
       } else {
         await StateContainer.of(context).requestUpdate();
-        Navigator.of(context).pushReplacementNamed('/home');
+        await Navigator.of(context).pushReplacementNamed('/home');
       }
     } catch (e) {
       dev.log(e.toString());
-      _goToIntroScreen();
+      FlutterNativeSplash.remove();
+      await _goToIntroScreen();
     }
-    FlutterNativeSplash.remove();
   }
 
   Future<void> _goToIntroScreen() async {
@@ -305,7 +305,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     await ref
         .read(ThemeProviders.selectedThemeOption.notifier)
         .selectTheme(ThemeOptions.dark);
-    Navigator.of(context).pushReplacementNamed('/intro_welcome');
+    await Navigator.of(context).pushReplacementNamed('/intro_welcome');
   }
 
   @override
