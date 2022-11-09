@@ -48,10 +48,9 @@ class _SessionNotifier extends Notifier<Session> {
   }
 
   Future<void> logout() async {
-    (await Vault.getInstance()).clearAll();
-    (await Preferences.getInstance()).clearAll();
-    sl.get<DBHelper>().clearAll();
-
+    await (await Vault.getInstance()).clearAll();
+    await (await Preferences.getInstance()).clearAll();
+    await sl.get<DBHelper>().clearAll();
     state = const Session.loggedOut();
     // TODO(Chralu): is it useful ?
     // RestartWidget.restartApp(context);

@@ -140,7 +140,7 @@ class SecurityMenuView extends ConsumerWidget {
                                     )
                                     .selectTheme(ThemeOptions.dark);
 
-                                ref
+                                await ref
                                     .read(SessionProviders.session.notifier)
                                     .logout();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
