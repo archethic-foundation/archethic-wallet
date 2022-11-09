@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
@@ -80,6 +81,7 @@ Future<void> main() async {
   });
 }
 
+// TODO(Chralu): This could be stateless
 class App extends ConsumerStatefulWidget {
   const App({super.key});
 

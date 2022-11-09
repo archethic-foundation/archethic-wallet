@@ -267,8 +267,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     required TransferFormState formState,
   }) async {
-    final selectedAccount = ref.read(
-      AccountProviders.selectedAccount,
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
     );
     final recipientAddress = formState.recipient.address;
     if (recipientAddress == null) return null;
@@ -607,8 +607,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final localizations = AppLocalization.of(context)!;
 
-    final selectedAccount = ref.read(
-      AccountProviders.selectedAccount,
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
     );
 
     var amountInUCO = state.amount;

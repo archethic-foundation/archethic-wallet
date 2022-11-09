@@ -57,9 +57,13 @@ class TransferSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount = ref.watch(
-      AccountProviders.selectedAccount,
-    );
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    if (selectedAccount == null) return const SizedBox();
 
     final seed = ref.watch(SessionProviders.session).loggedIn!.wallet.seed;
 
@@ -73,7 +77,7 @@ class TransferSheet extends ConsumerWidget {
             accountToken: accountToken,
             seed: seed,
             recipient: recipient,
-            accountBalance: selectedAccount!.balance!,
+            accountBalance: selectedAccount.balance!,
             amount: transferType == TransferType.nft ? 1 : 0,
           ),
         ),

@@ -308,7 +308,8 @@ class _AccountListItem extends ConsumerWidget {
       ),
     );
 
-    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
     return contact.map(
       data: (data) {

@@ -1,5 +1,7 @@
 // ignore_for_file: cancel_subscriptions, prefer_const_constructors
 import 'dart:async';
+import 'dart:core';
+
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -18,6 +20,7 @@ import 'package:aewallet/ui/views/main/main_appbar.dart';
 import 'package:aewallet/ui/views/main/main_bottombar.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
+import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
@@ -186,16 +189,18 @@ class _HomePageState extends ConsumerState<HomePage>
           child: SettingsSheetWallet(),
         ),
       ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: StateContainer.of(context).bottomBarPageController,
-        children: const [AccountsListTab(), AccountTab(), NFTTab()],
-        //children: const [AccountsListTab(), AccountTab()],
-        onPageChanged: (index) {
-          setState(
-            () => StateContainer.of(context).bottomBarCurrentPage = index,
-          );
-        },
+      body: IncomingTransactionsNotifier(
+        child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: StateContainer.of(context).bottomBarPageController,
+          children: const [AccountsListTab(), AccountTab(), NFTTab()],
+          //children: const [AccountsListTab(), AccountTab()],
+          onPageChanged: (index) {
+            setState(
+              () => StateContainer.of(context).bottomBarCurrentPage = index,
+            );
+          },
+        ),
       ),
     );
   }
@@ -257,7 +262,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final session = ref.watch(SessionProviders.session).loggedIn;
 
-    if (session == null) return SizedBox();
+    if (session == null) return const SizedBox();
 
     return Column(
       children: [

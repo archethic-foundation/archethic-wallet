@@ -8,19 +8,13 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/keychain_util.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'account_notifier.dart';
 part 'accounts_notifier.dart';
 part 'providers.g.dart';
 part 'selected_account_notifier.dart';
-
-@riverpod
-Future<Account> _account(_AccountRef ref, String name) async {
-  final repository = ref.read(AccountProviders.accountsRepository);
-  final account = await repository.getAccount(name);
-
-  return account!;
-}
 
 @riverpod
 Future<List<Account>> _sortedAccounts(_SortedAccountsRef ref) async {
@@ -39,7 +33,11 @@ abstract class AccountProviders {
     (ref) => AccountLocalRepository(),
   );
   static final accounts = _accountsNotifierProvider;
-  static final account = _accountProvider;
+  static final account = AsyncNotifierProvider.autoDispose
+      .family<_AccountNotifier, Account?, String>(
+    _AccountNotifier.new,
+  );
   static final sortedAccounts = _sortedAccountsProvider;
   static final selectedAccount = _selectedAccountNotifierProvider;
+  static final selectedAccountName = _selectedAccountNameProvider;
 }

@@ -11,12 +11,19 @@ class BalanceInfosKpi extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final chartInfos = StateContainer.of(context).chartInfos;
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount.select((value) => value?.balance),
+      AccountProviders.selectedAccount.select(
+        (value) => value.valueOrNull?.balance,
+      ),
     );
 
     final preferences = ref.watch(SettingsProviders.settings);
 
-    if (accountSelectedBalance == null) return const SizedBox();
+// TODO(Chralu): Token Price is null before pull-to-refresh
+    if (accountSelectedBalance == null ||
+        accountSelectedBalance.nativeTokenName == null ||
+        accountSelectedBalance.tokenPrice?.amount == null) {
+      return const SizedBox();
+    }
 
     if (chartInfos?.data == null) {
       return const SizedBox(

@@ -1,6 +1,5 @@
 // Flutter imports:
 // Project imports:
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings.dart';
@@ -42,7 +41,6 @@ class AccountTab extends ConsumerWidget {
               await ref.read(SessionProviders.session.notifier).refresh();
               ref.invalidate(BlogProviders.fetchArticles);
               ref.invalidate(ContactProviders.fetchContacts);
-              ref.invalidate(AccountProviders.selectedAccount);
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

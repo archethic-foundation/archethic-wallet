@@ -102,10 +102,13 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount.select((value) => value?.balance),
-    )!;
+      AccountProviders.selectedAccount
+          .select((value) => value.valueOrNull?.balance),
+    );
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(CurrencyProviders.selectedCurrency);
+
+    if (accountSelectedBalance == null) return const SizedBox();
     return RichText(
       text: TextSpan(
         text: '',
@@ -147,11 +150,13 @@ class _BalanceIndicatorNative extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount.select((value) => value?.balance),
-    )!;
+      AccountProviders.selectedAccount
+          .select((value) => value.valueOrNull?.balance),
+    );
 
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
+    if (accountSelectedBalance == null) return const SizedBox();
     return RichText(
       text: TextSpan(
         text: '',

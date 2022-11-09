@@ -6,7 +6,6 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
-import 'package:aewallet/util/preferences.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +16,6 @@ class ThemeDialog {
     WidgetRef ref,
     ThemeSetting curThemeSetting,
   ) async {
-    final preferences = await Preferences.getInstance();
     final pickerItemsList = ThemeOptions.values
         .map(
           (theme) => ThemePickerItemExt.fromThemeOption(context, theme),

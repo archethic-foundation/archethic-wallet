@@ -1,73 +1,105 @@
-// import 'dart:async';
-// import 'dart:io';
+import 'dart:async';
+import 'dart:developer';
 
-// import 'package:aewallet/application/wallet/wallet.dart';
-// import 'package:aewallet/localization.dart';
-// import 'package:aewallet/service/app_service.dart';
-// import 'package:aewallet/util/get_it_instance.dart';
-// import 'package:aewallet/util/notifications_util.dart';
-// import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-// import 'package:flutter/foundation.dart';
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// abstract class CheckTransactions {}
+part 'state.dart';
 
+abstract class CheckTransactionsProvider {
+  static final provider = StreamProvider.autoDispose<ReceivedTransaction>(
+    _checkTransactions,
+  );
+}
 
-// TODO(Chralu): a declencher lorsqu'on est loggé et que SettingsProviders.settings.activeNotifications et true.
-// void tansactionInputs(LoggedInSession session) {
-//   final message =
-//       'bonjour'; // TODO(Chralu): use the appropriate message AppLocalization.of(context)!.transactionInputNotification;
-//   if (!kIsWeb &&
-//       (Platform.isIOS == true ||
-//           Platform.isAndroid == true ||
-//           Platform.isMacOS == true)) {
-//     Timer.periodic(
-//       const Duration(seconds: 30),
-//       (Timer t) async {
-//         final accounts = session.wallet.appKeychain.accounts;
-//         for (final account in accounts) {
-//           final transactionInputList =
-//               await sl.get<AppService>().getTransactionInputs(
-//                     account.lastAddress!,
-//                     'from, amount, timestamp, tokenAddress ',
-//                   );
+Stream<ReceivedTransaction> _checkTransactions(
+  Ref ref,
+) async* {
+  Timer? _checkTransactionsTimer;
+  final streamController = StreamController<ReceivedTransaction>.broadcast();
 
-//           for (final transactionInput in transactionInputList) {
-//             if (account.lastLoadingTransactionInputs == null ||
-//                 transactionInput.timestamp! >
-//                     account.lastLoadingTransactionInputs!) {
-//               account.updateLastLoadingTransactionInputs();
-//               if (transactionInput.from != account.lastAddress) {
-//                 var symbol = 'UCO';
-//                 if (transactionInput.tokenAddress != null) {
-//                   symbol = (await sl
-//                           .get<ApiService>()
-//                           .getToken(transactionInput.tokenAddress!))
-//                       .symbol!;
-//                 }
-//                 NotificationsUtil.showNotification(
-//                   title: 'Archethic',
-//                   body: message
-//                       .replaceAll(
-//                         '%1',
-//                         fromBigInt(transactionInput.amount).toString(),
-//                       )
-//                       .replaceAll('%2', symbol)
-//                       .replaceAll('%3', account.name!),
-//                   payload: account.name,
-//                 );
-//                 await requestUpdate(forceUpdateChart: false);
-//               }
-//             }
-//           }
-//         }
-//       },
-//     );
-//   }
-// }
+  Future<void> _cancelCheck() async {
+    if (_checkTransactionsTimer == null) return;
+    log('[CheckTransactionScheduler] cancelling scheduler');
+    _checkTransactionsTimer?.cancel();
+    _checkTransactionsTimer = null;
+  }
 
-// // TODO(Chralu): a declencher lorsqu'on logout
-// void cancelTimerCheckTransactionInputs() {
-//   if (timerCheckTransactionInputs != null) {
-//     timerCheckTransactionInputs!.cancel();
-//   }
-// }
+  void _scheduleCheck() {
+    if (_checkTransactionsTimer != null && _checkTransactionsTimer!.isActive) {
+      log('[CheckTransactionScheduler] start abort : scheduler already running');
+      return;
+    }
+    log('[CheckTransactionScheduler] starting scheduler');
+
+    _checkTransactionsTimer = Timer.periodic(
+      const Duration(seconds: 30),
+      (Timer t) async {
+        final accounts = await ref.read(AccountProviders.accounts.future);
+        for (final account in accounts) {
+          final transactionInputList =
+              await sl.get<AppService>().getTransactionInputs(
+                    account.lastAddress!,
+                    'from, amount, timestamp, tokenAddress ',
+                  );
+
+          for (final transactionInput in transactionInputList) {
+            if (account.lastLoadingTransactionInputs != null &&
+                transactionInput.timestamp! <=
+                    account.lastLoadingTransactionInputs!) {
+              continue;
+            }
+            if (transactionInput.from != account.lastAddress) {
+              var symbol = 'UCO';
+              if (transactionInput.tokenAddress != null) {
+                symbol = (await sl
+                        .get<ApiService>()
+                        .getToken(transactionInput.tokenAddress!))
+                    .symbol!;
+              }
+              streamController.add(
+                ReceivedTransaction(
+                  accountName: account.name,
+                  amount: transactionInput.amount ?? 0,
+                  currencySymbol: symbol,
+                ),
+              );
+
+              await ref
+                  .read(AccountProviders.account(account.name).notifier)
+                  .refreshRecentTransactions();
+            }
+          }
+        }
+      },
+    );
+  }
+
+  ref.onDispose(
+    () {
+      _cancelCheck();
+      streamController.close();
+    },
+  );
+
+  final activeNotifications = ref.watch(
+    SettingsProviders.settings.select(
+      (settings) => settings.activeNotifications,
+    ),
+  );
+  final session = ref.watch(SessionProviders.session).loggedIn;
+
+  if (!activeNotifications || session == null) {
+    await _cancelCheck();
+    return;
+  }
+
+  _scheduleCheck();
+  yield* streamController.stream;
+}

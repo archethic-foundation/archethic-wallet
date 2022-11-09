@@ -18,7 +18,7 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
         await ref.watch(
           AccountProviders.account(accountName).future,
         ),
-    ];
+    ].whereType<Account>().toList();
   }
 
   Future<void> selectAccount(Account account) async {

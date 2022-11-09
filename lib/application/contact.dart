@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -25,12 +26,24 @@ Future<List<Contact>> _fetchContacts(
 }
 
 @riverpod
+Future<Contact> _getSelectedContact(_GetSelectedContactRef ref) async {
+  final selectedAccountName =
+      await ref.watch(AccountProviders.selectedAccountName.future);
+  if (selectedAccountName == null) throw Exception();
+
+  return ref.watch(_getContactWithNameProvider(selectedAccountName).future);
+}
+
+@riverpod
 Future<Contact> _getContactWithName(
   _GetContactWithNameRef ref,
   String name,
 ) async {
-  final searchedContact =
-      await ref.watch(_contactRepositoryProvider).getContactWithName(name);
+  final searchedContact = await ref
+      .watch(
+        _contactRepositoryProvider,
+      )
+      .getContactWithName(name);
   return searchedContact;
 }
 
@@ -157,4 +170,5 @@ abstract class ContactProviders {
   static final getContactWithName = _getContactWithNameProvider;
   static final getContactWithAddress = _getContactWithAddressProvider;
   static final getContactWithPublicKey = _getContactWithPublicKeyProvider;
+  static final getSelectedContact = _getSelectedContactProvider;
 }

@@ -36,7 +36,8 @@ class BalanceInfos extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount.select((value) => value?.balance),
+      AccountProviders.selectedAccount
+          .select((value) => value.valueOrNull?.balance),
     );
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =

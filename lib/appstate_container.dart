@@ -86,8 +86,9 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
     final tokenPrice = await Price.getCurrency(currency.currency.name);
 
-    ref.read(AccountProviders.selectedAccount)!.balance!.tokenPrice =
-        tokenPrice;
+    (await ref.read(AccountProviders.selectedAccount.future))!
+        .balance!
+        .tokenPrice = tokenPrice;
     sl.get<DBHelper>().saveAppWallet(HiveAppWalletDTO.fromModel(appWallet));
     await chartInfos!.updateCoinsChart(
       currency.currency.name,
@@ -98,9 +99,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
   Future<void> requestUpdate({
     bool forceUpdateChart = true,
   }) async {
-    final selectedAccount = ref.read(AccountProviders.selectedAccount);
-    if (selectedAccount == null) return;
-
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
 
     final preferences = ref.read(SettingsProviders.settings);

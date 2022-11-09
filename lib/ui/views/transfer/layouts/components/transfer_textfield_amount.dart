@@ -56,13 +56,16 @@ class _TransferTextFieldAmountState
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final primaryCurrencyNotifier =
         ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier);
-    final accountSelected = ref.watch(AccountProviders.selectedAccount);
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final localCurrencyFormat = NumberFormat.currency(
       locale: CurrencyUtil.getLocale(currency.currency.name).toString(),
       symbol: CurrencyUtil.getCurrencySymbol(
         currency.currency.name,
       ),
     );
+
+    if (accountSelected == null) return const SizedBox();
 
     return Column(
       children: [
@@ -92,7 +95,7 @@ class _TransferTextFieldAmountState
             transferNotifier.setAmount(
               context: context,
               amount: double.tryParse(text) ?? 0,
-              tokenPrice: accountSelected!.balance!.tokenPrice!.amount ?? 0,
+              tokenPrice: accountSelected.balance!.tokenPrice!.amount ?? 0,
             );
           },
           textInputAction: TextInputAction.next,
@@ -122,7 +125,7 @@ class _TransferTextFieldAmountState
               }
               await transferNotifier.setMaxAmount(
                 context: context,
-                tokenPrice: accountSelected!.balance!.tokenPrice!.amount,
+                tokenPrice: accountSelected.balance!.tokenPrice!.amount,
               );
               _updateAmountTextController();
               transferNotifier.setDefineMaxAmountInProgress(
@@ -146,7 +149,7 @@ class _TransferTextFieldAmountState
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected!.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
+                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),

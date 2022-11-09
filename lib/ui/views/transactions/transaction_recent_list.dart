@@ -14,12 +14,11 @@ class TxList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recentTransactionsAsyncValue = ref.watch(
+    final recentTransactions = ref.watch(
       AccountProviders.selectedAccount.select(
-        (account) => account?.recentTransactions,
+        (account) => account.valueOrNull?.recentTransactions,
       ),
     );
-    final recentTransactions = recentTransactionsAsyncValue;
 
     final theme = ref.watch(ThemeProviders.selectedTheme);
 

@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -25,14 +24,16 @@ class CategoryTemplateForm extends ConsumerWidget {
         ),
       ),
     );
-    final accountSelected = ref.watch(AccountProviders.selectedAccount)!;
 
-    final listNftCategory = ref.watch(
-      NftCategoryProviders.fetchNftCategory(
-        context: context,
-        account: accountSelected,
-      ),
-    );
+    final listNftCategory = ref
+        .watch(
+          NftCategoryProviders.selectedAccountNftCategories(
+            context: context,
+          ),
+        )
+        .valueOrNull;
+
+    if (listNftCategory == null) return const SizedBox();
 
     switch (nftCreation.currentNftCategoryIndex) {
       case 4:

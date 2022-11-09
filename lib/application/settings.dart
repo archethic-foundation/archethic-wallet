@@ -12,8 +12,7 @@ final _localSettingsRepositoryProvider = Provider<Preferences>(
 abstract class SettingsProviders {
   static final localSettingsRepository = _localSettingsRepositoryProvider;
 
-  static final settings =
-      StateNotifierProvider.autoDispose<SettingsNotifier, Settings>(
+  static final settings = StateNotifierProvider<SettingsNotifier, Settings>(
     (ref) {
       final preferences = ref.read(_localSettingsRepositoryProvider);
 

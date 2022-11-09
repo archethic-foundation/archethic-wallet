@@ -162,7 +162,10 @@ class _SignTransactionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    if (selectedAccount == null) return const SizedBox();
+
     return ElevatedButton(
       child: Text(
         'Ledger - Verify transaction',
@@ -188,7 +191,7 @@ class _SignTransactionButton extends StatelessWidget {
           );
         }
         final lastTransaction = await sl.get<ApiService>().getLastTransaction(
-              selectedAccount!.lastAddress!,
+              selectedAccount.lastAddress!,
               request: 'chainLength',
             );
         final transactionChainSeed =

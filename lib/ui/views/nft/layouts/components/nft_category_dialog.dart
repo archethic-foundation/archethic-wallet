@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -15,12 +14,10 @@ class NftCategoryDialog {
     WidgetRef ref,
   ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-    final accountSelected = ref.read(AccountProviders.selectedAccount);
-    final listNftCategory = ref.read(
-      NftCategoryProviders.fetchNftCategory(
+    final listNftCategory = await ref.read(
+      NftCategoryProviders.selectedAccountNftCategories(
         context: context,
-        account: accountSelected!,
-      ),
+      ).future,
     );
 
     for (final nftCategory in listNftCategory) {

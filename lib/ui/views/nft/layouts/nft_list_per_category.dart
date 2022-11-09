@@ -23,8 +23,13 @@ class NFTListPerCategory extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected = ref.read(AccountProviders.selectedAccount);
+    final accountSelected = ref
+        .read(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
 
+    if (accountSelected == null) return const SizedBox();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
@@ -60,7 +65,7 @@ class NFTListPerCategory extends ConsumerWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    if (accountSelected!.balance!.isNativeTokenValuePositive())
+                    if (accountSelected.balance!.isNativeTokenValuePositive())
                       AppButton(
                         AppButtonType.primary,
                         localizations.createNFT,

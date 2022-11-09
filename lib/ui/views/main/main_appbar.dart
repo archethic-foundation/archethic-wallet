@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
-// Project imports:
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
@@ -43,7 +41,12 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         (value) => value.loggedIn?.wallet.appKeychain,
       ),
     );
-    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+    final selectedAccount = null;
+    // ref
+    //     .watch(
+    //       AccountProviders.selectedAccount,
+    //     )
+    //     .valueOrNull;
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
       child: ClipRRect(
@@ -63,8 +66,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       context: context,
                       ref: ref,
                       widget: const ConfigureCategoryList(),
-                      onDisposed: () =>
-                          ref.invalidate(NftCategoryProviders.fetchNftCategory),
+                      onDisposed: () => ref
+                          .invalidate(NftCategoryProviders.fetchNftCategories),
                     );
                   },
                 )

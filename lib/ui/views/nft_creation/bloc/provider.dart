@@ -129,8 +129,8 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     required BuildContext context,
     required NftCreationFormState formState,
   }) async {
-    final selectedAccount = ref.read(
-      AccountProviders.selectedAccount,
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
     );
 
     late Transaction transaction;
@@ -471,8 +471,8 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
 
     final localizations = AppLocalization.of(context)!;
 
-    final selectedAccount = ref.read(
-      AccountProviders.selectedAccount,
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
     );
 
     late Transaction transaction;

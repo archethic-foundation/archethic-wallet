@@ -84,7 +84,8 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
           ),
         );
 
-        final selectedAccount = ref.read(AccountProviders.selectedAccount);
+        final selectedAccount =
+            await ref.read(AccountProviders.selectedAccount.future);
         await selectedAccount?.updateNftInfosOffChain(
           tokenAddress: event.transactionAddress,
           categoryNftIndex: nftCreation.currentNftCategoryIndex,

@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
@@ -13,19 +14,39 @@ NFTCategoryRepository _nftCategoryRepository(_NftCategoryRepositoryRef ref) =>
     NFTCategoryRepository();
 
 @riverpod
+Future<List<NftCategory>> _selectedAccountNftCategories(
+  _SelectedAccountNftCategoriesRef ref, {
+  required BuildContext context,
+}) async {
+  final selectedAccount =
+      await ref.watch(AccountProviders.selectedAccount.future);
+
+  if (selectedAccount == null) {
+    return ref.watch(_nftCategoryRepositoryProvider).getListByDefault(context);
+  }
+
+  return ref.watch(
+    _fetchNftCategoryProvider(
+      context: context,
+      account: selectedAccount,
+    ),
+  );
+}
+
+@riverpod
 List<NftCategory> _fetchNftCategory(
   _FetchNftCategoryRef ref, {
   required BuildContext context,
   required Account account,
 }) {
   final nftCategoryAccountSelectedList = ref
-      .read(_nftCategoryRepositoryProvider)
+      .watch(_nftCategoryRepositoryProvider)
       .getListNftCategory(context, account);
   if (nftCategoryAccountSelectedList.isNotEmpty) {
     return nftCategoryAccountSelectedList;
   }
 
-  return ref.read(_nftCategoryRepositoryProvider).getListByDefault(context);
+  return ref.watch(_nftCategoryRepositoryProvider).getListByDefault(context);
 }
 
 @riverpod
@@ -184,7 +205,9 @@ class NFTCategoryRepository {
 
 abstract class NftCategoryProviders {
   static final nftCategoryRepository = _nftCategoryRepositoryProvider;
-  static final fetchNftCategory = _fetchNftCategoryProvider;
+  static final fetchNftCategories = _fetchNftCategoryProvider;
+  static final selectedAccountNftCategories =
+      _selectedAccountNftCategoriesProvider;
   static final getNbNFTInCategory = _getNbNFTInCategoryProvider;
   static final getListByDefault = _getListByDefaultProvider;
   static final updateNftCategoryList = _updateNftCategoryListProvider;

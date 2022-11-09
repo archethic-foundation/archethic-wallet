@@ -19,7 +19,8 @@ class MainMenuView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final selectedAccount = ref.watch(AccountProviders.selectedAccount);
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
     if (selectedAccount == null) return const SizedBox();
 
