@@ -5,6 +5,7 @@ import 'package:aewallet/domain/repositories/account.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

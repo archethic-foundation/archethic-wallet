@@ -6,7 +6,10 @@ import 'package:aewallet/application/currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/chart_infos.dart';
+import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/price.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
 // Flutter imports:
@@ -85,7 +88,7 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
     ref.read(AccountProviders.selectedAccount)!.balance!.tokenPrice =
         tokenPrice;
-    appWallet.save();
+    sl.get<DBHelper>().saveAppWallet(HiveAppWalletDTO.fromModel(appWallet));
     await chartInfos!.updateCoinsChart(
       currency.currency.name,
       option: idChartOption!,

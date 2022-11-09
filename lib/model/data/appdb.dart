@@ -3,8 +3,8 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
@@ -22,7 +22,7 @@ class DBHelper {
   static Future<void> setupDatabase() async {
     await Hive.initFlutter();
     Hive.registerAdapter(ContactAdapter());
-    Hive.registerAdapter(AppWalletAdapter());
+    Hive.registerAdapter(HiveAppWalletDTOAdapter());
     Hive.registerAdapter(AccountBalanceAdapter());
     Hive.registerAdapter(AccountAdapter());
     Hive.registerAdapter(AppKeychainAdapter());
@@ -203,13 +203,13 @@ class DBHelper {
   }
 
   Future<List<Account>> getAccounts() async {
-    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     return appWallet.appKeychain.accounts;
   }
 
   Future<Account?> getAccount(String name) async {
-    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     for (final account in appWallet.appKeychain.accounts) {
       if (account.name == name) return account;
@@ -217,24 +217,24 @@ class DBHelper {
     return null;
   }
 
-  Future<AppWallet> addAccount(Account account) async {
-    final box = await Hive.openBox<AppWallet>(appWalletTable);
+  Future<HiveAppWalletDTO> addAccount(Account account) async {
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     appWallet.appKeychain.accounts.add(account);
     await box.putAt(0, appWallet);
     return appWallet;
   }
 
-  Future<AppWallet> clearAccount() async {
-    final box = await Hive.openBox<AppWallet>(appWalletTable);
+  Future<HiveAppWalletDTO> clearAccount() async {
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     appWallet.appKeychain.accounts.clear();
     await box.putAt(0, appWallet);
     return appWallet;
   }
 
-  Future<AppWallet> changeAccount(String accountName) async {
-    final box = await Hive.openBox<AppWallet>(appWalletTable);
+  Future<HiveAppWalletDTO> changeAccount(String accountName) async {
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     for (var i = 0; i < appWallet.appKeychain.accounts.length; i++) {
       if (appWallet.appKeychain.accounts[i].name == accountName) {
@@ -252,7 +252,7 @@ class DBHelper {
     AccountBalance balance,
   ) async {
     // ignore: prefer_final_locals
-    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     final accounts = appWallet.appKeychain.accounts;
     for (final account in accounts) {
@@ -266,7 +266,7 @@ class DBHelper {
 
   Future<void> updateAccount(Account selectedAccount) async {
     // ignore: prefer_final_locals
-    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     appWallet.appKeychain.accounts = appWallet.appKeychain.accounts.map(
       (account) {
@@ -279,28 +279,28 @@ class DBHelper {
 
   Future<void> clearAppWallet() async {
     // ignore: prefer_final_locals
-    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     await box.clear();
   }
 
-  Future<AppWallet> createAppWallet(String seed, String keyChainAddress) async {
+  Future<HiveAppWalletDTO> createAppWallet(String keyChainAddress) async {
     // ignore: prefer_final_locals
-    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appKeychain =
         AppKeychain(address: keyChainAddress, accounts: <Account>[]);
-    final appWallet = AppWallet(seed: seed, appKeychain: appKeychain);
+    final appWallet = HiveAppWalletDTO(appKeychain: appKeychain);
     await box.add(appWallet);
     return appWallet;
   }
 
-  Future<AppWallet?> getAppWallet() async {
+  Future<HiveAppWalletDTO?> getAppWallet() async {
     // ignore: prefer_final_locals
-    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     return box.get(0);
   }
 
-  Future<void> saveAppWallet(AppWallet wallet) async {
-    final box = await Hive.openBox<AppWallet>(appWalletTable);
+  Future<void> saveAppWallet(HiveAppWalletDTO wallet) async {
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     return box.putAt(0, wallet);
   }
 

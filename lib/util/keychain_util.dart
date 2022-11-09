@@ -10,9 +10,9 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -134,8 +134,8 @@ class KeychainUtil {
     );
   }
 
-  Future<AppWallet> addAccountInKeyChain(
-    AppWallet? appWallet,
+  Future<HiveAppWalletDTO> addAccountInKeyChain(
+    HiveAppWalletDTO? appWallet,
     String? seed,
     String? name,
     String currency,
@@ -246,8 +246,8 @@ class KeychainUtil {
     return appWallet;
   }
 
-  Future<AppWallet?> getListAccountsFromKeychain(
-    AppWallet? appWallet,
+  Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
+    HiveAppWalletDTO? appWallet,
     String? seed,
     String currency,
     String tokenName, {
@@ -256,7 +256,7 @@ class KeychainUtil {
   }) async {
     final accounts = List<Account>.empty(growable: true);
 
-    AppWallet currentAppWallet;
+    HiveAppWalletDTO currentAppWallet;
     try {
       /// Get KeyChain Wallet
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -268,9 +268,8 @@ class KeychainUtil {
         final lastTransaction =
             await sl.get<ApiService>().getLastTransaction(addressKeychain);
 
-        currentAppWallet = await sl
-            .get<DBHelper>()
-            .createAppWallet(seed, lastTransaction.address!);
+        currentAppWallet =
+            await sl.get<DBHelper>().createAppWallet(lastTransaction.address!);
       } else {
         currentAppWallet = appWallet;
       }

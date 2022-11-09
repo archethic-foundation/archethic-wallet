@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'd8503bab51cb04acb6f61cc18639f4e872be87dd';
+String $_SessionNotifierHash() => r'c3580bae196686864362ac463f4dc28462d0abcb';
 
 /// See also [_SessionNotifier].
 final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
@@ -47,7 +47,7 @@ abstract class _$SessionNotifier extends Notifier<Session> {
 }
 
 String $_archethicWalletKeychainHash() =>
-    r'7b944e97107af41e54c05f9f8e86e05bb2b75bfe';
+    r'8bdb02d5a592f835ff8a33cc09d0f722d3b8fb5a';
 
 /// See also [_archethicWalletKeychain].
 final _archethicWalletKeychainProvider = AutoDisposeFutureProvider<Keychain?>(

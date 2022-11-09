@@ -14,17 +14,15 @@ class _SessionNotifier extends Notifier<Session> {
 
   Future<void> restore() async {
     final seed = (await _vault).getSeed();
-    final appWallet = await _dbHelper.getAppWallet();
+    final appWalletDTO = await _dbHelper.getAppWallet();
 
-    if (seed == null || appWallet == null) {
+    if (seed == null || appWalletDTO == null) {
       await logout();
       return;
     }
 
     state = Session.loggedIn(
-      wallet: appWallet.copyWith(
-        seed: seed,
-      ),
+      wallet: appWalletDTO.toModel(seed: seed),
     );
   }
 
@@ -34,17 +32,17 @@ class _SessionNotifier extends Notifier<Session> {
     final loggedInState = state.loggedIn!;
     final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
 
-    final newWallet = await KeychainUtil().getListAccountsFromKeychain(
-      loggedInState.wallet,
+    final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
+      HiveAppWalletDTO.fromModel(loggedInState.wallet),
       loggedInState.wallet.seed,
       selectedCurrency.currency.name,
       AccountBalance.cryptoCurrencyLabel,
     );
-    if (newWallet == null) return;
+    if (newWalletDTO == null) return;
 
     state = Session.loggedIn(
-      wallet: newWallet.copyWith(
-        seed: loggedInState.wallet.seed,
+      wallet: loggedInState.wallet.copyWith(
+        appKeychain: newWalletDTO.appKeychain,
       ),
     );
   }
@@ -65,14 +63,13 @@ class _SessionNotifier extends Notifier<Session> {
     required Keychain keychain,
     String? name,
   }) async {
-    final newAppWallet = await AppWallet.createNewAppWallet(
-      seed,
+    final newAppWalletDTO = await HiveAppWalletDTO.createNewAppWallet(
       keychainAddress,
       keychain,
       name,
     );
     state = Session.loggedIn(
-      wallet: newAppWallet,
+      wallet: newAppWalletDTO.toModel(seed: seed),
     );
   }
 
@@ -104,7 +101,7 @@ class _SessionNotifier extends Notifier<Session> {
       }
 
       return state = LoggedInSession(
-        wallet: appWallet,
+        wallet: appWallet.toModel(seed: seed),
       );
     } catch (e) {
       return null;
