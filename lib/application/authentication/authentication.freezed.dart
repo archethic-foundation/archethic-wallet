@@ -15,6 +15,155 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$PasswordAuthenticationState {
+  int get failedAttemptsCount => throw _privateConstructorUsedError;
+  int get maxAttemptsCount => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $PasswordAuthenticationStateCopyWith<PasswordAuthenticationState>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PasswordAuthenticationStateCopyWith<$Res> {
+  factory $PasswordAuthenticationStateCopyWith(
+          PasswordAuthenticationState value,
+          $Res Function(PasswordAuthenticationState) then) =
+      _$PasswordAuthenticationStateCopyWithImpl<$Res,
+          PasswordAuthenticationState>;
+  @useResult
+  $Res call({int failedAttemptsCount, int maxAttemptsCount});
+}
+
+/// @nodoc
+class _$PasswordAuthenticationStateCopyWithImpl<$Res,
+        $Val extends PasswordAuthenticationState>
+    implements $PasswordAuthenticationStateCopyWith<$Res> {
+  _$PasswordAuthenticationStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failedAttemptsCount = null,
+    Object? maxAttemptsCount = null,
+  }) {
+    return _then(_value.copyWith(
+      failedAttemptsCount: null == failedAttemptsCount
+          ? _value.failedAttemptsCount
+          : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxAttemptsCount: null == maxAttemptsCount
+          ? _value.maxAttemptsCount
+          : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_PasswordAuthenticationStateCopyWith<$Res>
+    implements $PasswordAuthenticationStateCopyWith<$Res> {
+  factory _$$_PasswordAuthenticationStateCopyWith(
+          _$_PasswordAuthenticationState value,
+          $Res Function(_$_PasswordAuthenticationState) then) =
+      __$$_PasswordAuthenticationStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int failedAttemptsCount, int maxAttemptsCount});
+}
+
+/// @nodoc
+class __$$_PasswordAuthenticationStateCopyWithImpl<$Res>
+    extends _$PasswordAuthenticationStateCopyWithImpl<$Res,
+        _$_PasswordAuthenticationState>
+    implements _$$_PasswordAuthenticationStateCopyWith<$Res> {
+  __$$_PasswordAuthenticationStateCopyWithImpl(
+      _$_PasswordAuthenticationState _value,
+      $Res Function(_$_PasswordAuthenticationState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failedAttemptsCount = null,
+    Object? maxAttemptsCount = null,
+  }) {
+    return _then(_$_PasswordAuthenticationState(
+      failedAttemptsCount: null == failedAttemptsCount
+          ? _value.failedAttemptsCount
+          : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxAttemptsCount: null == maxAttemptsCount
+          ? _value.maxAttemptsCount
+          : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PasswordAuthenticationState extends _PasswordAuthenticationState {
+  const _$_PasswordAuthenticationState(
+      {required this.failedAttemptsCount, required this.maxAttemptsCount})
+      : super._();
+
+  @override
+  final int failedAttemptsCount;
+  @override
+  final int maxAttemptsCount;
+
+  @override
+  String toString() {
+    return 'PasswordAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PasswordAuthenticationState &&
+            (identical(other.failedAttemptsCount, failedAttemptsCount) ||
+                other.failedAttemptsCount == failedAttemptsCount) &&
+            (identical(other.maxAttemptsCount, maxAttemptsCount) ||
+                other.maxAttemptsCount == maxAttemptsCount));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PasswordAuthenticationStateCopyWith<_$_PasswordAuthenticationState>
+      get copyWith => __$$_PasswordAuthenticationStateCopyWithImpl<
+          _$_PasswordAuthenticationState>(this, _$identity);
+}
+
+abstract class _PasswordAuthenticationState
+    extends PasswordAuthenticationState {
+  const factory _PasswordAuthenticationState(
+      {required final int failedAttemptsCount,
+      required final int maxAttemptsCount}) = _$_PasswordAuthenticationState;
+  const _PasswordAuthenticationState._() : super._();
+
+  @override
+  int get failedAttemptsCount;
+  @override
+  int get maxAttemptsCount;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PasswordAuthenticationStateCopyWith<_$_PasswordAuthenticationState>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PinAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;

@@ -2,8 +2,10 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -11,9 +13,6 @@ import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
-import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/string_encryption.dart';
-import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
@@ -34,9 +33,6 @@ class PasswordScreen extends ConsumerStatefulWidget {
 
 class _PasswordScreenState extends ConsumerState<PasswordScreen>
     with ShowLockScreenMixin {
-  static const int maxAttempts = 5;
-  int _failedAttempts = 0;
-
   FocusNode? enterPasswordFocusNode;
   TextEditingController? enterPasswordController;
 
@@ -49,48 +45,48 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     enterPasswordVisible = false;
     enterPasswordFocusNode = FocusNode();
     enterPasswordController = TextEditingController();
-
-    Preferences.getInstance().then((Preferences preferences) {
-      setState(() {
-        // Get adjusted failed attempts
-        _failedAttempts = preferences.getLockAttempts() % maxAttempts;
-      });
-    });
   }
 
   Future<void> _verifyPassword() async {
-    final vault = await Vault.getInstance();
-    final preferences = await Preferences.getInstance();
+    final result = await ref
+        .read(
+          AuthenticationProviders.passwordAuthentication.notifier,
+        )
+        .authenticateWithPassword(
+          PasswordCredentials(
+            password: enterPasswordController!.text,
+            seed: ref.read(SessionProviders.session).loggedIn!.wallet.seed,
+          ),
+        );
 
-    if (enterPasswordController!.text ==
-        stringDecryptBase64(
-          vault.getPassword()!,
-          ref.read(SessionProviders.session).loggedIn?.wallet.seed,
-        )) {
-      preferences.resetLockAttempts();
-      Navigator.of(context).pop(true);
-    } else {
-      enterPasswordController!.text = '';
-      preferences.incrementLockAttempts();
-      _failedAttempts++;
-      if (_failedAttempts >= maxAttempts) {
-        // TODO(Chralu): remettre en place ce mécanisme.
-        // preferences.updateLockDate();
-        showLockScreen(context);
-      }
+    await result.maybeMap(
+      success: (_) {
+        Navigator.of(context).pop(true);
+        return;
+      },
+      orElse: () async {
+        final isLocked = await ref.read(
+          AuthenticationProviders.isLocked.future,
+        );
+        enterPasswordController!.text = '';
 
-      if (mounted) {
-        setState(() {
-          passwordError = AppLocalization.of(context)!.invalidPassword;
-        });
-      }
-    }
+        if (isLocked) {
+          showLockScreen(context);
+          return;
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    final passwordAuthentication = ref.watch(
+      AuthenticationProviders.passwordAuthentication,
+    );
+
     return WillPopScope(
       onWillPop: () async => widget.canNavigateBack,
       child: Scaffold(
@@ -185,14 +181,14 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                           },
                         ),
                       ),
-                      if (_failedAttempts > 0)
+                      if (passwordAuthentication.failedAttemptsCount > 0)
                         Container(
                           margin: const EdgeInsets.symmetric(
                             horizontal: 40,
                             vertical: 10,
                           ),
                           child: AutoSizeText(
-                            '${localizations.attempt}$_failedAttempts/$maxAttempts',
+                            '${localizations.attempt}${passwordAuthentication.failedAttemptsCount}/${passwordAuthentication.maxAttemptsCount}',
                             style: theme.textStyleSize14W200Primary,
                             textAlign: TextAlign.center,
                             maxLines: 1,

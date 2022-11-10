@@ -37,15 +37,11 @@ mixin ShowLockScreenMixin {
 }
 
 abstract class AppLockScreenProviders {
-  static final remainingLockSeconds = Provider.autoDispose<String>(
-    (ref) {
-      final remainingDuration = ref
-          .watch(
-            AuthenticationProviders.lockCountdown,
-          )
-          .valueOrNull;
-
-      if (remainingDuration == null) return '';
+  static final remainingLockSeconds = FutureProvider.autoDispose<String>(
+    (ref) async {
+      final remainingDuration = await ref.watch(
+        AuthenticationProviders.lockCountdown.future,
+      );
 
       return DurationFormatters.HHmmss(remainingDuration);
     },
@@ -64,9 +60,12 @@ class AppLockScreen extends ConsumerWidget {
     );
     final isLocked =
         ref.watch(AuthenticationProviders.isLocked).valueOrNull ?? true;
-    final countDownString = ref.watch(
-      AppLockScreenProviders.remainingLockSeconds,
-    );
+    final countDownString = ref
+            .watch(
+              AppLockScreenProviders.remainingLockSeconds,
+            )
+            .valueOrNull ??
+        '';
 
     return WillPopScope(
       onWillPop: () async {

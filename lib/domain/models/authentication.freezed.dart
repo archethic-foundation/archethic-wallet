@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Credentials {
-  String get pin => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) pin,
+    required TResult Function(String password, String seed) password,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? pin,
+    TResult? Function(String password, String seed)? password,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? pin,
+    TResult Function(String password, String seed)? password,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(PinCredentials value) pin,
+    required TResult Function(PasswordCredentials value) password,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PinCredentials value)? pin,
+    TResult? Function(PasswordCredentials value)? password,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PinCredentials value)? pin,
+    TResult Function(PasswordCredentials value)? password,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $CredentialsCopyWith<Credentials> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +61,6 @@ abstract class $CredentialsCopyWith<$Res> {
   factory $CredentialsCopyWith(
           Credentials value, $Res Function(Credentials) then) =
       _$CredentialsCopyWithImpl<$Res, Credentials>;
-  @useResult
-  $Res call({String pin});
 }
 
 /// @nodoc
@@ -73,28 +72,13 @@ class _$CredentialsCopyWithImpl<$Res, $Val extends Credentials>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pin = null,
-  }) {
-    return _then(_value.copyWith(
-      pin: null == pin
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$PinCredentialsCopyWith<$Res>
-    implements $CredentialsCopyWith<$Res> {
+abstract class _$$PinCredentialsCopyWith<$Res> {
   factory _$$PinCredentialsCopyWith(
           _$PinCredentials value, $Res Function(_$PinCredentials) then) =
       __$$PinCredentialsCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String pin});
 }
@@ -155,6 +139,7 @@ class _$PinCredentials extends PinCredentials {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) pin,
+    required TResult Function(String password, String seed) password,
   }) {
     return pin(this.pin);
   }
@@ -163,6 +148,7 @@ class _$PinCredentials extends PinCredentials {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? pin,
+    TResult? Function(String password, String seed)? password,
   }) {
     return pin?.call(this.pin);
   }
@@ -171,6 +157,7 @@ class _$PinCredentials extends PinCredentials {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? pin,
+    TResult Function(String password, String seed)? password,
     required TResult orElse(),
   }) {
     if (pin != null) {
@@ -183,6 +170,7 @@ class _$PinCredentials extends PinCredentials {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(PinCredentials value) pin,
+    required TResult Function(PasswordCredentials value) password,
   }) {
     return pin(this);
   }
@@ -191,6 +179,7 @@ class _$PinCredentials extends PinCredentials {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PinCredentials value)? pin,
+    TResult? Function(PasswordCredentials value)? password,
   }) {
     return pin?.call(this);
   }
@@ -199,6 +188,7 @@ class _$PinCredentials extends PinCredentials {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PinCredentials value)? pin,
+    TResult Function(PasswordCredentials value)? password,
     required TResult orElse(),
   }) {
     if (pin != null) {
@@ -212,10 +202,156 @@ abstract class PinCredentials extends Credentials {
   const factory PinCredentials({required final String pin}) = _$PinCredentials;
   const PinCredentials._() : super._();
 
-  @override
   String get pin;
-  @override
   @JsonKey(ignore: true)
   _$$PinCredentialsCopyWith<_$PinCredentials> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PasswordCredentialsCopyWith<$Res> {
+  factory _$$PasswordCredentialsCopyWith(_$PasswordCredentials value,
+          $Res Function(_$PasswordCredentials) then) =
+      __$$PasswordCredentialsCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String password, String seed});
+}
+
+/// @nodoc
+class __$$PasswordCredentialsCopyWithImpl<$Res>
+    extends _$CredentialsCopyWithImpl<$Res, _$PasswordCredentials>
+    implements _$$PasswordCredentialsCopyWith<$Res> {
+  __$$PasswordCredentialsCopyWithImpl(
+      _$PasswordCredentials _value, $Res Function(_$PasswordCredentials) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? password = null,
+    Object? seed = null,
+  }) {
+    return _then(_$PasswordCredentials(
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      seed: null == seed
+          ? _value.seed
+          : seed // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PasswordCredentials extends PasswordCredentials {
+  const _$PasswordCredentials({required this.password, required this.seed})
+      : super._();
+
+  @override
+  final String password;
+  @override
+  final String seed;
+
+  @override
+  String toString() {
+    return 'Credentials.password(password: $password, seed: $seed)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PasswordCredentials &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.seed, seed) || other.seed == seed));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, password, seed);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PasswordCredentialsCopyWith<_$PasswordCredentials> get copyWith =>
+      __$$PasswordCredentialsCopyWithImpl<_$PasswordCredentials>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String pin) pin,
+    required TResult Function(String password, String seed) password,
+  }) {
+    return password(this.password, seed);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String pin)? pin,
+    TResult? Function(String password, String seed)? password,
+  }) {
+    return password?.call(this.password, seed);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String pin)? pin,
+    TResult Function(String password, String seed)? password,
+    required TResult orElse(),
+  }) {
+    if (password != null) {
+      return password(this.password, seed);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PinCredentials value) pin,
+    required TResult Function(PasswordCredentials value) password,
+  }) {
+    return password(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PinCredentials value)? pin,
+    TResult? Function(PasswordCredentials value)? password,
+  }) {
+    return password?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PinCredentials value)? pin,
+    TResult Function(PasswordCredentials value)? password,
+    required TResult orElse(),
+  }) {
+    if (password != null) {
+      return password(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PasswordCredentials extends Credentials {
+  const factory PasswordCredentials(
+      {required final String password,
+      required final String seed}) = _$PasswordCredentials;
+  const PasswordCredentials._() : super._();
+
+  String get password;
+  String get seed;
+  @JsonKey(ignore: true)
+  _$$PasswordCredentialsCopyWith<_$PasswordCredentials> get copyWith =>
       throw _privateConstructorUsedError;
 }
