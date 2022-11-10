@@ -1,13 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/currency.dart';
+import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -28,6 +30,7 @@ class TransferFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -92,11 +95,16 @@ class TransferFormSheet extends ConsumerWidget {
                 Row(
                   children: <Widget>[
                     if (transfer.canTransfer)
-                      AppButton(
-                        AppButtonType.primary,
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
                         actionButtonTitle ?? localizations.send,
                         Dimens.buttonBottomDimens,
                         key: const Key('send'),
+                        icon: Icon(
+                          UiIcons.send,
+                          color: theme.text,
+                          size: 14,
+                        ),
                         onPressed: () async {
                           final isAddressOk =
                               await transferNotifier.controlAddress(
@@ -116,11 +124,16 @@ class TransferFormSheet extends ConsumerWidget {
                         },
                       )
                     else
-                      AppButton(
-                        AppButtonType.primaryOutline,
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
                         actionButtonTitle ?? localizations.send,
                         Dimens.buttonBottomDimens,
                         key: const Key('send'),
+                        icon: Icon(
+                          UiIcons.send,
+                          color: theme.text30,
+                          size: 14,
+                        ),
                         onPressed: () {},
                       ),
                   ],

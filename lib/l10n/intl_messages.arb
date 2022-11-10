@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-09T09:40:13.459526",
+  "@@last_modified": "2022-11-10T22:01:38.528146",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -696,7 +696,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "total": "Total",
+  "total": "Total :",
   "@total": {
     "type": "text",
     "placeholders_order": [],
@@ -1440,13 +1440,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenName": "Name: ",
+  "tokenName": "Name :",
   "@tokenName": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenSymbol": "Symbol: ",
+  "tokenSymbol": "Symbol :",
   "@tokenSymbol": {
     "type": "text",
     "placeholders_order": [],
@@ -1482,13 +1482,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenInitialSupply": "Initial supply: ",
+  "tokenInitialSupply": "Initial supply :",
   "@tokenInitialSupply": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenSupply": "Supply: ",
+  "tokenSupply": "Supply :",
   "@tokenSupply": {
     "type": "text",
     "placeholders_order": [],
@@ -1584,19 +1584,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListTo": "To : ",
+  "txListTo": "To :",
   "@txListTo": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListDate": "Date : ",
-  "@txListDate": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "txListFees": "Fees : ",
+  "txListFees": "Fees :",
   "@txListFees": {
     "type": "text",
     "placeholders_order": [],
@@ -1680,13 +1674,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenCreated": "Token Created",
+  "tokenCreated": "Token created :",
   "@tokenCreated": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreated": "NFT Created",
+  "nftCreated": "NFT created :",
   "@nftCreated": {
     "type": "text",
     "placeholders_order": [],
@@ -2112,6 +2106,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "createTheNFT": "Create the NFT",
+  "@createTheNFT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftTabDescriptionHeader": "This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.",
   "@nftTabDescriptionHeader": {
     "type": "text",
@@ -2136,7 +2136,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftNameHint": "Enter a name",
+  "nftNameHint": "Enter the name of the NFT",
   "@nftNameHint": {
     "type": "text",
     "placeholders_order": [],
@@ -2154,7 +2154,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftPropertyNameHint": "Enter a name",
+  "nftPropertyNameHint": "Enter the name of the prop.",
   "@nftPropertyNameHint": {
     "type": "text",
     "placeholders_order": [],

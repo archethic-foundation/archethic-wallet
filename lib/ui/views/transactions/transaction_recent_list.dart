@@ -5,7 +5,6 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_detail.dart';
-// Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

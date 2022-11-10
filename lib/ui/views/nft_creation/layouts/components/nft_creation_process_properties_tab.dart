@@ -47,6 +47,11 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                     AppLocalization.of(context)!.addNFTProperty,
                     Dimens.buttonBottomDimens,
                     key: const Key('addNFTProperty'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.text,
+                      size: 14,
+                    ),
                     onPressed: () {
                       if (nftCreationNotifier.controlAddNFTProperty(context)) {
                         nftCreationNotifier.setProperty(
@@ -62,6 +67,11 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                     AppLocalization.of(context)!.addNFTProperty,
                     Dimens.buttonBottomDimens,
                     key: const Key('addNFTProperty'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.text30,
+                      size: 14,
+                    ),
                     onPressed: () {},
                   ),
               ],

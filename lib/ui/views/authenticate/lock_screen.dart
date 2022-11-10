@@ -7,7 +7,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -212,8 +212,8 @@ class AppLockScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        AppButton(
-                          AppButtonType.primary,
+                        AppButtonTiny(
+                          AppButtonTinyType.primary,
                           isLocked ? countDownString : localizations.unlock,
                           Dimens.buttonBottomDimens,
                           key: const Key('unlock'),

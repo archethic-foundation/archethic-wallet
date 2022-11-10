@@ -18,7 +18,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_f
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_property_access.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';

@@ -405,6 +405,7 @@ class AppService {
     // ignore: prefer_final_locals
     var transactionsInfos = List<TransactionInfos>.empty(growable: true);
 
+    // TODO(reddwarf03): don't load content if tx is NFT
     // ignore: prefer_final_locals
     var transaction =
         await sl.get<ApiService>().getTransactionAllInfos(address);

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings.dart';
@@ -41,18 +42,22 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         (value) => value.loggedIn?.wallet.appKeychain,
       ),
     );
-    final selectedAccount = null;
-    // ref
-    //     .watch(
-    //       AccountProviders.selectedAccount,
-    //     )
-    //     .valueOrNull;
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
       child: ClipRRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: AppBar(
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: const Icon(UiIcons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
             actions: [
               if (StateContainer.of(context).bottomBarCurrentPage == 2)
                 IconButton(

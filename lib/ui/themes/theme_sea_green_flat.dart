@@ -241,5 +241,5 @@ class SeaGreenFlatTheme implements BaseTheme {
   }
 
   @override
-  Color? favoriteIconColor = Colors.yellow[800];
+  Color? favoriteIconColor = const Color(0xFFFFFFFF);
 }

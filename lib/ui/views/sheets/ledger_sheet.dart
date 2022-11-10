@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -198,8 +198,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       'Get pubKey',
                       Dimens.buttonTopDimens,
                       key: const Key('getPubKey'),
@@ -213,8 +213,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                             .connectLedger(getPubKeyAPDU());
                       },
                     ),
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       'Get Arch Address',
                       key: const Key('getArchAddress'),
                       Dimens.buttonTopDimens,
@@ -244,8 +244,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                         }
                       },
                     ),
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       'Sign Transaction',
                       Dimens.buttonTopDimens,
                       key: const Key('signTransaction'),

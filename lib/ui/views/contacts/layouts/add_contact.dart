@@ -14,7 +14,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/add_contact_public_key_recovered.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -146,11 +146,16 @@ class AddContactSheetBody extends ConsumerWidget {
                 Row(
                   children: <Widget>[
                     if (contactCreation.canCreateContact)
-                      AppButton(
-                        AppButtonType.primary,
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
                         localizations.addContact,
                         Dimens.buttonBottomDimens,
                         key: const Key('addContact'),
+                        icon: Icon(
+                          Icons.add,
+                          color: theme.text,
+                          size: 14,
+                        ),
                         onPressed: () async {
                           final isNameOk =
                               await contactCreationNotifier.controlName(
@@ -190,11 +195,16 @@ class AddContactSheetBody extends ConsumerWidget {
                         },
                       )
                     else
-                      AppButton(
-                        AppButtonType.primaryOutline,
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
                         localizations.addContact,
                         Dimens.buttonBottomDimens,
                         key: const Key('addContact'),
+                        icon: Icon(
+                          Icons.add,
+                          color: theme.text30,
+                          size: 14,
+                        ),
                         onPressed: () {},
                       ),
                   ],

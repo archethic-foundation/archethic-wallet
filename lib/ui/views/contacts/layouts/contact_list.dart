@@ -9,7 +9,7 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -114,11 +114,16 @@ class ContactsList extends ConsumerWidget {
               margin: const EdgeInsets.only(top: 10),
               child: Row(
                 children: <Widget>[
-                  AppButton(
-                    AppButtonType.primary,
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
                     localizations.addContact,
                     Dimens.buttonBottomDimens,
                     key: const Key('addContact'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.text,
+                      size: 14,
+                    ),
                     onPressed: () {
                       Sheets.showAppHeightNineSheet(
                         context: context,

@@ -840,7 +840,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenName": "Name: ",
+  "TokenName": "Name :",
   "@TokenName": {
     "type": "text",
     "placeholders_order": [],
@@ -858,7 +858,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenInitialSupply": "Initial supply: ",
+  "TokenInitialSupply": "Initial supply :",
   "@TokenInitialSupply": {
     "type": "text",
     "placeholders_order": [],
@@ -930,25 +930,19 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListFrom": "From : ",
+  "txListFrom": "From :",
   "@txListFrom": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListTo": "To : ",
+  "txListTo": "To :",
   "@txListTo": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListDate": "Date : ",
-  "@txListDate": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "txListFees": "Fees : ",
+  "txListFees": "Fees :",
   "@txListFees": {
     "type": "text",
     "placeholders_order": [],
@@ -1032,7 +1026,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenCreated": "Token Created",
+  "TokenCreated": "Token created :",
   "@TokenCreated": {
     "type": "text",
     "placeholders_order": [],
@@ -1404,7 +1398,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFees": "Estimated fees",
+  "estimatedFees": "Estimated fees :",
   "@estimatedFees": {
     "type": "text",
     "placeholders_order": [],
@@ -1464,19 +1458,19 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "total": "Total",
+  "total": "Total :",
   "@total": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "availableAfterTransfer": "Available after transfer",
+  "availableAfterTransfer": "Available after transfer :",
   "@availableAfterTransfer": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "availableAfterMint": "Available after mint",
+  "availableAfterMint": "Available after mint :",
   "@availableAfterMint": {
     "type": "text",
     "placeholders_order": [],
@@ -1926,8 +1920,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenSupply": "Supply: ",
+  "tokenSupply": "Supply :",
   "@tokenSupply": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenInitialSupply": "Initial supply :",
+  "@tokenInitialSupply": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1938,7 +1938,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenSymbol": "Symbol: ",
+  "tokenSymbol": "Symbol :",
   "@tokenSymbol": {
     "type": "text",
     "placeholders_order": [],
@@ -2034,7 +2034,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreated": "NFT Created",
+  "nftCreated": "NFT created :",
   "@nftCreated": {
     "type": "text",
     "placeholders_order": [],
@@ -2364,6 +2364,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "createTheNFT": "Create the NFT",
+  "@createTheNFT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "addNFTFile": "Add a NFT",
   "@addNFTFile": {
     "type": "text",
@@ -2376,7 +2382,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftNameHint": "Enter a name",
+  "nftNameHint": "Enter the name of the NFT",
   "@nftNameHint": {
     "type": "text",
     "placeholders_order": [],
@@ -2388,7 +2394,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftPropertyNameHint": "Enter a name",
+  "nftPropertyNameHint": "Enter the name",
   "@nftPropertyNameHint": {
     "type": "text",
     "placeholders_order": [],

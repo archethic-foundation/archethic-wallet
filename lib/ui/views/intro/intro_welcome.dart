@@ -5,7 +5,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
@@ -140,10 +140,10 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     ),
                     Row(
                       children: <Widget>[
-                        AppButton(
+                        AppButtonTiny(
                           checkedValue
-                              ? AppButtonType.primary
-                              : AppButtonType.primaryOutline,
+                              ? AppButtonTinyType.primary
+                              : AppButtonTinyType.primaryOutline,
                           localizations.newWallet,
                           Dimens.buttonTopDimens,
                           key: const Key('newWallet'),
@@ -168,10 +168,10 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     Row(
                       children: <Widget>[
                         // Import Wallet Button
-                        AppButton(
+                        AppButtonTiny(
                           checkedValue
-                              ? AppButtonType.primary
-                              : AppButtonType.primaryOutline,
+                              ? AppButtonTinyType.primary
+                              : AppButtonTinyType.primaryOutline,
                           localizations.importWallet,
                           Dimens.buttonBottomDimens,
                           key: const Key('importWallet'),

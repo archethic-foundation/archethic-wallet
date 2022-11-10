@@ -9,7 +9,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -31,6 +31,7 @@ class AddTokenFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -98,9 +99,14 @@ class AddTokenFormSheet extends ConsumerWidget {
                 Row(
                   children: <Widget>[
                     if (addToken.canAddToken)
-                      AppButton(
-                        AppButtonType.primary,
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
                         localizations.createToken,
+                        icon: Icon(
+                          Icons.add,
+                          color: theme.text,
+                          size: 14,
+                        ),
                         Dimens.buttonBottomDimens,
                         key: const Key('createToken'),
                         onPressed: () async {
@@ -125,11 +131,16 @@ class AddTokenFormSheet extends ConsumerWidget {
                         },
                       )
                     else
-                      AppButton(
-                        AppButtonType.primaryOutline,
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
                         localizations.createToken,
                         Dimens.buttonBottomDimens,
                         key: const Key('createToken'),
+                        icon: Icon(
+                          Icons.add,
+                          color: theme.text30,
+                          size: 14,
+                        ),
                         onPressed: () {},
                       ),
                   ],

@@ -11,10 +11,8 @@ import 'package:aewallet/application/primary_currency.dart';
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
@@ -36,16 +34,13 @@ import 'package:aewallet/ui/widgets/dialogs/currency_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_timeout_dialog.dart';
-import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/primary_currency_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/theme_dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';

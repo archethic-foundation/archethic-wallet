@@ -56,7 +56,7 @@ class FeeInfos extends ConsumerWidget {
         data: (data) {
           if (data > 0) {
             return Text(
-              '+ ${localizations.estimatedFees}: ${AmountFormatters.standardSmallValue(data, AccountBalance.cryptoCurrencyLabel)}\n(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currencyName, tokenPrice, feeEstimation.valueOrNull ?? 0, 8)})',
+              '+ ${localizations.estimatedFees} ${AmountFormatters.standardSmallValue(data, AccountBalance.cryptoCurrencyLabel)}\n(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currencyName, tokenPrice, feeEstimation.valueOrNull ?? 0, 8)})',
               style: theme.textStyleSize14W100Primary,
               textAlign: TextAlign.center,
             );

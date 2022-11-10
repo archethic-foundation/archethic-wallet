@@ -7,7 +7,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -66,11 +66,16 @@ class NFTListPerCategory extends ConsumerWidget {
                 Row(
                   children: <Widget>[
                     if (accountSelected.balance!.isNativeTokenValuePositive())
-                      AppButton(
-                        AppButtonType.primary,
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
                         localizations.createNFT,
                         Dimens.buttonBottomDimens,
                         key: const Key('createNFT'),
+                        icon: Icon(
+                          Icons.add,
+                          color: theme.text,
+                          size: 14,
+                        ),
                         onPressed: () async {
                           sl.get<HapticUtil>().feedback(
                                 FeedbackType.light,
@@ -91,11 +96,16 @@ class NFTListPerCategory extends ConsumerWidget {
                         },
                       )
                     else
-                      AppButton(
-                        AppButtonType.primaryOutline,
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
                         localizations.createNFT,
                         Dimens.buttonBottomDimens,
                         key: const Key('createNFT'),
+                        icon: Icon(
+                          Icons.add,
+                          color: theme.text30,
+                          size: 14,
+                        ),
                         onPressed: () {},
                       ),
                   ],

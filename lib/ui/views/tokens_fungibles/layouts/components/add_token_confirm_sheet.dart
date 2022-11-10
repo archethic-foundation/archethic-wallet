@@ -17,7 +17,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/preferences.dart';
@@ -188,11 +188,16 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.confirm,
                       Dimens.buttonTopDimens,
                       key: const Key('confirm'),
+                      icon: Icon(
+                        Icons.check,
+                        color: theme.text,
+                        size: 14,
+                      ),
                       onPressed: () async {
                         // Authenticate
                         final preferences = await Preferences.getInstance();
@@ -214,11 +219,16 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
                 ),
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.cancel,
                       Dimens.buttonBottomDimens,
                       key: const Key('cancel'),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: theme.text,
+                        size: 14,
+                      ),
                       onPressed: () {
                         addTokenNotifier.setAddTokenProcessStep(
                           AddTokenProcessStep.form,

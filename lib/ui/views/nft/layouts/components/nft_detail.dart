@@ -10,7 +10,8 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_preview.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -93,11 +94,16 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
           ),
           Row(
             children: <Widget>[
-              AppButton(
-                AppButtonType.primary,
+              AppButtonTiny(
+                AppButtonTinyType.primary,
                 localizations.send,
                 Dimens.buttonTopDimens,
                 key: const Key('sendNFT'),
+                icon: Icon(
+                  UiIcons.send,
+                  color: theme.text,
+                  size: 14,
+                ),
                 onPressed: () async {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
@@ -120,13 +126,14 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
           ),
           Row(
             children: <Widget>[
-              AppButton(
-                AppButtonType.primary,
+              AppButtonTiny(
+                AppButtonTinyType.primary,
                 localizations.viewExplorer,
                 Dimens.buttonBottomDimens,
                 icon: Icon(
                   Icons.more_horiz,
                   color: theme.text,
+                  size: 14,
                 ),
                 key: const Key('viewExplorer'),
                 onPressed: () async {
