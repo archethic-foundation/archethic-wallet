@@ -281,7 +281,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       }
 
       if (preferences.getLock()) {
-        await Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/home');
 
         await AuthFactory.forceAuthenticate(
           context,
@@ -293,7 +293,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         );
       } else {
         await StateContainer.of(context).requestUpdate();
-        await Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     } catch (e) {
       dev.log(e.toString());
