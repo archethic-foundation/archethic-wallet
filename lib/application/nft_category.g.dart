@@ -44,7 +44,7 @@ final _nftCategoryRepositoryProvider =
 typedef _NftCategoryRepositoryRef
     = AutoDisposeProviderRef<NFTCategoryRepository>;
 String $_selectedAccountNftCategoriesHash() =>
-    r'181fb845351532f193c9a2a0450baea059a78d8f';
+    r'14c939211bff7bc3c39aedd5aa134a7cac928c4f';
 
 /// See also [_selectedAccountNftCategories].
 class _SelectedAccountNftCategoriesProvider

@@ -5,9 +5,11 @@ import 'package:aewallet/infrastructure/repositories/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'authentication.freezed.dart';
+part 'password.dart';
 part 'pin.dart';
 part 'settings.dart';
-part 'authentication.freezed.dart';
 
 abstract class AuthenticationProviders {
   static final _authenticationRepository = Provider(
@@ -53,6 +55,11 @@ abstract class AuthenticationProviders {
         await Future.delayed(const Duration(seconds: 1));
       }
     },
+  );
+
+  static final passwordAuthentication = StateNotifierProvider<
+      PasswordAuthenticationNotifier, PasswordAuthenticationState>(
+    PasswordAuthenticationNotifier.new,
   );
 
   static final pinAuthentication =

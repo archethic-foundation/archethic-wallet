@@ -2,13 +2,16 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.dart';
+import 'package:aewallet/util/string_encryption.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'authentication.freezed.dart';
+part 'i_authenticate_with_password.dart';
 part 'i_authenticate_with_pin.dart';
 part 'i_update_my_pin.dart';
 
-mixin AuthenticationLock {
+mixin AuthenticationWithLock {
+  AuthenticationRepository get repository;
   static int get maxFailedAttempts => 5;
 
   Duration lockDuration(int attempts) {
@@ -30,4 +33,33 @@ mixin AuthenticationLock {
 
     return Duration.zero;
   }
+
+  Future<AuthenticationResult> authenticationSucceed() async {
+    await repository.resetFailedAttempts();
+    await repository.resetLock();
+
+    return const AuthenticationResult.success();
+  }
+
+  Future<AuthenticationResult> authenticationFailed() async {
+    await repository.incrementFailedAttempts();
+    final failedAttempts = await repository.getFailedPinAttempts();
+    if (failedAttempts >= maxFailedAttempts) {
+      await repository.lock(lockDuration(failedAttempts));
+      return const AuthenticationResult.tooMuchAttempts();
+    }
+
+    return const AuthenticationResult.wrongCredentials();
+  }
+}
+
+@freezed
+class AuthenticationResult with _$AuthenticationResult {
+  const AuthenticationResult._();
+  const factory AuthenticationResult.success() = _AuthenticationResult;
+  const factory AuthenticationResult.wrongCredentials() =
+      _AuthenticationFailure;
+  const factory AuthenticationResult.notSetup() = _AuthenticationNotSetup;
+  const factory AuthenticationResult.tooMuchAttempts() =
+      _AuthenticationTooMuchAttempts;
 }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'authentication.freezed.dart';
 
 @freezed
@@ -7,4 +8,9 @@ class Credentials with _$Credentials {
   const factory Credentials.pin({
     required String pin,
   }) = PinCredentials;
+
+  const factory Credentials.password({
+    required String password,
+    required String seed,
+  }) = PasswordCredentials;
 }
