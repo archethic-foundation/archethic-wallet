@@ -242,5 +242,5 @@ class FlatTheme implements BaseTheme {
   }
 
   @override
-  Color? favoriteIconColor = Colors.yellow[800];
+  Color? favoriteIconColor = const Color.fromARGB(255, 88, 88, 88);
 }

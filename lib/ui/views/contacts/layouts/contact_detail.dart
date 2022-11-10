@@ -10,7 +10,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -85,7 +85,8 @@ class ContactDetail extends ConsumerWidget {
 
                               ref
                                   .read(
-                                      AccountProviders.selectedAccount.notifier,)
+                                    AccountProviders.selectedAccount.notifier,
+                                  )
                                   .refreshRecentTransactions();
                               UIUtil.showSnackbar(
                                 localizations.contactRemoved.replaceAll(
@@ -137,7 +138,7 @@ class ContactDetail extends ConsumerWidget {
                   height: 50,
                   margin: const EdgeInsetsDirectional.only(
                     top: 10,
-                    start: 10,
+                    end: 10,
                   ),
                   child: InkWell(
                     onTap: () async {
@@ -164,12 +165,12 @@ class ContactDetail extends ConsumerWidget {
                             ? Icon(
                                 Icons.favorite_border,
                                 color: theme.favoriteIconColor,
-                                size: 18,
+                                size: 26,
                               )
                             : Icon(
                                 Icons.favorite,
                                 color: theme.favoriteIconColor,
-                                size: 18,
+                                size: 26,
                               );
                       },
                       loading: () => const SizedBox(),
@@ -237,13 +238,14 @@ class ContactDetail extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.viewExplorer,
                       Dimens.buttonTopDimens,
                       icon: Icon(
                         Icons.more_horiz,
                         color: theme.text,
+                        size: 14,
                       ),
                       key: const Key('viewExplorer'),
                       onPressed: () async {
@@ -260,13 +262,14 @@ class ContactDetail extends ConsumerWidget {
                   children: <Widget>[
                     // TODO(reddwarf03): Provider pour gérer juste cette mécanique ?
                     if (infoToShare.isEmpty)
-                      AppButton(
-                        AppButtonType.primary,
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
                         localizations.share,
                         Dimens.buttonBottomDimens,
                         icon: Icon(
                           Icons.share,
                           color: theme.text,
+                          size: 14,
                         ),
                         key: const Key('share'),
                         onPressed: () {
@@ -279,13 +282,14 @@ class ContactDetail extends ConsumerWidget {
                         },
                       )
                     else
-                      AppButton(
-                        AppButtonType.primaryOutline,
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
                         localizations.share,
                         Dimens.buttonBottomDimens,
                         icon: Icon(
                           Icons.share,
                           color: theme.text30,
+                          size: 14,
                         ),
                         key: const Key('share'),
                         onPressed: () {},

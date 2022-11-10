@@ -15,6 +15,7 @@ class _NFTCreationProcessSummaryTabState
     extends ConsumerState<NFTCreationProcessSummaryTab> {
   @override
   Widget build(BuildContext context) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -51,11 +52,16 @@ class _NFTCreationProcessSummaryTabState
                     Row(
                       children: <Widget>[
                         if (nftCreation.canCreateNFT)
-                          AppButton(
-                            AppButtonType.primary,
-                            AppLocalization.of(context)!.createNFT,
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
+                            AppLocalization.of(context)!.createTheNFT,
                             Dimens.buttonTopDimens,
-                            key: const Key('addNFTFile'),
+                            key: const Key('createTheNFT'),
+                            icon: Icon(
+                              Icons.add,
+                              color: theme.text,
+                              size: 14,
+                            ),
                             onPressed: () async {
                               final isNameOk =
                                   nftCreationNotifier.controlName(context);
@@ -70,11 +76,16 @@ class _NFTCreationProcessSummaryTabState
                             },
                           )
                         else
-                          AppButton(
-                            AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.createNFT,
+                          AppButtonTiny(
+                            AppButtonTinyType.primaryOutline,
+                            AppLocalization.of(context)!.createTheNFT,
                             Dimens.buttonTopDimens,
-                            key: const Key('addNFTFile'),
+                            key: const Key('createTheNFT'),
+                            icon: Icon(
+                              Icons.add,
+                              color: theme.text30,
+                              size: 14,
+                            ),
                             onPressed: () async {},
                           ),
                       ],

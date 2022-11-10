@@ -20,7 +20,7 @@ import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/uco_transfer_detail.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -186,6 +186,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
@@ -224,11 +225,16 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.confirm,
                       Dimens.buttonTopDimens,
                       key: const Key('confirm'),
+                      icon: Icon(
+                        Icons.check,
+                        color: theme.text,
+                        size: 14,
+                      ),
                       onPressed: () async {
                         final preferences = await Preferences.getInstance();
                         // Authenticate
@@ -250,11 +256,16 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                 ),
                 Row(
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.back,
                       Dimens.buttonBottomDimens,
                       key: const Key('back'),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: theme.text,
+                        size: 14,
+                      ),
                       onPressed: () {
                         transferNotifier.setTransferProcessStep(
                           TransferProcessStep.form,

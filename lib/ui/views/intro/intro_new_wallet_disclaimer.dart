@@ -3,7 +3,7 @@ import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -156,8 +156,8 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.understandButton,
                       Dimens.buttonBottomDimens,
                       key: const Key('understandButton'),

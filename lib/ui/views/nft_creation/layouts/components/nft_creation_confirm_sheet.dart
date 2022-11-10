@@ -18,7 +18,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_detail.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/preferences.dart';
@@ -235,11 +235,16 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          AppButton(
-                            AppButtonType.primary,
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
                             key: const Key('confirm'),
+                            icon: Icon(
+                              Icons.check,
+                              color: theme.text,
+                              size: 14,
+                            ),
                             onPressed: () async {
                               // Authenticate
                               final preferences =
@@ -263,11 +268,16 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                       ),
                       Row(
                         children: <Widget>[
-                          AppButton(
-                            AppButtonType.primary,
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
                             localizations.cancel,
                             Dimens.buttonBottomDimens,
                             key: const Key('cancel'),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: theme.text,
+                              size: 14,
+                            ),
                             onPressed: () {
                               nftCreationNotifier
                                   .setIndexTab(NftCreationTab.summary.index);

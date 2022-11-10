@@ -13,7 +13,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/get_public_key.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -169,8 +168,8 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
             ),
             Row(
               children: <Widget>[
-                AppButton(
-                  AppButtonType.primary,
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
                   localizations.close,
                   Dimens.buttonTopDimens,
                   key: const Key('close'),

@@ -101,7 +101,7 @@ class TransactionDetail extends ConsumerWidget {
                       if (transaction.typeTx == RecentTransaction.tokenCreation)
                         preferences.showBalances
                             ? AutoSizeText(
-                                '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
+                                '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
                                 style: theme.textStyleSize12W400Primary,
                               )
                             : AutoSizeText(
@@ -121,54 +121,30 @@ class TransactionDetail extends ConsumerWidget {
                                           RecentTransaction.transferOutput)
                                         if (transaction.tokenInformations ==
                                             null)
-                                          transaction.amount! > 1000000
-                                              ? AutoSizeText(
-                                                  '-${NumberUtil.formatThousands(transaction.amount!.round())} ${AccountBalance.cryptoCurrencyLabel}',
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                )
-                                              : AutoSizeText(
-                                                  '-${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                )
+                                          AutoSizeText(
+                                            '-${NumberUtil.formatThousands(transaction.amount!, round: true)} ${AccountBalance.cryptoCurrencyLabel}',
+                                            style: theme
+                                                .textStyleSize12W400Primary,
+                                          )
                                         else
-                                          transaction.amount! > 1000000
-                                              ? AutoSizeText(
-                                                  '-${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                )
-                                              : AutoSizeText(
-                                                  '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                )
+                                          AutoSizeText(
+                                            '-${NumberUtil.formatThousands(transaction.amount!, round: true)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
+                                            style: theme
+                                                .textStyleSize12W400Primary,
+                                          )
                                       else if (transaction.tokenInformations ==
                                           null)
-                                        transaction.amount! > 1000000
-                                            ? AutoSizeText(
-                                                '${NumberUtil.formatThousands(transaction.amount!.round())} ${AccountBalance.cryptoCurrencyLabel}',
-                                                style: theme
-                                                    .textStyleSize12W400Primary,
-                                              )
-                                            : AutoSizeText(
-                                                '${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
-                                                style: theme
-                                                    .textStyleSize12W400Primary,
-                                              )
+                                        AutoSizeText(
+                                          '${NumberUtil.formatThousands(transaction.amount!, round: true)} ${AccountBalance.cryptoCurrencyLabel}',
+                                          style:
+                                              theme.textStyleSize12W400Primary,
+                                        )
                                       else
-                                        transaction.amount! > 1000000
-                                            ? AutoSizeText(
-                                                '${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
-                                                style: theme
-                                                    .textStyleSize12W400Primary,
-                                              )
-                                            : AutoSizeText(
-                                                '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                style: theme
-                                                    .textStyleSize12W400Primary,
-                                              )
+                                        AutoSizeText(
+                                          '${NumberUtil.formatThousands(transaction.amount!, round: true)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
+                                          style:
+                                              theme.textStyleSize12W400Primary,
+                                        )
                                     else
                                       AutoSizeText(
                                         '···········',
@@ -265,12 +241,12 @@ class TransactionDetail extends ConsumerWidget {
                             if (transaction.tokenInformations!.type ==
                                 'fungible')
                               AutoSizeText(
-                                '${localizations.tokenCreated}: ${transaction.tokenInformations!.name}',
+                                '${localizations.tokenCreated} ${transaction.tokenInformations!.name}',
                                 style: theme.textStyleSize12W400Primary,
                               )
                             else
                               AutoSizeText(
-                                '${localizations.nftCreated}: ${transaction.tokenInformations!.name}',
+                                '${localizations.nftCreated} ${transaction.tokenInformations!.name}',
                                 style: theme.textStyleSize12W400Primary,
                               ),
                           ],
@@ -286,14 +262,12 @@ class TransactionDetail extends ConsumerWidget {
                               const Text('')
                             else
                               Text(
-                                localizations.txListFrom +
-                                    Address(
-                                      transaction.contactInformations == null
-                                          ? transaction
-                                              .from! // TODO(Chralu): Should we show origin or destination address ?
-                                          : transaction
-                                              .contactInformations!.format,
-                                    ).getShortString4(),
+                                '${localizations.txListFrom} ${Address(
+                                  transaction.contactInformations == null
+                                      ? transaction
+                                          .from! // TODO(Chralu): Should we show origin or destination address ?
+                                      : transaction.contactInformations!.format,
+                                ).getShortString4()}',
                                 style: theme.textStyleSize12W400Primary,
                               )
                           ],
@@ -309,13 +283,11 @@ class TransactionDetail extends ConsumerWidget {
                               const Text('')
                             else
                               Text(
-                                localizations.txListTo +
-                                    Address(
-                                      transaction.contactInformations == null
-                                          ? transaction.recipient!
-                                          : transaction
-                                              .contactInformations!.format,
-                                    ).getShortString4(),
+                                '${localizations.txListTo} ${Address(
+                                  transaction.contactInformations == null
+                                      ? transaction.recipient!
+                                      : transaction.contactInformations!.format,
+                                ).getShortString4()}',
                                 style: theme.textStyleSize12W400Primary,
                               )
                           ],

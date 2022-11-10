@@ -6,7 +6,7 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
@@ -186,8 +186,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                       Row(
                         children: <Widget>[
                           // Next Button
-                          AppButton(
-                            AppButtonType.primary,
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
                             key: const Key('confirm'),

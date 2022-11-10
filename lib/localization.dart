@@ -586,7 +586,7 @@ class AppLocalization {
   }
 
   String get total {
-    return Intl.message('Total', name: 'total');
+    return Intl.message('Total :', name: 'total');
   }
 
   String get availableAfterTransfer {
@@ -1148,11 +1148,11 @@ class AppLocalization {
   }
 
   String get tokenName {
-    return Intl.message('Name: ', name: 'tokenName');
+    return Intl.message('Name :', name: 'tokenName');
   }
 
   String get tokenSymbol {
-    return Intl.message('Symbol: ', name: 'tokenSymbol');
+    return Intl.message('Symbol :', name: 'tokenSymbol');
   }
 
   String get tokenSymbolMaxNumberCharacter {
@@ -1180,11 +1180,11 @@ class AppLocalization {
   }
 
   String get tokenInitialSupply {
-    return Intl.message('Initial supply: ', name: 'tokenInitialSupply');
+    return Intl.message('Initial supply :', name: 'tokenInitialSupply');
   }
 
   String get tokenSupply {
-    return Intl.message('Supply: ', name: 'tokenSupply');
+    return Intl.message('Supply :', name: 'tokenSupply');
   }
 
   String get tokenInitialSupplyMissing {
@@ -1252,15 +1252,11 @@ class AppLocalization {
   }
 
   String get txListTo {
-    return Intl.message('To : ', name: 'txListTo');
-  }
-
-  String get txListDate {
-    return Intl.message('Date : ', name: 'txListDate');
+    return Intl.message('To :', name: 'txListTo');
   }
 
   String get txListFees {
-    return Intl.message('Fees : ', name: 'txListFees');
+    return Intl.message('Fees :', name: 'txListFees');
   }
 
   String get txListTypeTransactionLabelNewToken {
@@ -1326,11 +1322,11 @@ class AppLocalization {
   }
 
   String get tokenCreated {
-    return Intl.message('Token Created', name: 'tokenCreated');
+    return Intl.message('Token created :', name: 'tokenCreated');
   }
 
   String get nftCreated {
-    return Intl.message('NFT Created', name: 'nftCreated');
+    return Intl.message('NFT created :', name: 'nftCreated');
   }
 
   String get version {
@@ -1648,6 +1644,10 @@ class AppLocalization {
     return Intl.message('Create a NFT', name: 'createNFT');
   }
 
+  String get createTheNFT {
+    return Intl.message('Create the NFT', name: 'createTheNFT');
+  }
+
   String get nftTabDescriptionHeader {
     return Intl.message(
         'This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.',
@@ -1668,7 +1668,7 @@ class AppLocalization {
   }
 
   String get nftNameHint {
-    return Intl.message('Enter a name', name: 'nftNameHint');
+    return Intl.message('Enter the name of the NFT', name: 'nftNameHint');
   }
 
   String get publicKeyAddHint {
@@ -1680,7 +1680,8 @@ class AppLocalization {
   }
 
   String get nftPropertyNameHint {
-    return Intl.message('Enter a name', name: 'nftPropertyNameHint');
+    return Intl.message('Enter the name of the prop.',
+        name: 'nftPropertyNameHint');
   }
 
   String get nftPropertyValueHint {

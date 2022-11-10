@@ -81,7 +81,15 @@ class NumberUtil {
   }
 
   /// Format a number with blank separator for each thousand
-  static String formatThousands(num input) {
+  static String formatThousands(
+    num input, {
+    bool round = false,
+    int minAmountToRound = 1000000,
+  }) {
+    if (round == true && input > minAmountToRound) {
+      input.round();
+    }
+
     NumberFormat formatterThousand;
     if (input is double) {
       formatterThousand = NumberFormat('#,##0.000000000', 'en_US');

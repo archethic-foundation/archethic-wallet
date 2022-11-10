@@ -15,7 +15,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -384,16 +384,16 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     if (isPressed == true || phrase.contains(''))
-                      AppButton(
-                        AppButtonType.primaryOutline,
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
                         localizations.ok,
                         Dimens.buttonTopDimens,
                         key: const Key('ok'),
                         onPressed: () {},
                       )
                     else
-                      AppButton(
-                        AppButtonType.primary,
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
                         localizations.ok,
                         Dimens.buttonTopDimens,
                         key: const Key('ok'),

@@ -99,6 +99,11 @@ class __AddAccountButtonState extends ConsumerState<_AddAccountButton> {
       localizations.addAccount,
       Dimens.buttonBottomDimens,
       key: const Key('addAccount'),
+      icon: Icon(
+        Icons.add,
+        color: theme.text,
+        size: 14,
+      ),
       onPressed: () async {
         final nameFocusNode = FocusNode();
         final nameController = TextEditingController();

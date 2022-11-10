@@ -4,7 +4,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 // Package imports:
@@ -151,8 +151,8 @@ class _IntroNewWalletDisclaimerState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    AppButton(
-                      AppButtonType.primary,
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
                       localizations.ok,
                       Dimens.buttonBottomDimens,
                       key: const Key('okButton'),

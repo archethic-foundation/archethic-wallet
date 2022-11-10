@@ -10,7 +10,7 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -87,11 +87,9 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                           ),
                           child: Column(
                             children: <Widget>[
-                              // list
                               Expanded(
                                 child: Stack(
                                   children: <Widget>[
-                                    //  list
                                     Scrollbar(
                                       thumbVisibility: true,
                                       controller: scrollController,
@@ -130,13 +128,14 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  AppButton(
-                                    AppButtonType.primary,
+                                  AppButtonTiny(
+                                    AppButtonTinyType.primary,
                                     localizations.viewExplorer,
                                     Dimens.buttonBottomDimens,
                                     icon: Icon(
                                       Icons.more_horiz,
                                       color: theme.text,
+                                      size: 14,
                                     ),
                                     key: const Key('viewExplorer'),
                                     onPressed: () async {

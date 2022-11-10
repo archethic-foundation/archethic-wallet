@@ -326,6 +326,11 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                   AppButtonTinyType.primary,
                   localizations.createFungibleToken,
                   Dimens.buttonBottomDimens,
+                  icon: Icon(
+                    Icons.add,
+                    color: theme.text,
+                    size: 14,
+                  ),
                   key: const Key('createTokenFungible'),
                   onPressed: () async {
                     Sheets.showAppHeightNineSheet(

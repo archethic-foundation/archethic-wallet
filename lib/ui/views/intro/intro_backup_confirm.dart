@@ -13,7 +13,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -381,16 +380,16 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                     Row(
                       children: <Widget>[
                         if (wordListSelected.length != 24)
-                          AppButton(
-                            AppButtonType.primaryOutline,
+                          AppButtonTiny(
+                            AppButtonTinyType.primaryOutline,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
                             key: const Key('confirm'),
                             onPressed: () {},
                           )
                         else
-                          AppButton(
-                            AppButtonType.primary,
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
                             localizations.confirm,
                             Dimens.buttonTopDimens,
                             key: const Key('confirm'),

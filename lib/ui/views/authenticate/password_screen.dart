@@ -10,7 +10,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 // Package imports:
@@ -213,16 +213,16 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                       Row(
                         children: <Widget>[
                           if (enterPasswordController!.text == '')
-                            AppButton(
-                              AppButtonType.primaryOutline,
+                            AppButtonTiny(
+                              AppButtonTinyType.primaryOutline,
                               localizations.confirm,
                               Dimens.buttonTopDimens,
                               key: const Key('confirm'),
                               onPressed: () async {},
                             )
                           else
-                            AppButton(
-                              AppButtonType.primary,
+                            AppButtonTiny(
+                              AppButtonTinyType.primary,
                               localizations.confirm,
                               Dimens.buttonTopDimens,
                               key: const Key('confirm'),
