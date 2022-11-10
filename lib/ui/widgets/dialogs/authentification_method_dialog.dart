@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -123,7 +124,13 @@ class AuthentificationMethodDialog {
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const SetPassword();
+                          return SetPassword(
+                            seed: ref
+                                .read(SessionProviders.session)
+                                .loggedIn
+                                ?.wallet
+                                .seed,
+                          );
                         },
                       ),
                     );
