@@ -158,6 +158,7 @@ class _IntroConfigureSecurityState
                                               context,
                                             )!
                                                 .configureSecurityExplanationPassword,
+                                            seed: widget.seed,
                                           );
                                         },
                                       ),

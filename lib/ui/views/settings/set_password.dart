@@ -3,7 +3,6 @@ import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/application/theme.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -26,9 +25,11 @@ class SetPassword extends ConsumerStatefulWidget {
     super.key,
     this.header,
     this.description,
+    this.seed,
   });
   final String? header;
   final String? description;
+  final String? seed;
   @override
   ConsumerState<SetPassword> createState() => _SetPasswordState();
 }
@@ -389,9 +390,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
       }
     } else {
       final vault = await Vault.getInstance();
-      final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
       vault.setPassword(
-        stringEncryptBase64(setPasswordController!.text, seed),
+        stringEncryptBase64(setPasswordController!.text, widget.seed),
       );
       Navigator.of(context).pop(true);
     }
