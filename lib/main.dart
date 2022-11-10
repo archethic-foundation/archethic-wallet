@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/language.dart';
 import 'package:aewallet/application/settings.dart';
@@ -279,7 +280,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       }
 
       if (preferences.getLock()) {
-        await Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/home');
 
         await AuthFactory.forceAuthenticate(
           context,
@@ -291,7 +292,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         );
       } else {
         await StateContainer.of(context).requestUpdate();
-        await Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     } catch (e) {
       dev.log(e.toString());
