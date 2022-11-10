@@ -57,7 +57,7 @@ class NftCategoryMenu extends ConsumerWidget {
                     );
                 Navigator.of(context).pushNamed(
                   '/nft_list_per_category',
-                  arguments: index,
+                  arguments: nftCategories[index].id,
                 );
               },
               child: Column(

@@ -16,11 +16,13 @@ class _NFTCreationProcessImportTabState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
+    final nftCreation = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
       ),
-    ),);
+    );
 
     return SingleChildScrollView(
       physics: nftCreation.file == null
@@ -37,7 +39,7 @@ class _NFTCreationProcessImportTabState
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
-                  ref.read(
+                  ref.watch(
                     NftCategoryProviders.getDescriptionHeader(
                       context: context,
                       id: nftCreation.currentNftCategoryIndex,

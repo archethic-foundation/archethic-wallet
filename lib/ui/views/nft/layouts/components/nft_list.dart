@@ -19,8 +19,14 @@ class NFTList extends ConsumerWidget {
         account: accountSelected,
       ),
     );
-    final accountTokenList = accountSelected
-        .getAccountNFTFiltered(nftCategories[currentNftCategoryIndex].id);
+    final nftCategory = nftCategories
+        .where(
+          (element) => element.id == currentNftCategoryIndex,
+        )
+        .first;
+
+    final accountTokenList =
+        accountSelected.getAccountNFTFiltered(nftCategory.id);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 10),

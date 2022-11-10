@@ -26,6 +26,11 @@ class NFTHeader extends ConsumerWidget {
         account: accountSelected!,
       ),
     );
+    final nftCategory = nftCategories
+        .where(
+          (element) => element.id == currentNftCategoryIndex,
+        )
+        .first;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,8 +61,7 @@ class NFTHeader extends ConsumerWidget {
           child: Column(
             children: [
               Hero(
-                tag:
-                    'nftCategory${nftCategories[currentNftCategoryIndex].name!}',
+                tag: 'nftCategory${nftCategory.name!}',
                 child: Card(
                   elevation: 5,
                   shadowColor: Colors.black,
@@ -71,7 +75,7 @@ class NFTHeader extends ConsumerWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
-                      nftCategories[currentNftCategoryIndex].image,
+                      nftCategory.image,
                       width: 50,
                     ),
                   ),
@@ -79,7 +83,7 @@ class NFTHeader extends ConsumerWidget {
               ),
               if (displayCategoryName)
                 Text(
-                  nftCategories[currentNftCategoryIndex].name!,
+                  nftCategory.name!,
                   textAlign: TextAlign.center,
                   style: theme.textStyleSize12W100Primary,
                 ),

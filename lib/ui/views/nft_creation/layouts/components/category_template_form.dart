@@ -34,7 +34,7 @@ class CategoryTemplateForm extends ConsumerWidget {
       ),
     );
 
-    switch (listNftCategory[nftCreation.currentNftCategoryIndex].id) {
+    switch (nftCreation.currentNftCategoryIndex) {
       case 4:
         final nftPropertyAuthorFocusNode = FocusNode();
         final nftPropertyAuthorController = TextEditingController();
