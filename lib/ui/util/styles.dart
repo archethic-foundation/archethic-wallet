@@ -618,6 +618,15 @@ extension AppStyles on BaseTheme {
     );
   }
 
+  TextStyle get textStyleSize24W700EquinoxPrimaryRed {
+    return TextStyle(
+      fontFamily: mainFont,
+      fontSize: AppFontSizes.size24,
+      fontWeight: FontWeight.w700,
+      color: Colors.red,
+    );
+  }
+
   TextStyle get textStyleSize28W700Primary {
     return TextStyle(
       fontFamily: secondaryFont,

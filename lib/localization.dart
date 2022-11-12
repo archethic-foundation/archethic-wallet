@@ -742,8 +742,7 @@ class AppLocalization {
   }
 
   String get removeWalletAction {
-    return Intl.message('Delete from this device your wallet',
-        name: 'removeWalletAction');
+    return Intl.message('Delete', name: 'removeWalletAction');
   }
 
   String get areYouSure {
@@ -1277,6 +1276,12 @@ class AppLocalization {
     return Intl.message('Recovery Phrase', name: 'recoveryPhrase');
   }
 
+  String get recoveryPhraseIntroExplanation {
+    return Intl.message(
+        'Here is the list of 24 words to remember. The following screen will prompt you to find them in order to help you verify that you have written them down correctly. This list will also be available in your wallet in the "Security" menu.',
+        name: 'recoveryPhraseIntroExplanation');
+  }
+
   String get iveBackedItUp {
     return Intl.message('I\'ve Backed It Up', name: 'iveBackedItUp');
   }
@@ -1549,7 +1554,7 @@ class AppLocalization {
 
   String get introNewWalletGetFirstInfosNameInfos {
     return Intl.message(
-        'It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING: This name will be added to your decentralized keychain and cannot be modified.',
+        'It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING : This name will be added to your decentralized keychain and cannot be modified.',
         name: 'introNewWalletGetFirstInfosNameInfos');
   }
 
@@ -1665,6 +1670,14 @@ class AppLocalization {
   String get addNftNewCategory {
     return Intl.message('Add new category (Soon...)',
         name: 'addNftNewCategory');
+  }
+
+  String get availableCategories {
+    return Intl.message('Available categories', name: 'availableCategories');
+  }
+
+  String get hiddenCategories {
+    return Intl.message('Hidden categories', name: 'hiddenCategories');
   }
 
   String get nftNameHint {

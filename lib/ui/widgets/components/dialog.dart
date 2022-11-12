@@ -33,7 +33,7 @@ class AppDialogs {
         return AlertDialog(
           title: Text(
             title,
-            style: theme.textStyleSize24W700EquinoxPrimary,
+            style: theme.textStyleSize14W600EquinoxPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -43,7 +43,7 @@ class AppDialogs {
           ),
           content: Text(
             content,
-            style: theme.textStyleSize16W400Primary,
+            style: theme.textStyleSize12W100Primary,
           ),
           actions: <Widget>[
             _AppDialogsButton(
@@ -90,7 +90,7 @@ class AppDialogs {
         return AlertDialog(
           title: Text(
             title,
-            style: theme.textStyleSize20W700Primary,
+            style: theme.textStyleSize14W600Primary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -100,7 +100,7 @@ class AppDialogs {
           ),
           content: Text(
             content,
-            style: theme.textStyleSize16W400Primary,
+            style: theme.textStyleSize12W100Primary,
           ),
           actions: <Widget>[
             TextButton(
@@ -108,7 +108,7 @@ class AppDialogs {
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   AppLocalization.of(context)!.ok,
-                  style: theme.textStyleSize12W600Primary,
+                  style: theme.textStyleSize12W400Primary,
                 ),
               ),
               onPressed: () {
@@ -144,7 +144,7 @@ class _AppDialogsButton extends ConsumerWidget {
         constraints: const BoxConstraints(maxWidth: 100),
         child: Text(
           textButton,
-          style: theme.textStyleSize12W600Primary,
+          style: theme.textStyleSize12W400Primary,
         ),
       ),
     );

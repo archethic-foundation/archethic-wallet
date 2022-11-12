@@ -122,7 +122,7 @@ class NFTTab extends ConsumerWidget {
                                   child: Text(
                                     AppLocalization.of(context)!
                                         .nftTabDescriptionHeader,
-                                    style: theme.textStyleSize12W600Primary,
+                                    style: theme.textStyleSize12W400Primary,
                                     textAlign: TextAlign.justify,
                                   ),
                                 ),

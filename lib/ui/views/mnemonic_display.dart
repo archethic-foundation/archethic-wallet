@@ -1,12 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +40,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
@@ -95,7 +95,36 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                           AppLocalization.of(context)!.tapToHide,
                           style: theme.textStyleSize14W600Primary,
                         ),
-                )
+                ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Icon(
+                        UiIcons.about,
+                        color: theme.text,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: AutoSizeText(
+                        localizations.recoveryPhraseIntroExplanation,
+                        textAlign: TextAlign.justify,
+                        style: theme.textStyleSize12W100Primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

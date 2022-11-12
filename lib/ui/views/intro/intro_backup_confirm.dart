@@ -275,12 +275,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 10,
                           ),
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             localizations.confirmSecretPhrase,
-                            style: theme.textStyleSize20W700Warning,
+                            style: theme.textStyleSize24W700EquinoxPrimary,
                           ),
                         ),
                         Container(
@@ -291,7 +290,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                           ),
                           child: AutoSizeText(
                             localizations.confirmSecretPhraseExplanation,
-                            style: theme.textStyleSize16W600Primary,
+                            style: theme.textStyleSize14W600Primary,
                             textAlign: TextAlign.justify,
                             maxLines: 6,
                             stepGranularity: 0.5,
