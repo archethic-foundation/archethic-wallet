@@ -7,6 +7,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -83,19 +84,15 @@ class _IntroNewWalletDisclaimerState
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15,
                           ),
                           alignment: Alignment.bottomLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const SizedBox(
-                                height: 30,
-                              ),
                               AutoSizeText(
                                 localizations
                                     .introNewWalletGetFirstInfosWelcome,
-                                style: theme.textStyleSize20W700Primary,
+                                style: theme.textStyleSize24W700EquinoxPrimary,
                                 textAlign: TextAlign.left,
                               ),
                               const SizedBox(
@@ -104,7 +101,7 @@ class _IntroNewWalletDisclaimerState
                               AutoSizeText(
                                 localizations
                                     .introNewWalletGetFirstInfosNameRequest,
-                                style: theme.textStyleSize16W600Primary,
+                                style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.left,
                               ),
                               AppTextField(
@@ -132,10 +129,21 @@ class _IntroNewWalletDisclaimerState
                                 const SizedBox(
                                   height: 40,
                                 ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Icon(
+                                  UiIcons.about,
+                                  color: theme.text,
+                                  size: 20,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               AutoSizeText(
                                 localizations
                                     .introNewWalletGetFirstInfosNameInfos,
-                                style: theme.textStyleSize14W600Primary,
+                                style: theme.textStyleSize12W100Primary,
                                 textAlign: TextAlign.justify,
                               ),
                               const SizedBox(

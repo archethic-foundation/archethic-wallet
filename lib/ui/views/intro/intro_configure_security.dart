@@ -92,27 +92,34 @@ class _IntroConfigureSecurityState
                   child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
+                        AutoSizeText(
+                          localizations.securityHeader,
+                          style: theme.textStyleSize20W700EquinoxPrimary,
+                          textAlign: TextAlign.justify,
+                          maxLines: 6,
+                          stepGranularity: 0.5,
+                        ),
                         Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 10,
+                          margin: const EdgeInsets.only(
+                            top: 30,
+                            left: 20,
+                            right: 20,
                           ),
                           alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             localizations.configureSecurityIntro,
-                            style: theme.textStyleSize20W700Warning,
+                            style: theme.textStyleSize14W600Primary,
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
+                          margin: const EdgeInsets.only(
+                            top: 20,
+                            left: 20,
+                            right: 20,
                           ),
                           child: AutoSizeText(
                             localizations.configureSecurityExplanation,
-                            style: theme.textStyleSize16W600Primary,
+                            style: theme.textStyleSize12W100Primary,
                             textAlign: TextAlign.justify,
                             maxLines: 6,
                             stepGranularity: 0.5,
@@ -123,9 +130,9 @@ class _IntroConfigureSecurityState
                         ),
                         if (widget.accessModes != null)
                           Container(
-                            margin: const EdgeInsetsDirectional.only(
-                              start: 20,
-                              end: 20,
+                            margin: const EdgeInsets.only(
+                              left: 20,
+                              right: 20,
                             ),
                             child: PickerWidget(
                               pickerItems: widget.accessModes,

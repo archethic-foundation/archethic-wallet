@@ -137,9 +137,9 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                     child: Text(
                                       widget.pickerItems![index].subLabel!,
                                       style: widget.pickerItems![index].enabled
-                                          ? theme.textStyleSize12W400Primary
+                                          ? theme.textStyleSize14W600Primary
                                           : theme
-                                              .textStyleSize12W400PrimaryDisabled,
+                                              .textStyleSize14W600PrimaryDisabled,
                                     ),
                                   )
                                 else

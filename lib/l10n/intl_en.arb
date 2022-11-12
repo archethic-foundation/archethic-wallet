@@ -498,7 +498,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "removeWalletAction": "Delete from this device your wallet",
+  "removeWalletAction": "Delete",
   "@removeWalletAction": {
     "type": "text",
     "placeholders_order": [],
@@ -968,6 +968,12 @@
   },
   "recoveryPhrase": "Recovery Phrase",
   "@recoveryPhrase": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "recoveryPhraseIntroExplanation": "Here is the list of 24 words to remember. The following screen will prompt you to find them in order to help you verify that you have written them down correctly. This list will also be available in your wallet in the \"Security\" menu.",
+  "@recoveryPhraseIntroExplanation": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1686,7 +1692,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "introNewWalletGetFirstInfosNameInfos": "It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING: This name will be added to your decentralized keychain and cannot be modified.",
+  "introNewWalletGetFirstInfosNameInfos": "It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING : This name will be added to your decentralized keychain and cannot be modified.",
   "@introNewWalletGetFirstInfosNameInfos": {
     "type": "text",
     "placeholders_order": [],
@@ -2378,6 +2384,18 @@
   },
   "addNFTProperty": "Add property",
   "@addNFTProperty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "availableCategories": "Available categories",
+  "@availableCategories": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "hiddenCategories": "Hidden categories",
+  "@hiddenCategories": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

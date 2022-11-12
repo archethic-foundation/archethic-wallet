@@ -174,8 +174,11 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                         ),
                         child: AutoSizeText(
                           localizations.recoveryPhrase,
-                          style: theme.textStyleSize20W700Primary,
+                          style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
+                      ),
+                      const SizedBox(
+                        height: 30,
                       ),
                       if (mnemonic != null)
                         Expanded(
@@ -188,7 +191,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                           ),
                         )
                       else
-                        const Text('')
+                        const Text(''),
                     ],
                   ),
                 ),

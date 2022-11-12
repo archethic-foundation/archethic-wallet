@@ -110,7 +110,7 @@ class ReorderableWidget extends ConsumerWidget {
           child: Column(
             children: [
               Text(
-                'Available categories',
+                localizations.availableCategories,
                 style: theme.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
@@ -181,7 +181,7 @@ class ReorderableWidget extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Text(
-                  'Hidden categories',
+                  localizations.hiddenCategories,
                   style: theme.textStyleSize12W100Primary,
                   textAlign: TextAlign.justify,
                 ),

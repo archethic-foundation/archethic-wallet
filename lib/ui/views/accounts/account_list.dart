@@ -19,6 +19,7 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -120,7 +121,7 @@ class __AddAccountButtonState extends ConsumerState<_AddAccountButton> {
                       children: [
                         Text(
                           localizations.introNewWalletGetFirstInfosNameRequest,
-                          style: theme.textStyleSize12W400Primary,
+                          style: theme.textStyleSize14W600Primary,
                         ),
                       ],
                     ),
@@ -166,9 +167,20 @@ class __AddAccountButtonState extends ConsumerState<_AddAccountButton> {
                             const SizedBox(
                               height: 40,
                             ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Icon(
+                              UiIcons.about,
+                              color: theme.text,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           Text(
                             localizations.introNewWalletGetFirstInfosNameInfos,
-                            style: theme.textStyleSize12W600Primary,
+                            style: theme.textStyleSize12W100Primary,
                             textAlign: TextAlign.justify,
                           ),
                         ],

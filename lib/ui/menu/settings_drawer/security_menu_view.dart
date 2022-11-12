@@ -122,8 +122,7 @@ class SecurityMenuView extends ConsumerWidget {
                                 language.getLocaleString(),
                               ),
                               localizations.removeWalletDetail,
-                              localizations.removeWalletAction.toUpperCase(),
-                              () {
+                              localizations.removeWalletAction, () {
                             // Show another confirm dialog
                             AppDialogs.showConfirmDialog(
                               context,
