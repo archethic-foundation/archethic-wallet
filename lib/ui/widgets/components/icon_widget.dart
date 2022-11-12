@@ -117,7 +117,7 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
           ),
         ),
         shaderCallback: (Rect bounds) {
-          final rect = Rect.fromLTRB(0, 0, width, width);
+          final rect = Rect.fromLTRB(0, 0, width + 2, width + 2);
           return theme.gradient!.createShader(rect);
         },
       ),
