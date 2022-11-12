@@ -17,9 +17,6 @@ abstract class BaseTheme {
   Gradient? gradientMainButton;
 
   // IconData Widget
-  Color? iconDataWidgetBoxShadow;
-  Color? iconDataWidgetIconGradientLeft;
-  Color? iconDataWidgetIconGradientRight;
   Color? iconDataWidgetIconBackground;
 
   // Menu

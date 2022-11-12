@@ -34,12 +34,6 @@ class DarkTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.1);
-  @override
-  Color? iconDataWidgetIconGradientLeft = const Color(0xFF00A4DB);
-  @override
-  Color? iconDataWidgetIconGradientRight = const Color(0xFFCC00FF);
-  @override
   Color? iconDataWidgetIconBackground =
       const Color(0xFFFFFFFF).withOpacity(0.1);
 
