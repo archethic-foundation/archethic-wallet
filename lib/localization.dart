@@ -1584,6 +1584,11 @@ class AppLocalization {
         name: 'introNewWalletGetFirstInfosNetworkHeader');
   }
 
+  String get introNewWalletGetFirstInfosNetworkChoice {
+    return Intl.message('Current network :',
+        name: 'introNewWalletGetFirstInfosNetworkChoice');
+  }
+
   String get accountHeader {
     return Intl.message('Account', name: 'accountHeader');
   }
