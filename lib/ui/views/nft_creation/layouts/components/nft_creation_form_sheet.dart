@@ -20,11 +20,13 @@ class NftCreationFormSheet extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
+    final nftCreation = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
       ),
-    ),);
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
@@ -106,21 +108,23 @@ class NftCreationFormSheet extends ConsumerWidget {
                         final nftCreationArgs = ref.read(
                           NftCreationFormProvider.nftCreationFormArgs,
                         );
-                        final nftCreationNotifier = ref.watch(
-                          NftCreationFormProvider.nftCreationForm(
-                                  nftCreationArgs,)
-                              .notifier,
-                        );
-                        nftCreationNotifier.setIndexTab(index);
+                        ref
+                            .watch(
+                              NftCreationFormProvider.nftCreationForm(
+                                nftCreationArgs,
+                              ).notifier,
+                            )
+                            .setIndexTab(index);
                         if (index == NftCreationTab.summary.index) {
-                          final nftCreationNotifier = ref.watch(
-                            NftCreationFormProvider.nftCreationForm(
-                                    nftCreationArgs,)
-                                .notifier,
-                          );
-                          nftCreationNotifier.setFees(
-                            context,
-                          );
+                          ref
+                              .watch(
+                                NftCreationFormProvider.nftCreationForm(
+                                  nftCreationArgs,
+                                ).notifier,
+                              )
+                              .setFees(
+                                context,
+                              );
                           return;
                         }
                       },

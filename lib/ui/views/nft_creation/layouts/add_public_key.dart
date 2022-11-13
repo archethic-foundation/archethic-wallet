@@ -133,18 +133,19 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                         preferences.activeVibrations,
                                       );
 
-                                  final nftCreationNotifier = ref.watch(
-                                    NftCreationFormProvider.nftCreationForm(
-                                      ref.read(
-                                        NftCreationFormProvider
-                                            .nftCreationFormArgs,
-                                      ),
-                                    ).notifier,
-                                  );
-                                  nftCreationNotifier.addPublicKey(
-                                    widget.propertyName,
-                                    nftCreation.propertyAccessRecipient,
-                                  );
+                                  ref
+                                      .watch(
+                                        NftCreationFormProvider.nftCreationForm(
+                                          ref.read(
+                                            NftCreationFormProvider
+                                                .nftCreationFormArgs,
+                                          ),
+                                        ).notifier,
+                                      )
+                                      .addPublicKey(
+                                        widget.propertyName,
+                                        nftCreation.propertyAccessRecipient,
+                                      );
                                 },
                               )
                             else

@@ -96,8 +96,9 @@ class NumberUtil {
     } else {
       formatterThousand = NumberFormat('#,##0', 'en_US');
     }
-    formatterThousand.maximumFractionDigits = 8;
-    formatterThousand.minimumFractionDigits = 0;
+    formatterThousand
+      ..maximumFractionDigits = 8
+      ..minimumFractionDigits = 0;
     return formatterThousand.format(input).replaceAll(',', ' ');
   }
 }

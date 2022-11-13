@@ -90,8 +90,8 @@ class KeychainUtil {
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final keychain = Keychain(hexToUint8List(keychainSeed), version: 1);
-    keychain.addService(kServiceName, kDerivationPath);
+    final keychain = Keychain(hexToUint8List(keychainSeed), version: 1)
+      ..addService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
     final keychainTransaction = sl.get<ApiService>().newKeychainTransaction(
@@ -287,8 +287,8 @@ class KeychainUtil {
 
           final path = service.derivationPath!
               .replaceAll(kDerivationPathWithoutService, '')
-              .split('/');
-          path.last = '';
+              .split('/')
+            ..last = '';
           var name = path.join('/');
           name = name.substring(0, name.length - 1);
 

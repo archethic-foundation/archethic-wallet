@@ -51,14 +51,15 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         context,
         theme,
       );
-      final nftCreationNotifier = ref.watch(
-        NftCreationFormProvider.nftCreationForm(
-          ref.read(
-            NftCreationFormProvider.nftCreationFormArgs,
-          ),
-        ).notifier,
-      );
-      nftCreationNotifier.send(context);
+      ref
+          .watch(
+            NftCreationFormProvider.nftCreationForm(
+              ref.read(
+                NftCreationFormProvider.nftCreationFormArgs,
+              ),
+            ).notifier,
+          )
+          .send(context);
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
@@ -280,10 +281,10 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             ),
                             onPressed: () {
                               nftCreationNotifier
-                                  .setIndexTab(NftCreationTab.summary.index);
-                              nftCreationNotifier.setNftCreationProcessStep(
-                                NftCreationProcessStep.form,
-                              );
+                                ..setIndexTab(NftCreationTab.summary.index)
+                                ..setNftCreationProcessStep(
+                                  NftCreationProcessStep.form,
+                                );
                             },
                           ),
                         ],

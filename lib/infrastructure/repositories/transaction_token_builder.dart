@@ -30,14 +30,14 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     final content = archethic.tokenToJsonForTxDataContent(
       token,
     );
-    transaction.setContent(content);
-
-    transaction.address = archethic.uint8ListToHex(
-      keychain.deriveAddress(
-        serviceName,
-        index: index + 1,
-      ),
-    );
+    transaction
+      ..setContent(content)
+      ..address = archethic.uint8ListToHex(
+        keychain.deriveAddress(
+          serviceName,
+          index: index + 1,
+        ),
+      );
 
     return keychain
         .buildTransaction(

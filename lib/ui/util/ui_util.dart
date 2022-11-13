@@ -258,10 +258,10 @@ class UIUtil {
     }
     EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: true));
     final Future<dynamic> delayed =
-        Future<void>.delayed(const Duration(seconds: 10));
-    delayed.then((_) {
-      return true;
-    });
+        Future<void>.delayed(const Duration(seconds: 10))
+          ..then((_) {
+            return true;
+          });
     _lockDisableSub = delayed.asStream().listen((_) {
       EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: false));
     });

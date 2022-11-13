@@ -78,12 +78,12 @@ class ContactsDialog {
                     onChanged: (text) async {
                       contacts = await ref.read(
                         ContactProviders.fetchContacts().future,
-                      );
-                      contacts.removeWhere(
-                        (element) =>
-                            element.format.toUpperCase() ==
-                            accountSelected!.name.toUpperCase(),
-                      );
+                      )
+                        ..removeWhere(
+                          (element) =>
+                              element.format.toUpperCase() ==
+                              accountSelected!.name.toUpperCase(),
+                        );
                       setState(
                         () {
                           contacts = contacts.where((Contact contact) {

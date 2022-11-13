@@ -42,9 +42,8 @@ extension TransferTransactionBuilder on archethic.Transaction {
 
       final walletKeyPair = keychain.deriveKeypair(serviceName);
 
-      final authorizedPublicKeys = List<String>.empty(growable: true);
-      authorizedPublicKeys
-          .add(archethic.uint8ListToHex(walletKeyPair.publicKey));
+      final authorizedPublicKeys = List<String>.empty(growable: true)
+        ..add(archethic.uint8ListToHex(walletKeyPair.publicKey));
 
       for (final transfer in ucoTransferList) {
         final firstTxListRecipient = await sl

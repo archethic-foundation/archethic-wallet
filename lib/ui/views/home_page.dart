@@ -155,10 +155,10 @@ class _HomePageState extends ConsumerState<HomePage>
         lockStreamListener!.cancel();
       }
       final Future<dynamic> delayed =
-          Future<void>.delayed((preferences.getLockTimeout()).getDuration());
-      delayed.then((_) {
-        return true;
-      });
+          Future<void>.delayed((preferences.getLockTimeout()).getDuration())
+            ..then((_) {
+              return true;
+            });
       lockStreamListener = delayed.asStream().listen((_) {
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
