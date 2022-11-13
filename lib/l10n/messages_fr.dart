@@ -237,6 +237,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nftDescriptionHint" : MessageLookupByLibrary.simpleMessage("Saisissez la description"),
     "nftFormatNotSupportedEmpty" : MessageLookupByLibrary.simpleMessage("Le format n\'est pas pris en charge."),
     "nftInfosDescription" : MessageLookupByLibrary.simpleMessage("Ajoutez à votre NFT un nom et une description compréhensible."),
+    "nftListEmptyExplanation" : MessageLookupByLibrary.simpleMessage("C\'est ici que vous retrouverez vos NFT liées à cette catégorie.\nMalheureusement pour le moment, aucun NFT n\'est rangé dans cette catégorie.\n\nVous pouvez en créer en allant dans la fonction \"Créer un NFT\" ci-dessous."),
     "nftNameEmpty" : MessageLookupByLibrary.simpleMessage("Veuillez saisir un nom pour ce NFT."),
     "nftNameHint" : MessageLookupByLibrary.simpleMessage("Saisissez le nom du NFT"),
     "nftPropertiesRequiredByCategory" : MessageLookupByLibrary.simpleMessage("Les propriétés requises par la catégorie : "),

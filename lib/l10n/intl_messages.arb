@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-13T09:36:22.024799",
+  "@@last_modified": "2022-11-13T12:58:38.749191",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -2112,7 +2112,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "createNFT": "Create a NFT",
+  "createNFT": "Create an NFT",
   "@createNFT": {
     "type": "text",
     "placeholders_order": [],
@@ -2124,13 +2124,19 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftListEmptyExplanation": "This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the \"Create an NFT\" function below.",
+  "@nftListEmptyExplanation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftTabDescriptionHeader": "This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.",
   "@nftTabDescriptionHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTFile": "Add a NFT",
+  "addNFTFile": "Add an NFT",
   "@addNFTFile": {
     "type": "text",
     "placeholders_order": [],
