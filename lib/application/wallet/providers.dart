@@ -52,8 +52,6 @@ class _SessionNotifier extends Notifier<Session> {
     await (await Preferences.getInstance()).clearAll();
     await sl.get<DBHelper>().clearAll();
     state = const Session.loggedOut();
-    // TODO(Chralu): is it useful ?
-    // RestartWidget.restartApp(context);
   }
 
   Future<void> createNewAppWallet({
