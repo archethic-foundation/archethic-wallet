@@ -1927,6 +1927,10 @@ class AppLocalization {
     return Intl.message('Delete file', name: 'deleteFile');
   }
 
+  String get removePublicKey {
+    return Intl.message('Remove public key', name: 'removePublicKey');
+  }
+
   String get deleteProperty {
     return Intl.message('Delete property', name: 'deleteProperty');
   }

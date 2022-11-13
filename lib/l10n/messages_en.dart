@@ -307,6 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "recoveryPhraseIntroExplanation" : MessageLookupByLibrary.simpleMessage("Here is the list of 24 words to remember. The following screen will prompt you to find them in order to help you verify that you have written them down correctly.\n\nThis list will also be available in your wallet in the \"Security\" menu."),
     "removeContact" : MessageLookupByLibrary.simpleMessage("Remove Contact"),
     "removeContactConfirmation" : MessageLookupByLibrary.simpleMessage("Are you sure you want to delete %1?"),
+    "removePublicKey" : MessageLookupByLibrary.simpleMessage("Remove public key"),
     "removeWallet" : MessageLookupByLibrary.simpleMessage("Remove Wallet"),
     "removeWalletAction" : MessageLookupByLibrary.simpleMessage("Delete"),
     "removeWalletDescription" : MessageLookupByLibrary.simpleMessage("You can find it at any time with your secret phrase"),

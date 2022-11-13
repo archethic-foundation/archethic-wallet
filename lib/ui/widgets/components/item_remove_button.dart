@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTCreationProcessFileAccessRemoveButton extends ConsumerWidget {
-  const NFTCreationProcessFileAccessRemoveButton({
+class ItemRemoveButton extends ConsumerWidget {
+  const ItemRemoveButton({
     required this.onPressed,
     this.readOnly = false,
     super.key,

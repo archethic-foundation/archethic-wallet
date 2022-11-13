@@ -198,6 +198,25 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     );
   }
 
+  void removePublicKey(String propertyName, String publicKey) {
+    final updatedNftCreationProperties = state.properties.map(
+      (property) {
+        if (property.propertyName != propertyName) return property;
+
+        return property.copyWith(
+          publicKeys: [...property.publicKeys]..removeWhere(
+              (element) => element.publicKey!.publicKey == publicKey,
+            ),
+        );
+      },
+    ).toList();
+
+    state = state.copyWith(
+      properties: updatedNftCreationProperties,
+      error: '',
+    );
+  }
+
   void _setPropertyAccessRecipient({
     required PropertyAccessRecipient recipient,
   }) {
