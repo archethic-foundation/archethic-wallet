@@ -24,8 +24,7 @@ class TokenUtil {
     final token =
         await sl.get<ApiService>().getToken(address, request: 'properties');
     if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
-      final list = token.tokenProperties!;
-      list.forEach((key, value) {
+      token.tokenProperties!.forEach((key, value) {
         if (key == 'file') {
           if (_base64.hasMatch(value) == true) {
             valueFileDecoded = base64Decode(value);

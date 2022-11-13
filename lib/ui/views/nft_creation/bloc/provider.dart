@@ -239,7 +239,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     required BuildContext context,
     required PublicKey publicKey,
   }) async {
-    // TODO(reddwarf03): fix it with pk acess
+    // TODO(reddwarf03): fix it with pk access
     final contact = await sl.get<DBHelper>().getContactWithPublicKey(
           '',
         );
@@ -267,14 +267,15 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
   }
 
   void removeFileProperties() {
-    final propertiesToRemove = [...state.properties];
-    propertiesToRemove.removeWhere(
-      (NftCreationFormStateProperty element) => element.propertyName == 'file',
-    );
-    propertiesToRemove.removeWhere(
-      (NftCreationFormStateProperty element) =>
-          element.propertyName == 'type/mime',
-    );
+    final propertiesToRemove = [...state.properties]
+      ..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'file',
+      )
+      ..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type/mime',
+      );
 
     state = state.copyWith(
       fileImportType: null,
@@ -286,28 +287,27 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
   }
 
   void removeProperty(String propertyName) {
-    final propertiesToRemove = [...state.properties];
-    propertiesToRemove.removeWhere(
-      (NftCreationFormStateProperty element) =>
-          element.propertyName == propertyName,
-    );
+    final propertiesToRemove = [...state.properties]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == propertyName,
+      );
     state = state.copyWith(
       properties: propertiesToRemove,
     );
   }
 
   void setProperty(String propertyName, String propertyValue) {
-    final propertiesToSet = [...state.properties];
-    propertiesToSet.removeWhere(
-      (element) => element.propertyName == propertyName,
-    );
-    propertiesToSet.add(
-      NftCreationFormStateProperty(
-        propertyName: propertyName,
-        propertyValue: propertyValue,
-      ),
-    );
-    propertiesToSet.sort((a, b) => a.propertyName.compareTo(b.propertyName));
+    final propertiesToSet = [...state.properties]
+      ..removeWhere(
+        (element) => element.propertyName == propertyName,
+      )
+      ..add(
+        NftCreationFormStateProperty(
+          propertyName: propertyName,
+          propertyValue: propertyValue,
+        ),
+      )
+      ..sort((a, b) => a.propertyName.compareTo(b.propertyName));
     state = state.copyWith(
       properties: propertiesToSet,
       propertyName: '',

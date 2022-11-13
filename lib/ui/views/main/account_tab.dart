@@ -39,8 +39,9 @@ class AccountTab extends ConsumerWidget {
                   );
 
               await ref.read(SessionProviders.session.notifier).refresh();
-              ref.invalidate(BlogProviders.fetchArticles);
-              ref.invalidate(ContactProviders.fetchContacts);
+              ref
+                ..invalidate(BlogProviders.fetchArticles)
+                ..invalidate(ContactProviders.fetchContacts);
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

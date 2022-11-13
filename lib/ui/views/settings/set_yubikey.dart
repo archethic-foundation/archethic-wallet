@@ -291,8 +291,9 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
         }
       } else {
         final vault = await Vault.getInstance();
-        vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
-        vault.setYubikeyClientID(_clientIDController!.text);
+        vault
+          ..setYubikeyClientAPIKey(_clientAPIKeyController!.text)
+          ..setYubikeyClientID(_clientIDController!.text);
 
         final auth = await AuthFactory.authenticate(
           context,

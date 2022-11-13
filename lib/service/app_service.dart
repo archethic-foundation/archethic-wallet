@@ -351,8 +351,8 @@ class AppService {
           final token =
               await sl.get<ApiService>().getToken(balance.token![i].address!);
           if (token.type == 'non-fungible') {
-            final tokenWithoutFile = token.tokenProperties!;
-            tokenWithoutFile.removeWhere((key, value) => key == 'file');
+            final tokenWithoutFile = token.tokenProperties!
+              ..removeWhere((key, value) => key == 'file');
             final tokenInformations = TokenInformations(
               address: balance.token![i].address,
               id: token.id,
@@ -624,8 +624,8 @@ class AppService {
       final keychain = await sl.get<ApiService>().getKeychain(seed);
       final walletKeyPair = keychain.deriveKeypair(serviceName);
 
-      final authorizedPublicKeys = List<String>.empty(growable: true);
-      authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
+      final authorizedPublicKeys = List<String>.empty(growable: true)
+        ..add(uint8ListToHex(walletKeyPair.publicKey));
 
       for (final transfer in listUcoTransfer) {
         final firstTxListRecipient = await sl

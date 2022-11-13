@@ -58,9 +58,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
         context,
         theme,
       );
-      final transferNotifier =
-          ref.watch(TransferFormProvider.transferForm.notifier);
-      transferNotifier.send(context);
+
+      ref.watch(TransferFormProvider.transferForm.notifier).send(context);
     });
 
     _sendTxSub = EventTaxiImpl.singleton()

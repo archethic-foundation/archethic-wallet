@@ -21,28 +21,29 @@ class DBHelper {
 
   static Future<void> setupDatabase() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(ContactAdapter());
-    Hive.registerAdapter(HiveAppWalletDTOAdapter());
-    Hive.registerAdapter(AccountBalanceAdapter());
-    Hive.registerAdapter(AccountAdapter());
-    Hive.registerAdapter(AppKeychainAdapter());
-    Hive.registerAdapter(RecentTransactionAdapter());
-    Hive.registerAdapter(PriceAdapter());
-    Hive.registerAdapter(AccountTokenAdapter());
-    Hive.registerAdapter(TokenInformationsAdapter());
-    // TODO(chralu): How to remove this adapter annd the unused hive class
-    Hive.registerAdapter(TokenInformationsPropertyAdapter());
-    Hive.registerAdapter(NftInfosOffChainAdapter());
+    Hive
+      ..registerAdapter(ContactAdapter())
+      ..registerAdapter(HiveAppWalletDTOAdapter())
+      ..registerAdapter(AccountBalanceAdapter())
+      ..registerAdapter(AccountAdapter())
+      ..registerAdapter(AppKeychainAdapter())
+      ..registerAdapter(RecentTransactionAdapter())
+      ..registerAdapter(PriceAdapter())
+      ..registerAdapter(AccountTokenAdapter())
+      ..registerAdapter(TokenInformationsAdapter())
+      // TODO(chralu): How to remove this adapter annd the unused hive class
+      ..registerAdapter(TokenInformationsPropertyAdapter())
+      ..registerAdapter(NftInfosOffChainAdapter());
   }
 
   // Contacts
   Future<List<Contact>> getContacts() async {
     final box = await Hive.openBox<Contact>(contactsTable);
-    final contactsList = box.values.toList();
-    contactsList.sort(
-      (Contact a, Contact b) =>
-          a.name.toLowerCase().compareTo(b.name.toLowerCase()),
-    );
+    final contactsList = box.values.toList()
+      ..sort(
+        (Contact a, Contact b) =>
+            a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+      );
     return contactsList;
   }
 
@@ -79,8 +80,7 @@ class DBHelper {
       if (lastAddressContact == null || lastAddressContact.isEmpty) {
         lastAddressContact = contact.address;
       } else {
-        final contactToUpdate = contact;
-        contactToUpdate.address = lastAddressContact;
+        final contactToUpdate = contact..address = lastAddressContact;
         await sl.get<DBHelper>().saveContact(contactToUpdate);
       }
       if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {

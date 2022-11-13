@@ -49,9 +49,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
         context,
         theme,
       );
-      final addTokenNotifier =
-          ref.watch(AddTokenFormProvider.addTokenForm.notifier);
-      addTokenNotifier.send(context);
+
+      ref.watch(AddTokenFormProvider.addTokenForm.notifier).send(context);
     });
 
     _sendTxSub = EventTaxiImpl.singleton()

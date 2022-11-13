@@ -461,8 +461,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
-    final accessModes = <PickerItem>[];
-    accessModes.add(
+    final accessModes = <PickerItem>[
       PickerItem(
         const AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
         const AuthenticationMethod(AuthMethod.pin).getDescription(context),
@@ -471,8 +470,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
         AuthMethod.pin,
         true,
       ),
-    );
-    accessModes.add(
       PickerItem(
         const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
         const AuthenticationMethod(AuthMethod.password).getDescription(context),
@@ -480,8 +477,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
         theme.pickerItemIconEnabled,
         AuthMethod.password,
         true,
-      ),
-    );
+      )
+    ];
     if (biometricsAvalaible) {
       accessModes.add(
         PickerItem(
@@ -496,30 +493,31 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
         ),
       );
     }
-    accessModes.add(
-      PickerItem(
-        const AuthenticationMethod(AuthMethod.biometricsUniris)
-            .getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.biometricsUniris)
-            .getDescription(context),
-        AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
-        theme.pickerItemIconEnabled,
-        AuthMethod.biometricsUniris,
-        false,
-      ),
-    );
-    accessModes.add(
-      PickerItem(
-        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-            .getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-            .getDescription(context),
-        AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
-        theme.pickerItemIconEnabled,
-        AuthMethod.yubikeyWithYubicloud,
-        true,
-      ),
-    );
+    accessModes
+      ..add(
+        PickerItem(
+          const AuthenticationMethod(AuthMethod.biometricsUniris)
+              .getDisplayName(context),
+          const AuthenticationMethod(AuthMethod.biometricsUniris)
+              .getDescription(context),
+          AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
+          theme.pickerItemIconEnabled,
+          AuthMethod.biometricsUniris,
+          false,
+        ),
+      )
+      ..add(
+        PickerItem(
+          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+              .getDisplayName(context),
+          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+              .getDescription(context),
+          AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
+          theme.pickerItemIconEnabled,
+          AuthMethod.yubikeyWithYubicloud,
+          true,
+        ),
+      );
 
     final bool securityConfiguration = await Navigator.of(context).push(
       MaterialPageRoute(
