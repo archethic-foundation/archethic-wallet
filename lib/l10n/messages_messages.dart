@@ -176,6 +176,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "introNewWalletGetFirstInfosNameCharacterNonValid" : MessageLookupByLibrary.simpleMessage("The name cannot contain \"\\\" and space characters"),
     "introNewWalletGetFirstInfosNameInfos" : MessageLookupByLibrary.simpleMessage("It will allow you to distinguish this account from other accounts that you can, if you want, create later.\n\nWARNING : This name will be added to your decentralized keychain and cannot be modified."),
     "introNewWalletGetFirstInfosNameRequest" : MessageLookupByLibrary.simpleMessage("What name would you like to give to this account, which account will be stored in your decentralized keychain?"),
+    "introNewWalletGetFirstInfosNetworkChoice" : MessageLookupByLibrary.simpleMessage("Current network :"),
     "introNewWalletGetFirstInfosNetworkHeader" : MessageLookupByLibrary.simpleMessage("On which network do you want to use your wallet?"),
     "introNewWalletGetFirstInfosWelcome" : MessageLookupByLibrary.simpleMessage("Welcome to Archethic Wallet."),
     "invalidAddress" : MessageLookupByLibrary.simpleMessage("Address entered is invalid"),

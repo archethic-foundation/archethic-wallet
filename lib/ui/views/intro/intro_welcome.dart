@@ -2,6 +2,7 @@
 import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -149,14 +150,15 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                           key: const Key('newWallet'),
                           onPressed: () async {
                             if (checkedValue) {
-                              await _networkDialog();
-                              // TODO(reddwarf03): to implement, https://github.com/archethic-foundation/archethic-wallet/issues/144
-                              /* setState(() {
-                                  _curNetworksSetting = NetworksSetting(
-                                      AvailableNetworks.archethicTestNet);
-                                  StateContainer.of(context).curNetwork =
-                                      _curNetworksSetting;
-                                });*/
+                              await ref
+                                  .read(SettingsProviders.settings.notifier)
+                                  .setNetwork(
+                                    const NetworksSetting(
+                                      network:
+                                          AvailableNetworks.archethicMainNet,
+                                      networkDevEndpoint: '',
+                                    ),
+                                  );
                               Navigator.of(context).pushNamed(
                                 '/intro_welcome_get_first_infos',
                               );
@@ -177,14 +179,15 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                           key: const Key('importWallet'),
                           onPressed: () async {
                             if (checkedValue) {
-                              // TODO(reddwarf03): to implement, https://github.com/archethic-foundation/archethic-wallet/issues/144
-                              /*setState(() {
-                                  _curNetworksSetting = NetworksSetting(
-                                      AvailableNetworks.archethicTestNet);
-                                  StateContainer.of(context).curNetwork =
-                                      _curNetworksSetting;
-                                });*/
-                              await _networkDialog();
+                              await NetworkDialog.getDialog(
+                                context,
+                                ref,
+                                ref
+                                    .read(
+                                      SettingsProviders.localSettingsRepository,
+                                    )
+                                    .getNetwork(),
+                              );
                               Navigator.of(context).pushNamed('/intro_import');
                             }
                           },
@@ -199,13 +202,5 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
         ),
       ),
     );
-  }
-
-  Future<void> _networkDialog() async {
-    (await NetworkDialog.getDialog(
-      context,
-      ref,
-      ref.read(SettingsProviders.localSettingsRepository).getNetwork(),
-    ))!;
   }
 }

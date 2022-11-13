@@ -12,7 +12,6 @@ import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NetworkDialog {
@@ -26,16 +25,16 @@ class NetworkDialog {
     final endpointController = TextEditingController();
     String? endpointError;
 
-    final networkDevEndpoint = ref.watch(
-      SettingsProviders.settings.select(
-        (value) => value.network.networkDevEndpoint,
-      ),
-    );
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableNetworks.values) {
+      var _networkDevEndpoint = '';
+      if (value == AvailableNetworks.archethicDevNet &&
+          _networkDevEndpoint.isEmpty) {
+        _networkDevEndpoint = 'http://localhost:4000';
+      }
       final networkSetting = NetworksSetting(
         network: value,
-        networkDevEndpoint: networkDevEndpoint,
+        networkDevEndpoint: _networkDevEndpoint,
       );
       pickerItemsList.add(
         PickerItem(
@@ -43,7 +42,7 @@ class NetworkDialog {
           networkSetting.getLink(),
           '${theme.assetsFolder!}${theme.logoAlone!}.png',
           null,
-          value,
+          networkSetting,
           true,
         ),
       );
@@ -73,18 +72,14 @@ class NetworkDialog {
             pickerItems: pickerItemsList,
             selectedIndex: curNetworksSetting.getIndex(),
             onSelected: (value) async {
-              final selectedNetworkSettings = NetworksSetting(
-                network: value.value as AvailableNetworks,
-                networkDevEndpoint: networkDevEndpoint,
-              );
-
-              ref.read(SettingsProviders.settings.notifier).setNetwork(
-                    selectedNetworkSettings,
-                  );
-
-              if (value.value as AvailableNetworks ==
+              final selectedNetworkSettings = value.value as NetworksSetting;
+              await ref
+                  .read(SettingsProviders.settings.notifier)
+                  .setNetwork(selectedNetworkSettings);
+              if (selectedNetworkSettings.network ==
                   AvailableNetworks.archethicDevNet) {
-                endpointController.text = networkDevEndpoint;
+                endpointController.text =
+                    selectedNetworkSettings.networkDevEndpoint;
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
                   context: context,
@@ -196,14 +191,21 @@ class NetworkDialog {
                                             );
                                           });
                                         } else {
-                                          ref
+                                          await ref
                                               .read(
                                                 SettingsProviders
                                                     .settings.notifier,
                                               )
-                                              .setNetworkDevEndpoint(
-                                                endpointController.text,
+                                              .setNetwork(
+                                                NetworksSetting(
+                                                  network:
+                                                      selectedNetworkSettings
+                                                          .network,
+                                                  networkDevEndpoint:
+                                                      endpointController.text,
+                                                ),
                                               );
+
                                           Navigator.pop(context);
                                         }
                                       }

@@ -121,7 +121,7 @@ class Preferences {
         )],
         networkDevEndpoint: _getValue(
           curNetworkDevEndpoint,
-          defaultValue: 'http://localhost:4000',
+          defaultValue: '',
         ),
       );
 
