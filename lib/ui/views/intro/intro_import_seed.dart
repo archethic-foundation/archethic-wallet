@@ -464,7 +464,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             newSession.wallet.appKeychain.accounts,
                           );
 
-                          // TODO(chralu): The provider is not updated
                           final selectedAccount = await ref.read(
                             AccountProviders.selectedAccount.future,
                           );
