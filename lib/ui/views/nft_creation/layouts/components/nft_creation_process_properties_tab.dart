@@ -10,6 +10,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,
     );
@@ -19,9 +20,14 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
       NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
     );
 
-    return SingleChildScrollView(
+    return ArchethicScrollbar(
       child: Container(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: EdgeInsets.only(
+          top: 20,
+          left: 20,
+          right: 20,
+          bottom: bottom + 80,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
