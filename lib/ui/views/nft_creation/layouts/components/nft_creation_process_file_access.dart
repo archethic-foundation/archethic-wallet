@@ -5,7 +5,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_access_label.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access_add_button.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_access_remove_button.dart';
+import 'package:aewallet/ui/widgets/components/item_remove_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -87,7 +87,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                     propertyValue: '',
                     readOnly: readOnly,
                   ),
-                  NFTCreationProcessFileAccessRemoveButton(
+                  ItemRemoveButton(
                     onPressed: () {
                       AppDialogs.showConfirmDialog(
                           context,

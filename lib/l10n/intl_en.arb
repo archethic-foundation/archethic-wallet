@@ -2358,6 +2358,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "removePublicKey": "Remove public key",
+  "@removePublicKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "deleteProperty": "Delete property",
   "@deleteProperty": {
     "type": "text",

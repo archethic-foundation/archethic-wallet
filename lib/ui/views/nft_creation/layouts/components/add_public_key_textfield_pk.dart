@@ -53,11 +53,13 @@ class _AddPublicKeyTextFieldPkState
 
   void _updatePublicKeyTextController() {
     final propertyAccessRecipient = ref
-        .read(NftCreationFormProvider.nftCreationForm(
-          ref.read(
-            NftCreationFormProvider.nftCreationFormArgs,
+        .read(
+          NftCreationFormProvider.nftCreationForm(
+            ref.read(
+              NftCreationFormProvider.nftCreationFormArgs,
+            ),
           ),
-        ),)
+        )
         .propertyAccessRecipient;
     publicKeyController.text = propertyAccessRecipient.when(
       publicKey: (publicKey) => publicKey.publicKey,
@@ -78,8 +80,22 @@ class _AddPublicKeyTextFieldPkState
     final nftCreation =
         ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
     final nftCreationNotifier = ref.watch(
-        NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,);
+      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+    );
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
+
+    ref.listen<NftCreationFormState>(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+      (_, nftCreation) {
+        if (nftCreation.propertyAccessRecipient.publicKey!.publicKey.isEmpty) {
+          publicKeyController.text = '';
+        }
+      },
+    );
 
     return AppTextField(
       focusNode: publicKeyFocusNode,

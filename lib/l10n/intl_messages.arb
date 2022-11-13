@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-13T12:58:38.749191",
+  "@@last_modified": "2022-11-13T14:54:11.315714",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -2468,6 +2468,12 @@
   },
   "deleteFile": "Delete file",
   "@deleteFile": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "removePublicKey": "Remove public key",
+  "@removePublicKey": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -394,6 +394,7 @@
 	"nftPropertyExplanation": "Vous pouvez ajouter des propriétés supplémentaires pour définir, caractériser ou préciser l'utilisation de votre NFT. Le nom et la valeur sont libres.",
 	"publicKeyNotValid": "La clé publique n'est pas valide.",
 	"deleteFile": "Supprimer le fichier",
+	"removePublicKey": "Retirer la clé publique",
 	"deleteProperty": "Supprimer la propriété",
 	"formatLabel": "Format: ",
 	"createNFT": "Créer un NFT",
