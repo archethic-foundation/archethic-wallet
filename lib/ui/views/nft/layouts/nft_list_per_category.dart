@@ -24,7 +24,7 @@ class NFTListPerCategory extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected = ref
-        .read(
+        .watch(
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
