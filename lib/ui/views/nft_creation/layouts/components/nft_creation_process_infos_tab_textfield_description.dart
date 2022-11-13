@@ -35,13 +35,27 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final nftCreationNotifier =
-        ref.watch(NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
-      ),
-    ).notifier,);
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ).notifier,
+    );
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
+
+    ref.listen<NftCreationFormState>(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+      (_, nftCreation) {
+        if (nftCreation.description != nftDescriptionController.text) {
+          nftDescriptionController.text = nftCreation.description;
+        }
+      },
+    );
 
     return AppTextField(
       focusNode: nftDescriptionFocusNode,
