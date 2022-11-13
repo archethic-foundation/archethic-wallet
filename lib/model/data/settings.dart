@@ -12,20 +12,17 @@ part 'settings.freezed.dart';
 @freezed
 class Settings with _$Settings {
   const factory Settings({
-    // required AuthMethod authenticationMethod,
     required AvailableCurrencyEnum currency,
     required AvailablePrimaryCurrency primaryCurrency,
     required AvailableLanguage language,
     required NetworksSetting network,
     required String languageSeed,
     required bool firstLaunch,
-    // required bool pinPadShuffle,
     required bool showBalances,
     required bool showBlog,
     required bool activeVibrations,
     required bool activeNotifications,
-    required int
-        mainScreenCurrentPage, // TODO(Chralu): not shure it belongs here
+    required int mainScreenCurrentPage,
     required bool showPriceChart,
     required UnlockOption
         lock, // TODO(Chralu): create a notifier dedicated to Lock management

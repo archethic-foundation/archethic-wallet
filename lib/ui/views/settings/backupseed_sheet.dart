@@ -41,7 +41,7 @@ class AppSeedBackupSheet extends ConsumerWidget {
                             if (mnemonic != null)
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 30, left: 10, right: 10),
+                                    top: 30, left: 10, right: 10,),
                                 child: MnemonicDisplay(
                                   wordList: mnemonic!,
                                   obscureSeed: true,

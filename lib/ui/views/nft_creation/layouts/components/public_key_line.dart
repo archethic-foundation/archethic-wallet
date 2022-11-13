@@ -13,8 +13,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class PublicKeyLine extends ConsumerWidget {
-  const PublicKeyLine(
-      {super.key, required this.propertyName, required this.publicKey});
+  const PublicKeyLine({
+    super.key,
+    required this.propertyName,
+    required this.publicKey,
+  });
 
   final String propertyName;
   final String publicKey;
