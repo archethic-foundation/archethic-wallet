@@ -205,18 +205,6 @@ class _HomePageState extends ConsumerState<HomePage>
       ),
     );
   }
-
-  // TODO(reddwarf03): WIP, https://github.com/archethic-foundation/archethic-wallet/issues/144
-  // ignore: unused_element
-  Future<void> _networkDialog() async {
-    // StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
-    //   context,
-    //   ref,
-    //   StateContainer.of(context).curNetwork,
-    // ))!;
-    await StateContainer.of(context).requestUpdate();
-    setState(() {});
-  }
 }
 
 class ExpandablePageView extends ConsumerStatefulWidget {

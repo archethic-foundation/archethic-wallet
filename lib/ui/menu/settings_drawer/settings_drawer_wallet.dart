@@ -94,20 +94,6 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
     }
   }
 
-  // TODO(reddwarf03): https://github.com/archethic-foundation/archethic-wallet/issues/116
-  // ignore: unused_element
-  // Future<void> _networkDialog() async {
-  //   final ns = await NetworkDialog.getDialog(
-  //     context,
-  //     ref,
-  //     _curNetworksSetting,
-  //   );
-  //   if (ns != null) {
-  //     _curNetworksSetting = ns;
-  //     await StateContainer.of(context).requestUpdate();
-  //   }
-  // }
-
   Future<bool> _onBackButtonPressed() async {
     if (_contactsOpen) {
       _contactsOpen = false;
