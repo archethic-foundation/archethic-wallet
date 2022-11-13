@@ -65,16 +65,14 @@ Future<void> main() async {
     <DeviceOrientation>[DeviceOrientation.portraitUp],
   ).then((_) {
     runApp(
-      RestartWidget(
-        child: ProviderScope(
-          overrides: [
-            // TODO(reddwarf03): Meaning ? => a way to reinitiliaze the wallet
-            SettingsProviders.localSettingsRepository
-                .overrideWithValue(localPreferencesRepository),
-          ],
-          child: const StateContainer(
-            child: App(),
-          ),
+      ProviderScope(
+        overrides: [
+          // TODO(reddwarf03): Meaning ? => a way to reinitiliaze the wallet
+          SettingsProviders.localSettingsRepository
+              .overrideWithValue(localPreferencesRepository),
+        ],
+        child: const StateContainer(
+          child: App(),
         ),
       ),
     );
@@ -349,39 +347,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ref.read(ThemeProviders.selectedTheme).background,
-    );
-  }
-}
-
-class RestartWidget extends StatefulWidget {
-  const RestartWidget({this.child, super.key});
-
-  final Widget? child;
-
-  static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return _RestartWidgetState();
-  }
-}
-
-class _RestartWidgetState extends State<RestartWidget> {
-  Key key = UniqueKey();
-
-  void restartApp() {
-    setState(() {
-      key = UniqueKey();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: key,
-      child: widget.child ?? Container(),
     );
   }
 }
