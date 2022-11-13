@@ -67,7 +67,6 @@ Future<void> main() async {
     runApp(
       ProviderScope(
         overrides: [
-          // TODO(reddwarf03): Meaning ? => a way to reinitiliaze the wallet
           SettingsProviders.localSettingsRepository
               .overrideWithValue(localPreferencesRepository),
         ],
