@@ -398,6 +398,7 @@
 	"formatLabel": "Format: ",
 	"createNFT": "Créer un NFT",
 	"createTheNFT": "Créer le NFT",
+	"nftListEmptyExplanation": "C'est ici que vous retrouverez vos NFT liées à cette catégorie.\nMalheureusement pour le moment, aucun NFT n'est rangé dans cette catégorie.\n\nVous pouvez en créer en allant dans la fonction \"Créer un NFT\" ci-dessous.",
 	"addNFTFile": "Ajouter un NFT",
 	"addNFTProperty": "Ajouter une propriété",
 	"availableCategories": "Catégories disponibles",

@@ -1652,11 +1652,17 @@ class AppLocalization {
   }
 
   String get createNFT {
-    return Intl.message('Create a NFT', name: 'createNFT');
+    return Intl.message('Create an NFT', name: 'createNFT');
   }
 
   String get createTheNFT {
     return Intl.message('Create the NFT', name: 'createTheNFT');
+  }
+
+  String get nftListEmptyExplanation {
+    return Intl.message(
+        'This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the "Create an NFT" function below.',
+        name: 'nftListEmptyExplanation');
   }
 
   String get nftTabDescriptionHeader {
@@ -1666,7 +1672,7 @@ class AppLocalization {
   }
 
   String get addNFTFile {
-    return Intl.message('Add a NFT', name: 'addNFTFile');
+    return Intl.message('Add an NFT', name: 'addNFTFile');
   }
 
   String get addNFTProperty {

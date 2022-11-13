@@ -2370,7 +2370,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "createNFT": "Create a NFT",
+  "createNFT": "Create an NFT",
   "@createNFT": {
     "type": "text",
     "placeholders_order": [],
@@ -2382,7 +2382,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTFile": "Add a NFT",
+  "nftListEmptyExplanation": "This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the \"Create an NFT\" function below.",
+  "@nftListEmptyExplanation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addNFTFile": "Add an NFT",
   "@addNFTFile": {
     "type": "text",
     "placeholders_order": [],
