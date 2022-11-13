@@ -441,7 +441,7 @@ class AppLocalization {
   }
 
   String get sendMessageConfirmHeader {
-    return Intl.message('Your message:', name: 'sendMessageConfirmHeader');
+    return Intl.message('Your message :', name: 'sendMessageConfirmHeader');
   }
 
   String get messageInTxTransfer {
@@ -1278,8 +1278,14 @@ class AppLocalization {
 
   String get recoveryPhraseIntroExplanation {
     return Intl.message(
-        'Here is the list of 24 words to remember. The following screen will prompt you to find them in order to help you verify that you have written them down correctly. This list will also be available in your wallet in the "Security" menu.',
+        'Here is the list of 24 words to remember. The following screen will prompt you to find them in order to help you verify that you have written them down correctly.\n\nThis list will also be available in your wallet in the "Security" menu.',
         name: 'recoveryPhraseIntroExplanation');
+  }
+
+  String get dipslayPhraseExplanation {
+    return Intl.message(
+        'Here is the list of 24 words to remember. This list allows you to find your funds at any time if you lose your application or device.\nDo not give it to anyone! Even in the context of a support. \nArchethic will never ask you for this information.',
+        name: 'dipslayPhraseExplanation');
   }
 
   String get iveBackedItUp {
@@ -1554,7 +1560,7 @@ class AppLocalization {
 
   String get introNewWalletGetFirstInfosNameInfos {
     return Intl.message(
-        'It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING : This name will be added to your decentralized keychain and cannot be modified.',
+        'It will allow you to distinguish this account from other accounts that you can, if you want, create later.\n\nWARNING : This name will be added to your decentralized keychain and cannot be modified.',
         name: 'introNewWalletGetFirstInfosNameInfos');
   }
 

@@ -17,10 +17,12 @@ class MnemonicDisplay extends ConsumerStatefulWidget {
     super.key,
     required this.wordList,
     this.obscureSeed = false,
+    required this.explanation,
   });
 
   final List<String> wordList;
   final bool obscureSeed;
+  final Widget explanation;
 
   @override
   ConsumerState<MnemonicDisplay> createState() => _MnemonicDisplayState();
@@ -40,7 +42,6 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
@@ -114,14 +115,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: AutoSizeText(
-                        localizations.recoveryPhraseIntroExplanation,
-                        textAlign: TextAlign.justify,
-                        style: theme.textStyleSize12W100Primary,
-                      ),
-                    ),
+                    widget.explanation,
                   ],
                 ),
               ),
