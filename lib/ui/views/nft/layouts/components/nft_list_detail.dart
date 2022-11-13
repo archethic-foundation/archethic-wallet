@@ -143,8 +143,7 @@ class NFTListDetail extends ConsumerWidget {
   }
 }
 
-// TODO(redwarf03): Migrate to stateless
-class NFTCardBottom extends ConsumerStatefulWidget {
+class NFTCardBottom extends ConsumerWidget {
   const NFTCardBottom({
     super.key,
     required this.tokenInformations,
@@ -153,18 +152,13 @@ class NFTCardBottom extends ConsumerStatefulWidget {
   final TokenInformations tokenInformations;
 
   @override
-  ConsumerState<NFTCardBottom> createState() => _NFTCardBottomState();
-}
-
-class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount =
-        ref.read(AccountProviders.selectedAccount).valueOrNull!;
+        ref.watch(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
-      // TODO(Chralu): we should not interact directly with Hive DTOs. Use providers instead.
-      widget.tokenInformations.id,
+      // TODO(Chralu): we should not interact directly with Hive DTOs. Use providers instead. -> which provider ?
+      tokenInformations.id,
     );
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
@@ -202,9 +196,8 @@ class _NFTCardBottomState extends ConsumerState<NFTCardBottom> {
                         );
 
                     await selectedAccount.updateNftInfosOffChainFavorite(
-                      widget.tokenInformations.id,
+                      tokenInformations.id,
                     );
-                    setState(() {});
                   },
                   child: nftInfosOffChain == null ||
                           nftInfosOffChain.favorite == false

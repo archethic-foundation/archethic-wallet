@@ -81,18 +81,12 @@ Future<void> main() async {
   });
 }
 
-// TODO(Chralu): This could be stateless
-class App extends ConsumerStatefulWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
-  @override
-  ConsumerState<App> createState() => _AppState();
-}
-
-class _AppState extends ConsumerState<App> {
   // This widget is the root of the application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
