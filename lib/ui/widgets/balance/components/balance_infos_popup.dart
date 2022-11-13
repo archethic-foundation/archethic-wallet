@@ -68,7 +68,7 @@ class BalanceInfosPopup {
                     context,
                     ref,
                     '1',
-                    accountSelectedBalance.fiatCurrencyValue!.toString(),
+                    accountSelectedBalance.nativeTokenValueToString(),
                   ),
                 ],
     );
