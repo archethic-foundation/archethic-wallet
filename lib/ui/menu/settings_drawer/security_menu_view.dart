@@ -84,14 +84,6 @@ class SecurityMenuView extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      /* const _SettingsListItem.spacer(),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
-                        context,
-                        localizations.networksHeader,
-                        _curNetworksSetting,
-                        'assets/icons/url.png',
-                        theme.iconDrawer!,
-                        _networkDialog),*/
                       // Authentication Method
                       const _SettingsListItem.spacer(),
                       const _AuthMethodSettingsListItem(),
