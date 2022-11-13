@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -261,7 +262,11 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final session = ref.watch(SessionProviders.session).loggedIn;
-
+    final accountSelected = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
     if (session == null) return const SizedBox();
 
     return Column(
@@ -322,26 +327,40 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.createFungibleToken,
-                  Dimens.buttonBottomDimens,
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.text,
-                    size: 14,
+                if (accountSelected!.balance!.isNativeTokenValuePositive())
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.createFungibleToken,
+                    Dimens.buttonBottomDimens,
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.text,
+                      size: 14,
+                    ),
+                    key: const Key('createTokenFungible'),
+                    onPressed: () async {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: AddTokenSheet(
+                          seed: session.wallet.seed,
+                        ),
+                      );
+                    },
+                  )
+                else
+                  AppButtonTiny(
+                    AppButtonTinyType.primaryOutline,
+                    localizations.createFungibleToken,
+                    Dimens.buttonBottomDimens,
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.text30,
+                      size: 14,
+                    ),
+                    key: const Key('createTokenFungible'),
+                    onPressed: () {},
                   ),
-                  key: const Key('createTokenFungible'),
-                  onPressed: () async {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: AddTokenSheet(
-                        seed: session.wallet.seed,
-                      ),
-                    );
-                  },
-                ),
               ],
             ),
           ),
