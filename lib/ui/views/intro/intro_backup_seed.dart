@@ -186,7 +186,18 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
-                              child: MnemonicDisplay(wordList: mnemonic!),
+                              child: MnemonicDisplay(
+                                wordList: mnemonic!,
+                                explanation: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: AutoSizeText(
+                                    localizations
+                                        .recoveryPhraseIntroExplanation,
+                                    textAlign: TextAlign.justify,
+                                    style: theme.textStyleSize12W100Primary,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         )
