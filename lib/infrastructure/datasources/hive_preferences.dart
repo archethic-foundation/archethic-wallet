@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
 import 'dart:ui';
 
-// Project imports:
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -10,9 +8,6 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/primary_currency.dart';
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-// Package imports:
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +17,6 @@ class HivePreferencesDatasource {
   static const String _preferencesBox = '_preferencesBox';
   final Box<dynamic> _box;
 
-  //
   static const String firstLaunch = 'archethic_wallet_first_launch';
   static const String authMethod = 'archethic_wallet_auth_method';
   static const String curCurrency = 'archethic_wallet_cur_currency';
@@ -230,30 +224,5 @@ class HivePreferencesDatasource {
 
   Future<void> clearAll() async {
     await _box.clear();
-  }
-
-  static Future<void> initWallet(
-    AuthenticationMethod authenticationMethod,
-  ) async {
-    final preferences = await HivePreferencesDatasource.getInstance();
-    preferences
-      ..setLock(true)
-      ..setShowBalances(true)
-      ..setShowBlog(true)
-      ..setActiveVibrations(true)
-      ..setActiveNotifications(
-        !kIsWeb &&
-            (Platform.isIOS == true ||
-                Platform.isAndroid == true ||
-                Platform.isMacOS == true),
-      )
-      ..setPinPadShuffle(false)
-      ..setShowPriceChart(true)
-      ..setPrimaryCurrency(
-        const AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
-      )
-      ..setLockTimeout(const LockTimeoutSetting(LockTimeoutOption.one))
-      ..setAuthMethod(authenticationMethod)
-      ..setMainScreenCurrentPage(1);
   }
 }

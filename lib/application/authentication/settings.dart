@@ -20,6 +20,14 @@ class AuthenticationSettingsNotifier
         .getSettings();
   }
 
+  Future<void> reset() => _update(
+        state.copyWith(
+          lock: UnlockOption.yes,
+          pinPadShuffle: false,
+          lockTimeout: LockTimeoutOption.one,
+        ),
+      );
+
   Future<void> _update(AuthenticationSettings authSettings) async {
     ref
         .read(AuthenticationProviders._authenticationRepository)

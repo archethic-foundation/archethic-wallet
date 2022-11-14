@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -204,9 +203,6 @@ class _IntroConfigureSecurityState
                                     break;
                                 }
                                 if (authenticated) {
-                                  await HivePreferencesDatasource.initWallet(
-                                    AuthenticationMethod(authMethod),
-                                  );
                                   EventTaxiImpl.singleton()
                                       .fire(AuthenticatedEvent());
                                 }

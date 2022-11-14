@@ -2,14 +2,15 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -248,9 +249,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             ),
                             onPressed: () async {
                               // Authenticate
-                              final preferences =
-                                  await HivePreferencesDatasource.getInstance();
-                              final authMethod = preferences.getAuthMethod();
+                              final authMethod = AuthenticationMethod(
+                                ref.read(
+                                  AuthenticationProviders.settings.select(
+                                    (settings) => settings.authenticationMethod,
+                                  ),
+                                ),
+                              );
                               final auth = await AuthFactory.authenticate(
                                 context,
                                 ref,

@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -114,6 +114,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             keychainAccessRequested = true;
           });
           await KeychainUtil().createKeyChainAccess(
+            ref.read(SettingsProviders.settings).network,
             widget.seed,
             widget.name,
             event.params!['keychainAddress']! as String,
@@ -196,22 +197,21 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   void initState() {
     super.initState();
     _registerBus();
-    HivePreferencesDatasource.getInstance()
-        .then((HivePreferencesDatasource preferences) {
-      setState(() {
-        wordListToSelect = AppMnemomics.seedToMnemonic(
-          widget.seed!,
-          languageCode: preferences.getLanguageSeed(),
-        );
-        wordListToSelect.sort(
-          (a, b) => a.compareTo(b),
-        );
-        originalWordsList = AppMnemomics.seedToMnemonic(
-          widget.seed!,
-          languageCode: preferences.getLanguageSeed(),
-        );
-      });
-    });
+    // TODO(reddwarf03): LanguageSeed seems to be local to "import wallet" and "create wallet" screens. Maybe it should not be stored in preferences ?
+    final languageSeed = ref.read(
+      SettingsProviders.settings.select((settings) => settings.languageSeed),
+    );
+    wordListToSelect = AppMnemomics.seedToMnemonic(
+      widget.seed!,
+      languageCode: languageSeed,
+    );
+    wordListToSelect.sort(
+      (a, b) => a.compareTo(b),
+    );
+    originalWordsList = AppMnemomics.seedToMnemonic(
+      widget.seed!,
+      languageCode: languageSeed,
+    );
   }
 
   @override
@@ -548,6 +548,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
       await KeychainUtil().createKeyChain(
+        ref.read(SettingsProviders.settings).network,
         widget.seed,
         widget.name,
         originPrivateKey,

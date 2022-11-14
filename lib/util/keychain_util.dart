@@ -8,7 +8,7 @@ import 'dart:typed_data';
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -23,6 +23,7 @@ import 'package:event_taxi/event_taxi.dart';
 
 class KeychainUtil {
   Future<void> createKeyChainAccess(
+    NetworksSetting networkSettings,
     String? seed,
     String? name,
     String keychainAddress,
@@ -36,11 +37,10 @@ class KeychainUtil {
           hexToUint8List(originPrivateKey),
         );
 
-    final preferences = await HivePreferencesDatasource.getInstance();
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
+      websocketEndpoint: networkSettings.getWebsocketUri(),
     );
 
     dev.log('>>> Create access <<< ${accessKeychainTx.address}');
@@ -68,6 +68,7 @@ class KeychainUtil {
   }
 
   Future<void> createKeyChain(
+    NetworksSetting networkSettings,
     String? seed,
     String? name,
     String originPrivateKey,
@@ -102,11 +103,10 @@ class KeychainUtil {
           derivationPath: kDerivationPath,
         );
 
-    final preferences = await HivePreferencesDatasource.getInstance();
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
-      phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
-      websocketEndpoint: preferences.getNetwork().getWebsocketUri(),
+      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
+      websocketEndpoint: networkSettings.getWebsocketUri(),
     );
 
     dev.log('>>> Create keychain <<< ${keychainTransaction.address}');
