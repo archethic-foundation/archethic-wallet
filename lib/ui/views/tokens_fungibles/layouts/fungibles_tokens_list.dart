@@ -8,7 +8,6 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -138,16 +137,15 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                   FeedbackType.light,
                                   preferences.activeVibrations,
                                 );
-                            Sheets.showAppHeightNineSheet(
+                            await TransferSheet(
+                              transferType: TransferType.token,
+                              accountToken: accountFungibleToken,
+                              recipient: const TransferRecipient.address(
+                                address: Address(''),
+                              ),
+                            ).show(
                               context: context,
                               ref: ref,
-                              widget: TransferSheet(
-                                transferType: TransferType.token,
-                                accountToken: accountFungibleToken,
-                                recipient: const TransferRecipient.address(
-                                  address: Address(''),
-                                ),
-                              ),
                             );
                           },
                         ),

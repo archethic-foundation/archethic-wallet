@@ -2,6 +2,7 @@
 // Project imports:
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -41,7 +42,8 @@ class AccountTab extends ConsumerWidget {
               await ref.read(SessionProviders.session.notifier).refresh();
               ref
                 ..invalidate(BlogProviders.fetchArticles)
-                ..invalidate(ContactProviders.fetchContacts);
+                ..invalidate(ContactProviders.fetchContacts)
+                ..invalidate(MarketPriceProviders.currencyMarketPrice);
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

@@ -60,11 +60,22 @@ class _TransferTextFieldAmountState
       symbol: CurrencyUtil.getCurrencySymbol(settings.currency.name),
     );
 
-    if (accountSelected == null) return const SizedBox();
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
+    final selectedCurrencyMarketPrice = ref
+        .watch(
+          MarketPriceProviders.selectedCurrencyMarketPrice,
+        )
+        .valueOrNull;
+
+    if (accountSelected == null || selectedCurrencyMarketPrice == null) {
+      return const SizedBox();
+    }
     final valueLabel = ref.read(
       PrimaryCurrencyProviders.convertedValueLabel(
         amount: transfer.amount,
-        tokenPrice: accountSelected.balance!.tokenPrice!.amount!,
+        tokenPrice: selectedCurrencyMarketPrice.amount,
         context: context,
       ),
     );
@@ -94,10 +105,14 @@ class _TransferTextFieldAmountState
             ),
           ],
           onChanged: (String text) async {
-            transferNotifier.setAmount(
+            final selectedCurrencyMarketPrice = await ref.watch(
+              MarketPriceProviders.selectedCurrencyMarketPrice.future,
+            );
+
+            await transferNotifier.setAmount(
               context: context,
               amount: double.tryParse(text) ?? 0,
-              tokenPrice: accountSelected.balance!.tokenPrice!.amount ?? 0,
+              tokenPrice: selectedCurrencyMarketPrice.amount,
             );
           },
           textInputAction: TextInputAction.next,
@@ -125,9 +140,13 @@ class _TransferTextFieldAmountState
                 );
                 return;
               }
+              final selectedCurrencyMarketPrice = await ref.watch(
+                MarketPriceProviders.selectedCurrencyMarketPrice.future,
+              );
+
               await transferNotifier.setMaxAmount(
                 context: context,
-                tokenPrice: accountSelected.balance!.tokenPrice!.amount,
+                tokenPrice: selectedCurrencyMarketPrice.amount,
               );
               _updateAmountTextController();
               transferNotifier.setDefineMaxAmountInProgress(
@@ -151,7 +170,7 @@ class _TransferTextFieldAmountState
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
                 child: AutoSizeText(
-                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(accountSelected.balance!.fiatCurrencyCode!, accountSelected.balance!.tokenPrice!.amount!)}',
+                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(currency.name, selectedCurrencyMarketPrice.amount)}',
                   style: theme.textStyleSize14W100Primary,
                 ),
               ),

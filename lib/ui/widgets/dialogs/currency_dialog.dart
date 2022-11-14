@@ -69,9 +69,6 @@ class CurrencyDialog {
                 final currency =
                     AvailableCurrency(value.value as AvailableCurrencyEnum);
 
-                final accountSelected = await ref.read(
-                  AccountProviders.selectedAccount.future,
-                );
                 await ref
                     .read(
                       SettingsProviders.settings.notifier,
@@ -81,8 +78,6 @@ class CurrencyDialog {
                 ref
                     .read(AccountProviders.selectedAccount.notifier)
                     .refreshBalance();
-                accountSelected!.balance!.fiatCurrencyCode =
-                    currency.currency.name;
                 Navigator.pop(context, value.value);
               },
             ),

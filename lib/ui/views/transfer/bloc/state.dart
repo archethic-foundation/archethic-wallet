@@ -19,10 +19,14 @@ class TransferFormState with _$TransferFormState {
     @Default(TransferType.uco) TransferType transferType,
     required String seed,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
+
+    /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
     required AsyncValue<double> feeEstimation,
     @Default(false) bool defineMaxAmountInProgress,
     @Default(0.0) double amount,
-    // Amount converted in UCO if primary currency is native. Else in fiat currency
+
+    /// Amount converted in UCO if primary currency is native. Else in fiat currency
+    /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
     @Default(0.0) double amountConverted,
     required AccountBalance accountBalance,
     required TransferRecipient recipient,
@@ -49,7 +53,7 @@ class TransferFormState with _$TransferFormState {
             // Due to rounding, it can be difficult to obtain the max
             return true;
           case AvailablePrimaryCurrencyEnum.native:
-            return (amount + fees) < accountBalance.nativeTokenValue!;
+            return (amount + fees) < accountBalance.nativeTokenValue;
         }
       case TransferType.token:
         return amount != accountToken!.amount!;

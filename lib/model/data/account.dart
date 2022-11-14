@@ -3,7 +3,6 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -153,24 +152,14 @@ class Account extends HiveObject {
     await updateAccount();
   }
 
-  Future<void> updateBalance(
-    String fiatCurrencyCode,
-    Price price,
-  ) async {
+  Future<void> updateBalance() async {
     final balanceGetResponse =
         await sl.get<AppService>().getBalanceGetResponse(lastAddress!);
-    var fiatCurrencyValue = 0.0;
-    if (balanceGetResponse.uco != null && price.amount != null) {
-      fiatCurrencyValue = fromBigInt(balanceGetResponse.uco) * price.amount!;
-    }
     final accountBalance = AccountBalance(
       nativeTokenName: AccountBalance.cryptoCurrencyLabel,
       nativeTokenValue: balanceGetResponse.uco == null
           ? 0
           : fromBigInt(balanceGetResponse.uco).toDouble(),
-      fiatCurrencyCode: fiatCurrencyCode,
-      fiatCurrencyValue: fiatCurrencyValue,
-      tokenPrice: price,
     );
     balance = accountBalance;
     await updateAccount();

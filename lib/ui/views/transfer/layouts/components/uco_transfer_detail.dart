@@ -114,7 +114,7 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  accountSelected.balance!.nativeTokenValue! -
+                  accountSelected.balance!.nativeTokenValue -
                       (transfer.feeEstimationOrZero + amountInUco),
                   transfer.symbol(context),
                 ),

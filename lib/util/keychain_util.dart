@@ -14,7 +14,6 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
@@ -204,8 +203,6 @@ class KeychainUtil {
     final transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
 
-    final tokenPrice = await Price.getCurrency(currency);
-
     final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
@@ -213,11 +210,8 @@ class KeychainUtil {
       genesisAddress: uint8ListToHex(genesisAddress),
       name: name,
       balance: AccountBalance(
-        fiatCurrencyCode: '',
-        fiatCurrencyValue: 0,
         nativeTokenName: networkCurrency,
         nativeTokenValue: 0,
-        tokenPrice: tokenPrice,
       ),
       recentTransactions: [],
     );
@@ -278,8 +272,6 @@ class KeychainUtil {
 
       const kDerivationPathWithoutService = "m/650'/archethic-wallet-";
 
-      final tokenPrice = await Price.getCurrency(currency);
-
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
@@ -302,11 +294,8 @@ class KeychainUtil {
             genesisAddress: uint8ListToHex(genesisAddress),
             name: nameDecoded,
             balance: AccountBalance(
-              fiatCurrencyCode: '',
-              fiatCurrencyValue: 0,
               nativeTokenName: '',
               nativeTokenValue: 0,
-              tokenPrice: tokenPrice,
             ),
             recentTransactions: [],
           );
@@ -342,7 +331,7 @@ class KeychainUtil {
           accounts[i].lastAddress = lastAddress;
         }
         if (loadBalance) {
-          await accounts[i].updateBalance(currency, tokenPrice);
+          await accounts[i].updateBalance();
           await accounts[i].updateFungiblesTokens();
         }
         if (loadRecentTransactions) {

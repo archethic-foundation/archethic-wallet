@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -287,20 +288,16 @@ class DBHelper {
     await clearPrice();
   }
 
-  Future<void> updatePrice(Price price) async {
+  Future<void> updatePrice(AvailableCurrencyEnum currency, Price price) async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<Price>(priceTable);
-    if (box.isEmpty) {
-      await box.add(price);
-    } else {
-      await box.putAt(0, price);
-    }
+    await box.put(currency, price);
   }
 
-  Future<Price?> getPrice() async {
+  Future<Price?> getPrice(AvailableCurrencyEnum currency) async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<Price>(priceTable);
-    return box.get(0);
+    return box.get(currency);
   }
 
   Future<void> clearPrice() async {

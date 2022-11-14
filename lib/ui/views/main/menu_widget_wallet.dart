@@ -58,15 +58,14 @@ class MenuWidgetWallet extends ConsumerWidget {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
-                      Sheets.showAppHeightNineSheet(
+                      await const TransferSheet(
+                        transferType: TransferType.uco,
+                        recipient: TransferRecipient.address(
+                          address: Address(''),
+                        ),
+                      ).show(
                         context: context,
                         ref: ref,
-                        widget: const TransferSheet(
-                          transferType: TransferType.uco,
-                          recipient: TransferRecipient.address(
-                            address: Address(''),
-                          ),
-                        ),
                       );
                     },
                   )

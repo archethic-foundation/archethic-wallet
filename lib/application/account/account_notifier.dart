@@ -28,18 +28,7 @@ class _AccountNotifier
     await account.updateRecentTransactions(session.wallet.seed);
   }
 
-  Future<void> _refreshBalance(Account account) async {
-    final selectedCurrency = ref.read(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
-    final tokenPrice = await Price.getCurrency(
-      selectedCurrency.name,
-    );
-    await account.updateBalance(
-      selectedCurrency.name,
-      tokenPrice,
-    );
-  }
+  Future<void> _refreshBalance(Account account) => account.updateBalance();
 
   Future<void> refreshRecentTransactions() => _refresh(
         (account) async {

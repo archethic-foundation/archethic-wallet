@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -36,9 +35,6 @@ class AddTokenFormSheet extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
@@ -81,11 +77,7 @@ class AddTokenFormSheet extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: FeeInfos(
-                            feeEstimation: addToken.feeEstimation,
-                            tokenPrice:
-                                accountSelected.balance!.tokenPrice!.amount ??
-                                    0,
-                            currencyName: currency.name,
+                            asyncFeeEstimation: addToken.feeEstimation,
                             estimatedFeesNote:
                                 localizations.estimatedFeesAddTokenNote,
                           ),

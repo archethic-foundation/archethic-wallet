@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -110,6 +111,16 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
     );
 
     if (accountSelectedBalance == null) return const SizedBox();
+
+    final fiatValue = ref
+        .watch(
+          MarketPriceProviders.convertedToSelectedCurrency(
+            nativeAmount: accountSelectedBalance.nativeTokenValue,
+          ),
+        )
+        .valueOrNull;
+    if (fiatValue == null) return const SizedBox();
+
     return RichText(
       text: TextSpan(
         text: '',
@@ -122,9 +133,9 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
                   : theme.textStyleSize14W100Primary,
             ),
           TextSpan(
-            text: CurrencyUtil.getConvertedAmount(
+            text: CurrencyUtil.format(
               currency.name,
-              accountSelectedBalance.fiatCurrencyValue!,
+              fiatValue,
             ),
             style: primary
                 ? theme.textStyleSize16W700Primary
@@ -171,7 +182,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
             ),
           TextSpan(
             text:
-                '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
+                '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName}',
             style: primary
                 ? theme.textStyleSize16W700Primary
                 : theme.textStyleSize14W700Primary,

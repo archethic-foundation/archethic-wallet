@@ -10,21 +10,27 @@ class BalanceInfosKpi extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final chartInfos = StateContainer.of(context).chartInfos;
+
+    final preferences = ref.watch(SettingsProviders.settings);
+
+    final currencyMarketPrice = ref
+        .watch(
+          MarketPriceProviders.selectedCurrencyMarketPrice,
+        )
+        .valueOrNull;
+    final selectedCurrency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     final accountSelectedBalance = ref.watch(
       AccountProviders.selectedAccount.select(
         (value) => value.valueOrNull?.balance,
       ),
     );
-
-    final preferences = ref.watch(SettingsProviders.settings);
-
-// TODO(Chralu): Token Price is null before pull-to-refresh
-    if (accountSelectedBalance == null ||
-        accountSelectedBalance.nativeTokenName == null ||
-        accountSelectedBalance.tokenPrice?.amount == null) {
+    if (accountSelectedBalance == null || currencyMarketPrice == null) {
       return const SizedBox();
     }
 
+    // TODO(Chralu): ChartInfos is null before pull-to-refresh
     if (chartInfos?.data == null) {
       return const SizedBox(
         height: 30,
@@ -42,7 +48,7 @@ class BalanceInfosKpi extends ConsumerWidget {
           child: Row(
             children: <Widget>[
               AutoSizeText(
-                '1 ${accountSelectedBalance.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(accountSelectedBalance.fiatCurrencyCode!, accountSelectedBalance.tokenPrice!.amount!)}',
+                '1 ${accountSelectedBalance.nativeTokenName} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrency.name, currencyMarketPrice.amount)}',
                 style: theme.textStyleSize12W100Primary,
               ),
               const SizedBox(
@@ -86,7 +92,7 @@ class BalanceInfosKpi extends ConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              if (accountSelectedBalance.tokenPrice!.useOracleUcoPrice!)
+              if (currencyMarketPrice.useOracle)
                 InkWell(
                   onTap: () {
                     sl.get<HapticUtil>().feedback(

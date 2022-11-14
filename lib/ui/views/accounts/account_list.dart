@@ -2,6 +2,7 @@
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -323,6 +324,18 @@ class _AccountListItem extends ConsumerWidget {
 
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final asyncFiatAmount = ref.watch(
+      MarketPriceProviders.convertedToSelectedCurrency(
+        nativeAmount: account.balance?.nativeTokenValue ?? 0,
+      ),
+    );
+    final fiatAmountString = asyncFiatAmount.maybeWhen(
+      data: (fiatAmount) => CurrencyUtil.format(
+        settings.currency.name,
+        fiatAmount,
+      ),
+      orElse: () => '--',
+    );
 
     return contact.map(
       data: (data) {
@@ -406,15 +419,12 @@ class _AccountListItem extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 AutoSizeText(
-                                  '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
+                                  '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
                                   style: theme.textStyleSize12W400Primary,
                                   textAlign: TextAlign.end,
                                 ),
                                 AutoSizeText(
-                                  CurrencyUtil.getConvertedAmount(
-                                    settings.currency.name,
-                                    account.balance!.fiatCurrencyValue!,
-                                  ),
+                                  fiatAmountString,
                                   textAlign: TextAlign.end,
                                   style: theme.textStyleSize12W400Primary,
                                 ),
@@ -440,15 +450,12 @@ class _AccountListItem extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 AutoSizeText(
-                                  CurrencyUtil.getConvertedAmount(
-                                    settings.currency.name,
-                                    account.balance!.fiatCurrencyValue!,
-                                  ),
+                                  fiatAmountString,
                                   textAlign: TextAlign.end,
                                   style: theme.textStyleSize12W400Primary,
                                 ),
                                 AutoSizeText(
-                                  '${account.balance!.nativeTokenValueToString()} ${selectedAccount!.balance!.nativeTokenName!}',
+                                  '${account.balance!.nativeTokenValueToString()} ${selectedAccount!.balance!.nativeTokenName}',
                                   style: theme.textStyleSize12W400Primary,
                                   textAlign: TextAlign.end,
                                 ),

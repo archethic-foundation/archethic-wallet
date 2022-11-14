@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -22,6 +23,7 @@ import 'package:aewallet/ui/views/transfer/layouts/components/transfer_confirm_s
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_form_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -53,6 +55,18 @@ class TransferSheet extends ConsumerWidget {
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final TransferType transferType;
+
+  Future<void> show({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
+    ref.invalidate(MarketPriceProviders.currencyMarketPrice);
+    return Sheets.showAppHeightNineSheet(
+      context: context,
+      ref: ref,
+      widget: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -17,28 +17,19 @@ class AccountBalanceAdapter extends TypeAdapter<AccountBalance> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AccountBalance(
-      nativeTokenValue: fields[0] as double?,
-      nativeTokenName: fields[1] as String?,
-      fiatCurrencyValue: fields[2] as double?,
-      fiatCurrencyCode: fields[3] as String?,
-      tokenPrice: fields[4] as Price?,
+      nativeTokenValue: fields[0] as double,
+      nativeTokenName: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AccountBalance obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.nativeTokenValue)
       ..writeByte(1)
-      ..write(obj.nativeTokenName)
-      ..writeByte(2)
-      ..write(obj.fiatCurrencyValue)
-      ..writeByte(3)
-      ..write(obj.fiatCurrencyCode)
-      ..writeByte(4)
-      ..write(obj.tokenPrice);
+      ..write(obj.nativeTokenName);
   }
 
   @override

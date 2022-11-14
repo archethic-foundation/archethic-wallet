@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:hive/hive.dart';
 
@@ -8,64 +7,33 @@ part 'account_balance.g.dart';
 @HiveType(typeId: 5)
 class AccountBalance extends HiveObject {
   AccountBalance({
-    this.nativeTokenValue,
-    this.nativeTokenName,
-    this.fiatCurrencyValue,
-    this.fiatCurrencyCode,
-    this.tokenPrice,
+    required this.nativeTokenValue,
+    required this.nativeTokenName,
   });
   static const String cryptoCurrencyLabel = 'UCO';
 
   /// Native Token - Value
   @HiveField(0)
-  double? nativeTokenValue;
+  final double nativeTokenValue;
 
   /// Native Token - Name
   @HiveField(1)
-  String? nativeTokenName;
+  final String nativeTokenName;
 
-  /// Fiat Currency - Value
-  @HiveField(2)
-  double? fiatCurrencyValue;
-
-  /// Fiat Currency - Code
-  @HiveField(3)
-  String? fiatCurrencyCode;
-
-  /// Token Price
-  @HiveField(4)
-  Price? tokenPrice;
-
-  String fiatCurrencyValueToString() {
-    if (fiatCurrencyValue == null) {
-      return '';
-    } else {
-      return NumberUtil.formatThousands(fiatCurrencyValue!);
-    }
-  }
+  /// These fields have been used. Do not reuse those field IDs !
+  // @HiveField(2)
+  // @HiveField(3)
 
   String nativeTokenValueToString() {
-    if (nativeTokenValue == null) {
-      return '';
+    if (nativeTokenValue > 1000000) {
+      return NumberUtil.formatThousands(nativeTokenValue.round());
     } else {
-      if (nativeTokenValue! > 1000000) {
-        return NumberUtil.formatThousands(nativeTokenValue!.round());
-      } else {
-        return NumberUtil.formatThousands(nativeTokenValue!);
-      }
-    }
-  }
-
-  String tokenPriceToString() {
-    if (tokenPrice == null || tokenPrice!.amount == null) {
-      return '';
-    } else {
-      return NumberUtil.formatThousands(tokenPrice!.amount!);
+      return NumberUtil.formatThousands(nativeTokenValue);
     }
   }
 
   bool isNativeTokenValuePositive() {
-    if (nativeTokenValue != null && nativeTokenValue! > 0) {
+    if (nativeTokenValue > 0) {
       return true;
     } else {
       return false;

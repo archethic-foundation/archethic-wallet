@@ -55,8 +55,6 @@ class HiveAppWalletDTO extends HiveObject {
       genesisAddress: uint8ListToHex(genesisAddress),
       name: name,
       balance: AccountBalance(
-        fiatCurrencyCode: '',
-        fiatCurrencyValue: 0,
         nativeTokenName: AccountBalance.cryptoCurrencyLabel,
         nativeTokenValue: 0,
       ),

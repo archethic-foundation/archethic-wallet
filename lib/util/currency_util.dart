@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -245,11 +244,16 @@ class CurrencyUtil {
     }
   }
 
-  static String getConvertedAmount(String currency, double amount) {
+  static String format(String currency, double amount) {
     if (currency == 'btc') {
       return '${amount.toStringAsFixed(8)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else if (currency == 'eur') {
-      return '${amount.toStringAsFixed(NumberFormat.currency(locale: CurrencyUtil.getLocale(currency).toString(), symbol: CurrencyUtil.getCurrencySymbol(currency)).decimalDigits!)} ${CurrencyUtil.getCurrencySymbol(currency)}';
+      return '${amount.toStringAsFixed(
+        NumberFormat.currency(
+          locale: CurrencyUtil.getLocale(currency).toString(),
+          symbol: CurrencyUtil.getCurrencySymbol(currency),
+        ).decimalDigits!,
+      )} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
         locale: CurrencyUtil.getLocale(currency).toString(),
@@ -258,7 +262,7 @@ class CurrencyUtil {
     }
   }
 
-  static String getConvertedAmountWithNumberOfDigits(
+  static String formatWithNumberOfDigits(
     String currency,
     double amount,
     int numberOfDigits,
@@ -271,17 +275,6 @@ class CurrencyUtil {
         symbol: CurrencyUtil.getCurrencySymbol(currency),
         decimalDigits: numberOfDigits,
       ).format(amount);
-    }
-  }
-
-  static String getAmountDisplay(
-    double amount, {
-    String? networkCryptoCurrencyLabel = '',
-  }) {
-    if (networkCryptoCurrencyLabel!.isEmpty) {
-      return amount.toString();
-    } else {
-      return '$amount $networkCryptoCurrencyLabel';
     }
   }
 
@@ -300,7 +293,7 @@ class CurrencyUtil {
     double amount,
   ) {
     final amountConverted = convertAmount(price, amount);
-    return getConvertedAmount(currency, amountConverted);
+    return format(currency, amountConverted);
   }
 
   static String convertAmountFormatedWithNumberOfDigits(
@@ -310,7 +303,7 @@ class CurrencyUtil {
     int numberOfDigits,
   ) {
     final amountConverted = convertAmount(price, amount);
-    return getConvertedAmountWithNumberOfDigits(
+    return formatWithNumberOfDigits(
       currency,
       amountConverted,
       numberOfDigits,

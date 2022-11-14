@@ -17,9 +17,9 @@ class PriceAdapter extends TypeAdapter<Price> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Price(
-      amount: fields[0] as double?,
-      lastLoading: fields[1] as int?,
-      useOracleUcoPrice: fields[2] as bool?,
+      amount: fields[0] as double,
+      lastLoading: fields[1] as int,
+      useOracleUcoPrice: fields[2] as bool,
     );
   }
 

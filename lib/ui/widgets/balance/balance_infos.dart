@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -102,14 +103,12 @@ class BalanceInfos extends ConsumerWidget {
         ),
       ),
       onTapDown: (details) {
-        if (accountSelectedBalance.fiatCurrencyValue! > 0) {
-          BalanceInfosPopup.getPopup(
-            context,
-            ref,
-            details,
-            accountSelectedBalance,
-          );
-        }
+        BalanceInfosPopup.getPopup(
+          context,
+          ref,
+          details,
+          accountSelectedBalance,
+        );
       },
     );
   }
@@ -127,6 +126,16 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
+    final fiatValue = ref
+        .watch(
+          MarketPriceProviders.convertedToSelectedCurrency(
+            nativeAmount: accountSelectedBalance.nativeTokenValue,
+          ),
+        )
+        .valueOrNull;
+    if (fiatValue == null) {
+      return const SizedBox();
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -136,9 +145,9 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
           style: theme.textStyleSize25W900EquinoxPrimary,
         ),
         AutoSizeText(
-          CurrencyUtil.getConvertedAmount(
+          CurrencyUtil.format(
             currency.name,
-            accountSelectedBalance.fiatCurrencyValue ?? 0,
+            fiatValue,
           ),
           textAlign: TextAlign.center,
           style: theme.textStyleSize12W600Primary,
@@ -160,21 +169,31 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
+    final fiatValue = ref
+        .watch(
+          MarketPriceProviders.convertedToSelectedCurrency(
+            nativeAmount: accountSelectedBalance.nativeTokenValue,
+          ),
+        )
+        .valueOrNull;
+    if (fiatValue == null) {
+      return const SizedBox();
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
-          CurrencyUtil.getConvertedAmount(
+          CurrencyUtil.format(
             currency.name,
-            accountSelectedBalance.fiatCurrencyValue!,
+            fiatValue,
           ),
           textAlign: TextAlign.center,
           style: theme.textStyleSize25W900EquinoxPrimary,
         ),
         AutoSizeText(
-          '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName!}',
+          '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName}',
           style: theme.textStyleSize12W600Primary,
         ),
       ],

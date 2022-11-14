@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
 import 'package:aewallet/model/asset_history_interval.dart';
 import 'package:aewallet/util/currency_util.dart';
 // Package imports:
@@ -121,7 +120,7 @@ class HistoryChart extends StatelessWidget {
                   break;
               }
               return LineTooltipItem(
-                '$title\n${CurrencyUtil.getConvertedAmountWithNumberOfDigits(currency, touchedSpot.y, 5)}',
+                '$title\n${CurrencyUtil.formatWithNumberOfDigits(currency, touchedSpot.y, 5)}',
                 tooltipText,
               );
             }).toList();
@@ -206,17 +205,17 @@ class HistoryChart extends StatelessWidget {
                   showTitles: true,
                   reservedSize: 60,
                   getTitlesWidget: (value, titleMeta) {
-                    final axisTitle = value == titleMeta.max ||
-                            value == titleMeta.min
-                        ? const SizedBox.shrink()
-                        : Text(
-                            CurrencyUtil.getConvertedAmountWithNumberOfDigits(
-                              currency,
-                              value,
-                              3,
-                            ),
-                            style: axisTextStyle,
-                          );
+                    final axisTitle =
+                        value == titleMeta.max || value == titleMeta.min
+                            ? const SizedBox.shrink()
+                            : Text(
+                                CurrencyUtil.formatWithNumberOfDigits(
+                                  currency,
+                                  value,
+                                  3,
+                                ),
+                                style: axisTextStyle,
+                              );
                     return SideTitleWidget(
                       axisSide: titleMeta.axisSide,
                       child: axisTitle,
