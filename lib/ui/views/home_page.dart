@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
@@ -42,13 +43,15 @@ class _HomePageState extends ConsumerState<HomePage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   bool _lockDisabled = false; // whether we should avoid locking the app
 
-  TabController? tabController;
+  PageController? _bottomBarPageController;
+  PageController get bottomBarPageController =>
+      _bottomBarPageController ??= PageController(
+        initialPage: ref.read(SettingsProviders.settings).mainScreenCurrentPage,
+      );
 
   @override
   void initState() {
     super.initState();
-
-    tabController = TabController(length: 2, vsync: this);
 
     _registerBus();
     WidgetsBinding.instance.addObserver(this);
@@ -61,7 +64,7 @@ class _HomePageState extends ConsumerState<HomePage>
   void dispose() {
     _destroyBus();
     WidgetsBinding.instance.removeObserver(this);
-    tabController!.dispose();
+    _bottomBarPageController?.dispose();
     super.dispose();
   }
 
@@ -176,6 +179,16 @@ class _HomePageState extends ConsumerState<HomePage>
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    ref.listen(
+      SettingsProviders.settings
+          .select((settings) => settings.mainScreenCurrentPage),
+      (previous, next) {
+        if (previous == next) return;
+
+        bottomBarPageController.jumpToPage(next);
+      },
+    );
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -193,14 +206,12 @@ class _HomePageState extends ConsumerState<HomePage>
       body: IncomingTransactionsNotifier(
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
-          controller: StateContainer.of(context).bottomBarPageController,
-          children: const [AccountsListTab(), AccountTab(), NFTTab()],
+          controller: bottomBarPageController,
           //children: const [AccountsListTab(), AccountTab()],
-          onPageChanged: (index) {
-            setState(
-              () => StateContainer.of(context).bottomBarCurrentPage = index,
-            );
-          },
+          onPageChanged: ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage,
+          children: const [AccountsListTab(), AccountTab(), NFTTab()],
         ),
       ),
     );

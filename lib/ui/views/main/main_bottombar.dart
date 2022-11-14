@@ -2,9 +2,8 @@
 import 'dart:ui';
 
 // Project imports:
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 // Package imports:
 import 'package:bottom_bar/bottom_bar.dart';
@@ -13,11 +12,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MainBottomBar extends ConsumerWidget {
-  const MainBottomBar({super.key});
+  const MainBottomBar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final bottomBarCurrentPage = ref.watch(
+      SettingsProviders.settings.select(
+        (settings) => settings.mainScreenCurrentPage,
+      ),
+    );
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 22),
@@ -25,15 +31,10 @@ class MainBottomBar extends ConsumerWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: BottomBar(
-            selectedIndex: StateContainer.of(context).bottomBarCurrentPage,
-            onTap: (int index) async {
-              StateContainer.of(context)
-                  .bottomBarPageController!
-                  .jumpToPage(index);
-              final preferences = await HivePreferencesDatasource.getInstance();
-              preferences.setMainScreenCurrentPage(index);
-              StateContainer.of(context).bottomBarCurrentPage = index;
-            },
+            selectedIndex: bottomBarCurrentPage,
+            onTap: ref
+                .read(SettingsProviders.settings.notifier)
+                .setMainScreenCurrentPage,
             items: <BottomBarItem>[
               BottomBarItem(
                 icon: const Icon(

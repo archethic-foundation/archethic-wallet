@@ -32,7 +32,7 @@ class Settings with _$Settings {
         currency: AvailableCurrencyEnum.usd,
         language: AvailableLanguage.english,
         languageSeed: '',
-        mainScreenCurrentPage: 0,
+        mainScreenCurrentPage: 1,
         network: NetworksSetting(
           network: AvailableNetworks.archethicMainNet,
           networkDevEndpoint: '',

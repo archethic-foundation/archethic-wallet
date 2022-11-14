@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
@@ -44,8 +43,6 @@ class StateContainer extends ConsumerStatefulWidget {
 class StateContainerState extends ConsumerState<StateContainer> {
   ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1h';
-  int bottomBarCurrentPage = 1;
-  PageController? bottomBarPageController = PageController(initialPage: 1);
 
   @override
   void initState() {
@@ -53,26 +50,16 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
     // Setup Service Provide
     setupServiceLocator().then((_) {
-      HivePreferencesDatasource.getInstance()
-          .then((HivePreferencesDatasource preferences) {
-        setState(
-          () {
-            updateCurrency().then((_) {
-              final index = preferences.getMainScreenCurrentPage();
-              bottomBarPageController = PageController(
-                initialPage: index,
-              );
-              bottomBarCurrentPage = index;
-            });
-          },
-        );
-      });
+      updateCurrency().then(
+        (_) => setState(
+          () {},
+        ),
+      );
     });
   }
 
   @override
   void dispose() {
-    bottomBarPageController!.dispose();
     super.dispose();
   }
 

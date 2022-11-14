@@ -102,4 +102,16 @@ class SettingsNotifier extends StateNotifier<Settings> {
           language: language,
         ),
       );
+
+  Future<void> resetMainScreenCurrentPage() => _update(
+        state.copyWith(
+          mainScreenCurrentPage: 1,
+        ),
+      );
+
+  Future<void> setMainScreenCurrentPage(int index) => _update(
+        state.copyWith(
+          mainScreenCurrentPage: index,
+        ),
+      );
 }
