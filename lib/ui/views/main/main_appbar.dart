@@ -7,7 +7,6 @@ import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -33,8 +32,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final bottomBarCurrentPage =
-        StateContainer.of(context).bottomBarCurrentPage;
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
     final keychain = ref.watch(
@@ -59,7 +56,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             actions: [
-              if (StateContainer.of(context).bottomBarCurrentPage == 2)
+              if (preferences.mainScreenCurrentPage == 2)
                 IconButton(
                   icon: const Icon(UiIcons.settings),
                   onPressed: () async {
@@ -85,7 +82,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
             ],
-            title: bottomBarCurrentPage == 0
+            title: preferences.mainScreenCurrentPage == 0
                 ? InkWell(
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
@@ -110,7 +107,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       style: theme.textStyleSize24W700EquinoxPrimary,
                     ),
                   )
-                : bottomBarCurrentPage == 1
+                : preferences.mainScreenCurrentPage == 1
                     ? FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(

@@ -72,118 +72,111 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
           theme.snackBarShadow!,
         );
         Navigator.of(context).pop(false);
-      } else {
-        if (event.response != 'ok' ||
-            !TransactionConfirmation.isEnoughConfirmations(
-              event.nbConfirmations!,
-              event.maxConfirmations!,
-            )) {
+        return;
+      }
+
+      if (event.response != 'ok' ||
+          !TransactionConfirmation.isEnoughConfirmations(
+            event.nbConfirmations!,
+            event.maxConfirmations!,
+          )) {
+        UIUtil.showSnackbar(
+          localizations.notEnoughConfirmations,
+          context,
+          ref,
+          theme.text!,
+          theme.snackBarShadow!,
+        );
+        Navigator.of(context).pop();
+        return;
+      }
+
+      switch (event.transactionType!) {
+        case TransactionSendEventType.keychain:
           UIUtil.showSnackbar(
-            localizations.notEnoughConfirmations,
+            event.nbConfirmations == 1
+                ? localizations.keychainCreationTransactionConfirmed1
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString())
+                : localizations.keychainCreationTransactionConfirmed
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString()),
             context,
             ref,
             theme.text!,
             theme.snackBarShadow!,
+            duration: const Duration(milliseconds: 5000),
           );
-          Navigator.of(context).pop();
-          return;
-        }
 
-        switch (event.transactionType!) {
-          case TransactionSendEventType.keychain:
+          if (keychainAccessRequested) break;
+
+          setState(() {
+            keychainAccessRequested = true;
+          });
+          await KeychainUtil().createKeyChainAccess(
+            widget.seed,
+            widget.name,
+            event.params!['keychainAddress']! as String,
+            event.params!['originPrivateKey']! as String,
+            event.params!['keychain']! as Keychain,
+          );
+          break;
+        case TransactionSendEventType.keychainAccess:
+          UIUtil.showSnackbar(
+            event.nbConfirmations == 1
+                ? localizations.keychainAccessCreationTransactionConfirmed1
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString())
+                : localizations.keychainAccessCreationTransactionConfirmed
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString()),
+            context,
+            ref,
+            theme.text!,
+            theme.snackBarShadow!,
+            duration: const Duration(milliseconds: 5000),
+          );
+
+          if (newWalletRequested) break;
+
+          setState(() {
+            newWalletRequested = true;
+          });
+          var error = false;
+          try {
+            await ref
+                .read(SessionProviders.session.notifier)
+                .createNewAppWallet(
+                  seed: widget.seed!,
+                  keychainAddress: event.params!['keychainAddress']! as String,
+                  keychain: event.params!['keychain']! as Keychain,
+                  name: widget.name,
+                );
+          } catch (e) {
+            error = true;
             UIUtil.showSnackbar(
-              event.nbConfirmations == 1
-                  ? localizations.keychainCreationTransactionConfirmed1
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString())
-                  : localizations.keychainCreationTransactionConfirmed
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString()),
+              '${localizations.sendError} ($e)',
               context,
               ref,
               theme.text!,
               theme.snackBarShadow!,
-              duration: const Duration(milliseconds: 5000),
             );
+          }
+          if (error == false) {
+            await StateContainer.of(context).requestUpdate();
 
-            if (keychainAccessRequested) break;
-
-            setState(() {
-              keychainAccessRequested = true;
-            });
-            await KeychainUtil().createKeyChainAccess(
-              widget.seed,
-              widget.name,
-              event.params!['keychainAddress']! as String,
-              event.params!['originPrivateKey']! as String,
-              event.params!['keychain']! as Keychain,
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home',
+              (Route<dynamic> route) => false,
             );
-            break;
-          case TransactionSendEventType.keychainAccess:
-            UIUtil.showSnackbar(
-              event.nbConfirmations == 1
-                  ? localizations.keychainAccessCreationTransactionConfirmed1
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString())
-                  : localizations.keychainAccessCreationTransactionConfirmed
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString()),
-              context,
-              ref,
-              theme.text!,
-              theme.snackBarShadow!,
-              duration: const Duration(milliseconds: 5000),
-            );
-
-            if (newWalletRequested) break;
-
-            setState(() {
-              newWalletRequested = true;
-            });
-            var error = false;
-            try {
-              await ref
-                  .read(SessionProviders.session.notifier)
-                  .createNewAppWallet(
-                    seed: widget.seed!,
-                    keychainAddress:
-                        event.params!['keychainAddress']! as String,
-                    keychain: event.params!['keychain']! as Keychain,
-                    name: widget.name,
-                  );
-            } catch (e) {
-              error = true;
-              UIUtil.showSnackbar(
-                '${localizations.sendError} ($e)',
-                context,
-                ref,
-                theme.text!,
-                theme.snackBarShadow!,
-              );
-            }
-            if (error == false) {
-              await StateContainer.of(context).requestUpdate();
-
-              final preferences = await HivePreferencesDatasource.getInstance();
-              StateContainer.of(context).bottomBarCurrentPage =
-                  preferences.getMainScreenCurrentPage();
-              StateContainer.of(context).bottomBarPageController =
-                  PageController(
-                initialPage: StateContainer.of(context).bottomBarCurrentPage,
-              );
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                '/home',
-                (Route<dynamic> route) => false,
-              );
-            } else {
-              Navigator.of(context).pop();
-            }
-            break;
-          case TransactionSendEventType.transfer:
-            break;
-          case TransactionSendEventType.token:
-            break;
-        }
+          } else {
+            Navigator.of(context).pop();
+          }
+          break;
+        case TransactionSendEventType.transfer:
+          break;
+        case TransactionSendEventType.token:
+          break;
       }
     });
   }

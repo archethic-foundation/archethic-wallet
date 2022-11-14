@@ -5,8 +5,6 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -348,15 +346,9 @@ class _AccountListItem extends ConsumerWidget {
               }
               ref.read(AccountProviders.selectedAccount.notifier).refreshAll();
 
-              StateContainer.of(context).bottomBarCurrentPage = 1;
-              StateContainer.of(context)
-                  .bottomBarPageController!
-                  .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
-              final preferences_ =
-                  await HivePreferencesDatasource.getInstance();
-              preferences_.setMainScreenCurrentPage(
-                StateContainer.of(context).bottomBarCurrentPage,
-              );
+              ref
+                  .read(SettingsProviders.settings.notifier)
+                  .resetMainScreenCurrentPage();
               Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
             },
             onLongPress: () {
