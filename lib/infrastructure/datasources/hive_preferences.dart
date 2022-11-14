@@ -8,9 +8,7 @@ import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
-import 'package:aewallet/model/data/settings.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
-import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/primary_currency.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -18,8 +16,8 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-class Preferences {
-  Preferences._(this._box);
+class HivePreferencesDatasource {
+  HivePreferencesDatasource._(this._box);
 
   static const String _preferencesBox = '_preferencesBox';
   final Box<dynamic> _box;
@@ -53,9 +51,9 @@ class Preferences {
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static Future<Preferences> getInstance() async {
+  static Future<HivePreferencesDatasource> getInstance() async {
     final box = await Hive.openBox<dynamic>(_preferencesBox);
-    return Preferences._(box);
+    return HivePreferencesDatasource._(box);
   }
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>
@@ -237,7 +235,7 @@ class Preferences {
   static Future<void> initWallet(
     AuthenticationMethod authenticationMethod,
   ) async {
-    final preferences = await Preferences.getInstance();
+    final preferences = await HivePreferencesDatasource.getInstance();
     preferences
       ..setLock(true)
       ..setShowBalances(true)
@@ -258,25 +256,4 @@ class Preferences {
       ..setAuthMethod(authenticationMethod)
       ..setMainScreenCurrentPage(1);
   }
-
-  Settings toModel() => Settings(
-        activeNotifications: getActiveNotifications(),
-        activeVibrations: getActiveVibrations(),
-        currency: getCurrency(const Locale('us', 'US'))
-            .currency, // TODO(Chralu): utiliser la locale du telephone (mettre en place un provider dédié)
-        firstLaunch: getFirstLaunch(),
-        language: getLanguage().language,
-        languageSeed: getLanguageSeed(),
-        lock: getLock() ? UnlockOption.yes : UnlockOption.no,
-        lockAttempts: getLockAttempts(),
-        lockTimeout: getLockTimeout().setting,
-        mainScreenCurrentPage: getMainScreenCurrentPage(),
-        network: getNetwork(),
-        primaryCurrency: getPrimaryCurrency(),
-        showBalances: getShowBalances(),
-        showBlog: getShowBlog(),
-        showPriceChart: getShowPriceChart(),
-        theme: getTheme().theme,
-        pinLockUntil: getLockDate(),
-      );
 }

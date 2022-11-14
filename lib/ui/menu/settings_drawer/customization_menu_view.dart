@@ -149,12 +149,14 @@ class _CurrencySettingsListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     return _SettingsListItem.withDefaultValueWithInfos(
       heading: localizations.changeCurrencyHeader,
       info: localizations.changeCurrencyDesc
           .replaceAll('%1', AccountBalance.cryptoCurrencyLabel),
-      defaultMethod: currency,
+      defaultMethod: AvailableCurrency(currency),
       icon: UiIcons.currency,
       onPressed: () => CurrencyDialog.getDialog(context, ref),
       disabled: false,
@@ -186,7 +188,9 @@ class _ThemeSettingsListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
 
-    final themeOption = ref.watch(ThemeProviders.selectedThemeOption);
+    final themeOption = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.theme),
+    );
     return _SettingsListItem.withDefaultValue(
       heading: localizations.themeHeader,
       defaultMethod: ThemeSetting(themeOption),
@@ -200,7 +204,7 @@ class _ThemeSettingsListItem extends ConsumerWidget {
         if (pickedTheme == null) return;
 
         await ref
-            .read(ThemeProviders.selectedThemeOption.notifier)
+            .read(SettingsProviders.settings.notifier)
             .selectTheme(pickedTheme.theme);
       },
     );

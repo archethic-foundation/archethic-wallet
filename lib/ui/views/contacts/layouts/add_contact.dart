@@ -2,8 +2,8 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -29,8 +29,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-part 'components/add_contact_textfield_name.dart';
 part 'components/add_contact_textfield_address.dart';
+part 'components/add_contact_textfield_name.dart';
 part 'components/add_contact_textfield_public_key.dart';
 
 class AddContactSheet extends ConsumerWidget {

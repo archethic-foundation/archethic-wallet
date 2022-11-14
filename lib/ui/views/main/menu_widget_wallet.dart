@@ -2,8 +2,8 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/styles.dart';

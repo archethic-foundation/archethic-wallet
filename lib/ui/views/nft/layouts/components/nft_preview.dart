@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-import 'package:aewallet/application/theme.dart';
+
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -133,7 +134,10 @@ class NFTPreviewWidget extends ConsumerWidget {
                         ? Padding(
                             padding: const EdgeInsets.all(5),
                             child: _buildTokenProperty(
-                                context, ref, {entry.key: entry.value},),
+                              context,
+                              ref,
+                              {entry.key: entry.value},
+                            ),
                           )
                         : const SizedBox();
                   }).toList(),

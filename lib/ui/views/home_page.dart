@@ -3,12 +3,13 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/bus/notifications_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -25,7 +26,6 @@ import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.da
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -150,7 +150,7 @@ class _HomePageState extends ConsumerState<HomePage>
   StreamSubscription<dynamic>? lockStreamListener;
 
   Future<void> setAppLockEvent() async {
-    final preferences = await Preferences.getInstance();
+    final preferences = await HivePreferencesDatasource.getInstance();
     if ((preferences.getLock()) && !_lockDisabled) {
       if (lockStreamListener != null) {
         lockStreamListener!.cancel();

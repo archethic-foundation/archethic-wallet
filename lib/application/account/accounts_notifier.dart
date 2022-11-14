@@ -40,7 +40,7 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
     if (loggedInSession == null) return;
 
     final currencyName = ref.read(
-      CurrencyProviders.selectedCurrency.select((value) => value.currency.name),
+      SettingsProviders.settings.select((settings) => settings.currency.name),
     );
 
     await KeychainUtil().addAccountInKeyChain(

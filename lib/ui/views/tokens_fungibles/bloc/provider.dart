@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
@@ -342,11 +342,9 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 abstract class AddTokenFormProvider {
   static final _repository = Provider<TransactionRemoteRepositoryInterface>(
     (ref) {
-      final networkSettings = ref
-          .watch(
-            SettingsProviders.localSettingsRepository,
-          )
-          .getNetwork();
+      final networkSettings = ref.watch(
+        SettingsProviders.settings.select((settings) => settings.network),
+      );
       return ArchethicTransactionRepository(
         phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
         websocketEndpoint: networkSettings.getWebsocketUri(),

@@ -8,6 +8,7 @@ import 'dart:typed_data';
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -16,7 +17,6 @@ import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/preferences.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -36,7 +36,7 @@ class KeychainUtil {
           hexToUint8List(originPrivateKey),
         );
 
-    final preferences = await Preferences.getInstance();
+    final preferences = await HivePreferencesDatasource.getInstance();
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
       phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),
@@ -102,7 +102,7 @@ class KeychainUtil {
           derivationPath: kDerivationPath,
         );
 
-    final preferences = await Preferences.getInstance();
+    final preferences = await HivePreferencesDatasource.getInstance();
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
       phoenixHttpEndpoint: preferences.getNetwork().getPhoenixHttpLink(),

@@ -3,8 +3,8 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';

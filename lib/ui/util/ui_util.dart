@@ -4,7 +4,7 @@
 import 'dart:async';
 
 // Project imports:
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/ui/util/styles.dart';
 // Package imports:

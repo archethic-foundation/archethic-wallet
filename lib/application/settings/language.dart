@@ -1,4 +1,4 @@
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,9 +7,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'language.g.dart';
 
 @Riverpod(keepAlive: true)
-LanguageSetting _selectedLanguage(_SelectedLanguageRef ref) {
-  return ref.read(SettingsProviders.localSettingsRepository).getLanguage();
-}
+LanguageSetting _selectedLanguage(_SelectedLanguageRef ref) => ref.watch(
+      SettingsProviders.settings.select(
+        (settings) => LanguageSetting(settings.language),
+      ),
+    );
 
 /// Resolves the selected locale
 ///
@@ -35,20 +37,8 @@ final _defaultLocaleProvider = StateProvider<Locale>(
   (ref) => const Locale('en', 'US'),
 );
 
-@riverpod
-Future<void> _selectLanguage(
-  _SelectLanguageRef ref, {
-  required AvailableLanguage language,
-}) async {
-  await ref
-      .read(SettingsProviders.localSettingsRepository)
-      .setLanguage(LanguageSetting(language));
-  ref.invalidate(_selectedLanguageProvider);
-}
-
 abstract class LanguageProviders {
   static final selectedLanguage = _selectedLanguageProvider;
-  static final selectLanguage = _selectLanguageProvider;
 
   static final availableLocales = _availableLocalesProvider;
   static final defaultLocale = _defaultLocaleProvider;

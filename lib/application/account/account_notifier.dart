@@ -29,12 +29,14 @@ class _AccountNotifier
   }
 
   Future<void> _refreshBalance(Account account) async {
-    final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
+    final selectedCurrency = ref.read(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     final tokenPrice = await Price.getCurrency(
-      selectedCurrency.currency.name,
+      selectedCurrency.name,
     );
     await account.updateBalance(
-      selectedCurrency.currency.name,
+      selectedCurrency.name,
       tokenPrice,
     );
   }

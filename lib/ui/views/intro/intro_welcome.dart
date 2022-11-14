@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -182,11 +182,11 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                               await NetworkDialog.getDialog(
                                 context,
                                 ref,
-                                ref
-                                    .read(
-                                      SettingsProviders.localSettingsRepository,
-                                    )
-                                    .getNetwork(),
+                                ref.read(
+                                  SettingsProviders.settings.select(
+                                    (settings) => settings.network,
+                                  ),
+                                ),
                               );
                               Navigator.of(context).pushNamed('/intro_import');
                             }

@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/language.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/language.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -52,11 +52,9 @@ class LanguageDialog {
             pickerItems: pickerItemsList,
             selectedIndex: selectedLanguage.language.index,
             onSelected: (value) {
-              ref.read(
-                LanguageProviders.selectLanguage(
-                  language: value.value as AvailableLanguage,
-                ),
-              );
+              ref
+                  .read(SettingsProviders.settings.notifier)
+                  .selectLanguage(value.value as AvailableLanguage);
               Navigator.pop(context, value.value);
             },
           ),

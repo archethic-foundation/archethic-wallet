@@ -1,6 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/primary_currency.dart';
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
@@ -409,12 +409,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     var amountConverted = 0.0;
     if (amount > 0 && tokenPrice != null) {
-      final primaryCurrencyNotifier =
-          ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier);
-
-      amountConverted = primaryCurrencyNotifier.getValueConverted(
-        amount: amount,
-        tokenPrice: tokenPrice,
+      amountConverted = ref.read(
+        PrimaryCurrencyProviders.convertedValue(
+          amount: amount,
+          tokenPrice: tokenPrice,
+        ),
       );
     }
 
@@ -739,11 +738,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 abstract class TransferFormProvider {
   static final _repository = Provider<TransactionRemoteRepositoryInterface>(
     (ref) {
-      final networkSettings = ref
-          .watch(
-            SettingsProviders.localSettingsRepository,
-          )
-          .getNetwork();
+      final networkSettings = ref.watch(
+        SettingsProviders.settings.select((settings) => settings.network),
+      );
       return ArchethicTransactionRepository(
         phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
         websocketEndpoint: networkSettings.getWebsocketUri(),

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -10,7 +11,6 @@ import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/seeds.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +37,10 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
-    Preferences.getInstance()
-        .then((Preferences preferences) => preferences.setLanguageSeed('en'));
+    HivePreferencesDatasource.getInstance().then(
+      (HivePreferencesDatasource preferences) =>
+          preferences.setLanguageSeed('en'),
+    );
   }
 
   @override
@@ -110,7 +112,8 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                       seed!,
                                     );
                                     final preferences_ =
-                                        await Preferences.getInstance();
+                                        await HivePreferencesDatasource
+                                            .getInstance();
                                     preferences_.setLanguageSeed('en');
                                     setState(() {
                                       language = 'en';
@@ -146,7 +149,8 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                       languageCode: 'fr',
                                     );
                                     final preferences_ =
-                                        await Preferences.getInstance();
+                                        await HivePreferencesDatasource
+                                            .getInstance();
                                     preferences_.setLanguageSeed('fr');
                                     setState(() {
                                       language = 'fr';

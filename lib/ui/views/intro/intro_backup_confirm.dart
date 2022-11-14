@@ -1,11 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-import 'package:aewallet/application/theme.dart';
+
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -22,8 +25,6 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
-import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/vault.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -163,7 +164,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             if (error == false) {
               await StateContainer.of(context).requestUpdate();
 
-              final preferences = await Preferences.getInstance();
+              final preferences = await HivePreferencesDatasource.getInstance();
               StateContainer.of(context).bottomBarCurrentPage =
                   preferences.getMainScreenCurrentPage();
               StateContainer.of(context).bottomBarPageController =
@@ -202,7 +203,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   void initState() {
     super.initState();
     _registerBus();
-    Preferences.getInstance().then((Preferences preferences) {
+    HivePreferencesDatasource.getInstance()
+        .then((HivePreferencesDatasource preferences) {
       setState(() {
         wordListToSelect = AppMnemomics.seedToMnemonic(
           widget.seed!,
@@ -547,7 +549,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
     try {
       await sl.get<DBHelper>().clearAppWallet();
-      final vault = await Vault.getInstance();
+      final vault = await HiveVaultDatasource.getInstance();
       await vault.setSeed(widget.seed!);
 
       final originPrivateKey = sl.get<ApiService>().getOriginKey();

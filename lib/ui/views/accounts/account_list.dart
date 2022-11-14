@@ -2,11 +2,11 @@
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/primary_currency.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -25,7 +25,6 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -315,8 +314,7 @@ class _AccountListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final contact = ref.watch(
@@ -354,7 +352,8 @@ class _AccountListItem extends ConsumerWidget {
               StateContainer.of(context)
                   .bottomBarPageController!
                   .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
-              final preferences_ = await Preferences.getInstance();
+              final preferences_ =
+                  await HivePreferencesDatasource.getInstance();
               preferences_.setMainScreenCurrentPage(
                 StateContainer.of(context).bottomBarCurrentPage,
               );
@@ -363,7 +362,7 @@ class _AccountListItem extends ConsumerWidget {
             onLongPress: () {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    preferences.activeVibrations,
+                    settings.activeVibrations,
                   );
 
               Sheets.showAppHeightNineSheet(
@@ -408,7 +407,7 @@ class _AccountListItem extends ConsumerWidget {
                         style: theme.textStyleSize12W400Primary,
                       ),
                     ),
-                    if (preferences.showBalances)
+                    if (settings.showBalances)
                       primaryCurrency.primaryCurrency ==
                               AvailablePrimaryCurrencyEnum.native
                           ? Column(
@@ -421,7 +420,7 @@ class _AccountListItem extends ConsumerWidget {
                                 ),
                                 AutoSizeText(
                                   CurrencyUtil.getConvertedAmount(
-                                    currency.currency.name,
+                                    settings.currency.name,
                                     account.balance!.fiatCurrencyValue!,
                                   ),
                                   textAlign: TextAlign.end,
@@ -450,7 +449,7 @@ class _AccountListItem extends ConsumerWidget {
                               children: <Widget>[
                                 AutoSizeText(
                                   CurrencyUtil.getConvertedAmount(
-                                    currency.currency.name,
+                                    settings.currency.name,
                                     account.balance!.fiatCurrencyValue!,
                                   ),
                                   textAlign: TextAlign.end,

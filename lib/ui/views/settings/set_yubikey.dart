@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -10,7 +11,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -290,7 +290,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           });
         }
       } else {
-        final vault = await Vault.getInstance();
+        final vault = await HiveVaultDatasource.getInstance();
         vault
           ..setYubikeyClientAPIKey(_clientAPIKeyController!.text)
           ..setYubikeyClientID(_clientIDController!.text);

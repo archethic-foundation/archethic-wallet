@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
@@ -583,9 +583,9 @@ abstract class NftCreationFormProvider {
     (ref) {
       final networkSettings = ref
           .watch(
-            SettingsProviders.localSettingsRepository,
+            SettingsProviders.settings,
           )
-          .getNetwork();
+          .network;
       return ArchethicTransactionRepository(
         phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
         websocketEndpoint: networkSettings.getWebsocketUri(),

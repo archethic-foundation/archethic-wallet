@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -21,7 +21,7 @@ class ContactsList extends ConsumerWidget {
   ContactsList(this.contactsController, this.contactsOpen, {super.key});
 
   final AnimationController contactsController;
-  bool contactsOpen;
+  bool contactsOpen; // TODO(reddwarf03): this is not a  StatefulWidget
 
   TextEditingController? searchNameController = TextEditingController();
 

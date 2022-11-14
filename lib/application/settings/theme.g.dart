@@ -29,24 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_ThemeNotifierHash() => r'78b9eb32fc3fb98c4419f0fd7fb5e96d5ce2470e';
-
-/// See also [_ThemeNotifier].
-final _themeNotifierProvider = NotifierProvider<_ThemeNotifier, ThemeOptions>(
-  _ThemeNotifier.new,
-  name: r'_themeNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_ThemeNotifierHash,
-);
-typedef _ThemeNotifierRef = NotifierProviderRef<ThemeOptions>;
-
-abstract class _$ThemeNotifier extends Notifier<ThemeOptions> {
-  @override
-  ThemeOptions build();
-}
-
-String $_selectedThemeHash() => r'f3e875949f84ddd7762bbb820067351e081c2e42';
+String $_selectedThemeHash() => r'a8bbf6b1dc34a9fdc3b2b2c2fe58eee891226b4f';
 
 /// See also [_selectedTheme].
 final _selectedThemeProvider = Provider<BaseTheme>(

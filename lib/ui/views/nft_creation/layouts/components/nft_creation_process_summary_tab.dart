@@ -20,7 +20,9 @@ class _NFTCreationProcessSummaryTabState
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,
     );
@@ -47,7 +49,7 @@ class _NFTCreationProcessSummaryTabState
                     feeEstimation: nftCreation.feeEstimation,
                     tokenPrice:
                         accountSelected.balance!.tokenPrice!.amount ?? 0,
-                    currencyName: currency.currency.name,
+                    currencyName: currency.name,
                     estimatedFeesNote: localizations.estimatedFeesAddNFTNote,
                   ),
                 ),

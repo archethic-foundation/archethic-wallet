@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Project imports:
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/ui_util.dart';

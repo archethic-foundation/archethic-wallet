@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:typed_data';
@@ -10,8 +8,8 @@ import 'package:aewallet/model/data/secured_settings.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
-class Vault {
-  Vault._(this._box);
+class HiveVaultDatasource {
+  HiveVaultDatasource._(this._box);
 
   static const String _vaultBox = '_vaultBox';
   final Box<dynamic> _box;
@@ -28,7 +26,7 @@ class Vault {
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static Future<Vault> getInstance() async {
+  static Future<HiveVaultDatasource> getInstance() async {
     try {
       const secureStorage = FlutterSecureStorage();
       final encryptionKey = await _readEncryptionKey(secureStorage) ??
@@ -37,7 +35,7 @@ class Vault {
         _vaultBox,
         encryptionCipher: HiveAesCipher(encryptionKey),
       );
-      return Vault._(encryptedBox);
+      return HiveVaultDatasource._(encryptedBox);
     } catch (e) {
       dev.log(e.toString());
       throw Exception();

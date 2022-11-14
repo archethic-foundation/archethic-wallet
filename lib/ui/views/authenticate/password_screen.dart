@@ -3,7 +3,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/localization.dart';

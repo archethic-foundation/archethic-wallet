@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -37,7 +37,11 @@ class CurrencyDialog {
       context: context,
       builder: (BuildContext context) {
         final theme = ref.watch(ThemeProviders.selectedTheme);
-        final currency = ref.watch(CurrencyProviders.selectedCurrency);
+        final currency = AvailableCurrency(
+          ref.watch(
+            SettingsProviders.settings.select((settings) => settings.currency),
+          ),
+        );
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -68,9 +72,11 @@ class CurrencyDialog {
                 final accountSelected = await ref.read(
                   AccountProviders.selectedAccount.future,
                 );
-                await ref.read(
-                  CurrencyProviders.selectCurrency(currency: currency).future,
-                );
+                await ref
+                    .read(
+                      SettingsProviders.settings.notifier,
+                    )
+                    .selectCurrency(currency);
 
                 ref
                     .read(AccountProviders.selectedAccount.notifier)

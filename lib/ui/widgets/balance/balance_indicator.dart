@@ -1,9 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/primary_currency.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -87,7 +86,7 @@ class _BalanceIndicatorButton extends ConsumerWidget {
               preferences.activeVibrations,
             );
         await ref
-            .read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier)
+            .read(SettingsProviders.settings.notifier)
             .switchSelectedPrimaryCurrency();
       },
     );
@@ -106,7 +105,9 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
           .select((value) => value.valueOrNull?.balance),
     );
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
 
     if (accountSelectedBalance == null) return const SizedBox();
     return RichText(
@@ -122,7 +123,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
             ),
           TextSpan(
             text: CurrencyUtil.getConvertedAmount(
-              currency.currency.name,
+              currency.name,
               accountSelectedBalance.fiatCurrencyValue!,
             ),
             style: primary

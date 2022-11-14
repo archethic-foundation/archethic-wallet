@@ -16,27 +16,19 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Settings {
-// required AuthMethod authenticationMethod,
   AvailableCurrencyEnum get currency => throw _privateConstructorUsedError;
   AvailablePrimaryCurrency get primaryCurrency =>
       throw _privateConstructorUsedError;
   AvailableLanguage get language => throw _privateConstructorUsedError;
   NetworksSetting get network => throw _privateConstructorUsedError;
   String get languageSeed => throw _privateConstructorUsedError;
-  bool get firstLaunch =>
-      throw _privateConstructorUsedError; // required bool pinPadShuffle,
+  bool get firstLaunch => throw _privateConstructorUsedError;
   bool get showBalances => throw _privateConstructorUsedError;
   bool get showBlog => throw _privateConstructorUsedError;
   bool get activeVibrations => throw _privateConstructorUsedError;
   bool get activeNotifications => throw _privateConstructorUsedError;
-  int get mainScreenCurrentPage =>
-      throw _privateConstructorUsedError; // TODO(Chralu): not shure it belongs here
+  int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
-  UnlockOption get lock =>
-      throw _privateConstructorUsedError; // TODO(Chralu): create a notifier dedicated to Lock management
-  LockTimeoutOption get lockTimeout => throw _privateConstructorUsedError;
-  int get lockAttempts => throw _privateConstructorUsedError;
-  DateTime? get pinLockUntil => throw _privateConstructorUsedError;
   ThemeOptions get theme => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -62,10 +54,6 @@ abstract class $SettingsCopyWith<$Res> {
       bool activeNotifications,
       int mainScreenCurrentPage,
       bool showPriceChart,
-      UnlockOption lock,
-      LockTimeoutOption lockTimeout,
-      int lockAttempts,
-      DateTime? pinLockUntil,
       ThemeOptions theme});
 }
 
@@ -94,10 +82,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? activeNotifications = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
-    Object? lock = null,
-    Object? lockTimeout = null,
-    Object? lockAttempts = null,
-    Object? pinLockUntil = freezed,
     Object? theme = null,
   }) {
     return _then(_value.copyWith(
@@ -149,22 +133,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.showPriceChart
           : showPriceChart // ignore: cast_nullable_to_non_nullable
               as bool,
-      lock: null == lock
-          ? _value.lock
-          : lock // ignore: cast_nullable_to_non_nullable
-              as UnlockOption,
-      lockTimeout: null == lockTimeout
-          ? _value.lockTimeout
-          : lockTimeout // ignore: cast_nullable_to_non_nullable
-              as LockTimeoutOption,
-      lockAttempts: null == lockAttempts
-          ? _value.lockAttempts
-          : lockAttempts // ignore: cast_nullable_to_non_nullable
-              as int,
-      pinLockUntil: freezed == pinLockUntil
-          ? _value.pinLockUntil
-          : pinLockUntil // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -193,10 +161,6 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
       bool activeNotifications,
       int mainScreenCurrentPage,
       bool showPriceChart,
-      UnlockOption lock,
-      LockTimeoutOption lockTimeout,
-      int lockAttempts,
-      DateTime? pinLockUntil,
       ThemeOptions theme});
 }
 
@@ -223,10 +187,6 @@ class __$$_SettingsCopyWithImpl<$Res>
     Object? activeNotifications = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
-    Object? lock = null,
-    Object? lockTimeout = null,
-    Object? lockAttempts = null,
-    Object? pinLockUntil = freezed,
     Object? theme = null,
   }) {
     return _then(_$_Settings(
@@ -278,22 +238,6 @@ class __$$_SettingsCopyWithImpl<$Res>
           ? _value.showPriceChart
           : showPriceChart // ignore: cast_nullable_to_non_nullable
               as bool,
-      lock: null == lock
-          ? _value.lock
-          : lock // ignore: cast_nullable_to_non_nullable
-              as UnlockOption,
-      lockTimeout: null == lockTimeout
-          ? _value.lockTimeout
-          : lockTimeout // ignore: cast_nullable_to_non_nullable
-              as LockTimeoutOption,
-      lockAttempts: null == lockAttempts
-          ? _value.lockAttempts
-          : lockAttempts // ignore: cast_nullable_to_non_nullable
-              as int,
-      pinLockUntil: freezed == pinLockUntil
-          ? _value.pinLockUntil
-          : pinLockUntil // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -318,14 +262,9 @@ class _$_Settings extends _Settings {
       required this.activeNotifications,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
-      required this.lock,
-      required this.lockTimeout,
-      required this.lockAttempts,
-      this.pinLockUntil,
       required this.theme})
       : super._();
 
-// required AuthMethod authenticationMethod,
   @override
   final AvailableCurrencyEnum currency;
   @override
@@ -338,7 +277,6 @@ class _$_Settings extends _Settings {
   final String languageSeed;
   @override
   final bool firstLaunch;
-// required bool pinPadShuffle,
   @override
   final bool showBalances;
   @override
@@ -349,24 +287,14 @@ class _$_Settings extends _Settings {
   final bool activeNotifications;
   @override
   final int mainScreenCurrentPage;
-// TODO(Chralu): not shure it belongs here
   @override
   final bool showPriceChart;
-  @override
-  final UnlockOption lock;
-// TODO(Chralu): create a notifier dedicated to Lock management
-  @override
-  final LockTimeoutOption lockTimeout;
-  @override
-  final int lockAttempts;
-  @override
-  final DateTime? pinLockUntil;
   @override
   final ThemeOptions theme;
 
   @override
   String toString() {
-    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, lock: $lock, lockTimeout: $lockTimeout, lockAttempts: $lockAttempts, pinLockUntil: $pinLockUntil, theme: $theme)';
+    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, theme: $theme)';
   }
 
   @override
@@ -397,13 +325,6 @@ class _$_Settings extends _Settings {
                 other.mainScreenCurrentPage == mainScreenCurrentPage) &&
             (identical(other.showPriceChart, showPriceChart) ||
                 other.showPriceChart == showPriceChart) &&
-            (identical(other.lock, lock) || other.lock == lock) &&
-            (identical(other.lockTimeout, lockTimeout) ||
-                other.lockTimeout == lockTimeout) &&
-            (identical(other.lockAttempts, lockAttempts) ||
-                other.lockAttempts == lockAttempts) &&
-            (identical(other.pinLockUntil, pinLockUntil) ||
-                other.pinLockUntil == pinLockUntil) &&
             (identical(other.theme, theme) || other.theme == theme));
   }
 
@@ -422,10 +343,6 @@ class _$_Settings extends _Settings {
       activeNotifications,
       mainScreenCurrentPage,
       showPriceChart,
-      lock,
-      lockTimeout,
-      lockAttempts,
-      pinLockUntil,
       theme);
 
   @JsonKey(ignore: true)
@@ -449,14 +366,10 @@ abstract class _Settings extends Settings {
       required final bool activeNotifications,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
-      required final UnlockOption lock,
-      required final LockTimeoutOption lockTimeout,
-      required final int lockAttempts,
-      final DateTime? pinLockUntil,
       required final ThemeOptions theme}) = _$_Settings;
   const _Settings._() : super._();
 
-  @override // required AuthMethod authenticationMethod,
+  @override
   AvailableCurrencyEnum get currency;
   @override
   AvailablePrimaryCurrency get primaryCurrency;
@@ -468,7 +381,7 @@ abstract class _Settings extends Settings {
   String get languageSeed;
   @override
   bool get firstLaunch;
-  @override // required bool pinPadShuffle,
+  @override
   bool get showBalances;
   @override
   bool get showBlog;
@@ -478,16 +391,8 @@ abstract class _Settings extends Settings {
   bool get activeNotifications;
   @override
   int get mainScreenCurrentPage;
-  @override // TODO(Chralu): not shure it belongs here
+  @override
   bool get showPriceChart;
-  @override
-  UnlockOption get lock;
-  @override // TODO(Chralu): create a notifier dedicated to Lock management
-  LockTimeoutOption get lockTimeout;
-  @override
-  int get lockAttempts;
-  @override
-  DateTime? get pinLockUntil;
   @override
   ThemeOptions get theme;
   @override

@@ -2,9 +2,11 @@
 import 'dart:async';
 
 // Project imports:
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/otp_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -12,8 +14,6 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
-import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -86,8 +86,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     // TODO(chralu): utilisation provider ?
-    final preferences = await Preferences.getInstance();
-    final vault = await Vault.getInstance();
+    final preferences = await HivePreferencesDatasource.getInstance();
+    final vault = await HiveVaultDatasource.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
     final yubikeyClientID = vault.getYubikeyClientID();
     verificationResponse = await YubicoService()

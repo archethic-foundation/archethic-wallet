@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Project imports:
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

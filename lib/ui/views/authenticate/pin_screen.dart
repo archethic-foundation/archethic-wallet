@@ -3,11 +3,11 @@ import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/authentication.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/settings.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/util/get_it_instance.dart';

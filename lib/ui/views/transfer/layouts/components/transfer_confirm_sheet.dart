@@ -5,11 +5,12 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -24,7 +25,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -235,7 +235,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                         size: 14,
                       ),
                       onPressed: () async {
-                        final preferences = await Preferences.getInstance();
+                        final preferences =
+                            await HivePreferencesDatasource.getInstance();
                         // Authenticate
                         final authMethod = preferences.getAuthMethod();
                         final auth = await AuthFactory.authenticate(

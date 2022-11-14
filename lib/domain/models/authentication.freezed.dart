@@ -355,3 +355,194 @@ abstract class PasswordCredentials extends Credentials {
   _$$PasswordCredentialsCopyWith<_$PasswordCredentials> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$AuthenticationSettings {
+  AuthMethod get authenticationMethod => throw _privateConstructorUsedError;
+  bool get pinPadShuffle => throw _privateConstructorUsedError;
+  UnlockOption get lock => throw _privateConstructorUsedError;
+  LockTimeoutOption get lockTimeout => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AuthenticationSettingsCopyWith<AuthenticationSettings> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AuthenticationSettingsCopyWith<$Res> {
+  factory $AuthenticationSettingsCopyWith(AuthenticationSettings value,
+          $Res Function(AuthenticationSettings) then) =
+      _$AuthenticationSettingsCopyWithImpl<$Res, AuthenticationSettings>;
+  @useResult
+  $Res call(
+      {AuthMethod authenticationMethod,
+      bool pinPadShuffle,
+      UnlockOption lock,
+      LockTimeoutOption lockTimeout});
+}
+
+/// @nodoc
+class _$AuthenticationSettingsCopyWithImpl<$Res,
+        $Val extends AuthenticationSettings>
+    implements $AuthenticationSettingsCopyWith<$Res> {
+  _$AuthenticationSettingsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? authenticationMethod = null,
+    Object? pinPadShuffle = null,
+    Object? lock = null,
+    Object? lockTimeout = null,
+  }) {
+    return _then(_value.copyWith(
+      authenticationMethod: null == authenticationMethod
+          ? _value.authenticationMethod
+          : authenticationMethod // ignore: cast_nullable_to_non_nullable
+              as AuthMethod,
+      pinPadShuffle: null == pinPadShuffle
+          ? _value.pinPadShuffle
+          : pinPadShuffle // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lock: null == lock
+          ? _value.lock
+          : lock // ignore: cast_nullable_to_non_nullable
+              as UnlockOption,
+      lockTimeout: null == lockTimeout
+          ? _value.lockTimeout
+          : lockTimeout // ignore: cast_nullable_to_non_nullable
+              as LockTimeoutOption,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AuthenticationSettingsCopyWith<$Res>
+    implements $AuthenticationSettingsCopyWith<$Res> {
+  factory _$$_AuthenticationSettingsCopyWith(_$_AuthenticationSettings value,
+          $Res Function(_$_AuthenticationSettings) then) =
+      __$$_AuthenticationSettingsCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {AuthMethod authenticationMethod,
+      bool pinPadShuffle,
+      UnlockOption lock,
+      LockTimeoutOption lockTimeout});
+}
+
+/// @nodoc
+class __$$_AuthenticationSettingsCopyWithImpl<$Res>
+    extends _$AuthenticationSettingsCopyWithImpl<$Res,
+        _$_AuthenticationSettings>
+    implements _$$_AuthenticationSettingsCopyWith<$Res> {
+  __$$_AuthenticationSettingsCopyWithImpl(_$_AuthenticationSettings _value,
+      $Res Function(_$_AuthenticationSettings) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? authenticationMethod = null,
+    Object? pinPadShuffle = null,
+    Object? lock = null,
+    Object? lockTimeout = null,
+  }) {
+    return _then(_$_AuthenticationSettings(
+      authenticationMethod: null == authenticationMethod
+          ? _value.authenticationMethod
+          : authenticationMethod // ignore: cast_nullable_to_non_nullable
+              as AuthMethod,
+      pinPadShuffle: null == pinPadShuffle
+          ? _value.pinPadShuffle
+          : pinPadShuffle // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lock: null == lock
+          ? _value.lock
+          : lock // ignore: cast_nullable_to_non_nullable
+              as UnlockOption,
+      lockTimeout: null == lockTimeout
+          ? _value.lockTimeout
+          : lockTimeout // ignore: cast_nullable_to_non_nullable
+              as LockTimeoutOption,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AuthenticationSettings extends _AuthenticationSettings {
+  const _$_AuthenticationSettings(
+      {required this.authenticationMethod,
+      required this.pinPadShuffle,
+      required this.lock,
+      required this.lockTimeout})
+      : super._();
+
+  @override
+  final AuthMethod authenticationMethod;
+  @override
+  final bool pinPadShuffle;
+  @override
+  final UnlockOption lock;
+  @override
+  final LockTimeoutOption lockTimeout;
+
+  @override
+  String toString() {
+    return 'AuthenticationSettings(authenticationMethod: $authenticationMethod, pinPadShuffle: $pinPadShuffle, lock: $lock, lockTimeout: $lockTimeout)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AuthenticationSettings &&
+            (identical(other.authenticationMethod, authenticationMethod) ||
+                other.authenticationMethod == authenticationMethod) &&
+            (identical(other.pinPadShuffle, pinPadShuffle) ||
+                other.pinPadShuffle == pinPadShuffle) &&
+            (identical(other.lock, lock) || other.lock == lock) &&
+            (identical(other.lockTimeout, lockTimeout) ||
+                other.lockTimeout == lockTimeout));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, authenticationMethod, pinPadShuffle, lock, lockTimeout);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AuthenticationSettingsCopyWith<_$_AuthenticationSettings> get copyWith =>
+      __$$_AuthenticationSettingsCopyWithImpl<_$_AuthenticationSettings>(
+          this, _$identity);
+}
+
+abstract class _AuthenticationSettings extends AuthenticationSettings {
+  const factory _AuthenticationSettings(
+          {required final AuthMethod authenticationMethod,
+          required final bool pinPadShuffle,
+          required final UnlockOption lock,
+          required final LockTimeoutOption lockTimeout}) =
+      _$_AuthenticationSettings;
+  const _AuthenticationSettings._() : super._();
+
+  @override
+  AuthMethod get authenticationMethod;
+  @override
+  bool get pinPadShuffle;
+  @override
+  UnlockOption get lock;
+  @override
+  LockTimeoutOption get lockTimeout;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AuthenticationSettingsCopyWith<_$_AuthenticationSettings> get copyWith =>
+      throw _privateConstructorUsedError;
+}
