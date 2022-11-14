@@ -174,7 +174,7 @@ class PearlGreyFlatTheme implements BaseTheme {
   Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
 
   @override
-  Brightness? brightness = Brightness.dark;
+  Brightness? brightness = Brightness.light;
   @override
   SystemUiOverlayStyle? statusBar =
       SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);

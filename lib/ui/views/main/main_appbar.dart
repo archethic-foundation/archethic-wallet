@@ -50,6 +50,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: AppBar(
+            systemOverlayStyle: theme.brightness == Brightness.light
+                ? SystemUiOverlayStyle.dark
+                : SystemUiOverlayStyle.light,
             automaticallyImplyLeading: false,
             leading: IconButton(
               icon: const Icon(UiIcons.menu),
