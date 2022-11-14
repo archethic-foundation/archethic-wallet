@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -29,7 +28,6 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   String? seed;
   List<String>? mnemonic;
   bool? isPressed;
-  String language = 'en';
 
   @override
   void initState() {
@@ -37,10 +35,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
-    HivePreferencesDatasource.getInstance().then(
-      (HivePreferencesDatasource preferences) =>
-          preferences.setLanguageSeed('en'),
-    );
+    ref.read(SettingsProviders.settings.notifier).setLanguageSeed('en');
   }
 
   @override
@@ -48,6 +43,11 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final language = ref.watch(
+      SettingsProviders.settings.select(
+        (settings) => settings.languageSeed,
+      ),
+    );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -111,13 +111,11 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                     mnemonic = AppMnemomics.seedToMnemonic(
                                       seed!,
                                     );
-                                    final preferences_ =
-                                        await HivePreferencesDatasource
-                                            .getInstance();
-                                    preferences_.setLanguageSeed('en');
-                                    setState(() {
-                                      language = 'en';
-                                    });
+                                    ref
+                                        .read(
+                                          SettingsProviders.settings.notifier,
+                                        )
+                                        .setLanguageSeed('en');
                                   },
                                   child: language == 'en'
                                       ? Image.asset(
@@ -148,13 +146,12 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                       seed!,
                                       languageCode: 'fr',
                                     );
-                                    final preferences_ =
-                                        await HivePreferencesDatasource
-                                            .getInstance();
-                                    preferences_.setLanguageSeed('fr');
-                                    setState(() {
-                                      language = 'fr';
-                                    });
+
+                                    ref
+                                        .read(
+                                          SettingsProviders.settings.notifier,
+                                        )
+                                        .setLanguageSeed('fr');
                                   },
                                   child: language == 'fr'
                                       ? Image.asset(

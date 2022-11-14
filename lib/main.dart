@@ -9,11 +9,11 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
@@ -218,7 +218,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   Future<void> checkLoggedIn() async {
-    final preferences = await HivePreferencesDatasource.getInstance();
     /*bool jailbroken = false;
     bool developerMode = false;
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
@@ -271,7 +270,8 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         return;
       }
 
-      if (preferences.getLock()) {
+      final authenticationSettings = ref.read(AuthenticationProviders.settings);
+      if (authenticationSettings.lock == UnlockOption.yes) {
         Navigator.of(context).pushReplacementNamed('/home');
 
         await AuthFactory.forceAuthenticate(

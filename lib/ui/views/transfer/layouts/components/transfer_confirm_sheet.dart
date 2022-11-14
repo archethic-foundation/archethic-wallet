@@ -5,13 +5,14 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -235,10 +236,13 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                         size: 14,
                       ),
                       onPressed: () async {
-                        final preferences =
-                            await HivePreferencesDatasource.getInstance();
-                        // Authenticate
-                        final authMethod = preferences.getAuthMethod();
+                        final authMethod = AuthenticationMethod(
+                          ref.read(
+                            AuthenticationProviders.settings.select(
+                              (settings) => settings.authenticationMethod,
+                            ),
+                          ),
+                        );
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,

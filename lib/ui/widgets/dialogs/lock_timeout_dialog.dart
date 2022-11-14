@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -10,15 +10,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LockTimeoutDialog {
   static Future<LockTimeoutSetting> _updateLockTimeout(
+    WidgetRef ref,
     LockTimeoutSetting timeoutSettings,
     LockTimeoutOption lockTimeoutOption,
   ) async {
-    final preferences = await HivePreferencesDatasource.getInstance();
-
     if (timeoutSettings.setting != lockTimeoutOption) {
-      await preferences.setLockTimeout(
-        LockTimeoutSetting(lockTimeoutOption),
-      );
+      await ref
+          .read(AuthenticationProviders.settings.notifier)
+          .setLockTimeout(lockTimeoutOption);
       return LockTimeoutSetting(lockTimeoutOption);
     }
 
@@ -68,6 +67,7 @@ class LockTimeoutDialog {
               selectedIndex: curTimeoutSetting.setting.index,
               onSelected: (value) async {
                 final updatedSettings = await _updateLockTimeout(
+                  ref,
                   curTimeoutSetting,
                   value.value as LockTimeoutOption,
                 );

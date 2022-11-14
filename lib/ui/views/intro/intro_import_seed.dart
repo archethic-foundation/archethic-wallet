@@ -8,7 +8,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -44,7 +43,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
-  String language = 'en';
   List<String> phrase = List<String>.filled(24, '');
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
@@ -53,10 +51,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   void initState() {
     isPressed = false;
     _registerBus();
-    HivePreferencesDatasource.getInstance().then(
-      (HivePreferencesDatasource preferences) =>
-          preferences.setLanguageSeed('en'),
-    );
+    ref.read(SettingsProviders.settings.notifier).setLanguageSeed('en');
     super.initState();
   }
 
@@ -88,6 +83,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final languageSeed = ref.watch(
+      SettingsProviders.settings.select(
+        (settings) => settings.languageSeed,
+      ),
+    );
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
@@ -145,14 +145,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                     preferences.activeVibrations,
                                   );
 
-                              final preferences_ =
-                                  await HivePreferencesDatasource.getInstance();
-                              preferences_.setLanguageSeed('en');
-                              setState(() {
-                                language = 'en';
-                              });
+                              ref
+                                  .read(SettingsProviders.settings.notifier)
+                                  .setLanguageSeed('en');
                             },
-                            child: language == 'en'
+                            child: languageSeed == 'en'
                                 ? Image.asset(
                                     'assets/icons/languages/united-states.png',
                                   )
@@ -177,14 +174,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                     preferences.activeVibrations,
                                   );
 
-                              final preferences_ =
-                                  await HivePreferencesDatasource.getInstance();
-                              preferences_.setLanguageSeed('fr');
-                              setState(() {
-                                language = 'fr';
-                              });
+                              ref
+                                  .read(SettingsProviders.settings.notifier)
+                                  .setLanguageSeed('fr');
                             },
-                            child: language == 'fr'
+                            child: languageSeed == 'fr'
                                 ? Image.asset(
                                     'assets/icons/languages/france.png',
                                   )
@@ -278,7 +272,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                   String>.empty();
                                             }
                                             return AppMnemomics.getLanguage(
-                                              language,
+                                              languageSeed,
                                             ).list.where((String option) {
                                               return option.contains(
                                                 unorm.nfkd(
@@ -292,7 +286,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                             phrase[index] = selection;
                                             if (!AppMnemomics.isValidWord(
                                               selection,
-                                              languageCode: language,
+                                              languageCode: languageSeed,
                                             )) {
                                               setState(() {
                                                 _mnemonicIsValid = false;
@@ -332,7 +326,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                     if (!AppMnemomics
                                                         .isValidWord(
                                                       value,
-                                                      languageCode: language,
+                                                      languageCode:
+                                                          languageSeed,
                                                     )) {
                                                       setState(() {
                                                         _mnemonicIsValid =
@@ -413,7 +408,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             } else {
                               if (AppMnemomics.isValidWord(
                                     word,
-                                    languageCode: language,
+                                    languageCode: languageSeed,
                                   ) ==
                                   false) {
                                 _mnemonicIsValid = false;
@@ -442,7 +437,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               .read(SessionProviders.session.notifier)
                               .restoreFromMnemonics(
                                 mnemonics: phrase,
-                                languageCode: language,
+                                languageCode: languageSeed,
                               );
 
                           if (newSession == null) {

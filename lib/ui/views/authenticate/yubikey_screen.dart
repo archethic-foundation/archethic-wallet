@@ -84,7 +84,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
 
   Future<void> _verifyOTP(String otp) async {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
     // TODO(chralu): utilisation provider ?
     final preferences = await HivePreferencesDatasource.getInstance();
     final vault = await HiveVaultDatasource.getInstance();

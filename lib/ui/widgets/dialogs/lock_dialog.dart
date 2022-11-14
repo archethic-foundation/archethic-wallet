@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -14,7 +14,6 @@ class LockDialog {
     WidgetRef ref,
     UnlockSetting curUnlockSetting,
   ) async {
-    final preferences = await HivePreferencesDatasource.getInstance();
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in UnlockOption.values) {
       pickerItemsList.add(
@@ -51,14 +50,9 @@ class LockDialog {
               onSelected: (value) {
                 final pickedOption = value.value as UnlockOption;
 
-                switch (pickedOption) {
-                  case UnlockOption.yes:
-                    preferences.setLock(true);
-                    break;
-                  case UnlockOption.no:
-                    preferences.setLock(false);
-                    break;
-                }
+                ref
+                    .read(AuthenticationProviders.settings.notifier)
+                    .setLockApp(pickedOption);
 
                 Navigator.pop(
                   context,

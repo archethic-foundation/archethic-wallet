@@ -152,6 +152,7 @@ class _HomePageState extends ConsumerState<HomePage>
   // To lock and unlock the app
   StreamSubscription<dynamic>? lockStreamListener;
 
+  // TODO(reddward03): Need for explaination about that feature.
   Future<void> setAppLockEvent() async {
     final preferences = await HivePreferencesDatasource.getInstance();
     if ((preferences.getLock()) && !_lockDisabled) {

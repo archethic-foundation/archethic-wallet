@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
@@ -7,6 +9,7 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class SettingsProviders {
@@ -28,6 +31,25 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final locale = ref.read(LanguageProviders.selectedLocale);
     state = await ref.read(SettingsProviders._repository).getSettings(locale);
   }
+
+  Future<void> reset() => _update(
+        state.copyWith(
+          activeNotifications: !kIsWeb &&
+              (Platform.isIOS == true ||
+                  Platform.isAndroid == true ||
+                  Platform.isMacOS == true),
+          activeVibrations: true,
+          currency: AvailableCurrencyEnum.usd,
+          mainScreenCurrentPage: 1,
+          primaryCurrency: const AvailablePrimaryCurrency(
+            AvailablePrimaryCurrencyEnum.native,
+          ),
+          showBalances: true,
+          showBlog: true,
+          showPriceChart: true,
+          theme: ThemeOptions.dark,
+        ),
+      );
 
   Future<void> _update(Settings settings) async {
     await ref.read(SettingsProviders._repository).setSettings(settings);
@@ -112,6 +134,12 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> setMainScreenCurrentPage(int index) => _update(
         state.copyWith(
           mainScreenCurrentPage: index,
+        ),
+      );
+
+  Future<void> setLanguageSeed(String languageSeed) => _update(
+        state.copyWith(
+          languageSeed: languageSeed,
         ),
       );
 }
