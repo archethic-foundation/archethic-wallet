@@ -207,7 +207,6 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-    
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

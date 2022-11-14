@@ -15,7 +15,7 @@ dependencies:
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^1.0.26
-  #archethic_lib_dart: 
+  #archethic_lib_dart:
   #  git:
   #   url: https://github.com/archethic-foundation/libdart.git
   #   ref: master
@@ -55,10 +55,10 @@ dependencies:
 
   # A set of high-level APIs over PointyCastle for two-way cryptography.
   encrypt: ^5.0.1
-  
+
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
-  
+
   # Dart package to decode Exif data from tiff, jpeg and heic files.
   exif: ^3.1.2
 
@@ -88,7 +88,7 @@ dependencies:
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
   flutter_native_splash: ^2.2.12
-  
+
   # State management
   flutter_riverpod: ^2.1.1
 
@@ -148,7 +148,7 @@ dependencies:
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^2.1.2
-  
+
   # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
   mime_dart: ^2.0.1
 
@@ -166,7 +166,7 @@ dependencies:
 
   # A basic password strength estimator for Dart. Considers the length of the password, used characters, and whether or not the password appears in the top 10,000 most used passwords.
   password_strength: ^0.2.0
-  
+
   # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
   path: ^1.8.2
 
@@ -178,7 +178,7 @@ dependencies:
 
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
   pointycastle: ^3.6.2
-  
+
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0
 
@@ -188,7 +188,7 @@ dependencies:
   # A package exposing annotations for riverpod_generator
   riverpod_annotation: ^1.0.6
 
-  # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
+  # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
   rxdart: ^0.27.5
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
@@ -202,10 +202,10 @@ dependencies:
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
   url_launcher: ^6.1.6
-  
+
   # String validation and sanitization for Dart
   validators: ^3.0.0
-  
+
   # This plugin allows Flutter desktop apps to resizing and repositioning the window
   window_manager: ^0.2.7
 
