@@ -1,7 +1,7 @@
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/language.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/language.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
@@ -141,9 +141,8 @@ class AppLockScreen extends ConsumerWidget {
                                           // TODO(Chralu): move that behavior to `logOut` usecase.
                                           await ref
                                               .read(
-                                                ThemeProviders
-                                                    .selectedThemeOption
-                                                    .notifier,
+                                                SettingsProviders
+                                                    .settings.notifier,
                                               )
                                               .selectTheme(ThemeOptions.dark);
                                           await ref

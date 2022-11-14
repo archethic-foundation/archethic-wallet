@@ -4,12 +4,14 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/language.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/language.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -25,7 +27,6 @@ import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,19 +59,13 @@ Future<void> main() async {
     });
   }
 
-  final localPreferencesRepository = await Preferences.getInstance();
-
   // Run app
   await SystemChrome.setPreferredOrientations(
     <DeviceOrientation>[DeviceOrientation.portraitUp],
   ).then((_) {
     runApp(
-      ProviderScope(
-        overrides: [
-          SettingsProviders.localSettingsRepository
-              .overrideWithValue(localPreferencesRepository),
-        ],
-        child: const StateContainer(
+      const ProviderScope(
+        child: StateContainer(
           child: App(),
         ),
       ),
@@ -217,8 +212,13 @@ class Splash extends ConsumerStatefulWidget {
 class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   // late bool _hasCheckedLoggedIn;
 
+  Future<void> initializeProviders() async {
+    await ref.read(SettingsProviders.settings.notifier).initialize();
+    await ref.read(AuthenticationProviders.settings.notifier).initialize();
+  }
+
   Future<void> checkLoggedIn() async {
-    final preferences = await Preferences.getInstance();
+    final preferences = await HivePreferencesDatasource.getInstance();
     /*bool jailbroken = false;
     bool developerMode = false;
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
@@ -278,7 +278,10 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           context,
           ref,
           authMethod: ref.read(
-            AuthenticationProviders.preferedAuthMethod,
+            AuthenticationProviders.settings.select(
+              (authSettings) =>
+                  AuthenticationMethod(authSettings.authenticationMethod),
+            ),
           ),
           canCancel: false,
         );
@@ -296,7 +299,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   Future<void> _goToIntroScreen() async {
     // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
     await ref
-        .read(ThemeProviders.selectedThemeOption.notifier)
+        .read(SettingsProviders.settings.notifier)
         .selectTheme(ThemeOptions.dark);
     await Navigator.of(context).pushReplacementNamed('/intro_welcome');
   }
@@ -306,7 +309,10 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => checkLoggedIn(),
+      (_) async {
+        await initializeProviders();
+        await checkLoggedIn();
+      },
     );
   }
 

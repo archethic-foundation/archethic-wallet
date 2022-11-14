@@ -2,8 +2,6 @@ import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
-import 'package:aewallet/model/device_lock_timeout.dart';
-import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -24,13 +22,28 @@ class Settings with _$Settings {
     required bool activeNotifications,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
-    required UnlockOption
-        lock, // TODO(Chralu): create a notifier dedicated to Lock management
-    required LockTimeoutOption lockTimeout,
-    required int lockAttempts,
-    DateTime? pinLockUntil,
     required ThemeOptions theme,
   }) = _Settings;
+
+  factory Settings.empty() => const Settings(
+        activeNotifications: true,
+        activeVibrations: true,
+        firstLaunch: true,
+        currency: AvailableCurrencyEnum.usd,
+        language: AvailableLanguage.english,
+        languageSeed: '',
+        mainScreenCurrentPage: 0,
+        network: NetworksSetting(
+          network: AvailableNetworks.archethicMainNet,
+          networkDevEndpoint: '',
+        ),
+        primaryCurrency:
+            AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
+        showBalances: true,
+        showBlog: true,
+        showPriceChart: true,
+        theme: ThemeOptions.dark,
+      );
 
   const Settings._();
 }

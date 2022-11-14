@@ -2,8 +2,8 @@
 // Project imports:
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/home_page.dart';

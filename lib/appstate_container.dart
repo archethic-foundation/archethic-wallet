@@ -2,17 +2,15 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/settings.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -55,7 +53,8 @@ class StateContainerState extends ConsumerState<StateContainer> {
 
     // Setup Service Provide
     setupServiceLocator().then((_) {
-      Preferences.getInstance().then((Preferences preferences) {
+      HivePreferencesDatasource.getInstance()
+          .then((HivePreferencesDatasource preferences) {
         setState(
           () {
             updateCurrency().then((_) {
@@ -82,16 +81,16 @@ class StateContainerState extends ConsumerState<StateContainer> {
     final appWallet = ref.read(SessionProviders.session).loggedIn?.wallet;
 
     if (appWallet == null) return;
-    final currency = ref.read(CurrencyProviders.selectedCurrency);
+    final currency = ref.read(SettingsProviders.settings).currency;
 
-    final tokenPrice = await Price.getCurrency(currency.currency.name);
+    final tokenPrice = await Price.getCurrency(currency.name);
 
     (await ref.read(AccountProviders.selectedAccount.future))!
         .balance!
         .tokenPrice = tokenPrice;
     sl.get<DBHelper>().saveAppWallet(HiveAppWalletDTO.fromModel(appWallet));
     await chartInfos!.updateCoinsChart(
-      currency.currency.name,
+      currency.name,
       option: idChartOption!,
     );
   }
@@ -99,12 +98,12 @@ class StateContainerState extends ConsumerState<StateContainer> {
   Future<void> requestUpdate({
     bool forceUpdateChart = true,
   }) async {
-    final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
+    final selectedCurrency = ref.read(SettingsProviders.settings).currency;
 
     final preferences = ref.read(SettingsProviders.settings);
     if (forceUpdateChart && preferences.showPriceChart) {
       await chartInfos!.updateCoinsChart(
-        selectedCurrency.currency.name,
+        selectedCurrency.name,
         option: idChartOption!,
       );
     }

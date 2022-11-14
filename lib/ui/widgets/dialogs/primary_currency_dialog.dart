@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/primary_currency.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -59,12 +59,8 @@ class PrimaryCurrencyDialog {
               );
 
               await ref
-                  .read(
-                    PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier,
-                  )
-                  .selectPrimaryCurrency(
-                    primaryCurrency: primaryCurrency,
-                  );
+                  .read(SettingsProviders.settings.notifier)
+                  .selectPrimaryCurrency(primaryCurrency);
               Navigator.pop(context, value.value);
             },
           ),

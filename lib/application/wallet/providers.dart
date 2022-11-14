@@ -2,8 +2,9 @@ part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
 class _SessionNotifier extends Notifier<Session> {
-  Vault? __vault;
-  Future<Vault> get _vault async => __vault ??= await Vault.getInstance();
+  HiveVaultDatasource? __vault;
+  Future<HiveVaultDatasource> get _vault async =>
+      __vault ??= await HiveVaultDatasource.getInstance();
 
   final DBHelper _dbHelper = sl.get<DBHelper>();
 
@@ -30,12 +31,14 @@ class _SessionNotifier extends Notifier<Session> {
     if (state.isLoggedOut) return;
 
     final loggedInState = state.loggedIn!;
-    final selectedCurrency = ref.read(CurrencyProviders.selectedCurrency);
+    final selectedCurrency = ref.read(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
 
     final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
       HiveAppWalletDTO.fromModel(loggedInState.wallet),
       loggedInState.wallet.seed,
-      selectedCurrency.currency.name,
+      selectedCurrency.name,
       AccountBalance.cryptoCurrencyLabel,
     );
     if (newWalletDTO == null) return;
@@ -48,8 +51,8 @@ class _SessionNotifier extends Notifier<Session> {
   }
 
   Future<void> logout() async {
-    await (await Vault.getInstance()).clearAll();
-    await (await Preferences.getInstance()).clearAll();
+    await (await HiveVaultDatasource.getInstance()).clearAll();
+    await (await HivePreferencesDatasource.getInstance()).clearAll();
     await sl.get<DBHelper>().clearAll();
     state = const Session.loggedOut();
   }
@@ -82,7 +85,7 @@ class _SessionNotifier extends Notifier<Session> {
       mnemonics,
       languageCode: languageCode,
     );
-    final vault = await Vault.getInstance();
+    final vault = await HiveVaultDatasource.getInstance();
     vault.setSeed(seed);
 
     try {

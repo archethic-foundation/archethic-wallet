@@ -1,4 +1,4 @@
-import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/domain/models/authentication.dart';
 
 abstract class AuthenticationRepositoryInterface {
   Future<String?> getPin();

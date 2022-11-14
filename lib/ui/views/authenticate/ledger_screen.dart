@@ -3,7 +3,7 @@ import 'dart:developer';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';

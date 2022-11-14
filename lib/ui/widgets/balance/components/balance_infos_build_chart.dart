@@ -10,8 +10,7 @@ class BalanceInfosChart extends ConsumerWidget {
     var optionChartList = List<OptionChart>.empty(growable: true);
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
 
     final chartInfos = StateContainer.of(context).chartInfos;
 
@@ -19,7 +18,7 @@ class BalanceInfosChart extends ConsumerWidget {
       onTap: () async {
         await sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              preferences.activeVibrations,
+              settings.activeVibrations,
             );
         optionChartList = <OptionChart>[
           OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h')),
@@ -93,7 +92,7 @@ class BalanceInfosChart extends ConsumerWidget {
                           axisTextStyle: theme.textStyleSize12W100Primary,
                           optionChartSelected:
                               StateContainer.of(context).idChartOption!,
-                          currency: currency.currency.name,
+                          currency: settings.currency.name,
                           completeChart: false,
                         )
                       : const SizedBox(),

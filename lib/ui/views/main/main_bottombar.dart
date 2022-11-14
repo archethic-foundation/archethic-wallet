@@ -2,10 +2,10 @@
 import 'dart:ui';
 
 // Project imports:
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
-import 'package:aewallet/util/preferences.dart';
 // Package imports:
 import 'package:bottom_bar/bottom_bar.dart';
 // Flutter imports:
@@ -30,7 +30,7 @@ class MainBottomBar extends ConsumerWidget {
               StateContainer.of(context)
                   .bottomBarPageController!
                   .jumpToPage(index);
-              final preferences = await Preferences.getInstance();
+              final preferences = await HivePreferencesDatasource.getInstance();
               preferences.setMainScreenCurrentPage(index);
               StateContainer.of(context).bottomBarCurrentPage = index;
             },

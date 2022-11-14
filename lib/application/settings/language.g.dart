@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_selectedLanguageHash() => r'51be0bff0d8a3b5a0b4b9d4f6017fffe0e1d6ae5';
+String $_selectedLanguageHash() => r'a4f615e55b8ded2dbe6f34ed5f620a4b781a2ec9';
 
 /// See also [_selectedLanguage].
 final _selectedLanguageProvider = Provider<LanguageSetting>(
@@ -67,72 +67,3 @@ final _availableLocalesProvider = Provider<List<Locale>>(
       : $_availableLocalesHash,
 );
 typedef _AvailableLocalesRef = ProviderRef<List<Locale>>;
-String $_selectLanguageHash() => r'5e6cedcf0ff3db0cfdf81ea28905965eeda99ec2';
-
-/// See also [_selectLanguage].
-class _SelectLanguageProvider extends AutoDisposeFutureProvider<void> {
-  _SelectLanguageProvider({
-    required this.language,
-  }) : super(
-          (ref) => _selectLanguage(
-            ref,
-            language: language,
-          ),
-          from: _selectLanguageProvider,
-          name: r'_selectLanguageProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : $_selectLanguageHash,
-        );
-
-  final AvailableLanguage language;
-
-  @override
-  bool operator ==(Object other) {
-    return other is _SelectLanguageProvider && other.language == language;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, language.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-typedef _SelectLanguageRef = AutoDisposeFutureProviderRef<void>;
-
-/// See also [_selectLanguage].
-final _selectLanguageProvider = _SelectLanguageFamily();
-
-class _SelectLanguageFamily extends Family<AsyncValue<void>> {
-  _SelectLanguageFamily();
-
-  _SelectLanguageProvider call({
-    required AvailableLanguage language,
-  }) {
-    return _SelectLanguageProvider(
-      language: language,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<void> getProviderOverride(
-    covariant _SelectLanguageProvider provider,
-  ) {
-    return call(
-      language: provider.language,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_selectLanguageProvider';
-}

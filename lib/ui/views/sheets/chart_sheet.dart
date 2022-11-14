@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/chart_infos.dart';
@@ -77,8 +75,9 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -114,7 +113,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
                       axisTextStyle: theme.textStyleSize12W100Primary,
                       optionChartSelected:
                           StateContainer.of(context).idChartOption!,
-                      currency: currency.currency.name,
+                      currency: currency.name,
                       completeChart: true,
                     )
                   : const SizedBox(),
@@ -133,12 +132,14 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
               itemPadding: const EdgeInsets.all(10),
               padding: const EdgeInsets.only(right: 10, left: 10),
               onTap: (int index) async {
+                final settings = ref.read(SettingsProviders.settings);
+
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
-                      preferences.activeVibrations,
+                      settings.activeVibrations,
                     );
                 await StateContainer.of(context).chartInfos!.updateCoinsChart(
-                      currency.currency.name,
+                      settings.currency.name,
                       option: widget.optionChartList[index].id,
                     );
 

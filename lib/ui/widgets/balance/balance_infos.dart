@@ -1,9 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/primary_currency.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/chart_infos.dart';
@@ -39,10 +38,9 @@ class BalanceInfos extends ConsumerWidget {
       AccountProviders.selectedAccount
           .select((value) => value.valueOrNull?.balance),
     );
-    final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
 
     if (accountSelectedBalance == null) return const SizedBox();
 
@@ -71,7 +69,7 @@ class BalanceInfos extends ConsumerWidget {
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
-                            if (preferences.showBalances)
+                            if (settings.showBalances)
                               _BalanceInfosNativeShowed(
                                 accountSelectedBalance: accountSelectedBalance,
                               )
@@ -85,11 +83,11 @@ class BalanceInfos extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
-                                currency.currency.name,
+                                settings.currency.name,
                                 style: theme.textStyleSize35W900EquinoxPrimary,
                               ),
                             ),
-                            if (preferences.showBalances)
+                            if (settings.showBalances)
                               _BalanceInfosFiatShowed(
                                 accountSelectedBalance: accountSelectedBalance,
                               )
@@ -126,7 +124,9 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -137,7 +137,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
         ),
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
-            currency.currency.name,
+            currency.name,
             accountSelectedBalance.fiatCurrencyValue ?? 0,
           ),
           textAlign: TextAlign.center,
@@ -157,7 +157,9 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -165,7 +167,7 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
       children: [
         AutoSizeText(
           CurrencyUtil.getConvertedAmount(
-            currency.currency.name,
+            currency.name,
             accountSelectedBalance.fiatCurrencyValue!,
           ),
           textAlign: TextAlign.center,

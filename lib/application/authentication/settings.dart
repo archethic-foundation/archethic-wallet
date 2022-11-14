@@ -1,15 +1,5 @@
 part of 'authentication.dart';
 
-@freezed
-class AuthenticationSettings with _$AuthenticationSettings {
-  const factory AuthenticationSettings({
-    required AuthMethod authenticationMethod,
-    required bool pinPadShuffle,
-  }) = _AuthenticationSettings;
-
-  const AuthenticationSettings._();
-}
-
 class AuthenticationSettingsNotifier
     extends StateNotifier<AuthenticationSettings> {
   AuthenticationSettingsNotifier(this.ref)
@@ -17,32 +7,39 @@ class AuthenticationSettingsNotifier
           const AuthenticationSettings(
             authenticationMethod: AuthMethod.pin,
             pinPadShuffle: false,
+            lock: UnlockOption.yes,
+            lockTimeout: LockTimeoutOption.one,
           ),
-        ) {
-    _loadInitialState();
-  }
+        );
 
   final Ref ref;
 
-  Future<void> _loadInitialState() async {
+  Future<void> initialize() async {
     state = await ref
         .read(AuthenticationProviders._authenticationRepository)
         .getSettings();
   }
 
-  Future<void> setAuthMethod(AuthMethod method) async {
-    final updatedState = state.copyWith(authenticationMethod: method);
+  Future<void> _update(AuthenticationSettings authSettings) async {
     ref
         .read(AuthenticationProviders._authenticationRepository)
-        .setSettings(updatedState);
-    state = updatedState;
+        .setSettings(authSettings);
+    state = authSettings;
   }
 
-  Future<void> setPinPadShuffle(bool pinPadShuffle) async {
-    final updatedState = state.copyWith(pinPadShuffle: pinPadShuffle);
-    ref
-        .read(AuthenticationProviders._authenticationRepository)
-        .setSettings(updatedState);
-    state = updatedState;
-  }
+  Future<void> setAuthMethod(AuthMethod method) => _update(
+        state.copyWith(authenticationMethod: method),
+      );
+
+  Future<void> setPinPadShuffle(bool pinPadShuffle) => _update(
+        state.copyWith(pinPadShuffle: pinPadShuffle),
+      );
+
+  Future<void> setLockApp(UnlockOption lockOption) => _update(
+        state.copyWith(lock: lockOption),
+      );
+
+  Future<void> setLockTimeout(LockTimeoutOption lockTimeout) => _update(
+        state.copyWith(lockTimeout: lockTimeout),
+      );
 }

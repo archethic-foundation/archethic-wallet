@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
@@ -38,8 +37,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
     return Column(
       children: [
         Expanded(
@@ -48,7 +46,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
             onRefresh: () => Future<void>.sync(() async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    preferences.activeVibrations,
+                    settings.activeVibrations,
                   );
               await ref.read(SessionProviders.session.notifier).refresh();
             }),
@@ -83,7 +81,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
                           children: <Widget>[
                             /// ACCOUNTS LIST
                             AccountsListWidget(
-                              currencyName: currency.currency.name,
+                              currencyName: settings.currency.name,
                             )
                           ],
                         ),

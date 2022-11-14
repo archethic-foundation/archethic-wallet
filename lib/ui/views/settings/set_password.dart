@@ -2,7 +2,8 @@
 import 'dart:math';
 
 // Project imports:
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -12,7 +13,6 @@ import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/string_encryption.dart';
-import 'package:aewallet/util/vault.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
@@ -389,7 +389,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
         });
       }
     } else {
-      final vault = await Vault.getInstance();
+      final vault = await HiveVaultDatasource.getInstance();
       vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );

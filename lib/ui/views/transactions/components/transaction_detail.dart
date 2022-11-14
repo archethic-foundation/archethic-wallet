@@ -1,9 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/currency.dart';
-import 'package:aewallet/application/primary_currency.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -33,8 +32,7 @@ class TransactionDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final primaryCurrency =
@@ -54,7 +52,7 @@ class TransactionDetail extends ConsumerWidget {
       onTap: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
-              preferences.activeVibrations,
+              settings.activeVibrations,
             );
         Sheets.showAppHeightNineSheet(
           context: context,
@@ -99,7 +97,7 @@ class TransactionDetail extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       if (transaction.typeTx == RecentTransaction.tokenCreation)
-                        preferences.showBalances
+                        settings.showBalances
                             ? AutoSizeText(
                                 '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
                                 style: theme.textStyleSize12W400Primary,
@@ -116,7 +114,7 @@ class TransactionDetail extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   if (transaction.amount != null)
-                                    if (preferences.showBalances == true)
+                                    if (settings.showBalances == true)
                                       if (transaction.typeTx ==
                                           RecentTransaction.transferOutput)
                                         if (transaction.tokenInformations ==
@@ -153,10 +151,10 @@ class TransactionDetail extends ConsumerWidget {
                                       ),
                                   if (transaction.tokenInformations == null &&
                                       transaction.amount != null)
-                                    if (preferences.showBalances == true)
+                                    if (settings.showBalances == true)
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
-                                          currency.currency.name,
+                                          settings.currency.name,
                                           accountSelected
                                               .balance!.tokenPrice!.amount!,
                                           transaction.amount!,
@@ -177,10 +175,10 @@ class TransactionDetail extends ConsumerWidget {
                                 children: [
                                   if (transaction.tokenInformations == null &&
                                       transaction.amount != null)
-                                    if (preferences.showBalances == true)
+                                    if (settings.showBalances == true)
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
-                                          currency.currency.name,
+                                          settings.currency.name,
                                           accountSelected
                                               .balance!.tokenPrice!.amount!,
                                           transaction.amount!,
@@ -194,7 +192,7 @@ class TransactionDetail extends ConsumerWidget {
                                             theme.textStyleSize12W600Primary60,
                                       ),
                                   if (transaction.amount != null)
-                                    if (preferences.showBalances == true)
+                                    if (settings.showBalances == true)
                                       if (transaction.typeTx ==
                                           RecentTransaction.transferOutput)
                                         if (transaction.tokenInformations ==
@@ -309,15 +307,15 @@ class TransactionDetail extends ConsumerWidget {
                       if (transaction.typeTx != RecentTransaction.transferInput)
                         Row(
                           children: <Widget>[
-                            if (preferences.showBalances == true)
+                            if (settings.showBalances == true)
                               primaryCurrency.primaryCurrency ==
                                       AvailablePrimaryCurrencyEnum.native
                                   ? Text(
-                                      '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                      '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(settings.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                                   : Text(
-                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(currency.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel})',
+                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(settings.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                             else

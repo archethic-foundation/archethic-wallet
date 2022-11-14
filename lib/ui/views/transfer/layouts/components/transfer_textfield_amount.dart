@@ -47,25 +47,27 @@ class _TransferTextFieldAmountState
   ) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final currency = ref.watch(CurrencyProviders.selectedCurrency);
-    final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final primaryCurrencyNotifier =
-        ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency.notifier);
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final localCurrencyFormat = NumberFormat.currency(
-      locale: CurrencyUtil.getLocale(currency.currency.name).toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(
-        currency.currency.name,
-      ),
+      locale: CurrencyUtil.getLocale(settings.currency.name).toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(settings.currency.name),
     );
 
     if (accountSelected == null) return const SizedBox();
+    final valueLabel = ref.read(
+      PrimaryCurrencyProviders.convertedValueLabel(
+        amount: transfer.amount,
+        tokenPrice: accountSelected.balance!.tokenPrice!.amount!,
+        context: context,
+      ),
+    );
 
     return Column(
       children: [
@@ -105,7 +107,7 @@ class _TransferTextFieldAmountState
               ? primaryCurrency.primaryCurrency ==
                       AvailablePrimaryCurrencyEnum.native
                   ? '${localizations.enterAmount} (${transfer.symbol(context)})'
-                  : '${AppLocalization.of(context)!.enterAmount} (${currency.currency.name.toUpperCase()})'
+                  : '${AppLocalization.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
               : '${localizations.enterAmount} (${transfer.symbol(context)})',
           prefixButton: TextFieldButton(
             icon: UiIcons.max,
@@ -115,7 +117,7 @@ class _TransferTextFieldAmountState
               );
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
-                    preferences.activeVibrations,
+                    settings.activeVibrations,
                   );
               if (transferNotifier.controlMaxSend(context) == false) {
                 transferNotifier.setDefineMaxAmountInProgress(
@@ -158,7 +160,7 @@ class _TransferTextFieldAmountState
                   margin: const EdgeInsets.only(right: 40),
                   alignment: Alignment.centerRight,
                   child: Text(
-                    '= ${primaryCurrencyNotifier.getValueConvertedLabel(amount: transfer.amount, tokenPrice: accountSelected.balance!.tokenPrice!.amount!, context: context)}',
+                    '= $valueLabel',
                     textAlign: TextAlign.right,
                     style: theme.textStyleSize14W100Primary,
                   ),

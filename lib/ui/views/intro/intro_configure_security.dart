@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -11,7 +12,6 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -204,7 +204,7 @@ class _IntroConfigureSecurityState
                                     break;
                                 }
                                 if (authenticated) {
-                                  await Preferences.initWallet(
+                                  await HivePreferencesDatasource.initWallet(
                                     AuthenticationMethod(authMethod),
                                   );
                                   EventTaxiImpl.singleton()

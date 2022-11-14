@@ -2,12 +2,13 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -21,7 +22,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_d
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -249,7 +249,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             onPressed: () async {
                               // Authenticate
                               final preferences =
-                                  await Preferences.getInstance();
+                                  await HivePreferencesDatasource.getInstance();
                               final authMethod = preferences.getAuthMethod();
                               final auth = await AuthFactory.authenticate(
                                 context,

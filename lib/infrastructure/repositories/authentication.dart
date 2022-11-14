@@ -1,16 +1,18 @@
-import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/vault.dart';
+import 'package:aewallet/model/device_unlock_option.dart';
 
 class AuthenticationRepository implements AuthenticationRepositoryInterface {
-  Vault? _vault;
-  Future<Vault> get vault async => _vault ??= await Vault.getInstance();
+  HiveVaultDatasource? _vault;
+  Future<HiveVaultDatasource> get vault async =>
+      _vault ??= await HiveVaultDatasource.getInstance();
 
-  Preferences? _preferences;
-  Future<Preferences> get preferences async =>
-      _preferences ??= await Preferences.getInstance();
+  HivePreferencesDatasource? _preferences;
+  Future<HivePreferencesDatasource> get preferences async =>
+      _preferences ??= await HivePreferencesDatasource.getInstance();
 
   @override
   Future<String?> getPin() async {
@@ -62,10 +64,15 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
   }
 
   @override
-  Future<AuthenticationSettings> getSettings() async => AuthenticationSettings(
-        authenticationMethod: (await preferences).getAuthMethod().method,
-        pinPadShuffle: (await preferences).getPinPadShuffle(),
-      );
+  Future<AuthenticationSettings> getSettings() async {
+    final loadedPreferences = await preferences;
+    return AuthenticationSettings(
+      authenticationMethod: loadedPreferences.getAuthMethod().method,
+      pinPadShuffle: loadedPreferences.getPinPadShuffle(),
+      lock: loadedPreferences.getLock() ? UnlockOption.yes : UnlockOption.no,
+      lockTimeout: loadedPreferences.getLockTimeout().setting,
+    );
+  }
 
   @override
   Future<void> setSettings(AuthenticationSettings settings) async {

@@ -103,8 +103,9 @@ class SecurityMenuView extends ConsumerWidget {
                         headingStyle: theme.textStyleSize16W600EquinoxRed,
                         icon: UiIcons.trash,
                         onPressed: () {
-                          final language =
-                              ref.read(LanguageProviders.selectedLanguage);
+                          final language = ref.read(
+                            LanguageProviders.selectedLanguage,
+                          );
 
                           AppDialogs.showConfirmDialog(
                               context,
@@ -126,8 +127,7 @@ class SecurityMenuView extends ConsumerWidget {
                                 // TODO(Chralu): Déplacer la selection du theme par défaut dans le UseCase `logout`
                                 await ref
                                     .read(
-                                      ThemeProviders
-                                          .selectedThemeOption.notifier,
+                                      SettingsProviders.settings.notifier,
                                     )
                                     .selectTheme(ThemeOptions.dark);
 
@@ -194,9 +194,13 @@ class _LockSettingsListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
 
-    final lock = ref
-        .watch(SettingsProviders.settings.select((settings) => settings.lock));
-    final settingsNotifier = ref.read(SettingsProviders.settings.notifier);
+    final lock = ref.watch(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lock,
+      ),
+    );
+    final authenticationSettingsNotifier =
+        ref.read(AuthenticationProviders.settings.notifier);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.lockAppSetting,
@@ -209,7 +213,7 @@ class _LockSettingsListItem extends ConsumerWidget {
           UnlockSetting(lock),
         );
         if (unlockSetting == null) return;
-        await settingsNotifier.setLockApp(unlockSetting.setting);
+        await authenticationSettingsNotifier.setLockApp(unlockSetting.setting);
       },
     );
   }
@@ -223,12 +227,17 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
 
     final lock = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.lock),
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lock,
+      ),
     );
     final lockTimeout = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.lockTimeout),
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lockTimeout,
+      ),
     );
-    final settingsNotifier = ref.read(SettingsProviders.settings.notifier);
+    final authenticationSettingsNotifier =
+        ref.read(AuthenticationProviders.settings.notifier);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.autoLockHeader,
@@ -241,7 +250,8 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
           LockTimeoutSetting(lockTimeout),
         );
         if (lockTimeoutSetting == null) return;
-        await settingsNotifier.setLockTimeout(lockTimeoutSetting.setting);
+        await authenticationSettingsNotifier
+            .setLockTimeout(lockTimeoutSetting.setting);
       },
       disabled: lock == UnlockOption.no,
     );

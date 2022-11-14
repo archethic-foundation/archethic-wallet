@@ -2,8 +2,8 @@
 import 'dart:math' as math;
 
 import 'package:aewallet/application/blog.dart';
-import 'package:aewallet/application/settings.dart';
-import 'package:aewallet/application/theme.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 // Project imports:
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';

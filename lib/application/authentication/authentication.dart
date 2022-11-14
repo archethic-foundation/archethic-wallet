@@ -1,8 +1,9 @@
-import 'package:aewallet/application/settings.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/device_lock_timeout.dart';
+import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,14 +15,6 @@ part 'settings.dart';
 abstract class AuthenticationProviders {
   static final _authenticationRepository = Provider(
     (ref) => AuthenticationRepository(),
-  );
-
-  static final preferedAuthMethod = Provider<AuthenticationMethod>(
-    (ref) => ref
-        .read(
-          SettingsProviders.localSettingsRepository,
-        )
-        .getAuthMethod(),
   );
 
   static final isLocked = StreamProvider.autoDispose<bool>(

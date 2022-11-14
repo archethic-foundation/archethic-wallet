@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, ApiService, AddressService, OracleService;
 import 'package:coingecko_api/coingecko_api.dart';
@@ -52,7 +52,7 @@ Future<void> setupServiceLocator() async {
   }
   sl.registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new);
 
-  final preferences = await Preferences.getInstance();
+  final preferences = await HivePreferencesDatasource.getInstance();
   final network = preferences.getNetwork().getLink();
   if (sl.isRegistered<ApiService>()) {
     sl.unregister<ApiService>();
