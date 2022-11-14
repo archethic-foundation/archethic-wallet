@@ -36,6 +36,7 @@ final _transferFormProvider =
     AccountProviders.selectedAccount,
     TransferFormProvider._repository,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
+    PrimaryCurrencyProviders.convertedValue,
   ],
 );
 
