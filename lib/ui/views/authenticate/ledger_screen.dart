@@ -190,17 +190,18 @@ class _SignTransactionButton extends StatelessWidget {
             transfer.amount!,
           );
         }
-        final lastTransaction = await sl.get<ApiService>().getLastTransaction(
-              selectedAccount.lastAddress!,
-              request: 'chainLength',
-            );
+        final lastTransactionMap =
+            await sl.get<ApiService>().getLastTransaction(
+          [selectedAccount.lastAddress!],
+          request: 'chainLength',
+        );
         final transactionChainSeed =
             ref.read(SessionProviders.session).loggedIn?.wallet.seed;
         final originPrivateKey = sl.get<ApiService>().getOriginKey();
         transaction
             .build(
               transactionChainSeed!,
-              lastTransaction.chainLength!,
+              lastTransactionMap[selectedAccount.lastAddress!]!.chainLength!,
             )
             .originSign(originPrivateKey);
         final onChainWalletData = walletEncoder(originPubKey);

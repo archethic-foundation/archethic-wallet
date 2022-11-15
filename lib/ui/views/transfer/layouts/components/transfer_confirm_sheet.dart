@@ -119,21 +119,22 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     );
     final transfer = ref.read(TransferFormProvider.transferForm);
     if (transfer.transferType == TransferType.nft) {
-      final transaction = await sl
+      final transactionMap = await sl
           .get<ApiService>()
-          .getLastTransaction(event.transactionAddress!);
-
-      final token = await sl.get<ApiService>().getToken(
-            transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
-            request: 'id',
-          );
+          .getLastTransaction([event.transactionAddress!]);
+      final transaction = transactionMap[event.transactionAddress!];
+      final tokenMap = await sl.get<ApiService>().getToken(
+        [transaction!.data!.ledger!.token!.transfers![0].tokenAddress!],
+        request: 'id',
+      );
 
       final selectedAccount = await ref.read(
         AccountProviders.selectedAccount.future,
       );
 
       await selectedAccount!.removeftInfosOffChain(
-        token.id,
+        tokenMap[transaction.data!.ledger!.token!.transfers![0].tokenAddress!]!
+            .id,
       ); // TODO(Chralu): we should not interact directly with data source. Use Providers instead.
 
       await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();

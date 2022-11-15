@@ -46,24 +46,30 @@ extension TransferTransactionBuilder on archethic.Transaction {
         ..add(archethic.uint8ListToHex(walletKeyPair.publicKey));
 
       for (final transfer in ucoTransferList) {
-        final firstTxListRecipient = await sl
+        final firstTxListRecipientMap = await sl
             .get<archethic.ApiService>()
-            .getTransactionChain(transfer.to!, request: 'previousPublicKey');
-        if (firstTxListRecipient.isNotEmpty) {
-          authorizedPublicKeys.add(
-            firstTxListRecipient.first.previousPublicKey!,
-          );
+            .getTransactionChain([transfer.to!], request: 'previousPublicKey');
+        if (firstTxListRecipientMap.isNotEmpty) {
+          final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
+          if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
+            authorizedPublicKeys.add(
+              firstTxListRecipient.first.previousPublicKey!,
+            );
+          }
         }
       }
 
       for (final transfer in tokenTransferList) {
-        final firstTxListRecipient = await sl
+        final firstTxListRecipientMap = await sl
             .get<archethic.ApiService>()
-            .getTransactionChain(transfer.to!, request: 'previousPublicKey');
-        if (firstTxListRecipient.isNotEmpty) {
-          authorizedPublicKeys.add(
-            firstTxListRecipient.first.previousPublicKey!,
-          );
+            .getTransactionChain([transfer.to!], request: 'previousPublicKey');
+        if (firstTxListRecipientMap.isNotEmpty) {
+          final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
+          if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
+            authorizedPublicKeys.add(
+              firstTxListRecipient.first.previousPublicKey!,
+            );
+          }
         }
       }
 

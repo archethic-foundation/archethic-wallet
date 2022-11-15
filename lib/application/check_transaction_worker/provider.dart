@@ -43,12 +43,13 @@ Stream<ReceivedTransaction> _checkTransactions(
       (Timer t) async {
         final accounts = await ref.read(AccountProviders.accounts.future);
         for (final account in accounts) {
-          final transactionInputList =
+          final transactionInputMap =
               await sl.get<AppService>().getTransactionInputs(
-                    account.lastAddress!,
-                    'from, amount, timestamp, tokenAddress ',
-                  );
-
+            [account.lastAddress!],
+            'from, amount, timestamp, tokenAddress ',
+          );
+          final transactionInputList =
+              transactionInputMap[account.lastAddress!] ?? [];
           for (final transactionInput in transactionInputList) {
             if (account.lastLoadingTransactionInputs != null &&
                 transactionInput.timestamp! <=
@@ -58,10 +59,11 @@ Stream<ReceivedTransaction> _checkTransactions(
             if (transactionInput.from != account.lastAddress) {
               var symbol = 'UCO';
               if (transactionInput.tokenAddress != null) {
-                symbol = (await sl
-                        .get<ApiService>()
-                        .getToken(transactionInput.tokenAddress!))
-                    .symbol!;
+                final symbolMap = await sl
+                    .get<ApiService>()
+                    .getToken([transactionInput.tokenAddress!]);
+                symbol =
+                    symbolMap[transactionInput.tokenAddress!]!.symbol ?? 'UCO';
               }
               streamController.add(
                 ReceivedTransaction(

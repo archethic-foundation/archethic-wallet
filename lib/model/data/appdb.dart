@@ -62,23 +62,35 @@ class DBHelper {
   }
 
   Future<Contact?> getContactWithAddress(String address) async {
-    var lastAddress = (await sl
-            .get<ApiService>()
-            .getLastTransaction(address, request: 'address'))
-        .address;
-    if (lastAddress == null || lastAddress == '') {
-      lastAddress = address;
-    }
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
+    final addressContact = <String>[];
+    for (final contacts in contactsList) {
+      addressContact.add(contacts.address);
+    }
+
+    final lastTransactionMap = await sl.get<ApiService>().getLastTransaction(
+      [address, ...addressContact],
+      request: 'address',
+    );
+
+    var lastAddress = '';
+    if (lastTransactionMap[address] != null) {
+      lastAddress = lastTransactionMap[address]!.address ?? '';
+    }
+    if (lastAddress == '') {
+      lastAddress = address;
+    }
+
     Contact? contactSelected;
     for (final contact in contactsList) {
-      var lastAddressContact = (await sl
-              .get<ApiService>()
-              .getLastTransaction(contact.address, request: 'address'))
-          .address;
+      var lastAddressContact = '';
+      if (lastTransactionMap[contact.address] != null &&
+          lastTransactionMap[contact.address]!.address != null) {
+        lastAddressContact = lastTransactionMap[contact.address]!.address!;
+      }
 
-      if (lastAddressContact == null || lastAddressContact.isEmpty) {
+      if (lastAddressContact.isEmpty) {
         lastAddressContact = contact.address;
       } else {
         final contactToUpdate = contact..address = lastAddressContact;

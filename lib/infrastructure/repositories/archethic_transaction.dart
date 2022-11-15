@@ -108,14 +108,16 @@ class ArchethicTransactionRepository
       transfer.accountSelectedName,
     );
     final service = 'archethic-wallet-$nameEncoded';
-    final index = (await apiService.getTransactionIndex(
-      archethic.uint8ListToHex(
-        keychain.deriveAddress(
-          service,
-        ),
+    final address = archethic.uint8ListToHex(
+      keychain.deriveAddress(
+        service,
       ),
-    ))
-        .chainLength!;
+    );
+    final indexMap = await apiService.getTransactionIndex(
+      [address],
+    );
+
+    final index = indexMap[address] ?? 0;
 
     var tokenTransferList = <archethic.TokenTransfer>[];
     var ucoTransferList = <archethic.UCOTransfer>[];
@@ -162,14 +164,16 @@ class ArchethicTransactionRepository
       token.accountSelectedName,
     );
     final service = 'archethic-wallet-$nameEncoded';
-    final index = (await apiService.getTransactionIndex(
-      archethic.uint8ListToHex(
-        keychain.deriveAddress(
-          service,
-        ),
+    final address = archethic.uint8ListToHex(
+      keychain.deriveAddress(
+        service,
       ),
-    ))
-        .chainLength!;
+    );
+    final indexMap = await apiService.getTransactionIndex(
+      [address],
+    );
+
+    final index = indexMap[address] ?? 0;
 
     return AddTokenTransactionBuilder.build(
       tokenName: token.name,
