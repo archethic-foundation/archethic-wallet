@@ -21,8 +21,12 @@ class TokenUtil {
   ) async {
     Uint8List? valueFileDecoded;
     Uint8List? imageDecoded;
-    final token =
-        await sl.get<ApiService>().getToken(address, request: 'properties');
+    final tokenMap =
+        await sl.get<ApiService>().getToken([address], request: 'properties');
+    if (tokenMap.isEmpty) {
+      return Uint8List.fromList([]);
+    }
+    final token = tokenMap[address]!;
     if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
       token.tokenProperties!.forEach((key, value) {
         if (key == 'file') {

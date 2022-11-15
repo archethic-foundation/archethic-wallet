@@ -157,12 +157,12 @@ class KeychainUtil {
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
     keychain.addService(kServiceName, kDerivationPath);
 
-    final lastTransactionKeychain =
+    final lastTransactionKeychainMap =
         await sl.get<ApiService>().getLastTransaction(
-              genesisAddressKeychain,
-              request:
-                  'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }',
-            );
+      [genesisAddressKeychain],
+      request:
+          'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }',
+    );
 
     final aesKey = uint8ListToHex(
       Uint8List.fromList(
@@ -176,7 +176,10 @@ class KeychainUtil {
 
     final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
     final authorizedKeysList =
-        lastTransactionKeychain.data!.ownerships![0].authorizedPublicKeys!;
+        lastTransactionKeychainMap[genesisAddressKeychain]!
+            .data!
+            .ownerships![0]
+            .authorizedPublicKeys!;
     for (final authorizedKey in authorizedKeysList) {
       authorizedKeys.add(
         AuthorizedKey(
@@ -195,7 +198,7 @@ class KeychainUtil {
     keychainTransaction
         .build(
           uint8ListToHex(keychain.seed!),
-          lastTransactionKeychain.chainLength!,
+          lastTransactionKeychainMap[genesisAddressKeychain]!.chainLength!,
         )
         .originSign(originPrivateKey);
 
@@ -220,10 +223,11 @@ class KeychainUtil {
     appWallet.appKeychain.accounts.sort((a, b) => a.name.compareTo(b.name));
     appWallet.appKeychain.accounts.sort((a, b) => a.name.compareTo(b.name));
 
-    final lastTransactionKeychainAddress = await sl
+    final lastTransactionKeychainAddressMap = await sl
         .get<ApiService>()
-        .getLastTransaction(genesisAddressKeychain, request: 'address');
-    appWallet.appKeychain.address = lastTransactionKeychainAddress
+        .getLastTransaction([genesisAddressKeychain], request: 'address');
+    appWallet.appKeychain.address = lastTransactionKeychainAddressMap[
+            genesisAddressKeychain]!
         .address!; // TODO(Chralu): Transaction.address should be non-nullable
 
     await sl.get<DBHelper>().saveAppWallet(appWallet);
@@ -259,11 +263,12 @@ class KeychainUtil {
       if (appWallet == null) {
         final addressKeychain =
             deriveAddress(uint8ListToHex(keychain.seed!), 0);
-        final lastTransaction =
-            await sl.get<ApiService>().getLastTransaction(addressKeychain);
+        final lastTransactionMap =
+            await sl.get<ApiService>().getLastTransaction([addressKeychain]);
 
-        currentAppWallet =
-            await sl.get<DBHelper>().createAppWallet(lastTransaction.address!);
+        currentAppWallet = await sl
+            .get<DBHelper>()
+            .createAppWallet(lastTransactionMap[addressKeychain]!.address!);
       } else {
         currentAppWallet = appWallet;
       }
@@ -341,10 +346,11 @@ class KeychainUtil {
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-      final lastTransactionKeychain = await sl
+      final lastTransactionKeychainMap = await sl
           .get<ApiService>()
-          .getLastTransaction(genesisAddressKeychain, request: 'address');
-      currentAppWallet.appKeychain.address = lastTransactionKeychain.address!;
+          .getLastTransaction([genesisAddressKeychain], request: 'address');
+      currentAppWallet.appKeychain.address =
+          lastTransactionKeychainMap[genesisAddressKeychain]!.address!;
       accounts.sort((a, b) => a.name.compareTo(b.name));
       currentAppWallet.appKeychain.accounts = accounts;
 

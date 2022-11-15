@@ -43,9 +43,10 @@ class ContactCreationFormNotifier
     state = state.copyWith(address: address, error: '');
 
     if (Address(address).isValid) {
-      final publicKey = (await sl
-              .get<ApiService>()
-              .getLastTransaction(address, request: 'previousPublicKey'))
+      final publicKey = (await sl.get<ApiService>().getLastTransaction(
+        [address],
+        request: 'previousPublicKey',
+      ))[address]!
           .previousPublicKey;
       if (publicKey != null) {
         state = state.copyWith(publicKeyRecovered: publicKey);

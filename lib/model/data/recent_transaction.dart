@@ -24,6 +24,7 @@ class RecentTransaction extends HiveObject {
     this.timestamp,
     this.type,
     this.decryptedSecret,
+    this.ownerships,
   });
 
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
@@ -94,6 +95,9 @@ class RecentTransaction extends HiveObject {
   @HiveField(14)
   List<String>? decryptedSecret;
 
+  List<Ownership>? ownerships;
+  String? tokenAddress;
+
   Map<String, dynamic> toJson() => <String, dynamic>{
         'address': address,
         'typeTx': typeTx,
@@ -107,26 +111,6 @@ class RecentTransaction extends HiveObject {
         'decryptedSecret': decryptedSecret
       };
 
-  Future<Contact?> getContactInformations() async {
-    contactInformations = null;
-    if (typeTx == RecentTransaction.transferInput) {
-      if (recipient != null) {
-        final contact = await sl.get<DBHelper>().getContactWithAddress(from!);
-        contactInformations = contact;
-      }
-    } else {
-      if (typeTx == RecentTransaction.transferOutput) {
-        if (from != null) {
-          final contact =
-              await sl.get<DBHelper>().getContactWithAddress(recipient!);
-          contactInformations = contact;
-        }
-      }
-    }
-
-    return contactInformations;
-  }
-
   // TODO(Chralu): Move that method in a dedicated [Provider]
   Future<TokenInformations?> getTokenInfo(
     String? content,
@@ -136,10 +120,14 @@ class RecentTransaction extends HiveObject {
     if (address == null) {
       return null;
     }
-
-    final localOrRemoteContent = (content == null || content.isEmpty)
-        ? await sl.get<ApiService>().getTransactionContent(address)
-        : content;
+    final localOrRemoteContent;
+    if (content == null || content.isEmpty) {
+      final transactionContentMap =
+          await sl.get<ApiService>().getTransactionContent([address]);
+      localOrRemoteContent = transactionContentMap[address];
+    } else {
+      localOrRemoteContent = content;
+    }
 
     if (localOrRemoteContent.isEmpty) {
       return null;

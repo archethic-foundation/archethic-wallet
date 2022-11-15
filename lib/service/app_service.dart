@@ -4,42 +4,38 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/number_util.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppService {
   // TODO(reddwarf03): Error loading recent transactions when tx number > 10, https://github.com/archethic-foundation/archethic-wallet/issues/262
-  Future<List<Transaction>> getTransactionChain(
-    String address,
-    String? pagingAddress,
+  Future<Map<String, List<Transaction>>> getTransactionChain(
+    List<String> addresses,
     String? request,
   ) async {
-    final transactionChain = await sl.get<ApiService>().getTransactionChain(
-          address,
-          pagingAddress: pagingAddress ?? '',
+    final transactionChainMap = await sl.get<ApiService>().getTransactionChain(
+          addresses,
           request: request!,
         );
-    return transactionChain;
+    return transactionChainMap;
   }
 
-  Future<List<TransactionInput>> getTransactionInputs(
-    String address,
+  Future<Map<String, List<TransactionInput>>> getTransactionInputs(
+    List<String> addresses,
     String request,
   ) async {
     final transactionInputs = await sl
         .get<ApiService>()
-        .getTransactionInputs(address, request: request);
+        .getTransactionInputs(addresses, request: request);
     return transactionInputs;
   }
 
@@ -49,37 +45,25 @@ class AppService {
     String seed,
     String name,
   ) async {
-    var pagingAddress = '';
-    final lastTransaction = await sl
-        .get<ApiService>()
-        .getLastTransaction(lastAddress, request: 'chainLength');
-    if (lastTransaction.chainLength! > 10) {
-      final keychain = await sl.get<ApiService>().getKeychain(seed);
-      final nameEncoded = Uri.encodeFull(name);
-      final serviceName = 'archethic-wallet-$nameEncoded';
-      pagingAddress = uint8ListToHex(
-        keychain.deriveAddress(
-          serviceName,
-          index: lastTransaction.chainLength! - 10,
-        ),
-      );
-    }
-
-    final transactionChain = await getTransactionChain(
-      lastAddress,
-      pagingAddress,
+    final transactionChainMap = await getTransactionChain(
+      [lastAddress, genesisAddress],
       'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } }, content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
     );
 
-    final transactionInputsGenesisAddress = await getTransactionInputs(
-      genesisAddress,
+    final transactionInputsGenesisAddressMap = await getTransactionInputs(
+      [genesisAddress],
       'from, type, spent, tokenAddress, amount, timestamp',
     );
 
     final recentTransactions = List<RecentTransaction>.empty(growable: true);
 
+    final transactionChain = transactionChainMap[lastAddress] ?? [];
+    final transactionInputsGenesisAddress =
+        transactionInputsGenesisAddressMap[genesisAddress] ?? [];
+
+    final tokensAddresses = <String>[];
+
     for (final transaction in transactionChain) {
-      final content = transaction.data!.content!.toLowerCase();
       if (transaction.type! == 'token') {
         final recentTransaction = RecentTransaction()
           ..address = transaction.address
@@ -88,105 +72,52 @@ class AppService {
           ..content = transaction.data!.content
           ..fee = fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
               .toDouble();
-        recentTransaction.tokenInformations = await recentTransaction
-            .getTokenInfo(transaction.data!.content, transaction.address);
+        if (transaction.address != null) {
+          tokensAddresses.add(transaction.address!);
+          recentTransaction.tokenAddress = transaction.address;
+        }
         recentTransactions.add(recentTransaction);
-      } else {
-        if (transaction.type! == 'transfer') {
-          for (var i = 0;
-              i < transaction.data!.ledger!.uco!.transfers!.length;
-              i++) {
-            final recentTransaction = RecentTransaction()
-              ..content = content
-              ..address = transaction.address
-              ..typeTx = RecentTransaction.transferOutput
-              ..amount = fromBigInt(
-                transaction.data!.ledger!.uco!.transfers![i].amount,
-              ).toDouble()
-              ..recipient = transaction.data!.ledger!.uco!.transfers![i].to
-              ..fee =
-                  fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
-                      .toDouble()
-              ..timestamp = transaction.validationStamp!.timestamp
-              ..from = lastAddress
-              ..decryptedSecret = List<String>.empty(growable: true);
-            if (transaction.data!.ownerships != null) {
-              final nameEncoded = Uri.encodeFull(name);
-              final serviceName = 'archethic-wallet-$nameEncoded';
-              final keychain = await sl.get<ApiService>().getKeychain(seed);
-              final keypair = keychain.deriveKeypair(serviceName);
-              for (final ownership in transaction.data!.ownerships!) {
-                final authorizedPublicKey =
-                    ownership.authorizedPublicKeys!.firstWhere(
-                  (AuthorizedKey authKey) =>
-                      authKey.publicKey!.toUpperCase() ==
-                      uint8ListToHex(keypair.publicKey).toUpperCase(),
-                  orElse: AuthorizedKey.new,
-                );
-                if (authorizedPublicKey.encryptedSecretKey != null) {
-                  final aesKey = ecDecrypt(
-                    authorizedPublicKey.encryptedSecretKey,
-                    keypair.privateKey,
-                  );
-                  final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
+      }
 
-                  recentTransaction.decryptedSecret!
-                      .add(utf8.decode(decryptedSecret));
-                }
-              }
-            }
-            recentTransactions.add(recentTransaction);
+      if (transaction.type! == 'transfer') {
+        for (final transfer in transaction.data!.ledger!.uco!.transfers!) {
+          final recentTransaction = RecentTransaction()
+            ..content = transaction.data!.content
+            ..address = transaction.address
+            ..typeTx = RecentTransaction.transferOutput
+            ..amount = fromBigInt(
+              transfer.amount,
+            ).toDouble()
+            ..recipient = transfer.to
+            ..fee =
+                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
+                    .toDouble()
+            ..timestamp = transaction.validationStamp!.timestamp
+            ..from = lastAddress
+            ..ownerships = transaction.data!.ownerships;
+          recentTransactions.add(recentTransaction);
+        }
+        for (final transfer in transaction.data!.ledger!.token!.transfers!) {
+          final recentTransaction = RecentTransaction()
+            ..content = transaction.data!.content
+            ..address = transaction.address
+            ..typeTx = RecentTransaction.transferOutput
+            ..amount = fromBigInt(
+              transfer.amount,
+            ).toDouble()
+            ..recipient = transfer.to
+            ..fee =
+                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
+                    .toDouble()
+            ..timestamp = transaction.validationStamp!.timestamp
+            ..from = lastAddress
+            ..ownerships = transaction.data!.ownerships;
+
+          if (transfer.tokenAddress != null) {
+            tokensAddresses.add(transfer.tokenAddress!);
+            recentTransaction.tokenAddress = transfer.tokenAddress;
           }
-          for (var i = 0;
-              i < transaction.data!.ledger!.token!.transfers!.length;
-              i++) {
-            final recentTransaction = RecentTransaction()
-              ..content = content
-              ..address = transaction.address
-              ..typeTx = RecentTransaction.transferOutput
-              ..amount = fromBigInt(
-                transaction.data!.ledger!.token!.transfers![i].amount,
-              ).toDouble()
-              ..recipient = transaction.data!.ledger!.token!.transfers![i].to
-              ..fee =
-                  fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
-                      .toDouble()
-              ..timestamp = transaction.validationStamp!.timestamp
-              ..from = lastAddress
-              ..decryptedSecret = List<String>.empty(growable: true);
-            recentTransaction.tokenInformations =
-                await recentTransaction.getTokenInfo(
-              null,
-              transaction.data!.ledger!.token!.transfers![i].tokenAddress,
-            );
-            if (transaction.data!.ownerships != null) {
-              final nameEncoded = Uri.encodeFull(name);
-              final serviceName = 'archethic-wallet-$nameEncoded';
-              final keychain = await sl.get<ApiService>().getKeychain(seed);
-              final keypair = keychain.deriveKeypair(serviceName);
-              for (final ownership in transaction.data!.ownerships!) {
-                final authorizedPublicKey =
-                    ownership.authorizedPublicKeys!.firstWhere(
-                  (AuthorizedKey authKey) =>
-                      authKey.publicKey!.toUpperCase() ==
-                      uint8ListToHex(keypair.publicKey).toUpperCase(),
-                  orElse: AuthorizedKey.new,
-                );
-                if (authorizedPublicKey.encryptedSecretKey != null) {
-                  final aesKey = ecDecrypt(
-                    authorizedPublicKey.encryptedSecretKey,
-                    keypair.privateKey,
-                  );
-                  final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
-
-                  recentTransaction.decryptedSecret!
-                      .add(utf8.decode(decryptedSecret));
-                }
-              }
-            }
-
-            recentTransactions.add(recentTransaction);
-          }
+          recentTransactions.add(recentTransaction);
         }
       }
 
@@ -205,38 +136,11 @@ class AppService {
               ..recipient = transaction.address
               ..timestamp = transactionInput.timestamp
               ..fee = 0
-              ..content = transaction.data!.content
-              ..decryptedSecret = List<String>.empty(growable: true);
-            recentTransaction.tokenInformations = await recentTransaction
-                .getTokenInfo('', transactionInput.tokenAddress);
-            final ownerships = await sl
-                .get<ApiService>()
-                .getTransactionOwnerships(transactionInput.from!);
-            if (ownerships.isNotEmpty) {
-              final nameEncoded = Uri.encodeFull(name);
-              final serviceName = 'archethic-wallet-$nameEncoded';
-              final keychain = await sl.get<ApiService>().getKeychain(seed);
-              final keypair = keychain.deriveKeypair(serviceName);
-              for (final ownership in ownerships) {
-                final authorizedPublicKey =
-                    ownership.authorizedPublicKeys!.firstWhere(
-                  (AuthorizedKey authKey) =>
-                      authKey.publicKey!.toUpperCase() ==
-                      uint8ListToHex(keypair.publicKey).toUpperCase(),
-                  orElse: AuthorizedKey.new,
-                );
-                if (authorizedPublicKey.encryptedSecretKey != null) {
-                  final aesKey = ecDecrypt(
-                    authorizedPublicKey.encryptedSecretKey,
-                    keypair.privateKey,
-                  );
-                  final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
-                  recentTransaction.decryptedSecret!
-                      .add(utf8.decode(decryptedSecret));
-                }
-              }
+              ..content = transaction.data!.content;
+            if (transactionInput.tokenAddress != null) {
+              tokensAddresses.add(transactionInput.tokenAddress!);
+              recentTransaction.tokenAddress = transactionInput.tokenAddress;
             }
-
             recentTransactions.add(recentTransaction);
           }
         }
@@ -244,52 +148,182 @@ class AppService {
     }
 
     // Transaction inputs for genesisAddress
-    for (final transaction in transactionInputsGenesisAddress) {
+    for (final transactionInput in transactionInputsGenesisAddress) {
       final recentTransaction = RecentTransaction()
-        ..address = transaction.from
-        ..amount = fromBigInt(transaction.amount).toDouble()
+        ..address = transactionInput.from
+        ..amount = fromBigInt(transactionInput.amount).toDouble()
         ..typeTx = RecentTransaction.transferInput
-        ..from = transaction.from
+        ..from = transactionInput.from
         ..recipient = lastAddress
-        ..timestamp = transaction.timestamp
+        ..timestamp = transactionInput.timestamp
         ..fee = 0;
-      if (transaction.type! == 'token') {
-        final content =
-            await sl.get<ApiService>().getTransactionContent(transaction.from!);
-        recentTransaction.content = content;
+      if (transactionInput.tokenAddress != null) {
+        tokensAddresses.add(transactionInput.tokenAddress!);
+        recentTransaction.tokenAddress = transactionInput.tokenAddress;
       }
-      recentTransaction.decryptedSecret = List<String>.empty(growable: true);
-      final ownerships = await sl
-          .get<ApiService>()
-          .getTransactionOwnerships(recentTransaction.address!);
-      if (ownerships.isNotEmpty) {
-        final nameEncoded = Uri.encodeFull(name);
-        final serviceName = 'archethic-wallet-$nameEncoded';
-        final keychain = await sl.get<ApiService>().getKeychain(seed);
-        final keypair = keychain.deriveKeypair(serviceName);
-        for (final ownership in ownerships) {
-          final authorizedPublicKey =
-              ownership.authorizedPublicKeys!.firstWhere(
-            (AuthorizedKey authKey) =>
-                authKey.publicKey!.toUpperCase() ==
-                uint8ListToHex(keypair.publicKey).toUpperCase(),
-            orElse: AuthorizedKey.new,
+      recentTransactions.add(recentTransaction);
+    }
+
+    // Get token informations
+    final tokensAddressMap =
+        await sl.get<ApiService>().getToken(tokensAddresses.toSet().toList());
+    for (final recentTransaction in recentTransactions) {
+      if (recentTransaction.tokenAddress != null &&
+          recentTransaction.tokenAddress!.isNotEmpty) {
+        final token = tokensAddressMap[recentTransaction.tokenAddress];
+        if (token != null) {
+          recentTransaction.tokenInformations = TokenInformations(
+            address: token.address,
+            name: token.name,
+            supply: fromBigInt(token.supply).toDouble(),
+            symbol: token.symbol,
+            type: token.type,
           );
-          if (authorizedPublicKey.encryptedSecretKey != null) {
-            final aesKey = ecDecrypt(
-              authorizedPublicKey.encryptedSecretKey,
-              keypair.privateKey,
-            );
-            final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
-            recentTransaction.decryptedSecret!
-                .add(utf8.decode(decryptedSecret));
-          }
         }
       }
+    }
 
-      recentTransaction.tokenInformations =
-          await recentTransaction.getTokenInfo('', transaction.tokenAddress);
-      recentTransactions.add(recentTransaction);
+    // Decrypt secrets
+    final recentTransactionLastAddresses = <String>[];
+    final ownershipsAddresses = <String>[];
+    for (final recentTransaction in recentTransactions) {
+      switch (recentTransaction.typeTx) {
+        case RecentTransaction.transferInput:
+          if (recentTransaction.from != null) {
+            recentTransactionLastAddresses.add(recentTransaction.from!);
+          }
+          break;
+        case RecentTransaction.transferOutput:
+          if (recentTransaction.recipient != null) {
+            recentTransactionLastAddresses.add(recentTransaction.recipient!);
+          }
+          break;
+      }
+    }
+    var ownershipsMap = <String, List<Ownership>>{};
+    if (ownershipsAddresses.isNotEmpty) {
+      ownershipsMap = await sl
+          .get<ApiService>()
+          .getTransactionOwnerships(ownershipsAddresses);
+    }
+
+    final nameEncoded = Uri.encodeFull(name);
+    final serviceName = 'archethic-wallet-$nameEncoded';
+    late Keychain keychain;
+    late KeyPair keypair;
+    var getKeypair = false;
+
+    for (var recentTransaction in recentTransactions) {
+      if (recentTransaction.typeTx == RecentTransaction.transferInput &&
+          recentTransaction.address != null) {
+        if (getKeypair == false) {
+          keychain = await sl.get<ApiService>().getKeychain(seed);
+          keypair = keychain.deriveKeypair(serviceName);
+          getKeypair = true;
+        }
+
+        recentTransaction = _decryptedSecret(
+          keypair: keypair,
+          ownerships: ownershipsMap[recentTransaction.address!] ?? [],
+          recentTransaction: recentTransaction,
+        );
+      } else {
+        if (getKeypair == false) {
+          keychain = await sl.get<ApiService>().getKeychain(seed);
+          keypair = keychain.deriveKeypair(serviceName);
+          getKeypair = true;
+        }
+        recentTransaction = _decryptedSecret(
+          keypair: keypair,
+          ownerships: recentTransaction.ownerships ?? [],
+          recentTransaction: recentTransaction,
+        );
+      }
+    }
+
+    // Check if the recent transactions are with contacts
+    // TODO(chralu): How to use a provider here without ref param ?
+    final contactsList = await sl.get<DBHelper>().getContacts();
+    final contactsListUpdated = <Contact>[];
+    final contactsAddresses = <String>[];
+    for (final contact in contactsList) {
+      contactsAddresses.add(contact.address);
+    }
+
+    // Remove doublons between 2 lists
+    final lastTransactionAddressesToSearch = [
+      ...recentTransactionLastAddresses,
+      ...contactsAddresses
+    ];
+    final lastAddressesMap = await sl.get<ApiService>().getLastTransaction(
+          lastTransactionAddressesToSearch.toSet().toList(),
+          request: 'address',
+        );
+
+    // Update map with genesis address
+    for (final recentTransactionLastAddress in recentTransactionLastAddresses) {
+      if (lastAddressesMap[recentTransactionLastAddress] == null) {
+        lastAddressesMap[recentTransactionLastAddress] = Transaction(
+          type: 'transfer',
+          data: Transaction.initData(),
+          address: recentTransactionLastAddress,
+        );
+      }
+    }
+
+    // Update contact's last address
+    for (final contact in contactsList) {
+      if (lastAddressesMap[contact.address] != null &&
+          lastAddressesMap[contact.address]!.address != contact.address) {
+        contact.address =
+            lastAddressesMap[contact.address]!.address ?? contact.address;
+        await sl.get<DBHelper>().saveContact(contact);
+      }
+      contactsListUpdated.add(contact);
+    }
+
+    for (final contact in contactsList) {
+      String contactAddress;
+      if (lastAddressesMap[contact.address] != null &&
+          lastAddressesMap[contact.address]!.address != null) {
+        contactAddress = lastAddressesMap[contact.address]!.address!;
+      } else {
+        contactAddress = contact.address;
+      }
+      for (final recentTransaction in recentTransactions) {
+        switch (recentTransaction.typeTx) {
+          case RecentTransaction.transferInput:
+            if (recentTransaction.from != null) {
+              if (lastAddressesMap[recentTransaction.from!]!
+                      .address!
+                      .toLowerCase() ==
+                  contactAddress.toLowerCase()) {
+                recentTransaction.contactInformations =
+                    contactsListUpdated.firstWhere(
+                  (contact) =>
+                      contact.address.toLowerCase() ==
+                      contactAddress.toLowerCase(),
+                );
+              }
+            }
+            break;
+          case RecentTransaction.transferOutput:
+            if (recentTransaction.recipient != null) {
+              if (lastAddressesMap[recentTransaction.recipient!]!
+                      .address!
+                      .toLowerCase() ==
+                  contactAddress.toLowerCase()) {
+                recentTransaction.contactInformations =
+                    contactsListUpdated.firstWhere(
+                  (contact) =>
+                      contact.address.toLowerCase() ==
+                      contactAddress.toLowerCase(),
+                );
+              }
+            }
+            break;
+        }
+      }
     }
 
     // Sort by date (desc)
@@ -298,25 +332,48 @@ class AppService {
           a.timestamp!.compareTo(b.timestamp!),
     );
 
-    for (var i = 0; i < recentTransactions.length; i++) {
-      if (i <= 10) {
-        recentTransactions[i].contactInformations =
-            await recentTransactions[i].getContactInformations();
-      }
-    }
-
     return recentTransactions.reversed.toList();
   }
 
+  RecentTransaction _decryptedSecret({
+    required KeyPair keypair,
+    required List<Ownership> ownerships,
+    required RecentTransaction recentTransaction,
+  }) {
+    recentTransaction.decryptedSecret = List<String>.empty(growable: true);
+    if (ownerships.isEmpty) {
+      return recentTransaction;
+    }
+    for (final ownership in ownerships) {
+      final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
+        (AuthorizedKey authKey) =>
+            authKey.publicKey!.toUpperCase() ==
+            uint8ListToHex(keypair.publicKey).toUpperCase(),
+        orElse: AuthorizedKey.new,
+      );
+      if (authorizedPublicKey.encryptedSecretKey != null) {
+        final aesKey = ecDecrypt(
+          authorizedPublicKey.encryptedSecretKey,
+          keypair.privateKey,
+        );
+        final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
+        recentTransaction.decryptedSecret!.add(utf8.decode(decryptedSecret));
+      }
+    }
+    return recentTransaction;
+  }
+
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
-    final balance = await sl.get<ApiService>().fetchBalance(address);
+    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
+    final balance = balanceMap[address];
     final fungiblesTokensList = List<AccountToken>.empty(growable: true);
 
-    if (balance.token != null) {
+    if (balance != null && balance.token != null) {
       for (var i = 0; i < balance.token!.length; i++) {
-        final token =
-            await sl.get<ApiService>().getToken(balance.token![i].address!);
-        if (token.type == 'fungible') {
+        final tokenMap =
+            await sl.get<ApiService>().getToken([balance.token![i].address!]);
+        final token = tokenMap[balance.token![i].address!];
+        if (token != null && token.type == 'fungible') {
           final tokenInformations = TokenInformations(
             address: balance.token![i].address,
             name: token.name,
@@ -342,15 +399,17 @@ class AppService {
   }
 
   Future<List<AccountToken>> getNFTList(String address) async {
-    final balance = await sl.get<ApiService>().fetchBalance(address);
+    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
+    final balance = balanceMap[address];
     final nftList = List<AccountToken>.empty(growable: true);
 
-    if (balance.token != null) {
+    if (balance != null && balance.token != null) {
       for (var i = 0; i < balance.token!.length; i++) {
         if (balance.token![i].tokenId! > 0) {
-          final token =
-              await sl.get<ApiService>().getToken(balance.token![i].address!);
-          if (token.type == 'non-fungible') {
+          final tokenMap =
+              await sl.get<ApiService>().getToken([balance.token![i].address!]);
+          final token = tokenMap[balance.token![i].address!];
+          if (token != null && token.type == 'non-fungible') {
             final tokenWithoutFile = token.tokenProperties!
               ..removeWhere((key, value) => key == 'file');
             final tokenInformations = TokenInformations(
@@ -380,9 +439,9 @@ class AppService {
   }
 
   Future<Balance> getBalanceGetResponse(String address) async {
-    var balance =
+    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
+    final balance = balanceMap[address] ??
         Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
-    balance = await sl.get<ApiService>().fetchBalance(address);
     final balanceTokenList = List<TokenBalance>.empty(growable: true);
     if (balance.token != null) {
       for (var i = 0; i < balance.token!.length; i++) {
@@ -407,8 +466,15 @@ class AppService {
 
     // TODO(reddwarf03): don't load content if tx is NFT
     // ignore: prefer_final_locals
-    var transaction =
-        await sl.get<ApiService>().getTransactionAllInfos(address);
+    var transactionMap = await sl.get<ApiService>().getTransaction(
+      [address],
+      request:
+          ' address, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients }, type ',
+    );
+    final transaction = transactionMap[address];
+    if (transaction == null) {
+      return [];
+    }
     if (transaction.address != null) {
       transactionsInfos.add(
         TransactionInfos(
@@ -430,17 +496,21 @@ class AppService {
     if (transaction.data != null) {
       transactionsInfos
           .add(TransactionInfos(domain: 'Data', titleInfo: '', valueInfo: ''));
+
       if (transaction.data!.content != null) {
         transactionsInfos.add(
           TransactionInfos(
             domain: 'Data',
             titleInfo: 'Content',
-            valueInfo: transaction.data!.content == ''
-                ? 'N/A'
-                : transaction.data!.content!,
+            valueInfo: transaction.type == 'token'
+                ? 'See explorer...'
+                : transaction.data!.content == ''
+                    ? 'N/A'
+                    : transaction.data!.content!,
           ),
         );
       }
+
       if (transaction.data!.code != null) {
         transactionsInfos.add(
           TransactionInfos(
@@ -450,7 +520,8 @@ class AppService {
           ),
         );
       }
-      if (transaction.data!.ownerships != null) {
+      if (transaction.data!.ownerships != null &&
+          transaction.data!.ownerships!.isNotEmpty) {
         final nameEncoded = Uri.encodeFull(name);
         final serviceName = 'archethic-wallet-$nameEncoded';
         final keychain = await sl.get<ApiService>().getKeychain(seed);
@@ -568,10 +639,13 @@ class AppService {
             );
           }
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
-            final content = await sl.get<ApiService>().getTransactionContent(
-                  transaction.data!.ledger!.token!.transfers![i].tokenAddress!,
-                );
-            final token = tokenFromJson(content);
+            final contentMap = await sl.get<ApiService>().getTransactionContent(
+              [transaction.data!.ledger!.token!.transfers![i].tokenAddress!],
+            );
+            final token = tokenFromJson(
+              contentMap[transaction
+                  .data!.ledger!.token!.transfers![i].tokenAddress!]!,
+            );
             transactionsInfos.add(
               TransactionInfos(
                 domain: 'TokenLedger',
@@ -596,9 +670,9 @@ class AppService {
     String message,
     String name,
   ) async {
-    final lastTransaction = await sl
+    final lastTransactionMap = await sl
         .get<ApiService>()
-        .getLastTransaction(address, request: 'chainLength');
+        .getLastTransaction([address], request: 'chainLength');
     final transaction =
         Transaction(type: 'transfer', data: Transaction.initData());
     for (final transfer in listUcoTransfer) {
@@ -628,22 +702,28 @@ class AppService {
         ..add(uint8ListToHex(walletKeyPair.publicKey));
 
       for (final transfer in listUcoTransfer) {
-        final firstTxListRecipient = await sl
+        final firstTxListRecipientMap = await sl
             .get<ApiService>()
-            .getTransactionChain(transfer.to!, request: 'previousPublicKey');
-        if (firstTxListRecipient.isNotEmpty) {
-          authorizedPublicKeys
-              .add(firstTxListRecipient.first.previousPublicKey!);
+            .getTransactionChain([transfer.to!], request: 'previousPublicKey');
+        if (firstTxListRecipientMap.isNotEmpty) {
+          final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
+          if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
+            authorizedPublicKeys
+                .add(firstTxListRecipient.first.previousPublicKey!);
+          }
         }
       }
 
       for (final transfer in listTokenTransfer) {
-        final firstTxListRecipient = await sl
+        final firstTxListRecipientMap = await sl
             .get<ApiService>()
-            .getTransactionChain(transfer.to!, request: 'previousPublicKey');
-        if (firstTxListRecipient.isNotEmpty) {
-          authorizedPublicKeys
-              .add(firstTxListRecipient.first.previousPublicKey!);
+            .getTransactionChain([transfer.to!], request: 'previousPublicKey');
+        if (firstTxListRecipientMap.isNotEmpty) {
+          final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
+          if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
+            authorizedPublicKeys
+                .add(firstTxListRecipient.first.previousPublicKey!);
+          }
         }
       }
 
@@ -661,8 +741,9 @@ class AppService {
     }
 
     var transactionFee = TransactionFee();
+    final lastTransaction = lastTransactionMap[address];
     transaction
-        .build(seed, lastTransaction.chainLength!)
+        .build(seed, lastTransaction!.chainLength ?? 0)
         .originSign(originPrivateKey);
     try {
       transactionFee =
@@ -674,153 +755,7 @@ class AppService {
   }
 
   Future<Keychain> getKeychain(String seed) async {
-    // Keychain keychain;
-    // try {
     final keychain = await sl.get<ApiService>().getKeychain(seed);
     return keychain;
-    /*} catch (e) {
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-
-      /// Get Wallet KeyPair
-      final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
-
-      /// Generate keyChain Seed from random value
-      final String keychainSeed = uint8ListToHex(Uint8List.fromList(
-          List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
-
-      AppWallet? appWallet = await sl.get<DBHelper>().getAppWallet();
-      List<Account> accountsList = appWallet!.appKeychain!.accounts!;
-
-      bool first = true;
-      Uint8List genesisAddress;
-      for (Account account in accountsList) {
-        Price tokenPrice =
-            await Price.getCurrency(account.balance!.fiatCurrencyCode!);
-
-        String nameEncoded = Uri.encodeFull(account.name!);
-
-        /// Default service for wallet
-        String kServiceName = 'archethic-wallet-$nameEncoded';
-        String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
-        const String index = '0';
-        String kDerivationPath = '$kDerivationPathWithoutIndex$index';
-
-        if (first) {
-          first = false;
-
-          Keychain keychain =
-              Keychain(hexToUint8List(keychainSeed), version: 1);
-          keychain.addService(kServiceName, kDerivationPath);
-
-          /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-          final Transaction keychainTransaction = sl
-              .get<ApiService>()
-              .newKeychainTransaction(
-                  keychainSeed,
-                  <String>[uint8ListToHex(walletKeyPair.publicKey)],
-                  hexToUint8List(originPrivateKey),
-                  serviceName: kServiceName,
-                  derivationPath: kDerivationPath);
-
-          // ignore: unused_local_variable
-          final TransactionStatus transactionStatusKeychain =
-              await sl.get<ApiService>().sendTx(keychainTransaction);
-
-          await Future.delayed(const Duration(seconds: 5));
-
-          final Transaction accessKeychainTx = sl
-              .get<ApiService>()
-              .newAccessKeychainTransaction(
-                  seed,
-                  hexToUint8List(keychainTransaction.address!),
-                  hexToUint8List(originPrivateKey));
-
-          // ignore: unused_local_variable
-          final TransactionStatus transactionStatusKeychainAccess =
-              await sl.get<ApiService>().sendTx(accessKeychainTx);
-
-          genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
-          print('(first) genesisAddress: ${uint8ListToHex(genesisAddress)}');
-        } else {
-          final Keychain keychain =
-              await sl.get<ApiService>().getKeychain(seed);
-
-          final String genesisAddressKeychain =
-              deriveAddress(uint8ListToHex(keychain.seed!), 0);
-
-          keychain.addService(kServiceName, kDerivationPath);
-
-          final Transaction lastTransactionKeychain = await sl
-              .get<ApiService>()
-              .getLastTransaction(genesisAddressKeychain,
-                  request:
-                      'chainLength, data { content, ownerships
-                       { authorizedPublicKeys { publicKey } } }');
-
-          final String aesKey = uint8ListToHex(Uint8List.fromList(
-              List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
-
-          Transaction keychainTransaction =
-              Transaction(type: 'keychain', data: Transaction.initData())
-                  .setContent(jsonEncode(keychain.toDID()));
-
-          final List<AuthorizedKey> authorizedKeys =
-              List<AuthorizedKey>.empty(growable: true);
-          List<AuthorizedKey> authorizedKeysList = lastTransactionKeychain
-              .data!.ownerships![0].authorizedPublicKeys!;
-          authorizedKeysList.forEach((AuthorizedKey authorizedKey) {
-            authorizedKeys.add(AuthorizedKey(
-                encryptedSecretKey:
-                    uint8ListToHex(ecEncrypt(aesKey, authorizedKey.publicKey)),
-                publicKey: authorizedKey.publicKey));
-          });
-
-          keychainTransaction.addOwnership(
-              aesEncrypt(keychain.encode(), aesKey), authorizedKeys);
-
-          keychainTransaction
-              .build(uint8ListToHex(keychain.seed!),
-                  lastTransactionKeychain.chainLength!)
-              .originSign(originPrivateKey);
-
-          // ignore: unused_local_variable
-          final TransactionStatus transactionStatusKeychain =
-              await sl.get<ApiService>().sendTx(keychainTransaction);
-
-          genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
-          print(
-              '(not first) genesisAddress: ${uint8ListToHex(genesisAddress)}');
-        }
-
-        Account selectedAcct = Account(
-            lastLoadingTransactionInputs: 0,
-            lastAddress: uint8ListToHex(genesisAddress),
-            genesisAddress: uint8ListToHex(genesisAddress),
-            name: account.name,
-            balance: AccountBalance(
-                fiatCurrencyCode: '',
-                fiatCurrencyValue: 0,
-                nativeTokenName: account.balance!.nativeTokenName,
-                nativeTokenValue: 0,
-                tokenPrice: tokenPrice),
-            selected: false,
-            recentTransactions: []);
-
-        appWallet.appKeychain!.accounts!
-            .removeWhere((element) => element.name == selectedAcct.name);
-        appWallet.appKeychain!.accounts!.add(selectedAcct);
-        await appWallet.save();
-
-        final Contact newContact = Contact(
-            name: '@${account.name}',
-            address: uint8ListToHex(genesisAddress),
-            type: 'keychainService');
-        await sl.get<DBHelper>().deleteContact(newContact);
-        await sl.get<DBHelper>().saveContact(newContact);
-      }
-
-      keychain = await getKeychain(seed);
-      return keychain;
-    }*/
   }
 }
