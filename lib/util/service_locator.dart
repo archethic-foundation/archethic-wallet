@@ -7,7 +7,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiCoinsService, ApiService, AddressService, OracleService;
+    show ApiService, AddressService, OracleService;
 import 'package:coingecko_api/coingecko_api.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
@@ -16,11 +16,6 @@ Future<void> setupServiceLocator() async {
     sl.unregister<AppService>();
   }
   sl.registerLazySingleton<AppService>(AppService.new);
-
-  if (sl.isRegistered<ApiCoinsService>()) {
-    sl.unregister<ApiCoinsService>();
-  }
-  sl.registerLazySingleton<ApiCoinsService>(ApiCoinsService.new);
 
   if (sl.isRegistered<CoinGeckoApi>()) {
     sl.unregister<CoinGeckoApi>();

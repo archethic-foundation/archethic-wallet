@@ -18,7 +18,7 @@ dependencies:
   archethic_lib_dart:
     git:
      url: https://github.com/archethic-foundation/libdart.git
-     ref: Optimize-recent-transactions-loading
+     ref: master
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
