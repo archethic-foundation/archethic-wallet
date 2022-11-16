@@ -28,11 +28,11 @@ class AccountBalance extends HiveObject {
   // @HiveField(4)
 
   /// Token Price
-  @HiveField(5)
+  @HiveField(5, defaultValue: 0)
   int tokensFungiblesNb;
 
   /// Token Price
-  @HiveField(6)
+  @HiveField(6, defaultValue: 0)
   int nftNb;
 
   String nativeTokenValueToString() {

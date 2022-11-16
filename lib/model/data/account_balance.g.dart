@@ -19,8 +19,8 @@ class AccountBalanceAdapter extends TypeAdapter<AccountBalance> {
     return AccountBalance(
       nativeTokenValue: fields[0] as double,
       nativeTokenName: fields[1] as String,
-      tokensFungiblesNb: fields[5] as int,
-      nftNb: fields[6] as int,
+      tokensFungiblesNb: fields[5] == null ? 0 : fields[5] as int,
+      nftNb: fields[6] == null ? 0 : fields[6] as int,
     );
   }
 
