@@ -35,20 +35,23 @@ class ContactCreationFormNotifier
         ContactCreationFormProvider.initialContactCreationForm,
       );
 
-  void setName(String name) {
+  Future<void> setName(String name, BuildContext context) async {
     state = state.copyWith(name: name, error: '');
-  }
 
-  Future<void> setAddress(String address, BuildContext context) async {
-    state = state.copyWith(address: address, error: '');
-
-    if (Address(address).isValid) {
-      final publicKey = (await sl.get<ApiService>().getLastTransaction(
-        [address],
+    if ((state.publicKey.isEmpty && state.publicKeyRecovered.isEmpty) &&
+        Address(state.address).isValid) {
+      final publicKeyMap = await sl.get<ApiService>().getLastTransaction(
+        [state.address],
         request: 'previousPublicKey',
-      ))[address]!
-          .previousPublicKey;
-      if (publicKey != null) {
+      );
+      var publicKey = '';
+      if (publicKeyMap.isNotEmpty &&
+          publicKeyMap[state.address] != null &&
+          publicKeyMap[state.address]!.previousPublicKey != null) {
+        publicKey = publicKeyMap[state.address]!.previousPublicKey!;
+      }
+
+      if (publicKey.isNotEmpty) {
         state = state.copyWith(publicKeyRecovered: publicKey);
       } else {
         state = state.copyWith(
@@ -56,6 +59,36 @@ class ContactCreationFormNotifier
           error: AppLocalization.of(context)!.contactPublicKeyNotFound,
         );
       }
+    }
+  }
+
+  Future<void> setAddress(String address, BuildContext context) async {
+    state = state.copyWith(address: address, error: '');
+
+    if (Address(address).isValid) {
+      final publicKeyMap = await sl.get<ApiService>().getLastTransaction(
+        [address],
+        request: 'previousPublicKey',
+      );
+      var publicKey = '';
+      if (publicKeyMap.isNotEmpty &&
+          publicKeyMap[address] != null &&
+          publicKeyMap[address]!.previousPublicKey != null) {
+        publicKey = publicKeyMap[address]!.previousPublicKey!;
+      }
+
+      if (publicKey.isNotEmpty) {
+        state = state.copyWith(publicKeyRecovered: publicKey);
+      } else {
+        state = state.copyWith(
+          publicKeyRecovered: '',
+          error: AppLocalization.of(context)!.contactPublicKeyNotFound,
+        );
+      }
+    } else {
+      state = state.copyWith(
+        publicKeyRecovered: '',
+      );
     }
   }
 

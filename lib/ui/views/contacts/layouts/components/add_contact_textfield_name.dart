@@ -49,8 +49,8 @@ class _AddContactTextFieldNameState
         UpperCaseTextFormatter(),
         LengthLimitingTextInputFormatter(20),
       ],
-      onChanged: (text) {
-        contactCreationNotifier.setName(text);
+      onChanged: (text) async {
+        contactCreationNotifier.setName(text, context);
       },
     );
   }
