@@ -80,7 +80,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       errorNameText: '',
     );
     if (state.feeEstimationOrZero >
-        state.accountBalance.nativeTokenValue! - fees) {
+        state.accountBalance.nativeTokenValue - fees) {
       state = state.copyWith(
         errorNameText:
             AppLocalization.of(context)!.insufficientBalance.replaceAll(
@@ -224,7 +224,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
   ) {
     final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
 
-    if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+    if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
       state = state.copyWith(
         errorAmountText:
             AppLocalization.of(context)!.insufficientBalance.replaceAll(

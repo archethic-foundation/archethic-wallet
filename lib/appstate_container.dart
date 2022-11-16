@@ -1,13 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -70,11 +68,6 @@ class StateContainerState extends ConsumerState<StateContainer> {
     if (appWallet == null) return;
     final currency = ref.read(SettingsProviders.settings).currency;
 
-    final tokenPrice = await Price.getCurrency(currency.name);
-
-    (await ref.read(AccountProviders.selectedAccount.future))!
-        .balance!
-        .tokenPrice = tokenPrice;
     sl.get<DBHelper>().saveAppWallet(HiveAppWalletDTO.fromModel(appWallet));
     await chartInfos!.updateCoinsChart(
       currency.name,

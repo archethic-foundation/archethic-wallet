@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -37,6 +38,10 @@ class TransactionDetail extends ConsumerWidget {
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+
+    final selectedCurrencyMarketPrice =
+        ref.watch(MarketPriceProviders.selectedCurrencyMarketPrice).valueOrNull;
+
     String? contactAddress;
     if (transaction.typeTx == RecentTransaction.transferOutput) {
       contactAddress = transaction.recipient;
@@ -46,7 +51,9 @@ class TransactionDetail extends ConsumerWidget {
       }
     }
 
-    if (accountSelected == null) return const SizedBox();
+    if (accountSelected == null || selectedCurrencyMarketPrice == null) {
+      return const SizedBox();
+    }
 
     return GestureDetector(
       onTap: () {
@@ -155,8 +162,7 @@ class TransactionDetail extends ConsumerWidget {
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
                                           settings.currency.name,
-                                          accountSelected
-                                              .balance!.tokenPrice!.amount!,
+                                          selectedCurrencyMarketPrice.amount,
                                           transaction.amount!,
                                         ),
                                         style: theme.textStyleSize12W400Primary,
@@ -179,8 +185,7 @@ class TransactionDetail extends ConsumerWidget {
                                       Text(
                                         CurrencyUtil.convertAmountFormated(
                                           settings.currency.name,
-                                          accountSelected
-                                              .balance!.tokenPrice!.amount!,
+                                          selectedCurrencyMarketPrice.amount,
                                           transaction.amount!,
                                         ),
                                         style: theme.textStyleSize12W400Primary,
@@ -311,11 +316,11 @@ class TransactionDetail extends ConsumerWidget {
                               primaryCurrency.primaryCurrency ==
                                       AvailablePrimaryCurrencyEnum.native
                                   ? Text(
-                                      '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(settings.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                      '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(settings.currency.name, selectedCurrencyMarketPrice.amount, transaction.fee!, 8)})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                                   : Text(
-                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(settings.currency.name, accountSelected.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel})',
+                                      '${localizations.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(settings.currency.name, selectedCurrencyMarketPrice.amount, transaction.fee!, 8)} (${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel})',
                                       style: theme.textStyleSize12W400Primary,
                                     )
                             else

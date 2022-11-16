@@ -3,29 +3,41 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/domain/repositories/market.dart';
-import 'package:aewallet/domain/usecases/usecase.dart';
+import 'package:aewallet/domain/usecases/read_usecases.dart';
+import 'package:aewallet/model/available_currency.dart';
 
-class GetUCOMarketPriceUsecase
-    implements UseCase<String, Result<MarketPrice, Failure>> {
-  const GetUCOMarketPriceUsecase({
-    required this.repositories,
+class GetUCOMarketPriceUsecases
+    with ReadStrategy<AvailableCurrencyEnum, MarketPrice> {
+  GetUCOMarketPriceUsecases({
+    required this.localRepository,
+    required this.remoteRepositories,
   });
 
-  final List<MarketRepositoryInterface> repositories;
+  final List<MarketRepositoryInterface> remoteRepositories;
+  final MarketLocalRepositoryInterface localRepository;
 
-  MarketRepositoryInterface _findRepo(String currency) =>
-      repositories.firstWhere(
+  MarketRepositoryInterface _findRepo(AvailableCurrencyEnum currency) {
+    try {
+      return remoteRepositories.firstWhere(
         (repository) => repository.canHandleCurrency(currency),
       );
+    } catch (_) {
+      throw const Failure.invalidValue();
+    }
+  }
 
   @override
-  Future<Result<MarketPrice, Failure>> run(String currency) async {
-    if (currency.isEmpty) {
-      return const Result.failure(Failure.invalidValue());
-    }
+  Future<MarketPrice?> getLocal(AvailableCurrencyEnum command) =>
+      localRepository.getPrice(currency: command).valueOrThrow;
 
-    final repo = _findRepo(currency);
+  @override
+  Future<MarketPrice?> getRemote(AvailableCurrencyEnum command) =>
+      _findRepo(command).getUCOMarketPrice(command).valueOrThrow;
 
-    return repo.getUCOMarketPrice(currency);
-  }
+  @override
+  Future<void> saveLocal(AvailableCurrencyEnum command, MarketPrice value) =>
+      localRepository.setPrice(
+        currency: command,
+        price: value,
+      );
 }

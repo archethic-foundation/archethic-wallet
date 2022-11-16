@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 
 /// Handles read strategies and persistent cache.
 mixin ReadStrategy<CommandT, ValueT> {
+  final String _logPrefix = '[Read ${ValueT.toString()} Usecase]';
+
   /// Reads data from local data source.
   Future<ValueT?> getLocal(CommandT command);
 
@@ -14,10 +18,12 @@ mixin ReadStrategy<CommandT, ValueT> {
   Future<ValueT?> getRemote(CommandT command);
 
   Future<Result<ValueT, Failure>> _getFromRemoteFirst(CommandT command) async {
+    log('$_logPrefix Get from remote first');
     try {
       final remoteValue = await getRemote(command);
 
       if (remoteValue != null) {
+        log('$_logPrefix Using and saving remote value');
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
@@ -28,12 +34,14 @@ mixin ReadStrategy<CommandT, ValueT> {
     try {
       final localValue = await getLocal(command);
       if (localValue != null) {
+        log('$_logPrefix Using local value');
         return Result.success(localValue);
       }
     } catch (_) {
       // TODO(Chralu): Should we log local failure ?
     }
 
+    log('$_logPrefix Unable to fetch local or remote value');
     return const Result.failure(
       Failure.other(
         cause: 'Unable to fetch local or remote value',
@@ -42,9 +50,14 @@ mixin ReadStrategy<CommandT, ValueT> {
   }
 
   Future<Result<ValueT, Failure>> _getFromLocalFirst(CommandT command) async {
+    log('$_logPrefix Get from local first');
+
     try {
       final localValue = await getLocal(command);
-      if (localValue != null) return Result.success(localValue);
+      if (localValue != null) {
+        log('$_logPrefix Using local value');
+        return Result.success(localValue);
+      }
     } catch (_) {
       // TODO(Chralu): Should we log local failure ?
     }
@@ -52,12 +65,15 @@ mixin ReadStrategy<CommandT, ValueT> {
     try {
       final remoteValue = await getRemote(command);
       if (remoteValue != null) {
+        log('$_logPrefix Using and saving remote value');
+
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
     } catch (_) {
       // TODO(Chralu): Should we log remote failure ?
     }
+    log('$_logPrefix Unable to fetch local or remote value');
 
     return const Result.failure(
       Failure.other(

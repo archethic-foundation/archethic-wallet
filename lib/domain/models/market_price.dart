@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'market_price.freezed.dart';
 
-/// Represents a token, blockchain agnostic.
+/// Represents a currency conversion ratio.
 @freezed
 class MarketPrice with _$MarketPrice {
   const factory MarketPrice({

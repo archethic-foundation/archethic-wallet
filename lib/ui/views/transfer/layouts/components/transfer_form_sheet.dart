@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -35,12 +34,7 @@ class TransferFormSheet extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final transferNotifier =
-        ref.watch(TransferFormProvider.transferForm.notifier);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -75,10 +69,7 @@ class TransferFormSheet extends ConsumerWidget {
                           child: const TransferTextFieldAddress(),
                         ),
                         FeeInfos(
-                          feeEstimation: transfer.feeEstimation,
-                          tokenPrice:
-                              accountSelected.balance!.tokenPrice!.amount ?? 0,
-                          currencyName: currency.name,
+                          asyncFeeEstimation: transfer.feeEstimation,
                           estimatedFeesNote:
                               transfer.transferType == TransferType.nft
                                   ? localizations.estimatedFeesNoteNFT
@@ -108,6 +99,9 @@ class TransferFormSheet extends ConsumerWidget {
                           size: 14,
                         ),
                         onPressed: () async {
+                          final transferNotifier = ref
+                              .read(TransferFormProvider.transferForm.notifier);
+
                           final isAddressOk =
                               await transferNotifier.controlAddress(
                             context,

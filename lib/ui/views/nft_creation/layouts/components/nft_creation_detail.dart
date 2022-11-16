@@ -82,7 +82,7 @@ class NftCreationDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  nftCreation.accountBalance.nativeTokenValue! -
+                  nftCreation.accountBalance.nativeTokenValue -
                       nftCreation.feeEstimationOrZero,
                   nftCreation.symbolFees(context),
                 ),

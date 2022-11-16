@@ -114,7 +114,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       error: '',
     );
     if (state.feeEstimationOrZero >
-        state.accountBalance.nativeTokenValue! - fees) {
+        state.accountBalance.nativeTokenValue - fees) {
       state = state.copyWith(
         error: AppLocalization.of(context)!.insufficientBalance.replaceAll(
               '%1',

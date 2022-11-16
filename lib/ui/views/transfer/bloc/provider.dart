@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -93,7 +94,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
           errorAmountText:
-              amountInUCO > state.accountBalance.nativeTokenValue! - fees
+              amountInUCO > state.accountBalance.nativeTokenValue - fees
                   ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
                         '%1',
                         state.symbol(context),
@@ -133,7 +134,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
                     '%1',
                     state.symbol(context),
                   )
-              : fees > state.accountBalance.nativeTokenValue!
+              : fees > state.accountBalance.nativeTokenValue
                   ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
                         '%1',
                         state.symbolFees(context),
@@ -169,7 +170,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
-          errorAmountText: fees > state.accountBalance.nativeTokenValue!
+          errorAmountText: fees > state.accountBalance.nativeTokenValue
               ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
                     '%1',
                     state.symbolFees(context),
@@ -360,7 +361,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final fees = await _calculateFees(
       context: context,
-      formState: state.copyWith(amount: balance.nativeTokenValue ?? 0),
+      formState: state.copyWith(amount: balance.nativeTokenValue),
     );
 
     if (fees == null) {
@@ -374,10 +375,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case AvailablePrimaryCurrencyEnum.fiat:
         var amountMax = 0.0;
         if (tokenPrice != null) {
-          amountMax = (balance.nativeTokenValue! - fees) * tokenPrice;
+          amountMax = (balance.nativeTokenValue - fees) * tokenPrice;
           state = state.copyWith(
             amount: amountMax,
-            amountConverted: balance.nativeTokenValue! - fees,
+            amountConverted: balance.nativeTokenValue - fees,
             feeEstimation: AsyncValue.data(fees),
             errorAmountText: '',
           );
@@ -385,7 +386,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         break;
       case AvailablePrimaryCurrencyEnum.native:
         state = state.copyWith(
-          amount: balance.nativeTokenValue! - fees,
+          amount: balance.nativeTokenValue - fees,
           feeEstimation: AsyncValue.data(fees),
           errorAmountText: '',
         );
@@ -396,7 +397,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   Future<void> setAmount({
     required BuildContext context,
     required double amount,
-    double? tokenPrice,
   }) async {
     if (state.transferType == TransferType.token) {
       state = state.copyWith(
@@ -408,12 +408,21 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return;
     }
 
+    state = state.copyWith(
+      amount: amount,
+      errorAmountText: '',
+    );
+
+    final selectedCurrencyMarketPrice = await ref.watch(
+      MarketPriceProviders.selectedCurrencyMarketPrice.future,
+    );
+
     var amountConverted = 0.0;
-    if (amount > 0 && tokenPrice != null) {
+    if (amount > 0) {
       amountConverted = ref.read(
         PrimaryCurrencyProviders.convertedValue(
           amount: amount,
-          tokenPrice: tokenPrice,
+          tokenPrice: selectedCurrencyMarketPrice.amount,
         ),
       );
     }
@@ -489,7 +498,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         }
 
         if (amountInUCO + feeEstimation >
-            accountSelected.balance!.nativeTokenValue!) {
+            accountSelected.balance!.nativeTokenValue) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalization.of(context)!.insufficientBalance.replaceAll(
@@ -501,7 +510,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         }
         break;
       case TransferType.token:
-        if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+        if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalization.of(context)!.insufficientBalance.replaceAll(
@@ -524,7 +533,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         }
         break;
       case TransferType.nft:
-        if (feeEstimation > accountSelected.balance!.nativeTokenValue!) {
+        if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalization.of(context)!.insufficientBalance.replaceAll(
