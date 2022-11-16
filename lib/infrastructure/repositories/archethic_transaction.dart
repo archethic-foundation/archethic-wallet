@@ -38,12 +38,14 @@ class ArchethicTransactionRepository
   Future<String> getLastTransactionAddress({
     required String genesisAddress,
   }) async {
-    final lastAddressFromAddress = await _addressService.lastAddressFromAddress(
-      genesisAddress,
+    final lastAddressFromAddressMap =
+        await _addressService.lastAddressFromAddress(
+      [genesisAddress],
     );
-    return lastAddressFromAddress == ''
+    return (lastAddressFromAddressMap.isEmpty ||
+            lastAddressFromAddressMap[genesisAddress] == null)
         ? genesisAddress
-        : lastAddressFromAddress;
+        : lastAddressFromAddressMap[genesisAddress]!;
   }
 
   @override
@@ -53,7 +55,7 @@ class ArchethicTransactionRepository
   }) async {
     return Result.guard(
       () async {
-        return _appService.getRecentTransactions(
+        return _appService.getAccountRecentTransactions(
           account.genesisAddress,
           account.lastAddress!,
           walletSeed,

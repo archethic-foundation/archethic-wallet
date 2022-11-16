@@ -24,8 +24,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       type: fields[3] as String?,
       symbol: fields[4] as String?,
       tokenProperties: (fields[12] as Map?)?.cast<String, dynamic>(),
-      onChain: fields[7] as bool?,
-    );
+    )..onChain = fields[7] as bool?;
   }
 
   @override

@@ -105,14 +105,9 @@ class _TransferTextFieldAmountState
             ),
           ],
           onChanged: (String text) async {
-            final selectedCurrencyMarketPrice = await ref.watch(
-              MarketPriceProviders.selectedCurrencyMarketPrice.future,
-            );
-
             await transferNotifier.setAmount(
               context: context,
               amount: double.tryParse(text) ?? 0,
-              tokenPrice: selectedCurrencyMarketPrice.amount,
             );
           },
           textInputAction: TextInputAction.next,

@@ -1,6 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -120,7 +117,7 @@ class RecentTransaction extends HiveObject {
     if (address == null) {
       return null;
     }
-    final localOrRemoteContent;
+    final String? localOrRemoteContent;
     if (content == null || content.isEmpty) {
       final transactionContentMap =
           await sl.get<ApiService>().getTransactionContent([address]);
@@ -129,7 +126,7 @@ class RecentTransaction extends HiveObject {
       localOrRemoteContent = content;
     }
 
-    if (localOrRemoteContent.isEmpty) {
+    if (localOrRemoteContent == null || localOrRemoteContent.isEmpty) {
       return null;
     }
     try {

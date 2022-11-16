@@ -9,6 +9,8 @@ class AccountBalance extends HiveObject {
   AccountBalance({
     required this.nativeTokenValue,
     required this.nativeTokenName,
+    this.tokensFungiblesNb = 0,
+    this.nftNb = 0,
   });
   static const String cryptoCurrencyLabel = 'UCO';
 
@@ -23,6 +25,15 @@ class AccountBalance extends HiveObject {
   /// These fields have been used. Do not reuse those field IDs !
   // @HiveField(2)
   // @HiveField(3)
+  // @HiveField(4)
+
+  /// Token Price
+  @HiveField(5)
+  int tokensFungiblesNb;
+
+  /// Token Price
+  @HiveField(6)
+  int nftNb;
 
   String nativeTokenValueToString() {
     if (nativeTokenValue > 1000000) {
