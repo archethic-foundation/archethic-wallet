@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -36,6 +37,7 @@ class HivePreferencesDatasource {
   static const String showBalances = 'archethic_wallet_showBalances';
   static const String showBlog = 'archethic_wallet_showBlog';
   static const String showPriceChart = 'archethic_wallet_showPriceChart';
+  static const String priceChartScale = 'archethic_wallet_priceChartScale';
   static const String activeVibrations = 'archethic_wallet_activeVibrations';
   static const String activeNotifications =
       'archethic_wallet_activeNotifications';
@@ -171,6 +173,19 @@ class HivePreferencesDatasource {
       _setValue(showPriceChart, value);
 
   bool getShowPriceChart() => _getValue(showPriceChart, defaultValue: true);
+
+  Future<void> setPriceChartIntervalOption(
+          MarketPriceHistoryInterval scaleOption) =>
+      _setValue(
+        priceChartScale,
+        scaleOption.index,
+      );
+
+  MarketPriceHistoryInterval getPriceChartIntervalOption() =>
+      MarketPriceHistoryInterval.values[_getValue(
+        priceChartScale,
+        defaultValue: MarketPriceHistoryInterval.hour.index,
+      )];
 
   Future<void> setLockTimeout(LockTimeoutSetting setting) =>
       _setValue(lockTimeout, setting.getIndex());

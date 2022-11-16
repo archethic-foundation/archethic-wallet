@@ -29,6 +29,8 @@ mixin _$Settings {
   bool get activeNotifications => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
+  MarketPriceHistoryInterval get priceChartIntervalOption =>
+      throw _privateConstructorUsedError;
   ThemeOptions get theme => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -54,6 +56,7 @@ abstract class $SettingsCopyWith<$Res> {
       bool activeNotifications,
       int mainScreenCurrentPage,
       bool showPriceChart,
+      MarketPriceHistoryInterval priceChartIntervalOption,
       ThemeOptions theme});
 }
 
@@ -82,6 +85,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? activeNotifications = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
+    Object? priceChartIntervalOption = null,
     Object? theme = null,
   }) {
     return _then(_value.copyWith(
@@ -133,6 +137,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.showPriceChart
           : showPriceChart // ignore: cast_nullable_to_non_nullable
               as bool,
+      priceChartIntervalOption: null == priceChartIntervalOption
+          ? _value.priceChartIntervalOption
+          : priceChartIntervalOption // ignore: cast_nullable_to_non_nullable
+              as MarketPriceHistoryInterval,
       theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -161,6 +169,7 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
       bool activeNotifications,
       int mainScreenCurrentPage,
       bool showPriceChart,
+      MarketPriceHistoryInterval priceChartIntervalOption,
       ThemeOptions theme});
 }
 
@@ -187,6 +196,7 @@ class __$$_SettingsCopyWithImpl<$Res>
     Object? activeNotifications = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
+    Object? priceChartIntervalOption = null,
     Object? theme = null,
   }) {
     return _then(_$_Settings(
@@ -238,6 +248,10 @@ class __$$_SettingsCopyWithImpl<$Res>
           ? _value.showPriceChart
           : showPriceChart // ignore: cast_nullable_to_non_nullable
               as bool,
+      priceChartIntervalOption: null == priceChartIntervalOption
+          ? _value.priceChartIntervalOption
+          : priceChartIntervalOption // ignore: cast_nullable_to_non_nullable
+              as MarketPriceHistoryInterval,
       theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -262,6 +276,7 @@ class _$_Settings extends _Settings {
       required this.activeNotifications,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
+      required this.priceChartIntervalOption,
       required this.theme})
       : super._();
 
@@ -290,11 +305,13 @@ class _$_Settings extends _Settings {
   @override
   final bool showPriceChart;
   @override
+  final MarketPriceHistoryInterval priceChartIntervalOption;
+  @override
   final ThemeOptions theme;
 
   @override
   String toString() {
-    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, theme: $theme)';
+    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption, theme: $theme)';
   }
 
   @override
@@ -325,6 +342,9 @@ class _$_Settings extends _Settings {
                 other.mainScreenCurrentPage == mainScreenCurrentPage) &&
             (identical(other.showPriceChart, showPriceChart) ||
                 other.showPriceChart == showPriceChart) &&
+            (identical(
+                    other.priceChartIntervalOption, priceChartIntervalOption) ||
+                other.priceChartIntervalOption == priceChartIntervalOption) &&
             (identical(other.theme, theme) || other.theme == theme));
   }
 
@@ -343,6 +363,7 @@ class _$_Settings extends _Settings {
       activeNotifications,
       mainScreenCurrentPage,
       showPriceChart,
+      priceChartIntervalOption,
       theme);
 
   @JsonKey(ignore: true)
@@ -366,6 +387,7 @@ abstract class _Settings extends Settings {
       required final bool activeNotifications,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
+      required final MarketPriceHistoryInterval priceChartIntervalOption,
       required final ThemeOptions theme}) = _$_Settings;
   const _Settings._() : super._();
 
@@ -393,6 +415,8 @@ abstract class _Settings extends Settings {
   int get mainScreenCurrentPage;
   @override
   bool get showPriceChart;
+  @override
+  MarketPriceHistoryInterval get priceChartIntervalOption;
   @override
   ThemeOptions get theme;
   @override

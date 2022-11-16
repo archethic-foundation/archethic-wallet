@@ -29,6 +29,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
       showBalances: loadedPreferences.getShowBalances(),
       showBlog: loadedPreferences.getShowBlog(),
       showPriceChart: loadedPreferences.getShowPriceChart(),
+      priceChartIntervalOption: loadedPreferences.getPriceChartIntervalOption(),
       theme: loadedPreferences.getTheme().theme,
     );
   }
@@ -50,6 +51,8 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences.setShowBalances(settings.showBalances);
     await loadedPreferences.setShowBlog(settings.showBlog);
     await loadedPreferences.setShowPriceChart(settings.showPriceChart);
+    await loadedPreferences
+        .setPriceChartIntervalOption(settings.priceChartIntervalOption);
     await loadedPreferences.setTheme(ThemeSetting(settings.theme));
   }
 }

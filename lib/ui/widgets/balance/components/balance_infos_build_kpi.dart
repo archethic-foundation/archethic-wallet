@@ -9,9 +9,15 @@ class BalanceInfosKpi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final chartInfos = StateContainer.of(context).chartInfos;
-
     final preferences = ref.watch(SettingsProviders.settings);
+
+    final chartInfos = ref
+        .watch(
+          PriceHistoryProviders.chartData(
+            scaleOption: preferences.priceChartIntervalOption,
+          ),
+        )
+        .valueOrNull;
 
     final currencyMarketPrice = ref
         .watch(
@@ -30,13 +36,14 @@ class BalanceInfosKpi extends ConsumerWidget {
       return const SizedBox();
     }
 
-    // TODO(Chralu): ChartInfos is null before pull-to-refresh
-    if (chartInfos?.data == null) {
+    if (chartInfos == null) {
       return const SizedBox(
         height: 30,
       );
     }
 
+    final selectedPriceHistoryInterval =
+        ref.watch(PriceHistoryProviders.scaleOption);
     return FadeIn(
       duration: const Duration(milliseconds: 1000),
       child: Container(
@@ -54,38 +61,39 @@ class BalanceInfosKpi extends ConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              AutoSizeText(
-                '${chartInfos!.getPriceChangePercentage(StateContainer.of(context).idChartOption!)!.toStringAsFixed(2)}%',
-                style: StateContainer.of(context)
-                            .chartInfos!
-                            .getPriceChangePercentage(
-                              StateContainer.of(context).idChartOption!,
-                            )! >=
-                        0
-                    ? theme.textStyleSize12W100PositiveValue
-                    : theme.textStyleSize12W100NegativeValue,
-              ),
+
+              /// TODO(Chralu): reactiver
+              // AutoSizeText(
+              //            '${chartInfos!.getPriceChangePercentage(selectedPriceHistoryInterval)!.toStringAsFixed(2)}%',
+              //   style: chartInfos.getPriceChangePercentage(
+              //             selectedPriceHistoryInterval,
+              //           )! >=
+              //           0
+              //       ? theme.textStyleSize12W100PositiveValue
+              //       : theme.textStyleSize12W100NegativeValue,
+              // ),
               const SizedBox(width: 5),
-              if (chartInfos.getPriceChangePercentage(
-                    StateContainer.of(context).idChartOption!,
-                  )! >=
-                  0)
-                FaIcon(
-                  FontAwesomeIcons.caretUp,
-                  color: theme.positiveValue,
-                )
-              else
-                FaIcon(
-                  FontAwesomeIcons.caretDown,
-                  color: theme.negativeValue,
-                ),
+
+              /// TODO(Chralu): reactiver
+              // if (chartInfos.getPriceChangePercentage(
+              //       selectedPriceHistoryInterval,
+              //     )! >=
+              //     0)
+              //   FaIcon(
+              //     FontAwesomeIcons.caretUp,
+              //     color: theme.positiveValue,
+              //   )
+              // else
+              FaIcon(
+                FontAwesomeIcons.caretDown,
+                color: theme.negativeValue,
+              ),
               const SizedBox(
                 width: 10,
               ),
               AutoSizeText(
-                ChartInfos.getChartOptionLabel(
+                selectedPriceHistoryInterval.getChartOptionLabel(
                   context,
-                  StateContainer.of(context).idChartOption!,
                 ),
                 style: theme.textStyleSize12W100Primary,
               ),

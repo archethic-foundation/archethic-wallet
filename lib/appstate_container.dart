@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -39,9 +38,6 @@ class StateContainer extends ConsumerStatefulWidget {
 }
 
 class StateContainerState extends ConsumerState<StateContainer> {
-  ChartInfos? chartInfos = ChartInfos();
-  String? idChartOption = '1h';
-
   @override
   void initState() {
     super.initState();
@@ -69,25 +65,11 @@ class StateContainerState extends ConsumerState<StateContainer> {
     final currency = ref.read(SettingsProviders.settings).currency;
 
     sl.get<DBHelper>().saveAppWallet(HiveAppWalletDTO.fromModel(appWallet));
-    await chartInfos!.updateCoinsChart(
-      currency.name,
-      option: idChartOption!,
-    );
   }
 
   Future<void> requestUpdate({
     bool forceUpdateChart = true,
-  }) async {
-    final selectedCurrency = ref.read(SettingsProviders.settings).currency;
-
-    final preferences = ref.read(SettingsProviders.settings);
-    if (forceUpdateChart && preferences.showPriceChart) {
-      await chartInfos!.updateCoinsChart(
-        selectedCurrency.name,
-        option: idChartOption!,
-      );
-    }
-  }
+  }) async {}
 
   /// Simple build method that just passes this state through
   /// your InheritedWidget

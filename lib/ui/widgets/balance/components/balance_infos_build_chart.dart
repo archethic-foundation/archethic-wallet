@@ -7,12 +7,17 @@ class BalanceInfosChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var optionChartList = List<OptionChart>.empty(growable: true);
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
 
-    final chartInfos = StateContainer.of(context).chartInfos;
+    final chartInfos = ref
+        .watch(
+          PriceHistoryProviders.chartData(
+            scaleOption: settings.priceChartIntervalOption,
+          ),
+        )
+        .valueOrNull;
 
     return InkWell(
       onTap: () async {
@@ -20,27 +25,11 @@ class BalanceInfosChart extends ConsumerWidget {
               FeedbackType.light,
               settings.activeVibrations,
             );
-        optionChartList = <OptionChart>[
-          OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h')),
-          OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
-          OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d')),
-          OptionChart('14d', ChartInfos.getChartOptionLabel(context, '14d')),
-          OptionChart('30d', ChartInfos.getChartOptionLabel(context, '30d')),
-          OptionChart('60d', ChartInfos.getChartOptionLabel(context, '60d')),
-          OptionChart('200d', ChartInfos.getChartOptionLabel(context, '200d')),
-          OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
-          OptionChart('all', ChartInfos.getChartOptionLabel(context, 'all')),
-        ];
-        final optionChart =
-            _getOptionChart(context, StateContainer.of(context).idChartOption!);
 
         Sheets.showAppHeightNineSheet(
           context: context,
           ref: ref,
-          widget: ChartSheet(
-            optionChartList: optionChartList,
-            optionChart: optionChart,
-          ),
+          widget: const ChartSheet(),
         );
       },
       child: Ink(
@@ -70,9 +59,9 @@ class BalanceInfosChart extends ConsumerWidget {
                 duration: const Duration(milliseconds: 1000),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
-                  child: chartInfos != null && chartInfos.data != null
+                  child: chartInfos != null
                       ? HistoryChart(
-                          intervals: chartInfos.data!,
+                          intervals: chartInfos,
                           gradientColors: LinearGradient(
                             colors: <Color>[
                               theme.text20!,
@@ -91,7 +80,7 @@ class BalanceInfosChart extends ConsumerWidget {
                           tooltipText: theme.textStyleSize12W100Primary,
                           axisTextStyle: theme.textStyleSize12W100Primary,
                           optionChartSelected:
-                              StateContainer.of(context).idChartOption!,
+                              settings.priceChartIntervalOption,
                           currency: settings.currency.name,
                           completeChart: false,
                         )
@@ -103,48 +92,5 @@ class BalanceInfosChart extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  OptionChart _getOptionChart(BuildContext context, String idChartOption) {
-    switch (idChartOption) {
-      case '1h':
-        return OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h'));
-      case '24h':
-        return OptionChart(
-          '24h',
-          ChartInfos.getChartOptionLabel(context, '24h'),
-        );
-      case '7d':
-        return OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d'));
-      case '14d':
-        return OptionChart(
-          '14d',
-          ChartInfos.getChartOptionLabel(context, '14d'),
-        );
-      case '30d':
-        return OptionChart(
-          '30d',
-          ChartInfos.getChartOptionLabel(context, '30d'),
-        );
-      case '60d':
-        return OptionChart(
-          '60d',
-          ChartInfos.getChartOptionLabel(context, '60d'),
-        );
-      case '200d':
-        return OptionChart(
-          '200d',
-          ChartInfos.getChartOptionLabel(context, '200d'),
-        );
-      case '1y':
-        return OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y'));
-      case 'all':
-        return OptionChart(
-          'all',
-          ChartInfos.getChartOptionLabel(context, 'all'),
-        );
-      default:
-        return OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h'));
-    }
   }
 }
