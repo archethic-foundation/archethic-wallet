@@ -95,6 +95,7 @@ class _SessionNotifier extends Notifier<Session> {
         seed,
         settings.currency.name,
         AccountBalance.cryptoCurrencyLabel,
+        loadBalance: false,
       );
 
       if (appWallet == null) {

@@ -245,11 +245,11 @@ class KeychainUtil {
   }
 
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
-    HiveAppWalletDTO? appWallet,
-    String? seed,
-    String currency,
-    String tokenName,
-  ) async {
+      HiveAppWalletDTO? appWallet,
+      String? seed,
+      String currency,
+      String tokenName,
+      {bool loadBalance = true}) async {
     final accounts = List<Account>.empty(growable: true);
 
     HiveAppWalletDTO currentAppWallet;
@@ -325,9 +325,10 @@ class KeychainUtil {
           }
         }
       });
-
-      for (var i = 0; i < accounts.length; i++) {
-        await accounts[i].updateBalance();
+      if (loadBalance) {
+        for (var i = 0; i < accounts.length; i++) {
+          await accounts[i].updateBalance();
+        }
       }
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
