@@ -20,6 +20,7 @@ mixin _$Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() quotaExceeded,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) =>
@@ -28,6 +29,7 @@ mixin _$Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) =>
@@ -36,6 +38,7 @@ mixin _$Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? quotaExceeded,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -45,6 +48,7 @@ mixin _$Failure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) =>
@@ -53,6 +57,7 @@ mixin _$Failure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) =>
@@ -61,6 +66,7 @@ mixin _$Failure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -125,6 +131,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() quotaExceeded,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -136,6 +143,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -147,6 +155,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? quotaExceeded,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -162,6 +171,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -173,6 +183,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -184,6 +195,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -240,6 +252,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() quotaExceeded,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -251,6 +264,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -262,6 +276,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? quotaExceeded,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -277,6 +292,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -288,6 +304,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -299,6 +316,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -313,6 +331,127 @@ class _$_NetworkFailure extends _NetworkFailure {
 abstract class _NetworkFailure extends Failure {
   const factory _NetworkFailure() = _$_NetworkFailure;
   const _NetworkFailure._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_QuotaExceededFailureCopyWith<$Res> {
+  factory _$$_QuotaExceededFailureCopyWith(_$_QuotaExceededFailure value,
+          $Res Function(_$_QuotaExceededFailure) then) =
+      __$$_QuotaExceededFailureCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_QuotaExceededFailureCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_QuotaExceededFailure>
+    implements _$$_QuotaExceededFailureCopyWith<$Res> {
+  __$$_QuotaExceededFailureCopyWithImpl(_$_QuotaExceededFailure _value,
+      $Res Function(_$_QuotaExceededFailure) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_QuotaExceededFailure extends _QuotaExceededFailure {
+  const _$_QuotaExceededFailure() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.quotaExceeded()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_QuotaExceededFailure);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function() quotaExceeded,
+    required TResult Function() invalidValue,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return quotaExceeded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return quotaExceeded?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function()? quotaExceeded,
+    TResult Function()? invalidValue,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (quotaExceeded != null) {
+      return quotaExceeded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return quotaExceeded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return quotaExceeded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (quotaExceeded != null) {
+      return quotaExceeded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuotaExceededFailure extends Failure {
+  const factory _QuotaExceededFailure() = _$_QuotaExceededFailure;
+  const _QuotaExceededFailure._() : super._();
 }
 
 /// @nodoc
@@ -355,6 +494,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() quotaExceeded,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -366,6 +506,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -377,6 +518,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? quotaExceeded,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -392,6 +534,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -403,6 +546,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -414,6 +558,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -502,6 +647,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() quotaExceeded,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -513,6 +659,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -524,6 +671,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? quotaExceeded,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -539,6 +687,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -550,6 +699,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -561,6 +711,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),

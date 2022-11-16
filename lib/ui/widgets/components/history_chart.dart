@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/model/asset_history_interval.dart';
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/util/currency_util.dart';
 // Package imports:
 import 'package:collection/collection.dart';
@@ -20,13 +20,13 @@ class HistoryChart extends StatelessWidget {
     required this.completeChart,
   });
 
-  final List<AssetHistoryInterval> intervals;
+  final List<PriceHistoryValue> intervals;
   final Gradient gradientColors;
   final Gradient gradientColorsBar;
   final Color tooltipBg;
   final TextStyle tooltipText;
   final TextStyle axisTextStyle;
-  final String optionChartSelected;
+  final MarketPriceHistoryInterval optionChartSelected;
   final String currency;
   final bool completeChart;
 
@@ -78,45 +78,23 @@ class HistoryChart extends StatelessWidget {
               var title = '';
               final dt = intervals[touchedSpot.x.toInt()].time;
               switch (optionChartSelected) {
-                case '1h':
+                case MarketPriceHistoryInterval.hour:
+                case MarketPriceHistoryInterval.day:
                   title =
                       '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                   break;
-                case '24h':
-                  title =
-                      '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-                  break;
-                case '7d':
-                  title =
-                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                  break;
-                case '14d':
+                case MarketPriceHistoryInterval.week:
+                case MarketPriceHistoryInterval.twoWeeks:
+                case MarketPriceHistoryInterval.month:
+                case MarketPriceHistoryInterval.twoMonths:
                   title =
                       '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                   break;
-                case '30d':
-                  title =
-                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                  break;
-                case '60d':
-                  title =
-                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                  break;
-                case '200d':
+                case MarketPriceHistoryInterval.twoHundredDays:
+                case MarketPriceHistoryInterval.year:
+                case MarketPriceHistoryInterval.all:
                   title =
                       '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                  break;
-                case '1y':
-                  title =
-                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                  break;
-                case 'all':
-                  title =
-                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                  break;
-                default:
-                  title =
-                      '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                   break;
               }
               return LineTooltipItem(
@@ -148,43 +126,25 @@ class HistoryChart extends StatelessWidget {
                         value < intervals.length - intervals.length ~/ 4) {
                       final dt = intervals[value.toInt()].time;
                       switch (optionChartSelected) {
-                        case '1h':
+                        case MarketPriceHistoryInterval.day:
+                          title = '${dt.hour.toString().padLeft(2, '0')}h';
+                          break;
+                        case MarketPriceHistoryInterval.hour:
                           title =
                               '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                           break;
-                        case '24h':
-                          title = '${dt.hour.toString().padLeft(2, '0')}h';
-                          break;
-                        case '7d':
+                        case MarketPriceHistoryInterval.week:
+                        case MarketPriceHistoryInterval.twoWeeks:
+                        case MarketPriceHistoryInterval.month:
+                        case MarketPriceHistoryInterval.twoMonths:
                           title =
                               '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                           break;
-                        case '14d':
-                          title =
-                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                          break;
-                        case '30d':
-                          title =
-                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                          break;
-                        case '60d':
-                          title =
-                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                          break;
-                        case '200d':
+                        case MarketPriceHistoryInterval.twoHundredDays:
+                        case MarketPriceHistoryInterval.year:
+                        case MarketPriceHistoryInterval.all:
                           title =
                               '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                          break;
-                        case '1y':
-                          title =
-                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                          break;
-                        case 'all':
-                          title =
-                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                          break;
-                        default:
-                          title = '${dt.hour.toString().padLeft(2, '0')}h';
                           break;
                       }
                     }

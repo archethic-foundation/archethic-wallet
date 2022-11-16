@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:aewallet/application/settings/language.dart';
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/repositories/settings.dart';
@@ -140,6 +141,15 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> setLanguageSeed(String languageSeed) => _update(
         state.copyWith(
           languageSeed: languageSeed,
+        ),
+      );
+
+  Future<void> setPriceChartInterval(
+    MarketPriceHistoryInterval chartIntervalOption,
+  ) =>
+      _update(
+        state.copyWith(
+          priceChartIntervalOption: chartIntervalOption,
         ),
       );
 }

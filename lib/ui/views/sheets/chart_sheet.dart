@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
@@ -17,67 +18,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class ChartSheet extends ConsumerStatefulWidget {
+class ChartSheet extends ConsumerWidget {
   const ChartSheet({
     super.key,
-    required this.optionChartList,
-    required this.optionChart,
   });
 
-  final List<OptionChart> optionChartList;
-  final OptionChart? optionChart;
-  @override
-  ConsumerState<ChartSheet> createState() => _ChartSheetState();
-}
+  static const List<MarketPriceHistoryInterval> _chartIntervalOptions = [
+    MarketPriceHistoryInterval.hour,
+    MarketPriceHistoryInterval.day,
+    MarketPriceHistoryInterval.week,
+    MarketPriceHistoryInterval.twoWeeks,
+    MarketPriceHistoryInterval.month,
+    MarketPriceHistoryInterval.twoMonths,
+    MarketPriceHistoryInterval.twoHundredDays,
+    MarketPriceHistoryInterval.year,
+    MarketPriceHistoryInterval.all,
+  ];
 
-class _ChartSheetState extends ConsumerState<ChartSheet> {
-  OptionChart? optionChartSelected;
-
-  int bottomBarCurrentPage = 0;
-  @override
-  void initState() {
-    optionChartSelected = widget.optionChart;
-    switch (optionChartSelected!.id) {
-      case '1h':
-        bottomBarCurrentPage = 0;
-        break;
-      case '24h':
-        bottomBarCurrentPage = 1;
-        break;
-      case '7d':
-        bottomBarCurrentPage = 2;
-        break;
-      case '14d':
-        bottomBarCurrentPage = 3;
-        break;
-      case '30d':
-        bottomBarCurrentPage = 4;
-        break;
-      case '60d':
-        bottomBarCurrentPage = 5;
-        break;
-      case '200d':
-        bottomBarCurrentPage = 6;
-        break;
-      case '1y':
-        bottomBarCurrentPage = 7;
-        break;
-      case 'all':
-        bottomBarCurrentPage = 8;
-        break;
-      default:
-        bottomBarCurrentPage = 0;
-        break;
-    }
-    super.initState();
-  }
+  int _intervalOptionIndex(MarketPriceHistoryInterval interval) =>
+      _chartIntervalOptions.indexWhere((element) => element == interval);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
+
+    final selectedInterval = ref.watch(PriceHistoryProviders.scaleOption);
+    final asyncChartInfos = ref.watch(
+      PriceHistoryProviders.chartData(
+        scaleOption: selectedInterval,
+      ),
+    );
+
     return Column(
       children: <Widget>[
         SheetHeader(
@@ -90,33 +64,38 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
             padding: const EdgeInsets.only(top: 20),
             child: Padding(
               padding: const EdgeInsets.only(right: 5, left: 5),
-              child: StateContainer.of(context).chartInfos != null &&
-                      StateContainer.of(context).chartInfos!.data != null
-                  ? HistoryChart(
-                      intervals: StateContainer.of(context).chartInfos!.data!,
-                      gradientColors: LinearGradient(
-                        colors: <Color>[
-                          theme.text20!,
-                          theme.text!,
-                        ],
-                      ),
-                      gradientColorsBar: LinearGradient(
-                        colors: <Color>[
-                          theme.text!.withOpacity(0.9),
-                          theme.text!.withOpacity(0),
-                        ],
-                        begin: Alignment.center,
-                        end: Alignment.bottomCenter,
-                      ),
-                      tooltipBg: theme.backgroundDark!,
-                      tooltipText: theme.textStyleSize12W100Primary,
-                      axisTextStyle: theme.textStyleSize12W100Primary,
-                      optionChartSelected:
-                          StateContainer.of(context).idChartOption!,
-                      currency: currency.name,
-                      completeChart: true,
-                    )
-                  : const SizedBox(),
+              child: asyncChartInfos.when(
+                data: (chartInfos) => HistoryChart(
+                  intervals: chartInfos,
+                  gradientColors: LinearGradient(
+                    colors: <Color>[
+                      theme.text20!,
+                      theme.text!,
+                    ],
+                  ),
+                  gradientColorsBar: LinearGradient(
+                    colors: <Color>[
+                      theme.text!.withOpacity(0.9),
+                      theme.text!.withOpacity(0),
+                    ],
+                    begin: Alignment.center,
+                    end: Alignment.bottomCenter,
+                  ),
+                  tooltipBg: theme.backgroundDark!,
+                  tooltipText: theme.textStyleSize12W100Primary,
+                  axisTextStyle: theme.textStyleSize12W100Primary,
+                  optionChartSelected: selectedInterval,
+                  currency: currency.name,
+                  completeChart: true,
+                ),
+                error: (_, __) {
+                  if (asyncChartInfos.isLoading) {
+                    return const _ChartLoading();
+                  }
+                  return const _ChartLoadFailed();
+                },
+                loading: () => const _ChartLoading(),
+              ),
             ),
           ),
         ),
@@ -126,7 +105,7 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
         Wrap(
           children: [
             BottomBar(
-              selectedIndex: bottomBarCurrentPage,
+              selectedIndex: _intervalOptionIndex(selectedInterval),
               curve: Curves.easeIn,
               duration: const Duration(milliseconds: 500),
               itemPadding: const EdgeInsets.all(10),
@@ -138,24 +117,16 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
                       FeedbackType.light,
                       settings.activeVibrations,
                     );
-                await StateContainer.of(context).chartInfos!.updateCoinsChart(
-                      settings.currency.name,
-                      option: widget.optionChartList[index].id,
-                    );
+                await ref
+                    .read(SettingsProviders.settings.notifier)
+                    .setPriceChartInterval(_chartIntervalOptions[index]);
 
-                setState(() {
-                  optionChartSelected = widget.optionChartList[index];
-                  StateContainer.of(context).idChartOption =
-                      widget.optionChartList[index].id;
-
-                  bottomBarCurrentPage = index;
-                });
                 await StateContainer.of(context).requestUpdate();
               },
-              items: widget.optionChartList.map((OptionChart optionChart) {
+              items: _chartIntervalOptions.map((optionChart) {
                 return BottomBarItem(
                   icon: Text(
-                    ChartInfos.getChartOptionLabel(context, optionChart.id),
+                    optionChart.getChartOptionLabel(context),
                     style: theme.textStyleSize12W100Primary,
                   ),
                   backgroundColorOpacity:
@@ -169,18 +140,51 @@ class _ChartSheetState extends ConsumerState<ChartSheet> {
             ),
           ],
         ),
-        if (StateContainer.of(context).chartInfos != null)
-          const BalanceInfosKpi()
-        else
-          const SizedBox(),
+        if (asyncChartInfos.valueOrNull != null) const BalanceInfosKpi()
       ],
     );
   }
 }
 
-class OptionChart {
-  const OptionChart(this.id, this.label);
+class _ChartLoading extends ConsumerWidget {
+  const _ChartLoading();
 
-  final String label;
-  final String id;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Center(
+      child: SizedBox(
+        height: 78,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: theme.text,
+            strokeWidth: 1,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChartLoadFailed extends ConsumerWidget {
+  const _ChartLoadFailed();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final priceChartInterval = ref.watch(PriceHistoryProviders.scaleOption);
+    return Center(
+      child: TextButton(
+        child: Icon(Icons.replay_outlined, color: theme.text, size: 30),
+        onPressed: () {
+          ref.invalidate(
+            PriceHistoryProviders.chartData(
+              scaleOption: priceChartInterval,
+            ),
+          );
+        },
+      ),
+    );
+  }
 }

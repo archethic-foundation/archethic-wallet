@@ -1,3 +1,4 @@
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -22,6 +23,7 @@ class Settings with _$Settings {
     required bool activeNotifications,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
+    required MarketPriceHistoryInterval priceChartIntervalOption,
     required ThemeOptions theme,
   }) = _Settings;
 
@@ -42,6 +44,7 @@ class Settings with _$Settings {
         showBalances: true,
         showBlog: true,
         showPriceChart: true,
+        priceChartIntervalOption: MarketPriceHistoryInterval.hour,
         theme: ThemeOptions.dark,
       );
 

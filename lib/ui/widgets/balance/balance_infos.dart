@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
