@@ -122,9 +122,15 @@ class _IntroNewWalletDisclaimerState
                                 style: theme.textStyleSize14W600Primary,
                                 textAlign: TextAlign.left,
                               ),
+                              const SizedBox(
+                                height: 30,
+                              ),
                               AppTextField(
                                 leftMargin: 0,
                                 rightMargin: 0,
+                                labelText: localizations
+                                    .introNewWalletGetFirstInfosNameBlank,
+                                autofocus: true,
                                 focusNode: nameFocusNode,
                                 autocorrect: false,
                                 controller: nameController,
@@ -137,17 +143,6 @@ class _IntroNewWalletDisclaimerState
                               ),
                               const SizedBox(
                                 height: 40,
-                              ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Icon(
-                                  UiIcons.about,
-                                  color: theme.text,
-                                  size: 20,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
                               ),
                               AutoSizeText(
                                 localizations
