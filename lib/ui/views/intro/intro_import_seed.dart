@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-
-// Project imports:
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -23,10 +21,8 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -462,14 +458,18 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                           final selectedAccount = await ref.read(
                             AccountProviders.selectedAccount.future,
                           );
-                          await _launchSecurityConfiguration(
+                          final securityConfigOk =
+                              await _launchSecurityConfiguration(
                             selectedAccount!.name,
                             newSession.wallet.seed,
                           );
-
                           setState(() {
                             isPressed = false;
                           });
+
+                          if (securityConfigOk == false) {
+                            Navigator.of(context).pop(false);
+                          }
                         },
                       ),
                   ],
