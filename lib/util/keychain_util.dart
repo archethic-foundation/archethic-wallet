@@ -326,6 +326,7 @@ class KeychainUtil {
         }
       });
       if (loadBalance) {
+        // TODO(reddwarf03): use just one call to graphql
         for (var i = 0; i < accounts.length; i++) {
           await accounts[i].updateBalance();
         }
