@@ -1,5 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
-
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -92,11 +91,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                           widget: ContactDetail(
                             contact: data.value,
                           ),
-                          onDisposed: () {
-                            ref
-                                .read(AccountProviders.selectedAccount.notifier)
-                                .refreshRecentTransactions();
-                          },
                         );
                       },
                     );

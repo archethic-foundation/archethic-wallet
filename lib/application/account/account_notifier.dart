@@ -34,20 +34,19 @@ class _AccountNotifier
         (account) async {
           await _refreshRecentTransactions(account);
           await _refreshBalance(account);
+          await account.updateFungiblesTokens();
         },
       );
 
   Future<void> refreshFungibleTokens() => _refresh(
         (account) async {
           await account.updateFungiblesTokens();
-          await _refreshBalance(account);
         },
       );
 
   Future<void> refreshNFTs() => _refresh(
         (account) async {
           await account.updateNFT();
-          await _refreshBalance(account);
         },
       );
 

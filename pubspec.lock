@@ -34,7 +34,7 @@ packages:
     description:
       path: "."
       ref: Optimize-recent-transactions-loading
-      resolved-ref: "5ef409efc299ef50b17c07730e7ffbcbc6be3cbb"
+      resolved-ref: "743131f760b1f89c8f3a6fcc8e1e3847752eee81"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "1.0.26"
@@ -1300,7 +1300,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.6"
+    version: "0.27.7"
   screen_retriever:
     dependency: transitive
     description:

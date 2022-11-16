@@ -102,10 +102,12 @@ class Account extends HiveObject {
   List<int>? nftCategoryList;
 
   Future<void> updateLastAddress() async {
-    final lastAddressFromAddress =
-        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
-    lastAddress =
-        lastAddressFromAddress == '' ? genesisAddress : lastAddressFromAddress;
+    final lastAddressFromAddressMap =
+        await sl.get<AddressService>().lastAddressFromAddress([genesisAddress]);
+    lastAddress = lastAddressFromAddressMap.isEmpty ||
+            lastAddressFromAddressMap[genesisAddress] == null
+        ? genesisAddress
+        : lastAddressFromAddressMap[genesisAddress];
     await updateAccount();
   }
 
@@ -161,6 +163,18 @@ class Account extends HiveObject {
           ? 0
           : fromBigInt(balanceGetResponse.uco).toDouble(),
     );
+    if (balanceGetResponse.token != null) {
+      for (final token in balanceGetResponse.token!) {
+        if (token.tokenId != null) {
+          if (token.tokenId == 0) {
+            accountBalance.tokensFungiblesNb++;
+          } else {
+            accountBalance.nftNb++;
+          }
+        }
+      }
+    }
+
     balance = accountBalance;
     await updateAccount();
   }
@@ -176,7 +190,7 @@ class Account extends HiveObject {
   ) async {
     recentTransactions = await sl
         .get<AppService>()
-        .getRecentTransactions(genesisAddress, lastAddress!, seed, name);
+        .getAccountRecentTransactions(genesisAddress, lastAddress!, seed, name);
     await updateLastLoadingTransactionInputs();
     await updateAccount();
   }

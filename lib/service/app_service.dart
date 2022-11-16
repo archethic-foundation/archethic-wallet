@@ -39,15 +39,50 @@ class AppService {
     return transactionInputs;
   }
 
-  Future<List<RecentTransaction>> getRecentTransactions(
+  Future<Map<String, List<RecentTransaction>>> getRecentTransactions(
+    List<String> genesisAddresses,
+    String seed,
+  ) async {
+    // Find last addresses from each genesis
+    final lastAddressGenesisAdressesMap =
+        await sl.get<AddressService>().lastAddressFromAddress(
+              genesisAddresses,
+            );
+
+    final recentTransactionsMap = <String, List<RecentTransaction>>{};
+    for (final genesisAddress in genesisAddresses) {
+      var lastAddress = genesisAddress;
+      if (lastAddressGenesisAdressesMap[genesisAddress] != null) {
+        lastAddress = lastAddressGenesisAdressesMap[genesisAddress]!;
+      }
+
+      final contact =
+          await sl.get<DBHelper>().getContactWithAddress(genesisAddress);
+
+      final recentTransactions = await getAccountRecentTransactions(
+        genesisAddress,
+        lastAddress,
+        seed,
+        contact!.name,
+      );
+      recentTransactionsMap[contact.name] = recentTransactions;
+    }
+    return recentTransactionsMap;
+  }
+
+  Future<List<RecentTransaction>> getAccountRecentTransactions(
     String genesisAddress,
     String lastAddress,
     String seed,
     String name,
   ) async {
+    dev.log(
+      '>> START getRecentTransactions : ${DateTime.now().toString()}',
+    );
+
     final transactionChainMap = await getTransactionChain(
       [lastAddress, genesisAddress],
-      'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } }, content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
+      'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
     );
 
     final transactionInputsGenesisAddressMap = await getTransactionInputs(
@@ -69,7 +104,6 @@ class AppService {
           ..address = transaction.address
           ..timestamp = transaction.validationStamp!.timestamp
           ..typeTx = RecentTransaction.tokenCreation
-          ..content = transaction.data!.content
           ..fee = fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
               .toDouble();
         if (transaction.address != null) {
@@ -82,7 +116,6 @@ class AppService {
       if (transaction.type! == 'transfer') {
         for (final transfer in transaction.data!.ledger!.uco!.transfers!) {
           final recentTransaction = RecentTransaction()
-            ..content = transaction.data!.content
             ..address = transaction.address
             ..typeTx = RecentTransaction.transferOutput
             ..amount = fromBigInt(
@@ -99,7 +132,6 @@ class AppService {
         }
         for (final transfer in transaction.data!.ledger!.token!.transfers!) {
           final recentTransaction = RecentTransaction()
-            ..content = transaction.data!.content
             ..address = transaction.address
             ..typeTx = RecentTransaction.transferOutput
             ..amount = fromBigInt(
@@ -135,8 +167,8 @@ class AppService {
               ..from = transactionInput.from
               ..recipient = transaction.address
               ..timestamp = transactionInput.timestamp
-              ..fee = 0
-              ..content = transaction.data!.content;
+              ..fee = 0;
+
             if (transactionInput.tokenAddress != null) {
               tokensAddresses.add(transactionInput.tokenAddress!);
               recentTransaction.tokenAddress = transactionInput.tokenAddress;
@@ -165,8 +197,10 @@ class AppService {
     }
 
     // Get token informations
-    final tokensAddressMap =
-        await sl.get<ApiService>().getToken(tokensAddresses.toSet().toList());
+    final tokensAddressMap = await sl.get<ApiService>().getToken(
+          tokensAddresses.toSet().toList(),
+          request: 'genesis, name, id, supply, symbol, type',
+        );
     for (final recentTransaction in recentTransactions) {
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty) {
@@ -242,7 +276,6 @@ class AppService {
     }
 
     // Check if the recent transactions are with contacts
-    // TODO(chralu): How to use a provider here without ref param ?
     final contactsList = await sl.get<DBHelper>().getContacts();
     final contactsListUpdated = <Contact>[];
     final contactsAddresses = <String>[];
@@ -332,6 +365,10 @@ class AppService {
           a.timestamp!.compareTo(b.timestamp!),
     );
 
+    dev.log(
+      '>> END getRecentTransactions : ${DateTime.now().toString()}',
+    );
+
     return recentTransactions.reversed.toList();
   }
 
@@ -370,8 +407,10 @@ class AppService {
 
     if (balance != null && balance.token != null) {
       for (var i = 0; i < balance.token!.length; i++) {
-        final tokenMap =
-            await sl.get<ApiService>().getToken([balance.token![i].address!]);
+        final tokenMap = await sl.get<ApiService>().getToken(
+          [balance.token![i].address!],
+          request: 'genesis, name, id, supply, symbol, type',
+        );
         final token = tokenMap[balance.token![i].address!];
         if (token != null && token.type == 'fungible') {
           final tokenInformations = TokenInformations(
@@ -380,8 +419,6 @@ class AppService {
             type: token.type,
             supply: fromBigInt(token.supply).toDouble(),
             symbol: token.symbol,
-            tokenProperties: token.tokenProperties,
-            onChain: true,
           );
           final accountFungibleToken = AccountToken(
             tokenInformations: tokenInformations,
@@ -420,7 +457,6 @@ class AppService {
               supply: fromBigInt(token.supply).toDouble(),
               symbol: token.symbol,
               tokenProperties: tokenWithoutFile,
-              onChain: true,
             );
             final accountNFT = AccountToken(
               tokenInformations: tokenInformations,
@@ -449,6 +485,7 @@ class AppService {
         balanceToken = balance.token![i];
         balanceTokenList.add(balanceToken);
       }
+      balance.token = balanceTokenList;
     }
     return balance;
   }

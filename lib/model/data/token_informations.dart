@@ -14,7 +14,6 @@ class TokenInformations extends HiveObject {
     this.type,
     this.symbol,
     this.tokenProperties,
-    this.onChain,
   });
 
   /// Address of token
@@ -34,6 +33,7 @@ class TokenInformations extends HiveObject {
   String? symbol;
 
   /// Token on chain or in creation
+  @Deprecated('Unused')
   @HiveField(7)
   bool? onChain;
 

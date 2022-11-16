@@ -248,10 +248,8 @@ class KeychainUtil {
     HiveAppWalletDTO? appWallet,
     String? seed,
     String currency,
-    String tokenName, {
-    bool loadBalance = true,
-    bool loadRecentTransactions = true,
-  }) async {
+    String tokenName,
+  ) async {
     final accounts = List<Account>.empty(growable: true);
 
     HiveAppWalletDTO currentAppWallet;
@@ -329,19 +327,7 @@ class KeychainUtil {
       });
 
       for (var i = 0; i < accounts.length; i++) {
-        final lastAddress = await sl
-            .get<AddressService>()
-            .lastAddressFromAddress(accounts[i].genesisAddress);
-        if (lastAddress.isNotEmpty) {
-          accounts[i].lastAddress = lastAddress;
-        }
-        if (loadBalance) {
-          await accounts[i].updateBalance();
-          await accounts[i].updateFungiblesTokens();
-        }
-        if (loadRecentTransactions) {
-          await accounts[i].updateRecentTransactions(seed);
-        }
+        await accounts[i].updateBalance();
       }
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
