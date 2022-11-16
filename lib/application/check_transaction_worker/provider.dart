@@ -42,12 +42,32 @@ Stream<ReceivedTransaction> _checkTransactions(
       const Duration(seconds: 30),
       (Timer t) async {
         final accounts = await ref.read(AccountProviders.accounts.future);
+
+        var transactionInputMap = <String, List<TransactionInput>>{};
+        final lastAddressContactList = <String>[];
         for (final account in accounts) {
-          final transactionInputMap =
-              await sl.get<AppService>().getTransactionInputs(
-            [account.lastAddress!],
-            'from, amount, timestamp, tokenAddress ',
-          );
+          if (account.lastAddress != null) {
+            lastAddressContactList.add(account.lastAddress!);
+          }
+        }
+        transactionInputMap = await sl.get<AppService>().getTransactionInputs(
+              lastAddressContactList,
+              'from, amount, timestamp, tokenAddress ',
+            );
+
+        final tokenAddressList = <String>[];
+        for (final transactionInputList in transactionInputMap.values) {
+          for (final transactionInput in transactionInputList) {
+            if (transactionInput.tokenAddress != null &&
+                transactionInput.tokenAddress!.isNotEmpty) {
+              tokenAddressList.add(transactionInput.tokenAddress!);
+            }
+          }
+        }
+
+        final symbolMap = await sl.get<ApiService>().getToken(tokenAddressList);
+
+        for (final account in accounts) {
           final transactionInputList =
               transactionInputMap[account.lastAddress!] ?? [];
           for (final transactionInput in transactionInputList) {
@@ -58,10 +78,8 @@ Stream<ReceivedTransaction> _checkTransactions(
             }
             if (transactionInput.from != account.lastAddress) {
               var symbol = 'UCO';
-              if (transactionInput.tokenAddress != null) {
-                final symbolMap = await sl
-                    .get<ApiService>()
-                    .getToken([transactionInput.tokenAddress!]);
+              if (symbolMap.isNotEmpty &&
+                  symbolMap[transactionInput.tokenAddress] != null) {
                 symbol =
                     symbolMap[transactionInput.tokenAddress!]!.symbol ?? 'UCO';
               }
