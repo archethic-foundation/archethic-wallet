@@ -48,7 +48,6 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
       onPressed: () async {
         final nameFocusNode = FocusNode();
         final nameController = TextEditingController();
-        String? nameError;
         await showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -95,18 +94,9 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
                               UpperCaseTextFormatter(),
                             ],
                           ),
-                          if (nameError != null)
-                            SizedBox(
-                              height: 40,
-                              child: Text(
-                                nameError!,
-                                style: theme.textStyleSize12W600Primary,
-                              ),
-                            )
-                          else
-                            const SizedBox(
-                              height: 40,
-                            ),
+                          const SizedBox(
+                            height: 40,
+                          ),
                           Align(
                             alignment: Alignment.topLeft,
                             child: Icon(
@@ -141,15 +131,23 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
                               if (isPressed == true) {
                                 return;
                               }
-                              nameError = '';
+
                               if (nameController.text.isEmpty) {
-                                setState(() {
-                                  nameError = localizations
-                                      .introNewWalletGetFirstInfosNameBlank;
-                                  FocusScope.of(context).requestFocus(
-                                    nameFocusNode,
-                                  );
-                                });
+                                UIUtil.showSnackbar(
+                                  localizations
+                                      .introNewWalletGetFirstInfosNameBlank,
+                                  context,
+                                  ref,
+                                  theme.text!,
+                                  theme.snackBarShadow!,
+                                  duration: const Duration(
+                                    seconds: 5,
+                                  ),
+                                );
+
+                                FocusScope.of(context).requestFocus(
+                                  nameFocusNode,
+                                );
                               } else {
                                 var accountExists = false;
                                 for (final account in accounts) {
@@ -158,12 +156,19 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
                                   }
                                 }
                                 if (accountExists == true) {
-                                  setState(() {
-                                    nameError = localizations.addAccountExists;
-                                    FocusScope.of(context).requestFocus(
-                                      nameFocusNode,
-                                    );
-                                  });
+                                  UIUtil.showSnackbar(
+                                    localizations.addAccountExists,
+                                    context,
+                                    ref,
+                                    theme.text!,
+                                    theme.snackBarShadow!,
+                                    duration: const Duration(
+                                      seconds: 5,
+                                    ),
+                                  );
+                                  FocusScope.of(context).requestFocus(
+                                    nameFocusNode,
+                                  );
                                 } else {
                                   setState(() {
                                     isPressed = true;
@@ -190,8 +195,9 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
                                             );
 
                                         await ref
-                                            .read(SessionProviders
-                                                .session.notifier,)
+                                            .read(
+                                              SessionProviders.session.notifier,
+                                            )
                                             .refresh();
                                       } on ArchethicConnectionException {
                                         UIUtil.showSnackbar(
