@@ -1776,13 +1776,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "newAccountConfirmation": "Are you sure you want to create in your keychain \"%1?\"",
+  "newAccountConfirmation": "Are you sure you want to create in your keychain \"%1\"?",
   "@newAccountConfirmation": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1?\"",
+  "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1\"?",
   "@addAccountConfirmation": {
     "type": "text",
     "placeholders_order": [],
