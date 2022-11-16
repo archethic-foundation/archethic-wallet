@@ -191,7 +191,7 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
 
                                         await ref
                                             .read(SessionProviders
-                                                .session.notifier)
+                                                .session.notifier,)
                                             .refresh();
                                       } on ArchethicConnectionException {
                                         UIUtil.showSnackbar(

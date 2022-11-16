@@ -175,7 +175,7 @@ class HivePreferencesDatasource {
   bool getShowPriceChart() => _getValue(showPriceChart, defaultValue: true);
 
   Future<void> setPriceChartIntervalOption(
-          MarketPriceHistoryInterval scaleOption) =>
+          MarketPriceHistoryInterval scaleOption,) =>
       _setValue(
         priceChartScale,
         scaleOption.index,
