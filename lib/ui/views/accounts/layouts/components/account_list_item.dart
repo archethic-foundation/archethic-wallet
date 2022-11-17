@@ -195,26 +195,41 @@ class AccountListItem extends ConsumerWidget {
                               ],
                             )
                     else
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          AutoSizeText(
+                            '···········',
+                            style: theme.textStyleSize12W600Primary60,
+                          ),
+                          AutoSizeText(
+                            '···········',
+                            style: theme.textStyleSize12W600Primary60,
+                          ),
+                          if (account.accountTokens != null &&
+                              account.accountTokens!.isNotEmpty)
                             AutoSizeText(
                               '···········',
-                              textAlign: TextAlign.center,
+                              style: theme.textStyleSize12W600Primary60,
+                            )
+                          else
+                            AutoSizeText(
+                              '',
                               style: theme.textStyleSize12W600Primary60,
                             ),
+                          if (account.accountNFT != null &&
+                              account.accountNFT!.isNotEmpty)
                             AutoSizeText(
                               '···········',
                               style: theme.textStyleSize12W600Primary60,
-                            ),
+                            )
+                          else
                             AutoSizeText(
-                              '···········',
+                              '',
                               style: theme.textStyleSize12W600Primary60,
                             ),
-                          ],
-                        ),
+                        ],
                       ),
                   ],
                 ),
