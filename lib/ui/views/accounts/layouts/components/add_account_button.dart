@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -193,12 +192,6 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
                                             .addAccount(
                                               name: nameController.text,
                                             );
-
-                                        await ref
-                                            .read(
-                                              SessionProviders.session.notifier,
-                                            )
-                                            .refresh();
                                       } on ArchethicConnectionException {
                                         UIUtil.showSnackbar(
                                           localizations.noConnection,
