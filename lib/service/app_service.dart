@@ -481,7 +481,7 @@ class AppService {
 
       for (final tokenBalance in balance.token!) {
         final token = tokenMap[tokenBalance.address];
-        if (token != null) {
+        if (token != null && token.type == 'fungible') {
           final tokenInformations = TokenInformations(
             address: tokenBalance.address,
             name: token.name,
@@ -510,30 +510,40 @@ class AppService {
     final balance = balanceMap[address];
     final nftList = List<AccountToken>.empty(growable: true);
 
-    if (balance != null && balance.token != null) {
-      for (var i = 0; i < balance.token!.length; i++) {
-        if (balance.token![i].tokenId! > 0) {
-          final tokenMap =
-              await sl.get<ApiService>().getToken([balance.token![i].address!]);
-          final token = tokenMap[balance.token![i].address!];
-          if (token != null && token.type == 'non-fungible') {
-            final tokenWithoutFile = token.tokenProperties!
-              ..removeWhere((key, value) => key == 'file');
-            final tokenInformations = TokenInformations(
-              address: balance.token![i].address,
-              id: token.id,
-              name: token.name,
-              type: token.type,
-              supply: fromBigInt(token.supply).toDouble(),
-              symbol: token.symbol,
-              tokenProperties: tokenWithoutFile,
-            );
-            final accountNFT = AccountToken(
-              tokenInformations: tokenInformations,
-              amount: fromBigInt(balance.token![i].amount).toDouble(),
-            );
-            nftList.add(accountNFT);
-          }
+    final tokenAddressList = <String>[];
+    if (balance == null) {
+      return [];
+    }
+    if (balance.token != null) {
+      for (final tokenBalance in balance.token!) {
+        if (tokenBalance.address != null) {
+          tokenAddressList.add(tokenBalance.address!);
+        }
+      }
+
+      final tokenMap = await sl.get<ApiService>().getToken(
+            tokenAddressList,
+          );
+
+      for (final tokenBalance in balance.token!) {
+        final token = tokenMap[tokenBalance.address];
+        if (token != null && token.type == 'non-fungible') {
+          final tokenWithoutFile = token.tokenProperties!
+            ..removeWhere((key, value) => key == 'file');
+
+          final tokenInformations = TokenInformations(
+            address: tokenBalance.address,
+            name: token.name,
+            type: token.type,
+            supply: fromBigInt(token.supply).toDouble(),
+            symbol: token.symbol,
+            tokenProperties: tokenWithoutFile,
+          );
+          final accountNFT = AccountToken(
+            tokenInformations: tokenInformations,
+            amount: fromBigInt(tokenBalance.amount).toDouble(),
+          );
+          nftList.add(accountNFT);
         }
       }
       nftList.sort(
@@ -541,6 +551,7 @@ class AppService {
             a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
       );
     }
+
     return nftList;
   }
 
