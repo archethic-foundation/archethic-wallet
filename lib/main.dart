@@ -10,7 +10,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -293,10 +292,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   Future<void> _goToIntroScreen() async {
-    // TODO(Chralu): Theme reset should be part of the `logOut` usecase.
-    await ref
-        .read(SettingsProviders.settings.notifier)
-        .selectTheme(ThemeOptions.dark);
     await Navigator.of(context).pushReplacementNamed('/intro_welcome');
   }
 

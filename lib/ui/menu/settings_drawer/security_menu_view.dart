@@ -124,13 +124,6 @@ class SecurityMenuView extends ConsumerWidget {
                               localizations.removeWalletReassurance,
                               localizations.yes,
                               () async {
-                                // TODO(Chralu): Déplacer la selection du theme par défaut dans le UseCase `logout`
-                                await ref
-                                    .read(
-                                      SettingsProviders.settings.notifier,
-                                    )
-                                    .selectTheme(ThemeOptions.dark);
-
                                 await ref
                                     .read(SessionProviders.session.notifier)
                                     .logout();
