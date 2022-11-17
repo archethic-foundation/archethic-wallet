@@ -11,7 +11,7 @@ environment:
 dependencies:
 
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
-  animate_do: ^2.1.0
+  animate_do: ^3.0.2
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   #archethic_lib_dart: ^1.0.26
@@ -118,7 +118,7 @@ dependencies:
       ref: main
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
-  gql: ^0.13.1
+  gql: ^0.14.0
   graphql_flutter: ^5.1.1-beta.4
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
