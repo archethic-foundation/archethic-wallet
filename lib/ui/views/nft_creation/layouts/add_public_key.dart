@@ -80,7 +80,10 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
-            SheetHeader(title: localizations.addPublicKeyHeader),
+            SheetHeader(
+                title: widget.readOnly
+                    ? localizations.getPublicKeyHeader
+                    : localizations.addPublicKeyHeader,),
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
@@ -159,9 +162,9 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                           ],
                         ),
                       GetPublicKeys(
-                        propertyName: widget.propertyName,
-                        propertyValue: widget.propertyValue,
-                      ),
+                          propertyName: widget.propertyName,
+                          propertyValue: widget.propertyValue,
+                          readOnly: widget.readOnly,),
                     ],
                   ),
                 ),

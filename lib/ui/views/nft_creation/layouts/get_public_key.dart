@@ -10,10 +10,12 @@ class GetPublicKeys extends ConsumerWidget {
     super.key,
     required this.propertyName,
     required this.propertyValue,
+    required this.readOnly,
   });
 
   final String propertyName;
   final String propertyValue;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,10 +51,10 @@ class GetPublicKeys extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(5),
                   child: PublicKeyLine(
-                    propertyName: propertyName,
-                    publicKey:
-                        propertySelected.publicKeys[index].publicKey!.publicKey,
-                  ),
+                      propertyName: propertyName,
+                      publicKey: propertySelected
+                          .publicKeys[index].publicKey!.publicKey,
+                      readOnly: readOnly,),
                 );
               },
             ),
