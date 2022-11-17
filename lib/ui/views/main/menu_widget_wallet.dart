@@ -29,7 +29,7 @@ class MenuWidgetWallet extends ConsumerWidget {
         )
         .valueOrNull;
     final preferences = ref.watch(SettingsProviders.settings);
-    final contact = ref.watch(ContactProviders.getSelectedContact);
+    final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
 
     if (accountSelected == null) return const SizedBox();
 
@@ -74,34 +74,31 @@ class MenuWidgetWallet extends ConsumerWidget {
                     icon: UiIcons.send,
                     enabled: false,
                   ),
-                contact.map(
-                  data: (data) {
-                    return _ActionButton(
-                      text: localizations.infos,
-                      icon: UiIcons.receive,
-                      onTap: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
+                if (contact != null)
+                  _ActionButton(
+                    text: localizations.infos,
+                    icon: UiIcons.receive,
+                    onTap: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
 
-                        return Sheets.showAppHeightNineSheet(
-                          context: context,
-                          ref: ref,
-                          widget: ContactDetail(
-                            contact: data.value,
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  error: (error) => const SizedBox(),
-                  loading: (loading) => _ActionButton(
+                      return Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: ContactDetail(
+                          contact: contact,
+                        ),
+                      );
+                    },
+                  )
+                else
+                  _ActionButton(
                     text: localizations.infos,
                     icon: UiIcons.receive,
                     enabled: false,
                   ),
-                ),
                 _ActionButton(
                   text: localizations.buy,
                   icon: UiIcons.buy,
