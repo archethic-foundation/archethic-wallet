@@ -65,7 +65,9 @@ Stream<ReceivedTransaction> _checkTransactions(
           }
         }
 
-        final symbolMap = await sl.get<ApiService>().getToken(tokenAddressList);
+        final symbolMap = await sl
+            .get<ApiService>()
+            .getToken(tokenAddressList, request: 'symbol');
 
         for (final account in accounts) {
           final transactionInputList =
