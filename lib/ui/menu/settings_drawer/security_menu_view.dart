@@ -68,22 +68,8 @@ class SecurityMenuView extends ConsumerWidget {
                     padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       const _SettingsListItem.spacer(),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: theme.text05,
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsetsDirectional.only(
-                            top: 15,
-                            bottom: 15,
-                          ),
-                          child: Text(
-                            localizations.preferences,
-                            style: theme.textStyleSize20W700EquinoxPrimary,
-                          ),
-                        ),
-                      ),
+                      _SettingsListItem.title(text: localizations.preferences),
+
                       // Authentication Method
                       const _SettingsListItem.spacer(),
                       const _AuthMethodSettingsListItem(),
