@@ -20,8 +20,8 @@ class AccountsListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accounts = ref.watch(AccountProviders.sortedAccounts).valueOrNull ??
-        []; // TODO(Chralu): show a loading screen ?
+    final accounts =
+        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
     return Container(
       padding: const EdgeInsets.only(top: 40, bottom: 50),
       child: Column(
