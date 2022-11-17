@@ -135,9 +135,10 @@ class NFTListDetail extends ConsumerWidget {
             ),
           ),
         ),
-        NFTCardBottom(
+        // TODO(reddwarf03): Implement this feature
+        /* NFTCardBottom(
           tokenInformations: tokenInformations,
-        ),
+        ),*/
       ],
     );
   }
