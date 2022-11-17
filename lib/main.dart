@@ -8,7 +8,6 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_themes.dart';
@@ -65,9 +64,7 @@ Future<void> main() async {
   ).then((_) {
     runApp(
       const ProviderScope(
-        child: StateContainer(
-          child: App(),
-        ),
+        child: App(),
       ),
     );
   });
@@ -286,7 +283,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           canCancel: false,
         );
       } else {
-        await StateContainer.of(context).requestUpdate();
         Navigator.of(context).pushReplacementNamed('/home');
       }
     } catch (e) {

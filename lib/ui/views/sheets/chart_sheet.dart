@@ -2,7 +2,6 @@
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -120,8 +119,6 @@ class ChartSheet extends ConsumerWidget {
                 await ref
                     .read(SettingsProviders.settings.notifier)
                     .setPriceChartInterval(_chartIntervalOptions[index]);
-
-                await StateContainer.of(context).requestUpdate();
               },
               items: _chartIntervalOptions.map((optionChart) {
                 return BottomBarItem(

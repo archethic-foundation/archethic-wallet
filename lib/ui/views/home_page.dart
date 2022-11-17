@@ -6,7 +6,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/bus/notifications_event.dart';
@@ -93,10 +92,6 @@ class _HomePageState extends ConsumerState<HomePage>
     _switchAccountSub = EventTaxiImpl.singleton()
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
-      setState(() {
-        StateContainer.of(context).requestUpdate();
-      });
-
       if (event.delayPop) {
         Future<void>.delayed(const Duration(milliseconds: 300), () {
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -109,8 +104,6 @@ class _HomePageState extends ConsumerState<HomePage>
     _notificationsSub = EventTaxiImpl.singleton()
         .registerTo<NotificationsEvent>()
         .listen((NotificationsEvent event) async {
-      await StateContainer.of(context).requestUpdate();
-
       Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
     });
   }
