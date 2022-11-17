@@ -64,4 +64,15 @@ abstract class AuthenticationProviders {
       AuthenticationSettings>(
     AuthenticationSettingsNotifier.new,
   );
+
+  static Future<void> reset(Ref ref) async {
+    await ref.read(AuthenticationProviders.settings.notifier).reset();
+    ref.read(_authenticationRepository)
+      ..resetFailedAttempts()
+      ..resetLock();
+
+    ref
+      ..invalidate(passwordAuthentication)
+      ..invalidate(pinAuthentication);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'contact.g.dart';
@@ -159,6 +160,10 @@ class ContactRepository {
   Future<Contact> getContactWithPublicKey(String publicKey) async {
     return sl.get<DBHelper>().getContactWithPublicKey(publicKey);
   }
+
+  Future<void> clear() async {
+    await sl.get<DBHelper>().clearContacts();
+  }
 }
 
 abstract class ContactProviders {
@@ -171,4 +176,16 @@ abstract class ContactProviders {
   static final getContactWithAddress = _getContactWithAddressProvider;
   static final getContactWithPublicKey = _getContactWithPublicKeyProvider;
   static final getSelectedContact = _getSelectedContactProvider;
+
+  static Future<void> reset(Ref ref) async {
+    await ref.read(_contactRepositoryProvider).clear();
+    ref
+      ..invalidate(fetchContacts)
+      ..invalidate(isContactExistsWithName)
+      ..invalidate(isContactExistsWithAddress)
+      ..invalidate(getContactWithName)
+      ..invalidate(getContactWithAddress)
+      ..invalidate(getContactWithPublicKey)
+      ..invalidate(getSelectedContact);
+  }
 }

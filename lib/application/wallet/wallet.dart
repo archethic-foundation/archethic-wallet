@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
