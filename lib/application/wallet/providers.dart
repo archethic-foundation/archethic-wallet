@@ -52,9 +52,12 @@ class _SessionNotifier extends Notifier<Session> {
 
   Future<void> logout() async {
     await ref.read(SettingsProviders.settings.notifier).reset();
-    await ref.read(AuthenticationProviders.settings.notifier).reset();
+    await AuthenticationProviders.reset(ref);
+    await ContactProviders.reset(ref);
+
     await (await HiveVaultDatasource.getInstance()).clearAll();
-    await sl.get<DBHelper>().clearAll();
+    await _dbHelper.clearAppWallet();
+
     state = const Session.loggedOut();
   }
 
