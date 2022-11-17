@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
@@ -164,8 +163,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             );
           }
           if (error == false) {
-            await StateContainer.of(context).requestUpdate();
-
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
               (Route<dynamic> route) => false,

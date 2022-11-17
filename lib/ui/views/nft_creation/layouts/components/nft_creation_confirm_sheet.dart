@@ -5,7 +5,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
@@ -135,9 +134,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
       duration: const Duration(milliseconds: 5000),
     );
 
-    setState(() {
-      StateContainer.of(context).requestUpdate();
-    });
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
   }
 
