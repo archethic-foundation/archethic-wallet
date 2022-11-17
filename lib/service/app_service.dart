@@ -485,6 +485,7 @@ class AppService {
           final tokenInformations = TokenInformations(
             address: tokenBalance.address,
             name: token.name,
+            id: token.id,
             type: token.type,
             supply: fromBigInt(token.supply).toDouble(),
             symbol: token.symbol,
@@ -534,6 +535,7 @@ class AppService {
           final tokenInformations = TokenInformations(
             address: tokenBalance.address,
             name: token.name,
+            id: token.id,
             type: token.type,
             supply: fromBigInt(token.supply).toDouble(),
             symbol: token.symbol,
