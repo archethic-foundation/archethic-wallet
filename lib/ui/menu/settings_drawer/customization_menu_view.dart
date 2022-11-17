@@ -68,22 +68,7 @@ class CustomizationMenuView extends ConsumerWidget {
                   ListView(
                     padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: theme.text05,
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsetsDirectional.only(
-                            top: 20,
-                            bottom: 10,
-                          ),
-                          child: Text(
-                            localizations.preferences,
-                            style: theme.textStyleSize24W700EquinoxPrimary,
-                          ),
-                        ),
-                      ),
+                      _SettingsListItem.title(text: localizations.preferences),
                       const _SettingsListItem.spacer(),
                       const _CurrencySettingsListItem(),
                       const _SettingsListItem.spacer(),
