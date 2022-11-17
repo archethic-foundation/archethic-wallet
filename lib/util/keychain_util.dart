@@ -249,7 +249,7 @@ class KeychainUtil {
       String? seed,
       String currency,
       String tokenName,
-      {bool loadBalance = true}) async {
+      {bool loadBalance = true,}) async {
     final accounts = List<Account>.empty(growable: true);
 
     HiveAppWalletDTO currentAppWallet;

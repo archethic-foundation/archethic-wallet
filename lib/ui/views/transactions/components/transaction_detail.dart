@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
@@ -22,6 +23,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class TransactionDetail extends ConsumerWidget {
@@ -336,10 +338,30 @@ class TransactionDetail extends ConsumerWidget {
                                   RecentTransaction.tokenCreation &&
                               transaction.decryptedSecret != null &&
                               transaction.decryptedSecret!.isNotEmpty)
-                            AutoSizeText(
-                              localizations.messageInTxTransfer,
-                              style: theme.textStyleSize12W400Primary,
-                            )
+                            GestureDetector(
+                              onLongPressEnd: (details) {
+                                RawInfoPopup.getPopup(
+                                  context,
+                                  ref,
+                                  details,
+                                  transaction.decryptedSecret![0],
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  AutoSizeText(
+                                    localizations.messageInTxTransfer,
+                                    style: theme.textStyleSize12W400Primary,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  FaIcon(
+                                    FontAwesomeIcons.commentDots,
+                                    size: 12,
+                                    color: theme.text,
+                                  ),
+                                ],
+                              ),
+                            ),
                         ],
                       )
                     ],

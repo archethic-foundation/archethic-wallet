@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/transaction_infos.dart';
+import 'package:aewallet/model/transaction_input_with_tx_address.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -70,6 +71,37 @@ class AppService {
     return recentTransactionsMap;
   }
 
+  List<TransactionInputWithTxAddress> _removeDuplicates(
+    List<TransactionInputWithTxAddress> transactionInputs,
+  ) =>
+      transactionInputs.fold<List<TransactionInputWithTxAddress>>(
+        [],
+        (keptTransactionInputs, element) {
+          final matchingIndex = keptTransactionInputs.indexWhere(
+            (keptTransactionInput) =>
+                keptTransactionInput.from == element.from &&
+                keptTransactionInput.tokenAddress == element.tokenAddress,
+          );
+
+          if (matchingIndex == -1) {
+            return [
+              ...keptTransactionInputs,
+              element,
+            ];
+          }
+
+          final matchingElement = keptTransactionInputs[matchingIndex];
+          if (matchingElement.timestamp > element.timestamp) {
+            return keptTransactionInputs;
+          }
+
+          return [
+            for (var i = 0; i < keptTransactionInputs.length; i++)
+              i == matchingIndex ? element : keptTransactionInputs[i]
+          ];
+        },
+      );
+
   Future<List<RecentTransaction>> getAccountRecentTransactions(
     String genesisAddress,
     String lastAddress,
@@ -97,6 +129,55 @@ class AppService {
         transactionInputsGenesisAddressMap[genesisAddress] ?? [];
 
     final tokensAddresses = <String>[];
+
+    // Delete transaction inputs from own account
+    // Transaction inputs filtering
+    final listTransactionInputsToFilter = <TransactionInputWithTxAddress>[];
+    for (final transaction in transactionChain) {
+      if (transaction.inputs != null) {
+        for (final transactionInput in transaction.inputs!) {
+          final transactionInputWithTxAddress = TransactionInputWithTxAddress(
+            amount: transactionInput.amount ?? 0,
+            from: transactionInput.from ?? '',
+            spent: transactionInput.spent ?? false,
+            timestamp: transactionInput.timestamp ?? 0,
+            tokenAddress: transactionInput.tokenAddress,
+            tokenId: transactionInput.tokenId,
+            txAddress: transaction.address!,
+            type: transactionInput.type,
+          );
+          listTransactionInputsToFilter.add(transactionInputWithTxAddress);
+        }
+      }
+    }
+
+    for (final transaction in transactionChain) {
+      listTransactionInputsToFilter
+          .removeWhere((element) => element.from == transaction.address);
+    }
+
+    final listTransactionInputsFiltered =
+        _removeDuplicates(listTransactionInputsToFilter)
+          ..sort(
+            (a, b) => b.timestamp.compareTo(a.timestamp),
+          );
+
+    for (final transactionInput in listTransactionInputsFiltered) {
+      final recentTransaction = RecentTransaction()
+        ..address = transactionInput.from
+        ..amount = fromBigInt(transactionInput.amount).toDouble()
+        ..typeTx = RecentTransaction.transferInput
+        ..from = transactionInput.from
+        ..recipient = transactionInput.txAddress
+        ..timestamp = transactionInput.timestamp
+        ..fee = 0;
+
+      if (transactionInput.tokenAddress != null) {
+        tokensAddresses.add(transactionInput.tokenAddress!);
+        recentTransaction.tokenAddress = transactionInput.tokenAddress;
+      }
+      recentTransactions.add(recentTransaction);
+    }
 
     for (final transaction in transactionChain) {
       if (transaction.type! == 'token') {
@@ -152,31 +233,6 @@ class AppService {
           recentTransactions.add(recentTransaction);
         }
       }
-
-      if (transaction.inputs != null) {
-        for (final transactionInput in transaction.inputs!) {
-          if (transactionInput.from != transaction.address &&
-              // TODO(reddwarf03): See Apoorv's PR
-              transactionInput.spent == false &&
-              (transactionInput.tokenAddress == null ||
-                  transactionInput.from != transactionInput.tokenAddress)) {
-            final recentTransaction = RecentTransaction()
-              ..address = transactionInput.from
-              ..amount = fromBigInt(transactionInput.amount).toDouble()
-              ..typeTx = RecentTransaction.transferInput
-              ..from = transactionInput.from
-              ..recipient = transaction.address
-              ..timestamp = transactionInput.timestamp
-              ..fee = 0;
-
-            if (transactionInput.tokenAddress != null) {
-              tokensAddresses.add(transactionInput.tokenAddress!);
-              recentTransaction.tokenAddress = transactionInput.tokenAddress;
-            }
-            recentTransactions.add(recentTransaction);
-          }
-        }
-      }
     }
 
     // Transaction inputs for genesisAddress
@@ -225,11 +281,13 @@ class AppService {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null) {
             recentTransactionLastAddresses.add(recentTransaction.from!);
+            ownershipsAddresses.add(recentTransaction.from!);
           }
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.recipient != null) {
             recentTransactionLastAddresses.add(recentTransaction.recipient!);
+            ownershipsAddresses.add(recentTransaction.recipient!);
           }
           break;
       }
