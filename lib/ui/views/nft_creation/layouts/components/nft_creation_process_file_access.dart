@@ -82,11 +82,13 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
               ),
               Row(
                 children: [
-                  NFTCreationProcessFileAccessAddButton(
-                    propertyName: 'file',
-                    propertyValue: '',
-                    readOnly: readOnly,
-                  ),
+                  if (readOnly == false ||
+                      fileProperty[0].publicKeys.isNotEmpty)
+                    NFTCreationProcessFileAccessAddButton(
+                      propertyName: 'file',
+                      propertyValue: '',
+                      readOnly: readOnly,
+                    ),
                   ItemRemoveButton(
                     onPressed: () {
                       AppDialogs.showConfirmDialog(

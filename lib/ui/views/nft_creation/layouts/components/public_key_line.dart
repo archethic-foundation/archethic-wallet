@@ -17,10 +17,12 @@ class PublicKeyLine extends ConsumerWidget {
     super.key,
     required this.propertyName,
     required this.publicKey,
+    required this.readOnly,
   });
 
   final String propertyName;
   final String publicKey;
+  final bool readOnly;
 
   @override
   Widget build(
@@ -69,34 +71,36 @@ class PublicKeyLine extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            ItemRemoveButton(
-                              onPressed: () {
-                                AppDialogs.showConfirmDialog(
-                                    context,
-                                    ref,
-                                    localizations.removePublicKey,
-                                    localizations.areYouSure,
-                                    localizations.deleteOption, () {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        preferences.activeVibrations,
-                                      );
-                                  ref
-                                      .watch(
-                                        NftCreationFormProvider.nftCreationForm(
-                                          ref.read(
-                                            NftCreationFormProvider
-                                                .nftCreationFormArgs,
-                                          ),
-                                        ).notifier,
-                                      )
-                                      .removePublicKey(
-                                        propertyName,
-                                        publicKey,
-                                      );
-                                });
-                              },
-                            ),
+                            if (readOnly == false)
+                              ItemRemoveButton(
+                                onPressed: () {
+                                  AppDialogs.showConfirmDialog(
+                                      context,
+                                      ref,
+                                      localizations.removePublicKey,
+                                      localizations.areYouSure,
+                                      localizations.deleteOption, () {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          preferences.activeVibrations,
+                                        );
+                                    ref
+                                        .watch(
+                                          NftCreationFormProvider
+                                              .nftCreationForm(
+                                            ref.read(
+                                              NftCreationFormProvider
+                                                  .nftCreationFormArgs,
+                                            ),
+                                          ).notifier,
+                                        )
+                                        .removePublicKey(
+                                          propertyName,
+                                          publicKey,
+                                        );
+                                  });
+                                },
+                              ),
                           ],
                         ),
                       ),
