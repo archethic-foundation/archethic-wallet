@@ -456,9 +456,16 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                           final selectedAccount = await ref.read(
                             AccountProviders.selectedAccount.future,
                           );
+                          ref
+                              .read(
+                                AccountProviders.account(
+                                  selectedAccount!.name,
+                                ).notifier,
+                              )
+                              .refreshRecentTransactions();
                           final securityConfigOk =
                               await _launchSecurityConfiguration(
-                            selectedAccount!.name,
+                            selectedAccount.name,
                             newSession.wallet.seed,
                           );
                           setState(() {
