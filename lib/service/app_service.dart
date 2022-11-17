@@ -463,16 +463,27 @@ class AppService {
     final balance = balanceMap[address];
     final fungiblesTokensList = List<AccountToken>.empty(growable: true);
 
-    if (balance != null && balance.token != null) {
-      for (var i = 0; i < balance.token!.length; i++) {
-        final tokenMap = await sl.get<ApiService>().getToken(
-          [balance.token![i].address!],
-          request: 'genesis, name, id, supply, symbol, type',
-        );
-        final token = tokenMap[balance.token![i].address!];
-        if (token != null && token.type == 'fungible') {
+    final tokenAddressList = <String>[];
+    if (balance == null) {
+      return [];
+    }
+    if (balance.token != null) {
+      for (final tokenBalance in balance.token!) {
+        if (tokenBalance.address != null) {
+          tokenAddressList.add(tokenBalance.address!);
+        }
+      }
+
+      final tokenMap = await sl.get<ApiService>().getToken(
+            tokenAddressList,
+            request: 'genesis, name, id, supply, symbol, type',
+          );
+
+      for (final tokenBalance in balance.token!) {
+        final token = tokenMap[tokenBalance.address];
+        if (token != null) {
           final tokenInformations = TokenInformations(
-            address: balance.token![i].address,
+            address: tokenBalance.address,
             name: token.name,
             type: token.type,
             supply: fromBigInt(token.supply).toDouble(),
@@ -480,7 +491,7 @@ class AppService {
           );
           final accountFungibleToken = AccountToken(
             tokenInformations: tokenInformations,
-            amount: fromBigInt(balance.token![i].amount).toDouble(),
+            amount: fromBigInt(tokenBalance.amount).toDouble(),
           );
           fungiblesTokensList.add(accountFungibleToken);
         }
@@ -490,6 +501,7 @@ class AppService {
             a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
       );
     }
+
     return fungiblesTokensList;
   }
 
