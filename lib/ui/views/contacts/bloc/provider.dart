@@ -100,6 +100,10 @@ class ContactCreationFormNotifier
     state = state.copyWith(favorite: favorite);
   }
 
+  void setError(String error) {
+    state = state.copyWith(error: error);
+  }
+
   Future<bool> controlName(
     BuildContext context,
   ) async {

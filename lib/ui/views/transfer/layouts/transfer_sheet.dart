@@ -140,6 +140,12 @@ class TransferSheetBody extends ConsumerWidget {
           theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
         );
+
+        ref.watch(TransferFormProvider.transferForm.notifier).setErrors(
+              errorAddressText: '',
+              errorAmountText: '',
+              errorMessageText: '',
+            );
       },
     );
 

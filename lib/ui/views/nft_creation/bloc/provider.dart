@@ -351,6 +351,12 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     );
   }
 
+  void setError(String error) {
+    state = state.copyWith(
+      error: error,
+    );
+  }
+
   void setPropertyValue(String propertyValue) {
     state = state.copyWith(
       propertyValue: propertyValue,
@@ -365,6 +371,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
   }
 
   Future<void> setFileProperties(
+    BuildContext context,
     File file,
     FileImportType fileImportType,
   ) async {
@@ -375,6 +382,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     )![0];
 
     Uint8List? fileDecodedForPreview;
+
     if (MimeUtil.isImage(typeMime) == true) {
       fileDecodedForPreview = fileDecoded;
 
@@ -424,6 +432,17 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       file: {file: List<String>.empty(growable: true)},
       properties: newPropertiesToSet,
     );
+
+    if (controlFile(context) == false) {
+      state = state.copyWith(
+        fileImportType: null,
+        fileSize: 0,
+        fileTypeMime: '',
+        fileDecodedForPreview: null,
+        file: null,
+        properties: [],
+      );
+    }
   }
 
   bool controlName(
@@ -463,6 +482,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       return false;
     }
 
+    state = state.copyWith(error: '');
     return true;
   }
 

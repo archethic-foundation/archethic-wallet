@@ -187,6 +187,18 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         TransferFormProvider.initialTransferForm,
       );
 
+  void setErrors({
+    String? errorAddressText,
+    String? errorAmountText,
+    String? errorMessageText,
+  }) {
+    state = state.copyWith(
+      errorAddressText: errorAddressText ?? '',
+      errorMessageText: errorMessageText ?? '',
+      errorAmountText: errorAmountText ?? '',
+    );
+  }
+
   void _setRecipient({
     required TransferRecipient recipient,
   }) {
