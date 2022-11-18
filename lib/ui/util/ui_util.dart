@@ -239,17 +239,18 @@ class UIUtil {
             ],
           ),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(
                 UiIcons.warning,
                 size: 16,
               ),
               const SizedBox(width: 5),
-              Text(
-                content,
-                style: theme.textStyleSize14W200Bakckground,
-                textAlign: TextAlign.start,
+              Expanded(
+                child: Text(
+                  content,
+                  style: theme.textStyleSize14W200Bakckground,
+                  textAlign: TextAlign.start,
+                ),
               ),
             ],
           ),
