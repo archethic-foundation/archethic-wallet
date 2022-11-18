@@ -1917,6 +1917,48 @@ class AppLocalization {
     return Intl.message('The NFT cannot exceed 2.5 MB.', name: 'nftSizeExceed');
   }
 
+  String get nftCategoryDescriptionHeader0 {
+    return Intl.message(
+        'Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.',
+        name: 'nftCategoryDescriptionHeader0');
+  }
+
+  String get nftCategoryDescriptionHeader1 {
+    return Intl.message('Import a photo, an image.',
+        name: 'nftCategoryDescriptionHeader1');
+  }
+
+  String get nftCategoryDescriptionHeader2 {
+    return Intl.message('Import a ticket to access an event or a location.',
+        name: 'nftCategoryDescriptionHeader2');
+  }
+
+  String get nftCategoryDescriptionHeader3 {
+    return Intl.message('Create your collections.',
+        name: 'nftCategoryDescriptionHeader3');
+  }
+
+  String get nftCategoryDescriptionHeader4 {
+    return Intl.message('Import a piece of music or a recording.',
+        name: 'nftCategoryDescriptionHeader4');
+  }
+
+  String get nftCategoryDescriptionHeader5 {
+    return Intl.message('Import a document PDF.',
+        name: 'nftCategoryDescriptionHeader5');
+  }
+
+  String get nftCategoryDescriptionHeader6 {
+    return Intl.message('Import a loyalty card',
+        name: 'nftCategoryDescriptionHeader6');
+  }
+
+  String get nftCategoryDescriptionHeaderDefault {
+    return Intl.message(
+        'Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.',
+        name: 'nftCategoryDescriptionHeaderDefault');
+  }
+
   String get nftPropertyExplanation {
     return Intl.message(
         'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.',

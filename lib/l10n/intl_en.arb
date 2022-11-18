@@ -2346,6 +2346,54 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftCategoryDescriptionHeader0": "Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.",
+  "@nftCategoryDescriptionHeader0": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeader1": "Import a photo, an image.",
+  "@nftCategoryDescriptionHeader1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeader2": "Import a ticket to access an event or a location.",
+  "@nftCategoryDescriptionHeader2": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeader3": "Create your collections.",
+  "@nftCategoryDescriptionHeader3": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeader4": "Import a piece of music or a recording.",
+  "@nftCategoryDescriptionHeader4": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeader5": "Import a document PDF.",
+  "@nftCategoryDescriptionHeader5": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeader6": "Import a loyalty card.",
+  "@nftCategoryDescriptionHeader6": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDescriptionHeaderDefault": "Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.",
+  "@nftCategoryDescriptionHeaderDefault": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.",
   "@nftPropertyExplanation": {
     "type": "text",
