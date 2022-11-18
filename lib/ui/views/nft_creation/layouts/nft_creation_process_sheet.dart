@@ -118,6 +118,14 @@ class NftCreationSheetBody extends ConsumerWidget {
           theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
         );
+        final nftCreationArgs = ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        );
+        ref
+            .watch(
+              NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+            )
+            .setError('');
       },
     );
 

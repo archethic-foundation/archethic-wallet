@@ -86,6 +86,7 @@ class AddContactSheetBody extends ConsumerWidget {
           theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
         );
+        contactCreationNotifier.setError('');
       },
     );
 

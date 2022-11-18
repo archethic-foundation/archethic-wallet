@@ -19,7 +19,8 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
     final nftCreation =
         ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
     final nftCreationNotifier = ref.watch(
-        NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,);
+      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+    );
     return Column(
       children: [
         SizedBox(
@@ -33,6 +34,7 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
               );
               if (pickedFile != null) {
                 nftCreationNotifier.setFileProperties(
+                  context,
                   File(pickedFile.path),
                   FileImportType.camera,
                 );
