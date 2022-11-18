@@ -13,6 +13,7 @@ import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -197,6 +198,30 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     );
   }
 
+  Future<bool> _checkAddressType(BuildContext context) async {
+    final typesAllowed = <String>['token', 'transfer'];
+    if (state.recipient.address == null ||
+        state.recipient.isAddressValid == false) {
+      return true;
+    }
+    final transactionTypeMap = await sl
+        .get<AppService>()
+        .getTransaction([state.recipient.address!.address], request: 'type');
+    if (transactionTypeMap[state.recipient.address!.address] == null) {
+      return true;
+    }
+    if (typesAllowed.contains(
+            transactionTypeMap[state.recipient.address!.address]!.type) ==
+        false) {
+      state = state.copyWith(
+        errorAddressText: AppLocalization.of(context)!.invalidAddress,
+      );
+
+      return false;
+    }
+    return true;
+  }
+
   Future<void> setRecipientNameOrAddress({
     required BuildContext context,
     required String text,
@@ -205,6 +230,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       _setRecipient(
         recipient: TransferRecipient.address(address: Address(text)),
       );
+      if (await _checkAddressType(context) == false) {
+        return;
+      }
       _updateFees(context);
       return;
     }
@@ -222,6 +250,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           name: text,
         ),
       );
+    }
+    if (await _checkAddressType(context) == false) {
+      return;
     }
     _updateFees(context);
   }

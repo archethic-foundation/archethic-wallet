@@ -573,6 +573,17 @@ class AppService {
     return balance;
   }
 
+  Future<Map<String, Transaction>> getTransaction(
+    List<String> addresses, {
+    String request = Transaction.kTransactionQueryAllFields,
+  }) async {
+    final transactionMap = await sl.get<ApiService>().getTransaction(
+          addresses,
+          request: request,
+        );
+    return transactionMap;
+  }
+
   Future<List<TransactionInfos>> getTransactionAllInfos(
     String seed,
     String address,
