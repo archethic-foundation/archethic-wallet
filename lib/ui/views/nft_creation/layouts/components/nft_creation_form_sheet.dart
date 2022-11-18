@@ -72,16 +72,16 @@ class NftCreationFormSheet extends ConsumerWidget {
                       ),
                       tabs: [
                         Tab(
-                          text: AppLocalization.of(context)!
-                              .nftCreationProcessTabImportHeader,
-                          icon: const Icon(UiIcons.nft_creation_process_import),
-                        ),
-                        Tab(
                           text: localizations
                               .nftCreationProcessTabDescriptionHeader,
                           icon: const Icon(
                             UiIcons.nft_creation_process_description,
                           ),
+                        ),
+                        Tab(
+                          text: AppLocalization.of(context)!
+                              .nftCreationProcessTabImportHeader,
+                          icon: const Icon(UiIcons.nft_creation_process_import),
                         ),
                         Tab(
                           text: localizations
@@ -99,8 +99,8 @@ class NftCreationFormSheet extends ConsumerWidget {
                         ),
                       ],
                       views: const [
-                        NFTCreationProcessImportTab(),
                         NFTCreationProcessInfosTab(),
+                        NFTCreationProcessImportTab(),
                         NFTCreationProcessPropertiesTab(),
                         NFTCreationProcessSummaryTab(),
                       ],

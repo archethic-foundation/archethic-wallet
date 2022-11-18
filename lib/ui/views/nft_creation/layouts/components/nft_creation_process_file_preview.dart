@@ -40,6 +40,16 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
               ),
             ),
           ),
+        if (nftCreation.symbol.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Align(
+              child: Text(
+                '[${nftCreation.symbol}]',
+                style: theme.textStyleSize12W400Primary,
+              ),
+            ),
+          ),
         if (nftCreation.description.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),

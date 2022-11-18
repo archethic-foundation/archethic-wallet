@@ -43,6 +43,7 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default([]) List<NftCreationFormStateProperty> properties,
     @Default('') String error,
     @Default('') String symbol,
+    @Default(1) int initialSupply,
     Transaction? transaction,
   }) = _NftCreationFormState;
   const NftCreationFormState._();
