@@ -182,23 +182,24 @@ class NFTCategoryRepository {
   }
 
   String getDescriptionHeader(BuildContext context, int id) {
+    final localizations = AppLocalization.of(context)!;
     switch (id) {
       case 0:
-        return 'Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.';
+        return localizations.nftCategoryDescriptionHeader0;
       case 1:
-        return 'Import a photo, an image or a video.';
+        return localizations.nftCategoryDescriptionHeader1;
       case 2:
-        return 'Import a ticket to access an event or a location.';
+        return localizations.nftCategoryDescriptionHeader2;
       case 3:
-        return 'Create your collections';
+        return localizations.nftCategoryDescriptionHeader3;
       case 4:
-        return 'Import a piece of music or a recording';
+        return localizations.nftCategoryDescriptionHeader4;
       case 5:
-        return 'Import a document PDF';
+        return localizations.nftCategoryDescriptionHeader5;
       case 6:
-        return 'Import a loyalty card';
+        return localizations.nftCategoryDescriptionHeader6;
       default:
-        return 'Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.';
+        return localizations.nftCategoryDescriptionHeaderDefault;
     }
   }
 }
