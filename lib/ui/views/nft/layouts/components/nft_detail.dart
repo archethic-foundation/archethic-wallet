@@ -6,6 +6,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_preview.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -64,6 +65,16 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
       child: Column(
         children: <Widget>[
           SheetHeader(title: widget.tokenInformations.name!),
+          if (widget.tokenInformations.symbol != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Align(
+                child: Text(
+                  '[${widget.tokenInformations.symbol}]',
+                  style: theme.textStyleSize12W400Primary,
+                ),
+              ),
+            ),
           Expanded(
             child: Center(
               child: SizedBox(

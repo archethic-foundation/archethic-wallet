@@ -40,6 +40,7 @@ mixin _$NftCreationFormState {
       throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
+  int get initialSupply => throw _privateConstructorUsedError;
   Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -75,6 +76,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       List<NftCreationFormStateProperty> properties,
       String error,
       String symbol,
+      int initialSupply,
       Transaction? transaction});
 
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
@@ -115,6 +117,7 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? properties = null,
     Object? error = null,
     Object? symbol = null,
+    Object? initialSupply = null,
     Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
@@ -202,6 +205,10 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
+      initialSupply: null == initialSupply
+          ? _value.initialSupply
+          : initialSupply // ignore: cast_nullable_to_non_nullable
+              as int,
       transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
@@ -249,6 +256,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       List<NftCreationFormStateProperty> properties,
       String error,
       String symbol,
+      int initialSupply,
       Transaction? transaction});
 
   @override
@@ -287,6 +295,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? properties = null,
     Object? error = null,
     Object? symbol = null,
+    Object? initialSupply = null,
     Object? transaction = freezed,
   }) {
     return _then(_$_NftCreationFormState(
@@ -374,6 +383,10 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
+      initialSupply: null == initialSupply
+          ? _value.initialSupply
+          : initialSupply // ignore: cast_nullable_to_non_nullable
+              as int,
       transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
@@ -407,6 +420,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       final List<NftCreationFormStateProperty> properties = const [],
       this.error = '',
       this.symbol = '',
+      this.initialSupply = 1,
       this.transaction})
       : _file = file,
         _properties = properties,
@@ -480,11 +494,14 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @JsonKey()
   final String symbol;
   @override
+  @JsonKey()
+  final int initialSupply;
+  @override
   final Transaction? transaction;
 
   @override
   String toString() {
-    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, transaction: $transaction)';
+    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, transaction: $transaction)';
   }
 
   @override
@@ -531,6 +548,8 @@ class _$_NftCreationFormState extends _NftCreationFormState {
                 .equals(other._properties, _properties) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
+            (identical(other.initialSupply, initialSupply) ||
+                other.initialSupply == initialSupply) &&
             (identical(other.transaction, transaction) ||
                 other.transaction == transaction));
   }
@@ -559,6 +578,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         const DeepCollectionEquality().hash(_properties),
         error,
         symbol,
+        initialSupply,
         transaction
       ]);
 
@@ -593,6 +613,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final List<NftCreationFormStateProperty> properties,
       final String error,
       final String symbol,
+      final int initialSupply,
       final Transaction? transaction}) = _$_NftCreationFormState;
   const _NftCreationFormState._() : super._();
 
@@ -638,6 +659,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   String get error;
   @override
   String get symbol;
+  @override
+  int get initialSupply;
   @override
   Transaction? get transaction;
   @override

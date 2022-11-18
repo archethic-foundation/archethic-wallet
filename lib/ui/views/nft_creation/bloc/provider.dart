@@ -66,6 +66,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
   NftCreationFormState build(NftCreationFormNotifierParams arg) {
     return NftCreationFormState(
       feeEstimation: const AsyncValue.data(0),
+      initialSupply: 1,
       seed: arg.seed,
       propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
         publicKey: PublicKey(''),
@@ -140,7 +141,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
         accountSelectedName: selectedAccount!.name,
         name: formState.name,
         symbol: formState.symbol,
-        initialSupply: 1,
+        initialSupply: formState.initialSupply.toDouble(),
         seed: formState.seed,
         type: 'non-fungible',
         properties: formState.propertiesConverted,
@@ -339,6 +340,14 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     setProperty('name', name);
   }
 
+  void setSymbol(String symbol) {
+    state = state.copyWith(symbol: symbol, error: '');
+  }
+
+  void setInitialSupply(int initialSupply) {
+    state = state.copyWith(initialSupply: initialSupply, error: '');
+  }
+
   void setDescription(String description) {
     state = state.copyWith(description: description);
     setProperty('description', description);
@@ -520,7 +529,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       token: Token(
         name: state.name,
         symbol: state.symbol,
-        initialSupply: 1,
+        initialSupply: state.initialSupply.toDouble(),
         accountSelectedName: selectedAccount!.name,
         seed: state.seed,
         type: 'non-fungible',

@@ -27,8 +27,9 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
           ),
           const NFTCreationProcessInfosTabTextFieldName(),
           const SizedBox(
-            height: 30,
+            height: 10,
           ),
+          const NFTCreationProcessInfosTabTextFieldSymbol(),
           const NFTCreationProcessInfosTabTextFieldDescription(),
         ],
       ),

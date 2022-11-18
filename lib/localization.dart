@@ -1168,6 +1168,10 @@ class AppLocalization {
         name: 'tokenInitialSupplyHint');
   }
 
+  String get nftInitialSupplyHint {
+    return Intl.message('Enter a quantity', name: 'nftInitialSupplyHint');
+  }
+
   String get tokenNameMissing {
     return Intl.message('Choose a Name for the Token',
         name: 'tokenNameMissing');
