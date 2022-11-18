@@ -38,7 +38,7 @@ class SeaGreenFlatTheme implements BaseTheme {
 
   // Menu
   @override
-  Color? iconDrawer = const Color.fromARGB(255, 0, 71, 55);
+  Color? iconDrawer = const Color(0xFFFFFFFF);
   @override
   Color? iconDrawerBackground = const Color(0xFFFFFFFF).withOpacity(0.8);
   @override
