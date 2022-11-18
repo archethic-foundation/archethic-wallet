@@ -6,7 +6,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/bus/notifications_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
@@ -75,7 +74,6 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   StreamSubscription<DisableLockTimeoutEvent>? _disableLockSub;
-  StreamSubscription<AccountChangedEvent>? _switchAccountSub;
   StreamSubscription<NotificationsEvent>? _notificationsSub;
 
   void _registerBus() {
@@ -88,18 +86,6 @@ class _HomePageState extends ConsumerState<HomePage>
       }
       _lockDisabled = event.disable!;
     });
-    // User changed account
-    _switchAccountSub = EventTaxiImpl.singleton()
-        .registerTo<AccountChangedEvent>()
-        .listen((AccountChangedEvent event) {
-      if (event.delayPop) {
-        Future<void>.delayed(const Duration(milliseconds: 300), () {
-          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-        });
-      } else if (!event.noPop) {
-        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-      }
-    });
 
     _notificationsSub = EventTaxiImpl.singleton()
         .registerTo<NotificationsEvent>()
@@ -111,9 +97,6 @@ class _HomePageState extends ConsumerState<HomePage>
   void _destroyBus() {
     if (_disableLockSub != null) {
       _disableLockSub!.cancel();
-    }
-    if (_switchAccountSub != null) {
-      _switchAccountSub!.cancel();
     }
     if (_notificationsSub != null) {
       _notificationsSub!.cancel();
