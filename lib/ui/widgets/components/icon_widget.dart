@@ -102,23 +102,13 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: theme.iconDataWidgetIconBackground!,
+            color: theme.iconDataWidgetIconBackground!.withOpacity(0.1),
           ),
         ],
       ),
       alignment: AlignmentDirectional.center,
-      child: ShaderMask(
-        child: SizedBox(
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: width,
-          ),
-        ),
-        shaderCallback: (Rect bounds) {
-          final rect = Rect.fromLTRB(0, 0, width + 2, width + 2);
-          return theme.gradient!.createShader(rect);
-        },
+      child: SizedBox(
+        child: Icon(icon, color: theme.iconDrawer, size: width),
       ),
     );
   }

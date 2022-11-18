@@ -38,7 +38,7 @@ class SapphireBlueTheme implements BaseTheme {
 
   // Menu
   @override
-  Color? iconDrawer = const Color.fromARGB(255, 6, 54, 120);
+  Color? iconDrawer = const Color(0xFFFFFFFF);
   @override
   Color? iconDrawerBackground = const Color(0xFFFFFFFF);
   @override
