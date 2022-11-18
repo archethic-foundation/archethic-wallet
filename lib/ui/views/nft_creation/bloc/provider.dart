@@ -469,7 +469,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
   bool controlFile(
     BuildContext context,
   ) {
-    if (state.file == null && state.file!.keys.isEmpty) {
+    if (state.file == null || state.file!.keys.isEmpty) {
       state = state.copyWith(
         error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
       );

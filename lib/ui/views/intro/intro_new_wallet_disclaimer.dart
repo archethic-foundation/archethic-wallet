@@ -4,6 +4,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -65,9 +66,20 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                   child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
-                        AutoSizeText(
-                          localizations.warning,
-                          style: theme.textStyleSize24W700EquinoxPrimaryRed,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              UiIcons.warning,
+                              color: Colors.red,
+                              size: 24,
+                            ),
+                            const SizedBox(width: 8),
+                            AutoSizeText(
+                              localizations.warning,
+                              style: theme.textStyleSize24W700EquinoxPrimaryRed,
+                            ),
+                          ],
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(

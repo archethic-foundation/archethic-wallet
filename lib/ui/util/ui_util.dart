@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
@@ -226,8 +227,8 @@ class UIUtil {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           width: MediaQuery.of(context).size.width - 30,
           decoration: BoxDecoration(
-            color: boxDecorationColor,
-            borderRadius: BorderRadius.circular(10),
+            color: boxDecorationColor.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(15),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: boxShadowColor,
@@ -237,10 +238,20 @@ class UIUtil {
               ),
             ],
           ),
-          child: Text(
-            content,
-            style: theme.textStyleSize14W700Background,
-            textAlign: TextAlign.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                UiIcons.warning,
+                size: 16,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                content,
+                style: theme.textStyleSize14W200Bakckground,
+                textAlign: TextAlign.start,
+              ),
+            ],
           ),
         ),
       ),

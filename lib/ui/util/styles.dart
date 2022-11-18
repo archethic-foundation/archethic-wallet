@@ -155,6 +155,15 @@ extension AppStyles on BaseTheme {
     );
   }
 
+  TextStyle get textStyleSize14W200Bakckground {
+    return TextStyle(
+      fontFamily: secondaryFont,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
+      color: background,
+    );
+  }
+
   TextStyle get textStyleSize25W900EquinoxPrimary {
     return TextStyle(
       fontFamily: mainFont,

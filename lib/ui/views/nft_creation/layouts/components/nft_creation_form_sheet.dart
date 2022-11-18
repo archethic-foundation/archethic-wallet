@@ -1,6 +1,7 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -116,6 +117,16 @@ class NftCreationFormSheet extends ConsumerWidget {
                             )
                             .setIndexTab(index);
                         if (index == NftCreationTab.summary.index) {
+                          if (nftCreation.name.isEmpty ||
+                              nftCreation.fileDecodedForPreview == null) {
+                            final nftCreationNotifier = ref.watch(
+                              NftCreationFormProvider.nftCreationForm(
+                                nftCreationArgs,
+                              ).notifier,
+                            )
+                              ..controlFile(context)
+                              ..controlName(context);
+                          }
                           ref
                               .watch(
                                 NftCreationFormProvider.nftCreationForm(
@@ -125,6 +136,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                               .setFees(
                                 context,
                               );
+
                           return;
                         }
                       },

@@ -59,6 +59,7 @@ class UiIcons {
   static const trash = _UiIconsData(0xf127, 'trash');
   static const vault = _UiIconsData(0xf128, 'vault');
   static const vibration = _UiIconsData(0xf129, 'vibration');
+  static const warning = _UiIconsData(0xf12a, 'warning');
 
   static const all = <String, _UiIconsData>{
     'about': about,
@@ -102,5 +103,6 @@ class UiIcons {
     'trash': trash,
     'vault': vault,
     'vibration': vibration,
+    'warning': warning,
   };
 }
