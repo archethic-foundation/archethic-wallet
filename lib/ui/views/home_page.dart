@@ -17,6 +17,7 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
+import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/main_appbar.dart';
 import 'package:aewallet/ui/views/main/main_bottombar.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
@@ -184,11 +185,15 @@ class _HomePageState extends ConsumerState<HomePage>
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: bottomBarPageController,
-          //children: const [AccountsListTab(), AccountTab()],
           onPageChanged: ref
               .read(SettingsProviders.settings.notifier)
               .setMainScreenCurrentPage,
-          children: const [AccountsListTab(), AccountTab(), NFTTab()],
+          children: const [
+            AccountsListTab(),
+            AccountTab(),
+            NFTTab(),
+            AddressBookTab()
+          ],
         ),
       ),
     );

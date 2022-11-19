@@ -3,14 +3,12 @@ part of 'settings_drawer.dart';
 
 class MainMenuView extends ConsumerWidget {
   const MainMenuView({
-    required this.showContacts,
     required this.showSecurity,
     required this.showCustom,
     required this.showAbout,
     super.key,
   });
 
-  final VoidCallback showContacts;
   final VoidCallback showSecurity;
   final VoidCallback showCustom;
   final VoidCallback showAbout;
@@ -50,51 +48,7 @@ class MainMenuView extends ConsumerWidget {
                     padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.title(text: localizations.manage),
-                      // TODO(reddwarf03): that conditional spacer seems odd.
-                      if (selectedAccount.balance!.isNativeTokenValuePositive())
-                        const _SettingsListItem.spacer()
-                      else
-                        const SizedBox(),
-                      /* if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue !=
-                            null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue! >
-                            0)
-                      AppSettings.buildSettingsListItemSingleLineWithInfos(
-                          context,
-                          localizations.tokenHeader,
-                          localizations.tokenHeaderDesc,
-                          icon: 'assets/icons/token.png',
-                          iconColor: StateContainer.of(context)
-                              .curTheme
-                              .iconDrawer!, onPressed: () {
-                        setState(() {
-                          _tokenOpen = true;
-                        });
-                        _tokenController!.forward();
-                      })
-                    else
-                      const SizedBox(),
-                    Divider(
-                      height: 2,
-                      color: theme.text15,
-                    ),*/
-                      _SettingsListItem.singleLineWithInfos(
-                        heading: localizations.addressBookHeader,
-                        info: localizations.addressBookDesc,
-                        icon: UiIcons.address_book,
-                        onPressed: showContacts,
-                      ),
-                      const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.preferences),
-
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
@@ -111,7 +65,6 @@ class MainMenuView extends ConsumerWidget {
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.informations),
-
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.aeWebsiteLinkHeader,

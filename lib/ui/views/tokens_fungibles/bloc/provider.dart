@@ -12,7 +12,6 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -144,7 +143,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       {String? errorAmountText,
       String? errorInitialSupplyText,
       String? errorNameText,
-      String? errorSymbolText}) {
+      String? errorSymbolText,}) {
     state = state.copyWith(
       errorAmountText: errorAmountText ?? '',
       errorInitialSupplyText: errorInitialSupplyText ?? '',
