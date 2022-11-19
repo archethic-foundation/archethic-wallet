@@ -87,7 +87,7 @@ class AddTokenSheetBody extends ConsumerWidget {
             errorAmountText: '',
             errorInitialSupplyText: '',
             errorNameText: '',
-            errorSymbolText: '');
+            errorSymbolText: '',);
       },
     );
 

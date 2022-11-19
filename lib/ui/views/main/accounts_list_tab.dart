@@ -60,6 +60,7 @@ class _AccountsListTabState extends ConsumerState<AccountsListTab> {
               child: Column(
                 children: <Widget>[
                   Container(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       image: DecorationImage(

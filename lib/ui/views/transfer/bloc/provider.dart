@@ -223,7 +223,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return true;
     }
     if (typesAllowed.contains(
-            transactionTypeMap[state.recipient.address!.address]!.type) ==
+            transactionTypeMap[state.recipient.address!.address]!.type,) ==
         false) {
       state = state.copyWith(
         errorAddressText: AppLocalization.of(context)!.invalidAddress,

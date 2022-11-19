@@ -69,6 +69,17 @@ class MainBottomBar extends ConsumerWidget {
                 activeColor: theme.bottomBarActiveColor!,
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
+              BottomBarItem(
+                icon: const Icon(
+                  UiIcons.address_book_menu,
+                  size: 30,
+                ),
+                backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
+                activeIconColor: theme.bottomBarActiveIconColor,
+                activeTitleColor: theme.bottomBarActiveTitleColor,
+                activeColor: theme.bottomBarActiveColor!,
+                inactiveColor: theme.bottomBarInactiveIcon,
+              ),
             ],
           ),
         ),

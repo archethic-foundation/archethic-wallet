@@ -118,10 +118,15 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )
-                    : AutoSizeText(
-                        'NFT',
-                        style: theme.textStyleSize24W700EquinoxPrimary,
-                      ),
+                    : preferences.mainScreenCurrentPage == 2
+                        ? AutoSizeText(
+                            'NFT',
+                            style: theme.textStyleSize24W700EquinoxPrimary,
+                          )
+                        : AutoSizeText(
+                            localizations.addressBookHeader,
+                            style: theme.textStyleSize24W700EquinoxPrimary,
+                          ),
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,

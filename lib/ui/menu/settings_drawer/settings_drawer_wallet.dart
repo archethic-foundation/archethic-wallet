@@ -11,8 +11,6 @@ class SettingsSheetWallet extends ConsumerStatefulWidget {
 
 class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  late AnimationController _contactsController;
-  late Animation<Offset> _contactsOffsetFloat;
   late AnimationController _securityController;
   late Animation<Offset> _securityOffsetFloat;
   late AnimationController _customController;
@@ -25,22 +23,16 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   late bool _securityOpen;
   late bool _customOpen;
   late bool _aboutOpen;
-  late bool _contactsOpen;
 
   bool notNull(Object? o) => o != null;
 
   @override
   void initState() {
     super.initState();
-    _contactsOpen = false;
     _securityOpen = false;
     _customOpen = false;
     _aboutOpen = false;
 
-    _contactsController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
     _securityController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
@@ -53,9 +45,6 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _contactsOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
-            .animate(_contactsController);
     _securityOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
             .animate(_securityController);
@@ -69,7 +58,6 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
 
   @override
   void dispose() {
-    _contactsController.dispose();
     _securityController.dispose();
     _customController.dispose();
     _aboutController.dispose();
@@ -95,11 +83,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   }
 
   Future<bool> _onBackButtonPressed() async {
-    if (_contactsOpen) {
-      _contactsOpen = false;
-      _contactsController.reverse();
-      return false;
-    } else if (_securityOpen) {
+    if (_securityOpen) {
       _securityOpen = false;
       _securityController.reverse();
       return false;
@@ -113,11 +97,6 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
       return false;
     }
     return true;
-  }
-
-  void showContacts() {
-    _contactsOpen = true;
-    _contactsController.forward();
   }
 
   void showSecurity() {
@@ -149,17 +128,9 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
               constraints: const BoxConstraints.expand(),
             ),
             MainMenuView(
-              showContacts: showContacts,
               showSecurity: showSecurity,
               showCustom: showCustom,
               showAbout: showAbout,
-            ),
-            SlideTransition(
-              position: _contactsOffsetFloat,
-              child: ContactsList(
-                _contactsController,
-                _contactsOpen,
-              ),
             ),
             SlideTransition(
               position: _securityOffsetFloat,
