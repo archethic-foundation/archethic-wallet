@@ -100,7 +100,7 @@ class PropertyAccessRecipient with _$PropertyAccessRecipient {
 
   PublicKey? get publicKey => when(
         publicKey: (publicKey) => publicKey,
-        contact: (contact) => PublicKey(contact.publicKey ?? ''),
+        contact: (contact) => PublicKey(contact.publicKey),
         unknownContact: (_) => null,
       );
 

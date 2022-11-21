@@ -18,7 +18,7 @@ class ContactsDialog {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    // TODO(reddwarf03): manage dispose
+    // TODO(reddwarf03): manage dispose // do a dedicated widget (2)
     final searchNameFocusNode = FocusNode();
     final searchNameController = TextEditingController();
 

@@ -149,7 +149,7 @@ class NFTPreviewWidget extends ConsumerWidget {
     );
   }
 
-  // TODO(Chralu): Extract to a [Widget] subclass
+  // TODO(Chralu): Extract to a [Widget] subclass (3)
   Widget _buildTokenProperty(
     BuildContext context,
     WidgetRef ref,

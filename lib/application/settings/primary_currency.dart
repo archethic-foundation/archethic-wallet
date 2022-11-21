@@ -73,10 +73,10 @@ AvailablePrimaryCurrency _selectedPrimaryCurrency(Ref ref) => ref.watch(
     );
 
 abstract class PrimaryCurrencyProviders {
-  // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones.
+  // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
   static final convertedValue = _convertedValueProvider;
 
-  // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones.
+  // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
   static final convertedValueLabel = _convertedValueLabelProvider;
   static final selectedPrimaryCurrency = _selectedPrimaryCurrencyProvider;
 }

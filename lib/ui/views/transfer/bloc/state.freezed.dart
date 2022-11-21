@@ -19,15 +19,13 @@ mixin _$TransferFormState {
   TransferType get transferType => throw _privateConstructorUsedError;
   String get seed => throw _privateConstructorUsedError;
   TransferProcessStep get transferProcessStep =>
-      throw _privateConstructorUsedError;
-
-  /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
+      throw _privateConstructorUsedError; // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   bool get defineMaxAmountInProgress => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
 
   /// Amount converted in UCO if primary currency is native. Else in fiat currency
-  /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
+// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   double get amountConverted => throw _privateConstructorUsedError;
   AccountBalance get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
@@ -307,8 +305,7 @@ class _$_TransferFormState extends _TransferFormState {
   @override
   @JsonKey()
   final TransferProcessStep transferProcessStep;
-
-  /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
+// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   @override
   final AsyncValue<double> feeEstimation;
   @override
@@ -319,7 +316,7 @@ class _$_TransferFormState extends _TransferFormState {
   final double amount;
 
   /// Amount converted in UCO if primary currency is native. Else in fiat currency
-  /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
+// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   @override
   @JsonKey()
   final double amountConverted;
@@ -430,9 +427,7 @@ abstract class _TransferFormState extends TransferFormState {
   String get seed;
   @override
   TransferProcessStep get transferProcessStep;
-  @override
-
-  /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
+  @override // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   AsyncValue<double> get feeEstimation;
   @override
   bool get defineMaxAmountInProgress;
@@ -441,7 +436,7 @@ abstract class _TransferFormState extends TransferFormState {
   @override
 
   /// Amount converted in UCO if primary currency is native. Else in fiat currency
-  /// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider]
+// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   double get amountConverted;
   @override
   AccountBalance get accountBalance;

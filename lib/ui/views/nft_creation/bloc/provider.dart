@@ -90,7 +90,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       fees = await Future<double>(
         () async {
           if (state.name.isEmpty) {
-            return 0; // TODO(Chralu): should we use an error class instead ?
+            return 0;
           }
 
           _calculateFeesTask?.cancel();
@@ -102,8 +102,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
           );
           final fees = await _calculateFeesTask?.schedule(delay);
 
-          return fees ??
-              0; // TODO(Chralu): should we use an error class instead ?
+          return fees ?? 0;
         },
       );
     } on CanceledTask {
@@ -125,7 +124,6 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     }
   }
 
-  // TODO(Chralu): That operation should be delayed to avoid to spam backend.
   Future<double?> _calculateFees({
     required BuildContext context,
     required NftCreationFormState formState,
@@ -191,7 +189,6 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       },
     ).toList();
 
-    // TODO(reddwarf03): don't work...
     state = state.copyWith(
       properties: updatedNftCreationProperties,
       propertyAccessRecipient:
@@ -259,7 +256,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     required BuildContext context,
     required PublicKey publicKey,
   }) async {
-    // TODO(reddwarf03): fix it with pk access
+    // TODO(reddwarf03): fix it with pk access (1)
     final contact = await sl.get<DBHelper>().getContactWithPublicKey(
           '',
         );
@@ -395,7 +392,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     if (MimeUtil.isImage(typeMime) == true) {
       fileDecodedForPreview = fileDecoded;
 
-      // TODO(reddwarf03): Change the exif addition in the ui
+      // TODO(reddwarf03): Change the exif addition in the ui (3)
       /*final data = await readExifFromBytes(fileDecoded!);
 
       for (final entry in data.entries) {

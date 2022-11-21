@@ -55,7 +55,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
           if (state.initialSupply <= 0 ||
               state.name.isEmpty ||
               state.symbol.isEmpty) {
-            return 0; // TODO(Chralu): should we use an error class instead ?
+            return 0;
           }
 
           _calculateFeesTask?.cancel();
@@ -67,8 +67,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
           );
           final fees = await _calculateFeesTask?.schedule(delay);
 
-          return fees ??
-              0; // TODO(Chralu): should we use an error class instead ?
+          return fees ?? 0;
         },
       );
     } on CanceledTask {
@@ -96,7 +95,6 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         AddTokenFormProvider.initialAddTokenForm,
       );
 
-  // TODO(Chralu): That operation should be delayed to avoid to spam backend.
   Future<double?> _calculateFees({
     required BuildContext context,
     required AddTokenFormState formState,
@@ -139,11 +137,12 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     return;
   }
 
-  void setErrors(
-      {String? errorAmountText,
-      String? errorInitialSupplyText,
-      String? errorNameText,
-      String? errorSymbolText,}) {
+  void setErrors({
+    String? errorAmountText,
+    String? errorInitialSupplyText,
+    String? errorNameText,
+    String? errorSymbolText,
+  }) {
     state = state.copyWith(
       errorAmountText: errorAmountText ?? '',
       errorInitialSupplyText: errorInitialSupplyText ?? '',
@@ -219,7 +218,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return false;
     }
 
-    // TODO(reddwarf03): Pb avec la gestion des bigint à régler
+    // TODO(reddwarf03): Pb avec la gestion des bigint à régler (1)
     if (state.initialSupply > 9999999999) {
       state = state.copyWith(
         errorInitialSupplyText:

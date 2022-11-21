@@ -212,7 +212,7 @@ class ContactDetail extends ConsumerWidget {
                     messageCopied: localizations.addressCopied,
                   ),
                   ContactDetailTab(
-                    infoQRCode: contact.publicKey!,
+                    infoQRCode: contact.publicKey,
                     description:
                         contact.type == ContactType.keychainService.name
                             ? localizations.contactPublicKeyInfoKeychainService
@@ -226,7 +226,7 @@ class ContactDetail extends ConsumerWidget {
                       infoToShare = contact.address.toUpperCase();
                       break;
                     case 1:
-                      infoToShare = contact.publicKey!.toUpperCase();
+                      infoToShare = contact.publicKey.toUpperCase();
                       break;
                   }
                 },
@@ -260,7 +260,7 @@ class ContactDetail extends ConsumerWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    // TODO(reddwarf03): Provider pour gérer juste cette mécanique ?
+                    // TODO(reddwarf03): Provider pour gérer juste cette mécanique ? (2)
                     if (infoToShare.isEmpty)
                       AppButtonTiny(
                         AppButtonTinyType.primary,

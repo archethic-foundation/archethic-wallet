@@ -14,7 +14,6 @@ class CancelableTask<T> {
   final Future<T> Function() task;
 
   Future<T> run() async {
-    // TODO(Chralu): Remove this future error when we cancel ?
     if (_canceled) {
       return Future.error(const CanceledTask());
     }

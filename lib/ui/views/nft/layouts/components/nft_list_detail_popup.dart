@@ -63,7 +63,7 @@ class NFTListDetailPopup {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        // TODO(reddwarf03): See with Charly why i have the error: type 'String' is not a subtype of type 'NftCategory?' of 'result'
+        // TODO(reddwarf03): See with Charly why i have the error: type 'String' is not a subtype of type 'NftCategory?' of 'result' (2)
         await NftCategoryDialog.getDialog(
           context,
           ref,

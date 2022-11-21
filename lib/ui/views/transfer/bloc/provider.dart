@@ -55,6 +55,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       feeEstimation: const AsyncValue.loading(),
     );
 
+    // TODO(reddwarf03): Factorize fees calculation (3)
     late final double fees;
     switch (state.transferType) {
       case TransferType.uco:
@@ -70,7 +71,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           fees = await Future<double>(
             () async {
               if (amountInUCO <= 0 || !state.recipient.isAddressValid) {
-                return 0; // TODO(Chralu): should we use an error class instead ?
+                return 0;
               }
 
               _calculateFeesTask?.cancel();
@@ -84,8 +85,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               );
               final fees = await _calculateFeesTask?.schedule(delay);
 
-              return fees ??
-                  0; // TODO(Chralu): should we use an error class instead ?
+              return fees ?? 0;
             },
           );
         } on CanceledTask {
@@ -108,7 +108,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           fees = await Future<double>(
             () async {
               if (state.amount <= 0 || !state.recipient.isAddressValid) {
-                return 0; // TODO(Chralu): should we use an error class instead ?
+                return 0;
               }
 
               _calculateFeesTask?.cancel();
@@ -120,8 +120,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               );
               final fees = await _calculateFeesTask?.schedule(delay);
 
-              return fees ??
-                  0; // TODO(Chralu): should we use an error class instead ?
+              return fees ?? 0;
             },
           );
         } on CanceledTask {
@@ -149,7 +148,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           fees = await Future<double>(
             () async {
               if (!state.recipient.isAddressValid) {
-                return 0; // TODO(Chralu): should we use an error class instead ?
+                return 0;
               }
 
               _calculateFeesTask?.cancel();
@@ -161,8 +160,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               );
               final fees = await _calculateFeesTask?.schedule(delay);
 
-              return fees ??
-                  0; // TODO(Chralu): should we use an error class instead ?
+              return fees ?? 0;
             },
           );
         } on CanceledTask {
@@ -223,7 +221,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return true;
     }
     if (typesAllowed.contains(
-            transactionTypeMap[state.recipient.address!.address]!.type,) ==
+          transactionTypeMap[state.recipient.address!.address]!.type,
+        ) ==
         false) {
       state = state.copyWith(
         errorAddressText: AppLocalization.of(context)!.invalidAddress,
@@ -307,7 +306,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     );
   }
 
-  // TODO(Chralu): That operation should be delayed to avoid to spam backend.
   Future<double?> _calculateFees({
     required BuildContext context,
     required TransferFormState formState,

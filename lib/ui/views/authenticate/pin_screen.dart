@@ -146,7 +146,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
     });
   }
 
-  // TODO(Chralu): Convert to [Widget] subclass.
+  // TODO(Chralu): Convert to [Widget] subclass. (3)
   Widget _buildPinScreenButton(
     String buttonText,
     BuildContext context,

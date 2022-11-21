@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'price.g.dart';
 
+/// Next field available : 3
 @HiveType(typeId: 7)
 class Price extends HiveObject {
   Price({

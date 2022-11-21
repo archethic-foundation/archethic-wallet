@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 
 part 'account_balance.g.dart';
 
+/// Next field available : 7
 @HiveType(typeId: 5)
 class AccountBalance extends HiveObject {
   AccountBalance({
@@ -21,11 +22,6 @@ class AccountBalance extends HiveObject {
   /// Native Token - Name
   @HiveField(1)
   final String nativeTokenName;
-
-  /// These fields have been used. Do not reuse those field IDs !
-  // @HiveField(2)
-  // @HiveField(3)
-  // @HiveField(4)
 
   /// Token Price
   @HiveField(5, defaultValue: 0)

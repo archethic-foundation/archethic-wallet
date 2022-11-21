@@ -20,7 +20,7 @@ class ContactAdapter extends TypeAdapter<Contact> {
       name: fields[0] as String,
       address: fields[1] as String,
       type: fields[4] as String,
-      publicKey: fields[5] as String?,
+      publicKey: fields[5] == null ? '' : fields[5] as String,
       favorite: fields[6] as bool?,
     );
   }

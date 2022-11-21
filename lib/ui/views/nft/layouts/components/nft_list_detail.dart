@@ -8,6 +8,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -61,14 +62,14 @@ class NFTListDetail extends ConsumerWidget {
                   NFTDetail(tokenInformations: tokenInformations, index: index),
             );
           },
-          // TODO(reddwarf03): Finish this feature
-          /*onLongPressEnd: (details) {
+          // TODO(reddwarf03): Finish this feature (2)
+          onLongPressEnd: (details) {
             NFTListDetailPopup.getPopup(
               context,
               ref,
               details,
             );
-          },*/
+          },
           child: Card(
             elevation: 5,
             shadowColor: Colors.black,
@@ -97,7 +98,6 @@ class NFTListDetail extends ConsumerWidget {
                               color: theme.text,
                               border: Border.all(),
                             ),
-                            // TODO(chralu): Cache management ?
                             child: Image.memory(
                               snapshot.data!,
                               height: 130,
@@ -135,7 +135,7 @@ class NFTListDetail extends ConsumerWidget {
             ),
           ),
         ),
-        // TODO(reddwarf03): Implement this feature
+        // TODO(reddwarf03): Implement this feature (3)
         /* NFTCardBottom(
           tokenInformations: tokenInformations,
         ),*/
@@ -158,7 +158,7 @@ class NFTCardBottom extends ConsumerWidget {
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
-      // TODO(Chralu): we should not interact directly with Hive DTOs. Use providers instead. -> which provider ?
+      // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
       tokenInformations.id,
     );
     final preferences = ref.watch(SettingsProviders.settings);

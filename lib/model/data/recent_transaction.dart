@@ -1,6 +1,5 @@
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
@@ -8,6 +7,7 @@ part 'recent_transaction.g.dart';
 
 /// [TransactionInput] represents the inputs from the transaction.
 
+/// Next field available : 15
 @HiveType(typeId: 6)
 class RecentTransaction extends HiveObject {
   RecentTransaction({
@@ -107,39 +107,4 @@ class RecentTransaction extends HiveObject {
         'type': type,
         'decryptedSecret': decryptedSecret
       };
-
-  // TODO(Chralu): Move that method in a dedicated [Provider]
-  Future<TokenInformations?> getTokenInfo(
-    String? content,
-    String? address,
-  ) async {
-    Token? token;
-    if (address == null) {
-      return null;
-    }
-    final String? localOrRemoteContent;
-    if (content == null || content.isEmpty) {
-      final transactionContentMap =
-          await sl.get<ApiService>().getTransactionContent([address]);
-      localOrRemoteContent = transactionContentMap[address];
-    } else {
-      localOrRemoteContent = content;
-    }
-
-    if (localOrRemoteContent == null || localOrRemoteContent.isEmpty) {
-      return null;
-    }
-    try {
-      token = tokenFromJson(localOrRemoteContent);
-      return TokenInformations(
-        address: token.address,
-        name: token.name,
-        supply: fromBigInt(token.supply).toDouble(),
-        symbol: token.symbol,
-        type: token.type,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
 }

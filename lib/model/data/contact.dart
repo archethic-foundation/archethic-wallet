@@ -7,13 +7,14 @@ part 'contact.g.dart';
 
 enum ContactType { keychainService, externalContact }
 
+/// Next field available : 7
 @HiveType(typeId: 0)
 class Contact extends HiveObject {
   Contact({
     required this.name,
     required this.address,
     required this.type,
-    this.publicKey,
+    required this.publicKey,
     this.favorite,
   });
 
@@ -29,10 +30,9 @@ class Contact extends HiveObject {
   @HiveField(4)
   String type;
 
-  // TODO(reddwarf03): How to create required properties with hive... ?
   /// Public Key
-  @HiveField(5)
-  String? publicKey;
+  @HiveField(5, defaultValue: '')
+  String publicKey;
 
   /// Favorite
   @HiveField(6)

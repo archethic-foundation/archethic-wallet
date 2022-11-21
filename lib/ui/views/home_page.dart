@@ -1,20 +1,14 @@
 // ignore_for_file: cancel_subscriptions, prefer_const_constructors
-import 'dart:async';
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/bus/disable_lock_timeout_event.dart';
-import 'package:aewallet/bus/notifications_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
@@ -28,7 +22,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,9 +33,7 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage>
-    with WidgetsBindingObserver, TickerProviderStateMixin {
-  bool _lockDisabled = false; // whether we should avoid locking the app
-
+    with TickerProviderStateMixin {
   PageController? _bottomBarPageController;
   PageController get bottomBarPageController =>
       _bottomBarPageController ??= PageController(
@@ -52,107 +43,13 @@ class _HomePageState extends ConsumerState<HomePage>
   @override
   void initState() {
     super.initState();
-
-    _registerBus();
-    WidgetsBinding.instance.addObserver(this);
-
     NotificationsUtil.init();
-    listenNotifications();
   }
 
   @override
   void dispose() {
-    _destroyBus();
-    WidgetsBinding.instance.removeObserver(this);
     _bottomBarPageController?.dispose();
     super.dispose();
-  }
-
-  StreamSubscription<String?> listenNotifications() =>
-      NotificationsUtil.onNotifications.stream.listen(onClickedNotification);
-
-  void onClickedNotification(String? payload) {
-    EventTaxiImpl.singleton().fire(NotificationsEvent(payload: payload));
-  }
-
-  StreamSubscription<DisableLockTimeoutEvent>? _disableLockSub;
-  StreamSubscription<NotificationsEvent>? _notificationsSub;
-
-  void _registerBus() {
-    // Hackish event to block auto-lock functionality
-    _disableLockSub = EventTaxiImpl.singleton()
-        .registerTo<DisableLockTimeoutEvent>()
-        .listen((DisableLockTimeoutEvent event) {
-      if (event.disable!) {
-        cancelLockEvent();
-      }
-      _lockDisabled = event.disable!;
-    });
-
-    _notificationsSub = EventTaxiImpl.singleton()
-        .registerTo<NotificationsEvent>()
-        .listen((NotificationsEvent event) async {
-      Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-    });
-  }
-
-  void _destroyBus() {
-    if (_disableLockSub != null) {
-      _disableLockSub!.cancel();
-    }
-    if (_notificationsSub != null) {
-      _notificationsSub!.cancel();
-    }
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Handle websocket connection when app is in background
-    // terminate it to be eco-friendly
-    switch (state) {
-      case AppLifecycleState.paused:
-        setAppLockEvent();
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.resumed:
-        cancelLockEvent();
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.inactive:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.detached:
-        super.didChangeAppLifecycleState(state);
-        break;
-    }
-  }
-
-  // To lock and unlock the app
-  StreamSubscription<dynamic>? lockStreamListener;
-
-  // TODO(reddward03): Need for explaination about that feature.
-  Future<void> setAppLockEvent() async {
-    final preferences = await HivePreferencesDatasource.getInstance();
-    if ((preferences.getLock()) && !_lockDisabled) {
-      if (lockStreamListener != null) {
-        lockStreamListener!.cancel();
-      }
-      final Future<dynamic> delayed =
-          Future<void>.delayed(preferences.getLockTimeout().duration)
-            ..then((_) {
-              return true;
-            });
-      lockStreamListener = delayed.asStream().listen((_) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-      });
-    }
-  }
-
-  Future<void> cancelLockEvent() async {
-    if (lockStreamListener != null) {
-      lockStreamListener!.cancel();
-    }
   }
 
   @override
@@ -274,12 +171,11 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                 textAlign: TextAlign.center,
               ),
             ],
-            // ignore: prefer_const_literals_to_create_immutables
-            views: [
-              const SizedBox(
+            views: const [
+              SizedBox(
                 height: 0,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 0,
               )
             ],

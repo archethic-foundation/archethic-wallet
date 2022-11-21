@@ -116,7 +116,6 @@ class _TransferTextFieldAddressState
                       FeedbackType.light,
                       preferences.activeVibrations,
                     );
-                UIUtil.cancelLockEvent();
                 final scanResult = await UserDataUtil.getQRData(
                   DataType.address,
                   context,

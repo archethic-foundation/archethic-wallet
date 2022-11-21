@@ -2,15 +2,9 @@
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-
-// Project imports:
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
-// Package imports:
-import 'package:event_taxi/event_taxi.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
@@ -259,24 +253,6 @@ class UIUtil {
       dismissOtherToast: true,
       duration: duration,
     );
-  }
-
-  static StreamSubscription<dynamic>? _lockDisableSub;
-
-  static Future<void> cancelLockEvent() async {
-    // Cancel auto-lock event, usually if we are launching another intent
-    if (_lockDisableSub != null) {
-      _lockDisableSub!.cancel();
-    }
-    EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: true));
-    final Future<dynamic> delayed =
-        Future<void>.delayed(const Duration(seconds: 10))
-          ..then((_) {
-            return true;
-          });
-    _lockDisableSub = delayed.asStream().listen((_) {
-      EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: false));
-    });
   }
 
   static Future<void> showWebview(

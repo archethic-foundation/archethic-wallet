@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppService {
-  // TODO(reddwarf03): Error loading recent transactions when tx number > 10, https://github.com/archethic-foundation/archethic-wallet/issues/262
+  // TODO(reddwarf03): Error loading recent transactions when tx number > 10, https://github.com/archethic-foundation/archethic-wallet/issues/262 (1)
   Future<Map<String, List<Transaction>>> getTransactionChain(
     List<String> addresses,
     String? request,
@@ -598,12 +598,9 @@ class AppService {
     BuildContext context,
     String name,
   ) async {
-    // ignore: prefer_final_locals
-    var transactionsInfos = List<TransactionInfos>.empty(growable: true);
+    final transactionsInfos = List<TransactionInfos>.empty(growable: true);
 
-    // TODO(reddwarf03): don't load content if tx is NFT
-    // ignore: prefer_final_locals
-    var transactionMap = await sl.get<ApiService>().getTransaction(
+    final transactionMap = await sl.get<ApiService>().getTransaction(
       [address],
       request:
           ' address, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients }, type ',

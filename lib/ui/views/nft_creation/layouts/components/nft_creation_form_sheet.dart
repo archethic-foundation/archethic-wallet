@@ -118,7 +118,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                         if (index == NftCreationTab.summary.index) {
                           if (nftCreation.name.isEmpty ||
                               nftCreation.fileDecodedForPreview == null) {
-                            final nftCreationNotifier = ref.watch(
+                            ref.watch(
                               NftCreationFormProvider.nftCreationForm(
                                 nftCreationArgs,
                               ).notifier,

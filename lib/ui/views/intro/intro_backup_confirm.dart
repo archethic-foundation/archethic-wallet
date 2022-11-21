@@ -194,7 +194,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   void initState() {
     super.initState();
     _registerBus();
-    // TODO(reddwarf03): LanguageSeed seems to be local to "import wallet" and "create wallet" screens. Maybe it should not be stored in preferences ?
+    // TODO(reddwarf03): LanguageSeed seems to be local to "import wallet" and "create wallet" screens. Maybe it should not be stored in preferences ? (3)
     final languageSeed = ref.read(
       SettingsProviders.settings.select((settings) => settings.languageSeed),
     );

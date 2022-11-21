@@ -44,17 +44,18 @@ class GetPublicKeys extends ConsumerWidget {
             right: 10,
           ),
           child: Wrap(
-            // TODO(reddwarf03): create dynamic loading
+            // TODO(Chralu): create dynamic loading (3)
             children: List.generate(
               propertySelected.publicKeys.length,
               (index) {
                 return Padding(
                   padding: const EdgeInsets.all(5),
                   child: PublicKeyLine(
-                      propertyName: propertyName,
-                      publicKey: propertySelected
-                          .publicKeys[index].publicKey!.publicKey,
-                      readOnly: readOnly,),
+                    propertyName: propertyName,
+                    publicKey:
+                        propertySelected.publicKeys[index].publicKey!.publicKey,
+                    readOnly: readOnly,
+                  ),
                 );
               },
             ),

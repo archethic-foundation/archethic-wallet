@@ -13,6 +13,7 @@ import 'package:hive/hive.dart';
 
 part 'account.g.dart';
 
+/// Next field available : 12
 @HiveType(typeId: 1)
 class Account extends HiveObject {
   Account({

@@ -5,16 +5,13 @@ import 'package:hive/hive.dart';
 
 part 'account_token.g.dart';
 
+/// Next field available : 9
 @HiveType(typeId: 8)
 class AccountToken extends HiveObject {
   AccountToken({
     this.tokenInformations,
     this.amount,
   });
-
-  /// Amount
-  //@HiveField(2)
-  //int? amount;
 
   /// Token informations
   @HiveField(7)

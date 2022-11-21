@@ -120,7 +120,7 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
   String? get name => r'_priceHistoryProvider';
 }
 
-String $_priceEvolutionHash() => r'8ad707dda019c2e59bb1b6352831854a0b07710e';
+String $_priceEvolutionHash() => r'bcc3b22660c82056f10a536b6f8285b00e202ec6';
 
 /// See also [_priceEvolution].
 class _PriceEvolutionProvider extends FutureProvider<double> {

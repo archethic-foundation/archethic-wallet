@@ -45,32 +45,6 @@ class NftPropertyAppTextField extends ConsumerWidget {
       inputFormatters: <LengthLimitingTextInputFormatter>[
         LengthLimitingTextInputFormatter(30),
       ],
-      onChanged: (text) {
-        // TODO(reddwarf03): Reactivate
-        /* if (text == '') {
-          tokenPropertyWithAccessInfosList.removeWhere(
-            (element) => element.tokenProperty!.keys.first == propertyKey,
-          );
-        } else {
-          tokenPropertyWithAccessInfosList.removeWhere(
-            (element) => element.tokenProperty!.keys.first == propertyKey,
-          );
-          tokenPropertyWithAccessInfosList.add(
-            TokenPropertyWithAccessInfos(
-              tokenProperty: {propertyKey: textEditingController.text},
-            ),
-          );
-          tokenPropertyWithAccessInfosList.sort(
-            (
-              TokenPropertyWithAccessInfos a,
-              TokenPropertyWithAccessInfos b,
-            ) =>
-                a.tokenProperty!.keys.first
-                    .toLowerCase()
-                    .compareTo(b.tokenProperty!.keys.first.toLowerCase()),
-          );
-        }*/
-      },
       suffixButton: hasQRCode
           ? TextFieldButton(
               icon: FontAwesomeIcons.qrcode,
@@ -79,7 +53,6 @@ class NftPropertyAppTextField extends ConsumerWidget {
                       FeedbackType.light,
                       preferences.activeVibrations,
                     );
-                UIUtil.cancelLockEvent();
                 final scanResult =
                     await UserDataUtil.getQRData(DataType.raw, context, ref);
                 if (scanResult == null) {

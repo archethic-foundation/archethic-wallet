@@ -229,7 +229,7 @@ class KeychainUtil {
         .getLastTransaction([genesisAddressKeychain], request: 'address');
     appWallet.appKeychain.address = lastTransactionKeychainAddressMap[
             genesisAddressKeychain]!
-        .address!; // TODO(Chralu): Transaction.address should be non-nullable
+        .address!; // TODO(Chralu): Transaction.address should be non-nullable (3)
 
     await sl.get<DBHelper>().saveAppWallet(appWallet);
 

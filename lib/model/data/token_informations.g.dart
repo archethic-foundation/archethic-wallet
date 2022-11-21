@@ -24,13 +24,13 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       type: fields[3] as String?,
       symbol: fields[4] as String?,
       tokenProperties: (fields[12] as Map?)?.cast<String, dynamic>(),
-    )..onChain = fields[7] as bool?;
+    );
   }
 
   @override
   void write(BinaryWriter writer, TokenInformations obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -39,8 +39,6 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..write(obj.type)
       ..writeByte(4)
       ..write(obj.symbol)
-      ..writeByte(7)
-      ..write(obj.onChain)
       ..writeByte(9)
       ..write(obj.supply)
       ..writeByte(10)

@@ -9,7 +9,7 @@ class PublicKey {
 
   String get publicKey => _publicKey;
 
-  // TODO(reddwarf03): Add control
+  // TODO(reddwarf03): Add control (1)
   bool get isValid {
     return true;
   }

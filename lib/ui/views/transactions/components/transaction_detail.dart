@@ -269,8 +269,7 @@ class TransactionDetail extends ConsumerWidget {
                               Text(
                                 '${localizations.txListFrom} ${Address(
                                   transaction.contactInformations == null
-                                      ? transaction
-                                          .from! // TODO(Chralu): Should we show origin or destination address ?
+                                      ? transaction.from!
                                       : transaction.contactInformations!.format,
                                 ).getShortString4()}',
                                 style: theme.textStyleSize12W400Primary,

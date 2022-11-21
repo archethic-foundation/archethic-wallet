@@ -19,17 +19,15 @@ class AppKeychainAdapter extends TypeAdapter<AppKeychain> {
     return AppKeychain(
       address: fields[0] as String,
       accounts: fields[2] == null ? [] : (fields[2] as List).cast<Account>(),
-    )..seed = fields[1] as String?;
+    );
   }
 
   @override
   void write(BinaryWriter writer, AppKeychain obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.address)
-      ..writeByte(1)
-      ..write(obj.seed)
       ..writeByte(2)
       ..write(obj.accounts);
   }

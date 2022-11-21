@@ -135,7 +135,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       await selectedAccount!.removeftInfosOffChain(
         tokenMap[transaction.data!.ledger!.token!.transfers![0].tokenAddress!]!
             .id,
-      ); // TODO(Chralu): we should not interact directly with data source. Use Providers instead.
+      ); // TODO(reddwarf03): we should not interact directly with data source. Use Providers instead. (3)
 
       await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
     }

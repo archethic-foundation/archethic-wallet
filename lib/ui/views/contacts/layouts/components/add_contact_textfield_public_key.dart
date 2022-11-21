@@ -59,7 +59,6 @@ class _AddContactTextFieldPublicKeyState
                       FeedbackType.light,
                       preferences.activeVibrations,
                     );
-                UIUtil.cancelLockEvent();
                 final scanResult = await UserDataUtil.getQRData(
                   DataType.raw,
                   context,

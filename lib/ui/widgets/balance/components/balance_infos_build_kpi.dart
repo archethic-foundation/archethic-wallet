@@ -104,7 +104,7 @@ class BalanceInfosKpi extends ConsumerWidget {
 }
 
 class _PriceEvolutionIndicator extends ConsumerWidget {
-  const _PriceEvolutionIndicator({super.key});
+  const _PriceEvolutionIndicator();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

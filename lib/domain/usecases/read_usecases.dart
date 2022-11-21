@@ -27,8 +27,8 @@ mixin ReadStrategy<CommandT, ValueT> {
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
-    } catch (_) {
-      // TODO(Chralu): Should we log network failure ?
+    } catch (e, stackTrace) {
+      log('$_logPrefix : Remote read failed', stackTrace: stackTrace);
     }
 
     try {
@@ -37,8 +37,8 @@ mixin ReadStrategy<CommandT, ValueT> {
         log('$_logPrefix Using local value');
         return Result.success(localValue);
       }
-    } catch (_) {
-      // TODO(Chralu): Should we log local failure ?
+    } catch (e, stackTrace) {
+      log('$_logPrefix : Local read failed', stackTrace: stackTrace);
     }
 
     log('$_logPrefix Unable to fetch local or remote value');
@@ -58,8 +58,8 @@ mixin ReadStrategy<CommandT, ValueT> {
         log('$_logPrefix Using local value');
         return Result.success(localValue);
       }
-    } catch (_) {
-      // TODO(Chralu): Should we log local failure ?
+    } catch (e, stackTrace) {
+      log('$_logPrefix : Local read failed', stackTrace: stackTrace);
     }
 
     try {
@@ -70,8 +70,8 @@ mixin ReadStrategy<CommandT, ValueT> {
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
-    } catch (_) {
-      // TODO(Chralu): Should we log remote failure ?
+    } catch (e, stackTrace) {
+      log('$_logPrefix : Remote read failed', stackTrace: stackTrace);
     }
     log('$_logPrefix Unable to fetch local or remote value');
 

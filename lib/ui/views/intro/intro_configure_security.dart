@@ -206,7 +206,7 @@ class _IntroConfigureSecurityState
                                 if (authenticated) {
                                   await ref
                                       .read(AuthenticationProviders
-                                          .settings.notifier)
+                                          .settings.notifier,)
                                       .setAuthMethod(authMethod);
                                   EventTaxiImpl.singleton()
                                       .fire(AuthenticatedEvent());

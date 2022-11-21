@@ -12,6 +12,7 @@ import 'package:hive/hive.dart';
 
 part 'hive_app_wallet_dto.g.dart';
 
+/// Next field available : 2
 @HiveType(typeId: 4)
 class HiveAppWalletDTO extends HiveObject {
   HiveAppWalletDTO({

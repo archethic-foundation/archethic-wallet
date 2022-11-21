@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 
 part 'token_informations.g.dart';
 
+/// Next field available : 13
 @HiveType(typeId: 9)
 class TokenInformations extends HiveObject {
   TokenInformations({
@@ -31,11 +32,6 @@ class TokenInformations extends HiveObject {
   /// Symbol
   @HiveField(4)
   String? symbol;
-
-  /// Token on chain or in creation
-  @Deprecated('Unused')
-  @HiveField(7)
-  bool? onChain;
 
   /// Supply
   @HiveField(9)

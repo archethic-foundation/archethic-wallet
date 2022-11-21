@@ -34,7 +34,7 @@ class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
     throw const Failure.invalidValue();
   }
 
-  // TODO(reddwarf03): Provide a way to get the last value of an oracle #451
+  // TODO(reddwarf03): Provide a way to get the last value of an oracle #451 (3)
   @override
   Future<Result<MarketPrice, Failure>> getUCOMarketPrice(
     AvailableCurrencyEnum currency,

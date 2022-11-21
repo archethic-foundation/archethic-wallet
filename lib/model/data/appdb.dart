@@ -10,7 +10,6 @@ import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -32,8 +31,6 @@ class DBHelper {
       ..registerAdapter(PriceAdapter())
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationsAdapter())
-      // TODO(chralu): How to remove this adapter annd the unused hive class
-      ..registerAdapter(TokenInformationsPropertyAdapter())
       ..registerAdapter(NftInfosOffChainAdapter());
   }
 
@@ -51,8 +48,8 @@ class DBHelper {
   Future<List<Contact>> getContactsWithNameLike(String pattern) async {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
-    // ignore: prefer_final_locals
-    var contactsListSelected = List<Contact>.empty(growable: true);
+
+    final contactsListSelected = List<Contact>.empty(growable: true);
     for (final contact in contactsList) {
       if (contact.name.contains(pattern)) {
         contactsListSelected.add(contact);
@@ -110,7 +107,7 @@ class DBHelper {
     } else {
       return contactSelected;
     }
-    // TODO(reddwarf03): need feature in node: https://github.com/archethic-foundation/archethic-node/issues/670
+    // TODO(reddwarf03): need feature in node: https://github.com/archethic-foundation/archethic-node/issues/670 (1)
     /* final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     Contact? contactSelected;
@@ -166,7 +163,7 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithAddress(String address) async {
-    // TODO(reddwarf03): Create similar behaviour with contactExistsWithName
+    // TODO(reddwarf03): Create similar behaviour with contactExistsWithName (3)
     final _contact = await getContactWithAddress(address);
     if (_contact == null) {
       return false;
@@ -175,20 +172,17 @@ class DBHelper {
   }
 
   Future<void> saveContact(Contact contact) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<Contact>(contactsTable);
+    final box = await Hive.openBox<Contact>(contactsTable);
     await box.put(contact.name, contact);
   }
 
   Future<void> deleteContact(Contact contact) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<Contact>(contactsTable);
+    final box = await Hive.openBox<Contact>(contactsTable);
     await box.delete(contact.name);
   }
 
   Future<void> clearContacts() async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<Contact>(contactsTable);
+    final box = await Hive.openBox<Contact>(contactsTable);
     await box.clear();
   }
 
@@ -241,8 +235,7 @@ class DBHelper {
     Account selectedAccount,
     AccountBalance balance,
   ) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     final accounts = appWallet.appKeychain.accounts;
     for (final account in accounts) {
@@ -255,8 +248,7 @@ class DBHelper {
   }
 
   Future<void> updateAccount(Account selectedAccount) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appWallet = box.get(0)!;
     appWallet.appKeychain.accounts = appWallet.appKeychain.accounts.map(
       (account) {
@@ -268,14 +260,12 @@ class DBHelper {
   }
 
   Future<void> clearAppWallet() async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     await box.clear();
   }
 
   Future<HiveAppWalletDTO> createAppWallet(String keyChainAddress) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     final appKeychain =
         AppKeychain(address: keyChainAddress, accounts: <Account>[]);
     final appWallet = HiveAppWalletDTO(appKeychain: appKeychain);
@@ -284,8 +274,7 @@ class DBHelper {
   }
 
   Future<HiveAppWalletDTO?> getAppWallet() async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
+    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     return box.get(0);
   }
 
@@ -301,20 +290,17 @@ class DBHelper {
   }
 
   Future<void> updatePrice(AvailableCurrencyEnum currency, Price price) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<Price>(priceTable);
+    final box = await Hive.openBox<Price>(priceTable);
     await box.put(currency.index, price);
   }
 
   Future<Price?> getPrice(AvailableCurrencyEnum currency) async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<Price>(priceTable);
+    final box = await Hive.openBox<Price>(priceTable);
     return box.get(currency.index);
   }
 
   Future<void> clearPrice() async {
-    // ignore: prefer_final_locals
-    var box = await Hive.openBox<Price>(priceTable);
+    final box = await Hive.openBox<Price>(priceTable);
     await box.clear();
   }
 }

@@ -5,6 +5,8 @@ import 'package:hive/hive.dart';
 part 'app_keychain.g.dart';
 
 @HiveType(typeId: 3)
+
+/// Next field available : 3
 class AppKeychain extends HiveObject {
   AppKeychain({
     required this.address,
@@ -14,11 +16,6 @@ class AppKeychain extends HiveObject {
   /// Address
   @HiveField(0)
   String address;
-
-  /// Seed
-  // TODO(reddwarf03): This should be mandatory and filled on Keychain creation.
-  @HiveField(1)
-  String? seed;
 
   /// Accounts
   @HiveField(2, defaultValue: [])

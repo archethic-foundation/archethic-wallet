@@ -153,7 +153,6 @@ class AuthFactory {
   }) async {
     var auth = false;
     if (transitions) {
-      // TODO(redDwarf03): add the description
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (BuildContext context) => PinScreen(

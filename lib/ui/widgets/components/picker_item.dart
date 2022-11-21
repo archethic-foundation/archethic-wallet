@@ -32,7 +32,7 @@ class PickerItem {
   String? subLabel;
 }
 
-// TODO(Chralu): specify [PickerItem.value] types (thanks to Generics)
+// TODO(reddwarf03): specify [PickerItem.value] types (thanks to Generics) (3)
 class PickerWidget extends ConsumerStatefulWidget {
   const PickerWidget({
     super.key,

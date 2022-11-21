@@ -90,7 +90,6 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
                       FeedbackType.light,
                       preferences.activeVibrations,
                     );
-                UIUtil.cancelLockEvent();
                 final scanResult = await UserDataUtil.getQRData(
                   DataType.raw,
                   context,
