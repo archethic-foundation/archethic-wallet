@@ -2,7 +2,7 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
-import 'package:aewallet/domain/repositories/market.dart';
+import 'package:aewallet/domain/repositories/market/market.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:coingecko_api/coingecko_api.dart';

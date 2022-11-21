@@ -1,8 +1,8 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
-import 'package:aewallet/domain/repositories/price_history.dart';
-import 'package:aewallet/infrastructure/repositories/coingecko_price_history_repository.dart';
+import 'package:aewallet/domain/repositories/market/price_history.dart';
+import 'package:aewallet/infrastructure/repositories/market/coingecko_price_history_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,7 +19,7 @@ MarketPriceHistoryInterval _intervalOption(Ref ref) => ref.watch(
     );
 
 @Riverpod(keepAlive: true)
-Future<List<PriceHistoryValue>> _chartData(
+Future<List<PriceHistoryValue>> _priceHistory(
   Ref ref, {
   required MarketPriceHistoryInterval scaleOption,
 }) async {
@@ -35,7 +35,26 @@ Future<List<PriceHistoryValue>> _chartData(
       .valueOrThrow;
 }
 
+@Riverpod(keepAlive: true)
+Future<double> _priceEvolution(
+  Ref ref, {
+  required MarketPriceHistoryInterval scaleOption,
+}) async {
+  final priceHistory = await ref.watch(
+    _priceHistoryProvider(scaleOption: scaleOption).future,
+  );
+
+  return ref
+      .watch(_repositoryProvider)
+      .getPriceEvolution(
+        priceHistory: priceHistory,
+        interval: scaleOption,
+      )
+      .valueOrThrow;
+}
+
 abstract class PriceHistoryProviders {
   static final scaleOption = _intervalOptionProvider;
-  static final chartData = _chartDataProvider;
+  static final chartData = _priceHistoryProvider;
+  static final priceEvolution = _priceEvolutionProvider;
 }

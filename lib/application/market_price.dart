@@ -1,7 +1,7 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
-import 'package:aewallet/domain/repositories/market.dart';
+import 'package:aewallet/domain/repositories/market/market.dart';
 import 'package:aewallet/domain/usecases/market/get_market_price.dart';
 import 'package:aewallet/infrastructure/repositories/market/archethic_oracle_uco_market.dart';
 import 'package:aewallet/infrastructure/repositories/market/coingecko_uco_market.dart';

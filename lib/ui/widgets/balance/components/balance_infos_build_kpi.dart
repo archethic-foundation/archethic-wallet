@@ -18,6 +18,11 @@ class BalanceInfosKpi extends ConsumerWidget {
           ),
         )
         .valueOrNull;
+    if (chartInfos == null) {
+      return const SizedBox(
+        height: 30,
+      );
+    }
 
     final currencyMarketPrice = ref
         .watch(
@@ -34,12 +39,6 @@ class BalanceInfosKpi extends ConsumerWidget {
     );
     if (accountSelectedBalance == null || currencyMarketPrice == null) {
       return const SizedBox();
-    }
-
-    if (chartInfos == null) {
-      return const SizedBox(
-        height: 30,
-      );
     }
 
     final selectedPriceHistoryInterval =
@@ -61,33 +60,7 @@ class BalanceInfosKpi extends ConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-
-              /// TODO(Chralu): reactiver
-              // AutoSizeText(
-              //            '${chartInfos!.getPriceChangePercentage(selectedPriceHistoryInterval)!.toStringAsFixed(2)}%',
-              //   style: chartInfos.getPriceChangePercentage(
-              //             selectedPriceHistoryInterval,
-              //           )! >=
-              //           0
-              //       ? theme.textStyleSize12W100PositiveValue
-              //       : theme.textStyleSize12W100NegativeValue,
-              // ),
-              const SizedBox(width: 5),
-
-              /// TODO(Chralu): reactiver
-              // if (chartInfos.getPriceChangePercentage(
-              //       selectedPriceHistoryInterval,
-              //     )! >=
-              //     0)
-              //   FaIcon(
-              //     FontAwesomeIcons.caretUp,
-              //     color: theme.positiveValue,
-              //   )
-              // else
-              FaIcon(
-                FontAwesomeIcons.caretDown,
-                color: theme.negativeValue,
-              ),
+              const _PriceEvolutionIndicator(),
               const SizedBox(
                 width: 10,
               ),
@@ -125,6 +98,54 @@ class BalanceInfosKpi extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _PriceEvolutionIndicator extends ConsumerWidget {
+  const _PriceEvolutionIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    final preferences = ref.watch(SettingsProviders.settings);
+    final asyncPriceEvolution = ref.watch(
+      PriceHistoryProviders.priceEvolution(
+        scaleOption: preferences.priceChartIntervalOption,
+      ),
+    );
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 100),
+      child: asyncPriceEvolution.maybeWhen(
+        data: (priceEvolution) {
+          return Row(
+            children: [
+              AutoSizeText(
+                '${priceEvolution.toStringAsFixed(2)}%',
+                style: priceEvolution >= 0
+                    ? theme.textStyleSize12W100PositiveValue
+                    : theme.textStyleSize12W100NegativeValue,
+              ),
+              const SizedBox(width: 5),
+              if (priceEvolution >= 0)
+                FaIcon(
+                  FontAwesomeIcons.caretUp,
+                  color: theme.positiveValue,
+                )
+              else
+                FaIcon(
+                  FontAwesomeIcons.caretDown,
+                  color: theme.negativeValue,
+                ),
+            ],
+          );
+        },
+        orElse: () {
+          return const SizedBox();
+        },
       ),
     );
   }
