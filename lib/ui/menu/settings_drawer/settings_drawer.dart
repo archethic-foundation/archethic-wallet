@@ -13,6 +13,7 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';

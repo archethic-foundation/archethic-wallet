@@ -29,6 +29,7 @@ class HivePreferencesDatasource {
   static const String curTheme = 'archethic_wallet_cur_theme';
   static const String lock = 'archethic_wallet_lock';
   static const String lockTimeout = 'archethic_wallet_lock_timeout';
+  static const String autoLockDate = 'archethic_wallet_autolock_date';
   static const String hasShownRootWarning =
       'archethic_wallet_has_shown_root_warning';
   static const String pinAttempts = 'archethic_wallet_pin_attempts';
@@ -134,7 +135,7 @@ class HivePreferencesDatasource {
 
   Future<void> setLock(bool value) => _setValue(lock, value);
 
-  bool getLock() => _getValue(lock, defaultValue: false);
+  bool getLock() => _getValue(lock, defaultValue: true);
 
   Future<void> setFirstLaunch(bool value) => _setValue(firstLaunch, value);
 
@@ -188,15 +189,13 @@ class HivePreferencesDatasource {
         defaultValue: MarketPriceHistoryInterval.hour.index,
       )];
 
-  Future<void> setLockTimeout(LockTimeoutSetting setting) =>
-      _setValue(lockTimeout, setting.getIndex());
+  Future<void> setLockTimeout(LockTimeoutOption lockTimeoutOption) =>
+      _setValue(lockTimeout, lockTimeoutOption.index);
 
-  LockTimeoutSetting getLockTimeout() => LockTimeoutSetting(
-        LockTimeoutOption.values[_getValue(
-          lockTimeout,
-          defaultValue: LockTimeoutOption.one.index,
-        )],
-      );
+  LockTimeoutOption getLockTimeout() => LockTimeoutOption.values[_getValue(
+        lockTimeout,
+        defaultValue: LockTimeoutOption.one.index,
+      )];
 
   int getLockAttempts() => _getValue(pinAttempts, defaultValue: 0);
 
@@ -240,5 +239,17 @@ class HivePreferencesDatasource {
 
   Future<void> clearAll() async {
     await _box.clear();
+  }
+
+  Future<DateTime?> getAutoLockTriggerDate() async {
+    return _getValue(autoLockDate, defaultValue: null);
+  }
+
+  Future<void> setAutoLockTriggerDate(DateTime date) async {
+    return _setValue(autoLockDate, date);
+  }
+
+  Future<void> clearAutoLockTriggerDate() async {
+    await _removeValue(autoLockDate);
   }
 }

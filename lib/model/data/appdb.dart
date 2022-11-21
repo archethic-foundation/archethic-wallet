@@ -303,13 +303,13 @@ class DBHelper {
   Future<void> updatePrice(AvailableCurrencyEnum currency, Price price) async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<Price>(priceTable);
-    await box.put(currency, price);
+    await box.put(currency.index, price);
   }
 
   Future<Price?> getPrice(AvailableCurrencyEnum currency) async {
     // ignore: prefer_final_locals
     var box = await Hive.openBox<Price>(priceTable);
-    return box.get(currency);
+    return box.get(currency.index);
   }
 
   Future<void> clearPrice() async {

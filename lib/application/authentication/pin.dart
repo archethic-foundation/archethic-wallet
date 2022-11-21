@@ -14,7 +14,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
       : super(
           PinAuthenticationState(
             failedAttemptsCount: 0,
-            maxAttemptsCount: IAuthenticateWithPin.maxFailedAttempts,
+            maxAttemptsCount: AuthenticateWithPin.maxFailedAttempts,
           ),
         ) {
     _loadInitialState();
@@ -39,7 +39,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
     final authenticationRepository = ref.read(
       AuthenticationProviders._authenticationRepository,
     );
-    final authenticationResult = await IAuthenticateWithPin(
+    final authenticationResult = await AuthenticateWithPin(
       repository: authenticationRepository,
     ).run(pin);
 
@@ -63,7 +63,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
     required String pin,
     required String pinConfirmation,
   }) async =>
-      IUpdateMyPin(
+      UpdateMyPin(
         repository: ref.read(
           AuthenticationProviders._authenticationRepository,
         ),

@@ -159,7 +159,7 @@ class _LanguageSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.language,
-      defaultMethod: language,
+      defaultMethod: LanguageSetting(language),
       icon: UiIcons.language,
       onPressed: () => LanguageDialog.getDialog(context, ref),
     );

@@ -29,17 +29,17 @@ class _SystemHash {
   }
 }
 
-String $_selectedLanguageHash() => r'a4f615e55b8ded2dbe6f34ed5f620a4b781a2ec9';
+String $_selectedLanguageHash() => r'c63fc0ebfcfac294c5aad3f7132338ffb10ab0f1';
 
 /// See also [_selectedLanguage].
-final _selectedLanguageProvider = Provider<LanguageSetting>(
+final _selectedLanguageProvider = Provider<AvailableLanguage>(
   _selectedLanguage,
   name: r'_selectedLanguageProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_selectedLanguageHash,
 );
-typedef _SelectedLanguageRef = ProviderRef<LanguageSetting>;
+typedef _SelectedLanguageRef = ProviderRef<AvailableLanguage>;
 String $_selectedLocaleHash() => r'b1fa4f810786d439212304efb93e2e420b1d1993';
 
 /// Resolves the selected locale

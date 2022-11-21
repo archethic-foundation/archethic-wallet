@@ -15,6 +15,129 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$AutoLockState {
+  /// After that date, application should lock when displayed
+  DateTime? get lockDate => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AutoLockStateCopyWith<AutoLockState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AutoLockStateCopyWith<$Res> {
+  factory $AutoLockStateCopyWith(
+          AutoLockState value, $Res Function(AutoLockState) then) =
+      _$AutoLockStateCopyWithImpl<$Res, AutoLockState>;
+  @useResult
+  $Res call({DateTime? lockDate});
+}
+
+/// @nodoc
+class _$AutoLockStateCopyWithImpl<$Res, $Val extends AutoLockState>
+    implements $AutoLockStateCopyWith<$Res> {
+  _$AutoLockStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lockDate = freezed,
+  }) {
+    return _then(_value.copyWith(
+      lockDate: freezed == lockDate
+          ? _value.lockDate
+          : lockDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AutoLockStateCopyWith<$Res>
+    implements $AutoLockStateCopyWith<$Res> {
+  factory _$$_AutoLockStateCopyWith(
+          _$_AutoLockState value, $Res Function(_$_AutoLockState) then) =
+      __$$_AutoLockStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({DateTime? lockDate});
+}
+
+/// @nodoc
+class __$$_AutoLockStateCopyWithImpl<$Res>
+    extends _$AutoLockStateCopyWithImpl<$Res, _$_AutoLockState>
+    implements _$$_AutoLockStateCopyWith<$Res> {
+  __$$_AutoLockStateCopyWithImpl(
+      _$_AutoLockState _value, $Res Function(_$_AutoLockState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lockDate = freezed,
+  }) {
+    return _then(_$_AutoLockState(
+      lockDate: freezed == lockDate
+          ? _value.lockDate
+          : lockDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AutoLockState extends _AutoLockState {
+  const _$_AutoLockState({this.lockDate}) : super._();
+
+  /// After that date, application should lock when displayed
+  @override
+  final DateTime? lockDate;
+
+  @override
+  String toString() {
+    return 'AutoLockState(lockDate: $lockDate)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AutoLockState &&
+            (identical(other.lockDate, lockDate) ||
+                other.lockDate == lockDate));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, lockDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AutoLockStateCopyWith<_$_AutoLockState> get copyWith =>
+      __$$_AutoLockStateCopyWithImpl<_$_AutoLockState>(this, _$identity);
+}
+
+abstract class _AutoLockState extends AutoLockState {
+  const factory _AutoLockState({final DateTime? lockDate}) = _$_AutoLockState;
+  const _AutoLockState._() : super._();
+
+  @override
+
+  /// After that date, application should lock when displayed
+  DateTime? get lockDate;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AutoLockStateCopyWith<_$_AutoLockState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PasswordAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;

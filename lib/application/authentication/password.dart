@@ -15,7 +15,7 @@ class PasswordAuthenticationNotifier
       : super(
           PasswordAuthenticationState(
             failedAttemptsCount: 0,
-            maxAttemptsCount: IAuthenticateWithPin.maxFailedAttempts,
+            maxAttemptsCount: AuthenticateWithPin.maxFailedAttempts,
           ),
         ) {
     _loadInitialState();
@@ -40,7 +40,7 @@ class PasswordAuthenticationNotifier
     final authenticationRepository = ref.read(
       AuthenticationProviders._authenticationRepository,
     );
-    final authenticationResult = await IAuthenticateWithPassword(
+    final authenticationResult = await AuthenticateWithPassword(
       repository: authenticationRepository,
     ).run(password);
 

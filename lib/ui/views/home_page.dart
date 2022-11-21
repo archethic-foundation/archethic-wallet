@@ -10,6 +10,7 @@ import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/bus/notifications_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
@@ -137,7 +138,7 @@ class _HomePageState extends ConsumerState<HomePage>
         lockStreamListener!.cancel();
       }
       final Future<dynamic> delayed =
-          Future<void>.delayed((preferences.getLockTimeout()).getDuration())
+          Future<void>.delayed(preferences.getLockTimeout().duration)
             ..then((_) {
               return true;
             });
