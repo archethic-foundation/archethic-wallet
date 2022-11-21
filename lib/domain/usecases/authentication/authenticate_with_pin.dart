@@ -1,14 +1,14 @@
 part of 'authentication.dart';
 
-class IAuthenticateWithPin
+class AuthenticateWithPin
     with AuthenticationWithLock
     implements UseCase<PinCredentials, AuthenticationResult> {
-  const IAuthenticateWithPin({
+  const AuthenticateWithPin({
     required this.repository,
   });
 
   @override
-  final AuthenticationRepository repository;
+  final AuthenticationRepositoryInterface repository;
 
   static int get maxFailedAttempts => AuthenticationWithLock.maxFailedAttempts;
 

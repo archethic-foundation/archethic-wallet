@@ -7,9 +7,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'language.g.dart';
 
 @Riverpod(keepAlive: true)
-LanguageSetting _selectedLanguage(_SelectedLanguageRef ref) => ref.watch(
+AvailableLanguage _selectedLanguage(_SelectedLanguageRef ref) => ref.watch(
       SettingsProviders.settings.select(
-        (settings) => LanguageSetting(settings.language),
+        (settings) => settings.language,
       ),
     );
 

@@ -4,6 +4,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -24,15 +25,6 @@ abstract class DurationFormatters {
   // ignore: non_constant_identifier_names
   static String HHmmss(Duration duration) =>
       '${_twoDigitsFormatter(duration.inHours)}:${_twoDigitsFormatter(duration.inMinutes % 59)}:${_twoDigitsFormatter(duration.inSeconds % 59)}';
-}
-
-/// Handles navigation to the lock screen
-mixin ShowLockScreenMixin {
-  void showLockScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      '/lock_screen_transition',
-    );
-  }
 }
 
 abstract class AppLockScreenProviders {

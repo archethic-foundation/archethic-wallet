@@ -2029,7 +2029,7 @@ class AppLocalization {
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   const AppLocalizationsDelegate(this.languageSetting);
 
-  final LanguageSetting languageSetting;
+  final AvailableLanguage languageSetting;
 
   @override
   bool isSupported(Locale locale) {
@@ -2038,7 +2038,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
 
   @override
   Future<AppLocalization> load(Locale locale) {
-    if (languageSetting.language == AvailableLanguage.systemDefault) {
+    if (languageSetting == AvailableLanguage.systemDefault) {
       return AppLocalization.load(locale);
     }
     return AppLocalization.load(Locale(languageSetting.getLocaleString()));

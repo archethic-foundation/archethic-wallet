@@ -12,7 +12,12 @@ abstract class AuthenticationRepositoryInterface {
 
   Future<void> lock(Duration duration);
   Future<void> resetLock();
+  Future<DateTime?> getLockUntilDate();
 
   Future<AuthenticationSettings> getSettings();
   Future<void> setSettings(AuthenticationSettings settings);
+
+  Future<DateTime?> getAutoLockTriggerDate();
+  Future<void> setAutoLockTriggerDate(DateTime newAutoLockDate);
+  Future<void> removeAutoLockTriggerDate();
 }

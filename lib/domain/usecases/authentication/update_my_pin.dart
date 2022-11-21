@@ -18,8 +18,8 @@ class PinUpdateCommand {
   final String pinConfirmation;
 }
 
-class IUpdateMyPin extends UseCase<PinUpdateCommand, UpdatePinResult> {
-  IUpdateMyPin({
+class UpdateMyPin extends UseCase<PinUpdateCommand, UpdatePinResult> {
+  UpdateMyPin({
     required this.repository,
   });
 

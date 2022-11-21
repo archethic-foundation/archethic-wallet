@@ -9,7 +9,7 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
+import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 // Package imports:
@@ -49,7 +49,7 @@ class PinScreen extends ConsumerStatefulWidget {
 }
 
 class _PinScreenState extends ConsumerState<PinScreen>
-    with SingleTickerProviderStateMixin, ShowLockScreenMixin {
+    with SingleTickerProviderStateMixin, LockGuardMixin {
   static const int _pinLength = 6;
   double buttonSize = 70;
 
@@ -101,6 +101,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
       curve: ShakeCurve(),
     );
     _animation = Tween<double>(begin: 0, end: 25).animate(curve);
+
+    showLockScreenIfNeeded(context, ref);
   }
 
   @override
@@ -266,6 +268,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
         return;
       },
       orElse: () {
+        showLockScreenIfNeeded(context, ref);
         sl.get<HapticUtil>().feedback(
               FeedbackType.error,
               preferences.activeVibrations,
@@ -301,16 +304,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
     final pinAuthentication = ref.watch(
       AuthenticationProviders.pinAuthentication,
-    );
-
-    ref.listen<AsyncValue<bool>>(
-      AuthenticationProviders.isLocked,
-      (previous, next) {
-        if (next.isLoading) return;
-        if (previous?.value == next.value) return;
-
-        if (next.valueOrNull == true) showLockScreen(context);
-      },
     );
 
     if (pinEnterTitle.isEmpty) {

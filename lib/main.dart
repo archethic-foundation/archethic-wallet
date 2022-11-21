@@ -9,12 +9,11 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/home_page.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
@@ -115,12 +114,12 @@ class App extends ConsumerWidget {
               );
             case '/home':
               return NoTransitionRoute<HomePage>(
-                builder: (_) => const HomePage(),
+                builder: (_) => const AutoLockGuard(child: HomePage()),
                 settings: settings,
               );
             case '/home_transition':
               return NoPopTransitionRoute<HomePage>(
-                builder: (_) => const HomePage(),
+                builder: (_) => const AutoLockGuard(child: HomePage()),
                 settings: settings,
               );
             case '/intro_welcome':
@@ -268,24 +267,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         return;
       }
 
-      final authenticationSettings = ref.read(AuthenticationProviders.settings);
-      if (authenticationSettings.lock == UnlockOption.yes) {
-        Navigator.of(context).pushReplacementNamed('/home');
-
-        await AuthFactory.forceAuthenticate(
-          context,
-          ref,
-          authMethod: ref.read(
-            AuthenticationProviders.settings.select(
-              (authSettings) =>
-                  AuthenticationMethod(authSettings.authenticationMethod),
-            ),
-          ),
-          canCancel: false,
-        );
-      } else {
-        Navigator.of(context).pushReplacementNamed('/home');
-      }
+      Navigator.of(context).pushReplacementNamed('/home');
     } catch (e) {
       dev.log(e.toString());
       FlutterNativeSplash.remove();

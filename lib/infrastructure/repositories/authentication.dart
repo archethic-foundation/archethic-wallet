@@ -54,7 +54,8 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
     (await preferences).removeLockDate();
   }
 
-  Future<DateTime?> getLockDate() async {
+  @override
+  Future<DateTime?> getLockUntilDate() async {
     return (await preferences).getLockDate();
   }
 
@@ -64,13 +65,28 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
   }
 
   @override
+  Future<DateTime?> getAutoLockTriggerDate() async {
+    return (await preferences).getAutoLockTriggerDate();
+  }
+
+  @override
+  Future<void> setAutoLockTriggerDate(DateTime newAutoLockDate) async {
+    return (await preferences).setAutoLockTriggerDate(newAutoLockDate);
+  }
+
+  @override
+  Future<void> removeAutoLockTriggerDate() async {
+    return (await preferences).clearAutoLockTriggerDate();
+  }
+
+  @override
   Future<AuthenticationSettings> getSettings() async {
     final loadedPreferences = await preferences;
     return AuthenticationSettings(
       authenticationMethod: loadedPreferences.getAuthMethod().method,
       pinPadShuffle: loadedPreferences.getPinPadShuffle(),
       lock: loadedPreferences.getLock() ? UnlockOption.yes : UnlockOption.no,
-      lockTimeout: loadedPreferences.getLockTimeout().setting,
+      lockTimeout: loadedPreferences.getLockTimeout(),
     );
   }
 
@@ -81,6 +97,10 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
     );
     (await preferences).setPinPadShuffle(
       settings.pinPadShuffle,
+    );
+    (await preferences).setLock(settings.lock == UnlockOption.yes);
+    (await preferences).setLockTimeout(
+      settings.lockTimeout,
     );
   }
 }

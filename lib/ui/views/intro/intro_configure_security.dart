@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
@@ -203,6 +204,10 @@ class _IntroConfigureSecurityState
                                     break;
                                 }
                                 if (authenticated) {
+                                  await ref
+                                      .read(AuthenticationProviders
+                                          .settings.notifier)
+                                      .setAuthMethod(authMethod);
                                   EventTaxiImpl.singleton()
                                       .fire(AuthenticatedEvent());
                                 }

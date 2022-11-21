@@ -1,14 +1,14 @@
 part of 'authentication.dart';
 
-class IAuthenticateWithPassword
+class AuthenticateWithPassword
     with AuthenticationWithLock
     implements UseCase<PasswordCredentials, AuthenticationResult> {
-  const IAuthenticateWithPassword({
+  const AuthenticateWithPassword({
     required this.repository,
   });
 
   @override
-  final AuthenticationRepository repository;
+  final AuthenticationRepositoryInterface repository;
 
   static int get maxFailedAttempts => AuthenticationWithLock.maxFailedAttempts;
 

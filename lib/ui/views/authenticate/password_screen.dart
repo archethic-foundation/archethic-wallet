@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-// Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -9,13 +8,11 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
+import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,7 +29,7 @@ class PasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _PasswordScreenState extends ConsumerState<PasswordScreen>
-    with ShowLockScreenMixin {
+    with LockGuardMixin {
   FocusNode? enterPasswordFocusNode;
   TextEditingController? enterPasswordController;
 
@@ -45,6 +42,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     enterPasswordVisible = false;
     enterPasswordFocusNode = FocusNode();
     enterPasswordController = TextEditingController();
+    showLockScreenIfNeeded(context, ref);
   }
 
   Future<void> _verifyPassword() async {
@@ -65,15 +63,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         return;
       },
       orElse: () async {
-        final isLocked = await ref.read(
-          AuthenticationProviders.isLocked.future,
-        );
+        showLockScreenIfNeeded(context, ref);
         enterPasswordController!.text = '';
-
-        if (isLocked) {
-          showLockScreen(context);
-          return;
-        }
       },
     );
   }
