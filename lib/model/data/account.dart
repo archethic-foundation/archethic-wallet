@@ -155,8 +155,13 @@ class Account extends HiveObject {
   }
 
   Future<void> updateBalance() async {
-    final balanceGetResponse =
-        await sl.get<AppService>().getBalanceGetResponse(lastAddress!);
+    final balanceGetResponseMap =
+        await sl.get<AppService>().getBalanceGetResponse([lastAddress!]);
+
+    if (balanceGetResponseMap[lastAddress] == null) {
+      return;
+    }
+    final balanceGetResponse = balanceGetResponseMap[lastAddress]!;
     final accountBalance = AccountBalance(
       nativeTokenName: AccountBalance.cryptoCurrencyLabel,
       nativeTokenValue: balanceGetResponse.uco == null
