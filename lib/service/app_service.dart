@@ -557,20 +557,26 @@ class AppService {
     return nftList;
   }
 
-  Future<Balance> getBalanceGetResponse(String address) async {
-    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
-    final balance = balanceMap[address] ??
-        Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
-    final balanceTokenList = List<TokenBalance>.empty(growable: true);
-    if (balance.token != null) {
-      for (var i = 0; i < balance.token!.length; i++) {
-        var balanceToken = TokenBalance();
-        balanceToken = balance.token![i];
-        balanceTokenList.add(balanceToken);
+  Future<Map<String, Balance>> getBalanceGetResponse(
+    List<String> addresses,
+  ) async {
+    final balanceMap = await sl.get<ApiService>().fetchBalance(addresses);
+    final balancesToReturn = <String, Balance>{};
+    for (final address in addresses) {
+      final balance = balanceMap[address] ??
+          Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
+      final balanceTokenList = List<TokenBalance>.empty(growable: true);
+      if (balance.token != null) {
+        for (var i = 0; i < balance.token!.length; i++) {
+          var balanceToken = TokenBalance();
+          balanceToken = balance.token![i];
+          balanceTokenList.add(balanceToken);
+        }
+        balance.token = balanceTokenList;
       }
-      balance.token = balanceTokenList;
+      balancesToReturn[address] = balance;
     }
-    return balance;
+    return balancesToReturn;
   }
 
   Future<Map<String, Transaction>> getTransaction(

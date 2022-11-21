@@ -14,6 +14,7 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
@@ -245,11 +246,12 @@ class KeychainUtil {
   }
 
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
-      HiveAppWalletDTO? appWallet,
-      String? seed,
-      String currency,
-      String tokenName,
-      {bool loadBalance = true,}) async {
+    HiveAppWalletDTO? appWallet,
+    String? seed,
+    String currency,
+    String tokenName, {
+    bool loadBalance = true,
+  }) async {
     final accounts = List<Account>.empty(growable: true);
 
     HiveAppWalletDTO currentAppWallet;
@@ -275,6 +277,9 @@ class KeychainUtil {
 
       const kDerivationPathWithoutService = "m/650'/archethic-wallet-";
 
+      final genesisAddressAccountList = <String>[];
+      final lastAddressAccountList = <String>[];
+
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
@@ -289,6 +294,9 @@ class KeychainUtil {
 
           final nameDecoded = Uri.decodeFull(name);
 
+          genesisAddressAccountList.add(
+            uint8ListToHex(genesisAddress),
+          );
           final account = Account(
             lastLoadingTransactionInputs:
                 DateTime.now().millisecondsSinceEpoch ~/
@@ -325,20 +333,70 @@ class KeychainUtil {
           }
         }
       });
-      if (loadBalance) {
-        // TODO(reddwarf03): use just one call to graphql
-        for (var i = 0; i < accounts.length; i++) {
-          await accounts[i].updateBalance();
-        }
-      }
+
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-      final lastTransactionKeychainMap = await sl
-          .get<ApiService>()
-          .getLastTransaction([genesisAddressKeychain], request: 'address');
+      final lastTransactionKeychainMap =
+          await sl.get<ApiService>().getLastTransaction(
+        [genesisAddressKeychain, ...genesisAddressAccountList],
+        request: 'address',
+      );
+
       currentAppWallet.appKeychain.address =
           lastTransactionKeychainMap[genesisAddressKeychain]!.address!;
+
+      for (var i = 0; i < accounts.length; i++) {
+        if (lastTransactionKeychainMap[accounts[i].genesisAddress] != null &&
+            lastTransactionKeychainMap[accounts[i].genesisAddress]!.address !=
+                null) {
+          accounts[i].lastAddress =
+              lastTransactionKeychainMap[accounts[i].genesisAddress]!.address;
+          lastAddressAccountList.add(
+            lastTransactionKeychainMap[accounts[i].genesisAddress]!.address!,
+          );
+        } else {
+          lastAddressAccountList.add(
+            accounts[i].genesisAddress,
+          );
+        }
+      }
+
+      if (loadBalance) {
+        var balanceGetResponseMap = <String, Balance>{};
+        if (loadBalance) {
+          balanceGetResponseMap = await sl
+              .get<AppService>()
+              .getBalanceGetResponse(lastAddressAccountList);
+        }
+
+        for (var i = 0; i < accounts.length; i++) {
+          if (balanceGetResponseMap[accounts[i].lastAddress] != null) {
+            final balanceGetResponse =
+                balanceGetResponseMap[accounts[i].lastAddress]!;
+            final accountBalance = AccountBalance(
+              nativeTokenName: AccountBalance.cryptoCurrencyLabel,
+              nativeTokenValue: balanceGetResponse.uco == null
+                  ? 0
+                  : fromBigInt(balanceGetResponse.uco).toDouble(),
+            );
+            if (balanceGetResponse.token != null) {
+              for (final token in balanceGetResponse.token!) {
+                if (token.tokenId != null) {
+                  if (token.tokenId == 0) {
+                    accountBalance.tokensFungiblesNb++;
+                  } else {
+                    accountBalance.nftNb++;
+                  }
+                }
+              }
+            }
+
+            accounts[i].balance = accountBalance;
+          }
+        }
+      }
+
       accounts.sort((a, b) => a.name.compareTo(b.name));
       currentAppWallet.appKeychain.accounts = accounts;
 
