@@ -27,7 +27,6 @@ class AddTokenSheet extends ConsumerWidget {
 
     if (selectedAccount == null) return const SizedBox();
 
-    // The main column that holds everything
     return ProviderScope(
       overrides: [
         AddTokenFormProvider.initialAddTokenForm.overrideWithValue(
@@ -84,10 +83,11 @@ class AddTokenSheetBody extends ConsumerWidget {
         );
 
         ref.watch(AddTokenFormProvider.addTokenForm.notifier).setErrors(
-            errorAmountText: '',
-            errorInitialSupplyText: '',
-            errorNameText: '',
-            errorSymbolText: '',);
+              errorAmountText: '',
+              errorInitialSupplyText: '',
+              errorNameText: '',
+              errorSymbolText: '',
+            );
       },
     );
 

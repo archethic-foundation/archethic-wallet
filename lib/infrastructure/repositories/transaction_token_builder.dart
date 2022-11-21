@@ -4,9 +4,9 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 extension AddTokenTransactionBuilder on archethic.Transaction {
   /// Builds a creation of token Transaction
   static archethic.Transaction build({
-    required String? tokenName,
+    required String tokenName,
     required double tokenInitialSupply,
-    required String? tokenSymbol,
+    required String tokenSymbol,
     required String serviceName,
     required archethic.Keychain keychain,
     required int index,

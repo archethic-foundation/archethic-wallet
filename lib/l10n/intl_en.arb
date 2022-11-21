@@ -816,6 +816,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "addAccountConfirmationMessage": "Do you confirm the creation of the following Account?",
+  "@addAccountConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "createNFTConfirmationMessage": "Do you confirm the mint of the following NFT?",
   "@createNFTConfirmationMessage": {
     "type": "text",
@@ -848,6 +854,12 @@
   },
   "TokenInitialSupplyHint": "Enter an initial supply",
   "@TokenInitialSupplyHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftInitialSupplyHint": "Enter a quantity",
+  "@nftInitialSupplyHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1488,6 +1500,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "availableAfterCreation": "Available after creation :",
+  "@availableAfterCreation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "seeAll": "See all transactions",
   "@seeAll": {
     "type": "text",
@@ -2078,6 +2096,18 @@
   },
   "addTokenConfirmed": "Tokens were created with %1 confirmations on %2",
   "@addTokenConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addAccountConfirmed1": "The account was created with %1 confirmation on %2",
+  "@addAccountConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addAccountConfirmed": "The account was created with %1 confirmations on %2",
+  "@addAccountConfirmed": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

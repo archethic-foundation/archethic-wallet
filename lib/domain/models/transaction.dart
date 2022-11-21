@@ -15,4 +15,9 @@ class Transaction with _$Transaction {
   const factory Transaction.token({
     required Token token,
   }) = _TransactionToken;
+
+  const factory Transaction.keychain({
+    required String seed,
+    required String name,
+  }) = _TransactionKeychain;
 }

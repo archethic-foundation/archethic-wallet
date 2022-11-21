@@ -80,7 +80,6 @@ class TransferSheet extends ConsumerWidget {
 
     final seed = ref.watch(SessionProviders.session).loggedIn!.wallet.seed;
 
-    // The main column that holds everything
     return ProviderScope(
       overrides: [
         TransferFormProvider.initialTransferForm.overrideWithValue(

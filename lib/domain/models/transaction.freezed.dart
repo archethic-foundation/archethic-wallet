@@ -20,18 +20,21 @@ mixin _$Transaction {
   TResult when<TResult extends Object?>({
     required TResult Function(Transfer transfer) transfer,
     required TResult Function(Token token) token,
+    required TResult Function(String seed, String name) keychain,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Transfer transfer)? transfer,
     TResult? Function(Token token)? token,
+    TResult? Function(String seed, String name)? keychain,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Transfer transfer)? transfer,
     TResult Function(Token token)? token,
+    TResult Function(String seed, String name)? keychain,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$Transaction {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTransfer value) transfer,
     required TResult Function(_TransactionToken value) token,
+    required TResult Function(_TransactionKeychain value) keychain,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTransfer value)? transfer,
     TResult? Function(_TransactionToken value)? token,
+    TResult? Function(_TransactionKeychain value)? keychain,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTransfer value)? transfer,
     TResult Function(_TransactionToken value)? token,
+    TResult Function(_TransactionKeychain value)? keychain,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -152,6 +158,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   TResult when<TResult extends Object?>({
     required TResult Function(Transfer transfer) transfer,
     required TResult Function(Token token) token,
+    required TResult Function(String seed, String name) keychain,
   }) {
     return transfer(this.transfer);
   }
@@ -161,6 +168,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Transfer transfer)? transfer,
     TResult? Function(Token token)? token,
+    TResult? Function(String seed, String name)? keychain,
   }) {
     return transfer?.call(this.transfer);
   }
@@ -170,6 +178,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Transfer transfer)? transfer,
     TResult Function(Token token)? token,
+    TResult Function(String seed, String name)? keychain,
     required TResult orElse(),
   }) {
     if (transfer != null) {
@@ -183,6 +192,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTransfer value) transfer,
     required TResult Function(_TransactionToken value) token,
+    required TResult Function(_TransactionKeychain value) keychain,
   }) {
     return transfer(this);
   }
@@ -192,6 +202,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTransfer value)? transfer,
     TResult? Function(_TransactionToken value)? token,
+    TResult? Function(_TransactionKeychain value)? keychain,
   }) {
     return transfer?.call(this);
   }
@@ -201,6 +212,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTransfer value)? transfer,
     TResult Function(_TransactionToken value)? token,
+    TResult Function(_TransactionKeychain value)? keychain,
     required TResult orElse(),
   }) {
     if (transfer != null) {
@@ -297,6 +309,7 @@ class _$_TransactionToken extends _TransactionToken {
   TResult when<TResult extends Object?>({
     required TResult Function(Transfer transfer) transfer,
     required TResult Function(Token token) token,
+    required TResult Function(String seed, String name) keychain,
   }) {
     return token(this.token);
   }
@@ -306,6 +319,7 @@ class _$_TransactionToken extends _TransactionToken {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Transfer transfer)? transfer,
     TResult? Function(Token token)? token,
+    TResult? Function(String seed, String name)? keychain,
   }) {
     return token?.call(this.token);
   }
@@ -315,6 +329,7 @@ class _$_TransactionToken extends _TransactionToken {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Transfer transfer)? transfer,
     TResult Function(Token token)? token,
+    TResult Function(String seed, String name)? keychain,
     required TResult orElse(),
   }) {
     if (token != null) {
@@ -328,6 +343,7 @@ class _$_TransactionToken extends _TransactionToken {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTransfer value) transfer,
     required TResult Function(_TransactionToken value) token,
+    required TResult Function(_TransactionKeychain value) keychain,
   }) {
     return token(this);
   }
@@ -337,6 +353,7 @@ class _$_TransactionToken extends _TransactionToken {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTransfer value)? transfer,
     TResult? Function(_TransactionToken value)? token,
+    TResult? Function(_TransactionKeychain value)? keychain,
   }) {
     return token?.call(this);
   }
@@ -346,6 +363,7 @@ class _$_TransactionToken extends _TransactionToken {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTransfer value)? transfer,
     TResult Function(_TransactionToken value)? token,
+    TResult Function(_TransactionKeychain value)? keychain,
     required TResult orElse(),
   }) {
     if (token != null) {
@@ -363,5 +381,158 @@ abstract class _TransactionToken extends Transaction {
   Token get token;
   @JsonKey(ignore: true)
   _$$_TransactionTokenCopyWith<_$_TransactionToken> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_TransactionKeychainCopyWith<$Res> {
+  factory _$$_TransactionKeychainCopyWith(_$_TransactionKeychain value,
+          $Res Function(_$_TransactionKeychain) then) =
+      __$$_TransactionKeychainCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String seed, String name});
+}
+
+/// @nodoc
+class __$$_TransactionKeychainCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$_TransactionKeychain>
+    implements _$$_TransactionKeychainCopyWith<$Res> {
+  __$$_TransactionKeychainCopyWithImpl(_$_TransactionKeychain _value,
+      $Res Function(_$_TransactionKeychain) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? seed = null,
+    Object? name = null,
+  }) {
+    return _then(_$_TransactionKeychain(
+      seed: null == seed
+          ? _value.seed
+          : seed // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TransactionKeychain extends _TransactionKeychain {
+  const _$_TransactionKeychain({required this.seed, required this.name})
+      : super._();
+
+  @override
+  final String seed;
+  @override
+  final String name;
+
+  @override
+  String toString() {
+    return 'Transaction.keychain(seed: $seed, name: $name)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionKeychain &&
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, seed, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TransactionKeychainCopyWith<_$_TransactionKeychain> get copyWith =>
+      __$$_TransactionKeychainCopyWithImpl<_$_TransactionKeychain>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Transfer transfer) transfer,
+    required TResult Function(Token token) token,
+    required TResult Function(String seed, String name) keychain,
+  }) {
+    return keychain(seed, name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Transfer transfer)? transfer,
+    TResult? Function(Token token)? token,
+    TResult? Function(String seed, String name)? keychain,
+  }) {
+    return keychain?.call(seed, name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Transfer transfer)? transfer,
+    TResult Function(Token token)? token,
+    TResult Function(String seed, String name)? keychain,
+    required TResult orElse(),
+  }) {
+    if (keychain != null) {
+      return keychain(seed, name);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransactionTransfer value) transfer,
+    required TResult Function(_TransactionToken value) token,
+    required TResult Function(_TransactionKeychain value) keychain,
+  }) {
+    return keychain(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_TransactionTransfer value)? transfer,
+    TResult? Function(_TransactionToken value)? token,
+    TResult? Function(_TransactionKeychain value)? keychain,
+  }) {
+    return keychain?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransactionTransfer value)? transfer,
+    TResult Function(_TransactionToken value)? token,
+    TResult Function(_TransactionKeychain value)? keychain,
+    required TResult orElse(),
+  }) {
+    if (keychain != null) {
+      return keychain(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TransactionKeychain extends Transaction {
+  const factory _TransactionKeychain(
+      {required final String seed,
+      required final String name}) = _$_TransactionKeychain;
+  const _TransactionKeychain._() : super._();
+
+  String get seed;
+  String get name;
+  @JsonKey(ignore: true)
+  _$$_TransactionKeychainCopyWith<_$_TransactionKeychain> get copyWith =>
       throw _privateConstructorUsedError;
 }
