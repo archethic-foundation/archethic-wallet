@@ -41,7 +41,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
                   Platform.isMacOS == true),
           activeVibrations: true,
           currency: AvailableCurrencyEnum.usd,
-          mainScreenCurrentPage: 1,
+          mainScreenCurrentPage: 2,
           primaryCurrency: const AvailablePrimaryCurrency(
             AvailablePrimaryCurrencyEnum.native,
           ),
@@ -128,7 +128,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> resetMainScreenCurrentPage() => _update(
         state.copyWith(
-          mainScreenCurrentPage: 1,
+          mainScreenCurrentPage: 2,
         ),
       );
 

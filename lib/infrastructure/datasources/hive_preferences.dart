@@ -167,7 +167,7 @@ class HivePreferencesDatasource {
       _setValue(mainScreenCurrentPage, value);
 
   int getMainScreenCurrentPage() =>
-      _getValue(mainScreenCurrentPage, defaultValue: 1);
+      _getValue(mainScreenCurrentPage, defaultValue: 2);
 
   Future<void> setShowPriceChart(bool value) =>
       _setValue(showPriceChart, value);
@@ -175,7 +175,8 @@ class HivePreferencesDatasource {
   bool getShowPriceChart() => _getValue(showPriceChart, defaultValue: true);
 
   Future<void> setPriceChartIntervalOption(
-          MarketPriceHistoryInterval scaleOption,) =>
+    MarketPriceHistoryInterval scaleOption,
+  ) =>
       _setValue(
         priceChartScale,
         scaleOption.index,

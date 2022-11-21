@@ -59,7 +59,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             actions: [
-              if (preferences.mainScreenCurrentPage == 2)
+              if (preferences.mainScreenCurrentPage == 3)
                 IconButton(
                   icon: const Icon(UiIcons.settings),
                   onPressed: () async {
@@ -85,7 +85,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
             ],
-            title: preferences.mainScreenCurrentPage == 0
+            title: preferences.mainScreenCurrentPage == 1
                 ? InkWell(
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
@@ -105,12 +105,15 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         theme.snackBarShadow!,
                       );
                     },
-                    child: AutoSizeText(
-                      localizations.keychainHeader,
-                      style: theme.textStyleSize24W700EquinoxPrimary,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: AutoSizeText(
+                        localizations.keychainHeader,
+                        style: theme.textStyleSize24W700EquinoxPrimary,
+                      ),
                     ),
                   )
-                : preferences.mainScreenCurrentPage == 1
+                : preferences.mainScreenCurrentPage == 2
                     ? FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
@@ -118,14 +121,20 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )
-                    : preferences.mainScreenCurrentPage == 2
-                        ? AutoSizeText(
-                            'NFT',
-                            style: theme.textStyleSize24W700EquinoxPrimary,
+                    : preferences.mainScreenCurrentPage == 3
+                        ? FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: AutoSizeText(
+                              'NFT',
+                              style: theme.textStyleSize24W700EquinoxPrimary,
+                            ),
                           )
-                        : AutoSizeText(
-                            localizations.addressBookHeader,
-                            style: theme.textStyleSize24W700EquinoxPrimary,
+                        : FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: AutoSizeText(
+                              localizations.addressBookHeader,
+                              style: theme.textStyleSize24W700EquinoxPrimary,
+                            ),
                           ),
             backgroundColor: Colors.transparent,
             elevation: 0,

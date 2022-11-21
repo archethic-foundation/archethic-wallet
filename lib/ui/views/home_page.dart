@@ -189,10 +189,10 @@ class _HomePageState extends ConsumerState<HomePage>
               .read(SettingsProviders.settings.notifier)
               .setMainScreenCurrentPage,
           children: const [
+            AddressBookTab(),
             AccountsListTab(),
             AccountTab(),
             NFTTab(),
-            AddressBookTab()
           ],
         ),
       ),
