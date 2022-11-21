@@ -8,4 +8,9 @@ abstract class PriceHistoryRepositoryInterface {
     required AvailableCurrencyEnum vsCurrency,
     required MarketPriceHistoryInterval interval,
   });
+
+  Future<Result<double, Failure>> getPriceEvolution({
+    required List<PriceHistoryValue> priceHistory,
+    required MarketPriceHistoryInterval interval,
+  });
 }

@@ -50,30 +50,30 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>(
       : $_intervalOptionHash,
 );
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String $_chartDataHash() => r'22f6d864c32bf2664200d77ddb153d2b8cc31b09';
+String $_priceHistoryHash() => r'53a8fb4fa9f1089577cc2150bd23d7ff77972298';
 
-/// See also [_chartData].
-class _ChartDataProvider extends FutureProvider<List<PriceHistoryValue>> {
-  _ChartDataProvider({
+/// See also [_priceHistory].
+class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
+  _PriceHistoryProvider({
     required this.scaleOption,
   }) : super(
-          (ref) => _chartData(
+          (ref) => _priceHistory(
             ref,
             scaleOption: scaleOption,
           ),
-          from: _chartDataProvider,
-          name: r'_chartDataProvider',
+          from: _priceHistoryProvider,
+          name: r'_priceHistoryProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_chartDataHash,
+                  : $_priceHistoryHash,
         );
 
   final MarketPriceHistoryInterval scaleOption;
 
   @override
   bool operator ==(Object other) {
-    return other is _ChartDataProvider && other.scaleOption == scaleOption;
+    return other is _PriceHistoryProvider && other.scaleOption == scaleOption;
   }
 
   @override
@@ -85,25 +85,25 @@ class _ChartDataProvider extends FutureProvider<List<PriceHistoryValue>> {
   }
 }
 
-typedef _ChartDataRef = FutureProviderRef<List<PriceHistoryValue>>;
+typedef _PriceHistoryRef = FutureProviderRef<List<PriceHistoryValue>>;
 
-/// See also [_chartData].
-final _chartDataProvider = _ChartDataFamily();
+/// See also [_priceHistory].
+final _priceHistoryProvider = _PriceHistoryFamily();
 
-class _ChartDataFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
-  _ChartDataFamily();
+class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
+  _PriceHistoryFamily();
 
-  _ChartDataProvider call({
+  _PriceHistoryProvider call({
     required MarketPriceHistoryInterval scaleOption,
   }) {
-    return _ChartDataProvider(
+    return _PriceHistoryProvider(
       scaleOption: scaleOption,
     );
   }
 
   @override
   FutureProvider<List<PriceHistoryValue>> getProviderOverride(
-    covariant _ChartDataProvider provider,
+    covariant _PriceHistoryProvider provider,
   ) {
     return call(
       scaleOption: provider.scaleOption,
@@ -117,5 +117,75 @@ class _ChartDataFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
   List<ProviderOrFamily>? get dependencies => null;
 
   @override
-  String? get name => r'_chartDataProvider';
+  String? get name => r'_priceHistoryProvider';
+}
+
+String $_priceEvolutionHash() => r'8ad707dda019c2e59bb1b6352831854a0b07710e';
+
+/// See also [_priceEvolution].
+class _PriceEvolutionProvider extends FutureProvider<double> {
+  _PriceEvolutionProvider({
+    required this.scaleOption,
+  }) : super(
+          (ref) => _priceEvolution(
+            ref,
+            scaleOption: scaleOption,
+          ),
+          from: _priceEvolutionProvider,
+          name: r'_priceEvolutionProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_priceEvolutionHash,
+        );
+
+  final MarketPriceHistoryInterval scaleOption;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _PriceEvolutionProvider && other.scaleOption == scaleOption;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, scaleOption.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _PriceEvolutionRef = FutureProviderRef<double>;
+
+/// See also [_priceEvolution].
+final _priceEvolutionProvider = _PriceEvolutionFamily();
+
+class _PriceEvolutionFamily extends Family<AsyncValue<double>> {
+  _PriceEvolutionFamily();
+
+  _PriceEvolutionProvider call({
+    required MarketPriceHistoryInterval scaleOption,
+  }) {
+    return _PriceEvolutionProvider(
+      scaleOption: scaleOption,
+    );
+  }
+
+  @override
+  FutureProvider<double> getProviderOverride(
+    covariant _PriceEvolutionProvider provider,
+  ) {
+    return call(
+      scaleOption: provider.scaleOption,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_priceEvolutionProvider';
 }

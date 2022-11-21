@@ -1,10 +1,11 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
-import 'package:aewallet/domain/repositories/price_history.dart';
+import 'package:aewallet/domain/repositories/market/price_history.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:coingecko_api/coingecko_api.dart';
+import 'package:coingecko_api/data/coin_market_data.dart';
 
 class CoinGeckoPriceHistoryRepository
     implements PriceHistoryRepositoryInterface {
@@ -13,21 +14,33 @@ class CoinGeckoPriceHistoryRepository
 
   static const archethicId = 'archethic';
 
-  // Future<Result<List<double>, Failure>> getEvolution() async {
-  //   final coinResult = await coinGeckoApi.coins.getCoinData(
-  //     id: archethicId,
-  //     // ignore: avoid_redundant_argument_values
-  //     marketData: true,
-  //     communityData: false,
-  //     developerData: false,
-  //     localization: false,
-  //     // ignore: avoid_redundant_argument_values
-  //     sparkline: false,
-  //     tickers: false,
-  //   );
+  @override
+  Future<Result<double, Failure>> getPriceEvolution({
+    required List<PriceHistoryValue> priceHistory,
+    required MarketPriceHistoryInterval interval,
+  }) =>
+      Result.guard(
+        () async {
+          final coinResult = await coinGeckoApi.coins.getCoinData(
+            id: archethicId,
+            // ignore: avoid_redundant_argument_values
+            marketData: true,
+            communityData: false,
+            developerData: false,
+            localization: false,
+            // ignore: avoid_redundant_argument_values
+            sparkline: false,
+            tickers: false,
+          );
 
-  //   coinResult.data.marketData.
-  //   }
+          final result = coinResult.data?.marketData?.priceEvolution(
+            priceHistory: priceHistory,
+            interval: interval,
+          );
+          if (result == null) throw const Failure.invalidValue();
+          return result;
+        },
+      );
 
   @override
   Future<Result<List<PriceHistoryValue>, Failure>> getWithInterval({
@@ -86,6 +99,39 @@ extension CoinGeckoPriceHistoryConversion on MarketPriceHistoryInterval {
         return const Duration(days: 365);
       case MarketPriceHistoryInterval.all:
         return const Duration(days: 365000);
+    }
+  }
+}
+
+extension CoinGeckoMarketDataSelection on CoinMarketData {
+  double _priceEvolution({
+    required List<PriceHistoryValue> priceHistory,
+  }) =>
+      ((priceHistory.last.price / priceHistory.first.price) - 1) * 100;
+
+  double? priceEvolution({
+    required List<PriceHistoryValue> priceHistory,
+    required MarketPriceHistoryInterval interval,
+  }) {
+    switch (interval) {
+      case MarketPriceHistoryInterval.hour:
+        return _priceEvolution(priceHistory: priceHistory);
+      case MarketPriceHistoryInterval.day:
+        return priceChangePercentage24h;
+      case MarketPriceHistoryInterval.week:
+        return priceChangePercentage7d;
+      case MarketPriceHistoryInterval.twoWeeks:
+        return priceChangePercentage14d;
+      case MarketPriceHistoryInterval.month:
+        return priceChangePercentage30d;
+      case MarketPriceHistoryInterval.twoMonths:
+        return priceChangePercentage60d;
+      case MarketPriceHistoryInterval.twoHundredDays:
+        return priceChangePercentage200d;
+      case MarketPriceHistoryInterval.year:
+        return priceChangePercentage1y;
+      case MarketPriceHistoryInterval.all:
+        return _priceEvolution(priceHistory: priceHistory);
     }
   }
 }

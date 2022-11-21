@@ -2,7 +2,7 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
-import 'package:aewallet/domain/repositories/market.dart';
+import 'package:aewallet/domain/repositories/market/market.dart';
 import 'package:aewallet/domain/usecases/read_usecases.dart';
 import 'package:aewallet/model/available_currency.dart';
 
