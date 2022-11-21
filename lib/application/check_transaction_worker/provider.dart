@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 part 'state.dart';
 
 abstract class CheckTransactionsProvider {
-  static final provider = StreamProvider.autoDispose<ReceivedTransaction>(
+  static final provider = StreamProvider<ReceivedTransaction>(
     _checkTransactions,
   );
 }
@@ -115,9 +115,10 @@ Stream<ReceivedTransaction> _checkTransactions(
       (settings) => settings.activeNotifications,
     ),
   );
-  final session = ref.watch(SessionProviders.session).loggedIn;
+  final isLoggedIn = ref
+      .watch(SessionProviders.session.select((session) => session.isLoggedIn));
 
-  if (!activeNotifications || session == null) {
+  if (!activeNotifications || !isLoggedIn) {
     await _cancelCheck();
     return;
   }
