@@ -171,25 +171,32 @@ class AppLocalization {
   }
 
   String get addTokenConfirmed1 {
-    return Intl.message('The token has been created with %1 confirmation on %2',
+    return Intl.message('The token was created with %1 confirmation on %2',
         name: 'addTokenConfirmed1');
   }
 
   String get addTokenConfirmed {
-    return Intl.message(
-        'The token has been created with %1 confirmations on %2',
+    return Intl.message('The token was created with %1 confirmations on %2',
         name: 'addTokenConfirmed');
   }
 
+  String get addAccountConfirmed1 {
+    return Intl.message('The account was created with %1 confirmation on %2',
+        name: 'addAccountConfirmed1');
+  }
+
+  String get addAccountConfirmed {
+    return Intl.message('The account was created with %1 confirmations on %2',
+        name: 'addAccountConfirmed');
+  }
+
   String get transferConfirmed1 {
-    return Intl.message(
-        'The transfer has been created with %1 confirmation on %2',
+    return Intl.message('The transfer was created with %1 confirmation on %2',
         name: 'transferConfirmed1');
   }
 
   String get transferConfirmed {
-    return Intl.message(
-        'The transfer has been created with %1 confirmations on %2',
+    return Intl.message('The transfer was created with %1 confirmations on %2',
         name: 'transferConfirmed');
   }
 
@@ -590,12 +597,17 @@ class AppLocalization {
   }
 
   String get availableAfterTransfer {
-    return Intl.message('Available after transfer',
+    return Intl.message('Available after transfer :',
         name: 'availableAfterTransfer');
   }
 
+  String get availableAfterCreation {
+    return Intl.message('Available after creation :',
+        name: 'availableAfterCreation');
+  }
+
   String get availableAfterMint {
-    return Intl.message('Available after mint', name: 'availableAfterMint');
+    return Intl.message('Available after mint :', name: 'availableAfterMint');
   }
 
   String get estimatedFeesNoteNFT {
@@ -1127,6 +1139,11 @@ class AppLocalization {
   String get addTokenConfirmationMessage {
     return Intl.message('Do you confirm the creation of the following Token?',
         name: 'addTokenConfirmationMessage');
+  }
+
+  String get addAccountConfirmationMessage {
+    return Intl.message('Do you confirm the creation of the following Account?',
+        name: 'addAccountConfirmationMessage');
   }
 
   String get createNFTConfirmationMessage {

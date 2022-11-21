@@ -30,6 +30,10 @@ class CalculateFeesUsecase
           return const Result.success(0);
         }
       },
+      keychain: (transaction) {
+        // No fees for keychain tx
+        return const Result.success(0);
+      },
     );
 
     return repository.calculateFees(transaction);

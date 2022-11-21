@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-18T11:14:21.871570",
+  "@@last_modified": "2022-11-21T10:18:45.942004",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -180,25 +180,37 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addTokenConfirmed1": "The token has been created with %1 confirmation on %2",
+  "addTokenConfirmed1": "The token was created with %1 confirmation on %2",
   "@addTokenConfirmed1": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addTokenConfirmed": "The token has been created with %1 confirmations on %2",
+  "addTokenConfirmed": "The token was created with %1 confirmations on %2",
   "@addTokenConfirmed": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferConfirmed1": "The transfer has been created with %1 confirmation on %2",
+  "addAccountConfirmed1": "The account was created with %1 confirmation on %2",
+  "@addAccountConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addAccountConfirmed": "The account was created with %1 confirmations on %2",
+  "@addAccountConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferConfirmed1": "The transfer was created with %1 confirmation on %2",
   "@transferConfirmed1": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferConfirmed": "The transfer has been created with %1 confirmations on %2",
+  "transferConfirmed": "The transfer was created with %1 confirmations on %2",
   "@transferConfirmed": {
     "type": "text",
     "placeholders_order": [],
@@ -702,13 +714,19 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "availableAfterTransfer": "Available after transfer",
+  "availableAfterTransfer": "Available after transfer :",
   "@availableAfterTransfer": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "availableAfterMint": "Available after mint",
+  "availableAfterCreation": "Available after creation :",
+  "@availableAfterCreation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "availableAfterMint": "Available after mint :",
   "@availableAfterMint": {
     "type": "text",
     "placeholders_order": [],
@@ -1416,6 +1434,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "addAccountConfirmationMessage": "Do you confirm the creation of the following Account?",
+  "@addAccountConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "createNFTConfirmationMessage": "Do you confirm the mint of the following NFT?",
   "@createNFTConfirmationMessage": {
     "type": "text",
@@ -1466,6 +1490,12 @@
   },
   "tokenInitialSupplyHint": "Enter an initial supply",
   "@tokenInitialSupplyHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftInitialSupplyHint": "Enter a quantity",
+  "@nftInitialSupplyHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

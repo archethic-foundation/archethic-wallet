@@ -5,6 +5,7 @@ import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
+import 'package:aewallet/infrastructure/repositories/transaction_keychain_builder.dart';
 import 'package:aewallet/infrastructure/repositories/transaction_token_builder.dart';
 import 'package:aewallet/infrastructure/repositories/transaction_transfer_builder.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -190,6 +191,30 @@ class ArchethicTransactionRepository
     );
   }
 
+  Future<archethic.Transaction> _buildTransactionKeychain(
+    String seed,
+    String nameAccount,
+  ) async {
+    final originPrivateKey = apiService.getOriginKey();
+    final keychain = await apiService.getKeychain(seed);
+
+    final nameEncoded = Uri.encodeFull(
+      nameAccount,
+    );
+    final kServiceName = 'archethic-wallet-$nameEncoded';
+    final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
+    const index = 0;
+    final kDerivationPath = '$kDerivationPathWithoutIndex$index';
+    keychain.addService(kServiceName, kDerivationPath);
+
+    return KeychainTransactionBuilder.build(
+      seed: seed,
+      nameAccount: nameAccount,
+      keychain: keychain,
+      originPrivateKey: originPrivateKey,
+    );
+  }
+
   Future<archethic.Transaction> _buildTransaction(
     Transaction transaction,
   ) async {
@@ -199,6 +224,9 @@ class ArchethicTransactionRepository
       },
       token: (token) async {
         return _buildTransactionToken(token.token);
+      },
+      keychain: (keychain) async {
+        return _buildTransactionKeychain(keychain.seed, keychain.name);
       },
     );
   }
@@ -227,6 +255,13 @@ class ArchethicTransactionRepository
       token: (token) async {
         transactionSender.send(
           transaction: await _buildTransaction(token),
+          onConfirmation: onConfirmation,
+          onError: onError,
+        );
+      },
+      keychain: (keychain) async {
+        transactionSender.send(
+          transaction: await _buildTransaction(keychain),
           onConfirmation: onConfirmation,
           onError: onError,
         );
