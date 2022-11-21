@@ -41,6 +41,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
                   Platform.isMacOS == true),
           activeVibrations: true,
           currency: AvailableCurrencyEnum.usd,
+          language: AvailableLanguage.systemDefault,
           mainScreenCurrentPage: 2,
           primaryCurrency: const AvailablePrimaryCurrency(
             AvailablePrimaryCurrencyEnum.native,
