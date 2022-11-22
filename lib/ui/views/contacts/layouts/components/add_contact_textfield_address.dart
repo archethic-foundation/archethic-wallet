@@ -32,6 +32,12 @@ class _AddContactTextFieldAddressState
     super.dispose();
   }
 
+  void _updateAdressTextController() {
+    final contactCreation =
+        ref.watch(ContactCreationFormProvider.contactCreationForm);
+    addressController.text = contactCreation.address;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
@@ -88,6 +94,7 @@ class _AddContactTextFieldAddressState
                     scanResult,
                     context,
                   );
+                  _updateAdressTextController();
                 }
               },
             )
