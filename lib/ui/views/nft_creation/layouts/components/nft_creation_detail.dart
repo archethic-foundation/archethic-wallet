@@ -47,18 +47,19 @@ class NftCreationDetail extends ConsumerWidget {
               ),
             ],
           ),
-          SheetDetailCard(
-            children: [
-              Text(
-                localizations.tokenSymbol,
-                style: theme.textStyleSize12W400Primary,
-              ),
-              Text(
-                nftCreation.symbol,
-                style: theme.textStyleSize12W400Primary,
-              ),
-            ],
-          ),
+          if (nftCreation.symbol.isNotEmpty)
+            SheetDetailCard(
+              children: [
+                Text(
+                  localizations.tokenSymbol,
+                  style: theme.textStyleSize12W400Primary,
+                ),
+                Text(
+                  nftCreation.symbol,
+                  style: theme.textStyleSize12W400Primary,
+                ),
+              ],
+            ),
           SheetDetailCard(
             children: [
               Text(
