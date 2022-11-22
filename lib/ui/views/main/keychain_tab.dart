@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListTab extends ConsumerStatefulWidget {
-  const AccountsListTab({super.key});
+class KeychainTab extends ConsumerStatefulWidget {
+  const KeychainTab({super.key});
 
   @override
-  ConsumerState<AccountsListTab> createState() => _AccountsListTabState();
+  ConsumerState<KeychainTab> createState() => _KeychainTabState();
 }
 
-class _AccountsListTabState extends ConsumerState<AccountsListTab> {
+class _KeychainTabState extends ConsumerState<KeychainTab> {
   late ScrollController scrollController;
 
   @override
