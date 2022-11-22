@@ -10,6 +10,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -114,14 +115,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Align(
-                                  alignment: Alignment.topCenter,
-                                  child: IconWidget(
-                                    icon: 'assets/icons/digital-key.png',
-                                    width: 90,
-                                    height: 90,
-                                  ),
-                                ),
                                 if (widget.header != null)
                                   Container(
                                     margin: const EdgeInsetsDirectional.only(
@@ -132,7 +125,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
-                                      style: theme.textStyleSize20W700Warning,
+                                      style: theme.textStyleSize14W600Primary,
                                     ),
                                   ),
                                 if (widget.description != null)
@@ -187,6 +180,35 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                 const SizedBox(
                                   height: 20,
                                 ),
+                                if (widget.description != null)
+                                  Container(
+                                    margin: const EdgeInsetsDirectional.only(
+                                      start: 20,
+                                      end: 20,
+                                      top: 15,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Icon(
+                                            UiIcons.about,
+                                            color: theme.text,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          widget.description!,
+                                          style:
+                                              theme.textStyleSize12W100Primary,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                               ],
                             ),
                           ),

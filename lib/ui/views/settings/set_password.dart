@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math';
-
-// Project imports:
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
@@ -9,13 +7,10 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/string_encryption.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:password_strength/password_strength.dart';
@@ -110,11 +105,6 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                             ),
                           ],
                         ),
-                        const IconWidget(
-                          icon: 'assets/icons/password.png',
-                          width: 90,
-                          height: 90,
-                        ),
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
@@ -130,30 +120,10 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
-                                      style: theme.textStyleSize20W700Warning,
+                                      style: theme.textStyleSize14W600Primary,
                                     ),
                                   ),
-                                if (widget.description != null)
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                          start: 20,
-                                          end: 20,
-                                          top: 15,
-                                        ),
-                                        child: Text(
-                                          widget.description!,
-                                          style:
-                                              theme.textStyleSize16W600Primary,
-                                          textAlign: TextAlign.justify,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+
                                 AppTextField(
                                   topMargin: 30,
                                   cursorColor: theme.text,
@@ -335,9 +305,43 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                     style: theme.textStyleSize14W600Primary,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
+
+                                if (widget.description != null)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                          start: 20,
+                                          end: 20,
+                                          top: 15,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Icon(
+                                                UiIcons.about,
+                                                color: theme.text,
+                                                size: 20,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              widget.description!,
+                                              style: theme
+                                                  .textStyleSize12W100Primary,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                               ],
                             ),
                           ),
