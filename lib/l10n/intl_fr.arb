@@ -251,7 +251,7 @@
 	"total": "Total :",
 	"availableAfterTransfer": "Disponible après transfert :",
 	"availableAfterMint": "Disponible après création :",
-	"availableAfterCreation": "Available après creation :",
+	"availableAfterCreation": "Disponible après creation :",
 	"seeAll": "Voir toutes les transactions",
 	"yubikeyConnectInvite": "Svp, connectez votre Yubikey",
 	"yubikeyConnectHoldNearDevice": "Tenez votre appareil près de votre Yubikey",
