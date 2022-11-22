@@ -73,7 +73,6 @@ class UserDataUtil {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    // TODO(chralu): Disable autolock (1)
     try {
       final scanResult = await BarcodeScanner.scan();
       final data = scanResult.rawContent;
