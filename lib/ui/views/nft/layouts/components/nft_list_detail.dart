@@ -62,7 +62,6 @@ class NFTListDetail extends ConsumerWidget {
                   NFTDetail(tokenInformations: tokenInformations, index: index),
             );
           },
-          // TODO(reddwarf03): Finish this feature (2)
           onLongPressEnd: (details) {
             NFTListDetailPopup.getPopup(
               context,
@@ -91,6 +90,20 @@ class NFTListDetail extends ConsumerWidget {
                       typeMime,
                     ),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasError) {
+                        return SizedBox(
+                          width: 200,
+                          height: 130,
+                          child: SizedBox(
+                            height: 78,
+                            child: Center(
+                              child: Text(
+                                snapshot.error.toString(),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                       if (snapshot.hasData) {
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(15),
