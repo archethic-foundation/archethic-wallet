@@ -203,9 +203,7 @@ class KeychainUtil {
         )
         .originSign(originPrivateKey);
 
-    // ignore: unused_local_variable
-    final transactionStatusKeychain =
-        await sl.get<ApiService>().sendTx(keychainTransaction);
+    await sl.get<ApiService>().sendTx(keychainTransaction);
 
     final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(

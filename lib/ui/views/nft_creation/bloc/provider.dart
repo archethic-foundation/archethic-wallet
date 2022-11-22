@@ -252,28 +252,6 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     }
   }
 
-  Future<void> setContactPublicKey({
-    required BuildContext context,
-    required PublicKey publicKey,
-  }) async {
-    // TODO(reddwarf03): fix it with pk access (1)
-    final contact = await sl.get<DBHelper>().getContactWithPublicKey(
-          '',
-        );
-
-    if (contact != null) {
-      _setPropertyAccessRecipient(
-        recipient: PropertyAccessRecipient.contact(contact: contact),
-      );
-    } else {
-      _setPropertyAccessRecipient(
-        recipient: PropertyAccessRecipient.publicKey(
-          publicKey: publicKey,
-        ),
-      );
-    }
-  }
-
   Future<void> setPropertyAccessRecipient({
     required BuildContext context,
     required PropertyAccessRecipient contact,
@@ -281,6 +259,27 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     _setPropertyAccessRecipient(
       recipient: contact,
     );
+  }
+
+  Future<void> setContactPublicKey({
+    required BuildContext context,
+    required PublicKey publicKey,
+  }) async {
+    try {
+      final contact = await sl.get<DBHelper>().getContactWithPublicKey(
+            publicKey.publicKey,
+          );
+
+      _setPropertyAccessRecipient(
+        recipient: PropertyAccessRecipient.contact(contact: contact),
+      );
+    } catch (_) {
+      _setPropertyAccessRecipient(
+        recipient: PropertyAccessRecipient.publicKey(
+          publicKey: publicKey,
+        ),
+      );
+    }
   }
 
   void removeFileProperties() {

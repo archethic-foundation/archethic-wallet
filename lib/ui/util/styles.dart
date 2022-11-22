@@ -383,7 +383,6 @@ extension AppStyles on BaseTheme {
   }
 }
 
-// ignore: avoid_classes_with_only_static_members
 class AppFontSizes {
   static const double size10 = 10;
   static const double size12 = 12;

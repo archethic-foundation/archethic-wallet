@@ -1,4 +1,3 @@
-// ignore_for_file: cancel_subscriptions, prefer_const_constructors
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -68,8 +67,8 @@ class _HomePageState extends ConsumerState<HomePage>
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
-      appBar: MainAppBar(),
-      bottomNavigationBar: MainBottomBar(),
+      appBar: const MainAppBar(),
+      bottomNavigationBar: const MainBottomBar(),
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.background,

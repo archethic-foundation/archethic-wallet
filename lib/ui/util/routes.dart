@@ -61,7 +61,6 @@ class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-// ignore: avoid_classes_with_only_static_members
 class RouteUtils {
   static RoutePredicate withNameLike(String name) {
     return (Route<dynamic> route) {

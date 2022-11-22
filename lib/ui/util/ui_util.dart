@@ -1,5 +1,3 @@
-// ignore_for_file: cancel_subscriptions
-
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'package:aewallet/application/settings/theme.dart';
@@ -14,7 +12,6 @@ enum ThreeLineAddressTextType { primary60, primary }
 
 enum OneLineAddressTextType { primary60, primary, success }
 
-// ignore: avoid_classes_with_only_static_members
 class UIUtil {
   static Widget threeLinetextStyleSmallestW400Text(
     BuildContext context,

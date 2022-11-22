@@ -22,8 +22,7 @@ abstract class DurationFormatters {
   static String _twoDigitsFormatter(int value) =>
       value.toString().padLeft(2, '0');
 
-  // ignore: non_constant_identifier_names
-  static String HHmmss(Duration duration) =>
+  static String hhmmss(Duration duration) =>
       '${_twoDigitsFormatter(duration.inHours)}:${_twoDigitsFormatter(duration.inMinutes % 59)}:${_twoDigitsFormatter(duration.inSeconds % 59)}';
 }
 
@@ -34,7 +33,7 @@ abstract class AppLockScreenProviders {
         AuthenticationProviders.lockCountdown.future,
       );
 
-      return DurationFormatters.HHmmss(remainingDuration);
+      return DurationFormatters.hhmmss(remainingDuration);
     },
   );
 }
