@@ -463,6 +463,13 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                 ).notifier,
                               )
                               .refreshRecentTransactions();
+                          ref
+                              .read(
+                                AccountProviders.account(
+                                  selectedAccount.name,
+                                ).notifier,
+                              )
+                              .refreshNFTs();
                           final securityConfigOk =
                               await _launchSecurityConfiguration(
                             selectedAccount.name,
