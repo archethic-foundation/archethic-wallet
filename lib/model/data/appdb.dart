@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:developer';
+
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -102,37 +104,16 @@ class DBHelper {
 
   Future<Contact> getContactWithPublicKey(String publicKey) async {
     Contact? contactSelected;
-    if (contactSelected == null) {
-      throw Exception();
-    } else {
-      return contactSelected;
-    }
-    // TODO(reddwarf03): need feature in node: https://github.com/archethic-foundation/archethic-node/issues/670 (1)
-    /* final box = await Hive.openBox<Contact>(contactsTable);
-    final contactsList = box.values.toList();
-    Contact? contactSelected;
-    for (final contact in contactsList) {
-      var lastAddressContact = (await sl
-              .get<ApiService>()
-              .getLastTransaction(contact.address, request: 'address'))
-          .address;
 
-      if (lastAddressContact == null || lastAddressContact.isEmpty) {
-        lastAddressContact = contact.address;
-      } else {
-        final contactToUpdate = contact;
-        contactToUpdate.address = lastAddressContact;
-        await sl.get<DBHelper>().saveContact(contactToUpdate);
-      }
-      if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {
-        contactSelected = contact;
-      }
-    }
+    final address = hash(publicKey);
+    log('address contact: ${uint8ListToHex(address)}');
+    contactSelected = await getContactWithAddress(uint8ListToHex(address));
+
     if (contactSelected == null) {
       throw Exception();
     } else {
       return contactSelected;
-    }*/
+    }
   }
 
   Future<Contact> getContactWithName(String name) async {

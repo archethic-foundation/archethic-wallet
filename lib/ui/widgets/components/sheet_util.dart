@@ -1,16 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 import 'dart:ui';
-
-// Project imports:
 import 'package:aewallet/application/settings/theme.dart';
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 
-// ignore: avoid_classes_with_only_static_members
 class Sheets {
   //App Ninty Height Sheet
   static Future<T?>? showAppHeightNineSheet<T>({

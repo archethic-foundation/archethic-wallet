@@ -1,18 +1,12 @@
-// ignore_for_file: cancel_subscriptions
-
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:developer' as dev;
-
-// Project imports:
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/util/seeds.dart';
-// Package imports:
 import 'package:barcode_scan2/barcode_scan2.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,10 +26,7 @@ class QRScanErrs {
   ];
 }
 
-// ignore: avoid_classes_with_only_static_members
 class UserDataUtil {
-  static StreamSubscription<dynamic>? setStream;
-
   static String? _parseData(String data, DataType type) {
     final dataTrim = data.trim();
     if (type == DataType.raw) {

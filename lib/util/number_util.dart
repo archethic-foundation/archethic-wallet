@@ -1,16 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
-// ignore: avoid_classes_with_only_static_members
 class NumberUtil {
   /// Convert raw to ban and return as BigDecimal
   ///
   /// @param raw 100000000000000000000000000000
   /// @return Decimal value 1.000000000000000000000000000000
-  ///
   static Decimal getRawAsUsableDecimal(String raw) {
     final amount = Decimal.parse(raw);
     return amount;
@@ -20,7 +16,6 @@ class NumberUtil {
   ///
   /// @param raw 100000000000000000000000000000
   /// @returns 1
-  ///
   static String getRawAsUsableString(String raw) {
     final nf =
         NumberFormat.currency(locale: 'en_US', decimalDigits: 6, symbol: '');

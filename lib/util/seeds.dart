@@ -1,12 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:math';
-
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show isHex;
 
-// ignore: avoid_classes_with_only_static_members
 class AppSeeds {
   static bool isValidSeed(String seed) {
     if (seed.length != 64) {

@@ -95,7 +95,6 @@ class App extends ConsumerWidget {
           fontFamily: theme.secondaryFont,
           brightness: theme.brightness,
         ),
-        // ignore: always_specify_types
         localizationsDelegates: [
           AppLocalizationsDelegate(language),
           GlobalMaterialLocalizations.delegate,
