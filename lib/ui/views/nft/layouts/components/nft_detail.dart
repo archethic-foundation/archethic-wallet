@@ -65,7 +65,8 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
       child: Column(
         children: <Widget>[
           SheetHeader(title: widget.tokenInformations.name!),
-          if (widget.tokenInformations.symbol != null)
+          if (widget.tokenInformations.symbol != null &&
+              widget.tokenInformations.symbol!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Align(
