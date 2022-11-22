@@ -1,6 +1,9 @@
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_category_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -14,6 +17,7 @@ class NFTListDetailPopup {
     BuildContext context,
     WidgetRef ref,
     LongPressEndDetails details,
+    TokenInformations tokenInformations,
   ) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
@@ -41,6 +45,7 @@ class NFTListDetailPopup {
           label: localizations.nftCategoryChangeCategory,
           value: 'moveCategory',
           icon: Icons.drive_file_move_outlined,
+          tokenInformations: tokenInformations,
         ),
       ],
     );
@@ -52,6 +57,7 @@ class NFTListDetailPopup {
     required String label,
     required IconData icon,
     required String value,
+    required TokenInformations tokenInformations,
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
@@ -63,11 +69,16 @@ class NFTListDetailPopup {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        // TODO(reddwarf03): See with Charly why i have the error: type 'String' is not a subtype of type 'NftCategory?' of 'result' (2)
-        await NftCategoryDialog.getDialog(
-          context,
-          ref,
+        final nftCategoryChoosen =
+            await NftCategoryDialog.getDialog(context, ref, tokenInformations);
+        final selectedAccount =
+            await ref.read(AccountProviders.selectedAccount.future);
+        await selectedAccount?.updateNftInfosOffChain(
+          tokenAddress: tokenInformations.address,
+          categoryNftIndex: nftCategoryChoosen!.id,
         );
+
+        ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

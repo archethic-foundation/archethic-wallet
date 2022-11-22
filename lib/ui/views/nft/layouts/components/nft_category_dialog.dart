@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -12,6 +14,7 @@ class NftCategoryDialog {
   static Future<NftCategory?> getDialog(
     BuildContext context,
     WidgetRef ref,
+    TokenInformations tokenInformations,
   ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     final listNftCategory = await ref.read(
@@ -19,11 +22,17 @@ class NftCategoryDialog {
         context: context,
       ).future,
     );
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull!;
+    final nftInfosOffChain = selectedAccount.getftInfosOffChain(
+      // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
+      tokenInformations.id,
+    );
 
     for (final nftCategory in listNftCategory) {
       pickerItemsList.add(
         PickerItem(
-          nftCategory.id.toString(),
+          nftCategory.name.toString(),
           null,
           nftCategory.image,
           null,
@@ -64,6 +73,7 @@ class NftCategoryDialog {
               content: SingleChildScrollView(
                 child: PickerWidget(
                   pickerItems: pickerItemsList,
+                  selectedIndex: nftInfosOffChain!.categoryNftIndex ?? 0,
                   onSelected: (value) {
                     Navigator.pop(context, value.value);
                   },

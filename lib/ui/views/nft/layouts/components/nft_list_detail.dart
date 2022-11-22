@@ -68,6 +68,7 @@ class NFTListDetail extends ConsumerWidget {
               context,
               ref,
               details,
+              tokenInformations,
             );
           },
           child: Card(
