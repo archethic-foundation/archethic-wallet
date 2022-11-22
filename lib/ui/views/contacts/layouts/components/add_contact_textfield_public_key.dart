@@ -30,6 +30,12 @@ class _AddContactTextFieldPublicKeyState
     super.dispose();
   }
 
+  void _updatePublicKeyTextController() {
+    final contactCreation =
+        ref.watch(ContactCreationFormProvider.contactCreationForm);
+    publicKeyController.text = contactCreation.publicKey;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
@@ -85,6 +91,7 @@ class _AddContactTextFieldPublicKeyState
                   contactCreationNotifier.setPublicKey(
                     scanResult,
                   );
+                  _updatePublicKeyTextController();
                 }
               },
             )
