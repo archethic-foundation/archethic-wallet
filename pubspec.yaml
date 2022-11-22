@@ -80,6 +80,9 @@ dependencies:
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
   flutter_jailbreak_detection: ^1.8.0
 
+  # Makes in-text links clickable
+  flutter_linkify: ^5.0.2
+
   # A cross platform plugin for displaying local notifications.
   flutter_local_notifications: ^9.7.1
 
@@ -142,6 +145,8 @@ dependencies:
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
+
+
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
   loading_animation_widget: ^1.2.0+3
