@@ -67,7 +67,7 @@ Stream<ReceivedTransaction> _checkTransactions(
 
         final symbolMap = await sl
             .get<ApiService>()
-            .getToken(tokenAddressList, request: 'symbol');
+            .getToken(tokenAddressList, request: 'symbol, type');
 
         for (final account in accounts) {
           final transactionInputList =
@@ -82,8 +82,32 @@ Stream<ReceivedTransaction> _checkTransactions(
               var symbol = 'UCO';
               if (symbolMap.isNotEmpty &&
                   symbolMap[transactionInput.tokenAddress] != null) {
-                symbol =
-                    symbolMap[transactionInput.tokenAddress!]!.symbol ?? 'UCO';
+                switch (symbolMap[transactionInput.tokenAddress]!.type) {
+                  case 'non-fungible':
+                    if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
+                            null &&
+                        symbolMap[transactionInput.tokenAddress!]!
+                            .symbol!
+                            .isNotEmpty) {
+                      symbol =
+                          symbolMap[transactionInput.tokenAddress!]!.symbol!;
+                    } else {
+                      symbol = 'NFT';
+                    }
+                    break;
+                  case 'fungible':
+                    if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
+                            null &&
+                        symbolMap[transactionInput.tokenAddress!]!
+                            .symbol!
+                            .isNotEmpty) {
+                      symbol =
+                          symbolMap[transactionInput.tokenAddress!]!.symbol!;
+                    } else {
+                      symbol = 'token(s)';
+                    }
+                    break;
+                }
               }
               streamController.add(
                 ReceivedTransaction(
