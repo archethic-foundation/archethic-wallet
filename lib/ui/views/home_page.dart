@@ -10,7 +10,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
-import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
+import 'package:aewallet/ui/views/main/keychain_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/main_appbar.dart';
 import 'package:aewallet/ui/views/main/main_bottombar.dart';
@@ -87,7 +87,7 @@ class _HomePageState extends ConsumerState<HomePage>
               .setMainScreenCurrentPage,
           children: const [
             AddressBookTab(),
-            AccountsListTab(),
+            KeychainTab(),
             AccountTab(),
             NFTTab(),
           ],
