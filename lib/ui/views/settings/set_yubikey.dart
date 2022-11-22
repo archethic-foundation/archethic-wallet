@@ -15,7 +15,9 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SetYubikey extends ConsumerStatefulWidget {
   const SetYubikey({
@@ -140,10 +142,24 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                       end: 20,
                                       top: 15,
                                     ),
-                                    child: Text(
-                                      widget.description!,
+                                    child: Linkify(
+                                      text: widget.description!,
                                       style: theme.textStyleSize16W600Primary,
                                       textAlign: TextAlign.left,
+                                      options: const LinkifyOptions(
+                                        humanize: false,
+                                      ),
+                                      linkStyle: theme
+                                          .textStyleSize16W600Primary
+                                          .copyWith(
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                      onOpen: (link) async {
+                                        final uri = Uri.parse(link.url);
+                                        if (!await canLaunchUrl(uri)) return;
+
+                                        await launchUrl(uri);
+                                      },
                                     ),
                                   ),
                                 Container(
