@@ -125,6 +125,11 @@ class AuthentificationMethodDialog {
                       MaterialPageRoute(
                         builder: (BuildContext context) {
                           return SetPassword(
+                            header: localizations.setPasswordHeader,
+                            description: AppLocalization.of(
+                              context,
+                            )!
+                                .configureSecurityExplanationPassword,
                             seed: ref
                                 .read(SessionProviders.session)
                                 .loggedIn
@@ -157,7 +162,10 @@ class AuthentificationMethodDialog {
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const SetYubikey();
+                          return SetYubikey(
+                            header: localizations.seYubicloudHeader,
+                            description: localizations.seYubicloudDescription,
+                          );
                         },
                       ),
                     );
