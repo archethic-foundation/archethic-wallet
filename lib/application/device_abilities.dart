@@ -5,10 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 
 class DeviceAbilities {
+  // TODO(reddwarf03): Don't use providers. Not necessary
   static final hasBiometricsProvider = FutureProvider<bool>(
     (ref) async {
-      if (!kIsWeb &&
-          (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
+      if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
         final localAuth = LocalAuthentication();
         final canCheck = await localAuth.canCheckBiometrics;
         if (canCheck) {
