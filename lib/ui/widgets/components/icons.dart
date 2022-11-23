@@ -5,9 +5,8 @@ import 'package:flutter/widgets.dart';
 // ignore_for_file: constant_identifier_names
 @immutable
 class _UiIconsData extends IconData {
-  const _UiIconsData(int codePoint, this.name)
+  const _UiIconsData(super.codePoint, this.name)
       : super(
-          codePoint,
           fontFamily: 'UiIcons',
         );
 
@@ -32,20 +31,28 @@ class UiIcons {
   static const keychain = _UiIconsData(0xf10c, 'keychain');
   static const language = _UiIconsData(0xf10d, 'language');
   static const link_archethic_lab = _UiIconsData(0xf10e, 'link_archethic_lab');
-  static const link_archethic_website = _UiIconsData(0xf10f, 'link_archethic_website');
+  static const link_archethic_website =
+      _UiIconsData(0xf10f, 'link_archethic_website');
   static const main = _UiIconsData(0xf110, 'main');
   static const max = _UiIconsData(0xf111, 'max');
   static const menu = _UiIconsData(0xf112, 'menu');
-  static const nft_creation_process_description = _UiIconsData(0xf113, 'nft_creation_process_description');
-  static const nft_creation_process_import = _UiIconsData(0xf114, 'nft_creation_process_import');
-  static const nft_creation_process_properties = _UiIconsData(0xf115, 'nft_creation_process_properties');
-  static const nft_creation_process_summary = _UiIconsData(0xf116, 'nft_creation_process_summary');
+  static const nft_creation_process_description =
+      _UiIconsData(0xf113, 'nft_creation_process_description');
+  static const nft_creation_process_import =
+      _UiIconsData(0xf114, 'nft_creation_process_import');
+  static const nft_creation_process_properties =
+      _UiIconsData(0xf115, 'nft_creation_process_properties');
+  static const nft_creation_process_summary =
+      _UiIconsData(0xf116, 'nft_creation_process_summary');
   static const nft = _UiIconsData(0xf117, 'nft');
-  static const notification_disabled = _UiIconsData(0xf118, 'notification_disabled');
-  static const notification_enabled = _UiIconsData(0xf119, 'notification_enabled');
+  static const notification_disabled =
+      _UiIconsData(0xf118, 'notification_disabled');
+  static const notification_enabled =
+      _UiIconsData(0xf119, 'notification_enabled');
   static const notification = _UiIconsData(0xf11a, 'notification');
   static const oracle = _UiIconsData(0xf11b, 'oracle');
-  static const primary_currency_uco = _UiIconsData(0xf11c, 'primary_currency_uco');
+  static const primary_currency_uco =
+      _UiIconsData(0xf11c, 'primary_currency_uco');
   static const primary_currency = _UiIconsData(0xf11d, 'primary_currency');
   static const privacy_policy = _UiIconsData(0xf11e, 'privacy_policy');
   static const receive = _UiIconsData(0xf11f, 'receive');
