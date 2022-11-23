@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-
-// Project imports:
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
@@ -31,6 +30,7 @@ class NFTListDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final typeMime = tokenInformations.tokenProperties!['type/mime'];
     return Column(
@@ -98,7 +98,8 @@ class NFTListDetail extends ConsumerWidget {
                             height: 78,
                             child: Center(
                               child: Text(
-                                snapshot.error.toString(),
+                                localizations.previewNotAvailable,
+                                style: theme.textStyleSize12W100Primary,
                               ),
                             ),
                           ),

@@ -306,6 +306,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pinSecretPhraseBackup" : MessageLookupByLibrary.simpleMessage("Enter PIN to Backup Secret Phrase"),
     "pleaseWait" : MessageLookupByLibrary.simpleMessage("Please wait"),
     "preferences" : MessageLookupByLibrary.simpleMessage("Preferences"),
+    "previewNotAvailable" : MessageLookupByLibrary.simpleMessage("Preview not available"),
     "priceChartHeader" : MessageLookupByLibrary.simpleMessage("Price Chart"),
     "primaryCurrency" : MessageLookupByLibrary.simpleMessage("Primary currency"),
     "propertyAccessAddAccess" : MessageLookupByLibrary.simpleMessage("Add access"),

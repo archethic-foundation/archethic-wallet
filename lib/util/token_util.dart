@@ -2,17 +2,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
-// Project imports:
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:pdfx/pdfx.dart';
-
-RegExp _base64 = RegExp(
-  r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$',
-);
 
 class TokenUtil {
   static Future<Uint8List?> getImageFromTokenAddress(
@@ -30,9 +23,7 @@ class TokenUtil {
     if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
       token.tokenProperties!.forEach((key, value) {
         if (key == 'file') {
-          if (_base64.hasMatch(value) == true) {
-            valueFileDecoded = base64Decode(value);
-          }
+          valueFileDecoded = base64Decode(value);
         }
       });
     }

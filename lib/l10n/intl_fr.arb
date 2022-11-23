@@ -10,6 +10,7 @@
 	"send": "Envoyer",
 	"add": "Ajouter",
 	"update": "Mettre à jour",
+	"previewNotAvailable": "Aperçu non disponible",
 	"transferTokens": "Envoyer des %1",
 	"transferToken": "Transfert Jeton",
 	"transferTokenName": "Transfert %1",

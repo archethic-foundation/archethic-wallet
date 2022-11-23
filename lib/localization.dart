@@ -88,6 +88,10 @@ class AppLocalization {
     return Intl.message('Update', name: 'update');
   }
 
+  String get previewNotAvailable {
+    return Intl.message('Preview not available', name: 'previewNotAvailable');
+  }
+
   String get token {
     return Intl.message('token', name: 'token');
   }

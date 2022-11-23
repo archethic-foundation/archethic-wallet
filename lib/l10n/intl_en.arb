@@ -60,6 +60,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "previewNotAvailable": "Preview not available",
+  "@previewNotAvailable": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "transferTokens": "Send %1",
   "@transferTokens": {
     "type": "text",
