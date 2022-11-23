@@ -258,9 +258,10 @@ class ContactDetail extends ConsumerWidget {
                     ),
                   ],
                 ),
+                // TODO(reddwarf03): See with Chralu to create providers
+                /*
                 Row(
                   children: <Widget>[
-                    // TODO(reddwarf03): Provider pour gérer juste cette mécanique ? (2)
                     if (infoToShare.isEmpty)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
@@ -295,7 +296,7 @@ class ContactDetail extends ConsumerWidget {
                         onPressed: () {},
                       ),
                   ],
-                ),
+                ),*/
               ],
             ),
         ],
