@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/public_key_line.dart';
-// Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +19,7 @@ class GetPublicKeys extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalization.of(context)!;
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -52,8 +53,7 @@ class GetPublicKeys extends ConsumerWidget {
                   padding: const EdgeInsets.all(5),
                   child: PublicKeyLine(
                     propertyName: propertyName,
-                    publicKey:
-                        propertySelected.publicKeys[index].publicKey!.publicKey,
+                    propertyAccessRecipient: propertySelected.publicKeys[index],
                     readOnly: readOnly,
                   ),
                 );

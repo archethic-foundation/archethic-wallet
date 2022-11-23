@@ -1,10 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/nft_category.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_property_apptextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,16 +10,6 @@ class CategoryTemplateForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
-    final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
-    );
-
     final listNftCategory = ref
         .watch(
           NftCategoryProviders.selectedAccountNftCategories(
@@ -35,6 +20,9 @@ class CategoryTemplateForm extends ConsumerWidget {
 
     if (listNftCategory == null) return const SizedBox();
 
+    return const SizedBox();
+    // TODO(reddwarf03): create an issue for this feature
+    /*
     switch (nftCreation.currentNftCategoryIndex) {
       case 4:
         final nftPropertyAuthorFocusNode = FocusNode();
@@ -129,6 +117,6 @@ class CategoryTemplateForm extends ConsumerWidget {
 
       default:
         return const SizedBox();
-    }
+    }*/
   }
 }

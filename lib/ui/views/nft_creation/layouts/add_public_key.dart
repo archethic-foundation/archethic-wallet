@@ -81,9 +81,10 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
         child: Column(
           children: <Widget>[
             SheetHeader(
-                title: widget.readOnly
-                    ? localizations.getPublicKeyHeader
-                    : localizations.addPublicKeyHeader,),
+              title: widget.readOnly
+                  ? localizations.getPublicKeyHeader
+                  : localizations.addPublicKeyHeader,
+            ),
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 10),
@@ -148,6 +149,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                       .addPublicKey(
                                         widget.propertyName,
                                         nftCreation.propertyAccessRecipient,
+                                        context,
                                       );
                                 },
                               )
@@ -162,9 +164,10 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                           ],
                         ),
                       GetPublicKeys(
-                          propertyName: widget.propertyName,
-                          propertyValue: widget.propertyValue,
-                          readOnly: widget.readOnly,),
+                        propertyName: widget.propertyName,
+                        propertyValue: widget.propertyValue,
+                        readOnly: widget.readOnly,
+                      ),
                     ],
                   ),
                 ),
