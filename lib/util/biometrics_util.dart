@@ -15,10 +15,9 @@ class BiometricUtil {
   /// hasBiometrics()
   ///
   /// @returns true if device has fingerprint/faceID available and registered, false otherwise
-  // TODO(reddwarf03) : use hasBiometricsProvider (3)
+  // TODO(reddwarf03) : remove hasBiometricsProvider (3)
   Future<bool> hasBiometrics() async {
-    if (!kIsWeb &&
-        (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       final localAuth = LocalAuthentication();
       final canCheck = await localAuth.canCheckBiometrics;
       if (canCheck) {
