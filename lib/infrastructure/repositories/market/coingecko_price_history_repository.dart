@@ -93,8 +93,6 @@ extension CoinGeckoPriceHistoryConversion on MarketPriceHistoryInterval {
         return const Duration(days: 30);
       case MarketPriceHistoryInterval.twoMonths:
         return const Duration(days: 60);
-      case MarketPriceHistoryInterval.twoHundredDays:
-        return const Duration(days: 200);
       case MarketPriceHistoryInterval.year:
         return const Duration(days: 365);
       case MarketPriceHistoryInterval.all:
@@ -126,8 +124,6 @@ extension CoinGeckoMarketDataSelection on CoinMarketData {
         return priceChangePercentage30d;
       case MarketPriceHistoryInterval.twoMonths:
         return priceChangePercentage60d;
-      case MarketPriceHistoryInterval.twoHundredDays:
-        return priceChangePercentage200d;
       case MarketPriceHistoryInterval.year:
         return priceChangePercentage1y;
       case MarketPriceHistoryInterval.all:
