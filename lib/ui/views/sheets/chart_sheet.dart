@@ -29,7 +29,6 @@ class ChartSheet extends ConsumerWidget {
     MarketPriceHistoryInterval.twoWeeks,
     MarketPriceHistoryInterval.month,
     MarketPriceHistoryInterval.twoMonths,
-    MarketPriceHistoryInterval.twoHundredDays,
     MarketPriceHistoryInterval.year,
     MarketPriceHistoryInterval.all,
   ];

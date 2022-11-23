@@ -8,7 +8,6 @@ enum MarketPriceHistoryInterval {
   twoWeeks,
   month,
   twoMonths,
-  twoHundredDays,
   year,
   all,
 }
@@ -29,8 +28,6 @@ extension PriceHistoryIntervalToString on MarketPriceHistoryInterval {
         return localizations.chartOptionLabel30d;
       case MarketPriceHistoryInterval.twoMonths:
         return localizations.chartOptionLabel60d;
-      case MarketPriceHistoryInterval.twoHundredDays:
-        return localizations.chartOptionLabel200d;
       case MarketPriceHistoryInterval.year:
         return localizations.chartOptionLabel1y;
       case MarketPriceHistoryInterval.all:

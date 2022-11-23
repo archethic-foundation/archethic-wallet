@@ -90,7 +90,6 @@ class HistoryChart extends StatelessWidget {
                   title =
                       '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                   break;
-                case MarketPriceHistoryInterval.twoHundredDays:
                 case MarketPriceHistoryInterval.year:
                 case MarketPriceHistoryInterval.all:
                   title =
@@ -140,7 +139,6 @@ class HistoryChart extends StatelessWidget {
                           title =
                               '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                           break;
-                        case MarketPriceHistoryInterval.twoHundredDays:
                         case MarketPriceHistoryInterval.year:
                         case MarketPriceHistoryInterval.all:
                           title =
