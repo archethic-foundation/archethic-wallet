@@ -2352,6 +2352,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "publicKeyAccessExists": "This access already exists.",
+  "@publicKeyAccessExists": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "publicKeyInvalid": "The public key is not valid.",
+  "@publicKeyInvalid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftAddConfirmationFileEmpty": "Veuillez importer un fichier ou une photo.",
   "@nftAddConfirmationFileEmpty": {
     "type": "text",

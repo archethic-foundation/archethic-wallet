@@ -178,10 +178,29 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     return;
   }
 
-  void addPublicKey(String propertyName, PropertyAccessRecipient publicKey) {
+  void addPublicKey(
+    String propertyName,
+    PropertyAccessRecipient publicKey,
+    BuildContext context,
+  ) {
+    if (publicKey.isPublicKeyValid == false) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.publicKeyInvalid,
+      );
+      return;
+    }
+
+    var exist = false;
     final updatedNftCreationProperties = state.properties.map(
       (property) {
         if (property.propertyName != propertyName) return property;
+
+        for (final otherPublicKey in property.publicKeys) {
+          if (otherPublicKey.publicKey!.publicKey ==
+              publicKey.publicKey!.publicKey) {
+            exist = true;
+          }
+        }
 
         return property.copyWith(
           publicKeys: [...property.publicKeys, publicKey],
@@ -189,7 +208,15 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
       },
     ).toList();
 
+    if (exist) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.publicKeyAccessExists,
+      );
+      return;
+    }
+
     state = state.copyWith(
+      error: '',
       properties: updatedNftCreationProperties,
       propertyAccessRecipient:
           const PropertyAccessRecipient.publicKey(publicKey: PublicKey('')),
@@ -224,15 +251,25 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     );
   }
 
-  Future<void> setPropertyAccessRecipientNameOrAddress({
+  Future<void> setPropertyAccessRecipientNameOrPublicKey({
     required BuildContext context,
     required String text,
   }) async {
     if (!text.startsWith('@')) {
-      _setPropertyAccessRecipient(
-        recipient:
-            PropertyAccessRecipient.publicKey(publicKey: PublicKey(text)),
-      );
+      try {
+        final contact = await sl.get<DBHelper>().getContactWithPublicKey(
+              text,
+            );
+        _setPropertyAccessRecipient(
+          recipient: PropertyAccessRecipient.contact(contact: contact),
+        );
+      } catch (_) {
+        _setPropertyAccessRecipient(
+          recipient:
+              PropertyAccessRecipient.publicKey(publicKey: PublicKey(text)),
+        );
+      }
+
       return;
     }
 

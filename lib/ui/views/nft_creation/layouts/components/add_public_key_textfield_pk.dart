@@ -96,7 +96,6 @@ class _AddPublicKeyTextFieldPkState
         }
       },
     );
-
     return AppTextField(
       focusNode: publicKeyFocusNode,
       controller: publicKeyController,
@@ -181,7 +180,7 @@ class _AddPublicKeyTextFieldPkState
           ? theme.textStyleSize14W700Primary
           : theme.textStyleSize14W700Primary60,
       onChanged: (String text) async {
-        nftCreationNotifier.setPropertyAccessRecipientNameOrAddress(
+        nftCreationNotifier.setPropertyAccessRecipientNameOrPublicKey(
           context: context,
           text: text,
         );

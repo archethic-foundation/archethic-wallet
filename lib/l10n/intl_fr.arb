@@ -393,6 +393,8 @@
 	"nftPropertyNameEmpty": "Veuillez saisir un nom.",
 	"nftPropertyValueEmpty": "Veuillez saisir une valeur.",
 	"nftPropertyExists": "Cette propriété existe déjà.",
+	"publicKeyAccessExists": "Cet accès existe déjà.",
+	"publicKeyInvalid": "La clé publique n'est pas valide.",
 	"nftAddConfirmationFileEmpty": "Veuillez importer un fichier ou une photo.",
 	"nftNameEmpty": "Veuillez saisir un nom pour ce NFT.",
 	"nftFormatNotSupportedEmpty": "Le format n'est pas pris en charge.",

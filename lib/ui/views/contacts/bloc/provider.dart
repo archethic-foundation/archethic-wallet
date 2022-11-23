@@ -40,17 +40,7 @@ class ContactCreationFormNotifier
 
     if ((state.publicKey.isEmpty && state.publicKeyRecovered.isEmpty) &&
         Address(state.address).isValid) {
-      final publicKeyMap = await sl.get<ApiService>().getLastTransaction(
-        [state.address],
-        request: 'previousPublicKey',
-      );
-      var publicKey = '';
-      if (publicKeyMap.isNotEmpty &&
-          publicKeyMap[state.address] != null &&
-          publicKeyMap[state.address]!.previousPublicKey != null) {
-        publicKey = publicKeyMap[state.address]!.previousPublicKey!;
-      }
-
+      final publicKey = await _getGenesisPublicKey(state.address);
       if (publicKey.isNotEmpty) {
         state = state.copyWith(publicKeyRecovered: publicKey);
       } else {
@@ -66,17 +56,7 @@ class ContactCreationFormNotifier
     state = state.copyWith(address: address, error: '');
 
     if (Address(address).isValid) {
-      final publicKeyMap = await sl.get<ApiService>().getLastTransaction(
-        [address],
-        request: 'previousPublicKey',
-      );
-      var publicKey = '';
-      if (publicKeyMap.isNotEmpty &&
-          publicKeyMap[address] != null &&
-          publicKeyMap[address]!.previousPublicKey != null) {
-        publicKey = publicKeyMap[address]!.previousPublicKey!;
-      }
-
+      final publicKey = await _getGenesisPublicKey(state.address);
       if (publicKey.isNotEmpty) {
         state = state.copyWith(publicKeyRecovered: publicKey);
       } else {
@@ -90,6 +70,21 @@ class ContactCreationFormNotifier
         publicKeyRecovered: '',
       );
     }
+  }
+
+  Future<String> _getGenesisPublicKey(String address) async {
+    final publicKeyMap = await sl.get<ApiService>().getTransactionChain(
+      [address],
+      request: 'previousPublicKey',
+    );
+    var publicKey = '';
+    if (publicKeyMap.isNotEmpty &&
+        publicKeyMap[state.address] != null &&
+        publicKeyMap[state.address]!.isNotEmpty) {
+      publicKey = publicKeyMap[state.address]![0].previousPublicKey!;
+    }
+
+    return publicKey;
   }
 
   void setPublicKey(String publicKey) {

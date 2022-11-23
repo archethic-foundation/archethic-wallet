@@ -1919,6 +1919,16 @@ class AppLocalization {
         name: 'nftPropertyExists');
   }
 
+  String get publicKeyAccessExists {
+    return Intl.message('This access already exists',
+        name: 'publicKeyAccessExists');
+  }
+
+  String get publicKeyInvalid {
+    return Intl.message('The public key is not valid',
+        name: 'publicKeyInvalid');
+  }
+
   String get nftAddConfirmationFileEmpty {
     return Intl.message('Veuillez importer un fichier ou une photo.',
         name: 'nftAddConfirmationFileEmpty');

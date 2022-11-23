@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-21T10:18:45.942004",
+  "@@last_modified": "2022-11-23T13:11:00.878297",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -2462,6 +2462,18 @@
   },
   "nftPropertyExists": "This property already exists",
   "@nftPropertyExists": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "publicKeyAccessExists": "This access already exists",
+  "@publicKeyAccessExists": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "publicKeyInvalid": "The public key is not valid",
+  "@publicKeyInvalid": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
