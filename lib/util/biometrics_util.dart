@@ -15,6 +15,7 @@ class BiometricUtil {
   /// hasBiometrics()
   ///
   /// @returns true if device has fingerprint/faceID available and registered, false otherwise
+  // TODO(reddwarf03) : use hasBiometricsProvider (3)
   Future<bool> hasBiometrics() async {
     if (!kIsWeb &&
         (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
