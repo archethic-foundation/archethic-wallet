@@ -238,9 +238,19 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required String text,
   }) async {
     if (!text.startsWith('@')) {
-      _setRecipient(
-        recipient: TransferRecipient.address(address: Address(text)),
-      );
+      final contact = await sl.get<DBHelper>().getContactWithAddress(text);
+      if (contact != null) {
+        _setRecipient(
+          recipient: TransferRecipient.contact(
+            contact: contact,
+          ),
+        );
+      } else {
+        _setRecipient(
+          recipient: TransferRecipient.address(address: Address(text)),
+        );
+      }
+
       if (await _checkAddressType(context) == false) {
         return;
       }
