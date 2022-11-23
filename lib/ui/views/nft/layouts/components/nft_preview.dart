@@ -30,6 +30,7 @@ class NFTPreviewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
     final description = tokenInformations.tokenProperties!['description'] ?? '';
     final typeMime = tokenInformations.tokenProperties!['type/mime'] ?? '';
 
@@ -51,6 +52,21 @@ class NFTPreviewWidget extends ConsumerWidget {
                     BuildContext context,
                     AsyncSnapshot<Uint8List?> snapshot,
                   ) {
+                    if (snapshot.hasError) {
+                      return SizedBox(
+                        width: 200,
+                        height: 130,
+                        child: SizedBox(
+                          height: 78,
+                          child: Center(
+                            child: Text(
+                              localizations.previewNotAvailable,
+                              style: theme.textStyleSize12W100Primary,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                     if (snapshot.hasData) {
                       return Column(
                         children: [
