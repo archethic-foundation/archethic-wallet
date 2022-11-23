@@ -136,13 +136,13 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                     ),
                                     child: Linkify(
                                       text: widget.description!,
-                                      style: theme.textStyleSize16W600Primary,
+                                      style: theme.textStyleSize12W100Primary,
                                       textAlign: TextAlign.left,
                                       options: const LinkifyOptions(
                                         humanize: false,
                                       ),
                                       linkStyle: theme
-                                          .textStyleSize16W600Primary
+                                          .textStyleSize12W100Primary
                                           .copyWith(
                                         decoration: TextDecoration.underline,
                                       ),
