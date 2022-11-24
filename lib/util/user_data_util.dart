@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:developer' as dev;
+
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -94,8 +95,8 @@ class UserDataUtil {
       }
     } on FormatException {
       return QRScanErrs.cancelError;
-    } catch (e) {
-      dev.log('Unknown QR Scan Error ${e.toString()}');
+    } catch (e, stack) {
+      dev.log('Unknown QR Scan Error', error: e, stackTrace: stack);
       return QRScanErrs.unknownError;
     }
   }

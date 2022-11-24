@@ -36,9 +36,9 @@ class HiveVaultDatasource {
         encryptionCipher: HiveAesCipher(encryptionKey),
       );
       return HiveVaultDatasource._(encryptedBox);
-    } catch (e) {
-      dev.log(e.toString());
-      throw Exception();
+    } catch (e, stack) {
+      dev.log('Failed to get HiveVault instance.', error: e, stackTrace: stack);
+      rethrow;
     }
   }
 

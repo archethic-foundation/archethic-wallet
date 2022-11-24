@@ -267,8 +267,8 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       }
 
       Navigator.of(context).pushReplacementNamed('/home');
-    } catch (e) {
-      dev.log(e.toString());
+    } catch (e, stack) {
+      dev.log(e.toString(), error: e, stackTrace: stack);
       FlutterNativeSplash.remove();
       await _goToIntroScreen();
     }

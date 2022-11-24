@@ -41,87 +41,92 @@ Stream<ReceivedTransaction> _checkTransactions(
     _checkTransactionsTimer = Timer.periodic(
       const Duration(seconds: 30),
       (Timer t) async {
-        final accounts = await ref.read(AccountProviders.accounts.future);
+        try {
+          final accounts = await ref.read(AccountProviders.accounts.future);
 
-        var transactionInputMap = <String, List<TransactionInput>>{};
-        final lastAddressContactList = <String>[];
-        for (final account in accounts) {
-          if (account.lastAddress != null) {
-            lastAddressContactList.add(account.lastAddress!);
-          }
-        }
-        transactionInputMap = await sl.get<AppService>().getTransactionInputs(
-              lastAddressContactList,
-              'from, amount, timestamp, tokenAddress ',
-            );
-
-        final tokenAddressList = <String>[];
-        for (final transactionInputList in transactionInputMap.values) {
-          for (final transactionInput in transactionInputList) {
-            if (transactionInput.tokenAddress != null &&
-                transactionInput.tokenAddress!.isNotEmpty) {
-              tokenAddressList.add(transactionInput.tokenAddress!);
+          var transactionInputMap = <String, List<TransactionInput>>{};
+          final lastAddressContactList = <String>[];
+          for (final account in accounts) {
+            if (account.lastAddress != null) {
+              lastAddressContactList.add(account.lastAddress!);
             }
           }
-        }
-
-        final symbolMap = await sl
-            .get<ApiService>()
-            .getToken(tokenAddressList, request: 'symbol, type');
-
-        for (final account in accounts) {
-          final transactionInputList =
-              transactionInputMap[account.lastAddress!] ?? [];
-          for (final transactionInput in transactionInputList) {
-            if (account.lastLoadingTransactionInputs != null &&
-                transactionInput.timestamp! <=
-                    account.lastLoadingTransactionInputs!) {
-              continue;
-            }
-            if (transactionInput.from != account.lastAddress) {
-              var symbol = 'UCO';
-              if (symbolMap.isNotEmpty &&
-                  symbolMap[transactionInput.tokenAddress] != null) {
-                switch (symbolMap[transactionInput.tokenAddress]!.type) {
-                  case 'non-fungible':
-                    if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
-                            null &&
-                        symbolMap[transactionInput.tokenAddress!]!
-                            .symbol!
-                            .isNotEmpty) {
-                      symbol =
-                          symbolMap[transactionInput.tokenAddress!]!.symbol!;
-                    } else {
-                      symbol = 'NFT';
-                    }
-                    break;
-                  case 'fungible':
-                    if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
-                            null &&
-                        symbolMap[transactionInput.tokenAddress!]!
-                            .symbol!
-                            .isNotEmpty) {
-                      symbol =
-                          symbolMap[transactionInput.tokenAddress!]!.symbol!;
-                    } else {
-                      symbol = 'token(s)';
-                    }
-                    break;
-                }
-              }
-              streamController.add(
-                ReceivedTransaction(
-                  accountName: account.name,
-                  amount: transactionInput.amount ?? 0,
-                  currencySymbol: symbol,
-                ),
+          transactionInputMap = await sl.get<AppService>().getTransactionInputs(
+                lastAddressContactList,
+                'from, amount, timestamp, tokenAddress ',
               );
 
-              await ref
-                  .read(AccountProviders.account(account.name).notifier)
-                  .refreshRecentTransactions();
+          final tokenAddressList = <String>[];
+          for (final transactionInputList in transactionInputMap.values) {
+            for (final transactionInput in transactionInputList) {
+              if (transactionInput.tokenAddress != null &&
+                  transactionInput.tokenAddress!.isNotEmpty) {
+                tokenAddressList.add(transactionInput.tokenAddress!);
+              }
             }
           }
+
+          final symbolMap = await sl
+              .get<ApiService>()
+              .getToken(tokenAddressList, request: 'symbol, type');
+
+          for (final account in accounts) {
+            final transactionInputList =
+                transactionInputMap[account.lastAddress!] ?? [];
+            for (final transactionInput in transactionInputList) {
+              if (account.lastLoadingTransactionInputs != null &&
+                  transactionInput.timestamp! <=
+                      account.lastLoadingTransactionInputs!) {
+                continue;
+              }
+              if (transactionInput.from != account.lastAddress) {
+                var symbol = 'UCO';
+                if (symbolMap.isNotEmpty &&
+                    symbolMap[transactionInput.tokenAddress] != null) {
+                  switch (symbolMap[transactionInput.tokenAddress]!.type) {
+                    case 'non-fungible':
+                      if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
+                              null &&
+                          symbolMap[transactionInput.tokenAddress!]!
+                              .symbol!
+                              .isNotEmpty) {
+                        symbol =
+                            symbolMap[transactionInput.tokenAddress!]!.symbol!;
+                      } else {
+                        symbol = 'NFT';
+                      }
+                      break;
+                    case 'fungible':
+                      if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
+                              null &&
+                          symbolMap[transactionInput.tokenAddress!]!
+                              .symbol!
+                              .isNotEmpty) {
+                        symbol =
+                            symbolMap[transactionInput.tokenAddress!]!.symbol!;
+                      } else {
+                        symbol = 'token(s)';
+                      }
+                      break;
+                  }
+                }
+                streamController.add(
+                  ReceivedTransaction(
+                    accountName: account.name,
+                    amount: transactionInput.amount ?? 0,
+                    currencySymbol: symbol,
+                  ),
+                );
+
+                await ref
+                    .read(AccountProviders.account(account.name).notifier)
+                    .refreshRecentTransactions();
+              }
+            }
+          }
+        } catch (e, stack) {
+          log('[CheckTransactionScheduler] refresh failed.',
+              error: e, stackTrace: stack);
         }
       },
     );
