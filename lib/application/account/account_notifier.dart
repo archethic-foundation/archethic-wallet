@@ -13,14 +13,18 @@ class _AccountNotifier
   Future<void> _refresh(
     Future<void> Function(Account account) doRefresh,
   ) async {
-    final account = state.valueOrNull;
-    if (account == null) return;
-    await account.updateLastAddress();
+    try {
+      final account = state.valueOrNull;
+      if (account == null) return;
+      await account.updateLastAddress();
 
-    await doRefresh(account);
+      await doRefresh(account);
 
-    state = AsyncValue.data(account.copyWith());
-    ref.invalidate(AccountProviders.account(account.name));
+      state = AsyncValue.data(account.copyWith());
+      ref.invalidate(AccountProviders.account(account.name));
+    } catch (e, stack) {
+      log('Refresh failed', error: e, stackTrace: stack);
+    }
   }
 
   Future<void> _refreshRecentTransactions(Account account) async {

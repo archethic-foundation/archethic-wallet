@@ -28,7 +28,7 @@ mixin ReadStrategy<CommandT, ValueT> {
         return Result.success(remoteValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Remote read failed', stackTrace: stackTrace);
+      log('$_logPrefix : Remote read failed', error: e, stackTrace: stackTrace);
     }
 
     try {
@@ -38,7 +38,7 @@ mixin ReadStrategy<CommandT, ValueT> {
         return Result.success(localValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Local read failed', stackTrace: stackTrace);
+      log('$_logPrefix : Local read failed', error: e, stackTrace: stackTrace);
     }
 
     log('$_logPrefix Unable to fetch local or remote value');
@@ -59,7 +59,7 @@ mixin ReadStrategy<CommandT, ValueT> {
         return Result.success(localValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Local read failed', stackTrace: stackTrace);
+      log('$_logPrefix : Local read failed', error: e, stackTrace: stackTrace);
     }
 
     try {
@@ -71,7 +71,7 @@ mixin ReadStrategy<CommandT, ValueT> {
         return Result.success(remoteValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Remote read failed', stackTrace: stackTrace);
+      log('$_logPrefix : Remote read failed', error: e, stackTrace: stackTrace);
     }
     log('$_logPrefix Unable to fetch local or remote value');
 

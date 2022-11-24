@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -882,8 +883,8 @@ class AppService {
     try {
       transactionFee =
           await sl.get<ApiService>().getTransactionFee(transaction);
-    } catch (e) {
-      dev.log(e.toString());
+    } catch (e, stack) {
+      dev.log('Failed to get transaction fees', error: e, stackTrace: stack);
     }
     return fromBigInt(transactionFee.fee).toDouble();
   }
