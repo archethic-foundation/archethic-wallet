@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 part 'state.dart';
 
 abstract class CheckTransactionsProvider {
-  static final provider = StreamProvider<ReceivedTransaction>(
+  static final provider = StreamProvider.autoDispose<ReceivedTransaction>(
     _checkTransactions,
   );
 }
