@@ -36,7 +36,7 @@ class NFTCreationProcessPropertiesList extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
       child: Wrap(
         children: List.generate(propertiesFiltered.length, (index) {
           return Padding(
