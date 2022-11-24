@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/domain/models/token_property.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'token.freezed.dart';
 
@@ -12,7 +13,7 @@ class Token with _$Token {
     required String symbol,
     required double initialSupply,
     required String type,
-    required Map<String, dynamic> properties,
+    required List<TokenProperty> properties,
   }) = _Token;
   const Token._();
 }

@@ -2,6 +2,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:aewallet/domain/models/token_property.dart';
+import 'package:aewallet/domain/models/token_property_access.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
@@ -66,12 +68,26 @@ class NftCreationFormState with _$NftCreationFormState {
 
   String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 
-  Map<String, dynamic> get propertiesConverted {
-    final propertiesConverted = <String, dynamic>{};
-    for (final element in properties) {
-      propertiesConverted[element.propertyName] = element.propertyValue;
+  List<TokenProperty> get propertiesConverted {
+    final tokenProperties = <TokenProperty>[];
+    for (final property in properties) {
+      final tokenPropertyAccessList = <TokenPropertyAccess>[];
+      for (final tokenPropertyAccess in property.publicKeys) {
+        tokenPropertyAccessList.add(
+          TokenPropertyAccess(
+            publicKey: tokenPropertyAccess.publicKey!.publicKey,
+          ),
+        );
+      }
+
+      final tokenProperty = TokenProperty(
+        propertyName: property.propertyName,
+        propertyValue: property.propertyValue,
+        publicKeys: tokenPropertyAccessList,
+      );
+      tokenProperties.add(tokenProperty);
     }
-    return propertiesConverted;
+    return tokenProperties;
   }
 }
 

@@ -22,7 +22,7 @@ mixin _$Token {
   String get symbol => throw _privateConstructorUsedError;
   double get initialSupply => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  Map<String, dynamic> get properties => throw _privateConstructorUsedError;
+  List<TokenProperty> get properties => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TokenCopyWith<Token> get copyWith => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $TokenCopyWith<$Res> {
       String symbol,
       double initialSupply,
       String type,
-      Map<String, dynamic> properties});
+      List<TokenProperty> properties});
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
       properties: null == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as List<TokenProperty>,
     ) as $Val);
   }
 }
@@ -110,7 +110,7 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
       String symbol,
       double initialSupply,
       String type,
-      Map<String, dynamic> properties});
+      List<TokenProperty> properties});
 }
 
 /// @nodoc
@@ -158,7 +158,7 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
       properties: null == properties
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as List<TokenProperty>,
     ));
   }
 }
@@ -173,7 +173,7 @@ class _$_Token extends _Token {
       required this.symbol,
       required this.initialSupply,
       required this.type,
-      required final Map<String, dynamic> properties})
+      required final List<TokenProperty> properties})
       : _properties = properties,
         super._();
 
@@ -189,11 +189,11 @@ class _$_Token extends _Token {
   final double initialSupply;
   @override
   final String type;
-  final Map<String, dynamic> _properties;
+  final List<TokenProperty> _properties;
   @override
-  Map<String, dynamic> get properties {
+  List<TokenProperty> get properties {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_properties);
+    return EqualUnmodifiableListView(_properties);
   }
 
   @override
@@ -244,7 +244,7 @@ abstract class _Token extends Token {
       required final String symbol,
       required final double initialSupply,
       required final String type,
-      required final Map<String, dynamic> properties}) = _$_Token;
+      required final List<TokenProperty> properties}) = _$_Token;
   const _Token._() : super._();
 
   @override
@@ -260,7 +260,7 @@ abstract class _Token extends Token {
   @override
   String get type;
   @override
-  Map<String, dynamic> get properties;
+  List<TokenProperty> get properties;
   @override
   @JsonKey(ignore: true)
   _$$_TokenCopyWith<_$_Token> get copyWith =>

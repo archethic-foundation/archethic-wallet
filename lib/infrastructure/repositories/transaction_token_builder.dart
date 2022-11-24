@@ -1,5 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:math';
+
+import 'package:aewallet/domain/models/token_property.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:flutter/foundation.dart';
 
 extension AddTokenTransactionBuilder on archethic.Transaction {
   /// Builds a creation of token Transaction
@@ -12,19 +16,67 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     required int index,
     required String originPrivateKey,
     required String tokenType,
-    required Map<String, dynamic> tokenProperties,
+    required List<TokenProperty> tokenProperties,
   }) {
     final transaction = archethic.Transaction(
       type: 'token',
       data: archethic.Transaction.initData(),
     );
 
+    var aesKey = '';
+    if (tokenProperties.isNotEmpty) {
+      aesKey = archethic.uint8ListToHex(
+        Uint8List.fromList(
+          List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+        ),
+      );
+    }
+
+    final tokenPropertiesNotProtected = <String, dynamic>{};
+    for (final tokenProperty in tokenProperties) {
+      if (tokenProperty.publicKeys.isEmpty) {
+        tokenPropertiesNotProtected[tokenProperty.propertyName] =
+            tokenProperty.propertyValue;
+      } else {
+        final walletKeyPair = keychain.deriveKeypair(serviceName);
+
+        final authorizedPublicKeys = List<String>.empty(growable: true)
+          ..add(archethic.uint8ListToHex(walletKeyPair.publicKey));
+
+        for (final publicKey in tokenProperty.publicKeys) {
+          authorizedPublicKeys.add(
+            publicKey.publicKey,
+          );
+        }
+
+        final authorizedKeys =
+            List<archethic.AuthorizedKey>.empty(growable: true);
+        for (final key in authorizedPublicKeys) {
+          authorizedKeys.add(
+            archethic.AuthorizedKey(
+              encryptedSecretKey:
+                  archethic.uint8ListToHex(archethic.ecEncrypt(aesKey, key)),
+              publicKey: key,
+            ),
+          );
+        }
+
+        final tokenPropertiesProtected = <String, dynamic>{};
+        tokenPropertiesProtected[tokenProperty.propertyName] =
+            tokenProperty.propertyValue;
+        transaction.addOwnership(
+          archethic.aesEncrypt(tokenPropertiesProtected.toString(), aesKey),
+          authorizedKeys,
+        );
+      }
+    }
+
     final token = archethic.Token(
       name: tokenName,
       supply: archethic.toBigInt(tokenInitialSupply),
       type: tokenType,
       symbol: tokenSymbol,
-      tokenProperties: tokenProperties,
+      tokenProperties: tokenPropertiesNotProtected,
     );
 
     final content = archethic.tokenToJsonForTxDataContent(
