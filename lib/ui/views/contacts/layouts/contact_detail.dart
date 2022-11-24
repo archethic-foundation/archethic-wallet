@@ -23,6 +23,43 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
+final _contactDetailInfoShareProviderArgs = Provider<Contact>(
+  (ref) {
+    throw UnimplementedError();
+  },
+);
+
+final _contactDetailInfoShareProvider = NotifierProvider.autoDispose
+    .family<ContactDetailInfoShareNotifier, String, Contact>(
+  () {
+    return ContactDetailInfoShareNotifier();
+  },
+);
+
+class ContactDetailInfoShareNotifier
+    extends AutoDisposeFamilyNotifier<String, Contact> {
+  ContactDetailInfoShareNotifier();
+
+  @override
+  String build(Contact arg) {
+    return arg.address.toUpperCase();
+  }
+
+  void setInfoShare(int tab, Contact contact) {
+    if (tab == 1) {
+      state = contact.publicKey.toUpperCase();
+    } else {
+      state = contact.address.toUpperCase();
+    }
+  }
+}
+
+abstract class ContactDetailProvider {
+  static final contactDetailInfoShare = _contactDetailInfoShareProvider;
+  static final contactDetailInfoShareProviderArgs =
+      _contactDetailInfoShareProviderArgs;
+}
+
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
     required this.contact,
@@ -33,6 +70,29 @@ class ContactDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return ProviderScope(
+      overrides: [
+        ContactDetailProvider.contactDetailInfoShareProviderArgs
+            .overrideWithValue(
+          contact,
+        ),
+      ],
+      child: ContactDetailBody(
+        contact: contact,
+      ),
+    );
+  }
+}
+
+class ContactDetailBody extends ConsumerWidget {
+  const ContactDetailBody({
+    required this.contact,
+    super.key,
+  });
+
+  final Contact contact;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
@@ -41,7 +101,6 @@ class ContactDetail extends ConsumerWidget {
         contact.name,
       ),
     );
-    var infoToShare = contact.address.toUpperCase();
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -221,14 +280,12 @@ class ContactDetail extends ConsumerWidget {
                   ),
                 ],
                 onChange: (p0) {
-                  switch (p0) {
-                    case 0:
-                      infoToShare = contact.address.toUpperCase();
-                      break;
-                    case 1:
-                      infoToShare = contact.publicKey.toUpperCase();
-                      break;
-                  }
+                  ref
+                      .watch(
+                        ContactDetailProvider.contactDetailInfoShare(contact)
+                            .notifier,
+                      )
+                      .setInfoShare(p0, contact);
                 },
               ),
             ),
@@ -258,11 +315,18 @@ class ContactDetail extends ConsumerWidget {
                     ),
                   ],
                 ),
-                // TODO(reddwarf03): See with Chralu to create providers
-                /*
                 Row(
                   children: <Widget>[
-                    if (infoToShare.isEmpty)
+                    if (ref
+                        .watch(
+                          ContactDetailProvider.contactDetailInfoShare(
+                            ref.read(
+                              ContactDetailProvider
+                                  .contactDetailInfoShareProviderArgs,
+                            ),
+                          ),
+                        )
+                        .isNotEmpty)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
                         localizations.share,
@@ -276,7 +340,14 @@ class ContactDetail extends ConsumerWidget {
                         onPressed: () {
                           final box = context.findRenderObject() as RenderBox?;
                           Share.share(
-                            infoToShare,
+                            ref.watch(
+                              ContactDetailProvider.contactDetailInfoShare(
+                                ref.read(
+                                  ContactDetailProvider
+                                      .contactDetailInfoShareProviderArgs,
+                                ),
+                              ),
+                            ),
                             sharePositionOrigin:
                                 box!.localToGlobal(Offset.zero) & box.size,
                           );
@@ -296,7 +367,7 @@ class ContactDetail extends ConsumerWidget {
                         onPressed: () {},
                       ),
                   ],
-                ),*/
+                ),
               ],
             ),
         ],
