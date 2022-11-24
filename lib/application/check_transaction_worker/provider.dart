@@ -125,8 +125,11 @@ Stream<ReceivedTransaction> _checkTransactions(
             }
           }
         } catch (e, stack) {
-          log('[CheckTransactionScheduler] refresh failed.',
-              error: e, stackTrace: stack);
+          log(
+            '[CheckTransactionScheduler] refresh failed.',
+            error: e,
+            stackTrace: stack,
+          );
         }
       },
     );
