@@ -47,7 +47,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
         .toList();
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 8, left: 15, right: 15),
       child: Card(
         shape: RoundedRectangleBorder(
           side: fileProperty[0].publicKeys.isNotEmpty
