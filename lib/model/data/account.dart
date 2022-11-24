@@ -118,8 +118,12 @@ class Account extends HiveObject {
     await updateAccount();
   }
 
-  Future<void> updateNFT() async {
-    accountNFT = await sl.get<AppService>().getNFTList(lastAddress!);
+  Future<void> updateNFT(
+    String seed,
+    String name,
+  ) async {
+    accountNFT =
+        await sl.get<AppService>().getNFTList(lastAddress!, seed, name);
 
     var nftInfosOffChainExist = false;
     if (accountNFT != null) {
