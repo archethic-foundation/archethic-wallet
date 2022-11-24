@@ -32,12 +32,13 @@ class _IncomingTransactionsWatcherState
     previousReceivedTransaction = element;
 
     final message = AppLocalization.of(context)!.transactionInputNotification;
+    final regex = RegExp(r'([.]*0)(?!.*\d)');
     NotificationsUtil.showNotification(
       title: 'Archethic',
       body: message
           .replaceAll(
             '%1',
-            fromBigInt(element.amount).toString(),
+            fromBigInt(element.amount).toString().replaceAll(regex, ''),
           )
           .replaceAll('%2', element.currencySymbol)
           .replaceAll('%3', element.accountName),
