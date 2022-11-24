@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:aewallet/domain/models/token_property.dart';
@@ -65,7 +66,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
         tokenPropertiesProtected[tokenProperty.propertyName] =
             tokenProperty.propertyValue;
         transaction.addOwnership(
-          archethic.aesEncrypt(tokenPropertiesProtected.toString(), aesKey),
+          archethic.aesEncrypt(json.encode(tokenPropertiesProtected), aesKey),
           authorizedKeys,
         );
       }

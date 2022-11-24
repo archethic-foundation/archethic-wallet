@@ -50,7 +50,11 @@ class _AccountNotifier
 
   Future<void> refreshNFTs() => _refresh(
         (account) async {
-          await account.updateNFT();
+          final session = ref.read(SessionProviders.session).loggedIn!;
+          await account.updateNFT(
+            session.wallet.seed,
+            session.wallet.appKeychain.getAccountSelected()!.name,
+          );
         },
       );
 
@@ -61,7 +65,11 @@ class _AccountNotifier
           await _refreshRecentTransactions(account);
           await _refreshBalance(account);
           await account.updateFungiblesTokens();
-          await account.updateNFT();
+          final session = ref.read(SessionProviders.session).loggedIn!;
+          await account.updateNFT(
+            session.wallet.seed,
+            session.wallet.appKeychain.getAccountSelected()!.name,
+          );
         },
       );
 }

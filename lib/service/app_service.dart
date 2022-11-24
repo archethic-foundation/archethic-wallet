@@ -507,7 +507,11 @@ class AppService {
     return fungiblesTokensList;
   }
 
-  Future<List<AccountToken>> getNFTList(String address) async {
+  Future<List<AccountToken>> getNFTList(
+    String address,
+    String seed,
+    String name,
+  ) async {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
     final nftList = List<AccountToken>.empty(growable: true);
@@ -527,11 +531,39 @@ class AppService {
             tokenAddressList,
           );
 
+      // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
+      final nameEncoded = Uri.encodeFull(name);
+      final serviceName = 'archethic-wallet-$nameEncoded';
+      late Keychain keychain;
+      late KeyPair keypair;
+      final secretMap = await sl.get<ApiService>().getTransaction(
+            tokenAddressList,
+            request:
+                'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
+          );
+
+      if (secretMap.isNotEmpty) {
+        keychain = await sl.get<ApiService>().getKeychain(seed);
+        keypair = keychain.deriveKeypair(serviceName);
+      }
+
       for (final tokenBalance in balance.token!) {
         final token = tokenMap[tokenBalance.address];
         if (token != null && token.type == 'non-fungible') {
           final tokenWithoutFile = token.tokenProperties!
             ..removeWhere((key, value) => key == 'file');
+
+          if (secretMap[tokenBalance.address] != null &&
+              secretMap[tokenBalance.address]!.data != null &&
+              secretMap[tokenBalance.address]!.data!.ownerships != null &&
+              secretMap[tokenBalance.address]!.data!.ownerships!.isNotEmpty) {
+            tokenWithoutFile.addAll(
+              _tokenPropertiesDecryptedSecret(
+                keypair: keypair,
+                ownerships: secretMap[tokenBalance.address]!.data!.ownerships!,
+              ),
+            );
+          }
 
           final tokenInformations = TokenInformations(
             address: tokenBalance.address,
@@ -556,6 +588,33 @@ class AppService {
     }
 
     return nftList;
+  }
+
+  Map<String, dynamic> _tokenPropertiesDecryptedSecret({
+    required KeyPair keypair,
+    required List<Ownership> ownerships,
+  }) {
+    for (final ownership in ownerships) {
+      final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
+        (AuthorizedKey authKey) =>
+            authKey.publicKey!.toUpperCase() ==
+            uint8ListToHex(keypair.publicKey).toUpperCase(),
+        orElse: AuthorizedKey.new,
+      );
+      if (authorizedPublicKey.encryptedSecretKey != null) {
+        final aesKey = ecDecrypt(
+          authorizedPublicKey.encryptedSecretKey,
+          keypair.privateKey,
+        );
+        final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
+        try {
+          return json.decode(utf8.decode(decryptedSecret));
+        } catch (e) {
+          return {};
+        }
+      }
+    }
+    return {};
   }
 
   Future<Map<String, Balance>> getBalanceGetResponse(
