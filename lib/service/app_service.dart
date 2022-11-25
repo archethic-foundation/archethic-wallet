@@ -96,7 +96,8 @@ class AppService {
 
     if (localRecentTransaction.isNotEmpty &&
         localRecentTransaction.first.address != null &&
-        localRecentTransactionLastAddress!.isNotEmpty) {
+        localRecentTransactionLastAddress != null &&
+        localRecentTransactionLastAddress.isNotEmpty) {
       lastAddressRecentTransaction[lastAddress] =
           localRecentTransactionLastAddress;
     } else {
@@ -893,10 +894,11 @@ class AppService {
         ..add(uint8ListToHex(walletKeyPair.publicKey));
 
       for (final transfer in listUcoTransfer) {
-        final firstTxListRecipientMap = await sl
-            .get<ApiService>()
-            .getTransactionChain({transfer.to!: ''},
-                request: 'previousPublicKey');
+        final firstTxListRecipientMap =
+            await sl.get<ApiService>().getTransactionChain(
+          {transfer.to!: ''},
+          request: 'previousPublicKey',
+        );
         if (firstTxListRecipientMap.isNotEmpty) {
           final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
           if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
@@ -907,10 +909,11 @@ class AppService {
       }
 
       for (final transfer in listTokenTransfer) {
-        final firstTxListRecipientMap = await sl
-            .get<ApiService>()
-            .getTransactionChain({transfer.to!: ''},
-                request: 'previousPublicKey');
+        final firstTxListRecipientMap =
+            await sl.get<ApiService>().getTransactionChain(
+          {transfer.to!: ''},
+          request: 'previousPublicKey',
+        );
         if (firstTxListRecipientMap.isNotEmpty) {
           final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
           if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {

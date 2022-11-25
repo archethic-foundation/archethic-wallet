@@ -125,7 +125,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                     accountToken: accountSelected.accountNFT!.firstWhere(
                         (element) =>
                             element.tokenInformations!.id ==
-                            widget.tokenInformations.id),
+                            widget.tokenInformations.id,),
                     recipient: const TransferRecipient.address(
                       address: Address(''),
                     ),
