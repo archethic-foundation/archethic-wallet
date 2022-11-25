@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -49,6 +50,9 @@ class _KeychainTabState extends ConsumerState<KeychainTab> {
                     settings.activeVibrations,
                   );
               await ref.read(SessionProviders.session.notifier).refresh();
+              await ref
+                  .read(AccountProviders.selectedAccount.notifier)
+                  .refreshRecentTransactions();
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
