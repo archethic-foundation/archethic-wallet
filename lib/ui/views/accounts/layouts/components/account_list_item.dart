@@ -5,11 +5,11 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -30,7 +30,6 @@ class AccountListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
@@ -145,22 +144,7 @@ class AccountListItem extends ConsumerWidget {
                                   textAlign: TextAlign.end,
                                   style: theme.textStyleSize12W400Primary,
                                 ),
-                                if (account.balance != null &&
-                                    account.balance!.tokensFungiblesNb > 0)
-                                  AutoSizeText(
-                                    account.balance!.tokensFungiblesNb > 1
-                                        ? '${account.balance!.tokensFungiblesNb} ${localizations.tokens}'
-                                        : '${account.balance!.tokensFungiblesNb} ${localizations.token}',
-                                    style: theme.textStyleSize12W400Primary,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                if (account.balance != null &&
-                                    account.balance!.nftNb > 0)
-                                  AutoSizeText(
-                                    '${account.balance!.nftNb} ${localizations.nft}',
-                                    style: theme.textStyleSize12W400Primary,
-                                    textAlign: TextAlign.end,
-                                  ),
+                                AccountListItemTokenInfo(account: account),
                               ],
                             )
                           : Column(
@@ -176,22 +160,7 @@ class AccountListItem extends ConsumerWidget {
                                   style: theme.textStyleSize12W400Primary,
                                   textAlign: TextAlign.end,
                                 ),
-                                if (account.accountTokens != null &&
-                                    account.accountTokens!.isNotEmpty)
-                                  AutoSizeText(
-                                    account.accountTokens!.length > 1
-                                        ? '${account.accountTokens!.length} ${localizations.tokens}'
-                                        : '${account.accountTokens!.length} ${localizations.token}',
-                                    style: theme.textStyleSize12W400Primary,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                if (account.accountNFT != null &&
-                                    account.accountNFT!.isNotEmpty)
-                                  AutoSizeText(
-                                    '${account.accountNFT!.length} ${localizations.nft}',
-                                    style: theme.textStyleSize12W400Primary,
-                                    textAlign: TextAlign.end,
-                                  ),
+                                AccountListItemTokenInfo(account: account),
                               ],
                             )
                     else
@@ -207,28 +176,14 @@ class AccountListItem extends ConsumerWidget {
                             '···········',
                             style: theme.textStyleSize12W600Primary60,
                           ),
-                          if (account.accountTokens != null &&
-                              account.accountTokens!.isNotEmpty)
-                            AutoSizeText(
-                              '···········',
-                              style: theme.textStyleSize12W600Primary60,
-                            )
-                          else
-                            AutoSizeText(
-                              '',
-                              style: theme.textStyleSize12W600Primary60,
-                            ),
-                          if (account.accountNFT != null &&
-                              account.accountNFT!.isNotEmpty)
-                            AutoSizeText(
-                              '···········',
-                              style: theme.textStyleSize12W600Primary60,
-                            )
-                          else
-                            AutoSizeText(
-                              '',
-                              style: theme.textStyleSize12W600Primary60,
-                            ),
+                          AutoSizeText(
+                            '···········',
+                            style: theme.textStyleSize12W600Primary60,
+                          ),
+                          AutoSizeText(
+                            '···········',
+                            style: theme.textStyleSize12W600Primary60,
+                          )
                         ],
                       ),
                   ],

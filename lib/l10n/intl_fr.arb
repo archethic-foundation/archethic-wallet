@@ -12,6 +12,8 @@
 	"add": "Ajouter",
 	"update": "Mettre à jour",
 	"previewNotAvailable": "Aperçu non disponible",
+	"noToken": "Aucun jeton",
+	"noNFT": "Aucun NFT",
 	"transferTokens": "Envoyer des %1",
 	"transferToken": "Transfert Jeton",
 	"transferTokenName": "Transfert %1",

@@ -72,6 +72,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "noToken": "No token",
+  "@noToken": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "noNFT": "No NFT",
+  "@noNFT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "transferTokens": "Send %1",
   "@transferTokens": {
     "type": "text",

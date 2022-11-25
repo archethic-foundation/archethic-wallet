@@ -270,6 +270,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "no" : MessageLookupByLibrary.simpleMessage("Non"),
     "noConnection" : MessageLookupByLibrary.simpleMessage("La connexion au réseau n\'a pas pu aboutir. Veuillez vérifier vos paramètres réseaux."),
     "noData" : MessageLookupByLibrary.simpleMessage("Pas de données"),
+    "noNFT" : MessageLookupByLibrary.simpleMessage("Aucun NFT"),
+    "noToken" : MessageLookupByLibrary.simpleMessage("Aucun jeton"),
     "nodeAuthorizationDate" : MessageLookupByLibrary.simpleMessage("Authorization date: "),
     "nodeAuthorized" : MessageLookupByLibrary.simpleMessage("Autorisé: "),
     "nodeAverageAvailability" : MessageLookupByLibrary.simpleMessage("Disponibilité moyenne: "),
