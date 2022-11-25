@@ -96,6 +96,14 @@ class AppLocalization {
     return Intl.message('Preview not available', name: 'previewNotAvailable');
   }
 
+  String get noToken {
+    return Intl.message('No token', name: 'noToken');
+  }
+
+  String get noNFT {
+    return Intl.message('No NFT', name: 'noNFT');
+  }
+
   String get token {
     return Intl.message('token', name: 'token');
   }
