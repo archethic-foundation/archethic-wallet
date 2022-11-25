@@ -65,6 +65,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                         physics: NeverScrollableScrollPhysics(),
                       ),
                       tabBarProperties: TabBarProperties(
+                        position: TabBarPosition.bottom,
                         labelColor: theme.text,
                         labelStyle: theme.textStyleSize10W100Primary,
                         indicatorSize: TabBarIndicatorSize.label,
