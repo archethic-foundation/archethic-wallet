@@ -5,6 +5,7 @@ import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class ContactDetailTab extends ConsumerWidget {
   const ContactDetailTab({
@@ -70,21 +70,14 @@ class ContactDetailTab extends ConsumerWidget {
                         infoQRCode,
                       );
                     },
-                    child: Container(
-                      width: 150,
-                      height: 150,
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: QrImage(
-                        foregroundColor: theme.text,
-                        data: infoQRCode,
-                        size: 150,
-                        gapless: false,
-                      ),
+                    child: QRCodeWithOptions(
+                      infoQRCode: infoQRCode,
+                      size: 150,
+                      messageCopied: messageCopied,
                     ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
