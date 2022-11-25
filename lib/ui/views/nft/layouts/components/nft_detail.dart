@@ -122,7 +122,10 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                       );
                   await TransferSheet(
                     transferType: TransferType.nft,
-                    accountToken: accountSelected.accountNFT![widget.index],
+                    accountToken: accountSelected.accountNFT!.firstWhere(
+                        (element) =>
+                            element.tokenInformations!.id ==
+                            widget.tokenInformations.id),
                     recipient: const TransferRecipient.address(
                       address: Address(''),
                     ),
