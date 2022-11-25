@@ -21,44 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:share_plus/share_plus.dart';
-
-final _contactDetailInfoShareProviderArgs = Provider<Contact>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
-final _contactDetailInfoShareProvider = NotifierProvider.autoDispose
-    .family<ContactDetailInfoShareNotifier, String, Contact>(
-  () {
-    return ContactDetailInfoShareNotifier();
-  },
-);
-
-class ContactDetailInfoShareNotifier
-    extends AutoDisposeFamilyNotifier<String, Contact> {
-  ContactDetailInfoShareNotifier();
-
-  @override
-  String build(Contact arg) {
-    return arg.address.toUpperCase();
-  }
-
-  void setInfoShare(int tab, Contact contact) {
-    if (tab == 1) {
-      state = contact.publicKey.toUpperCase();
-    } else {
-      state = contact.address.toUpperCase();
-    }
-  }
-}
-
-abstract class ContactDetailProvider {
-  static final contactDetailInfoShare = _contactDetailInfoShareProvider;
-  static final contactDetailInfoShareProviderArgs =
-      _contactDetailInfoShareProviderArgs;
-}
 
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
@@ -68,29 +30,6 @@ class ContactDetail extends ConsumerWidget {
 
   final Contact contact;
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      overrides: [
-        ContactDetailProvider.contactDetailInfoShareProviderArgs
-            .overrideWithValue(
-          contact,
-        ),
-      ],
-      child: ContactDetailBody(
-        contact: contact,
-      ),
-    );
-  }
-}
-
-class ContactDetailBody extends ConsumerWidget {
-  const ContactDetailBody({
-    required this.contact,
-    super.key,
-  });
-
-  final Contact contact;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
@@ -279,14 +218,6 @@ class ContactDetailBody extends ConsumerWidget {
                     messageCopied: localizations.publicKeyCopied,
                   ),
                 ],
-                onChange: (p0) {
-                  ref
-                      .watch(
-                        ContactDetailProvider.contactDetailInfoShare(contact)
-                            .notifier,
-                      )
-                      .setInfoShare(p0, contact);
-                },
               ),
             ),
           ),
@@ -298,7 +229,7 @@ class ContactDetailBody extends ConsumerWidget {
                     AppButtonTiny(
                       AppButtonTinyType.primary,
                       localizations.viewExplorer,
-                      Dimens.buttonTopDimens,
+                      Dimens.buttonBottomDimens,
                       icon: Icon(
                         Icons.more_horiz,
                         color: theme.text,
@@ -313,59 +244,6 @@ class ContactDetailBody extends ConsumerWidget {
                         );
                       },
                     ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    if (ref
-                        .watch(
-                          ContactDetailProvider.contactDetailInfoShare(
-                            ref.read(
-                              ContactDetailProvider
-                                  .contactDetailInfoShareProviderArgs,
-                            ),
-                          ),
-                        )
-                        .isNotEmpty)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.share,
-                        Dimens.buttonBottomDimens,
-                        icon: Icon(
-                          Icons.share,
-                          color: theme.text,
-                          size: 14,
-                        ),
-                        key: const Key('share'),
-                        onPressed: () {
-                          final box = context.findRenderObject() as RenderBox?;
-                          Share.share(
-                            ref.watch(
-                              ContactDetailProvider.contactDetailInfoShare(
-                                ref.read(
-                                  ContactDetailProvider
-                                      .contactDetailInfoShareProviderArgs,
-                                ),
-                              ),
-                            ),
-                            sharePositionOrigin:
-                                box!.localToGlobal(Offset.zero) & box.size,
-                          );
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.share,
-                        Dimens.buttonBottomDimens,
-                        icon: Icon(
-                          Icons.share,
-                          color: theme.text30,
-                          size: 14,
-                        ),
-                        key: const Key('share'),
-                        onPressed: () {},
-                      ),
                   ],
                 ),
               ],

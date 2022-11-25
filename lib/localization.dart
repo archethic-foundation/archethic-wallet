@@ -48,6 +48,10 @@ class AppLocalization {
     return Intl.message('Terms of use', name: 'welcomeDisclaimerLink');
   }
 
+  String get noData {
+    return Intl.message('No data', name: 'noData');
+  }
+
   String get cancel {
     return Intl.message('Cancel', name: 'cancel');
   }

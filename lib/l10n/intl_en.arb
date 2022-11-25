@@ -6,6 +6,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "noData": "No data",
+  "@noData": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "cancel": "Cancel",
   "@cancel": {
     "type": "text",
