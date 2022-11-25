@@ -82,9 +82,14 @@ class _HomePageState extends ConsumerState<HomePage>
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: bottomBarPageController,
-          onPageChanged: ref
-              .read(SettingsProviders.settings.notifier)
-              .setMainScreenCurrentPage,
+          onPageChanged: (int page) {
+            ref
+                .read(SettingsProviders.settings.notifier)
+                .setMainScreenCurrentPage(page);
+            if (page == 3) {
+              ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+            }
+          },
           children: const [
             AddressBookTab(),
             KeychainTab(),
