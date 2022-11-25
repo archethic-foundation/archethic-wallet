@@ -114,7 +114,7 @@ class AppService {
     );
 
     final transactionChainMap = await getTransactionChain(
-      [lastAddress, genesisAddress],
+      [lastAddress],
       'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
     );
 
