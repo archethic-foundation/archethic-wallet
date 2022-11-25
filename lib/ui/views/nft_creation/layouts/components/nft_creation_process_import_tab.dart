@@ -52,7 +52,7 @@ class _NFTCreationProcessImportTabState
               const NFTCreationProcessImportTabFile(),
               const NFTCreationProcessImportTabImage(),
               const NFTCreationProcessImportTabCamera(),
-              const NFTCreationProcessFileAccess(),
+              //const NFTCreationProcessFileAccess(),
               const NFTCreationProcessFilePreview()
             ],
           ),

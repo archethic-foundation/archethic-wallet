@@ -96,9 +96,9 @@ class _NFTCreationProcessSummaryTabState
                   ),
                 ),
                 const NFTCreationProcessFilePreview(),
-                const NFTCreationProcessFileAccess(
-                  readOnly: true,
-                ),
+                //const NFTCreationProcessFileAccess(
+                //  readOnly: true,
+                //),
                 const NFTCreationProcessPropertiesList(
                   readOnly: true,
                 ),
