@@ -48,7 +48,8 @@ extension TransferTransactionBuilder on archethic.Transaction {
       for (final transfer in ucoTransferList) {
         final firstTxListRecipientMap = await sl
             .get<archethic.ApiService>()
-            .getTransactionChain([transfer.to!], request: 'previousPublicKey');
+            .getTransactionChain({transfer.to!: ''},
+                request: 'previousPublicKey');
         if (firstTxListRecipientMap.isNotEmpty) {
           final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
           if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
@@ -62,7 +63,8 @@ extension TransferTransactionBuilder on archethic.Transaction {
       for (final transfer in tokenTransferList) {
         final firstTxListRecipientMap = await sl
             .get<archethic.ApiService>()
-            .getTransactionChain([transfer.to!], request: 'previousPublicKey');
+            .getTransactionChain({transfer.to!: ''},
+                request: 'previousPublicKey');
         if (firstTxListRecipientMap.isNotEmpty) {
           final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
           if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {

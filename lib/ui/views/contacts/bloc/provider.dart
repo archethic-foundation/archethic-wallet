@@ -74,7 +74,7 @@ class ContactCreationFormNotifier
 
   Future<String> _getGenesisPublicKey(String address) async {
     final publicKeyMap = await sl.get<ApiService>().getTransactionChain(
-      [address],
+      {address: ''},
       request: 'previousPublicKey',
     );
     var publicKey = '';

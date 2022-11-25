@@ -61,6 +61,7 @@ class ArchethicTransactionRepository
           account.lastAddress!,
           walletSeed,
           account.name,
+          account.recentTransactions ?? [],
         );
       },
     );

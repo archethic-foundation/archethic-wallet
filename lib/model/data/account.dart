@@ -198,9 +198,14 @@ class Account extends HiveObject {
   Future<void> updateRecentTransactions(
     String seed,
   ) async {
-    recentTransactions = await sl
-        .get<AppService>()
-        .getAccountRecentTransactions(genesisAddress, lastAddress!, seed, name);
+    recentTransactions =
+        await sl.get<AppService>().getAccountRecentTransactions(
+              genesisAddress,
+              lastAddress!,
+              seed,
+              name,
+              recentTransactions ?? [],
+            );
     await updateLastLoadingTransactionInputs();
     await updateAccount();
   }
