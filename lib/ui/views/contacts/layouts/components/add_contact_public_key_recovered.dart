@@ -22,10 +22,11 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.only(
         top: 20,
-        left: 40,
-        right: 40,
+        left: 20,
+        right: 20,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             localizations.contactPublicKeyGetAuto,
@@ -38,7 +39,7 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
           SelectableText(
             contactCreation.publicKeyRecovered,
             textAlign: TextAlign.left,
-            style: theme.textStyleSize12W100Primary,
+            style: theme.textStyleSize14W100Primary,
           ),
         ],
       ),

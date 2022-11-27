@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-25T14:22:13.102551",
+  "@@last_modified": "2022-11-27T21:50:58.061401",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -756,13 +756,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesNoteNFT": "Note: The fees will be estimated when the address is specified.",
+  "estimatedFeesNoteNFT": "Note : The fees will be estimated when the address is specified.",
   "@estimatedFeesNoteNFT": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesNote": "Note: The fees will be estimated when the address and the amount are specified.",
+  "estimatedFeesNote": "Note : The fees will be estimated when the address and the amount are specified.",
   "@estimatedFeesNote": {
     "type": "text",
     "placeholders_order": [],
@@ -774,7 +774,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesAddTokenNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
+  "estimatedFeesAddTokenNote": "Note : The fees will be estimated when the name and the initial supply are specified.",
   "@estimatedFeesAddTokenNote": {
     "type": "text",
     "placeholders_order": [],
@@ -966,8 +966,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.",
+  "passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds.",
   "@passBackupConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "archethicDoesntKeepCopy": "As a reminder, Archethic does not keep any copy.",
+  "@archethicDoesntKeepCopy": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1722,7 +1728,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel6": "Insecure ways of backup",
+  "backupSafetyLabel6": "Insecure ways of backup :",
   "@backupSafetyLabel6": {
     "type": "text",
     "placeholders_order": [],

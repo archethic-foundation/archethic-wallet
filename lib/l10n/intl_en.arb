@@ -282,7 +282,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addContactDescription": "To create a contact, you must specify a name and address.\n\nConcerning the address, it allows to send funds or tokens to your contact. You can either type it, copy and paste it or get it from a QR Code.\n\nThe public key is automatically retrieved unless your contact has never made a transaction on the Archethic network. In this case, you just have to ask him/her and either enter it, copy and paste it or retrieve it from a QR Code.\nThe public key allows you to give your contact access rights to information that you want to protect (specific properties associated with NFTs, messages, ...).or to verify the authenticity of an information by checking that it comes from this contact.",
+  "addContactDescription": "To create a contact, you must specify a name and address.\n\nConcerning the address, it allows to send funds or tokens to your contact. You can either type it, copy and paste it or get it from a QR Code.\n\nThe public key is automatically retrieved unless your contact has never made a transaction on the Archethic network. In this case, you just have to ask him/her and either enter it, copy and paste it or retrieve it from a QR Code.\nThe public key allows you to give your contact access rights to information that you want to protect (specific properties associated with NFTs, messages, ...) or to verify the authenticity of an information by checking that it comes from this contact.",
   "@addContactDescription": {
     "type": "text",
     "placeholders_order": [],
@@ -1056,7 +1056,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel6": "Insecure ways of backup",
+  "backupSafetyLabel6": "Insecure ways of backup :",
   "@backupSafetyLabel6": {
     "type": "text",
     "placeholders_order": [],
@@ -1452,13 +1452,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesNote": "Note: The fees will be estimated when the recipient and the amount are specified.",
+  "estimatedFeesNote": "Note : The fees will be estimated when the recipient and the amount are specified.",
   "@estimatedFeesNote": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesNoteNFT": "Note: The fees will be estimated when the recipient is specified.",
+  "estimatedFeesNoteNFT": "Note : The fees will be estimated when the recipient is specified.",
   "@estimatedFeesNoteNFT": {
     "type": "text",
     "placeholders_order": [],
@@ -1470,7 +1470,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesAddTokenNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
+  "estimatedFeesAddTokenNote": "Note : The fees will be estimated when the name and the initial supply are specified.",
   "@estimatedFeesAddTokenNote": {
     "type": "text",
     "placeholders_order": [],
@@ -1548,7 +1548,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "contactPublicKeyGetAuto": "The public key associated with this address has been recovered: ",
+  "contactPublicKeyGetAuto": "The public key associated with this address has been recovered :",
   "@contactPublicKeyGetAuto": {
     "type": "text",
     "placeholders_order": [],
@@ -1938,8 +1938,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.",
+  "passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds.",
   "@passBackupConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "archethicDoesntKeepCopy": "As a reminder, Archethic does not keep any copy.",
+  "@archethicDoesntKeepCopy": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2028,7 +2034,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "accountsListDescription": "Your keychain contains the following services and accounts.",
+  "accountsListDescription": "Your keychain contains the following services and accounts :",
   "@accountsListDescription": {
     "type": "text",
     "placeholders_order": [],

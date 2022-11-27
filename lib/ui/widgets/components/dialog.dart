@@ -21,6 +21,9 @@ class AppDialogs {
     Function onPressed, {
     String? cancelText,
     Function? cancelAction,
+    TextStyle? titleStyle,
+    String? additionalContent,
+    TextStyle? additionalContentStyle,
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
@@ -32,7 +35,7 @@ class AppDialogs {
         return AlertDialog(
           title: Text(
             title,
-            style: theme.textStyleSize14W600EquinoxPrimary,
+            style: titleStyle ?? theme.textStyleSize14W600EquinoxPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -40,9 +43,22 @@ class AppDialogs {
               color: theme.text45!,
             ),
           ),
-          content: Text(
-            content,
-            style: theme.textStyleSize12W100Primary,
+          content: RichText(
+            text: TextSpan(
+              text: '',
+              children: <InlineSpan>[
+                TextSpan(
+                  text: content,
+                  style: theme.textStyleSize12W100Primary,
+                ),
+                if (additionalContent != null)
+                  TextSpan(
+                    text: '\n\n$additionalContent',
+                    style: additionalContentStyle ??
+                        theme.textStyleSize12W100Primary,
+                  ),
+              ],
+            ),
           ),
           actions: <Widget>[
             _AppDialogsButton(
