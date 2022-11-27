@@ -58,16 +58,19 @@ class TransferFormSheet extends ConsumerWidget {
                     child: Column(
                       children: <Widget>[
                         const SizedBox(height: 25),
-                        if (transfer.transferType != TransferType.nft)
-                          const TransferTextFieldAmount(),
                         Container(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                            bottom: 20,
-                          ),
                           alignment: Alignment.topCenter,
                           child: const TransferTextFieldAddress(),
                         ),
+                        if (transfer.transferType != TransferType.nft)
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              bottom: 20,
+                            ),
+                            alignment: Alignment.topCenter,
+                            child: const TransferTextFieldAmount(),
+                          ),
                         FeeInfos(
                           asyncFeeEstimation: transfer.feeEstimation,
                           estimatedFeesNote:
