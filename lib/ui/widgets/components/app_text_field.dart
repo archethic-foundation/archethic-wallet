@@ -142,6 +142,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                 decoration: widget.prefixButton == null &&
                         widget.suffixButton == null
                     ? InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 48),
                         labelText: widget.labelText ?? '',
                         labelStyle: theme.textStyleSize16W400Primary60,
                       )
