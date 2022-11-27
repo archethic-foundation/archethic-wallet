@@ -246,7 +246,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "contactAddressInfoKeychainService": "The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can:\n- either scan the QR Code above,\n- or click on it to copy the address.",
+  "contactAddressInfoKeychainService": "The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.",
   "@contactAddressInfoKeychainService": {
     "type": "text",
     "placeholders_order": [],
@@ -258,7 +258,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "contactAddressInfoExternalContact": "The following QR Code contains the address of your contact.\n\nYou can use this address to send funds or tokens to your contact.\n\nTo use it, you can:\n- either scan the QR Code above,\n- or click on it to copy the address.",
+  "contactAddressInfoExternalContact": "The following QR Code contains the address of your contact.\n\nYou can use this address to send funds or tokens to your contact.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.",
   "@contactAddressInfoExternalContact": {
     "type": "text",
     "placeholders_order": [],
