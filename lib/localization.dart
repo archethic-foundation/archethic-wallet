@@ -365,7 +365,7 @@ class AppLocalization {
 
   String get contactAddressInfoKeychainService {
     return Intl.message(
-        'The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can:\n- either scan the QR Code above,\n- or click on it to copy the address.',
+        'The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.',
         name: 'contactAddressInfoKeychainService');
   }
 
@@ -377,7 +377,7 @@ class AppLocalization {
 
   String get contactAddressInfoExternalContact {
     return Intl.message(
-        'The following QR Code contains the address of your contact.\n\nYou can use this address to send funds or tokens to your contact.\n\nTo use it, you can:\n- either scan the QR Code above,\n- or click on it to copy the address.',
+        'The following QR Code contains the address of your contact.\n\nYou can use this address to send funds or tokens to your contact.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.',
         name: 'contactAddressInfoExternalContact');
   }
 
