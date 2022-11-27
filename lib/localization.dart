@@ -628,13 +628,13 @@ class AppLocalization {
 
   String get estimatedFeesNoteNFT {
     return Intl.message(
-        'Note: The fees will be estimated when the address is specified.',
+        'Note : The fees will be estimated when the address is specified.',
         name: 'estimatedFeesNoteNFT');
   }
 
   String get estimatedFeesNote {
     return Intl.message(
-        'Note: The fees will be estimated when the address and the amount are specified.',
+        'Note : The fees will be estimated when the address and the amount are specified.',
         name: 'estimatedFeesNote');
   }
 
@@ -645,7 +645,7 @@ class AppLocalization {
 
   String get estimatedFeesAddTokenNote {
     return Intl.message(
-        'Note: The fees will be estimated when the name and the initial supply are specified.',
+        'Note : The fees will be estimated when the name and the initial supply are specified.',
         name: 'estimatedFeesAddTokenNote');
   }
 
@@ -789,8 +789,13 @@ class AppLocalization {
 
   String get passBackupConfirmationMessage {
     return Intl.message(
-        'We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.',
+        'We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds.',
         name: 'passBackupConfirmationMessage');
+  }
+
+  String get archethicDoesntKeepCopy {
+    return Intl.message('As a reminder, Archethic does not keep any copy.',
+        name: 'archethicDoesntKeepCopy');
   }
 
   String get preferences {
@@ -1357,7 +1362,8 @@ class AppLocalization {
   }
 
   String get backupSafetyLabel6 {
-    return Intl.message('Insecure ways of backup', name: 'backupSafetyLabel6');
+    return Intl.message('Insecure ways of backup :',
+        name: 'backupSafetyLabel6');
   }
 
   String get backupSafetyLabel7 {

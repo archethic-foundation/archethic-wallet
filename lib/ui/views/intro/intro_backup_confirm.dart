@@ -424,18 +424,22 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                           key: const Key('pass'),
                           onPressed: () {
                             AppDialogs.showConfirmDialog(
-                              context,
-                              ref,
-                              localizations.passBackupConfirmationDisclaimer,
-                              localizations.passBackupConfirmationMessage,
-                              localizations.yes,
-                              () async {
-                                await _launchSecurityConfiguration(
-                                  widget.name!,
-                                  widget.seed!,
-                                );
-                              },
-                            );
+                                context,
+                                ref,
+                                localizations.passBackupConfirmationDisclaimer,
+                                localizations.passBackupConfirmationMessage,
+                                localizations.yes, () async {
+                              await _launchSecurityConfiguration(
+                                widget.name!,
+                                widget.seed!,
+                              );
+                            },
+                                titleStyle:
+                                    theme.textStyleSize14W600EquinoxPrimaryRed,
+                                additionalContent:
+                                    localizations.archethicDoesntKeepCopy,
+                                additionalContentStyle:
+                                    theme.textStyleSize12W300PrimaryRed);
                           },
                         )
                       ],

@@ -220,7 +220,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                       size: 14,
                     ),
                     key: const Key('createTokenFungible'),
-                    onPressed: () async {
+                    onPressed: () {
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         ref: ref,

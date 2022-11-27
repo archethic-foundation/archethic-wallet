@@ -56,6 +56,15 @@ extension AppStyles on BaseTheme {
     );
   }
 
+  TextStyle get textStyleSize14W600EquinoxPrimaryRed {
+    return TextStyle(
+      fontFamily: mainFont,
+      fontSize: AppFontSizes.size14,
+      fontWeight: FontWeight.w600,
+      color: Colors.red,
+    );
+  }
+
   TextStyle get textStyleSize14W600EquinoxPrimaryDisabled {
     return TextStyle(
       fontFamily: mainFont,
@@ -226,6 +235,15 @@ extension AppStyles on BaseTheme {
       color: text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
+    );
+  }
+
+  TextStyle get textStyleSize12W300PrimaryRed {
+    return TextStyle(
+      fontFamily: secondaryFont,
+      color: Colors.red,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w300,
     );
   }
 

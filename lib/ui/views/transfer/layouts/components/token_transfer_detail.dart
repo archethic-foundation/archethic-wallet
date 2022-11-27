@@ -126,21 +126,23 @@ class TokenTransferDetail extends ConsumerWidget {
           if (transfer.message.isNotEmpty)
             SheetDetailCard(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      localizations.sendMessageConfirmHeader,
-                      style: theme.textStyleSize12W400Primary,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        transfer.message,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        localizations.sendMessageConfirmHeader,
                         style: theme.textStyleSize12W400Primary,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          transfer.message,
+                          style: theme.textStyleSize12W400Primary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
