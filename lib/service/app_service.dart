@@ -37,7 +37,7 @@ class AppService {
   ) async {
     final transactionInputs = await sl
         .get<ApiService>()
-        .getTransactionInputs(addresses, request: request);
+        .getTransactionInputs(addresses.toSet().toList(), request: request);
     return transactionInputs;
   }
 
@@ -77,25 +77,26 @@ class AppService {
     String lastAddress,
     String seed,
     String name,
-    List<RecentTransaction> localRecentTransaction,
+    List<RecentTransaction> localRecentTransactionList,
   ) async {
     dev.log(
       '>> START getRecentTransactions : ${DateTime.now().toString()}',
     );
 
     final lastAddressRecentTransaction = {lastAddress: ''};
-    var transactionInputsGenesisAddressMap = {};
+    var transactionInputsGenesisAddressMap = <String, List<TransactionInput>>{};
 
     // Get from local transactions, the last address to search only new tx
-    final localRecentTransactionLastAddress = localRecentTransaction
+    final localRecentTransactionLastAddress = localRecentTransactionList
         .firstWhere(
           (element) => element.typeTx != RecentTransaction.transferInput,
           orElse: RecentTransaction.new,
         )
         .address;
 
-    if (localRecentTransaction.isNotEmpty &&
-        localRecentTransaction.first.address != null &&
+    // Load not in cached Tx inputs from genesis address
+    if (localRecentTransactionList.isNotEmpty &&
+        localRecentTransactionList.first.address != null &&
         localRecentTransactionLastAddress != null &&
         localRecentTransactionLastAddress.isNotEmpty) {
       lastAddressRecentTransaction[lastAddress] =
@@ -105,6 +106,14 @@ class AppService {
         [genesisAddress],
         'from, type, spent, tokenAddress, amount, timestamp',
       );
+
+      if (localRecentTransactionList.isNotEmpty &&
+          localRecentTransactionList.first.timestamp != null) {
+        transactionInputsGenesisAddressMap[genesisAddress]!.removeWhere(
+          (element) =>
+              element.timestamp! <= localRecentTransactionList.first.timestamp!,
+        );
+      }
     }
 
     final transactionChainMap = await getTransactionChain(
@@ -288,7 +297,7 @@ class AppService {
     if (ownershipsAddresses.isNotEmpty) {
       ownershipsMap = await sl
           .get<ApiService>()
-          .getTransactionOwnerships(ownershipsAddresses);
+          .getTransactionOwnerships(ownershipsAddresses.toSet().toList());
     }
 
     final nameEncoded = Uri.encodeFull(name);
@@ -410,7 +419,7 @@ class AppService {
     }
 
     recentTransactions
-      ..addAll(localRecentTransaction)
+      ..addAll(localRecentTransactionList)
 
       // Sort by date (desc)
       ..sort(
@@ -422,7 +431,10 @@ class AppService {
       '>> END getRecentTransactions : ${DateTime.now().toString()}',
     );
 
-    return recentTransactions.reversed.toList();
+    return recentTransactions.reversed.toList().sublist(
+          0,
+          recentTransactions.length > 10 ? 10 : recentTransactions.length,
+        );
   }
 
   RecentTransaction _decryptedSecret({
@@ -470,7 +482,7 @@ class AppService {
       }
 
       final tokenMap = await sl.get<ApiService>().getToken(
-            tokenAddressList,
+            tokenAddressList.toSet().toList(),
             request: 'genesis, name, id, supply, symbol, type',
           );
 
@@ -522,7 +534,7 @@ class AppService {
       }
 
       final tokenMap = await sl.get<ApiService>().getToken(
-            tokenAddressList,
+            tokenAddressList.toSet().toList(),
           );
 
       // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
@@ -531,7 +543,7 @@ class AppService {
       late Keychain keychain;
       late KeyPair keypair;
       final secretMap = await sl.get<ApiService>().getTransaction(
-            tokenAddressList,
+            tokenAddressList.toSet().toList(),
             request:
                 'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
           );
@@ -614,7 +626,8 @@ class AppService {
   Future<Map<String, Balance>> getBalanceGetResponse(
     List<String> addresses,
   ) async {
-    final balanceMap = await sl.get<ApiService>().fetchBalance(addresses);
+    final balanceMap =
+        await sl.get<ApiService>().fetchBalance(addresses.toSet().toList());
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
       final balance = balanceMap[address] ??
@@ -638,7 +651,7 @@ class AppService {
     String request = Transaction.kTransactionQueryAllFields,
   }) async {
     final transactionMap = await sl.get<ApiService>().getTransaction(
-          addresses,
+          addresses.toSet().toList(),
           request: request,
         );
     return transactionMap;
