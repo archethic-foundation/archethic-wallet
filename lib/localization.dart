@@ -249,7 +249,7 @@ class AppLocalization {
   }
 
   String get qrInvalidAddress {
-    return Intl.message('QR code does not contain a valid destination',
+    return Intl.message('QR code doesn\'t contain a valid destination',
         name: 'qrInvalidAddress');
   }
 
@@ -511,7 +511,7 @@ class AppLocalization {
 
   // ignore: non_constant_identifier_names
   String get yubikeyError_NO_SUCH_CLIENT {
-    return Intl.message('The request ID does not exist.',
+    return Intl.message('The request ID doesn\'t exist.',
         name: 'yubikeyError_NO_SUCH_CLIENT');
   }
 
@@ -794,7 +794,7 @@ class AppLocalization {
   }
 
   String get archethicDoesntKeepCopy {
-    return Intl.message('As a reminder, Archethic does not keep any copy.',
+    return Intl.message('As a reminder, Archethic doesn\'t keep any copy.',
         name: 'archethicDoesntKeepCopy');
   }
 
@@ -988,7 +988,7 @@ class AppLocalization {
   }
 
   String get qrMnemonicError {
-    return Intl.message('QR does not contain a valid secret phrase',
+    return Intl.message('QR doesn\'t contain a valid secret phrase',
         name: 'qrMnemonicError');
   }
 

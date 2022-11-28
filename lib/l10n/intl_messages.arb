@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-27T22:42:35.558930",
+  "@@last_modified": "2022-11-28T08:53:39.956793",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -288,7 +288,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "qrInvalidAddress": "QR code does not contain a valid destination",
+  "qrInvalidAddress": "QR code doesn't contain a valid destination",
   "@qrInvalidAddress": {
     "type": "text",
     "placeholders_order": [],
@@ -612,7 +612,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_NO_SUCH_CLIENT": "The request ID does not exist.",
+  "yubikeyError_NO_SUCH_CLIENT": "The request ID doesn't exist.",
   "@yubikeyError_NO_SUCH_CLIENT": {
     "type": "text",
     "placeholders_order": [],
@@ -972,7 +972,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "archethicDoesntKeepCopy": "As a reminder, Archethic does not keep any copy.",
+  "archethicDoesntKeepCopy": "As a reminder, Archethic doesn't keep any copy.",
   "@archethicDoesntKeepCopy": {
     "type": "text",
     "placeholders_order": [],
@@ -1242,7 +1242,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "qrMnemonicError": "QR does not contain a valid secret phrase",
+  "qrMnemonicError": "QR doesn't contain a valid secret phrase",
   "@qrMnemonicError": {
     "type": "text",
     "placeholders_order": [],
