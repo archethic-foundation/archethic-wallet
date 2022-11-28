@@ -112,7 +112,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 key: const Key('sendNFT'),
                 icon: Icon(
                   UiIcons.send,
-                  color: theme.text,
+                  color: theme.mainButtonLabel,
                   size: 14,
                 ),
                 onPressed: () async {
@@ -123,9 +123,10 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   await TransferSheet(
                     transferType: TransferType.nft,
                     accountToken: accountSelected.accountNFT!.firstWhere(
-                        (element) =>
-                            element.tokenInformations!.id ==
-                            widget.tokenInformations.id,),
+                      (element) =>
+                          element.tokenInformations!.id ==
+                          widget.tokenInformations.id,
+                    ),
                     recipient: const TransferRecipient.address(
                       address: Address(''),
                     ),
@@ -145,7 +146,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 Dimens.buttonBottomDimens,
                 icon: Icon(
                   Icons.more_horiz,
-                  color: theme.text,
+                  color: theme.mainButtonLabel,
                   size: 14,
                 ),
                 key: const Key('viewExplorer'),

@@ -154,7 +154,7 @@ class AddContactSheetBody extends ConsumerWidget {
                         key: const Key('addContact'),
                         icon: Icon(
                           Icons.add,
-                          color: theme.text,
+                          color: theme.mainButtonLabel,
                           size: 14,
                         ),
                         onPressed: () async {
@@ -203,7 +203,7 @@ class AddContactSheetBody extends ConsumerWidget {
                         key: const Key('addContact'),
                         icon: Icon(
                           Icons.add,
-                          color: theme.text30,
+                          color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),
                         onPressed: () {},

@@ -231,7 +231,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                       key: const Key('confirm'),
                       icon: Icon(
                         Icons.check,
-                        color: theme.text,
+                        color: theme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () async {
@@ -266,7 +266,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                       key: const Key('back'),
                       icon: Icon(
                         Icons.arrow_back_ios,
-                        color: theme.text,
+                        color: theme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () {

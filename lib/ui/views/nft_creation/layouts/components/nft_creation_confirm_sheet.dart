@@ -240,7 +240,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             key: const Key('confirm'),
                             icon: Icon(
                               Icons.check,
-                              color: theme.text,
+                              color: theme.mainButtonLabel,
                               size: 14,
                             ),
                             onPressed: () async {
@@ -277,7 +277,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             key: const Key('cancel'),
                             icon: Icon(
                               Icons.arrow_back_ios,
-                              color: theme.text,
+                              color: theme.mainButtonLabel,
                               size: 14,
                             ),
                             onPressed: () {

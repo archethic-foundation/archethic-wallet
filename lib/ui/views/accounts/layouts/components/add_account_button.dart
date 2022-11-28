@@ -33,7 +33,7 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
       key: const Key('addAccount'),
       icon: Icon(
         Icons.add,
-        color: theme.text,
+        color: theme.mainButtonLabel,
         size: 14,
       ),
       onPressed: () async {
