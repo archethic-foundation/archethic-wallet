@@ -44,83 +44,97 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
         search: searchNameController.text,
       ),
     );
-    return Padding(
-      padding: EdgeInsets.only(
+    return Container(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            theme.background4Small!,
+          ),
+          fit: BoxFit.fitHeight,
+          opacity: 0.7,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
           bottom: 83,
           left: 15,
-          right: 15),
-      child: Column(
-        children: [
-          Expanded(
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                dragDevices: {
-                  PointerDeviceKind.touch,
-                  PointerDeviceKind.mouse,
-                },
+          right: 15,
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: Column(
+                  children: <Widget>[
+                    AppTextField(
+                      inputFormatters: <UpperCaseTextFormatter>[
+                        UpperCaseTextFormatter()
+                      ],
+                      controller: searchNameController,
+                      autocorrect: false,
+                      labelText: localizations.searchField,
+                      keyboardType: TextInputType.text,
+                      onChanged: (text) {
+                        ref.watch(
+                          ContactProviders.fetchContacts(
+                            search: text,
+                          ),
+                        );
+                      },
+                      style: theme.textStyleSize16W600Primary,
+                    ),
+                    contactsList.map(
+                      data: (data) {
+                        return ContactList(contactsList: data.value);
+                      },
+                      error: (error) => const SizedBox(),
+                      loading: (loading) => const SizedBox(
+                        height: 50,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                top: 10,
+              ),
+              child: Row(
                 children: <Widget>[
-                  AppTextField(
-                    inputFormatters: <UpperCaseTextFormatter>[
-                      UpperCaseTextFormatter()
-                    ],
-                    controller: searchNameController,
-                    autocorrect: false,
-                    labelText: localizations.searchField,
-                    keyboardType: TextInputType.text,
-                    onChanged: (text) {
-                      ref.watch(
-                        ContactProviders.fetchContacts(
-                          search: text,
-                        ),
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.addContact,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('addContact'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.mainButtonLabel,
+                      size: 14,
+                    ),
+                    onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: const AddContactSheet(),
                       );
                     },
-                    style: theme.textStyleSize16W600Primary,
-                  ),
-                  contactsList.map(
-                    data: (data) {
-                      return ContactList(contactsList: data.value);
-                    },
-                    error: (error) => const SizedBox(),
-                    loading: (loading) => const SizedBox(
-                      height: 50,
-                      child: CircularProgressIndicator(),
-                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-              top: 10,
-            ),
-            child: Row(
-              children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addContact,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addContact'),
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.mainButtonLabel,
-                    size: 14,
-                  ),
-                  onPressed: () {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const AddContactSheet(),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
