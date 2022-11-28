@@ -84,7 +84,6 @@ class _TransferTextFieldAmountState
       children: [
         AppTextField(
           focusNode: sendAmountFocusNode,
-          autofocus: true,
           controller: sendAmountController,
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
