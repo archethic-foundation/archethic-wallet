@@ -102,7 +102,7 @@ class AddAccountFormSheet extends ConsumerWidget {
                         localizations.addAccount,
                         icon: Icon(
                           Icons.add,
-                          color: theme.text,
+                          color: theme.mainButtonLabel,
                           size: 14,
                         ),
                         Dimens.buttonBottomDimens,
@@ -126,7 +126,7 @@ class AddAccountFormSheet extends ConsumerWidget {
                         key: const Key('addAccount'),
                         icon: Icon(
                           Icons.add,
-                          color: theme.text30,
+                          color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),
                         onPressed: () {},

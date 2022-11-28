@@ -134,7 +134,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                                     Dimens.buttonBottomDimens,
                                     icon: Icon(
                                       Icons.more_horiz,
-                                      color: theme.text,
+                                      color: theme.mainButtonLabel,
                                       size: 14,
                                     ),
                                     key: const Key('viewExplorer'),

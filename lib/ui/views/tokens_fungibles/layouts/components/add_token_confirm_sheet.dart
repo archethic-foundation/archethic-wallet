@@ -231,7 +231,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
                       key: const Key('cancel'),
                       icon: Icon(
                         Icons.arrow_back_ios,
-                        color: theme.text,
+                        color: theme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () {

@@ -232,7 +232,7 @@ class ContactDetail extends ConsumerWidget {
                       Dimens.buttonBottomDimens,
                       icon: Icon(
                         Icons.more_horiz,
-                        color: theme.text,
+                        color: theme.mainButtonLabel,
                         size: 14,
                       ),
                       key: const Key('viewExplorer'),

@@ -98,7 +98,7 @@ class AddTokenFormSheet extends ConsumerWidget {
                         localizations.createToken,
                         icon: Icon(
                           Icons.add,
-                          color: theme.text,
+                          color: theme.mainButtonLabel,
                           size: 14,
                         ),
                         Dimens.buttonBottomDimens,
@@ -132,7 +132,7 @@ class AddTokenFormSheet extends ConsumerWidget {
                         key: const Key('createToken'),
                         icon: Icon(
                           Icons.add,
-                          color: theme.text30,
+                          color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),
                         onPressed: () {},

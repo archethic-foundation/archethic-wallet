@@ -106,7 +106,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                   key: const Key('addContact'),
                   icon: Icon(
                     Icons.add,
-                    color: theme.text,
+                    color: theme.mainButtonLabel,
                     size: 14,
                   ),
                   onPressed: () {
