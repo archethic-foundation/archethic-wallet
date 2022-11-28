@@ -600,6 +600,7 @@ class AppService {
     required KeyPair keypair,
     required List<Ownership> ownerships,
   }) {
+    final propertiesDecrypted = <String, dynamic>{};
     for (final ownership in ownerships) {
       final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
         (AuthorizedKey authKey) =>
@@ -614,13 +615,13 @@ class AppService {
         );
         final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
         try {
-          return json.decode(utf8.decode(decryptedSecret));
+          propertiesDecrypted.addAll(json.decode(utf8.decode(decryptedSecret)));
         } catch (e) {
-          return {};
+          dev.log('Decryption error $e');
         }
       }
     }
-    return {};
+    return propertiesDecrypted;
   }
 
   Future<Map<String, Balance>> getBalanceGetResponse(
