@@ -33,7 +33,6 @@ class _IncomingTransactionsWatcherState
     previousReceivedTransaction = element;
 
     final message = AppLocalization.of(context)!.transactionInputNotification;
-    final regex = RegExp(r'([.]*0)(?!.*\d)');
     NotificationsUtil.showNotification(
       title: 'Archethic',
       body: message
