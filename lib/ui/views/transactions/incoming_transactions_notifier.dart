@@ -6,43 +6,40 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IncomingTransactionsNotifier extends ConsumerStatefulWidget {
+class IncomingTransactionsNotifier extends ConsumerWidget {
   const IncomingTransactionsNotifier({required this.child, super.key});
   final Widget child;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _IncomingTransactionsWatcherState();
-}
-
-class _IncomingTransactionsWatcherState
-    extends ConsumerState<IncomingTransactionsNotifier> {
-  ReceivedTransaction? previousReceivedTransaction;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _listenCheckTransactions(context, ref);
-    return widget.child;
+    return child;
   }
 
   void _listenCheckTransactions(BuildContext context, WidgetRef ref) {
-    final element = ref.watch(CheckTransactionsProvider.provider).valueOrNull;
+    final receivedTransactionList =
+        ref.watch(CheckTransactionsProvider.provider).valueOrNull;
 
-    if (element == null) return;
-    if (element == previousReceivedTransaction) return;
-    previousReceivedTransaction = element;
-
+    if (receivedTransactionList == null || receivedTransactionList.isEmpty) {
+      return;
+    }
     final message = AppLocalization.of(context)!.transactionInputNotification;
-    NotificationsUtil.showNotification(
-      title: 'Archethic',
-      body: message
-          .replaceAll(
-            '%1',
-            NumberUtil.formatThousands(fromBigInt(element.amount)),
-          )
-          .replaceAll('%2', element.currencySymbol)
-          .replaceAll('%3', element.accountName),
-      payload: element.accountName,
-    );
+
+    for (final receivedTransaction in receivedTransactionList) {
+      NotificationsUtil.showNotification(
+        title: 'Archethic',
+        body: message
+            .replaceAll(
+              '%1',
+              NumberUtil.formatThousands(
+                  fromBigInt(receivedTransaction.amount)),
+            )
+            .replaceAll('%2', receivedTransaction.currencySymbol)
+            .replaceAll('%3', receivedTransaction.accountName),
+        payload: receivedTransaction.accountName,
+      ).then((value) {
+        ref.read(CheckTransactionsProvider.provider.notifier).clear();
+      });
+    }
   }
 }
