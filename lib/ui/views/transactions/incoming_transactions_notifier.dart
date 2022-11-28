@@ -32,7 +32,7 @@ class IncomingTransactionsNotifier extends ConsumerWidget {
             .replaceAll(
               '%1',
               NumberUtil.formatThousands(
-                  fromBigInt(receivedTransaction.amount)),
+                  fromBigInt(receivedTransaction.amount),),
             )
             .replaceAll('%2', receivedTransaction.currencySymbol)
             .replaceAll('%3', receivedTransaction.accountName),

@@ -13,6 +13,7 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -20,16 +21,17 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NFTDetail extends ConsumerStatefulWidget {
   const NFTDetail({
     super.key,
     required this.tokenInformations,
-    required this.index,
+    this.displaySendButton = true,
   });
 
   final TokenInformations tokenInformations;
-  final int index;
+  final bool displaySendButton;
 
   @override
   ConsumerState<NFTDetail> createState() => _NFTDetailState();
@@ -64,16 +66,55 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          SheetHeader(title: widget.tokenInformations.name!),
+          SheetHeader(
+            title: widget.tokenInformations.name!,
+            widgetLeft: const SizedBox(width: 50),
+            widgetRight: SizedBox(
+              width: 50,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, right: 20),
+                child: InkWell(
+                  child: const Icon(
+                    FontAwesomeIcons.qrcode,
+                    size: 30,
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(32)),
+                          ),
+                          contentPadding: const EdgeInsets.only(top: 10),
+                          content: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                              top: 20,
+                              bottom: 40,
+                            ),
+                            child: QRCodeWithOptions(
+                              infoQRCode: widget.tokenInformations.address!,
+                              size: 150,
+                              messageCopied: localizations.addressCopied,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
           if (widget.tokenInformations.symbol != null &&
               widget.tokenInformations.symbol!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: Align(
-                child: Text(
-                  '[${widget.tokenInformations.symbol}]',
-                  style: theme.textStyleSize12W400Primary,
-                ),
+              child: Text(
+                '[${widget.tokenInformations.symbol}]',
+                style: theme.textStyleSize12W400Primary,
               ),
             ),
           Expanded(
@@ -103,41 +144,42 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
               ),
             ),
           ),
-          Row(
-            children: <Widget>[
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.send,
-                Dimens.buttonTopDimens,
-                key: const Key('sendNFT'),
-                icon: Icon(
-                  UiIcons.send,
-                  color: theme.mainButtonLabel,
-                  size: 14,
+          if (widget.displaySendButton)
+            Row(
+              children: <Widget>[
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  localizations.send,
+                  Dimens.buttonTopDimens,
+                  key: const Key('sendNFT'),
+                  icon: Icon(
+                    UiIcons.send,
+                    color: theme.mainButtonLabel,
+                    size: 14,
+                  ),
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    await TransferSheet(
+                      transferType: TransferType.nft,
+                      accountToken: accountSelected.accountNFT!.firstWhere(
+                        (element) =>
+                            element.tokenInformations!.id ==
+                            widget.tokenInformations.id,
+                      ),
+                      recipient: const TransferRecipient.address(
+                        address: Address(''),
+                      ),
+                    ).show(
+                      context: context,
+                      ref: ref,
+                    );
+                  },
                 ),
-                onPressed: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  await TransferSheet(
-                    transferType: TransferType.nft,
-                    accountToken: accountSelected.accountNFT!.firstWhere(
-                      (element) =>
-                          element.tokenInformations!.id ==
-                          widget.tokenInformations.id,
-                    ),
-                    recipient: const TransferRecipient.address(
-                      address: Address(''),
-                    ),
-                  ).show(
-                    context: context,
-                    ref: ref,
-                  );
-                },
-              ),
-            ],
-          ),
+              ],
+            ),
           Row(
             children: <Widget>[
               AppButtonTiny(

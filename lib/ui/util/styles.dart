@@ -238,6 +238,15 @@ extension AppStyles on BaseTheme {
     );
   }
 
+  TextStyle get textStyleSize12W100Background {
+    return TextStyle(
+      fontFamily: secondaryFont,
+      color: background,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w100,
+    );
+  }
+
   TextStyle get textStyleSize12W300PrimaryRed {
     return TextStyle(
       fontFamily: secondaryFont,

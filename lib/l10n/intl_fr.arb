@@ -142,6 +142,8 @@
 	"fungiblesTokensListNoTokenYet": "Aucun jeton pour le moment",
 	"addTokenConfirmationMessage": "Confirmez-vous la création du jeton suivant ?",
 	"addAccountConfirmationMessage": "Confirmez-vous la création du compte suivant ?",
+	"searchNFTHint": "Rechercher un NFT à partir d'une adresse.",
+	"nftNotFound": "Le NFT n'a pas été trouvé.",
 	"createNFTConfirmationMessage": "Confirmez-vous la création du NFT suivant ?",
 	"tokenHeader": "Jeton",
 	"tokenHeaderDesc": "Gérez vos jetons",
