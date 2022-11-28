@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-28T08:53:39.956793",
+  "@@last_modified": "2022-11-28T09:51:34.380653",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -2580,7 +2580,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.",
+  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples: name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".",
   "@nftPropertyExplanation": {
     "type": "text",
     "placeholders_order": [],
