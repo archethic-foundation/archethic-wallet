@@ -172,6 +172,8 @@ class SapphireBlueTheme implements BaseTheme {
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
+  @override
+  Color? activeColorSwitch = Colors.green;
 
   @override
   Brightness? brightness = Brightness.dark;
