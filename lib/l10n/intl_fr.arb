@@ -305,7 +305,7 @@
 	"contactPublicKeyNotFound": "Aucune clé publique n'a été trouvée automatiquement. Veuillez la demander à votre contact.",
 	"keychainHeader": "Porte-clés",
 	"newAccount": "Nouveau compte",
-	"addAccount": "Ajout d'un compte",
+	"addAccount": "Ajouter un compte",
 	"newAccountConfirmation": "Etes-vous sûr(e) de vouloir créer dans votre porte-clés \"%1\"?",
 	"addAccountConfirmation": "Etes-vous sûr(e) de vouloir ajouter dans votre porte-clés \"%1\"?",
 	"primaryCurrency": "Monnaie prioritaire",
