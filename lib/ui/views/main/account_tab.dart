@@ -68,8 +68,8 @@ class AccountTab extends ConsumerWidget {
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: kToolbarHeight + kTextTabBarHeight,
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top + 10,
                           bottom: 50,
                         ),
                         child: Column(

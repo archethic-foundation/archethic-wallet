@@ -78,8 +78,8 @@ class _KeychainTabState extends ConsumerState<KeychainTab> {
                     child: ArchethicScrollbar(
                       scrollPhysics: const AlwaysScrollableScrollPhysics(),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: kToolbarHeight + kTextTabBarHeight,
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top,
                           bottom: 50,
                         ),
                         child: Column(
