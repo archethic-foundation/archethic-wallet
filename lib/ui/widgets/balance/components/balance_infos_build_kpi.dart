@@ -87,10 +87,10 @@ class BalanceInfosKpi extends ConsumerWidget {
                       localizations.currencyOracleInfo,
                     );
                   },
-                  child: const IconWidget(
-                    icon: 'assets/icons/menu/oracle.svg',
-                    width: 15,
-                    height: 15,
+                  child: Icon(
+                    UiIcons.oracle,
+                    color: theme.text,
+                    size: 15,
                   ),
                 )
               else
