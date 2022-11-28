@@ -142,9 +142,10 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                 decoration: widget.prefixButton == null &&
                         widget.suffixButton == null
                     ? InputDecoration(
-                        contentPadding: const EdgeInsets.only(left: 48),
                         labelText: widget.labelText ?? '',
                         labelStyle: theme.textStyleSize16W400Primary60,
+                        prefixIcon: const SizedBox(width: 48, height: 48),
+                        suffixIcon: const SizedBox(width: 48, height: 48),
                       )
                     : widget.prefixButton != null && widget.suffixButton == null
                         ? InputDecoration(
