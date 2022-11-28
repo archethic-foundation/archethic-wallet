@@ -2466,7 +2466,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.",
+  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples: name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".",
   "@nftPropertyExplanation": {
     "type": "text",
     "placeholders_order": [],

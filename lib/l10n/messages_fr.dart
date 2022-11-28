@@ -257,7 +257,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nftNameHint" : MessageLookupByLibrary.simpleMessage("Saisissez le nom du NFT"),
     "nftPropertiesRequiredByCategory" : MessageLookupByLibrary.simpleMessage("Les propriétés requises par la catégorie : "),
     "nftPropertyExists" : MessageLookupByLibrary.simpleMessage("Cette propriété existe déjà."),
-    "nftPropertyExplanation" : MessageLookupByLibrary.simpleMessage("Vous pouvez ajouter des propriétés supplémentaires pour définir, caractériser ou préciser l\'utilisation de votre NFT. Le nom et la valeur sont libres."),
+    "nftPropertyExplanation" : MessageLookupByLibrary.simpleMessage("Vous pouvez ajouter des propriétés supplémentaires pour définir, caractériser ou préciser l\'utilisation de votre NFT. Le nom et la valeur sont libres.\n\nExemples: nom=\"force\", valeur=\"30\", nom=\"couleur\", valeur=\"vert\", nom=\"année\", valeur=\"2012\"."),
     "nftPropertyNameEmpty" : MessageLookupByLibrary.simpleMessage("Veuillez saisir un nom."),
     "nftPropertyNameHint" : MessageLookupByLibrary.simpleMessage("Saisissez le nom"),
     "nftPropertyNotProtected" : MessageLookupByLibrary.simpleMessage("Cette propriété est accessible à tous"),

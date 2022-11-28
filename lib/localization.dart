@@ -2014,7 +2014,7 @@ class AppLocalization {
 
   String get nftPropertyExplanation {
     return Intl.message(
-        'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.',
+        'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples: name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".',
         name: 'nftPropertyExplanation');
   }
 
