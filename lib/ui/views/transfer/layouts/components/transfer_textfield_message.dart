@@ -45,7 +45,7 @@ class _TransferTextFieldMessageState
       controller: messageController,
       maxLines: 4,
       labelText:
-          '${AppLocalization.of(context)!.sendMessageHeader} (${transfer.message.length}/200)',
+          '${AppLocalization.of(context)!.sendMessageHeader} (${transfer.message.runes.length}/200)',
       onChanged: (String text) async {
         transferNotifier.setMessage(
           context: context,
