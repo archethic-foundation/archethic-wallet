@@ -52,7 +52,7 @@ class SingleContact extends ConsumerWidget {
                                 ContactType.keychainService.name)
                               Icon(
                                 UiIcons.keychain,
-                                color: theme.iconDrawer,
+                                color: theme.text,
                                 size: 30,
                               )
                             else
