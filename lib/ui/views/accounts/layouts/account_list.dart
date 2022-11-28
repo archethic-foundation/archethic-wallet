@@ -23,7 +23,7 @@ class AccountsListWidget extends ConsumerWidget {
     final accounts =
         ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
     return Container(
-      padding: const EdgeInsets.only(top: 40, bottom: 50),
+      padding: const EdgeInsets.only(top: 20, bottom: 50),
       child: Column(
         children: <Widget>[
           Padding(
