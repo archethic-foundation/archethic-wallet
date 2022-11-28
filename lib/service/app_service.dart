@@ -968,4 +968,64 @@ class AppService {
     final keychain = await sl.get<ApiService>().getKeychain(seed);
     return keychain;
   }
+
+  Future<TokenInformations?> getNFT(
+    String address,
+    String seed,
+    String name,
+  ) async {
+    final tokenMap = await sl.get<ApiService>().getToken(
+      [address],
+    );
+
+    if (tokenMap.isEmpty ||
+        tokenMap[address] == null ||
+        tokenMap[address]!.type != 'non-fungible') {
+      return null;
+    }
+
+    // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
+    final nameEncoded = Uri.encodeFull(name);
+    final serviceName = 'archethic-wallet-$nameEncoded';
+    late Keychain keychain;
+    late KeyPair keypair;
+    final secretMap = await sl.get<ApiService>().getTransaction(
+      [address],
+      request:
+          'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
+    );
+
+    if (secretMap.isNotEmpty) {
+      keychain = await sl.get<ApiService>().getKeychain(seed);
+      keypair = keychain.deriveKeypair(serviceName);
+    }
+
+    final token = tokenMap[address]!;
+
+    final tokenWithoutFile = token.tokenProperties!
+      ..removeWhere((key, value) => key == 'file');
+
+    if (secretMap[address] != null &&
+        secretMap[address]!.data != null &&
+        secretMap[address]!.data!.ownerships != null &&
+        secretMap[address]!.data!.ownerships!.isNotEmpty) {
+      tokenWithoutFile.addAll(
+        _tokenPropertiesDecryptedSecret(
+          keypair: keypair,
+          ownerships: secretMap[address]!.data!.ownerships!,
+        ),
+      );
+    }
+
+    final tokenInformations = TokenInformations(
+      address: address,
+      name: token.name,
+      id: token.id,
+      type: token.type,
+      supply: fromBigInt(token.supply).toDouble(),
+      symbol: token.symbol,
+      tokenProperties: tokenWithoutFile,
+    );
+    return tokenInformations;
+  }
 }

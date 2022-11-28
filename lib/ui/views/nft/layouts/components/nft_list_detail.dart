@@ -58,8 +58,7 @@ class NFTListDetail extends ConsumerWidget {
             Sheets.showAppHeightNineSheet(
               context: context,
               ref: ref,
-              widget:
-                  NFTDetail(tokenInformations: tokenInformations, index: index),
+              widget: NFTDetail(tokenInformations: tokenInformations),
             );
           },
           onLongPressEnd: (details) {

@@ -1,5 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
@@ -32,7 +30,6 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

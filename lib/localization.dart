@@ -1167,6 +1167,15 @@ class AppLocalization {
         name: 'addAccountConfirmationMessage');
   }
 
+  String get searchNFTHint {
+    return Intl.message('Search for a NFT from an address.',
+        name: 'searchNFTHint');
+  }
+
+  String get nftNotFound {
+    return Intl.message('The NFT was not found.', name: 'nftNotFound');
+  }
+
   String get createNFTConfirmationMessage {
     return Intl.message('Do you confirm the mint of the following NFT?',
         name: 'createNFTConfirmationMessage');

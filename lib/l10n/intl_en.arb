@@ -846,6 +846,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "searchNFTHint": "Search for a NFT from an address.",
+  "@searchNFTHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftNotFound": "The NFT was not found.",
+  "@nftNotFound": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "createNFTConfirmationMessage": "Do you confirm the mint of the following NFT?",
   "@createNFTConfirmationMessage": {
     "type": "text",

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-28T17:07:01.832095",
+  "@@last_modified": "2022-11-28T23:53:26.753058",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1466,6 +1466,18 @@
   },
   "addAccountConfirmationMessage": "Do you confirm the creation of the following Account?",
   "@addAccountConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "searchNFTHint": "Search for a NFT from an address.",
+  "@searchNFTHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftNotFound": "The NFT was not found.",
+  "@nftNotFound": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

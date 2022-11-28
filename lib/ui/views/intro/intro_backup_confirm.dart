@@ -439,7 +439,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                                 additionalContent:
                                     localizations.archethicDoesntKeepCopy,
                                 additionalContentStyle:
-                                    theme.textStyleSize12W300PrimaryRed);
+                                    theme.textStyleSize12W300PrimaryRed,);
                           },
                         )
                       ],
