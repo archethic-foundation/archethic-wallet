@@ -11,6 +11,7 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
@@ -63,8 +64,11 @@ Future<void> main() async {
     <DeviceOrientation>[DeviceOrientation.portraitUp],
   ).then((_) {
     runApp(
-      const ProviderScope(
-        child: App(),
+      ProviderScope(
+        observers: [
+          ProvidersLogger(),
+        ],
+        child: const App(),
       ),
     );
   });
