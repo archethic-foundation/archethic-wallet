@@ -30,7 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activateNotifications" : MessageLookupByLibrary.simpleMessage("Activer les notifications"),
     "activateVibrations" : MessageLookupByLibrary.simpleMessage("Activer les vibrations"),
     "add" : MessageLookupByLibrary.simpleMessage("Ajouter"),
-    "addAccount" : MessageLookupByLibrary.simpleMessage("Ajout d\'un compte"),
+    "addAccount" : MessageLookupByLibrary.simpleMessage("Ajouter un compte"),
     "addAccountConfirmation" : MessageLookupByLibrary.simpleMessage("Etes-vous sûr(e) de vouloir ajouter dans votre porte-clés \"%1\"?"),
     "addAccountConfirmationMessage" : MessageLookupByLibrary.simpleMessage("Confirmez-vous la création du compte suivant ?"),
     "addAccountConfirmed" : MessageLookupByLibrary.simpleMessage("Le compte a été créé avec %1 confirmations sur %2"),
