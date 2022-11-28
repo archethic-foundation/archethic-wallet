@@ -84,6 +84,7 @@ class _TransferTextFieldAddressState
           ),
         )
       ],
+      autofocus: true,
       textInputAction: TextInputAction.done,
       maxLines: null,
       autocorrect: false,
