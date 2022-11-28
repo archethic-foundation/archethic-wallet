@@ -95,6 +95,7 @@ abstract class BaseTheme {
 
   Color? activeTrackColorSwitch;
   Color? inactiveTrackColorSwitch;
+  Color? activeColorSwitch;
 
   Color? numMnemonicBackground;
 

@@ -172,6 +172,8 @@ class EmeraldGreenFlatTheme implements BaseTheme {
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
+  @override
+  Color? activeColorSwitch = const Color(0xFF228B77);
 
   @override
   Brightness? brightness = Brightness.dark;

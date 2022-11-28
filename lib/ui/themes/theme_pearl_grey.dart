@@ -172,6 +172,8 @@ class PearlGreyTheme implements BaseTheme {
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
+  @override
+  Color? activeColorSwitch = const Color(0xFFC7D1DA);
 
   @override
   Brightness? brightness = Brightness.light;

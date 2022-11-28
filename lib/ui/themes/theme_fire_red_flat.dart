@@ -172,6 +172,8 @@ class FireRedFlatTheme implements BaseTheme {
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
+  @override
+  Color? activeColorSwitch = const Color(0xFFCF2329);
 
   @override
   Brightness? brightness = Brightness.dark;

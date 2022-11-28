@@ -171,9 +171,11 @@ class FlatTheme implements BaseTheme {
   Color? numMnemonicBackground = const Color(0xFFFFFFFF);
 
   @override
-  Color? activeTrackColorSwitch = Colors.green;
+  Color? activeTrackColorSwitch = Colors.green[100];
   @override
   Color? inactiveTrackColorSwitch = Colors.grey;
+  @override
+  Color? activeColorSwitch = Colors.green;
 
   @override
   Brightness? brightness = Brightness.light;
