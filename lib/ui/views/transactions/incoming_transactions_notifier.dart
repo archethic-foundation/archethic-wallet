@@ -1,6 +1,7 @@
 import 'package:aewallet/application/check_transaction_worker/provider.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/util/notifications_util.dart';
+import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +39,7 @@ class _IncomingTransactionsWatcherState
       body: message
           .replaceAll(
             '%1',
-            fromBigInt(element.amount).toString().replaceAll(regex, ''),
+            NumberUtil.formatThousands(fromBigInt(element.amount)),
           )
           .replaceAll('%2', element.currencySymbol)
           .replaceAll('%3', element.accountName),
