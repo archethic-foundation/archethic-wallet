@@ -7,10 +7,10 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_list.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddressBookTab extends ConsumerStatefulWidget {
@@ -58,8 +58,8 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
       ),
       child: Padding(
         padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-          bottom: 83,
+          top: MediaQuery.of(context).padding.top + 20,
+          bottom: 90,
           left: 15,
           right: 15,
         ),
@@ -75,14 +75,39 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    AppTextField(
-                      inputFormatters: <UpperCaseTextFormatter>[
-                        UpperCaseTextFormatter()
-                      ],
+                    TextFormField(
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.zero,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: theme.text,
+                          size: 26,
+                        ),
+                        suffixIcon: const SizedBox(
+                          width: 26,
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(90),
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintStyle: theme.textStyleSize12W400Primary,
+                        filled: true,
+                        fillColor: theme.text30,
+                        hintText: localizations.searchField,
+                      ),
+                      style: theme.textStyleSize12W400Primary,
+                      textAlign: TextAlign.center,
                       controller: searchNameController,
                       autocorrect: false,
-                      labelText: localizations.searchField,
-                      keyboardType: TextInputType.text,
+                      autofocus: true,
+                      cursorColor: theme.text,
+                      inputFormatters: <TextInputFormatter>[
+                        UpperCaseTextFormatter(),
+                        LengthLimitingTextInputFormatter(20),
+                      ],
                       onChanged: (text) {
                         ref.watch(
                           ContactProviders.fetchContacts(
@@ -90,7 +115,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                           ),
                         );
                       },
-                      style: theme.textStyleSize16W600Primary,
                     ),
                     contactsList.map(
                       data: (data) {
