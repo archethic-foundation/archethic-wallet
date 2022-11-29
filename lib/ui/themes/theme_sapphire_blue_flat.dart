@@ -196,8 +196,8 @@ class SapphireBlueFlatTheme implements BaseTheme {
   @override
   Gradient? gradient = const LinearGradient(
     colors: <Color>[
-      Color(0xFF00A4DB),
-      Color(0xFFCC00FF),
+      Color(0xFFFFFFFF),
+      Color(0xFFFFFFFF),
     ],
     transform: GradientRotation(pi / 9),
   );
