@@ -30,7 +30,7 @@ class _SystemHash {
 }
 
 String $_CheckTransactionNotifierHash() =>
-    r'e1f82d2112b6039529a7898b12f0dc3704580b8b';
+    r'bfd6a827433ef4652bc98165094773a711efbe20';
 
 /// See also [_CheckTransactionNotifier].
 final _checkTransactionNotifierProvider =

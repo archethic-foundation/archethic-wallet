@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/nft_category.dart';
+import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -16,7 +16,6 @@ class NftCategoryMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final expandedKey = GlobalKey();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -31,80 +30,83 @@ class NftCategoryMenu extends ConsumerWidget {
         .valueOrNull;
 
     if (selectedAccount == null || nftCategories == null) {
-      return const SliverToBoxAdapter();
+      return const SizedBox();
     }
 
-    return SliverPadding(
-      key: expandedKey,
-      padding: const EdgeInsets.only(top: 10, bottom: 170, left: 20, right: 20),
-      sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 0.8,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 100,
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.only(
+          left: 10,
+          right: 10,
         ),
-        delegate: SliverChildBuilderDelegate(
-          childCount: nftCategories.length,
-          (context, index) {
-            var count = 0;
-            count = ref.read(
-              NftCategoryProviders.getNbNFTInCategory(
-                account: selectedAccount,
-                categoryNftIndex: nftCategories[index].id,
-              ),
-            );
-            return InkWell(
-              onTap: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                Navigator.of(context).pushNamed(
-                  '/nft_list_per_category',
-                  arguments: nftCategories[index].id,
-                );
-              },
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Hero(
-                        tag: 'nftCategory${nftCategories[index].name!}',
-                        child: Card(
-                          elevation: 5,
-                          shadowColor: Colors.black,
-                          color: theme.backgroundDark,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: const BorderSide(
-                              color: Colors.white10,
-                            ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.8,
+          crossAxisSpacing: 20,
+        ),
+        itemCount: nftCategories.length,
+        itemBuilder: (context, index) {
+          var count = 0;
+          count = ref.read(
+            NftCategoryProviders.getNbNFTInCategory(
+              account: selectedAccount,
+              categoryNftIndex: nftCategories[index].id,
+            ),
+          );
+          return InkWell(
+            onTap: () {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              Navigator.of(context).pushNamed(
+                '/nft_list_per_category',
+                arguments: nftCategories[index].id,
+              );
+            },
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Hero(
+                      tag: 'nftCategory${nftCategories[index].name!}',
+                      child: Card(
+                        elevation: 5,
+                        shadowColor: Colors.black,
+                        color: theme.backgroundDark,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: const BorderSide(
+                            color: Colors.white10,
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(nftCategories[index].image),
-                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(nftCategories[index].image),
                         ),
                       ),
-                      if (count > 0)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 5),
-                          child: Badge(
-                            toAnimate: false,
-                            badgeContent: Text(count.toString()),
-                          ),
+                    ),
+                    if (count > 0)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 5),
+                        child: Badge(
+                          toAnimate: false,
+                          badgeContent: Text(count.toString()),
                         ),
-                    ],
-                  ),
-                  Text(
-                    nftCategories[index].name!,
-                    textAlign: TextAlign.center,
-                    style: theme.textStyleSize12W400Primary,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                      ),
+                  ],
+                ),
+                Text(
+                  nftCategories[index].name!,
+                  textAlign: TextAlign.center,
+                  style: theme.textStyleSize12W400Primary,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

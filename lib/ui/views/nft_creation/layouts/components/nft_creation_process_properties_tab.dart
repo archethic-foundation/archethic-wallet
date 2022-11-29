@@ -36,7 +36,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
               child: Text(
                 localizations.nftPropertyExplanation,
                 style: theme.textStyleSize12W100Primary,
-                textAlign: TextAlign.justify,
+                textAlign: TextAlign.left,
               ),
             ),
             const CategoryTemplateForm(),
