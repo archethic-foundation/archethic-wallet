@@ -34,7 +34,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: f8fbda34060f52edbd3a0f7ce36f5b87e4fba2c2
+      resolved-ref: ed15ac0e021aae9102e0b346b02085c18f68e884
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "1.0.27"
@@ -100,7 +100,7 @@ packages:
       name: bottom_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   build:
     dependency: transitive
     description:
@@ -457,7 +457,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.2"
+    version: "5.2.3"
   filesize:
     dependency: "direct main"
     description:
@@ -544,7 +544,7 @@ packages:
       name: flutter_native_splash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.15"
+    version: "2.2.16"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -992,7 +992,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   mime_dart:
     dependency: "direct main"
     description:
@@ -1592,7 +1592,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   window_manager:
     dependency: "direct main"
     description:

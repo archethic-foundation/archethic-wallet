@@ -5,10 +5,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'nft.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 NFTRepository _nftRepository(_NftRepositoryRef ref) => NFTRepository();
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<TokenInformations?> _getNFT(
   _GetNFTRef ref,
   String address,
