@@ -1168,7 +1168,7 @@ class AppLocalization {
   }
 
   String get searchNFTHint {
-    return Intl.message('Search for a NFT from an address.',
+    return Intl.message('Search for a NFT\nfrom an address.',
         name: 'searchNFTHint');
   }
 
@@ -1709,7 +1709,7 @@ class AppLocalization {
   }
 
   String get createNFT {
-    return Intl.message('Create an NFT', name: 'createNFT');
+    return Intl.message('Create a NFT', name: 'createNFT');
   }
 
   String get createTheNFT {
@@ -1718,7 +1718,7 @@ class AppLocalization {
 
   String get nftListEmptyExplanation {
     return Intl.message(
-        'This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the "Create an NFT" function below.',
+        'This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the "Create a NFT" function below.',
         name: 'nftListEmptyExplanation');
   }
 
@@ -1729,7 +1729,7 @@ class AppLocalization {
   }
 
   String get addNFTFile {
-    return Intl.message('Add an NFT', name: 'addNFTFile');
+    return Intl.message('Add a NFT', name: 'addNFTFile');
   }
 
   String get addNFTProperty {
@@ -1739,6 +1739,18 @@ class AppLocalization {
   String get addNftNewCategory {
     return Intl.message('Add new category (Soon...)',
         name: 'addNftNewCategory');
+  }
+
+  String get property {
+    return Intl.message('property', name: 'property');
+  }
+
+  String get properties {
+    return Intl.message('properties', name: 'properties');
+  }
+
+  String get noProperty {
+    return Intl.message('No property', name: 'noProperty');
   }
 
   String get availableCategories {
@@ -2023,7 +2035,7 @@ class AppLocalization {
 
   String get nftPropertyExplanation {
     return Intl.message(
-        'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples: name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".',
+        'You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples : name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".',
         name: 'nftPropertyExplanation');
   }
 
@@ -2055,8 +2067,7 @@ class AppLocalization {
   }
 
   String get keychainNotExistWarning {
-    return Intl.message(
-        'For your information, the mainnet has been reset exceptionally as part of the current bug bounty program. We apologize for the inconvenience and invite you to delete your wallet and recreate one.',
+    return Intl.message('Keychain doesn\'t exist.',
         name: 'keychainNotExistWarning');
   }
 

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-28T23:53:26.753058",
+  "@@last_modified": "2022-11-30T22:42:26.376004",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1470,7 +1470,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "searchNFTHint": "Search for a NFT from an address.",
+  "searchNFTHint": "Search for a NFT\nfrom an address.",
   "@searchNFTHint": {
     "type": "text",
     "placeholders_order": [],
@@ -2190,7 +2190,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "createNFT": "Create an NFT",
+  "createNFT": "Create a NFT",
   "@createNFT": {
     "type": "text",
     "placeholders_order": [],
@@ -2202,7 +2202,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftListEmptyExplanation": "This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the \"Create an NFT\" function below.",
+  "nftListEmptyExplanation": "This is where you will find your NFTs related to this category. \nUnfortunately, for the moment, no NFTs are stored in this category, but you can create them by going to the \"Create a NFT\" function below.",
   "@nftListEmptyExplanation": {
     "type": "text",
     "placeholders_order": [],
@@ -2214,7 +2214,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTFile": "Add an NFT",
+  "addNFTFile": "Add a NFT",
   "@addNFTFile": {
     "type": "text",
     "placeholders_order": [],
@@ -2228,6 +2228,24 @@
   },
   "addNftNewCategory": "Add new category (Soon...)",
   "@addNftNewCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "property": "property",
+  "@property": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "properties": "properties",
+  "@properties": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "noProperty": "No property",
+  "@noProperty": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2592,7 +2610,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples: name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".",
+  "nftPropertyExplanation": "You can add additional properties to define, characterize or specify the use of your NFT. Name and value are free.\n\nExamples : name=\"strength\", valeur=\"30\", nom=\"color\", valeur=\"green\", nom=\"year\", valeur=\"2012\".",
   "@nftPropertyExplanation": {
     "type": "text",
     "placeholders_order": [],
@@ -2634,7 +2652,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "keychainNotExistWarning": "For your information, the mainnet has been reset exceptionally as part of the current bug bounty program. We apologize for the inconvenience and invite you to delete your wallet and recreate one.",
+  "keychainNotExistWarning": "Keychain doesn't exist.",
   "@keychainNotExistWarning": {
     "type": "text",
     "placeholders_order": [],
