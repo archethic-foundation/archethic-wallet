@@ -245,14 +245,18 @@ class TransactionDetail extends ConsumerWidget {
                           children: [
                             if (transaction.tokenInformations!.type ==
                                 'fungible')
-                              AutoSizeText(
-                                '${localizations.tokenCreated} ${transaction.tokenInformations!.name}',
-                                style: theme.textStyleSize12W400Primary,
+                              Expanded(
+                                child: AutoSizeText(
+                                  '${localizations.tokenCreated} ${transaction.tokenInformations!.name}',
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
                               )
                             else
-                              AutoSizeText(
-                                '${localizations.nftCreated} ${transaction.tokenInformations!.name}',
-                                style: theme.textStyleSize12W400Primary,
+                              Expanded(
+                                child: AutoSizeText(
+                                  '${localizations.nftCreated} ${transaction.tokenInformations!.name}',
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
                               ),
                           ],
                         ),

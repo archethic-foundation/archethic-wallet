@@ -13,6 +13,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:fluttericon/rpg_awesome_icons.dart' show RpgAwesome;
 
 class NFTListPerCategory extends ConsumerWidget {
   const NFTListPerCategory({super.key, this.currentNftCategoryIndex});
@@ -72,7 +73,7 @@ class NFTListPerCategory extends ConsumerWidget {
                         Dimens.buttonBottomDimens,
                         key: const Key('createNFT'),
                         icon: Icon(
-                          Icons.add,
+                          RpgAwesome.mining_diamonds,
                           color: theme.mainButtonLabel,
                           size: 14,
                         ),
@@ -102,7 +103,7 @@ class NFTListPerCategory extends ConsumerWidget {
                         Dimens.buttonBottomDimens,
                         key: const Key('createNFT'),
                         icon: Icon(
-                          Icons.add,
+                          RpgAwesome.mining_diamonds,
                           color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),

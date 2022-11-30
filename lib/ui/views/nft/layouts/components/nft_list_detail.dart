@@ -33,127 +33,136 @@ class NFTListDetail extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final typeMime = tokenInformations.tokenProperties!['type/mime'];
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12, left: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  tokenInformations.name!,
-                  style: theme.textStyleSize12W400Primary,
-                ),
-              ],
-            ),
+
+    var propertiesToCount = 0;
+    if (tokenInformations.tokenProperties != null) {
+      tokenInformations.tokenProperties!.forEach((key, value) {
+        if (key != 'name' && key != 'file' && key != 'type/mime') {
+          propertiesToCount++;
+        }
+      });
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Text(
+            tokenInformations.name!,
+            style: theme.textStyleSize12W600Primary,
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  preferences.activeVibrations,
-                );
-            Sheets.showAppHeightNineSheet(
-              context: context,
-              ref: ref,
-              widget: NFTDetail(tokenInformations: tokenInformations),
-            );
-          },
-          onLongPressEnd: (details) {
-            NFTListDetailPopup.getPopup(
-              context,
-              ref,
-              details,
-              tokenInformations,
-            );
-          },
-          child: Card(
-            elevation: 5,
-            shadowColor: Colors.black,
-            margin: const EdgeInsets.only(left: 8, right: 8),
-            color: theme.backgroundDark,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-              side: const BorderSide(color: Colors.white10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                if (MimeUtil.isImage(typeMime) == true ||
-                    MimeUtil.isPdf(typeMime) == true)
-                  FutureBuilder<Uint8List?>(
-                    future: TokenUtil.getImageFromTokenAddress(
-                      tokenInformations.address!,
-                      typeMime,
-                    ),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasError) {
-                        return SizedBox(
-                          width: 200,
-                          height: 130,
-                          child: SizedBox(
-                            height: 78,
-                            child: Center(
-                              child: Text(
-                                localizations.previewNotAvailable,
-                                style: theme.textStyleSize12W100Primary,
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: propertiesToCount == 0
+                ? Text(
+                    localizations.noProperty,
+                    style: theme.textStyleSize12W100Primary,
+                  )
+                : propertiesToCount == 1
+                    ? Text(
+                        '$propertiesToCount ${localizations.property}',
+                        style: theme.textStyleSize12W400Primary,
+                      )
+                    : Text(
+                        '$propertiesToCount ${localizations.properties}',
+                        style: theme.textStyleSize12W400Primary,
+                      ),
+          ),
+
+          GestureDetector(
+            onTap: () {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              Sheets.showAppHeightNineSheet(
+                context: context,
+                ref: ref,
+                widget: NFTDetail(tokenInformations: tokenInformations),
+              );
+            },
+            onLongPressEnd: (details) {
+              NFTListDetailPopup.getPopup(
+                context,
+                ref,
+                details,
+                tokenInformations,
+              );
+            },
+            child: Card(
+              elevation: 5,
+              shadowColor: Colors.black,
+              margin: const EdgeInsets.only(left: 8, right: 8),
+              color: theme.backgroundDark,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+                side: const BorderSide(color: Colors.white10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  if (MimeUtil.isImage(typeMime) == true ||
+                      MimeUtil.isPdf(typeMime) == true)
+                    FutureBuilder<Uint8List?>(
+                      future: TokenUtil.getImageFromTokenAddress(
+                        tokenInformations.address!,
+                        typeMime,
+                      ),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasError) {
+                          return SizedBox(
+                            width: 200,
+                            height: 130,
+                            child: SizedBox(
+                              height: 78,
+                              child: Center(
+                                child: Text(
+                                  localizations.previewNotAvailable,
+                                  style: theme.textStyleSize12W100Primary,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: theme.text,
-                              border: Border.all(),
-                            ),
+                          );
+                        }
+                        if (snapshot.hasData) {
+                          return SizedBox(
+                            width: 200,
+                            height: 130,
                             child: Image.memory(
                               snapshot.data!,
                               height: 130,
                               fit: BoxFit.fitHeight,
                             ),
-                          ),
-                        );
-                      } else {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: theme.backgroundDark,
-                              border: Border.all(),
-                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            width: 200,
+                            height: 130,
                             child: SizedBox(
-                              width: 200,
-                              height: 130,
-                              child: SizedBox(
-                                height: 78,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: theme.text,
-                                    strokeWidth: 1,
-                                  ),
+                              height: 78,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: theme.text,
+                                  strokeWidth: 1,
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                  )
-              ],
+                          );
+                        }
+                      },
+                    )
+                ],
+              ),
             ),
           ),
-        ),
-        // TODO(reddwarf03): Implement this feature (3)
-        /* NFTCardBottom(
+          // TODO(reddwarf03): Implement this feature (3)
+          /* NFTCardBottom(
           tokenInformations: tokenInformations,
         ),*/
-      ],
+        ],
+      ),
     );
   }
 }

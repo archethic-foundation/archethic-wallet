@@ -131,9 +131,9 @@ class FlatTheme implements BaseTheme {
   @override
   Color? backgroundTransferListCard = Colors.transparent;
   @override
-  Color? backgroundTransferListTotalCard = Colors.white.withOpacity(0.1);
+  Color? backgroundTransferListTotalCard = Colors.grey.withOpacity(0.5);
   @override
-  Color? backgroundTransferListOutline = Colors.white.withOpacity(0.1);
+  Color? backgroundTransferListOutline = Colors.grey.withOpacity(0.5);
 
   // Bottom Bar
   @override

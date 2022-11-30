@@ -27,7 +27,7 @@ class AccountsListWidget extends ConsumerWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 36, right: 36, bottom: 20),
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
             child: Text(
               localizations.accountsListDescription,
               textAlign: TextAlign.justify,
