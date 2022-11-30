@@ -177,7 +177,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
       textAlign: TextAlign.center,
       controller: searchController,
       autocorrect: false,
-      autofocus: true,
       maxLines: 2,
       textInputAction: TextInputAction.done,
       cursorColor: theme.text,
