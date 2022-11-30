@@ -60,7 +60,7 @@ class _NFTCreationProcessSummaryTabState
                               Dimens.buttonTopDimens,
                               key: const Key('createTheNFT'),
                               icon: Icon(
-                                Icons.add,
+                                RpgAwesome.mining_diamonds,
                                 color: theme.mainButtonLabel,
                                 size: 14,
                               ),
@@ -84,7 +84,7 @@ class _NFTCreationProcessSummaryTabState
                               Dimens.buttonTopDimens,
                               key: const Key('createTheNFT'),
                               icon: Icon(
-                                Icons.add,
+                                RpgAwesome.mining_diamonds,
                                 color: theme.mainButtonLabel!.withOpacity(0.3),
                                 size: 14,
                               ),
