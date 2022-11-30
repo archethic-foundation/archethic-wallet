@@ -69,7 +69,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 if (displayShareButton == true)
                   ClipOval(
                     child: Material(
-                      color: Colors.white, // Button color
+                      color: theme.text,
                       child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
@@ -101,7 +101,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 if (displayDisplayButton == true)
                   ClipOval(
                     child: Material(
-                      color: Colors.white, // Button color
+                      color: theme.text,
                       child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
@@ -133,7 +133,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 if (displayCopyButton == true)
                   ClipOval(
                     child: Material(
-                      color: Colors.white, // Button color
+                      color: theme.text,
                       child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
