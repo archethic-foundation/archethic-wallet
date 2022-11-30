@@ -29,21 +29,21 @@ class _SystemHash {
   }
 }
 
-String $_nftRepositoryHash() => r'16d6cf6b0939dbe4652c0e77ebfcf83d482c25a8';
+String $_nftRepositoryHash() => r'c16cc640004fbaf88bbe6c50e643bbe5b8c577ed';
 
 /// See also [_nftRepository].
-final _nftRepositoryProvider = Provider<NFTRepository>(
+final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>(
   _nftRepository,
   name: r'_nftRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : $_nftRepositoryHash,
 );
-typedef _NftRepositoryRef = ProviderRef<NFTRepository>;
-String $_getNFTHash() => r'029894ec33279e2a6f2c6c20d0c2c100ca702c0b';
+typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
+String $_getNFTHash() => r'dbce756299b6546024e9904ff3086370ac7719da';
 
 /// See also [_getNFT].
-class _GetNFTProvider extends FutureProvider<TokenInformations?> {
+class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
   _GetNFTProvider(
     this.address,
     this.seed,
@@ -86,7 +86,7 @@ class _GetNFTProvider extends FutureProvider<TokenInformations?> {
   }
 }
 
-typedef _GetNFTRef = FutureProviderRef<TokenInformations?>;
+typedef _GetNFTRef = AutoDisposeFutureProviderRef<TokenInformations?>;
 
 /// See also [_getNFT].
 final _getNFTProvider = _GetNFTFamily();
@@ -107,7 +107,7 @@ class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
   }
 
   @override
-  FutureProvider<TokenInformations?> getProviderOverride(
+  AutoDisposeFutureProvider<TokenInformations?> getProviderOverride(
     covariant _GetNFTProvider provider,
   ) {
     return call(
