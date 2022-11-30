@@ -12,6 +12,7 @@
     <application
         android:label="Archethic Wallet"
         android:icon="@mipmap/ic_launcher"
+        android:resource="@drawable/ic_notification" 
         android:allowBackup="false">
         <activity
             android:name=".MainActivityArchethicWallet"
