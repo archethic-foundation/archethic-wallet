@@ -232,7 +232,7 @@ dev_dependencies:
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.3.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
-  msix: ^3.6.3
+  msix: ^3.7.0
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: ^1.0.6
 
@@ -241,7 +241,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 1.0.8287.0
+  msix_version: 1.1.2312.0
   icons_background_color: "#000000"
   languages: en-us
   store: true
