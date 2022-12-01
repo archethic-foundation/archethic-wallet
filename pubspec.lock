@@ -32,11 +32,9 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: ed15ac0e021aae9102e0b346b02085c18f68e884
-      url: "https://github.com/archethic-foundation/libdart.git"
-    source: git
+      name: archethic_lib_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.0.27"
   archive:
     dependency: transitive
@@ -620,13 +618,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  fluttericon:
-    dependency: "direct main"
-    description:
-      name: fluttericon
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:
