@@ -104,6 +104,9 @@ dependencies:
   # A Flutter plugin to vibrate the device
   flutter_vibrate: ^1.3.0
 
+  # Flutter icon packs built from 15 popular free and open-source webfonts.
+  fluttericon: ^2.0.0
+
   # The Font Awesome Icon pack available as set of Flutter Icons.
   font_awesome_flutter: ^10.2.1
 
@@ -145,8 +148,6 @@ dependencies:
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
-
-
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
   loading_animation_widget: ^1.2.0+3
