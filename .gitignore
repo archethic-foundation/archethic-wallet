@@ -113,10 +113,8 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
-ios/fastlane/Appfile
 ios/Runner.app.dSYM.zip
 ios/Runner.ipa
-android/fastlane/Appfile
 android/secret/pc-api-5169468416570896137-923-bb9ef60f132d.json
 
 *.ninja
@@ -124,8 +122,6 @@ android/secret/pc-api-5169468416570896137-923-bb9ef60f132d.json
 CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
-android/fastlane/report.xml
-ios/fastlane/report.xml
 windows/certificates/archethic_wallet_testnet.crt
 windows/certificates/archethic_wallet_testnet.csr
 windows/certificates/archethic_wallet_testnet.key
@@ -136,9 +132,16 @@ windows/certificates/archethic_wallet.key
 windows/certificates/archethic_wallet.pfx
 windows/certificates/mdp.txt
 windows/certificates/mykeyname.key
-macos/fastlane/Appfile
 macos/archethic_wallet.app/
 macos/archethic_wallet.app.dSYM.zip
 macos/archethic_wallet.pkg
 .firebase/hosting.YnVpbGQvd2Vi.cache
 node_modules/
+fastlane/macos/Appfile
+fastlane/ios/Appfile
+fastlane/ios/report.xml
+fastlane/ios/Preview.html
+fastlane/android/report.xml
+fastlane/android/Appfile
+fastlane/macos/Preview.html
+fastlane/macos/report.xml
