@@ -57,7 +57,6 @@ class ArchethicTransactionRepository
     return Result.guard(
       () async {
         return _appService.getAccountRecentTransactions(
-          account.genesisAddress,
           account.lastAddress!,
           walletSeed,
           account.name,

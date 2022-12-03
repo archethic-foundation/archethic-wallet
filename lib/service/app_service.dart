@@ -33,11 +33,15 @@ class AppService {
 
   Future<Map<String, List<TransactionInput>>> getTransactionInputs(
     List<String> addresses,
-    String request,
-  ) async {
-    final transactionInputs = await sl
-        .get<ApiService>()
-        .getTransactionInputs(addresses.toSet().toList(), request: request);
+    String request, {
+    int limit = 0,
+    int pagingOffset = 0,
+  }) async {
+    final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
+        addresses.toSet().toList(),
+        request: request,
+        limit: limit,
+        pagingOffset: pagingOffset);
     return transactionInputs;
   }
 
@@ -73,7 +77,6 @@ class AppService {
       );
 
   Future<List<RecentTransaction>> getAccountRecentTransactions(
-    String genesisAddress,
     String lastAddress,
     String seed,
     String name,
@@ -84,7 +87,7 @@ class AppService {
     );
 
     final lastAddressRecentTransaction = {lastAddress: ''};
-    var transactionInputsGenesisAddressMap = <String, List<TransactionInput>>{};
+    var transactionInputsMap = <String, List<TransactionInput>>{};
 
     // Get from local transactions, the last address to search only new tx
     final localRecentTransactionLastAddress = localRecentTransactionList
@@ -101,31 +104,35 @@ class AppService {
         localRecentTransactionLastAddress.isNotEmpty) {
       lastAddressRecentTransaction[lastAddress] =
           localRecentTransactionLastAddress;
-    } else {
-      transactionInputsGenesisAddressMap = await getTransactionInputs(
-        [genesisAddress],
-        'from, type, spent, tokenAddress, amount, timestamp',
-      );
-
-      if (localRecentTransactionList.isNotEmpty &&
-          localRecentTransactionList.first.timestamp != null) {
-        transactionInputsGenesisAddressMap[genesisAddress]!.removeWhere(
-          (element) =>
-              element.timestamp! <= localRecentTransactionList.first.timestamp!,
-        );
-      }
     }
 
-    final transactionChainMap = await getTransactionChain(
-      lastAddressRecentTransaction,
-      'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
+    var transactionChainMap = {};
+    if (localRecentTransactionLastAddress != lastAddress) {
+      transactionChainMap = await getTransactionChain(
+        lastAddressRecentTransaction,
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
+      );
+    }
+
+    transactionInputsMap = await getTransactionInputs(
+      [lastAddress],
+      'from, type, spent, tokenAddress, amount, timestamp',
+      limit: 10,
     );
+
+    if (localRecentTransactionList.isNotEmpty &&
+        localRecentTransactionList.first.timestamp != null) {
+      transactionInputsMap[lastAddress]!.removeWhere(
+        (element) =>
+            element.timestamp! <= localRecentTransactionList.first.timestamp!,
+      );
+    }
 
     final recentTransactions = List<RecentTransaction>.empty(growable: true);
 
     final transactionChain = transactionChainMap[lastAddress] ?? [];
     final transactionInputsGenesisAddress =
-        transactionInputsGenesisAddressMap[genesisAddress] ?? [];
+        transactionInputsMap[lastAddress] ?? [];
 
     final tokensAddresses = <String>[];
 

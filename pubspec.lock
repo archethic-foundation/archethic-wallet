@@ -32,9 +32,11 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      name: archethic_lib_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: dev
+      resolved-ref: "756763cb9403e30b3b68aeecc70f7fff33a42aca"
+      url: "https://github.com/archethic-foundation/libdart.git"
+    source: git
     version: "1.0.27"
   archive:
     dependency: transitive
@@ -1604,7 +1606,7 @@ packages:
       name: window_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7"
+    version: "0.2.8"
   x25519:
     dependency: transitive
     description:
