@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppService {
-  // TODO(reddwarf03): Error loading recent transactions when tx number > 10, https://github.com/archethic-foundation/archethic-wallet/issues/262 (1)
   Future<Map<String, List<Transaction>>> getTransactionChain(
     Map<String, String> addresses,
     String? request,
@@ -38,10 +37,11 @@ class AppService {
     int pagingOffset = 0,
   }) async {
     final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
-        addresses.toSet().toList(),
-        request: request,
-        limit: limit,
-        pagingOffset: pagingOffset,);
+          addresses.toSet().toList(),
+          request: request,
+          limit: limit,
+          pagingOffset: pagingOffset,
+        );
     return transactionInputs;
   }
 
@@ -126,13 +126,15 @@ class AppService {
         (element) =>
             element.timestamp! <= localRecentTransactionList.first.timestamp!,
       );
+      transactionInputsMap[lastAddress]!.removeWhere(
+        (element) => element.from! == lastAddress,
+      );
     }
 
     final recentTransactions = List<RecentTransaction>.empty(growable: true);
 
     final transactionChain = transactionChainMap[lastAddress] ?? [];
-    final transactionInputsGenesisAddress =
-        transactionInputsMap[lastAddress] ?? [];
+    final transactionInputs = transactionInputsMap[lastAddress] ?? [];
 
     final tokensAddresses = <String>[];
 
@@ -243,8 +245,8 @@ class AppService {
       }
     }
 
-    // Transaction inputs for genesisAddress
-    for (final transactionInput in transactionInputsGenesisAddress) {
+    // Transaction inputs
+    for (final transactionInput in transactionInputs) {
       final recentTransaction = RecentTransaction()
         ..address = transactionInput.from
         ..amount = fromBigInt(transactionInput.amount).toDouble()
