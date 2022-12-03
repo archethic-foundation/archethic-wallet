@@ -200,7 +200,6 @@ class Account extends HiveObject {
   ) async {
     recentTransactions =
         await sl.get<AppService>().getAccountRecentTransactions(
-              genesisAddress,
               lastAddress!,
               seed,
               name,
