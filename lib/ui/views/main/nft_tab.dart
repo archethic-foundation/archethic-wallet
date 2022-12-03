@@ -2,21 +2,15 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/main/components/nft_search_bar.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_category_menu.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';

@@ -41,7 +41,7 @@ class AppService {
         addresses.toSet().toList(),
         request: request,
         limit: limit,
-        pagingOffset: pagingOffset);
+        pagingOffset: pagingOffset,);
     return transactionInputs;
   }
 
