@@ -199,11 +199,13 @@ class _ActionButton extends ConsumerWidget {
               children: <Widget>[
                 ShaderMask(
                   child: SizedBox(
+                    width: 40,
+                    height: 40,
                     child: Icon(
                       icon,
                       color:
                           enabled ? Colors.white : theme.text!.withOpacity(0.3),
-                      size: 40,
+                      size: 38,
                     ),
                   ),
                   shaderCallback: (Rect bounds) {
