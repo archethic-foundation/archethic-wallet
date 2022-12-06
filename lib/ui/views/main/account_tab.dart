@@ -5,6 +5,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
+import 'package:aewallet/ui/views/main/components/airdrop.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list.dart';
@@ -100,11 +101,17 @@ class AccountTab extends ConsumerWidget {
                               height: 1,
                               color: theme.backgroundDarkest!.withOpacity(0.1),
                             ),
+
+                            /// ICONS
+                            //const AirDrop(),
+
+                            Divider(
+                              height: 1,
+                              color: theme.backgroundDarkest!.withOpacity(0.1),
+                            ),
                             const SizedBox(
                               height: 15,
                             ),
-
-                            /// ICONS
                             const MenuWidgetWallet(),
                             const SizedBox(
                               height: 15,

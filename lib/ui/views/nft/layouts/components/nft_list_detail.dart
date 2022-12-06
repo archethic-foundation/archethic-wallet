@@ -32,12 +32,15 @@ class NFTListDetail extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
-    final typeMime = tokenInformations.tokenProperties!['type/mime'];
+    final typeMime = tokenInformations.tokenProperties!['type_mime'];
 
     var propertiesToCount = 0;
     if (tokenInformations.tokenProperties != null) {
       tokenInformations.tokenProperties!.forEach((key, value) {
-        if (key != 'name' && key != 'file' && key != 'type/mime') {
+        if (key != 'name' &&
+            key != 'content' &&
+            key != 'type_mime' &&
+            key != 'description') {
           propertiesToCount++;
         }
       });

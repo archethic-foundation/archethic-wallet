@@ -41,7 +41,7 @@ mixin _$NftCreationFormState {
   String get error => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   int get initialSupply => throw _privateConstructorUsedError;
-  Transaction? get transaction => throw _privateConstructorUsedError;
+  archethic.Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NftCreationFormStateCopyWith<NftCreationFormState> get copyWith =>
@@ -77,7 +77,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       String error,
       String symbol,
       int initialSupply,
-      Transaction? transaction});
+      archethic.Transaction? transaction});
 
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
 }
@@ -212,7 +212,7 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
       transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
-              as Transaction?,
+              as archethic.Transaction?,
     ) as $Val);
   }
 
@@ -257,7 +257,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       String error,
       String symbol,
       int initialSupply,
-      Transaction? transaction});
+      archethic.Transaction? transaction});
 
   @override
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
@@ -390,7 +390,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
       transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
-              as Transaction?,
+              as archethic.Transaction?,
     ));
   }
 }
@@ -497,7 +497,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @JsonKey()
   final int initialSupply;
   @override
-  final Transaction? transaction;
+  final archethic.Transaction? transaction;
 
   @override
   String toString() {
@@ -614,7 +614,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final String error,
       final String symbol,
       final int initialSupply,
-      final Transaction? transaction}) = _$_NftCreationFormState;
+      final archethic.Transaction? transaction}) = _$_NftCreationFormState;
   const _NftCreationFormState._() : super._();
 
   @override
@@ -662,7 +662,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   @override
   int get initialSupply;
   @override
-  Transaction? get transaction;
+  archethic.Transaction? get transaction;
   @override
   @JsonKey(ignore: true)
   _$$_NftCreationFormStateCopyWith<_$_NftCreationFormState> get copyWith =>
@@ -672,7 +672,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
 /// @nodoc
 mixin _$NftCreationFormStateProperty {
   String get propertyName => throw _privateConstructorUsedError;
-  String get propertyValue => throw _privateConstructorUsedError;
+  dynamic get propertyValue => throw _privateConstructorUsedError;
   List<PropertyAccessRecipient> get publicKeys =>
       throw _privateConstructorUsedError;
 
@@ -691,7 +691,7 @@ abstract class $NftCreationFormStatePropertyCopyWith<$Res> {
   @useResult
   $Res call(
       {String propertyName,
-      String propertyValue,
+      dynamic propertyValue,
       List<PropertyAccessRecipient> publicKeys});
 }
 
@@ -721,7 +721,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
       propertyValue: null == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       publicKeys: null == publicKeys
           ? _value.publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
@@ -741,7 +741,7 @@ abstract class _$$_NftCreationFormStatePropertyCopyWith<$Res>
   @useResult
   $Res call(
       {String propertyName,
-      String propertyValue,
+      dynamic propertyValue,
       List<PropertyAccessRecipient> publicKeys});
 }
 
@@ -770,7 +770,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
       propertyValue: null == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       publicKeys: null == publicKeys
           ? _value._publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
@@ -784,7 +784,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
 class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   const _$_NftCreationFormStateProperty(
       {this.propertyName = '',
-      this.propertyValue = '',
+      this.propertyValue,
       final List<PropertyAccessRecipient> publicKeys = const []})
       : _publicKeys = publicKeys,
         super._();
@@ -793,8 +793,7 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   @JsonKey()
   final String propertyName;
   @override
-  @JsonKey()
-  final String propertyValue;
+  final dynamic propertyValue;
   final List<PropertyAccessRecipient> _publicKeys;
   @override
   @JsonKey()
@@ -815,14 +814,17 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
             other is _$_NftCreationFormStateProperty &&
             (identical(other.propertyName, propertyName) ||
                 other.propertyName == propertyName) &&
-            (identical(other.propertyValue, propertyValue) ||
-                other.propertyValue == propertyValue) &&
+            const DeepCollectionEquality()
+                .equals(other.propertyValue, propertyValue) &&
             const DeepCollectionEquality()
                 .equals(other._publicKeys, _publicKeys));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, propertyName, propertyValue,
+  int get hashCode => Object.hash(
+      runtimeType,
+      propertyName,
+      const DeepCollectionEquality().hash(propertyValue),
       const DeepCollectionEquality().hash(_publicKeys));
 
   @JsonKey(ignore: true)
@@ -837,7 +839,7 @@ abstract class _NftCreationFormStateProperty
     extends NftCreationFormStateProperty {
   const factory _NftCreationFormStateProperty(
           {final String propertyName,
-          final String propertyValue,
+          final dynamic propertyValue,
           final List<PropertyAccessRecipient> publicKeys}) =
       _$_NftCreationFormStateProperty;
   const _NftCreationFormStateProperty._() : super._();
@@ -845,7 +847,7 @@ abstract class _NftCreationFormStateProperty
   @override
   String get propertyName;
   @override
-  String get propertyValue;
+  dynamic get propertyValue;
   @override
   List<PropertyAccessRecipient> get publicKeys;
   @override

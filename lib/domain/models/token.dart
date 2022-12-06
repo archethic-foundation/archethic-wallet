@@ -14,6 +14,7 @@ class Token with _$Token {
     required double initialSupply,
     required String type,
     required List<TokenProperty> properties,
+    required List<int> aeip,
   }) = _Token;
   const Token._();
 }

@@ -43,7 +43,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
 
     final fileProperty = nftCreation.properties
-        .where((element) => element.propertyName == 'file')
+        .where((element) => element.propertyName == 'raw')
         .toList();
 
     return Padding(
@@ -85,7 +85,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                   if (readOnly == false ||
                       fileProperty[0].publicKeys.isNotEmpty)
                     NFTCreationProcessFileAccessAddButton(
-                      propertyName: 'file',
+                      propertyName: 'content',
                       propertyValue: '',
                       readOnly: readOnly,
                     ),
@@ -101,7 +101,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                               FeedbackType.light,
                               preferences.activeVibrations,
                             );
-                        nftCreationNotifier.removeFileProperties();
+                        nftCreationNotifier.removeContentProperties();
                       });
                     },
                     readOnly: readOnly,

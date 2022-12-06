@@ -22,8 +22,12 @@ class TokenUtil {
     final token = tokenMap[address]!;
     if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
       token.tokenProperties!.forEach((key, value) {
-        if (key == 'file') {
-          valueFileDecoded = base64Decode(value);
+        if (key == 'content') {
+          value.forEach((key, value) {
+            if (key == 'raw') {
+              valueFileDecoded = base64Decode(value);
+            }
+          });
         }
       });
     }

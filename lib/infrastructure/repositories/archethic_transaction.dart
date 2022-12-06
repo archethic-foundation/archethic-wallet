@@ -187,6 +187,7 @@ class ArchethicTransactionRepository
       keychain: keychain,
       originPrivateKey: originPrivateKey,
       serviceName: service,
+      aeip: token.aeip,
       tokenProperties: token.properties,
     );
   }
