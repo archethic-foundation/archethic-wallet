@@ -2085,6 +2085,22 @@ class AppLocalization {
     return Intl.message('Bring ARCHETHIC to life with your first  ',
         name: 'getUCODescription1');
   }
+
+  String get getUCOInformation {
+    return Intl.message(
+        'In a few minutes you will receive your UCOs which will allow you to use the Archethic network and the features of your wallet.',
+        name: 'getUCOInformation');
+  }
+
+  String get getUCOInformationAlreadyReceived {
+    return Intl.message('You have already received your UCOs.',
+        name: 'getUCOInformationAlreadyReceived');
+  }
+
+  String get getUCOCount {
+    return Intl.message('See you in HH:MM to get new UCOs...',
+        name: 'getUCOCount');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

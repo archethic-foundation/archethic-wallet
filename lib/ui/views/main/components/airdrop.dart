@@ -5,6 +5,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,12 +42,22 @@ class AirDrop extends ConsumerWidget {
               )
             ],
           ),
+          Positioned(
+            right: 5,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                localizations.getUCOCount,
+                style: theme.textStyleSize12W100Primary,
+              ),
+            ),
+          ),
 
           // TODO(chralu): check Egibility
-          if (true == true)
+          if (true == false)
             Positioned(
               top: 40,
-              left: 200,
+              left: 170,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: AppButtonTiny(
@@ -54,21 +65,36 @@ class AirDrop extends ConsumerWidget {
                   'get UCO',
                   Dimens.buttonBottomDimens,
                   key: const Key('getUCO'),
-                  width: 100,
-                  onPressed: () {},
+                  width: 150,
+                  onPressed: () {
+                    AppDialogs.showInfoDialog(
+                      context,
+                      ref,
+                      localizations.informations,
+                      localizations.getUCOInformation,
+                    );
+                  },
                 ),
               ),
             )
           else
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: AppButtonTiny(
-                AppButtonTinyType.primaryOutline,
-                localizations.getUCOButton,
-                Dimens.buttonBottomDimens,
-                key: const Key('getUCO'),
-                width: 100,
-                onPressed: () {},
+            Positioned(
+              top: 40,
+              left: 170,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: AppButtonTiny(
+                      AppButtonTinyType.primaryOutline,
+                      localizations.getUCOButton,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('getUCO'),
+                      width: 150,
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
               ),
             ),
           Positioned.fill(

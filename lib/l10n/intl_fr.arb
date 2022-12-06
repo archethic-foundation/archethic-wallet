@@ -445,5 +445,8 @@
 	"nftAddFileSize": "Taille: ",
 	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?",
 	"getUCOButton": "Obtenir des UCOs",
-	"getUCODescription1": "Donnez vie à ARCHETHIC avec vos 1 ers  "
+	"getUCODescription1": "Donnez vie à ARCHETHIC avec vos 1 ers  ",
+	"getUCOInformation": "Vous allez recevoir dans quelques minutes vos UCOs qui vous permettront d'utiliser le réseau Archethic et les fonctionnalités de votre wallet.",
+	"getUCOInformationAlreadyReceived": "Vous avez déjà reçu vos UCOs.",
+	"getUCOCount": "Rdv dans HH:MM pour obtenir de nouveaux UCOs..."
 }
