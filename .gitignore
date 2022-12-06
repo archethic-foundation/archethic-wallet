@@ -145,3 +145,6 @@ fastlane/metadata/macos/Appfile
 fastlane/metadata/macos/Preview.html
 fastlane/metadata/macos/report.xml
 fastlane/metadata/android/report.xml
+android/fastlane/Appfile
+ios/fastlane/Appfile
+macos/fastlane/Appfile
