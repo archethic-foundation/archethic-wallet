@@ -32,7 +32,7 @@ final _nftCreationFormProviderArgs = Provider<NftCreationFormNotifierParams>(
   },
 );
 
-final _nftCreationFormProvider = NotifierProvider.autoDispose.family<
+final _nftCreationFormProvider = NotifierProvider.family<
     NftCreationFormNotifier,
     NftCreationFormState,
     NftCreationFormNotifierParams>(
@@ -56,8 +56,8 @@ class NftCreationFormNotifierParams {
   final int currentNftCategoryIndex;
 }
 
-class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
-    NftCreationFormState, NftCreationFormNotifierParams> {
+class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
+    NftCreationFormNotifierParams> {
   NftCreationFormNotifier();
 
   CancelableTask<double?>? _calculateFeesTask;
@@ -142,6 +142,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
         initialSupply: formState.initialSupply.toDouble(),
         seed: formState.seed,
         type: 'non-fungible',
+        aeip: [2],
         properties: formState.propertiesConverted,
       ),
     );
@@ -319,15 +320,15 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     }
   }
 
-  void removeFileProperties() {
+  void removeContentProperties() {
     final propertiesToRemove = [...state.properties]
       ..removeWhere(
         (NftCreationFormStateProperty element) =>
-            element.propertyName == 'file',
+            element.propertyName == 'content',
       )
       ..removeWhere(
         (NftCreationFormStateProperty element) =>
-            element.propertyName == 'type/mime',
+            element.propertyName == 'type_mime',
       );
 
     state = state.copyWith(
@@ -412,7 +413,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     );
   }
 
-  Future<void> setFileProperties(
+  Future<void> setContentProperties(
     BuildContext context,
     File file,
     FileImportType fileImportType,
@@ -457,11 +458,11 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
     final newPropertiesToSet = [
       ...state.properties,
       NftCreationFormStateProperty(
-        propertyName: 'file',
-        propertyValue: file64,
+        propertyName: 'content',
+        propertyValue: {'raw': file64},
       ),
       NftCreationFormStateProperty(
-        propertyName: 'type/mime',
+        propertyName: 'type_mime',
         propertyValue: typeMime,
       ),
     ];
@@ -566,6 +567,7 @@ class NftCreationFormNotifier extends AutoDisposeFamilyNotifier<
         accountSelectedName: selectedAccount!.name,
         seed: state.seed,
         type: 'non-fungible',
+        aeip: [2],
         properties: state.propertiesConverted,
       ),
     );
