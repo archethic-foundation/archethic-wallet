@@ -148,3 +148,5 @@ fastlane/metadata/android/report.xml
 android/fastlane/Appfile
 ios/fastlane/Appfile
 macos/fastlane/Appfile
+ios/fastlane/Preview.html
+macos/fastlane/Preview.html
