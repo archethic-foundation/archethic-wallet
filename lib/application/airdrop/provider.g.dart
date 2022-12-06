@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'wallet.dart';
+part of 'provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,32 +29,36 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'bf30aade70d0ab61a35dd5a72be3f9c1e3110e6c';
+String $_airDropRepositoryHash() => r'f7c97ae3c8b1870ea062645b2d38e9ea3e643d3d';
 
-/// See also [_SessionNotifier].
-final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
-  _SessionNotifier.new,
-  name: r'_sessionNotifierProvider',
+/// See also [_airDropRepository].
+final _airDropRepositoryProvider = Provider<AirDropRepositoryInterface>(
+  _airDropRepository,
+  name: r'_airDropRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_SessionNotifierHash,
+      : $_airDropRepositoryHash,
 );
-typedef _SessionNotifierRef = NotifierProviderRef<Session>;
+typedef _AirDropRepositoryRef = ProviderRef<AirDropRepositoryInterface>;
+String $_airdropCooldownHash() => r'90a7d7f222b26a81f09ff5d25411fbc0e6c6f072';
 
-abstract class _$SessionNotifier extends Notifier<Session> {
-  @override
-  Session build();
-}
-
-String $_archethicWalletKeychainHash() =>
-    r'8bdb02d5a592f835ff8a33cc09d0f722d3b8fb5a';
-
-/// See also [_archethicWalletKeychain].
-final _archethicWalletKeychainProvider = AutoDisposeFutureProvider<Keychain?>(
-  _archethicWalletKeychain,
-  name: r'_archethicWalletKeychainProvider',
+/// See also [_airdropCooldown].
+final _airdropCooldownProvider = FutureProvider<Duration>(
+  _airdropCooldown,
+  name: r'_airdropCooldownProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_archethicWalletKeychainHash,
+      : $_airdropCooldownHash,
 );
-typedef _ArchethicWalletKeychainRef = AutoDisposeFutureProviderRef<Keychain?>;
+typedef _AirdropCooldownRef = FutureProviderRef<Duration>;
+String $_isAirdropEligibleHash() => r'822f16247707f90430d8ce617c36b1b7bbf1d787';
+
+/// See also [_isAirdropEligible].
+final _isAirdropEligibleProvider = FutureProvider<bool>(
+  _isAirdropEligible,
+  name: r'_isAirdropEligibleProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_isAirdropEligibleHash,
+);
+typedef _IsAirdropEligibleRef = FutureProviderRef<bool>;

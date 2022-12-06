@@ -100,7 +100,7 @@ packages:
       name: bottom_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.2"
   build:
     dependency: transitive
     description:
@@ -429,7 +429,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.3"
+    version: "5.2.2"
   filesize:
     dependency: "direct main"
     description:
@@ -516,7 +516,7 @@ packages:
       name: flutter_native_splash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.16"
+    version: "2.2.15"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -971,7 +971,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.2"
   mime_dart:
     dependency: "direct main"
     description:
@@ -1524,7 +1524,7 @@ packages:
     source: hosted
     version: "3.0.1"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       url: "https://pub.dartlang.org"
@@ -1571,7 +1571,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.2"
+    version: "3.1.1"
   window_manager:
     dependency: "direct main"
     description:

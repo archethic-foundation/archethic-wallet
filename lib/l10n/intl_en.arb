@@ -72,6 +72,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "airdropError_QUOTA_EXCEEDED_ERROR": "Reward already claimed.",
+  "airdropError_BACKEND_ERROR": "An error occurred. Try again later.",
   "noToken": "No token",
   "@noToken": {
     "type": "text",
@@ -2682,10 +2684,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "getUCOCount": "See you in HH:MM to get new UCOs...",
-  "@getUCOCount": {
+  "getUCOInformationBackendError": "An error occurred. Try again later.",
+  "@getUCOInformationBackendError": {
     "type": "text",
     "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCOCount": "See you in %1:%2 to get new UCOs...",
+  "@getUCOCount": {
     "placeholders": {}
   }
 }

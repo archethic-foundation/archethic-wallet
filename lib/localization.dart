@@ -2097,6 +2097,11 @@ class AppLocalization {
         name: 'getUCOInformationAlreadyReceived');
   }
 
+  String get getUCOInformationBackendError {
+    return Intl.message('An error occurred. Try again later.',
+        name: 'getUCOInformationBackendError');
+  }
+
   String get getUCOCount {
     return Intl.message('See you in HH:MM to get new UCOs...',
         name: 'getUCOCount');

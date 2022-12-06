@@ -18,12 +18,14 @@ class AppButtonTiny extends ConsumerWidget {
     this.buttonText,
     this.dimens, {
     required this.onPressed,
+    this.showProgressIndicator = false,
     this.disabled = false,
     this.icon,
     this.width = 400,
     super.key,
   });
 
+  final bool showProgressIndicator;
   final AppButtonTinyType type;
   final String buttonText;
   final List<double> dimens;
@@ -71,12 +73,31 @@ class AppButtonTiny extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: theme.textStyleSize12W400EquinoxMainButtonLabel,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (showProgressIndicator) const Spacer(),
+                        AutoSizeText(
+                          buttonText,
+                          textAlign: TextAlign.center,
+                          style:
+                              theme.textStyleSize12W400EquinoxMainButtonLabel,
+                          maxLines: 1,
+                          stepGranularity: 0.5,
+                        ),
+                        if (showProgressIndicator) const Spacer(),
+                        if (showProgressIndicator)
+                          SizedBox.square(
+                            dimension: 10,
+                            child: CircularProgressIndicator(
+                              color: theme
+                                  .textStyleSize12W400EquinoxMainButtonLabel
+                                  .color,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                      ],
                     ),
                     onPressed: () {
                       if (!disabled) {
@@ -141,13 +162,31 @@ class AppButtonTiny extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: theme
-                          .textStyleSize12W400EquinoxMainButtonLabelDisabled,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (showProgressIndicator) const Spacer(),
+                        AutoSizeText(
+                          buttonText,
+                          textAlign: TextAlign.center,
+                          style: theme
+                              .textStyleSize12W400EquinoxMainButtonLabelDisabled,
+                          maxLines: 1,
+                          stepGranularity: 0.5,
+                        ),
+                        if (showProgressIndicator) const Spacer(),
+                        if (showProgressIndicator)
+                          SizedBox.square(
+                            dimension: 10,
+                            child: CircularProgressIndicator(
+                              color: theme
+                                  .textStyleSize12W400EquinoxMainButtonLabel
+                                  .color,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                      ],
                     ),
                     onPressed: () {
                       if (!disabled) {

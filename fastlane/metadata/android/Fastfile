@@ -88,9 +88,9 @@ platform :android do
       sh('flutter', 'packages', 'get')
       sh('flutter', 'clean')
       sh(
-        "flutter build appbundle --build-name=#{
+        "flutter build appbundle --obfuscate --build-name=#{
           versionName
-        } --build-number=#{number.to_s}"
+        } --build-number=#{number.to_s} --dart-define=AIRDROP_SECRET=#{ENV['airdropSecret']}"
       )
     end
   end

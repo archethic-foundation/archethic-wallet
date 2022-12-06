@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'wallet.dart';
+part of 'airdrop.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,32 +29,17 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'bf30aade70d0ab61a35dd5a72be3f9c1e3110e6c';
+String $_isAirDropRequestButtonActiveHash() =>
+    r'2f9940dee26e7beb5d583bb287b0fe58d60f0d39';
 
-/// See also [_SessionNotifier].
-final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
-  _SessionNotifier.new,
-  name: r'_sessionNotifierProvider',
+/// True if the AirDrop request button should be active
+///
+/// Copied from [_isAirDropRequestButtonActive].
+final _isAirDropRequestButtonActiveProvider = Provider<bool>(
+  _isAirDropRequestButtonActive,
+  name: r'_isAirDropRequestButtonActiveProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_SessionNotifierHash,
+      : $_isAirDropRequestButtonActiveHash,
 );
-typedef _SessionNotifierRef = NotifierProviderRef<Session>;
-
-abstract class _$SessionNotifier extends Notifier<Session> {
-  @override
-  Session build();
-}
-
-String $_archethicWalletKeychainHash() =>
-    r'8bdb02d5a592f835ff8a33cc09d0f722d3b8fb5a';
-
-/// See also [_archethicWalletKeychain].
-final _archethicWalletKeychainProvider = AutoDisposeFutureProvider<Keychain?>(
-  _archethicWalletKeychain,
-  name: r'_archethicWalletKeychainProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_archethicWalletKeychainHash,
-);
-typedef _ArchethicWalletKeychainRef = AutoDisposeFutureProviderRef<Keychain?>;
+typedef _IsAirDropRequestButtonActiveRef = ProviderRef<bool>;

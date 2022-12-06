@@ -1,13 +1,38 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/airdrop/provider.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/util/functional_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'airdrop.g.dart';
+
+/// True if the AirDrop request button should be active
+@Riverpod(keepAlive: true)
+bool _isAirDropRequestButtonActive(Ref ref) {
+  final isCooldownActive =
+      ref.watch(AirDropProviders.airdropCooldown).maybeWhen(
+            data: (data) => data > Duration.zero,
+            orElse: () => true,
+          );
+  final isAirdropEligible = ref.watch(AirDropProviders.isEligible).maybeWhen(
+        data: id,
+        orElse: () => false,
+      );
+
+  final isAirDropRequestRunning =
+      ref.watch(AirDropProviders.airDropRequest).isLoading;
+
+  return !isCooldownActive && isAirdropEligible && !isAirDropRequestRunning;
+}
 
 class AirDrop extends ConsumerWidget {
   const AirDrop({super.key});
@@ -23,7 +48,36 @@ class AirDrop extends ConsumerWidget {
     if (accountSelected == null) return const SizedBox();
 
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    final isAirDropRequestButtonActive = ref.watch(
+      _isAirDropRequestButtonActiveProvider,
+    );
+
+    final isAirdropRequestRunning =
+        ref.watch(AirDropProviders.airDropRequest).isLoading;
+
     final localizations = AppLocalization.of(context)!;
+    ref.listen(
+      AirDropProviders.airDropRequest,
+      (previous, next) {
+        if (previous == next) return;
+
+        final error = next.error as Failure?;
+        if (error == null) return;
+
+        UIUtil.showSnackbar(
+          error.maybeMap(
+            quotaExceeded: (value) =>
+                localizations.getUCOInformationAlreadyReceived,
+            orElse: () => localizations.getUCOInformationBackendError,
+          ),
+          context,
+          ref,
+          theme.text!,
+          theme.snackBarShadow!,
+        );
+      },
+    );
 
     return Container(
       alignment: Alignment.centerLeft,
@@ -42,61 +96,44 @@ class AirDrop extends ConsumerWidget {
               )
             ],
           ),
-          Positioned(
+          const Positioned(
             right: 5,
             child: Align(
               alignment: Alignment.topRight,
-              child: Text(
-                localizations.getUCOCount,
-                style: theme.textStyleSize12W100Primary,
+              child: _CooldownCounter(),
+            ),
+          ),
+          Positioned(
+            top: 40,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: AppButtonTiny(
+                isAirdropRequestRunning
+                    ? AppButtonTinyType.primaryOutline
+                    : AppButtonTinyType.primary,
+                localizations.getUCOButton,
+                <double>[14, 8, 14, 0],
+                disabled: isAirdropRequestRunning,
+                showProgressIndicator: isAirdropRequestRunning,
+                key: const Key('getUCO'),
+                width: 170,
+                onPressed: isAirDropRequestButtonActive
+                    ? () {
+                        AppDialogs.showInfoDialog(
+                          context,
+                          ref,
+                          localizations.informations,
+                          localizations.getUCOInformation,
+                        );
+                        ref
+                            .read(AirDropProviders.airDropRequest.notifier)
+                            .requestAirDrop();
+                      }
+                    : () {},
               ),
             ),
           ),
-
-          // TODO(chralu): check Egibility
-          if (true == false)
-            Positioned(
-              top: 40,
-              left: 170,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  'get UCO',
-                  Dimens.buttonBottomDimens,
-                  key: const Key('getUCO'),
-                  width: 150,
-                  onPressed: () {
-                    AppDialogs.showInfoDialog(
-                      context,
-                      ref,
-                      localizations.informations,
-                      localizations.getUCOInformation,
-                    );
-                  },
-                ),
-              ),
-            )
-          else
-            Positioned(
-              top: 40,
-              left: 170,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: AppButtonTiny(
-                      AppButtonTinyType.primaryOutline,
-                      localizations.getUCOButton,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('getUCO'),
-                      width: 150,
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
           Positioned.fill(
             top: 115,
             child: Padding(
@@ -125,6 +162,36 @@ class AirDrop extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _CooldownCounter extends ConsumerWidget {
+  const _CooldownCounter();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalization.of(context)!;
+    final cooldownRemainingTime =
+        ref.watch(AirDropProviders.airdropCooldown).valueOrNull;
+
+    if (cooldownRemainingTime == null ||
+        cooldownRemainingTime == Duration.zero) {
+      return const SizedBox();
+    }
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Text(
+      localizations.getUCOCount
+          .replaceAll(
+            '%1',
+            cooldownRemainingTime.inHours.toString().padLeft(2, '0'),
+          )
+          .replaceAll(
+            '%2',
+            (cooldownRemainingTime.inMinutes % 60).toString().padLeft(2, '0'),
+          ),
+      style: theme.textStyleSize12W100Primary,
     );
   }
 }
