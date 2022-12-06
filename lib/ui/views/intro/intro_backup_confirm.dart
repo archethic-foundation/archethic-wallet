@@ -10,6 +10,7 @@ import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -215,6 +216,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final settings = ref.read(SettingsProviders.settings);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -365,87 +367,146 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                     ),
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        if (wordListSelected.length != 24)
-                          AppButtonTiny(
-                            AppButtonTinyType.primaryOutline,
-                            localizations.confirm,
-                            Dimens.buttonTopDimens,
-                            key: const Key('confirm'),
-                            onPressed: () {},
-                          )
-                        else
+                if (settings.network.network ==
+                        AvailableNetworks.archethicDevNet ||
+                    settings.network.network ==
+                        AvailableNetworks.archethicTestNet)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          if (wordListSelected.length != 24)
+                            AppButtonTiny(
+                              AppButtonTinyType.primaryOutline,
+                              localizations.confirm,
+                              Dimens.buttonTopDimens,
+                              key: const Key('confirm'),
+                              onPressed: () {},
+                            )
+                          else
+                            AppButtonTiny(
+                              AppButtonTinyType.primary,
+                              localizations.confirm,
+                              Dimens.buttonTopDimens,
+                              key: const Key('confirm'),
+                              onPressed: () async {
+                                var orderOk = true;
+
+                                for (var i = 0;
+                                    i < originalWordsList.length;
+                                    i++) {
+                                  if (originalWordsList[i] !=
+                                      wordListSelected[i]) {
+                                    orderOk = false;
+                                  }
+                                }
+                                if (orderOk == false) {
+                                  setState(() {
+                                    UIUtil.showSnackbar(
+                                      localizations.confirmSecretPhraseKo,
+                                      context,
+                                      ref,
+                                      theme.text!,
+                                      theme.snackBarShadow!,
+                                    );
+                                  });
+                                } else {
+                                  await _launchSecurityConfiguration(
+                                    widget.name!,
+                                    widget.seed!,
+                                  );
+                                }
+                              },
+                            ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
                           AppButtonTiny(
                             AppButtonTinyType.primary,
-                            localizations.confirm,
-                            Dimens.buttonTopDimens,
-                            key: const Key('confirm'),
-                            onPressed: () async {
-                              var orderOk = true;
-
-                              for (var i = 0;
-                                  i < originalWordsList.length;
-                                  i++) {
-                                if (originalWordsList[i] !=
-                                    wordListSelected[i]) {
-                                  orderOk = false;
-                                }
-                              }
-                              if (orderOk == false) {
-                                setState(() {
-                                  UIUtil.showSnackbar(
-                                    localizations.confirmSecretPhraseKo,
-                                    context,
-                                    ref,
-                                    theme.text!,
-                                    theme.snackBarShadow!,
-                                  );
-                                });
-                              } else {
-                                await _launchSecurityConfiguration(
-                                  widget.name!,
-                                  widget.seed!,
-                                );
-                              }
-                            },
-                          ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          localizations.pass,
-                          Dimens.buttonBottomDimens,
-                          key: const Key('pass'),
-                          onPressed: () {
-                            AppDialogs.showConfirmDialog(
+                            localizations.pass,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('pass'),
+                            onPressed: () {
+                              AppDialogs.showConfirmDialog(
                                 context,
                                 ref,
                                 localizations.passBackupConfirmationDisclaimer,
                                 localizations.passBackupConfirmationMessage,
-                                localizations.yes, () async {
-                              await _launchSecurityConfiguration(
-                                widget.name!,
-                                widget.seed!,
-                              );
-                            },
+                                localizations.yes,
+                                () async {
+                                  await _launchSecurityConfiguration(
+                                    widget.name!,
+                                    widget.seed!,
+                                  );
+                                },
                                 titleStyle:
                                     theme.textStyleSize14W600EquinoxPrimaryRed,
                                 additionalContent:
                                     localizations.archethicDoesntKeepCopy,
                                 additionalContentStyle:
-                                    theme.textStyleSize12W300PrimaryRed,);
-                          },
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+                                    theme.textStyleSize12W300PrimaryRed,
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                else
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          if (wordListSelected.length != 24)
+                            AppButtonTiny(
+                              AppButtonTinyType.primaryOutline,
+                              localizations.confirm,
+                              Dimens.buttonBottomDimens,
+                              key: const Key('confirm'),
+                              onPressed: () {},
+                            )
+                          else
+                            AppButtonTiny(
+                              AppButtonTinyType.primary,
+                              localizations.confirm,
+                              Dimens.buttonBottomDimens,
+                              key: const Key('confirm'),
+                              onPressed: () async {
+                                var orderOk = true;
+
+                                for (var i = 0;
+                                    i < originalWordsList.length;
+                                    i++) {
+                                  if (originalWordsList[i] !=
+                                      wordListSelected[i]) {
+                                    orderOk = false;
+                                  }
+                                }
+                                if (orderOk == false) {
+                                  setState(() {
+                                    UIUtil.showSnackbar(
+                                      localizations.confirmSecretPhraseKo,
+                                      context,
+                                      ref,
+                                      theme.text!,
+                                      theme.snackBarShadow!,
+                                    );
+                                  });
+                                } else {
+                                  await _launchSecurityConfiguration(
+                                    widget.name!,
+                                    widget.seed!,
+                                  );
+                                }
+                              },
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
