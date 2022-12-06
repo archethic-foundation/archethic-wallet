@@ -2669,5 +2669,23 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "getUCOInformation": "In a few minutes you will receive your UCOs which will allow you to use the Archethic network and the features of your wallet.",
+  "@getUCOInformation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCOInformationAlreadyReceived": "You have already received your UCOs.",
+  "@getUCOInformationAlreadyReceived": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCOCount": "See you in HH:MM to get new UCOs...",
+  "@getUCOCount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }
