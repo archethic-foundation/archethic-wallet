@@ -26,7 +26,7 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
               final result = await FilePicker.platform.pickFiles();
 
               if (result != null) {
-                nftCreationNotifier.setFileProperties(
+                nftCreationNotifier.setContentProperties(
                   context,
                   File(result.files.single.path!),
                   FileImportType.file,

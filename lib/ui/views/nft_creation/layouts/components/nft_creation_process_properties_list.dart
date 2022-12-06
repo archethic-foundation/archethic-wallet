@@ -45,8 +45,8 @@ class NFTCreationProcessPropertiesList extends ConsumerWidget {
               propertyName: propertiesFiltered[index].propertyName,
               propertyValue: propertiesFiltered[index].propertyValue,
               propertiesHidden: const [
-                'file',
-                'type/mime',
+                'content',
+                'type_mime',
                 'name',
                 'description'
               ],

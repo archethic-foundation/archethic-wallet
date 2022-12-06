@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TokenProperty {
   String get propertyName => throw _privateConstructorUsedError;
-  String get propertyValue => throw _privateConstructorUsedError;
+  dynamic get propertyValue => throw _privateConstructorUsedError;
   List<TokenPropertyAccess> get publicKeys =>
       throw _privateConstructorUsedError;
 
@@ -34,7 +34,7 @@ abstract class $TokenPropertyCopyWith<$Res> {
   @useResult
   $Res call(
       {String propertyName,
-      String propertyValue,
+      dynamic propertyValue,
       List<TokenPropertyAccess> publicKeys});
 }
 
@@ -63,7 +63,7 @@ class _$TokenPropertyCopyWithImpl<$Res, $Val extends TokenProperty>
       propertyValue: null == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       publicKeys: null == publicKeys
           ? _value.publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
@@ -82,7 +82,7 @@ abstract class _$$_TokenPropertyCopyWith<$Res>
   @useResult
   $Res call(
       {String propertyName,
-      String propertyValue,
+      dynamic propertyValue,
       List<TokenPropertyAccess> publicKeys});
 }
 
@@ -109,7 +109,7 @@ class __$$_TokenPropertyCopyWithImpl<$Res>
       propertyValue: null == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
       publicKeys: null == publicKeys
           ? _value._publicKeys
           : publicKeys // ignore: cast_nullable_to_non_nullable
@@ -131,7 +131,7 @@ class _$_TokenProperty extends _TokenProperty {
   @override
   final String propertyName;
   @override
-  final String propertyValue;
+  final dynamic propertyValue;
   final List<TokenPropertyAccess> _publicKeys;
   @override
   List<TokenPropertyAccess> get publicKeys {
@@ -151,14 +151,17 @@ class _$_TokenProperty extends _TokenProperty {
             other is _$_TokenProperty &&
             (identical(other.propertyName, propertyName) ||
                 other.propertyName == propertyName) &&
-            (identical(other.propertyValue, propertyValue) ||
-                other.propertyValue == propertyValue) &&
+            const DeepCollectionEquality()
+                .equals(other.propertyValue, propertyValue) &&
             const DeepCollectionEquality()
                 .equals(other._publicKeys, _publicKeys));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, propertyName, propertyValue,
+  int get hashCode => Object.hash(
+      runtimeType,
+      propertyName,
+      const DeepCollectionEquality().hash(propertyValue),
       const DeepCollectionEquality().hash(_publicKeys));
 
   @JsonKey(ignore: true)
@@ -171,14 +174,14 @@ class _$_TokenProperty extends _TokenProperty {
 abstract class _TokenProperty extends TokenProperty {
   const factory _TokenProperty(
       {required final String propertyName,
-      required final String propertyValue,
+      required final dynamic propertyValue,
       required final List<TokenPropertyAccess> publicKeys}) = _$_TokenProperty;
   const _TokenProperty._() : super._();
 
   @override
   String get propertyName;
   @override
-  String get propertyValue;
+  dynamic get propertyValue;
   @override
   List<TokenPropertyAccess> get publicKeys;
   @override

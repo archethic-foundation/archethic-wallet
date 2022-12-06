@@ -24,13 +24,14 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       type: fields[3] as String?,
       symbol: fields[4] as String?,
       tokenProperties: (fields[12] as Map?)?.cast<String, dynamic>(),
+      aeip: (fields[13] as List?)?.cast<int>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TokenInformations obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..writeByte(10)
       ..write(obj.id)
       ..writeByte(12)
-      ..write(obj.tokenProperties);
+      ..write(obj.tokenProperties)
+      ..writeByte(13)
+      ..write(obj.aeip);
   }
 
   @override

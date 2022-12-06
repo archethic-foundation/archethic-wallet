@@ -23,6 +23,7 @@ mixin _$Token {
   double get initialSupply => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   List<TokenProperty> get properties => throw _privateConstructorUsedError;
+  List<int> get aeip => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TokenCopyWith<Token> get copyWith => throw _privateConstructorUsedError;
@@ -40,7 +41,8 @@ abstract class $TokenCopyWith<$Res> {
       String symbol,
       double initialSupply,
       String type,
-      List<TokenProperty> properties});
+      List<TokenProperty> properties,
+      List<int> aeip});
 }
 
 /// @nodoc
@@ -63,6 +65,7 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
     Object? initialSupply = null,
     Object? type = null,
     Object? properties = null,
+    Object? aeip = null,
   }) {
     return _then(_value.copyWith(
       seed: null == seed
@@ -93,6 +96,10 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<TokenProperty>,
+      aeip: null == aeip
+          ? _value.aeip
+          : aeip // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -110,7 +117,8 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
       String symbol,
       double initialSupply,
       String type,
-      List<TokenProperty> properties});
+      List<TokenProperty> properties,
+      List<int> aeip});
 }
 
 /// @nodoc
@@ -129,6 +137,7 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
     Object? initialSupply = null,
     Object? type = null,
     Object? properties = null,
+    Object? aeip = null,
   }) {
     return _then(_$_Token(
       seed: null == seed
@@ -159,6 +168,10 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<TokenProperty>,
+      aeip: null == aeip
+          ? _value._aeip
+          : aeip // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -173,8 +186,10 @@ class _$_Token extends _Token {
       required this.symbol,
       required this.initialSupply,
       required this.type,
-      required final List<TokenProperty> properties})
+      required final List<TokenProperty> properties,
+      required final List<int> aeip})
       : _properties = properties,
+        _aeip = aeip,
         super._();
 
   @override
@@ -196,9 +211,16 @@ class _$_Token extends _Token {
     return EqualUnmodifiableListView(_properties);
   }
 
+  final List<int> _aeip;
+  @override
+  List<int> get aeip {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_aeip);
+  }
+
   @override
   String toString() {
-    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties)';
+    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
   }
 
   @override
@@ -215,7 +237,8 @@ class _$_Token extends _Token {
                 other.initialSupply == initialSupply) &&
             (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality()
-                .equals(other._properties, _properties));
+                .equals(other._properties, _properties) &&
+            const DeepCollectionEquality().equals(other._aeip, _aeip));
   }
 
   @override
@@ -227,7 +250,8 @@ class _$_Token extends _Token {
       symbol,
       initialSupply,
       type,
-      const DeepCollectionEquality().hash(_properties));
+      const DeepCollectionEquality().hash(_properties),
+      const DeepCollectionEquality().hash(_aeip));
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +268,8 @@ abstract class _Token extends Token {
       required final String symbol,
       required final double initialSupply,
       required final String type,
-      required final List<TokenProperty> properties}) = _$_Token;
+      required final List<TokenProperty> properties,
+      required final List<int> aeip}) = _$_Token;
   const _Token._() : super._();
 
   @override
@@ -261,6 +286,8 @@ abstract class _Token extends Token {
   String get type;
   @override
   List<TokenProperty> get properties;
+  @override
+  List<int> get aeip;
   @override
   @JsonKey(ignore: true)
   _$$_TokenCopyWith<_$_Token> get copyWith =>

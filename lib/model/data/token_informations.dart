@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 
 part 'token_informations.g.dart';
 
-/// Next field available : 13
+/// Next field available : 14
 @HiveType(typeId: 9)
 class TokenInformations extends HiveObject {
   TokenInformations({
@@ -15,6 +15,7 @@ class TokenInformations extends HiveObject {
     this.type,
     this.symbol,
     this.tokenProperties,
+    this.aeip,
   });
 
   /// Address of token
@@ -44,4 +45,8 @@ class TokenInformations extends HiveObject {
   /// Token Properties
   @HiveField(12)
   Map<String, dynamic>? tokenProperties;
+
+  /// AEIP
+  @HiveField(13)
+  List<int>? aeip;
 }

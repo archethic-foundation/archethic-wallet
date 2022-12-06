@@ -339,6 +339,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             seed: formState.seed,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'fungible',
+            aeip: [2],
             tokenId: 0,
             properties:
                 formState.accountToken?.tokenInformations!.tokenProperties ??
@@ -367,6 +368,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             seed: formState.seed,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
+            aeip: [2],
             tokenId: 1,
             properties:
                 formState.accountToken?.tokenInformations!.tokenProperties ??
@@ -682,6 +684,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'fungible',
             tokenId: 0,
+            aeip: [2],
             properties:
                 state.accountToken?.tokenInformations!.tokenProperties ?? {},
           ),
@@ -709,6 +712,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             tokenId: 1,
+            aeip: [2],
             properties:
                 state.accountToken?.tokenInformations!.tokenProperties ?? {},
           ),

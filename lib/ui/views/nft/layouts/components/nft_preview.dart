@@ -32,7 +32,7 @@ class NFTPreviewWidget extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
     final description = tokenInformations.tokenProperties!['description'] ?? '';
-    final typeMime = tokenInformations.tokenProperties!['type/mime'] ?? '';
+    final typeMime = tokenInformations.tokenProperties!['type_mime'] ?? '';
 
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
@@ -143,10 +143,10 @@ class NFTPreviewWidget extends ConsumerWidget {
                   children: tokenInformations.tokenProperties!.entries.map((
                     MapEntry<String, dynamic> entry,
                   ) {
-                    return entry.key != 'file' &&
+                    return entry.key != 'content' &&
                             entry.key != 'description' &&
                             entry.key != 'name' &&
-                            entry.key != 'type/mime'
+                            entry.key != 'type_mime'
                         ? Padding(
                             padding: const EdgeInsets.all(5),
                             child: _buildTokenProperty(

@@ -25,5 +25,6 @@ class Transfer with _$Transfer {
     required String? tokenAddress,
     required int? tokenId,
     required Map<String, dynamic> properties,
+    required List<int> aeip,
   }) = _TransferToken;
 }

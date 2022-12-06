@@ -25,7 +25,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
   });
 
   final String propertyName;
-  final String propertyValue;
+  final dynamic propertyValue;
   final bool readOnly;
   final List<String>? propertiesHidden;
 

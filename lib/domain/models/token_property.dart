@@ -9,7 +9,7 @@ part 'token_property.freezed.dart';
 class TokenProperty with _$TokenProperty {
   const factory TokenProperty({
     required String propertyName,
-    required String propertyValue,
+    required dynamic propertyValue,
     required List<TokenPropertyAccess> publicKeys,
   }) = _TokenProperty;
   const TokenProperty._();

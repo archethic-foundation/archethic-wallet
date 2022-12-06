@@ -17,6 +17,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     required int index,
     required String originPrivateKey,
     required String tokenType,
+    required List<int> aeip,
     required List<TokenProperty> tokenProperties,
   }) {
     final transaction = archethic.Transaction(
@@ -77,6 +78,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
       supply: archethic.toBigInt(tokenInitialSupply),
       type: tokenType,
       symbol: tokenSymbol,
+      aeip: aeip,
       tokenProperties: tokenPropertiesNotProtected,
     );
 
