@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-11-30T22:42:26.376004",
+  "@@last_modified": "2022-12-06T22:36:06.415061",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -2660,6 +2660,18 @@
   },
   "noConnection": "The connection to the network could not be completed. Please check your network settings.",
   "@noConnection": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCOButton": "Get UCOs",
+  "@getUCOButton": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCODescription1": "Bring ARCHETHIC to life with your first  ",
+  "@getUCODescription1": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

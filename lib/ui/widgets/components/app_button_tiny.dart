@@ -20,6 +20,7 @@ class AppButtonTiny extends ConsumerWidget {
     required this.onPressed,
     this.disabled = false,
     this.icon,
+    this.width = 400,
     super.key,
   });
 
@@ -29,6 +30,7 @@ class AppButtonTiny extends ConsumerWidget {
   final Function onPressed;
   final bool disabled;
   final Icon? icon;
+  final double? width;
 
   @override
   Widget build(
@@ -41,7 +43,7 @@ class AppButtonTiny extends ConsumerWidget {
       case AppButtonTinyType.primary:
         return Expanded(
           child: Container(
-            width: 400,
+            width: width,
             decoration: ShapeDecoration(
               gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
@@ -119,7 +121,7 @@ class AppButtonTiny extends ConsumerWidget {
       case AppButtonTinyType.primaryOutline:
         return Expanded(
           child: Container(
-            width: 400,
+            width: width,
             decoration: ShapeDecoration(
               gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),

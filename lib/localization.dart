@@ -2076,6 +2076,15 @@ class AppLocalization {
         'The connection to the network could not be completed. Please check your network settings.',
         name: 'noConnection');
   }
+
+  String get getUCOButton {
+    return Intl.message('Get UCOs', name: 'getUCOButton');
+  }
+
+  String get getUCODescription1 {
+    return Intl.message('Bring ARCHETHIC to life with your first  ',
+        name: 'getUCODescription1');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
