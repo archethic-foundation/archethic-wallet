@@ -2657,5 +2657,17 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "getUCOButton": "Get UCOs",
+  "@getUCOButton": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCODescription1": "Bring ARCHETHIC to life with your first  ",
+  "@getUCODescription1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

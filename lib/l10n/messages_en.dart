@@ -166,6 +166,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "fungiblesTokensListNoTokenYet" : MessageLookupByLibrary.simpleMessage("No token yet"),
     "getOption" : MessageLookupByLibrary.simpleMessage("Get"),
     "getPublicKeyHeader" : MessageLookupByLibrary.simpleMessage("Access"),
+    "getUCOButton" : MessageLookupByLibrary.simpleMessage("Get UCOs"),
+    "getUCODescription1" : MessageLookupByLibrary.simpleMessage("Bring ARCHETHIC to life with your first  "),
     "go" : MessageLookupByLibrary.simpleMessage("Go!"),
     "hiddenCategories" : MessageLookupByLibrary.simpleMessage("Hidden categories"),
     "iUnderstandTheRisks" : MessageLookupByLibrary.simpleMessage("I Understand the Risks"),
