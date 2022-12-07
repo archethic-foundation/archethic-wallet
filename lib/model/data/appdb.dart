@@ -14,6 +14,7 @@ import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,9 +24,14 @@ class DBHelper {
   static const String priceTable = 'price';
 
   static Future<void> setupDatabase() async {
-    final suppDir = await getApplicationSupportDirectory();
+    if (kIsWeb) {
+      Hive.initFlutter();
+    } else {
+      final suppDir = await getApplicationSupportDirectory();
+      Hive.init(suppDir.path);
+    }
+
     Hive
-      ..init(suppDir.path)
       ..registerAdapter(ContactAdapter())
       ..registerAdapter(HiveAppWalletDTOAdapter())
       ..registerAdapter(AccountBalanceAdapter())
