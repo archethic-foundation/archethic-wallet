@@ -106,7 +106,7 @@ extension ThemePickerItemExt on PickerItem {
       true,
       decorationImageItem: DecorationImage(
         image: AssetImage(
-          '${themeSetting.getTheme().assetsFolder}/v0${Random().nextInt(4) + 1}-waves-1100.jpg',
+          '${themeSetting.getTheme().assetsFolder}v0${Random().nextInt(4) + 1}-waves-1100.jpg',
         ),
         opacity: 0.5,
         fit: BoxFit.fitWidth,
