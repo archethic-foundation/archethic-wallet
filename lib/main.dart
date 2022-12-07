@@ -54,6 +54,8 @@ Future<void> main() async {
     );
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       windowManager.setResizable(false);
+      // ignore: cascade_invocations
+      windowManager.setMaximizable(false);
       await windowManager.show();
       await windowManager.focus();
     });
