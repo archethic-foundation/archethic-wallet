@@ -109,12 +109,12 @@ class AirDrop extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: AppButtonTiny(
-                isAirdropRequestRunning
-                    ? AppButtonTinyType.primaryOutline
-                    : AppButtonTinyType.primary,
+                isAirDropRequestButtonActive
+                    ? AppButtonTinyType.primary
+                    : AppButtonTinyType.primaryOutline,
                 localizations.getUCOButton,
                 <double>[14, 8, 14, 0],
-                disabled: isAirdropRequestRunning,
+                disabled: !isAirDropRequestButtonActive,
                 showProgressIndicator: isAirdropRequestRunning,
                 key: const Key('getUCO'),
                 width: 170,
