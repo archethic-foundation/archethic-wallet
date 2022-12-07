@@ -39,7 +39,7 @@ Future<bool> _isAirdropEnabled(Ref ref) async {
         // retry request later
         Future.delayed(
           const Duration(minutes: 1),
-          () => ref.invalidate(_isAirdropEligibleProvider),
+          () => ref.invalidate(_isAirdropEnabledProvider),
         );
 
         return false;
@@ -139,7 +139,7 @@ class _AirDropRequestNotifier extends AsyncNotifier<void> {
 
       ref
         ..read(AirDropProviders.airdropCooldown.notifier).startCooldown()
-        ..invalidate(_isAirdropEligibleProvider)
+        ..invalidate(_isAirdropEnabledProvider)
         ..read(AccountProviders.selectedAccount.notifier)
             .refreshRecentTransactions();
 

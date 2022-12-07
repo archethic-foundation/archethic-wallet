@@ -30,7 +30,7 @@ class _SystemHash {
 }
 
 String $_isAirDropRequestButtonActiveHash() =>
-    r'2f9940dee26e7beb5d583bb287b0fe58d60f0d39';
+    r'7b567d21c5109b0e5b06cbc25ced8c16e60cb519';
 
 /// True if the AirDrop request button should be active
 ///
