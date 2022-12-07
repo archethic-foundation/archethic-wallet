@@ -66,7 +66,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
-        LengthLimitingTextInputFormatter(30),
+        LengthLimitingTextInputFormatter(40),
       ],
       onChanged: (text) {
         nftCreationNotifier.setName(text);
