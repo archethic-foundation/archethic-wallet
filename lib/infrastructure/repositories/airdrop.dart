@@ -56,7 +56,6 @@ class AirDropRepository implements AirDropRepositoryInterface {
     required String keychainAddress,
   }) async =>
       Result.guard(() async {
-        await Future.delayed(Duration(seconds: 3));
         const airDropSecret = String.fromEnvironment('AIRDROP_SECRET');
         final key = utf8.encode(airDropSecret);
         final bytes = utf8.encode(challenge);
@@ -87,12 +86,16 @@ class AirDropRepository implements AirDropRepositoryInterface {
         if (response.statusCode != 200) {
           throw const Failure.other();
         }
-        (await preferences).setLastAirdropDate(DateTime.now());
       });
 
   @override
   Future<DateTime?> getLastAirdropDate() async {
     return (await preferences).getLastAirdropDate();
+  }
+
+  @override
+  Future<void> setLastAirdropDate() async {
+    (await preferences).setLastAirdropDate(DateTime.now());
   }
 
   @override

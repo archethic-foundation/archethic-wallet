@@ -40,20 +40,11 @@ final _airDropRepositoryProvider = Provider<AirDropRepositoryInterface>(
       : $_airDropRepositoryHash,
 );
 typedef _AirDropRepositoryRef = ProviderRef<AirDropRepositoryInterface>;
-String $_airdropCooldownHash() => r'90a7d7f222b26a81f09ff5d25411fbc0e6c6f072';
+String $_isAirdropEligibleHash() => r'e9c9350992f33b59625d7e23adbf52fb744e5ca6';
 
-/// See also [_airdropCooldown].
-final _airdropCooldownProvider = FutureProvider<Duration>(
-  _airdropCooldown,
-  name: r'_airdropCooldownProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_airdropCooldownHash,
-);
-typedef _AirdropCooldownRef = FutureProviderRef<Duration>;
-String $_isAirdropEligibleHash() => r'822f16247707f90430d8ce617c36b1b7bbf1d787';
-
-/// See also [_isAirdropEligible].
+/// Is currently selected account authorized to claim Airdrop reward ?
+///
+/// Copied from [_isAirdropEligible].
 final _isAirdropEligibleProvider = FutureProvider<bool>(
   _isAirdropEligible,
   name: r'_isAirdropEligibleProvider',
@@ -62,3 +53,14 @@ final _isAirdropEligibleProvider = FutureProvider<bool>(
       : $_isAirdropEligibleHash,
 );
 typedef _IsAirdropEligibleRef = FutureProviderRef<bool>;
+String $_isAirdropEnabledHash() => r'7b901542684b974b9fcb7f0ab2e92750fcf7ca96';
+
+/// See also [_isAirdropEnabled].
+final _isAirdropEnabledProvider = FutureProvider<bool>(
+  _isAirdropEnabled,
+  name: r'_isAirdropEnabledProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_isAirdropEnabledHash,
+);
+typedef _IsAirdropEnabledRef = FutureProviderRef<bool>;

@@ -23,7 +23,7 @@ bool _isAirDropRequestButtonActive(Ref ref) {
             data: (data) => data > Duration.zero,
             orElse: () => true,
           );
-  final isAirdropEligible = ref.watch(AirDropProviders.isEligible).maybeWhen(
+  final isAirdropEnabled = ref.watch(AirDropProviders.isEnabled).maybeWhen(
         data: id,
         orElse: () => false,
       );
@@ -31,7 +31,7 @@ bool _isAirDropRequestButtonActive(Ref ref) {
   final isAirDropRequestRunning =
       ref.watch(AirDropProviders.airDropRequest).isLoading;
 
-  return !isCooldownActive && isAirdropEligible && !isAirDropRequestRunning;
+  return !isCooldownActive && isAirdropEnabled && !isAirDropRequestRunning;
 }
 
 class AirDrop extends ConsumerWidget {

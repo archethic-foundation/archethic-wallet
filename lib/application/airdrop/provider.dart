@@ -4,6 +4,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/repositories/airdrop.dart';
 import 'package:aewallet/infrastructure/repositories/airdrop.dart';
 import 'package:aewallet/util/date_util.dart';
+import 'package:aewallet/util/functional_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,28 +16,8 @@ AirDropRepositoryInterface _airDropRepository(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-Future<Duration> _airdropCooldown(Ref ref) async {
-  final repository = ref.watch(_airDropRepositoryProvider);
-  final lastAirDropDate = await repository.getLastAirdropDate();
-
-  if (lastAirDropDate == null) return Duration.zero;
-
-  final cooldownEndDate =
-      lastAirDropDate.toUtc().add(const Duration(hours: 24)).startOfDay;
-  final cooldownRemainingTime =
-      cooldownEndDate.difference(DateTime.now().toUtc()).max(Duration.zero);
-
-  Future.delayed(
-    const Duration(minutes: 1),
-    () {
-      ref.invalidate(_airdropCooldownProvider);
-    },
-  );
-  return cooldownRemainingTime;
-}
-
-@Riverpod(keepAlive: true)
-Future<bool> _isAirdropEligible(Ref ref) async {
+Future<bool> _isAirdropEnabled(Ref ref) async {
+  /// If the airdrop API replyes as expected, it means airdrop is enabled.
   final repository = ref.watch(_airDropRepositoryProvider);
 
   final installationId = await ref.watch(
@@ -46,7 +27,57 @@ Future<bool> _isAirdropEligible(Ref ref) async {
   final airDropChallenge = await repository.requestChallenge(
     deviceId: installationId,
   );
-  return airDropChallenge.valueOrNull != null;
+
+  return airDropChallenge.map(
+    success: (_) => true,
+    failure: (failure) => failure.maybeMap(
+      quotaExceeded: (_) async {
+        ref.read(AirDropProviders.airdropCooldown.notifier).startCooldown();
+        return true;
+      },
+      orElse: () {
+        // retry request later
+        Future.delayed(
+          const Duration(minutes: 1),
+          () => ref.invalidate(_isAirdropEligibleProvider),
+        );
+
+        return false;
+      },
+    ),
+  );
+}
+
+class _AirDropCooldownNotifier extends AsyncNotifier<Duration> {
+  @override
+  FutureOr<Duration> build() async {
+    final repository = ref.watch(_airDropRepositoryProvider);
+    final lastAirDropDate = await repository.getLastAirdropDate();
+
+    if (lastAirDropDate == null) return Duration.zero;
+
+    final cooldownEndDate =
+        lastAirDropDate.toUtc().add(const Duration(hours: 24)).startOfDay;
+    final cooldownRemainingTime =
+        cooldownEndDate.difference(DateTime.now().toUtc()).max(Duration.zero);
+
+    Future.delayed(
+      const Duration(minutes: 1),
+      () {
+        ref.invalidate(AirDropProviders.airdropCooldown);
+      },
+    );
+    return cooldownRemainingTime;
+  }
+
+  Future<void> startCooldown() async {
+    if (state.isLoading || state.valueOrNull != Duration.zero) return;
+
+    final repository = ref.watch(_airDropRepositoryProvider);
+    await repository.setLastAirdropDate();
+
+    ref.invalidate(AirDropProviders.airdropCooldown);
+  }
 }
 
 class _AirDropRequestNotifier extends AsyncNotifier<void> {
@@ -75,39 +106,61 @@ class _AirDropRequestNotifier extends AsyncNotifier<void> {
       final airDropChallenge = (await repository.requestChallenge(
         deviceId: installationId,
       ))
-          .valueOrThrow;
+          .map(
+        success: id,
+        failure: (failure) => failure.maybeMap(
+          quotaExceeded: (quotaExceeded) {
+            ref.read(AirDropProviders.airdropCooldown.notifier).startCooldown();
+            throw failure;
+          },
+          orElse: () {
+            throw failure;
+          },
+        ),
+      );
 
-      final result = await repository.requestAirDrop(
+      final result = (await repository.requestAirDrop(
         challenge: airDropChallenge,
         deviceId: installationId,
         keychainAddress: accountLastAddress,
+      ))
+          .map(
+        success: id,
+        failure: (failure) => failure.maybeMap(
+          quotaExceeded: (quotaExceeded) {
+            ref.read(AirDropProviders.airdropCooldown.notifier).startCooldown();
+            throw failure;
+          },
+          orElse: () {
+            throw failure;
+          },
+        ),
       );
 
-      if (result.isValue) {
-        ref
-          ..invalidate(_isAirdropEligibleProvider)
-          ..invalidate(_airdropCooldownProvider)
-          ..read(AccountProviders.selectedAccount.notifier)
-              .refreshRecentTransactions();
-      }
+      ref
+        ..read(AirDropProviders.airdropCooldown.notifier).startCooldown()
+        ..invalidate(_isAirdropEligibleProvider)
+        ..read(AccountProviders.selectedAccount.notifier)
+            .refreshRecentTransactions();
 
-      return result.valueOrThrow;
+      return result;
     });
   }
 }
 
 abstract class AirDropProviders {
-  static final isEligible = _isAirdropEligibleProvider;
+  static final isEnabled = _isAirdropEnabledProvider;
   static final airDropRequest =
       AsyncNotifierProvider<_AirDropRequestNotifier, void>(
     _AirDropRequestNotifier.new,
   );
-  static final airdropCooldown = _airdropCooldownProvider;
+  static final airdropCooldown =
+      AsyncNotifierProvider<_AirDropCooldownNotifier, Duration>(
+    _AirDropCooldownNotifier.new,
+  );
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_airDropRepositoryProvider).clear();
-    ref
-      ..invalidate(isEligible)
-      ..invalidate(airdropCooldown);
+    ref.invalidate(airdropCooldown);
   }
 }

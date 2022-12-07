@@ -17,6 +17,8 @@ abstract class AirDropRepositoryInterface {
 
   Future<DateTime?> getLastAirdropDate();
 
+  Future<void> setLastAirdropDate();
+
   /// Clears all stored data
   Future<void> clear();
 }
