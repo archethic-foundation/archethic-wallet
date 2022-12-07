@@ -179,35 +179,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                if (widget.description != null)
-                                  Container(
-                                    margin: const EdgeInsetsDirectional.only(
-                                      start: 20,
-                                      end: 20,
-                                      top: 15,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Icon(
-                                            UiIcons.about,
-                                            color: theme.text,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          widget.description!,
-                                          style:
-                                              theme.textStyleSize12W100Primary,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                               ],
                             ),
                           ),
