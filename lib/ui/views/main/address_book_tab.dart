@@ -102,7 +102,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                       textAlign: TextAlign.center,
                       controller: searchNameController,
                       autocorrect: false,
-                      autofocus: true,
                       cursorColor: theme.text,
                       inputFormatters: <TextInputFormatter>[
                         UpperCaseTextFormatter(),
