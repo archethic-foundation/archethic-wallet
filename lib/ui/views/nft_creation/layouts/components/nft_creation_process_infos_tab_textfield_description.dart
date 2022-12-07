@@ -68,9 +68,6 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
       keyboardType: TextInputType.multiline,
       maxLines: 4,
       style: theme.textStyleSize16W600Primary,
-      inputFormatters: <LengthLimitingTextInputFormatter>[
-        LengthLimitingTextInputFormatter(40),
-      ],
       onChanged: (text) {
         nftCreationNotifier.setDescription(text);
       },
