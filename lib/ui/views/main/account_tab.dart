@@ -102,12 +102,14 @@ class AccountTab extends ConsumerWidget {
                               color: theme.backgroundDarkest!.withOpacity(0.1),
                             ),
 
-                            const AirDrop(),
+                            if (!AirDrop.shouldBeVisible(ref)) const AirDrop(),
+                            if (!AirDrop.shouldBeVisible(ref))
+                              Divider(
+                                height: 1,
+                                color:
+                                    theme.backgroundDarkest!.withOpacity(0.1),
+                              ),
 
-                            Divider(
-                              height: 1,
-                              color: theme.backgroundDarkest!.withOpacity(0.1),
-                            ),
                             const SizedBox(
                               height: 15,
                             ),

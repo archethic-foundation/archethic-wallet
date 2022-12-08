@@ -1,14 +1,17 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/airdrop/provider.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/functional_utils.dart';
+import 'package:aewallet/util/screen_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -36,6 +39,13 @@ bool _isAirDropRequestButtonActive(Ref ref) {
 
 class AirDrop extends ConsumerWidget {
   const AirDrop({super.key});
+
+  static bool shouldBeVisible(WidgetRef ref) {
+    if (ScreenUtil.isDesktopMode()) return false;
+    if (ref.read(SettingsProviders.settings).network.network !=
+        AvailableNetworks.archethicMainNet) return false;
+    return true;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
