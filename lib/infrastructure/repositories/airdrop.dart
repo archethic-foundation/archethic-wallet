@@ -9,7 +9,7 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
 class _AirDropRoutes {
-  String get uriRoot => 'http://192.168.1.20:3000';
+  String get uriRoot => 'http://127.0.0.1:3000';
   String get challenge => '$uriRoot/challenge';
   String get claim => '$uriRoot/claim';
 }
@@ -84,6 +84,9 @@ class AirDropRepository implements AirDropRepositoryInterface {
         }
 
         if (response.statusCode != 200) {
+          if (response.body.contains('Insufficient funds')) {
+            throw const Failure.insufficientFunds();
+          }
           throw const Failure.other();
         }
       });
