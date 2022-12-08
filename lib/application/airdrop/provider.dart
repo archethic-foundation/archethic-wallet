@@ -10,7 +10,6 @@ import 'package:aewallet/util/functional_utils.dart';
 import 'package:aewallet/util/screen_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:safe_device/safe_device.dart';
 
 part 'provider.g.dart';
 
@@ -24,9 +23,6 @@ Future<bool> _isDeviceCompatible(Ref ref) async {
   if (ScreenUtil.isDesktopMode()) return false;
   if (ref.read(SettingsProviders.settings).network.network !=
       AvailableNetworks.archethicMainNet) return false;
-
-  final isSafeDevice = await SafeDevice.isSafeDevice;
-  if (isSafeDevice == false) return false;
 
   return true;
 }
