@@ -1,0 +1,4 @@
+Archethic Wallet - Version 2.0.0 Build 315
+
+Enhancements
+- We have fixed the display of recent transactions that were not showing the latest receipts.

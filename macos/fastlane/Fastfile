@@ -13,48 +13,30 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-platform :ios do
-  desc "Publish to iOS App Store"
-  lane :release do
-    version_code = getVersionCode(getVersionInfo())
-    version_name = getVersionName(getVersionInfo())
-    flutter_build(version_name,version_code, "ios")
-    build_ios_app(workspace: "ios/Runner.xcworkspace", scheme: "Runner")
-    upload_to_app_store
-  end
-  
-  desc "Publish to iOS TestFlight"
-  lane :beta do
-    version_code = getVersionCode(getVersionInfo())
-    version_name = getVersionName(getVersionInfo())
-    flutter_build(version_name,version_code, "ios")
-    build_ios_app(workspace: "ios/Runner.xcworkspace", scheme: "Runner")
-    upload_to_testflight
-  end
-end
+default_platform(:mac)
 
 platform :mac do
-  desc "Publish to MacOS App Store"
+  desc "Push a new release build to the App Store"
   lane :release do
     version_code = getVersionCode(getVersionInfo())
     version_name = getVersionName(getVersionInfo())
     flutter_build(version_name,version_code, "macos")
-    build_mac_app(workspace: "macos/Runner.xcworkspace", scheme: "Runner",
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner",
     export_options: {
       provisioningProfiles: { 
         "tech.archethic.wallet" => "Archethic Wallet Mac",
       }
     },
     installer_cert_name: "3rd Party Mac Developer Installer: Archethic Technologies SARL (2QGGN9QQKR)")
-    upload_to_app_store(pkg: "archethic_wallet.pkg")
+    upload_to_app_store
   end
-  
-  desc "Publish to MacOS TestFlight"
+
+  desc "Push a new release build to TestFlight"
   lane :beta do
     version_code = getVersionCode(getVersionInfo())
     version_name = getVersionName(getVersionInfo())
     flutter_build(version_name,version_code, "macos")
-    build_mac_app(workspace: "macos/Runner.xcworkspace", scheme: "Runner",  
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner",  
     export_options: {
       provisioningProfiles: { 
         "tech.archethic.wallet" => "Archethic Wallet Mac",
@@ -62,41 +44,12 @@ platform :mac do
     },
     installer_cert_name: "3rd Party Mac Developer Installer: Archethic Technologies SARL (2QGGN9QQKR)")
     upload_to_testflight
-  end
-end
-
-platform :android do
-  desc "Publish to GooglePlay"
-  lane :release do 
-    version_code = getVersionCode(getVersionInfo())
-    version_name = getVersionName(getVersionInfo())
-    flutter_build(version_name,version_code, "appbundle")
-    
-    upload_to_play_store(
-      track: 'production',
-      version_code: version_code,
-      aab: 'build/app/outputs/bundle/release/app-release.aab',
-    )
-  end
-    
-  desc "Publish to GooglePlay Beta"
-  lane :beta do 
-    desc "Deploy to beta canal"
-    version_code = getVersionCode(getVersionInfo())
-    version_name = getVersionName(getVersionInfo())
-    flutter_build(version_name,version_code, "appbundle")
-
-    upload_to_play_store(
-      track: 'beta',
-      version_code: version_code,
-      aab: 'build/app/outputs/bundle/release/app-release.aab',
-    )
-  end
+    end
 end
 
 def getVersionInfo()
   version_info = flutter_version(
-    pubspec_location: 'pubspec.yaml'
+    pubspec_location: '../pubspec.yaml'
   )
 end
 
