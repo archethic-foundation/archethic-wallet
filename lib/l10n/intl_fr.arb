@@ -340,7 +340,7 @@
 	"tokenSupply": "Offre :",
 	"tokenInitialSupplyTooHigh": "L'offre est trop élevée",
 	"tokenSymbol": "Symbole :",
-	"tokenSymbolMaxNumberCharacter": "4 caractères maximum",
+	"tokenSymbolMaxNumberCharacter": "10 caractères maximum",
 	"tokenSymbolHint": "Entrer un symbole",
 	"createFungibleToken": "Créer un jeton",
 	"token": "jeton",

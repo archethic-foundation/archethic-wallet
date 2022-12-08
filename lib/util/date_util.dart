@@ -3,9 +3,6 @@ extension DateTimeUtil on DateTime {
         year,
         month,
         day,
-        0,
-        0,
-        0,
       );
 }
 

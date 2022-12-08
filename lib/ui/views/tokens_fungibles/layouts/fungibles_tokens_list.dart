@@ -2,7 +2,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -29,12 +28,6 @@ class FungiblesTokensListWidget extends ConsumerWidget {
         ) ??
         [];
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final session = ref.watch(SessionProviders.session).loggedIn;
-    final accountSelected = ref
-        .watch(
-          AccountProviders.selectedAccount,
-        )
-        .valueOrNull;
     if (fungibleTokensAsyncValue.isEmpty == true) {
       return Container(
         alignment: Alignment.center,
@@ -136,52 +129,56 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: theme.backgroundDark!.withOpacity(0.3),
-                        border: Border.all(
-                          color: theme.backgroundDarkest!.withOpacity(0.2),
-                          width: 2,
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: theme.backgroundDark!.withOpacity(0.3),
+                          border: Border.all(
+                            color: theme.backgroundDarkest!.withOpacity(0.2),
+                            width: 2,
+                          ),
+                        ),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_circle_up_outlined,
+                            color: theme.backgroundDarkest,
+                            size: 21,
+                          ),
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            await TransferSheet(
+                              transferType: TransferType.token,
+                              accountToken: accountFungibleToken,
+                              recipient: const TransferRecipient.address(
+                                address: Address(''),
+                              ),
+                            ).show(
+                              context: context,
+                              ref: ref,
+                            );
+                          },
                         ),
                       ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_circle_up_outlined,
-                          color: theme.backgroundDarkest,
-                          size: 21,
-                        ),
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          await TransferSheet(
-                            transferType: TransferType.token,
-                            accountToken: accountFungibleToken,
-                            recipient: const TransferRecipient.address(
-                              address: Address(''),
-                            ),
-                          ).show(
-                            context: context,
-                            ref: ref,
-                          );
-                        },
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      accountFungibleToken.tokenInformations!.name!,
-                      style: theme.textStyleSize12W600Primary,
-                    ),
-                  ],
+                      Expanded(
+                        child: Text(
+                          accountFungibleToken.tokenInformations!.name!,
+                          style: theme.textStyleSize12W600Primary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 if (preferences.showBalances == true)
                   Column(
