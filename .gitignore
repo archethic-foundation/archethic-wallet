@@ -142,4 +142,4 @@ macos/archethic_wallet.pkg
 node_modules/
 Appfile
 fastlane/metadata/**/Preview.html
-fastlane/metadata/**/report.xml
+report.xml
