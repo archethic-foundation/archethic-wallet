@@ -21,6 +21,7 @@ mixin _$Failure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) =>
@@ -30,6 +31,7 @@ mixin _$Failure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) =>
@@ -39,6 +41,7 @@ mixin _$Failure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -49,6 +52,7 @@ mixin _$Failure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) =>
@@ -58,6 +62,7 @@ mixin _$Failure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) =>
@@ -67,6 +72,7 @@ mixin _$Failure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -132,6 +138,7 @@ class _$_LoggedOut extends _LoggedOut {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -144,6 +151,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -156,6 +164,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -172,6 +181,7 @@ class _$_LoggedOut extends _LoggedOut {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -184,6 +194,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -196,6 +207,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -253,6 +265,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -265,6 +278,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -277,6 +291,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -293,6 +308,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -305,6 +321,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -317,6 +334,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -374,6 +392,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -386,6 +405,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -398,6 +418,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -414,6 +435,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -426,6 +448,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -438,6 +461,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -452,6 +476,133 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
 abstract class _QuotaExceededFailure extends Failure {
   const factory _QuotaExceededFailure() = _$_QuotaExceededFailure;
   const _QuotaExceededFailure._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_InsuffientFundsCopyWith<$Res> {
+  factory _$$_InsuffientFundsCopyWith(
+          _$_InsuffientFunds value, $Res Function(_$_InsuffientFunds) then) =
+      __$$_InsuffientFundsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_InsuffientFundsCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_InsuffientFunds>
+    implements _$$_InsuffientFundsCopyWith<$Res> {
+  __$$_InsuffientFundsCopyWithImpl(
+      _$_InsuffientFunds _value, $Res Function(_$_InsuffientFunds) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_InsuffientFunds extends _InsuffientFunds {
+  const _$_InsuffientFunds() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.insufficientFunds()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_InsuffientFunds);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
+    required TResult Function() invalidValue,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return insufficientFunds();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return insufficientFunds?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
+    TResult Function()? invalidValue,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (insufficientFunds != null) {
+      return insufficientFunds();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return insufficientFunds(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return insufficientFunds?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (insufficientFunds != null) {
+      return insufficientFunds(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InsuffientFunds extends Failure {
+  const factory _InsuffientFunds() = _$_InsuffientFunds;
+  const _InsuffientFunds._() : super._();
 }
 
 /// @nodoc
@@ -495,6 +646,7 @@ class _$_InvalidValue extends _InvalidValue {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -507,6 +659,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -519,6 +672,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -535,6 +689,7 @@ class _$_InvalidValue extends _InvalidValue {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -547,6 +702,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -559,6 +715,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -648,6 +805,7 @@ class _$_OtherFailure extends _OtherFailure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function() quotaExceeded,
+    required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -660,6 +818,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function()? quotaExceeded,
+    TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -672,6 +831,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function()? quotaExceeded,
+    TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -688,6 +848,7 @@ class _$_OtherFailure extends _OtherFailure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -700,6 +861,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -712,6 +874,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),

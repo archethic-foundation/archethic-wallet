@@ -12,6 +12,9 @@
 .history
 .svn/
 
+
+# Fastlane
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -137,16 +140,6 @@ macos/archethic_wallet.app.dSYM.zip
 macos/archethic_wallet.pkg
 .firebase/hosting.YnVpbGQvd2Vi.cache
 node_modules/
-fastlane/metadata/android/Appfile
-fastlane/metadata/ios/Appfile
-fastlane/metadata/ios/Preview.html
-fastlane/metadata/ios/report.xml
-fastlane/metadata/macos/Appfile
-fastlane/metadata/macos/Preview.html
-fastlane/metadata/macos/report.xml
-fastlane/metadata/android/report.xml
-android/fastlane/Appfile
-ios/fastlane/Appfile
-macos/fastlane/Appfile
-ios/fastlane/Preview.html
-macos/fastlane/Preview.html
+Appfile
+fastlane/metadata/**/Preview.html
+fastlane/metadata/**/report.xml

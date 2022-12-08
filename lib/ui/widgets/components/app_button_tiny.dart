@@ -18,17 +18,21 @@ class AppButtonTiny extends ConsumerWidget {
     this.buttonText,
     this.dimens, {
     required this.onPressed,
+    this.showProgressIndicator = false,
     this.disabled = false,
     this.icon,
+    this.width = 400,
     super.key,
   });
 
+  final bool showProgressIndicator;
   final AppButtonTinyType type;
   final String buttonText;
   final List<double> dimens;
   final Function onPressed;
   final bool disabled;
   final Icon? icon;
+  final double? width;
 
   @override
   Widget build(
@@ -41,7 +45,7 @@ class AppButtonTiny extends ConsumerWidget {
       case AppButtonTinyType.primary:
         return Expanded(
           child: Container(
-            width: 400,
+            width: width,
             decoration: ShapeDecoration(
               gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
@@ -69,12 +73,31 @@ class AppButtonTiny extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: theme.textStyleSize12W400EquinoxMainButtonLabel,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (showProgressIndicator) const Spacer(),
+                        AutoSizeText(
+                          buttonText,
+                          textAlign: TextAlign.center,
+                          style:
+                              theme.textStyleSize12W400EquinoxMainButtonLabel,
+                          maxLines: 1,
+                          stepGranularity: 0.5,
+                        ),
+                        if (showProgressIndicator) const Spacer(),
+                        if (showProgressIndicator)
+                          SizedBox.square(
+                            dimension: 10,
+                            child: CircularProgressIndicator(
+                              color: theme
+                                  .textStyleSize12W400EquinoxMainButtonLabel
+                                  .color,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                      ],
                     ),
                     onPressed: () {
                       if (!disabled) {
@@ -119,7 +142,7 @@ class AppButtonTiny extends ConsumerWidget {
       case AppButtonTinyType.primaryOutline:
         return Expanded(
           child: Container(
-            width: 400,
+            width: width,
             decoration: ShapeDecoration(
               gradient: theme.gradientMainButton,
               shape: const StadiumBorder(),
@@ -139,13 +162,31 @@ class AppButtonTiny extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: theme
-                          .textStyleSize12W400EquinoxMainButtonLabelDisabled,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (showProgressIndicator) const Spacer(),
+                        AutoSizeText(
+                          buttonText,
+                          textAlign: TextAlign.center,
+                          style: theme
+                              .textStyleSize12W400EquinoxMainButtonLabelDisabled,
+                          maxLines: 1,
+                          stepGranularity: 0.5,
+                        ),
+                        if (showProgressIndicator) const Spacer(),
+                        if (showProgressIndicator)
+                          SizedBox.square(
+                            dimension: 10,
+                            child: CircularProgressIndicator(
+                              color: theme
+                                  .textStyleSize12W400EquinoxMainButtonLabel
+                                  .color,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                      ],
                     ),
                     onPressed: () {
                       if (!disabled) {
@@ -186,6 +227,221 @@ class AppButtonTiny extends ConsumerWidget {
                     },
                   ),
           ),
+        );
+    }
+  } //
+}
+
+class AppButtonTinyWithoutExpanded extends ConsumerWidget {
+  const AppButtonTinyWithoutExpanded(
+    this.type,
+    this.buttonText,
+    this.dimens, {
+    required this.onPressed,
+    this.showProgressIndicator = false,
+    this.disabled = false,
+    this.icon,
+    this.width = 400,
+    super.key,
+  });
+
+  final bool showProgressIndicator;
+  final AppButtonTinyType type;
+  final String buttonText;
+  final List<double> dimens;
+  final Function onPressed;
+  final bool disabled;
+  final Icon? icon;
+  final double? width;
+
+  @override
+  Widget build(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final preferences = ref.watch(SettingsProviders.settings);
+    switch (type) {
+      case AppButtonTinyType.primary:
+        return Container(
+          width: width,
+          decoration: ShapeDecoration(
+            gradient: theme.gradientMainButton,
+            shape: const StadiumBorder(),
+            shadows: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 7,
+                spreadRadius: 1,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          height: 35,
+          margin: EdgeInsetsDirectional.fromSTEB(
+            dimens[0],
+            dimens[1],
+            dimens[2],
+            dimens[3],
+          ),
+          child: icon == null
+              ? TextButton(
+                  key: key,
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (showProgressIndicator) const Spacer(),
+                      AutoSizeText(
+                        buttonText,
+                        textAlign: TextAlign.center,
+                        style: theme.textStyleSize12W400EquinoxMainButtonLabel,
+                        maxLines: 1,
+                        stepGranularity: 0.5,
+                      ),
+                      if (showProgressIndicator) const Spacer(),
+                      if (showProgressIndicator)
+                        SizedBox.square(
+                          dimension: 10,
+                          child: CircularProgressIndicator(
+                            color: theme
+                                .textStyleSize12W400EquinoxMainButtonLabel
+                                .color,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                    ],
+                  ),
+                  onPressed: () {
+                    if (!disabled) {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      onPressed();
+                    }
+                    return;
+                  },
+                )
+              : TextButton.icon(
+                  key: key,
+                  style: TextButton.styleFrom(
+                    foregroundColor: theme.text,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  icon: icon!,
+                  label: AutoSizeText(
+                    buttonText,
+                    textAlign: TextAlign.center,
+                    style: theme.textStyleSize12W400EquinoxMainButtonLabel,
+                    maxLines: 1,
+                    stepGranularity: 0.5,
+                  ),
+                  onPressed: () {
+                    if (!disabled) {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      onPressed();
+                    }
+                    return;
+                  },
+                ),
+        );
+      case AppButtonTinyType.primaryOutline:
+        return Container(
+          width: width,
+          decoration: ShapeDecoration(
+            gradient: theme.gradientMainButton,
+            shape: const StadiumBorder(),
+          ),
+          height: 35,
+          margin: EdgeInsetsDirectional.fromSTEB(
+            dimens[0],
+            dimens[1],
+            dimens[2],
+            dimens[3],
+          ),
+          child: icon == null
+              ? TextButton(
+                  key: key,
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (showProgressIndicator) const Spacer(),
+                      AutoSizeText(
+                        buttonText,
+                        textAlign: TextAlign.center,
+                        style: theme
+                            .textStyleSize12W400EquinoxMainButtonLabelDisabled,
+                        maxLines: 1,
+                        stepGranularity: 0.5,
+                      ),
+                      if (showProgressIndicator) const Spacer(),
+                      if (showProgressIndicator)
+                        SizedBox.square(
+                          dimension: 10,
+                          child: CircularProgressIndicator(
+                            color: theme
+                                .textStyleSize12W400EquinoxMainButtonLabel
+                                .color,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                    ],
+                  ),
+                  onPressed: () {
+                    if (!disabled) {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      onPressed();
+                    }
+                    return;
+                  },
+                )
+              : TextButton.icon(
+                  key: key,
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  icon: icon!,
+                  label: AutoSizeText(
+                    buttonText,
+                    textAlign: TextAlign.center,
+                    style:
+                        theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
+                    maxLines: 1,
+                    stepGranularity: 0.5,
+                  ),
+                  onPressed: () {
+                    if (!disabled) {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      onPressed();
+                    }
+                    return;
+                  },
+                ),
         );
     }
   } //

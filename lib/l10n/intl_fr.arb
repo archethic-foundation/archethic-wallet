@@ -12,6 +12,8 @@
 	"add": "Ajouter",
 	"update": "Mettre à jour",
 	"previewNotAvailable": "Aperçu non disponible",
+	"airdropError_QUOTA_EXCEEDED_ERROR": "Vous avez déjà reçu la récompense.",
+	"airdropError_BACKEND_ERROR": "Une erreur s'est produite. Essayer à nouveau plus tard.",
 	"noToken": "Aucun jeton",
 	"noNFT": "Aucun NFT",
 	"transferTokens": "Envoyer des %1",
@@ -443,5 +445,15 @@
 	"nftAddImportUrl": "Url",
 	"nftAddPreview": "Votre NFT (Preview)",
 	"nftAddFileSize": "Taille: ",
-	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?"
+	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?",
+	"getUCOButton": "Obtenir des UCOs",
+	"getUCODescription1": "Donnez vie à ARCHETHIC avec vos 1 ers  ",
+	"getUCOInformation": "Vous allez recevoir dans quelques minutes vos UCOs qui vous permettront d'utiliser le réseau Archethic et les fonctionnalités de votre wallet.",
+	"getUCOInformationAlreadyReceived": "Vous avez déjà reçu vos UCOs.",
+	"getUCOInformationBackendError": "Une erreur s'est produite. Essayer à nouveau plus tard.",
+	"getUCOInformationInsufficientBalance": "The faucet is currently empty. Please reiterate your request tomorrow.",
+	"getUCOCount": "Rdv dans %1h%2 pour obtenir de nouveaux UCOs...",
+	"@getUCOCount": {
+		"placeholders": {}
+	}
 }

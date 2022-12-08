@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/airdrop/provider.dart';
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
@@ -26,6 +27,9 @@ class AccountTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+
+    final isDeviceFaucetCompatible =
+        ref.watch(AirDropProviders.isDeviceCompatible).valueOrNull ?? false;
 
     return Column(
       children: [
@@ -102,13 +106,14 @@ class AccountTab extends ConsumerWidget {
                               color: theme.backgroundDarkest!.withOpacity(0.1),
                             ),
 
-                            /// ICONS
-                            //const AirDrop(),
+                            if (isDeviceFaucetCompatible) const AirDrop(),
+                            if (isDeviceFaucetCompatible)
+                              Divider(
+                                height: 1,
+                                color:
+                                    theme.backgroundDarkest!.withOpacity(0.1),
+                              ),
 
-                            Divider(
-                              height: 1,
-                              color: theme.backgroundDarkest!.withOpacity(0.1),
-                            ),
                             const SizedBox(
                               height: 15,
                             ),

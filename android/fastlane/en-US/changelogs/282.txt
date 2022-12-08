@@ -1,5 +1,0 @@
-Archethic Wallet - Version Bug Bounty 1.0.7 Build 282
-
-Enhancements
-- Improve messages to inform users when a transaction is sent 
-- Technical migration (Flutter 3.3)

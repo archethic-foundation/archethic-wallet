@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'wallet.dart';
+part of 'device_info.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,32 +29,26 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'bf30aade70d0ab61a35dd5a72be3f9c1e3110e6c';
+String $_deviceInfoRepositoryHash() =>
+    r'c3fd974e71cc6de779146c10d9813d82c620e85d';
 
-/// See also [_SessionNotifier].
-final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
-  _SessionNotifier.new,
-  name: r'_sessionNotifierProvider',
+/// See also [_deviceInfoRepository].
+final _deviceInfoRepositoryProvider = Provider<DeviceInfoRepositoryInterface>(
+  _deviceInfoRepository,
+  name: r'_deviceInfoRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_SessionNotifierHash,
+      : $_deviceInfoRepositoryHash,
 );
-typedef _SessionNotifierRef = NotifierProviderRef<Session>;
+typedef _DeviceInfoRepositoryRef = ProviderRef<DeviceInfoRepositoryInterface>;
+String $_installationIdHash() => r'3731950a3232f2db42099228140ebc5fa99b22a0';
 
-abstract class _$SessionNotifier extends Notifier<Session> {
-  @override
-  Session build();
-}
-
-String $_archethicWalletKeychainHash() =>
-    r'8bdb02d5a592f835ff8a33cc09d0f722d3b8fb5a';
-
-/// See also [_archethicWalletKeychain].
-final _archethicWalletKeychainProvider = AutoDisposeFutureProvider<Keychain?>(
-  _archethicWalletKeychain,
-  name: r'_archethicWalletKeychainProvider',
+/// See also [_installationId].
+final _installationIdProvider = FutureProvider<String>(
+  _installationId,
+  name: r'_installationIdProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_archethicWalletKeychainHash,
+      : $_installationIdHash,
 );
-typedef _ArchethicWalletKeychainRef = AutoDisposeFutureProviderRef<Keychain?>;
+typedef _InstallationIdRef = FutureProviderRef<String>;

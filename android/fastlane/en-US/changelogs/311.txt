@@ -1,7 +1,0 @@
-Archethic Wallet - Version 1.1.2 Build 311
-
-New Feature
-- NFT Creation and transfer
-
-Enhancements
-- Improve performance

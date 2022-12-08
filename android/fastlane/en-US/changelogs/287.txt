@@ -1,5 +1,0 @@
-Archethic Wallet - Version Bug Bounty 1.0.8 Build 287
-
-Enhancements
-- Prevent memory leaks
-- Add new flat themes
