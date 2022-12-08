@@ -2696,7 +2696,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "getUCOCount": "See you in %1:%2 to get new UCOs...",
+  "getUCOCount": "See you in %1h%2 to get new UCOs...",
   "@getUCOCount": {
     "placeholders": {}
   }

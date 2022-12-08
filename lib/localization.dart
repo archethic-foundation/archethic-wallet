@@ -2109,7 +2109,7 @@ class AppLocalization {
   }
 
   String get getUCOCount {
-    return Intl.message('See you in HH:MM to get new UCOs...',
+    return Intl.message('See you in HHhMM to get new UCOs...',
         name: 'getUCOCount');
   }
 }

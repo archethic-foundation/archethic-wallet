@@ -167,7 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getOption" : MessageLookupByLibrary.simpleMessage("Get"),
     "getPublicKeyHeader" : MessageLookupByLibrary.simpleMessage("Accès"),
     "getUCOButton" : MessageLookupByLibrary.simpleMessage("Obtenir des UCOs"),
-    "getUCOCount" : MessageLookupByLibrary.simpleMessage("Rdv dans %1:%2 pour obtenir de nouveaux UCOs..."),
+    "getUCOCount" : MessageLookupByLibrary.simpleMessage("Rdv dans %1h%2 pour obtenir de nouveaux UCOs..."),
     "getUCODescription1" : MessageLookupByLibrary.simpleMessage("Donnez vie à ARCHETHIC avec vos 1 ers  "),
     "getUCOInformation" : MessageLookupByLibrary.simpleMessage("Vous allez recevoir dans quelques minutes vos UCOs qui vous permettront d\'utiliser le réseau Archethic et les fonctionnalités de votre wallet."),
     "getUCOInformationAlreadyReceived" : MessageLookupByLibrary.simpleMessage("Vous avez déjà reçu vos UCOs."),

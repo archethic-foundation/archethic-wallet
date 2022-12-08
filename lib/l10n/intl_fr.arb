@@ -452,7 +452,7 @@
 	"getUCOInformationAlreadyReceived": "Vous avez déjà reçu vos UCOs.",
 	"getUCOInformationBackendError": "Une erreur s'est produite. Essayer à nouveau plus tard.",
 	"getUCOInformationInsufficientBalance": "The faucet is currently empty. Please reiterate your request tomorrow.",
-	"getUCOCount": "Rdv dans %1:%2 pour obtenir de nouveaux UCOs...",
+	"getUCOCount": "Rdv dans %1h%2 pour obtenir de nouveaux UCOs...",
 	"@getUCOCount": {
 		"placeholders": {}
 	}
