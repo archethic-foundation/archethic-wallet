@@ -63,12 +63,21 @@ class AirDrop extends ConsumerWidget {
         if (previous == next) return;
 
         final error = next.error as Failure?;
-        if (error == null) return;
-
+        if (error == null) {
+          AppDialogs.showInfoDialog(
+            context,
+            ref,
+            localizations.informations,
+            localizations.getUCOInformation,
+          );
+          return;
+        }
         UIUtil.showSnackbar(
           error.maybeMap(
             quotaExceeded: (value) =>
                 localizations.getUCOInformationAlreadyReceived,
+            insufficientFunds: (value) =>
+                localizations.getUCOInformationInsufficientBalance,
             orElse: () => localizations.getUCOInformationBackendError,
           ),
           context,
@@ -120,12 +129,6 @@ class AirDrop extends ConsumerWidget {
                 width: 170,
                 onPressed: isAirDropRequestButtonActive
                     ? () {
-                        AppDialogs.showInfoDialog(
-                          context,
-                          ref,
-                          localizations.informations,
-                          localizations.getUCOInformation,
-                        );
                         ref
                             .read(AirDropProviders.airDropRequest.notifier)
                             .requestAirDrop();

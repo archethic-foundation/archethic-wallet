@@ -172,6 +172,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getUCOInformation" : MessageLookupByLibrary.simpleMessage("Vous allez recevoir dans quelques minutes vos UCOs qui vous permettront d\'utiliser le réseau Archethic et les fonctionnalités de votre wallet."),
     "getUCOInformationAlreadyReceived" : MessageLookupByLibrary.simpleMessage("Vous avez déjà reçu vos UCOs."),
     "getUCOInformationBackendError" : MessageLookupByLibrary.simpleMessage("Une erreur s\'est produite. Essayer à nouveau plus tard."),
+    "getUCOInformationInsufficientBalance" : MessageLookupByLibrary.simpleMessage("The faucet is currently empty. Please reiterate your request tomorrow."),
     "go" : MessageLookupByLibrary.simpleMessage("Go !"),
     "hiddenCategories" : MessageLookupByLibrary.simpleMessage("Catégories masquées"),
     "iUnderstandTheRisks" : MessageLookupByLibrary.simpleMessage("Je comprends les risques"),

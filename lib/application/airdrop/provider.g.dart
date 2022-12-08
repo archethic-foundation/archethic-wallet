@@ -40,7 +40,7 @@ final _airDropRepositoryProvider = Provider<AirDropRepositoryInterface>(
       : $_airDropRepositoryHash,
 );
 typedef _AirDropRepositoryRef = ProviderRef<AirDropRepositoryInterface>;
-String $_isAirdropEnabledHash() => r'cf1d03038cdca132fe28318ff5b2732c59457968';
+String $_isAirdropEnabledHash() => r'59eebd0a852ab5e5ba6bbd441692ffd0659c0bd9';
 
 /// See also [_isAirdropEnabled].
 final _isAirdropEnabledProvider = FutureProvider<bool>(

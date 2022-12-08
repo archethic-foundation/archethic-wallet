@@ -2690,6 +2690,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "getUCOInformationInsufficientBalance": "The faucet is currently empty. Please reiterate your request tomorrow.",
+  "@getUCOInformationInsufficientBalance": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "getUCOCount": "See you in %1:%2 to get new UCOs...",
   "@getUCOCount": {
     "placeholders": {}

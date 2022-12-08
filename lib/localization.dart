@@ -2097,6 +2097,12 @@ class AppLocalization {
         name: 'getUCOInformationAlreadyReceived');
   }
 
+  String get getUCOInformationInsufficientBalance {
+    return Intl.message(
+        'The faucet is currently empty. Please reiterate your request tomorrow.',
+        name: 'getUCOInformationInsufficientBalance');
+  }
+
   String get getUCOInformationBackendError {
     return Intl.message('An error occurred. Try again later.',
         name: 'getUCOInformationBackendError');

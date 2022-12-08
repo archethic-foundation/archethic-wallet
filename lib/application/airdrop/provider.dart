@@ -127,6 +127,9 @@ class _AirDropRequestNotifier extends AsyncNotifier<void> {
           .map(
         success: id,
         failure: (failure) => failure.maybeMap(
+          insufficientFunds: (insufficientFunds) {
+            throw failure;
+          },
           quotaExceeded: (quotaExceeded) {
             ref.read(AirDropProviders.airdropCooldown.notifier).startCooldown();
             throw failure;
