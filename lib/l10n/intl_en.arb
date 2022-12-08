@@ -78,8 +78,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "airdropError_QUOTA_EXCEEDED_ERROR": "Reward already claimed.",
-  "airdropError_BACKEND_ERROR": "An error occurred. Try again later.",
   "noToken": "No token",
   "@noToken": {
     "type": "text",

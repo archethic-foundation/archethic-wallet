@@ -13,8 +13,6 @@
 	"add": "Ajouter",
 	"update": "Mettre à jour",
 	"previewNotAvailable": "Aperçu non disponible",
-	"airdropError_QUOTA_EXCEEDED_ERROR": "Vous avez déjà reçu la récompense.",
-	"airdropError_BACKEND_ERROR": "Une erreur s'est produite. Essayer à nouveau plus tard.",
 	"noToken": "Aucun jeton",
 	"noNFT": "Aucun NFT",
 	"transferTokens": "Envoyer des %1",

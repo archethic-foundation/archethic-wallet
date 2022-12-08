@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'airdrop.dart';
+part of 'faucet.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,17 +29,17 @@ class _SystemHash {
   }
 }
 
-String $_isAirDropRequestButtonActiveHash() =>
-    r'd754709efac4eb96bfcc546aad89eafa55d78370';
+String $_isFaucetRequestButtonActiveHash() =>
+    r'5e523e6d6e97b12d3f2f2c3cdfbdeeab25917055';
 
-/// True if the AirDrop request button should be active
+/// True if the Faucet claim button should be active
 ///
-/// Copied from [_isAirDropRequestButtonActive].
-final _isAirDropRequestButtonActiveProvider = Provider<bool>(
-  _isAirDropRequestButtonActive,
-  name: r'_isAirDropRequestButtonActiveProvider',
+/// Copied from [_isFaucetRequestButtonActive].
+final _isFaucetRequestButtonActiveProvider = Provider<bool>(
+  _isFaucetRequestButtonActive,
+  name: r'_isFaucetRequestButtonActiveProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_isAirDropRequestButtonActiveHash,
+      : $_isFaucetRequestButtonActiveHash,
 );
-typedef _IsAirDropRequestButtonActiveRef = ProviderRef<bool>;
+typedef _IsFaucetRequestButtonActiveRef = ProviderRef<bool>;
