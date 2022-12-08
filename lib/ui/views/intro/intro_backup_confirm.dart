@@ -28,6 +28,7 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -368,7 +369,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                   ),
                 ),
                 if (settings.network.network ==
-                    AvailableNetworks.archethicTestNet)
+                        AvailableNetworks.archethicTestNet ||
+                    kDebugMode)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
