@@ -1,18 +1,34 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_info.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/repositories/airdrop.dart';
 import 'package:aewallet/infrastructure/repositories/airdrop.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/functional_utils.dart';
+import 'package:aewallet/util/screen_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:safe_device/safe_device.dart';
 
 part 'provider.g.dart';
 
 @Riverpod(keepAlive: true)
 AirDropRepositoryInterface _airDropRepository(Ref ref) {
   return AirDropRepository();
+}
+
+@Riverpod(keepAlive: true)
+Future<bool> _isDeviceCompatible(Ref ref) async {
+  if (ScreenUtil.isDesktopMode()) return false;
+  if (ref.read(SettingsProviders.settings).network.network !=
+      AvailableNetworks.archethicMainNet) return false;
+
+  final isSafeDevice = await SafeDevice.isSafeDevice;
+  if (isSafeDevice == false) return false;
+
+  return true;
 }
 
 @Riverpod(keepAlive: true)
@@ -152,11 +168,19 @@ class _AirDropRequestNotifier extends AsyncNotifier<void> {
 }
 
 abstract class AirDropProviders {
-  static final isEnabled = _isAirdropEnabledProvider;
+  /// Is the device compatible with Faucet ?
+  static final isDeviceCompatible = _isDeviceCompatibleProvider;
+
+  /// Is the Faucet active ?
+  static final isFaucetEnabled = _isAirdropEnabledProvider;
+
+  /// Notifier that requests Faucet claim
   static final airDropRequest =
       AsyncNotifierProvider<_AirDropRequestNotifier, void>(
     _AirDropRequestNotifier.new,
   );
+
+  /// Faucet claim cooldown counter
   static final airdropCooldown =
       AsyncNotifierProvider<_AirDropCooldownNotifier, Duration>(
     _AirDropCooldownNotifier.new,

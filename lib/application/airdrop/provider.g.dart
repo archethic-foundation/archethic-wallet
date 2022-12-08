@@ -40,6 +40,18 @@ final _airDropRepositoryProvider = Provider<AirDropRepositoryInterface>(
       : $_airDropRepositoryHash,
 );
 typedef _AirDropRepositoryRef = ProviderRef<AirDropRepositoryInterface>;
+String $_isDeviceCompatibleHash() =>
+    r'c3082af5c03ede8006c9dd49c498337f7d1697ef';
+
+/// See also [_isDeviceCompatible].
+final _isDeviceCompatibleProvider = FutureProvider<bool>(
+  _isDeviceCompatible,
+  name: r'_isDeviceCompatibleProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : $_isDeviceCompatibleHash,
+);
+typedef _IsDeviceCompatibleRef = FutureProviderRef<bool>;
 String $_isAirdropEnabledHash() => r'59eebd0a852ab5e5ba6bbd441692ffd0659c0bd9';
 
 /// See also [_isAirdropEnabled].

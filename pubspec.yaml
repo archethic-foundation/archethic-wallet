@@ -200,6 +200,9 @@ dependencies:
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
   rxdart: ^0.27.5
 
+  # Check for device safety
+  safe_device: ^1.1.2
+
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^6.1.0
 
