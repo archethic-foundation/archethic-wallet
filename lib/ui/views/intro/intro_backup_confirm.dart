@@ -368,9 +368,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                   ),
                 ),
                 if (settings.network.network ==
-                        AvailableNetworks.archethicDevNet ||
-                    settings.network.network ==
-                        AvailableNetworks.archethicMainNet)
+                    AvailableNetworks.archethicTestNet)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
