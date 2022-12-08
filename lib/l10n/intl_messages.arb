@@ -1524,7 +1524,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenSymbolMaxNumberCharacter": "4 characters maximum",
+  "tokenSymbolMaxNumberCharacter": "10 characters maximum",
   "@tokenSymbolMaxNumberCharacter": {
     "type": "text",
     "placeholders_order": [],

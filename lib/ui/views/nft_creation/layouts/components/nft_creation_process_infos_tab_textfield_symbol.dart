@@ -69,7 +69,7 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
           style: theme.textStyleSize16W600Primary,
           inputFormatters: [
             UpperCaseTextFormatter(),
-            LengthLimitingTextInputFormatter(4),
+            LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (text) async {
             nftCreationNotifier.setSymbol(

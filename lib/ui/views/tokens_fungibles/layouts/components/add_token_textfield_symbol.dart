@@ -53,7 +53,7 @@ class _AddTokenTextFieldSymbolState
           style: theme.textStyleSize16W600Primary,
           inputFormatters: [
             UpperCaseTextFormatter(),
-            LengthLimitingTextInputFormatter(4),
+            LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (text) async {
             addTokenNotifier.setSymbol(

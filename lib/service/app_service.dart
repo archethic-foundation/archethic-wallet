@@ -902,7 +902,7 @@ class AppService {
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
             final tokenMap = await sl.get<ApiService>().getToken(
                 [transaction.data!.ledger!.token!.transfers![i].tokenAddress!],
-                request: 'symbol');
+                request: 'symbol',);
             var tokenSymbol = '';
             if (tokenMap[transaction
                     .data!.ledger!.token!.transfers![i].tokenAddress!] !=
