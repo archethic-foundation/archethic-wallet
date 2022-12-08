@@ -9,7 +9,7 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
 class _AirDropRoutes {
-  String get uriRoot => 'http://127.0.0.1:3000';
+  String get uriRoot => 'https://airdrop.archethic.net';
   String get challenge => '$uriRoot/challenge';
   String get claim => '$uriRoot/claim';
 }
