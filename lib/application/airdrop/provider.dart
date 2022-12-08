@@ -181,9 +181,4 @@ abstract class AirDropProviders {
       AsyncNotifierProvider<_AirDropCooldownNotifier, Duration>(
     _AirDropCooldownNotifier.new,
   );
-
-  static Future<void> reset(Ref ref) async {
-    await ref.read(_airDropRepositoryProvider).clear();
-    ref.invalidate(airdropCooldown);
-  }
 }
