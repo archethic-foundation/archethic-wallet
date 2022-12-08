@@ -29,19 +29,19 @@ class _SystemHash {
   }
 }
 
-String $_airDropRepositoryHash() => r'f7c97ae3c8b1870ea062645b2d38e9ea3e643d3d';
+String $_faucetRepositoryHash() => r'0700aacd141f765b45a052ac90ef9a6d3ca9aaa1';
 
-/// See also [_airDropRepository].
-final _airDropRepositoryProvider = Provider<AirDropRepositoryInterface>(
-  _airDropRepository,
-  name: r'_airDropRepositoryProvider',
+/// See also [_faucetRepository].
+final _faucetRepositoryProvider = Provider<FaucetRepositoryInterface>(
+  _faucetRepository,
+  name: r'_faucetRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_airDropRepositoryHash,
+      : $_faucetRepositoryHash,
 );
-typedef _AirDropRepositoryRef = ProviderRef<AirDropRepositoryInterface>;
+typedef _FaucetRepositoryRef = ProviderRef<FaucetRepositoryInterface>;
 String $_isDeviceCompatibleHash() =>
-    r'c3082af5c03ede8006c9dd49c498337f7d1697ef';
+    r'e2d2a03c1f372b8ac01ad47a7420757ba51c5712';
 
 /// See also [_isDeviceCompatible].
 final _isDeviceCompatibleProvider = FutureProvider<bool>(
@@ -52,14 +52,14 @@ final _isDeviceCompatibleProvider = FutureProvider<bool>(
       : $_isDeviceCompatibleHash,
 );
 typedef _IsDeviceCompatibleRef = FutureProviderRef<bool>;
-String $_isAirdropEnabledHash() => r'59eebd0a852ab5e5ba6bbd441692ffd0659c0bd9';
+String $_isFaucetEnabledHash() => r'd8203c75a1aa708300444c7c3b660b29a82f95a5';
 
-/// See also [_isAirdropEnabled].
-final _isAirdropEnabledProvider = FutureProvider<bool>(
-  _isAirdropEnabled,
-  name: r'_isAirdropEnabledProvider',
+/// See also [_isFaucetEnabled].
+final _isFaucetEnabledProvider = FutureProvider<bool>(
+  _isFaucetEnabled,
+  name: r'_isFaucetEnabledProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_isAirdropEnabledHash,
+      : $_isFaucetEnabledHash,
 );
-typedef _IsAirdropEnabledRef = FutureProviderRef<bool>;
+typedef _IsFaucetEnabledRef = FutureProviderRef<bool>;

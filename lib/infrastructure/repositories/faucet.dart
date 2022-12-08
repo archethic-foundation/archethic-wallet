@@ -3,18 +3,19 @@ import 'dart:io';
 
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/domain/repositories/airdrop.dart';
+import 'package:aewallet/domain/repositories/faucet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
-class _AirDropRoutes {
+class _FaucetRoutes {
   String get uriRoot => 'https://airdrop.archethic.net';
+  String get status => '$uriRoot/status';
   String get challenge => '$uriRoot/challenge';
   String get claim => '$uriRoot/claim';
 }
 
-class AirDropRepository implements AirDropRepositoryInterface {
+class FaucetRepository implements FaucetRepositoryInterface {
   HivePreferencesDatasource? _preferences;
   Future<HivePreferencesDatasource> get preferences async =>
       _preferences ??= await HivePreferencesDatasource.getInstance();
@@ -26,7 +27,7 @@ class AirDropRepository implements AirDropRepositoryInterface {
       Result.guard(() async {
         final response = await http.post(
           Uri.parse(
-            _AirDropRoutes().challenge,
+            _FaucetRoutes().challenge,
           ),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
@@ -50,14 +51,14 @@ class AirDropRepository implements AirDropRepositoryInterface {
       });
 
   @override
-  Future<Result<void, Failure>> requestAirDrop({
+  Future<Result<void, Failure>> claim({
     required String challenge,
     required String deviceId,
     required String keychainAddress,
   }) async =>
       Result.guard(() async {
-        const airDropSecret = String.fromEnvironment('AIRDROP_SECRET');
-        final key = utf8.encode(airDropSecret);
+        const faucetSecret = String.fromEnvironment('AIRDROP_SECRET');
+        final key = utf8.encode(faucetSecret);
         final bytes = utf8.encode(challenge);
         final challengeHmac = Hmac(
           sha256,
@@ -66,7 +67,7 @@ class AirDropRepository implements AirDropRepositoryInterface {
 
         final response = await http.post(
           Uri.parse(
-            _AirDropRoutes().claim,
+            _FaucetRoutes().claim,
           ),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
@@ -92,17 +93,32 @@ class AirDropRepository implements AirDropRepositoryInterface {
       });
 
   @override
-  Future<DateTime?> getLastAirdropDate() async {
-    return (await preferences).getLastAirdropDate();
+  Future<DateTime?> getLastClaimDate() async {
+    return (await preferences).getLastFaucetClaimDate();
   }
 
   @override
-  Future<void> setLastAirdropDate() async {
-    (await preferences).setLastAirdropDate(DateTime.now());
+  Future<void> setLastClaimDate() async {
+    (await preferences).setLastFaucetClaimDate(DateTime.now());
   }
 
   @override
   Future<void> clear() async {
-    (await preferences).clearLastAirdropDate();
+    (await preferences).clearLastFaucetClaimDate();
+  }
+
+  @override
+  Future<bool> isFaucetEnabled() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+          _FaucetRoutes().status,
+        ),
+      );
+
+      return response.statusCode == 200 && response.body == 'up';
+    } catch (_) {
+      return false;
+    }
   }
 }

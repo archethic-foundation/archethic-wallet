@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/airdrop/provider.dart';
+import 'package:aewallet/application/faucet/provider.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/localization.dart';
@@ -13,30 +13,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'airdrop.g.dart';
+part 'faucet.g.dart';
 
-/// True if the AirDrop request button should be active
+/// True if the Faucet claim button should be active
 @Riverpod(keepAlive: true)
-bool _isAirDropRequestButtonActive(Ref ref) {
-  final isCooldownActive =
-      ref.watch(AirDropProviders.airdropCooldown).maybeWhen(
-            data: (data) => data > Duration.zero,
-            orElse: () => true,
-          );
-  final isAirdropEnabled =
-      ref.watch(AirDropProviders.isFaucetEnabled).maybeWhen(
-            data: id,
-            orElse: () => false,
-          );
+bool _isFaucetRequestButtonActive(Ref ref) {
+  final isCooldownActive = ref.watch(FaucetProviders.claimCooldown).maybeWhen(
+        data: (data) => data > Duration.zero,
+        orElse: () => true,
+      );
+  final isFaucetEnabled = ref.watch(FaucetProviders.isFaucetEnabled).maybeWhen(
+        data: id,
+        orElse: () => false,
+      );
 
-  final isAirDropRequestRunning =
-      ref.watch(AirDropProviders.airDropRequest).isLoading;
+  final isFaucetClaimRequestRunning =
+      ref.watch(FaucetProviders.claimRequest).isLoading;
 
-  return !isCooldownActive && isAirdropEnabled && !isAirDropRequestRunning;
+  return !isCooldownActive && isFaucetEnabled && !isFaucetClaimRequestRunning;
 }
 
-class AirDrop extends ConsumerWidget {
-  const AirDrop({super.key});
+class FaucetBanner extends ConsumerWidget {
+  const FaucetBanner({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,20 +48,22 @@ class AirDrop extends ConsumerWidget {
 
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final isAirDropRequestButtonActive = ref.watch(
-      _isAirDropRequestButtonActiveProvider,
+    final isFaucetRequestButtonActive = ref.watch(
+      _isFaucetRequestButtonActiveProvider,
     );
 
-    final isAirdropRequestRunning =
-        ref.watch(AirDropProviders.airDropRequest).isLoading;
+    final isFaucetClaimRequestRunning =
+        ref.watch(FaucetProviders.claimRequest).isLoading;
 
     final localizations = AppLocalization.of(context)!;
     ref.listen(
-      AirDropProviders.airDropRequest,
+      FaucetProviders.claimRequest,
       (previous, next) {
-        if (previous == next) return;
-
         final error = next.error as Failure?;
+        if (next.isLoading) {
+          return;
+        }
+
         if (error == null) {
           AppDialogs.showInfoDialog(
             context,
@@ -73,6 +73,7 @@ class AirDrop extends ConsumerWidget {
           );
           return;
         }
+
         UIUtil.showSnackbar(
           error.maybeMap(
             quotaExceeded: (value) =>
@@ -119,20 +120,18 @@ class AirDrop extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: AppButtonTinyWithoutExpanded(
-                isAirDropRequestButtonActive
+                isFaucetRequestButtonActive
                     ? AppButtonTinyType.primary
                     : AppButtonTinyType.primaryOutline,
                 localizations.getUCOButton,
                 const <double>[14, 8, 14, 0],
-                disabled: !isAirDropRequestButtonActive,
-                showProgressIndicator: isAirdropRequestRunning,
+                disabled: !isFaucetRequestButtonActive,
+                showProgressIndicator: isFaucetClaimRequestRunning,
                 key: const Key('getUCO'),
                 width: 170,
-                onPressed: isAirDropRequestButtonActive
+                onPressed: isFaucetRequestButtonActive
                     ? () {
-                        ref
-                            .read(AirDropProviders.airDropRequest.notifier)
-                            .requestAirDrop();
+                        ref.read(FaucetProviders.claimRequest.notifier).claim();
                       }
                     : () {},
               ),
@@ -177,7 +176,7 @@ class _CooldownCounter extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final cooldownRemainingTime =
-        ref.watch(AirDropProviders.airdropCooldown).valueOrNull;
+        ref.watch(FaucetProviders.claimCooldown).valueOrNull;
 
     if (cooldownRemainingTime == null ||
         cooldownRemainingTime == Duration.zero) {

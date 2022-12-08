@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:aewallet/application/airdrop/provider.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
