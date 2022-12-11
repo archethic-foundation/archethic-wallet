@@ -83,6 +83,8 @@ class SecurityMenuView extends ConsumerWidget {
                       const _BackupSecretPhraseListItem(),
                       const _PinPadShuffleSettingsListItem(),
                       const _SettingsListItem.spacer(),
+                      const _SyncBlockchainSettingsListItem(),
+                      const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,
@@ -316,6 +318,34 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
           );
         }
       },
+    );
+  }
+}
+
+class _SyncBlockchainSettingsListItem extends ConsumerWidget {
+  const _SyncBlockchainSettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalization.of(context)!;
+
+    return _SettingsListItem.singleLineWithInfos(
+      heading: localizations.resyncWallet,
+      info: localizations.resyncWalletDescription,
+      icon: Icons.sync,
+      onPressed: () async {
+        AppDialogs.showConfirmDialog(context, ref, localizations.resyncWallet,
+            localizations.resyncWalletAreYouSure, localizations.yes, () async {
+          final session = ref.read(SessionProviders.session).loggedIn!;
+          for (final element in session.wallet.appKeychain.accounts) {
+            await element.clearRecentTransactionsFromCache();
+          }
+          ref
+              .read(AccountProviders.selectedAccount.notifier)
+              .refreshRecentTransactions();
+        });
+      },
+      displayChevron: false,
     );
   }
 }

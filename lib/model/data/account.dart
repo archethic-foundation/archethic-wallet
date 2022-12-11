@@ -327,4 +327,9 @@ class Account extends HiveObject {
       }
     }
   }
+
+  Future<void> clearRecentTransactionsFromCache() async {
+    recentTransactions = [];
+    await updateAccount();
+  }
 }
