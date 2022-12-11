@@ -444,6 +444,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "unlockPin" : MessageLookupByLibrary.simpleMessage("Entrer le code PIN pour déverrouiller"),
     "update" : MessageLookupByLibrary.simpleMessage("Mettre à jour"),
     "version" : MessageLookupByLibrary.simpleMessage("Version : "),
+    "viewAddressBook" : MessageLookupByLibrary.simpleMessage("Afficher mon carnet d\'adresses"),
     "viewExplorer" : MessageLookupByLibrary.simpleMessage("Voir dans l\'explorer"),
     "walletFAQDesc" : MessageLookupByLibrary.simpleMessage("Une question ? Vérifiez ici en premier !"),
     "walletFAQHeader" : MessageLookupByLibrary.simpleMessage("FAQ sur le portefeuille"),

@@ -369,6 +369,10 @@ class AppLocalization {
     return Intl.message('Address book', name: 'addressBookHeader');
   }
 
+  String get viewAddressBook {
+    return Intl.message('View my address book', name: 'viewAddressBook');
+  }
+
   String get contactAddressInfoKeychainService {
     return Intl.message(
         'The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.',

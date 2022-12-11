@@ -64,6 +64,7 @@ class _TransferTextFieldAddressState
   Widget build(
     BuildContext context,
   ) {
+    final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferFormProvider.transferForm);
@@ -71,97 +72,138 @@ class _TransferTextFieldAddressState
         ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
-    return AppTextField(
-      focusNode: sendAddressFocusNode,
-      controller: sendAddressController,
-      cursorColor: theme.text,
-      inputFormatters: <TextInputFormatter>[
-        UpperCaseTextFormatter(),
-        LengthLimitingTextInputFormatter(
-          transfer.recipient.maybeWhen(
-            address: (_) => 68,
-            orElse: () => 20,
-          ),
-        )
-      ],
-      autofocus: true,
-      textInputAction: TextInputAction.done,
-      maxLines: null,
-      autocorrect: false,
-      labelText: AppLocalization.of(context)!.enterAddress,
-      prefixButton: TextFieldButton(
-        icon: UiIcons.address_book,
-        onPressed: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-          final contact = await ContactsDialog.getDialog(context, ref);
-          if (contact == null) return;
-
-          await transferNotifier.setRecipient(
-            context: context,
-            contact: TransferRecipient.contact(contact: contact),
-          );
-
-          _updateAdressTextController();
-        },
-      ),
-      fadePrefixOnCondition: true,
-      prefixShowFirstCondition: true,
-      suffixButton: hasQRCode
-          ? TextFieldButton(
-              icon: FontAwesomeIcons.qrcode,
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                final scanResult = await UserDataUtil.getQRData(
-                  DataType.address,
-                  context,
-                  ref,
-                );
-                if (scanResult == null) {
-                  UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.qrInvalidAddress,
-                    context,
-                    ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
-                  );
-                } else if (QRScanErrs.errorList.contains(scanResult)) {
-                  UIUtil.showSnackbar(
-                    scanResult,
-                    context,
-                    ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
-                  );
-                  return;
-                } else {
-                  // Is a URI
-                  final address = Address(scanResult);
-                  await transferNotifier.setContactAddress(
-                    context: context,
-                    address: address,
-                  );
-                  _updateAdressTextController();
-                }
-              },
+    return Column(
+      children: [
+        AppTextField(
+          focusNode: sendAddressFocusNode,
+          controller: sendAddressController,
+          cursorColor: theme.text,
+          inputFormatters: <TextInputFormatter>[
+            UpperCaseTextFormatter(),
+            LengthLimitingTextInputFormatter(
+              transfer.recipient.maybeWhen(
+                address: (_) => 68,
+                orElse: () => 20,
+              ),
             )
-          : null,
-      suffixShowFirstCondition: true,
-      fadeSuffixOnCondition: true,
-      style: transfer.recipient.isAddressValid
-          ? theme.textStyleSize14W700Primary
-          : theme.textStyleSize14W700Primary60,
-      onChanged: (String text) async {
-        transferNotifier.setRecipientNameOrAddress(
-          context: context,
-          text: text,
-        );
-      },
+          ],
+          autofocus: true,
+          textInputAction: TextInputAction.done,
+          maxLines: null,
+          autocorrect: false,
+          labelText: AppLocalization.of(context)!.enterAddress,
+          prefixButton: hasQRCode
+              ? TextFieldButton(
+                  icon: FontAwesomeIcons.qrcode,
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    final scanResult = await UserDataUtil.getQRData(
+                      DataType.address,
+                      context,
+                      ref,
+                    );
+                    if (scanResult == null) {
+                      UIUtil.showSnackbar(
+                        AppLocalization.of(context)!.qrInvalidAddress,
+                        context,
+                        ref,
+                        theme.text!,
+                        theme.snackBarShadow!,
+                      );
+                    } else if (QRScanErrs.errorList.contains(scanResult)) {
+                      UIUtil.showSnackbar(
+                        scanResult,
+                        context,
+                        ref,
+                        theme.text!,
+                        theme.snackBarShadow!,
+                      );
+                      return;
+                    } else {
+                      // Is a URI
+                      final address = Address(scanResult);
+                      await transferNotifier.setContactAddress(
+                        context: context,
+                        address: address,
+                      );
+                      _updateAdressTextController();
+                    }
+                  },
+                )
+              : null,
+          fadePrefixOnCondition: true,
+          prefixShowFirstCondition: true,
+          suffixButton: TextFieldButton(
+            icon: FontAwesomeIcons.paste,
+            onPressed: () {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              Clipboard.getData('text/plain').then((ClipboardData? data) async {
+                if (data == null || data.text == null) {
+                  return;
+                }
+                sendAddressController.text = data.text!;
+              });
+            },
+          ),
+          suffixShowFirstCondition: true,
+          fadeSuffixOnCondition: true,
+          style: transfer.recipient.isAddressValid
+              ? theme.textStyleSize14W700Primary
+              : theme.textStyleSize14W700Primary60,
+          onChanged: (String text) async {
+            transferNotifier.setRecipientNameOrAddress(
+              context: context,
+              text: text,
+            );
+          },
+        ),
+        InkWell(
+          onTap: () async {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
+            final contact = await ContactsDialog.getDialog(context, ref);
+            if (contact == null) return;
+
+            await transferNotifier.setRecipient(
+              context: context,
+              contact: TransferRecipient.contact(contact: contact),
+            );
+
+            _updateAdressTextController();
+          },
+          child: Container(
+            margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.105,
+              right: MediaQuery.of(context).size.width * 0.105,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 48,
+                  width: 48,
+                  child: Icon(
+                    UiIcons.address_book,
+                    size: 20,
+                    color: theme.textFieldIcon,
+                  ),
+                ),
+                Text(
+                  localizations.viewAddressBook,
+                  style: theme.textStyleSize14W100Primary,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
