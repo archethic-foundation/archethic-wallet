@@ -1,14 +1,5 @@
 part of 'settings_drawer.dart';
 
-final versionStringProvider =
-    FutureProvider.autoDispose.family<String, AppLocalization>(
-  (ref, localizations) async {
-    final packageInfo = await PackageInfo.fromPlatform();
-
-    return '${localizations.version} ${packageInfo.version} - ${localizations.build} ${packageInfo.buildNumber}';
-  },
-);
-
 class AboutMenuView extends ConsumerWidget {
   const AboutMenuView({
     required this.onClose,
