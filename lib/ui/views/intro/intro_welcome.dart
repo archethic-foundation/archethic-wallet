@@ -77,14 +77,25 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                         ),
                         Container(
                           margin: const EdgeInsets.only(
-                            top: 20,
                             right: 20,
                             left: 20,
                           ),
                           child: AutoSizeText(
                             localizations.welcomeText,
+                            maxLines: 3,
+                            style: theme.textStyleSize16W400Primary,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            top: 20,
+                            right: 20,
+                            left: 20,
+                          ),
+                          child: AutoSizeText(
+                            localizations.welcomeText2,
                             maxLines: 5,
-                            style: theme.textStyleSize20W700Primary,
+                            style: theme.textStyleSize12W100Primary,
                           ),
                         ),
                       ],

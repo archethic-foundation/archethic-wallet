@@ -1,7 +1,13 @@
 {
-  "@@last_modified": "2022-12-08T08:34:52.518194",
-  "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
+  "@@last_modified": "2022-12-11T18:09:38.248950",
+  "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "welcomeText2": "Archethic gives back to humanity control over technology, and to each individual, control over their identity.",
+  "@welcomeText2": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
