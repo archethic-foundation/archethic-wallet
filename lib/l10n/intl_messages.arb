@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-11T21:28:21.218790",
+  "@@last_modified": "2022-12-11T22:00:13.304337",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -440,6 +440,12 @@
   },
   "addressBookHeader": "Address book",
   "@addressBookHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "viewAddressBook": "View my address book",
+  "@viewAddressBook": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
