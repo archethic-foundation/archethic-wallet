@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-11T22:00:13.304337",
+  "@@last_modified": "2022-12-11T22:29:29.565666",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -920,6 +920,24 @@
   },
   "removeWalletDescription": "You can find it at any time with your secret phrase",
   "@removeWalletDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "resyncWallet": "Resynchronize Wallet",
+  "@resyncWallet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "resyncWalletAreYouSure": "Are you sure you want to clear your cache and reload the information from the blockchain?\n\nThis action takes a few seconds and is safe because it only reloads your recent transactions.",
+  "@resyncWalletAreYouSure": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "resyncWalletDescription": "Empty the cache and reload informations from the blockchain",
+  "@resyncWalletDescription": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

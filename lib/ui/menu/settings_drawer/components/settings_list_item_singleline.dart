@@ -8,6 +8,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
     this.headingStyle,
     this.onPressed,
     this.icon,
+    this.displayChevron = true,
   });
 
   final String heading;
@@ -15,6 +16,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   final TextStyle? headingStyle;
   final Function? onPressed;
   final IconData? icon;
+  final bool? displayChevron;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,11 +72,12 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                 ),
               ],
             ),
-            FaIcon(
-              FontAwesomeIcons.chevronRight,
-              color: ref.watch(ThemeProviders.selectedTheme).iconDrawer,
-              size: 15,
-            ),
+            if (displayChevron != null && displayChevron == true)
+              FaIcon(
+                FontAwesomeIcons.chevronRight,
+                color: ref.watch(ThemeProviders.selectedTheme).iconDrawer,
+                size: 15,
+              ),
           ],
         ),
       ),

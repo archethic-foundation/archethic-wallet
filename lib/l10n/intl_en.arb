@@ -504,6 +504,24 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "resyncWallet": "Resynchronize Wallet",
+  "@resyncWallet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "resyncWalletAreYouSure": "Are you sure you want to clear your cache and reload the information from the blockchain?\n\nThis action takes a few seconds and is safe because it only reloads your recent transactions.",
+  "@resyncWalletAreYouSure": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "resyncWalletDescription": "Empty the cache and reload informations from the blockchain",
+  "@resyncWalletDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "rootWarning": "It appears your device is \"rooted\", \"jailbroken\", or modified in a way that compromises security. It is recommended that you reset your device to its original state before proceeding.",
   "@rootWarning": {
     "type": "text",

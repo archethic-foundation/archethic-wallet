@@ -41,6 +41,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
     TextStyle? headingStyle,
     Function? onPressed,
     IconData? icon,
+    bool? displayChevron,
   }) = _SettingsListItemSingleLineWithInfos;
 
   const factory _SettingsListItem.withSwitch({

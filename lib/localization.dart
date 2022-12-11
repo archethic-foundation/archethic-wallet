@@ -755,6 +755,22 @@ class AppLocalization {
         name: 'removeWalletDescription');
   }
 
+  String get resyncWallet {
+    return Intl.message('Resynchronize Wallet', name: 'resyncWallet');
+  }
+
+  String get resyncWalletAreYouSure {
+    return Intl.message(
+        'Are you sure you want to clear your cache and reload the information from the blockchain?\n\nThis action takes a few seconds and is safe because it only reloads your recent transactions.',
+        name: 'resyncWalletAreYouSure');
+  }
+
+  String get resyncWalletDescription {
+    return Intl.message(
+        'Empty the cache and reload informations from the blockchain',
+        name: 'resyncWalletDescription');
+  }
+
   String get rootWarning {
     return Intl.message(
         'It appears your device is "rooted", "jailbroken", or modified in a way that compromises security. It is recommended that you reset your device to its original state before proceeding.',
