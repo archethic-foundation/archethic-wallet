@@ -165,7 +165,7 @@ dependencies:
   oktoast: ^3.3.1
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^3.0.1
+  package_info_plus: ^3.0.2
 
   # Customizable indicators for your PageViews.
   page_view_indicators: ^2.0.0

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -145,9 +146,34 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                             ),
                           ],
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 30,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Consumer(
+                                builder: (context, ref, child) {
+                                  final asyncVersionString = ref.watch(
+                                    versionStringProvider(
+                                      AppLocalization.of(context)!,
+                                    ),
+                                  );
+
+                                  return Text(
+                                    asyncVersionString.asData?.value ?? '',
+                                    textAlign: TextAlign.left,
+                                    style: theme.textStyleSize10W100Primary,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(
                           height: 10,
-                        )
+                        ),
                       ],
                     ),
                     Row(
