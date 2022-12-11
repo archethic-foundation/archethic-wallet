@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-11T18:25:38.893133",
+  "@@last_modified": "2022-12-11T18:33:01.712922",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -1524,7 +1524,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenSymbolMaxNumberCharacter": "10 characters maximum",
+  "tokenSymbolMaxNumberCharacter": "4 characters maximum",
   "@tokenSymbolMaxNumberCharacter": {
     "type": "text",
     "placeholders_order": [],
