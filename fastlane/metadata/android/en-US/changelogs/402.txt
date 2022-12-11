@@ -1,0 +1,6 @@
+Archethic Wallet - Version 2.0.1 Build 402
+
+Display version of app in Welcome Screen
+Add paste button in Transfer Screen
+Add resync feature to clear the cache and get infos from blockchain
+Increase token's symbol to 10 characters
