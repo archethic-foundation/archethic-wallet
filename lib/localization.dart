@@ -35,8 +35,14 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        'Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.',
+        'Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3',
         name: 'welcomeText');
+  }
+
+  String get welcomeText2 {
+    return Intl.message(
+        'Archethic gives back to humanity control over technology, and to each individual, control over their identity.',
+        name: 'welcomeText2');
   }
 
   String get welcomeDisclaimerChoice {
