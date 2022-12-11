@@ -268,7 +268,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                             return AppMnemomics.getLanguage(
                                               languageSeed,
                                             ).list.where((String option) {
-                                              return option.contains(
+                                              return option.startsWith(
                                                 unorm.nfkd(
                                                   textEditingValue.text
                                                       .toLowerCase(),
