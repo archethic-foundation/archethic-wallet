@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-11T18:33:01.712922",
+  "@@last_modified": "2022-12-11T21:28:21.218790",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -2174,6 +2174,12 @@
   },
   "searchField": "Search...",
   "@searchField": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "search": "Search",
+  "@search": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

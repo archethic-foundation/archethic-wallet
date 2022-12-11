@@ -110,7 +110,7 @@ class AppButtonTiny extends ConsumerWidget {
                       return;
                     },
                   )
-                : TextButton.icon(
+                : TextButton(
                     key: key,
                     style: TextButton.styleFrom(
                       foregroundColor: theme.text,
@@ -118,13 +118,37 @@ class AppButtonTiny extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    icon: icon!,
-                    label: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: theme.textStyleSize12W400EquinoxMainButtonLabel,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (showProgressIndicator)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: SizedBox.square(
+                              dimension: 8,
+                              child: CircularProgressIndicator(
+                                color: theme
+                                    .textStyleSize12W400EquinoxMainButtonLabel
+                                    .color,
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          )
+                        else
+                          icon!,
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        AutoSizeText(
+                          buttonText,
+                          textAlign: TextAlign.center,
+                          style:
+                              theme.textStyleSize12W400EquinoxMainButtonLabel,
+                          maxLines: 1,
+                          stepGranularity: 0.5,
+                        ),
+                      ],
                     ),
                     onPressed: () {
                       if (!disabled) {

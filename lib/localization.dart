@@ -1701,6 +1701,10 @@ class AppLocalization {
     return Intl.message("Search...", name: 'searchField');
   }
 
+  String get search {
+    return Intl.message("Search", name: 'search');
+  }
+
   String get pleaseWait {
     return Intl.message("Please wait", name: 'pleaseWait');
   }
