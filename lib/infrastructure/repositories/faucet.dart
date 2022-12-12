@@ -6,10 +6,27 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/faucet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+@immutable
+class FaucetLimitReachedDTO {
+  const FaucetLimitReachedDTO({
+    required this.unlockTime,
+  });
+
+  factory FaucetLimitReachedDTO.fromJson(Map<String, dynamic> json) =>
+      FaucetLimitReachedDTO(
+        unlockTime: DateTime.fromMillisecondsSinceEpoch(
+          json['unlockTime'] * 1000,
+        ),
+      );
+
+  final DateTime unlockTime;
+}
+
 class _FaucetRoutes {
-  String get uriRoot => 'https://airdrop.archethic.net';
+  String get uriRoot => 'http://192.168.1.20:3000';
   String get status => '$uriRoot/status';
   String get challenge => '$uriRoot/challenge';
   String get claim => '$uriRoot/claim';
@@ -22,6 +39,7 @@ class FaucetRepository implements FaucetRepositoryInterface {
 
   @override
   Future<Result<String, Failure>> requestChallenge({
+    required String keychainAddress,
     required String deviceId,
   }) async =>
       Result.guard(() async {
@@ -34,12 +52,22 @@ class FaucetRepository implements FaucetRepositoryInterface {
           },
           body: json.encode({
             'deviceId': deviceId,
+            'keychainAddress': keychainAddress,
           }),
         );
 
-        if (response.statusCode == 429) {
-          throw const Failure.quotaExceeded();
-        }
+        try {
+          if (response.statusCode == 429) {
+            final jsonResponse = json.decode(response.body);
+            if (jsonResponse['reason'] == 'Limit reached') {
+              final limitReachedResponse =
+                  FaucetLimitReachedDTO.fromJson(jsonResponse);
+              throw Failure.quotaExceeded(
+                cooldownEndDate: limitReachedResponse.unlockTime,
+              );
+            }
+          }
+        } on FormatException catch (_) {}
 
         if (response.statusCode != 200) {
           throw const Failure.other();
@@ -51,9 +79,10 @@ class FaucetRepository implements FaucetRepositoryInterface {
       });
 
   @override
-  Future<Result<void, Failure>> claim({
+  Future<Result<DateTime, Failure>> claim({
     required String challenge,
     required String deviceId,
+    required String recipientAddress,
     required String keychainAddress,
   }) async =>
       Result.guard(() async {
@@ -76,13 +105,22 @@ class FaucetRepository implements FaucetRepositoryInterface {
             'deviceId': deviceId,
             'challenge': challenge,
             'auth': challengeHmac,
+            'recipientAddress': recipientAddress,
             'keychainAddress': keychainAddress,
           }),
         );
 
-        if (response.statusCode == 429) {
-          throw const Failure.quotaExceeded();
-        }
+        try {
+          final jsonResponse = json.decode(response.body);
+          if (jsonResponse['reason'] == 'Limit reached') {
+            final limitReachedResponse =
+                FaucetLimitReachedDTO.fromJson(jsonResponse);
+
+            throw Failure.quotaExceeded(
+              cooldownEndDate: limitReachedResponse.unlockTime,
+            );
+          }
+        } on FormatException catch (_) {}
 
         if (response.statusCode != 200) {
           if (response.body.contains('Insufficient funds')) {
@@ -90,35 +128,50 @@ class FaucetRepository implements FaucetRepositoryInterface {
           }
           throw const Failure.other();
         }
+
+        final cooldownEndDate = DateTime.fromMillisecondsSinceEpoch(
+          json.decode(response.body)['cooldownEndDate'],
+        );
+        return cooldownEndDate;
       });
 
   @override
-  Future<DateTime?> getLastClaimDate() async {
-    return (await preferences).getLastFaucetClaimDate();
+  Future<DateTime?> getClaimCooldownEndDate() async {
+    return (await preferences).getFaucetClaimCooldownEndDate();
   }
 
   @override
-  Future<void> setLastClaimDate() async {
-    (await preferences).setLastFaucetClaimDate(DateTime.now());
+  Future<void> setClaimCooldownEndDate({required DateTime date}) async {
+    (await preferences).setFaucetClaimCooldownEndDate(date);
   }
 
   @override
   Future<void> clear() async {
-    (await preferences).clearLastFaucetClaimDate();
+    (await preferences).clearFaucetClaimCooldownEndDate();
   }
 
   @override
-  Future<bool> isFaucetEnabled() async {
-    try {
-      final response = await http.get(
-        Uri.parse(
-          _FaucetRoutes().status,
-        ),
-      );
+  Future<Result<bool, Failure>> isFaucetEnabled() async => Result.guard(
+        () async {
+          try {
+            final response = await http
+                .get(
+                  Uri.parse(
+                    _FaucetRoutes().status,
+                  ),
+                )
+                .timeout(const Duration(seconds: 1));
 
-      return response.statusCode == 200 && response.body == 'up';
-    } catch (_) {
-      return false;
-    }
-  }
+            if (response.statusCode == 429) {
+              throw const Failure.quotaExceeded();
+            }
+
+            return response.statusCode == 200 && response.body == 'up';
+          } on Failure catch (_) {
+            rethrow;
+          } catch (e) {
+            throw const Failure.other();
+          }
+        },
+      );
 }

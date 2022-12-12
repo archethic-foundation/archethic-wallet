@@ -30,7 +30,7 @@ class _SystemHash {
 }
 
 String $_isFaucetRequestButtonActiveHash() =>
-    r'5e523e6d6e97b12d3f2f2c3cdfbdeeab25917055';
+    r'95430dc2f8679f214ea8cfeedfac8d3af9e6fb80';
 
 /// True if the Faucet claim button should be active
 ///

@@ -7,7 +7,9 @@ class Failure with _$Failure implements Exception {
   const Failure._();
   const factory Failure.loggedOut() = _LoggedOut;
   const factory Failure.network() = _NetworkFailure;
-  const factory Failure.quotaExceeded() = _QuotaExceededFailure;
+  const factory Failure.quotaExceeded({
+    DateTime? cooldownEndDate,
+  }) = _QuotaExceededFailure;
   const factory Failure.insufficientFunds() = _InsuffientFunds;
   const factory Failure.invalidValue() = _InvalidValue;
   const factory Failure.other({
