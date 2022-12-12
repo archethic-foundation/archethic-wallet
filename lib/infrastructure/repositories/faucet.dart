@@ -27,7 +27,7 @@ class FaucetLimitReachedDTO {
 }
 
 class _FaucetRoutes {
-  String get uriRoot => 'http://192.168.1.15:3000';
+  String get uriRoot => 'https://airdrop.archethic.net';
   String get status => '$uriRoot/status';
   String get challenge => '$uriRoot/challenge';
   String get claim => '$uriRoot/claim';
