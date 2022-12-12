@@ -1,0 +1,3 @@
+Archethic Wallet - Version 2.0.2 Build 405
+
+Fix Faucet
