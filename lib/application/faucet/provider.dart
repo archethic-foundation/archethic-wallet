@@ -80,8 +80,6 @@ class _FaucetCooldownNotifier extends AsyncNotifier<Duration> {
   Future<void> startCooldown({
     required DateTime endDate,
   }) async {
-    if (state.isLoading || state.valueOrNull != Duration.zero) return;
-
     final repository = ref.watch(_faucetRepositoryProvider);
     await repository.setClaimCooldownEndDate(date: endDate);
 

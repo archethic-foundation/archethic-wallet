@@ -19,6 +19,7 @@ class FaucetLimitReachedDTO {
       FaucetLimitReachedDTO(
         unlockTime: DateTime.fromMillisecondsSinceEpoch(
           json['unlockTime'] * 1000,
+          isUtc: true,
         ),
       );
 
