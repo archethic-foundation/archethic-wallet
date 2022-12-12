@@ -1,14 +1,27 @@
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+final globalKeyProvider =
+    Provider.autoDispose<GlobalKey<ContainedTabBarViewState>>(
+  (ref) {
+    return GlobalKey<ContainedTabBarViewState>();
+  },
+);
 
 class NftCreationFormSheet extends ConsumerWidget {
   const NftCreationFormSheet({
@@ -17,9 +30,12 @@ class NftCreationFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _key = ref.read(globalKeyProvider);
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final activeVibrations = ref.watch(
+      SettingsProviders.settings.select((value) => value.activeVibrations),
+    );
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -56,10 +72,67 @@ class NftCreationFormSheet extends ConsumerWidget {
                   height: 2,
                   color: theme.text15,
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (nftCreation.indexTab == 0)
+                        AppButtonTinyWithoutExpanded(
+                          AppButtonTinyType.primaryOutline,
+                          '< Previous',
+                          Dimens.buttonTopDimens,
+                          key: const Key('previous'),
+                          width: 100,
+                          onPressed: () {},
+                        )
+                      else
+                        AppButtonTinyWithoutExpanded(
+                          AppButtonTinyType.primary,
+                          '< Previous',
+                          Dimens.buttonTopDimens,
+                          key: const Key('previous'),
+                          width: 100,
+                          onPressed: () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  activeVibrations,
+                                );
+                            _key.currentState?.previous();
+                          },
+                        ),
+                      if (nftCreation.indexTab == 3)
+                        AppButtonTinyWithoutExpanded(
+                          AppButtonTinyType.primaryOutline,
+                          'Next >',
+                          Dimens.buttonTopDimens,
+                          key: const Key('next'),
+                          width: 100,
+                          onPressed: () {},
+                        )
+                      else
+                        AppButtonTinyWithoutExpanded(
+                          AppButtonTinyType.primary,
+                          'Next >',
+                          Dimens.buttonTopDimens,
+                          key: const Key('next'),
+                          width: 100,
+                          onPressed: () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  activeVibrations,
+                                );
+                            _key.currentState?.next();
+                          },
+                        ),
+                    ],
+                  ),
+                ),
                 Expanded(
                   child: Container(
                     constraints: const BoxConstraints.expand(height: 100),
                     child: ContainedTabBarView(
+                      key: _key,
                       initialIndex: nftCreation.indexTab,
                       tabBarViewProperties: const TabBarViewProperties(
                         physics: NeverScrollableScrollPhysics(),
