@@ -76,7 +76,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   ),
                 if (contact != null)
                   _ActionButton(
-                    text: localizations.infos,
+                    text: localizations.receive,
                     icon: UiIcons.receive,
                     onTap: () async {
                       sl.get<HapticUtil>().feedback(
@@ -95,7 +95,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   )
                 else
                   _ActionButton(
-                    text: localizations.infos,
+                    text: localizations.receive,
                     icon: UiIcons.receive,
                     enabled: false,
                   ),

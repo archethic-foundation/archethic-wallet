@@ -375,7 +375,7 @@ class AppLocalization {
 
   String get contactAddressInfoKeychainService {
     return Intl.message(
-        'The following QR Code contains the address of your account.\n\nYou can use this address to send funds or tokens to this account.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.',
+        'The following QR Code contains the address of your account.\n\nYou can use this address to receive funds or tokens on this account.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address.',
         name: 'contactAddressInfoKeychainService');
   }
 
@@ -395,6 +395,12 @@ class AppLocalization {
     return Intl.message(
         'The following QR Code contains the public key of your contact.\n\nYou can use this public key\n- to give him access rights to information that you want to protect (specific properties associated with NFTs, messages, ...).\n- to verify the authenticity of an information by checking that it comes from this contact.\n\nTo use it, you can\n- either scan the QR Code above,\n- or click on it to copy the public key.',
         name: 'contactPublicKeyInfoExternalContact');
+  }
+
+  String get contactPublicKeyInfoWarning {
+    return Intl.message(
+        'Don\'t use this information to receive funds or tokens!',
+        name: 'contactPublicKeyInfoWarning');
   }
 
   String get contactHeader {
@@ -1543,8 +1549,8 @@ class AppLocalization {
     return Intl.message('Transactions', name: 'transactionsAllListHeader');
   }
 
-  String get infos {
-    return Intl.message('Infos', name: 'infos');
+  String get receive {
+    return Intl.message('Receive', name: 'receive');
   }
 
   String get buy {

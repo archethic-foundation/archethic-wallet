@@ -215,6 +215,7 @@ class ContactDetail extends ConsumerWidget {
                         contact.type == ContactType.keychainService.name
                             ? localizations.contactPublicKeyInfoKeychainService
                             : localizations.contactPublicKeyInfoExternalContact,
+                    warning: localizations.contactPublicKeyInfoWarning,
                     messageCopied: localizations.publicKeyCopied,
                   ),
                 ],

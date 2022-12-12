@@ -20,12 +20,14 @@ class ContactDetailTab extends ConsumerWidget {
     required this.infoQRCode,
     required this.description,
     required this.messageCopied,
+    this.warning,
     super.key,
   });
 
   final String infoQRCode;
   final String description;
   final String messageCopied;
+  final String? warning;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,6 +78,15 @@ class ContactDetailTab extends ConsumerWidget {
                       messageCopied: messageCopied,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (warning != null)
+                    AutoSizeText(
+                      warning!,
+                      textAlign: TextAlign.left,
+                      style: theme.textStyleSize12W300PrimaryRed,
+                    ),
                   const SizedBox(
                     height: 10,
                   ),
