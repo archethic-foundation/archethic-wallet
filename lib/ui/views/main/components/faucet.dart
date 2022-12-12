@@ -188,7 +188,9 @@ class _CooldownCounter extends ConsumerWidget {
           )
           .replaceAll(
             '%2',
-            (cooldownRemainingTime.inMinutes % 60).toString().padLeft(2, '0'),
+            ((cooldownRemainingTime.inMinutes % 60) + 1)
+                .toString()
+                .padLeft(2, '0'),
           ),
       style: theme.textStyleSize12W100Primary,
     );
