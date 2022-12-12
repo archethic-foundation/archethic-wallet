@@ -1,9 +1,11 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_info.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/repositories/faucet.dart';
 import 'package:aewallet/infrastructure/repositories/faucet.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/functional_utils.dart';
 import 'package:aewallet/util/screen_util.dart';
@@ -20,8 +22,8 @@ FaucetRepositoryInterface _faucetRepository(Ref ref) {
 @Riverpod(keepAlive: true)
 Future<bool> _isDeviceCompatible(Ref ref) async {
   if (ScreenUtil.isDesktopMode()) return false;
-  // if (ref.read(SettingsProviders.settings).network.network !=
-  //     AvailableNetworks.archethicMainNet) return false;
+  if (ref.read(SettingsProviders.settings).network.network !=
+      AvailableNetworks.archethicMainNet) return false;
 
   return true;
 }
