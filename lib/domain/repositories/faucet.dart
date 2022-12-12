@@ -5,22 +5,24 @@ abstract class FaucetRepositoryInterface {
   /// Return [null] if device is not authorized to request Faucet
   /// Else, returns the challenge.
   Future<Result<String, Failure>> requestChallenge({
+    required String keychainAddress,
     required String deviceId,
   });
 
   /// Claims reward
-  Future<Result<void, Failure>> claim({
+  Future<Result<DateTime, Failure>> claim({
     required String challenge,
     required String deviceId,
+    required String recipientAddress,
     required String keychainAddress,
   });
 
-  Future<DateTime?> getLastClaimDate();
+  Future<DateTime?> getClaimCooldownEndDate();
 
-  Future<void> setLastClaimDate();
+  Future<void> setClaimCooldownEndDate({required DateTime date});
 
   /// Clears all stored data
   Future<void> clear();
 
-  Future<bool> isFaucetEnabled();
+  Future<Result<bool, Failure>> isFaucetEnabled();
 }

@@ -1,10 +1,9 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_info.dart';
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/repositories/faucet.dart';
 import 'package:aewallet/infrastructure/repositories/faucet.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/functional_utils.dart';
 import 'package:aewallet/util/screen_util.dart';
@@ -21,8 +20,8 @@ FaucetRepositoryInterface _faucetRepository(Ref ref) {
 @Riverpod(keepAlive: true)
 Future<bool> _isDeviceCompatible(Ref ref) async {
   if (ScreenUtil.isDesktopMode()) return false;
-  if (ref.read(SettingsProviders.settings).network.network !=
-      AvailableNetworks.archethicMainNet) return false;
+  // if (ref.read(SettingsProviders.settings).network.network !=
+  //     AvailableNetworks.archethicMainNet) return false;
 
   return true;
 }
@@ -31,19 +30,41 @@ Future<bool> _isDeviceCompatible(Ref ref) async {
 Future<bool> _isFaucetEnabled(Ref ref) async {
   final repository = ref.watch(_faucetRepositoryProvider);
 
-  return repository.isFaucetEnabled();
+  final isEnabled = await repository.isFaucetEnabled();
+
+  return isEnabled.map(
+    success: (value) {
+      Future.delayed(
+        const Duration(minutes: 10),
+        () {
+          ref.invalidate(_isFaucetEnabledProvider);
+        },
+      );
+
+      return value;
+    },
+    failure: (_) {
+      Future.delayed(
+        const Duration(seconds: 30),
+        () {
+          ref.invalidate(_isFaucetEnabledProvider);
+        },
+      );
+
+      // If there was an error, act like if faucet was enabled
+      return true;
+    },
+  );
 }
 
 class _FaucetCooldownNotifier extends AsyncNotifier<Duration> {
   @override
   FutureOr<Duration> build() async {
     final repository = ref.watch(_faucetRepositoryProvider);
-    final lastFaucetClaimDate = await repository.getLastClaimDate();
+    final cooldownEndDate = await repository.getClaimCooldownEndDate();
 
-    if (lastFaucetClaimDate == null) return Duration.zero;
+    if (cooldownEndDate == null) return Duration.zero;
 
-    final cooldownEndDate =
-        lastFaucetClaimDate.toUtc().add(const Duration(hours: 24)).startOfDay;
     final cooldownRemainingTime =
         cooldownEndDate.difference(DateTime.now().toUtc()).max(Duration.zero);
 
@@ -56,11 +77,13 @@ class _FaucetCooldownNotifier extends AsyncNotifier<Duration> {
     return cooldownRemainingTime;
   }
 
-  Future<void> startCooldown() async {
+  Future<void> startCooldown({
+    required DateTime endDate,
+  }) async {
     if (state.isLoading || state.valueOrNull != Duration.zero) return;
 
     final repository = ref.watch(_faucetRepositoryProvider);
-    await repository.setLastClaimDate();
+    await repository.setClaimCooldownEndDate(date: endDate);
 
     ref.invalidate(FaucetProviders.claimCooldown);
   }
@@ -82,21 +105,37 @@ class _FaucetClaimNotifier extends AsyncNotifier<void> {
       final selectedAccount = await ref.read(
         AccountProviders.selectedAccount.future,
       );
-
       final accountLastAddress = selectedAccount?.lastAddress;
 
       if (accountLastAddress == null) {
         throw const Failure.invalidValue();
       }
 
+      final keychainAddress = ref
+          .read(
+            SessionProviders.session,
+          )
+          .loggedIn
+          ?.wallet
+          .appKeychain
+          .address;
+      if (keychainAddress == null) {
+        throw const Failure.invalidValue();
+      }
+
       final claimChallenge = (await repository.requestChallenge(
         deviceId: installationId,
+        keychainAddress: keychainAddress,
       ))
           .map(
         success: id,
         failure: (failure) => failure.maybeMap(
           quotaExceeded: (quotaExceeded) {
-            ref.read(FaucetProviders.claimCooldown.notifier).startCooldown();
+            if (quotaExceeded.cooldownEndDate != null) {
+              ref
+                  .read(FaucetProviders.claimCooldown.notifier)
+                  .startCooldown(endDate: quotaExceeded.cooldownEndDate!);
+            }
             throw failure;
           },
           orElse: () {
@@ -108,23 +147,27 @@ class _FaucetClaimNotifier extends AsyncNotifier<void> {
       return (await repository.claim(
         challenge: claimChallenge,
         deviceId: installationId,
-        keychainAddress: accountLastAddress,
+        recipientAddress: accountLastAddress,
+        keychainAddress: keychainAddress,
       ))
           .map(
-        success: (success) {
+        success: (cooldownEndDate) {
           ref
-            ..read(FaucetProviders.claimCooldown.notifier).startCooldown()
+            ..read(FaucetProviders.claimCooldown.notifier)
+                .startCooldown(endDate: cooldownEndDate)
             ..read(AccountProviders.selectedAccount.notifier)
                 .refreshRecentTransactions();
-
-          return success;
         },
         failure: (failure) => failure.maybeMap(
           insufficientFunds: (insufficientFunds) {
             throw failure;
           },
           quotaExceeded: (quotaExceeded) {
-            ref.read(FaucetProviders.claimCooldown.notifier).startCooldown();
+            if (quotaExceeded.cooldownEndDate != null) {
+              ref
+                  .read(FaucetProviders.claimCooldown.notifier)
+                  .startCooldown(endDate: quotaExceeded.cooldownEndDate!);
+            }
             throw failure;
           },
           orElse: () {

@@ -20,7 +20,7 @@ mixin _$Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -30,7 +30,7 @@ mixin _$Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -40,7 +40,7 @@ mixin _$Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -137,7 +137,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -150,7 +150,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -163,7 +163,7 @@ class _$_LoggedOut extends _LoggedOut {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -264,7 +264,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -277,7 +277,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -290,7 +290,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -356,6 +356,8 @@ abstract class _$$_QuotaExceededFailureCopyWith<$Res> {
   factory _$$_QuotaExceededFailureCopyWith(_$_QuotaExceededFailure value,
           $Res Function(_$_QuotaExceededFailure) then) =
       __$$_QuotaExceededFailureCopyWithImpl<$Res>;
+  @useResult
+  $Res call({DateTime? cooldownEndDate});
 }
 
 /// @nodoc
@@ -365,38 +367,64 @@ class __$$_QuotaExceededFailureCopyWithImpl<$Res>
   __$$_QuotaExceededFailureCopyWithImpl(_$_QuotaExceededFailure _value,
       $Res Function(_$_QuotaExceededFailure) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cooldownEndDate = freezed,
+  }) {
+    return _then(_$_QuotaExceededFailure(
+      cooldownEndDate: freezed == cooldownEndDate
+          ? _value.cooldownEndDate
+          : cooldownEndDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_QuotaExceededFailure extends _QuotaExceededFailure {
-  const _$_QuotaExceededFailure() : super._();
+  const _$_QuotaExceededFailure({this.cooldownEndDate}) : super._();
+
+  @override
+  final DateTime? cooldownEndDate;
 
   @override
   String toString() {
-    return 'Failure.quotaExceeded()';
+    return 'Failure.quotaExceeded(cooldownEndDate: $cooldownEndDate)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_QuotaExceededFailure);
+        (other.runtimeType == runtimeType &&
+            other is _$_QuotaExceededFailure &&
+            (identical(other.cooldownEndDate, cooldownEndDate) ||
+                other.cooldownEndDate == cooldownEndDate));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, cooldownEndDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_QuotaExceededFailureCopyWith<_$_QuotaExceededFailure> get copyWith =>
+      __$$_QuotaExceededFailureCopyWithImpl<_$_QuotaExceededFailure>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
-    return quotaExceeded();
+    return quotaExceeded(cooldownEndDate);
   }
 
   @override
@@ -404,12 +432,12 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
-    return quotaExceeded?.call();
+    return quotaExceeded?.call(cooldownEndDate);
   }
 
   @override
@@ -417,14 +445,14 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (quotaExceeded != null) {
-      return quotaExceeded();
+      return quotaExceeded(cooldownEndDate);
     }
     return orElse();
   }
@@ -474,8 +502,14 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
 }
 
 abstract class _QuotaExceededFailure extends Failure {
-  const factory _QuotaExceededFailure() = _$_QuotaExceededFailure;
+  const factory _QuotaExceededFailure({final DateTime? cooldownEndDate}) =
+      _$_QuotaExceededFailure;
   const _QuotaExceededFailure._() : super._();
+
+  DateTime? get cooldownEndDate;
+  @JsonKey(ignore: true)
+  _$$_QuotaExceededFailureCopyWith<_$_QuotaExceededFailure> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -518,7 +552,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -531,7 +565,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -544,7 +578,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -645,7 +679,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -658,7 +692,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -671,7 +705,7 @@ class _$_InvalidValue extends _InvalidValue {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
@@ -804,7 +838,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
-    required TResult Function() quotaExceeded,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
@@ -817,7 +851,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
-    TResult? Function()? quotaExceeded,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
@@ -830,7 +864,7 @@ class _$_OtherFailure extends _OtherFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
-    TResult Function()? quotaExceeded,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,

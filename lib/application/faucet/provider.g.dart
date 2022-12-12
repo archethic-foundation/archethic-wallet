@@ -52,7 +52,7 @@ final _isDeviceCompatibleProvider = FutureProvider<bool>(
       : $_isDeviceCompatibleHash,
 );
 typedef _IsDeviceCompatibleRef = FutureProviderRef<bool>;
-String $_isFaucetEnabledHash() => r'd8203c75a1aa708300444c7c3b660b29a82f95a5';
+String $_isFaucetEnabledHash() => r'828846b82c9029b973cb4bda1dae1c4de1f15be7';
 
 /// See also [_isFaucetEnabled].
 final _isFaucetEnabledProvider = FutureProvider<bool>(

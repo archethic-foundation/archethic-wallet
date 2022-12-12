@@ -18,10 +18,6 @@ part 'faucet.g.dart';
 /// True if the Faucet claim button should be active
 @Riverpod(keepAlive: true)
 bool _isFaucetRequestButtonActive(Ref ref) {
-  final isCooldownActive = ref.watch(FaucetProviders.claimCooldown).maybeWhen(
-        data: (data) => data > Duration.zero,
-        orElse: () => true,
-      );
   final isFaucetEnabled = ref.watch(FaucetProviders.isFaucetEnabled).maybeWhen(
         data: id,
         orElse: () => false,
@@ -30,7 +26,7 @@ bool _isFaucetRequestButtonActive(Ref ref) {
   final isFaucetClaimRequestRunning =
       ref.watch(FaucetProviders.claimRequest).isLoading;
 
-  return !isCooldownActive && isFaucetEnabled && !isFaucetClaimRequestRunning;
+  return isFaucetEnabled && !isFaucetClaimRequestRunning;
 }
 
 class FaucetBanner extends ConsumerWidget {
