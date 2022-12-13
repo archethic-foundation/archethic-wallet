@@ -34,7 +34,7 @@ class NftCategoryMenu extends ConsumerWidget {
     }
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.only(

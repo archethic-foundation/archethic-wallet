@@ -31,6 +31,10 @@ class AccountTab extends ConsumerWidget {
     final isDeviceFaucetCompatible =
         ref.watch(FaucetProviders.isDeviceCompatible).valueOrNull ?? false;
 
+    ref
+        .watch(AccountProviders.selectedAccount.notifier)
+        .refreshRecentTransactions();
+
     return Column(
       children: [
         Expanded(
