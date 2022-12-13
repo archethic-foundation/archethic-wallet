@@ -316,10 +316,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                       .textStyleSize12W400Primary,
                                                   autocorrect: false,
                                                   onChanged: (value) {
-                                                    phrase[index] = value;
+                                                    final _value = value.trim();
+                                                    if (_value.isEmpty) {
+                                                      return;
+                                                    }
+                                                    phrase[index] = _value;
                                                     if (!AppMnemomics
                                                         .isValidWord(
-                                                      value,
+                                                      _value,
                                                       languageCode:
                                                           languageSeed,
                                                     )) {
@@ -396,19 +400,20 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
 
                           _mnemonicIsValid = true;
                           for (final word in phrase) {
-                            if (word.trim() == '') {
+                            final _word = word.trim();
+                            if (_word == '') {
                               _mnemonicIsValid = false;
                               _mnemonicError = localizations.mnemonicSizeError;
                             } else {
                               if (AppMnemomics.isValidWord(
-                                    word,
+                                    _word,
                                     languageCode: languageSeed,
                                   ) ==
                                   false) {
                                 _mnemonicIsValid = false;
                                 _mnemonicError = localizations
                                     .mnemonicInvalidWord
-                                    .replaceAll('%1', word);
+                                    .replaceAll('%1', _word);
                               }
                             }
                           }
