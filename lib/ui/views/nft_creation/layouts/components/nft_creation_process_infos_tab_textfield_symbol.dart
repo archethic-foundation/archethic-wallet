@@ -62,7 +62,7 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
           focusNode: nftSymbolFocusNode,
           controller: nftSymbolController,
           cursorColor: theme.text,
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
           labelText: localizations.tokenSymbolHint,
           autocorrect: false,
           keyboardType: TextInputType.text,

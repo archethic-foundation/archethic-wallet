@@ -109,7 +109,7 @@ class _TransferTextFieldAmountState
               amount: double.tryParse(text) ?? 0,
             );
           },
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
           maxLines: null,
           autocorrect: false,
           labelText: transfer.transferType == TransferType.uco

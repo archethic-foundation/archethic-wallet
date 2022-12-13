@@ -60,7 +60,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
       focusNode: nftNameFocusNode,
       controller: nftNameController,
       cursorColor: theme.text,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       labelText: AppLocalization.of(context)!.nftNameHint,
       autocorrect: false,
       keyboardType: TextInputType.text,
