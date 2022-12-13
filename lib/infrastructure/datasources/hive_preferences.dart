@@ -256,11 +256,13 @@ class HivePreferencesDatasource {
   }
 
   DateTime? getFaucetClaimCooldownEndDate() {
-    return _getValue(faucetClaimCooldownEndDate, defaultValue: null);
+    return DateTime.tryParse(
+      _getValue(faucetClaimCooldownEndDate, defaultValue: ''),
+    );
   }
 
   Future<void> setFaucetClaimCooldownEndDate(DateTime date) {
-    return _setValue(faucetClaimCooldownEndDate, date);
+    return _setValue(faucetClaimCooldownEndDate, date.toIso8601String());
   }
 
   Future<void> clearFaucetClaimCooldownEndDate() {

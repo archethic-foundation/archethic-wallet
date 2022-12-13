@@ -26,7 +26,7 @@ class FaucetLimitReachedDTO {
 }
 
 class _FaucetRoutes {
-  String get uriRoot => 'http://192.168.1.20:3000';
+  String get uriRoot => 'http://192.168.1.15:3000';
   String get status => '$uriRoot/status';
   String get challenge => '$uriRoot/challenge';
   String get claim => '$uriRoot/claim';
@@ -129,10 +129,11 @@ class FaucetRepository implements FaucetRepositoryInterface {
           throw const Failure.other();
         }
 
-        final cooldownEndDate = DateTime.fromMillisecondsSinceEpoch(
-          json.decode(response.body)['cooldownEndDate'],
+        final unlockTime = DateTime.fromMillisecondsSinceEpoch(
+          json.decode(response.body)['unlockTime'] * 1000,
+          isUtc: true,
         );
-        return cooldownEndDate;
+        return unlockTime;
       });
 
   @override
