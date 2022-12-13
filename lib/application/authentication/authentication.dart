@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
@@ -22,15 +24,14 @@ abstract class AuthenticationProviders {
     (ref) => AuthenticationRepository(),
   );
 
-  static final isLocked = StreamProvider.autoDispose<bool>(
-    (ref) async* {
-      yield* ref.watch(lockCountdown.stream).map(
-            (lockCountDownDuration) => lockCountDownDuration.inSeconds > 1,
-          );
+  static final isLockCountdownRunning = FutureProvider<bool>(
+    (ref) async {
+      final lockCountDownDuration = await ref.watch(lockCountdown.future);
+      return lockCountDownDuration.inSeconds > 1;
     },
   );
 
-  static final lockCountdown = StreamProvider.autoDispose<Duration>(
+  static final lockCountdown = StreamProvider<Duration>(
     (ref) async* {
       final lockDate = await ref
           .watch(
@@ -52,6 +53,18 @@ abstract class AuthenticationProviders {
         yield durationToWait;
         await Future.delayed(const Duration(seconds: 1));
       }
+    },
+  );
+
+  static final shouldLockOnStartup = FutureProvider<bool>(
+    (ref) async {
+      final autolockState = await ref.watch(
+        AuthenticationProviders.autoLock.future,
+      );
+      final isLockCountdownRunning = await ref
+          .watch(AuthenticationProviders.isLockCountdownRunning.future);
+
+      return isLockCountdownRunning || autolockState.shouldLock;
     },
   );
 

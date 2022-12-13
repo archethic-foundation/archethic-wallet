@@ -578,7 +578,7 @@ class AppService {
             tokenAddressList.toSet().toList(),
           );
 
-      // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
+      // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
 
       final secretMap = await sl.get<ApiService>().getTransaction(
             tokenAddressList.toSet().toList(),
@@ -764,8 +764,8 @@ class AppService {
             (AuthorizedKey authKey) =>
                 authKey.publicKey!.toUpperCase() ==
                 uint8ListToHex(
-                        Uint8List.fromList(keychainServiceKeyPair.publicKey),)
-                    .toUpperCase(),
+                  Uint8List.fromList(keychainServiceKeyPair.publicKey),
+                ).toUpperCase(),
             orElse: AuthorizedKey.new,
           );
           if (authorizedPublicKey.encryptedSecretKey != null) {
@@ -1013,7 +1013,7 @@ class AppService {
       return null;
     }
 
-    // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
+    // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
     final secretMap = await sl.get<ApiService>().getTransaction(
       [address],
       request:

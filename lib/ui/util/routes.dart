@@ -1,7 +1,20 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
 import 'package:flutter/material.dart';
+
+extension NavigatorPushOnceExt on NavigatorState {
+  /// Pushes a new route. Ensures that route is present only once.
+  /// This requires [newRoute.settings.name] to be defined.
+  Future<T?> pushOnce<T extends Object?>(Route<T> newRoute) {
+    assert(
+      newRoute.settings.name != null,
+      '[Navigator.pushOnce] required [newRoute.settings.name] to be defined',
+    );
+    return pushAndRemoveUntil(
+      newRoute,
+      (route) => route.settings.name != newRoute.settings.name,
+    );
+  }
+}
 
 /// NoTransitionRoute
 /// Custom route which has no transitions
@@ -22,7 +35,7 @@ class NoTransitionRoute<T> extends MaterialPageRoute<T> {
 /// NoPushTransitionRoute
 /// Custom route which has no transition when pushed, but has a pop animation
 class NoPushTransitionRoute<T> extends MaterialPageRoute<T> {
-  NoPushTransitionRoute({required super.builder});
+  NoPushTransitionRoute({required super.builder, super.settings});
 
   @override
   Widget buildTransitions(

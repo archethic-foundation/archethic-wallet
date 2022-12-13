@@ -39,7 +39,7 @@ class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
     final loadedState = state.valueOrNull;
     if (loadedState == null) return;
 
-    final autoLockOption = ref.watch(
+    final autoLockOption = ref.read(
       AuthenticationProviders.settings.select((settings) => settings.lock),
     );
 
@@ -52,7 +52,7 @@ class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
         ref.read(AuthenticationProviders.settings).lockTimeout.duration;
     final newAutoLockDate = DateTime.now().add(lockDuration);
     await ref
-        .watch(AuthenticationProviders._authenticationRepository)
+        .read(AuthenticationProviders._authenticationRepository)
         .setAutoLockTriggerDate(newAutoLockDate);
     state = AsyncValue.data(
       loadedState.copyWith(lockDate: newAutoLockDate),
@@ -61,7 +61,7 @@ class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
 
   Future<void> unscheduleAutolock() async {
     await ref
-        .watch(AuthenticationProviders._authenticationRepository)
+        .read(AuthenticationProviders._authenticationRepository)
         .removeAutoLockTriggerDate();
     state = const AsyncValue.data(AutoLockState());
   }

@@ -14,7 +14,7 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
+import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
@@ -163,11 +163,6 @@ class App extends ConsumerWidget {
                   name: args['name'] == null ? null : args['name'] as String,
                   seed: args['seed'] == null ? null : args['seed'] as String,
                 ),
-                settings: settings,
-              );
-            case '/lock_screen':
-              return NoTransitionRoute<AppLockScreen>(
-                builder: (_) => const AppLockScreen(),
                 settings: settings,
               );
             case '/lock_screen_transition':

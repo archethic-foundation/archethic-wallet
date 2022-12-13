@@ -31,6 +31,8 @@ class YubikeyScreen extends ConsumerStatefulWidget {
     required this.canNavigateBack,
   });
 
+  static const name = 'YubikeyScreen';
+
   final bool canNavigateBack;
 
   @override

@@ -9,12 +9,10 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
+import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -38,6 +36,8 @@ class PinScreen extends ConsumerStatefulWidget {
     this.canNavigateBack = true,
     super.key,
   });
+
+  static const name = 'PinScreen';
 
   final bool canNavigateBack;
   final PinOverlayType type;
@@ -102,7 +102,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
     );
     _animation = Tween<double>(begin: 0, end: 25).animate(curve);
 
-    showLockScreenIfNeeded(context, ref);
+    showLockCountdownScreenIfNeeded(context, ref);
   }
 
   @override
@@ -268,14 +268,14 @@ class _PinScreenState extends ConsumerState<PinScreen>
         return;
       },
       orElse: () {
-        showLockScreenIfNeeded(context, ref);
+        showLockCountdownScreenIfNeeded(context, ref);
         sl.get<HapticUtil>().feedback(
               FeedbackType.error,
               preferences.activeVibrations,
             );
         _controller.forward().then((_) async {
           final isLocked = await ref.read(
-            AuthenticationProviders.isLocked.future,
+            AuthenticationProviders.isLockCountdownRunning.future,
           );
 
           if (isLocked) {
