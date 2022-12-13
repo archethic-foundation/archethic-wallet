@@ -1424,6 +1424,14 @@ class AppLocalization {
     return Intl.message('NFT created :', name: 'nftCreated');
   }
 
+  String get nextButton {
+    return Intl.message('Next >', name: 'nextButton');
+  }
+
+  String get previousButton {
+    return Intl.message('< Previous', name: 'previousButton');
+  }
+
   String get version {
     return Intl.message('Version :', name: 'version');
   }
