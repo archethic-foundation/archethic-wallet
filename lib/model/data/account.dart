@@ -4,6 +4,7 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 // Package imports:
@@ -120,10 +121,11 @@ class Account extends HiveObject {
 
   Future<void> updateNFT(
     String seed,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
-    accountNFT =
-        await sl.get<AppService>().getNFTList(lastAddress!, seed, name);
+    accountNFT = await sl
+        .get<AppService>()
+        .getNFTList(lastAddress!, seed, keychainServiceKeyPair);
 
     var nftInfosOffChainExist = false;
     if (accountNFT != null) {
@@ -197,12 +199,13 @@ class Account extends HiveObject {
 
   Future<void> updateRecentTransactions(
     String seed,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     recentTransactions =
         await sl.get<AppService>().getAccountRecentTransactions(
               lastAddress!,
               seed,
-              name,
+              keychainServiceKeyPair,
               recentTransactions ?? [],
             );
     await updateLastLoadingTransactionInputs();

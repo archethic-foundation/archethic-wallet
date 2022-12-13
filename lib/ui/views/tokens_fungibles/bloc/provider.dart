@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
@@ -9,6 +10,7 @@ import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -31,6 +33,7 @@ final _addTokenFormProvider =
     AddTokenFormProvider.initialAddTokenForm,
     AccountProviders.selectedAccount,
     AddTokenFormProvider._repository,
+    SessionProviders.session,
   ],
 );
 
@@ -105,6 +108,12 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late Transaction transaction;
 
+    final keychainServiceKeyPairMap = ref
+        .watch(SessionProviders.session)
+        .loggedIn!
+        .wallet
+        .keychainServiceKeyPairMap;
+
     transaction = Transaction.token(
       token: Token(
         accountSelectedName: selectedAccount!.name,
@@ -112,6 +121,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
         seed: formState.seed,
+        keychainServiceKeyPair: keychainServiceKeyPairMap[state.name] ??
+            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
         type: 'fungible',
         aeip: [2],
         properties: [],
@@ -265,6 +276,12 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late Transaction transaction;
 
+    final keychainServiceKeyPairMap = ref
+        .watch(SessionProviders.session)
+        .loggedIn!
+        .wallet
+        .keychainServiceKeyPairMap;
+
     transaction = Transaction.token(
       token: Token(
         name: state.name,
@@ -272,6 +289,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         initialSupply: state.initialSupply,
         accountSelectedName: selectedAccount!.name,
         seed: state.seed,
+        keychainServiceKeyPair: keychainServiceKeyPairMap[state.name] ??
+            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
         type: 'fungible',
         aeip: [2],
         properties: [],

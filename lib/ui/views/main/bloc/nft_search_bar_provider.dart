@@ -1,6 +1,7 @@
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,7 +54,7 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
     String searchCriteria,
     BuildContext context,
     String seed,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final localizations = AppLocalization.of(context);
     if (searchCriteria.isEmpty) {
@@ -77,7 +78,7 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
       NFTProviders.getNFT(
         searchCriteria,
         seed,
-        name,
+        keychainServiceKeyPair,
       ).future,
     );
 

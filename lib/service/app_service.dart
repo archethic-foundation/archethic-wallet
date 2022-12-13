@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/model/transaction_input_with_tx_address.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -79,7 +80,7 @@ class AppService {
   Future<List<RecentTransaction>> getAccountRecentTransactions(
     String lastAddress,
     String seed,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
     List<RecentTransaction> localRecentTransactionList,
   ) async {
     dev.log(
@@ -321,33 +322,17 @@ class AppService {
           .getTransactionOwnerships(ownershipsAddresses.toSet().toList());
     }
 
-    final nameEncoded = Uri.encodeFull(name);
-    final serviceName = 'archethic-wallet-$nameEncoded';
-    late Keychain keychain;
-    late KeyPair keypair;
-    var getKeypair = false;
-
     for (var recentTransaction in recentTransactions) {
       if (recentTransaction.typeTx == RecentTransaction.transferInput &&
           recentTransaction.address != null) {
-        if (getKeypair == false) {
-          keychain = await sl.get<ApiService>().getKeychain(seed);
-          keypair = keychain.deriveKeypair(serviceName);
-          getKeypair = true;
-        }
         recentTransaction = _decryptedSecret(
-          keypair: keypair,
+          keypair: keychainServiceKeyPair,
           ownerships: ownershipsMap[recentTransaction.address!] ?? [],
           recentTransaction: recentTransaction,
         );
       } else {
-        if (getKeypair == false) {
-          keychain = await sl.get<ApiService>().getKeychain(seed);
-          keypair = keychain.deriveKeypair(serviceName);
-          getKeypair = true;
-        }
         recentTransaction = _decryptedSecret(
-          keypair: keypair,
+          keypair: keychainServiceKeyPair,
           ownerships: recentTransaction.ownerships ?? [],
           recentTransaction: recentTransaction,
         );
@@ -493,7 +478,7 @@ class AppService {
   }
 
   RecentTransaction _decryptedSecret({
-    required KeyPair keypair,
+    required KeychainServiceKeyPair keypair,
     required List<Ownership> ownerships,
     required RecentTransaction recentTransaction,
   }) {
@@ -505,13 +490,13 @@ class AppService {
       final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
         (AuthorizedKey authKey) =>
             authKey.publicKey!.toUpperCase() ==
-            uint8ListToHex(keypair.publicKey).toUpperCase(),
+            uint8ListToHex(Uint8List.fromList(keypair.publicKey)).toUpperCase(),
         orElse: AuthorizedKey.new,
       );
       if (authorizedPublicKey.encryptedSecretKey != null) {
         final aesKey = ecDecrypt(
           authorizedPublicKey.encryptedSecretKey,
-          keypair.privateKey,
+          Uint8List.fromList(keypair.privateKey),
         );
         final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
         recentTransaction.decryptedSecret!.add(utf8.decode(decryptedSecret));
@@ -572,7 +557,7 @@ class AppService {
   Future<List<AccountToken>> getNFTList(
     String address,
     String seed,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
@@ -594,20 +579,12 @@ class AppService {
           );
 
       // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
-      final nameEncoded = Uri.encodeFull(name);
-      final serviceName = 'archethic-wallet-$nameEncoded';
-      late Keychain keychain;
-      late KeyPair keypair;
+
       final secretMap = await sl.get<ApiService>().getTransaction(
             tokenAddressList.toSet().toList(),
             request:
                 'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
           );
-
-      if (secretMap.isNotEmpty) {
-        keychain = await sl.get<ApiService>().getKeychain(seed);
-        keypair = keychain.deriveKeypair(serviceName);
-      }
 
       for (final tokenBalance in balance.token!) {
         final token = tokenMap[tokenBalance.address];
@@ -621,7 +598,7 @@ class AppService {
               secretMap[tokenBalance.address]!.data!.ownerships!.isNotEmpty) {
             tokenWithoutFile.addAll(
               _tokenPropertiesDecryptedSecret(
-                keypair: keypair,
+                keypair: keychainServiceKeyPair,
                 ownerships: secretMap[tokenBalance.address]!.data!.ownerships!,
               ),
             );
@@ -654,7 +631,7 @@ class AppService {
   }
 
   Map<String, dynamic> _tokenPropertiesDecryptedSecret({
-    required KeyPair keypair,
+    required KeychainServiceKeyPair keypair,
     required List<Ownership> ownerships,
   }) {
     final propertiesDecrypted = <String, dynamic>{};
@@ -662,7 +639,7 @@ class AppService {
       final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
         (AuthorizedKey authKey) =>
             authKey.publicKey!.toUpperCase() ==
-            uint8ListToHex(keypair.publicKey).toUpperCase(),
+            uint8ListToHex(Uint8List.fromList(keypair.publicKey)).toUpperCase(),
         orElse: AuthorizedKey.new,
       );
       if (authorizedPublicKey.encryptedSecretKey != null) {
@@ -721,7 +698,7 @@ class AppService {
     DateFormat dateFormat,
     String cryptoCurrency,
     BuildContext context,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final transactionsInfos = List<TransactionInfos>.empty(growable: true);
 
@@ -781,23 +758,20 @@ class AppService {
       }
       if (transaction.data!.ownerships != null &&
           transaction.data!.ownerships!.isNotEmpty) {
-        final nameEncoded = Uri.encodeFull(name);
-        final serviceName = 'archethic-wallet-$nameEncoded';
-        final keychain = await sl.get<ApiService>().getKeychain(seed);
-        final keypair = keychain.deriveKeypair(serviceName);
-
         for (final ownership in transaction.data!.ownerships!) {
           final authorizedPublicKey =
               ownership.authorizedPublicKeys!.firstWhere(
             (AuthorizedKey authKey) =>
                 authKey.publicKey!.toUpperCase() ==
-                uint8ListToHex(keypair.publicKey).toUpperCase(),
+                uint8ListToHex(
+                        Uint8List.fromList(keychainServiceKeyPair.publicKey),)
+                    .toUpperCase(),
             orElse: AuthorizedKey.new,
           );
           if (authorizedPublicKey.encryptedSecretKey != null) {
             final aesKey = ecDecrypt(
               authorizedPublicKey.encryptedSecretKey,
-              keypair.privateKey,
+              Uint8List.fromList(keychainServiceKeyPair.privateKey),
             );
             final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
             transactionsInfos.add(
@@ -935,7 +909,7 @@ class AppService {
     List<UCOTransfer> listUcoTransfer,
     List<TokenTransfer> listTokenTransfer,
     String message,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final lastTransactionMap = await sl
         .get<ApiService>()
@@ -960,13 +934,12 @@ class AppService {
         ),
       );
 
-      final nameEncoded = Uri.encodeFull(name);
-      final serviceName = 'archethic-wallet-$nameEncoded';
-      final keychain = await sl.get<ApiService>().getKeychain(seed);
-      final walletKeyPair = keychain.deriveKeypair(serviceName);
-
       final authorizedPublicKeys = List<String>.empty(growable: true)
-        ..add(uint8ListToHex(walletKeyPair.publicKey));
+        ..add(
+          uint8ListToHex(
+            Uint8List.fromList(keychainServiceKeyPair.publicKey),
+          ),
+        );
 
       for (final transfer in listUcoTransfer) {
         final firstTxListRecipientMap =
@@ -1028,7 +1001,7 @@ class AppService {
   Future<TokenInformations?> getNFT(
     String address,
     String seed,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final tokenMap = await sl.get<ApiService>().getToken(
       [address],
@@ -1041,20 +1014,11 @@ class AppService {
     }
 
     // TODO(reddwarf03) : temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
-    final nameEncoded = Uri.encodeFull(name);
-    final serviceName = 'archethic-wallet-$nameEncoded';
-    late Keychain keychain;
-    late KeyPair keypair;
     final secretMap = await sl.get<ApiService>().getTransaction(
       [address],
       request:
           'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
     );
-
-    if (secretMap.isNotEmpty) {
-      keychain = await sl.get<ApiService>().getKeychain(seed);
-      keypair = keychain.deriveKeypair(serviceName);
-    }
 
     final token = tokenMap[address]!;
 
@@ -1067,7 +1031,7 @@ class AppService {
         secretMap[address]!.data!.ownerships!.isNotEmpty) {
       tokenWithoutFile.addAll(
         _tokenPropertiesDecryptedSecret(
-          keypair: keypair,
+          keypair: keychainServiceKeyPair,
           ownerships: secretMap[address]!.data!.ownerships!,
         ),
       );

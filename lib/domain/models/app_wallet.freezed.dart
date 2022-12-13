@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppWallet {
   String get seed => throw _privateConstructorUsedError;
   AppKeychain get appKeychain => throw _privateConstructorUsedError;
+  Map<String, KeychainServiceKeyPair> get keychainServiceKeyPairMap =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppWalletCopyWith<AppWallet> get copyWith =>
@@ -29,7 +31,10 @@ abstract class $AppWalletCopyWith<$Res> {
   factory $AppWalletCopyWith(AppWallet value, $Res Function(AppWallet) then) =
       _$AppWalletCopyWithImpl<$Res, AppWallet>;
   @useResult
-  $Res call({String seed, AppKeychain appKeychain});
+  $Res call(
+      {String seed,
+      AppKeychain appKeychain,
+      Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap});
 }
 
 /// @nodoc
@@ -47,6 +52,7 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
   $Res call({
     Object? seed = null,
     Object? appKeychain = null,
+    Object? keychainServiceKeyPairMap = null,
   }) {
     return _then(_value.copyWith(
       seed: null == seed
@@ -57,6 +63,10 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
           ? _value.appKeychain
           : appKeychain // ignore: cast_nullable_to_non_nullable
               as AppKeychain,
+      keychainServiceKeyPairMap: null == keychainServiceKeyPairMap
+          ? _value.keychainServiceKeyPairMap
+          : keychainServiceKeyPairMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, KeychainServiceKeyPair>,
     ) as $Val);
   }
 }
@@ -68,7 +78,10 @@ abstract class _$$_AppWalletCopyWith<$Res> implements $AppWalletCopyWith<$Res> {
       __$$_AppWalletCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String seed, AppKeychain appKeychain});
+  $Res call(
+      {String seed,
+      AppKeychain appKeychain,
+      Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap});
 }
 
 /// @nodoc
@@ -84,6 +97,7 @@ class __$$_AppWalletCopyWithImpl<$Res>
   $Res call({
     Object? seed = null,
     Object? appKeychain = null,
+    Object? keychainServiceKeyPairMap = null,
   }) {
     return _then(_$_AppWallet(
       seed: null == seed
@@ -94,6 +108,10 @@ class __$$_AppWalletCopyWithImpl<$Res>
           ? _value.appKeychain
           : appKeychain // ignore: cast_nullable_to_non_nullable
               as AppKeychain,
+      keychainServiceKeyPairMap: null == keychainServiceKeyPairMap
+          ? _value._keychainServiceKeyPairMap
+          : keychainServiceKeyPairMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, KeychainServiceKeyPair>,
     ));
   }
 }
@@ -101,17 +119,29 @@ class __$$_AppWalletCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AppWallet extends _AppWallet {
-  const _$_AppWallet({required this.seed, required this.appKeychain})
-      : super._();
+  const _$_AppWallet(
+      {required this.seed,
+      required this.appKeychain,
+      final Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap =
+          const {}})
+      : _keychainServiceKeyPairMap = keychainServiceKeyPairMap,
+        super._();
 
   @override
   final String seed;
   @override
   final AppKeychain appKeychain;
+  final Map<String, KeychainServiceKeyPair> _keychainServiceKeyPairMap;
+  @override
+  @JsonKey()
+  Map<String, KeychainServiceKeyPair> get keychainServiceKeyPairMap {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_keychainServiceKeyPairMap);
+  }
 
   @override
   String toString() {
-    return 'AppWallet(seed: $seed, appKeychain: $appKeychain)';
+    return 'AppWallet(seed: $seed, appKeychain: $appKeychain, keychainServiceKeyPairMap: $keychainServiceKeyPairMap)';
   }
 
   @override
@@ -121,11 +151,14 @@ class _$_AppWallet extends _AppWallet {
             other is _$_AppWallet &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.appKeychain, appKeychain) ||
-                other.appKeychain == appKeychain));
+                other.appKeychain == appKeychain) &&
+            const DeepCollectionEquality().equals(
+                other._keychainServiceKeyPairMap, _keychainServiceKeyPairMap));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, seed, appKeychain);
+  int get hashCode => Object.hash(runtimeType, seed, appKeychain,
+      const DeepCollectionEquality().hash(_keychainServiceKeyPairMap));
 
   @JsonKey(ignore: true)
   @override
@@ -137,13 +170,17 @@ class _$_AppWallet extends _AppWallet {
 abstract class _AppWallet extends AppWallet {
   const factory _AppWallet(
       {required final String seed,
-      required final AppKeychain appKeychain}) = _$_AppWallet;
+      required final AppKeychain appKeychain,
+      final Map<String, KeychainServiceKeyPair>
+          keychainServiceKeyPairMap}) = _$_AppWallet;
   const _AppWallet._() : super._();
 
   @override
   String get seed;
   @override
   AppKeychain get appKeychain;
+  @override
+  Map<String, KeychainServiceKeyPair> get keychainServiceKeyPairMap;
   @override
   @JsonKey(ignore: true)
   _$$_AppWalletCopyWith<_$_AppWallet> get copyWith =>

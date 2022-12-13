@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
@@ -14,6 +15,7 @@ import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart'
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -42,6 +44,7 @@ final _nftCreationFormProvider = NotifierProvider.family<
   dependencies: [
     AccountProviders.selectedAccount,
     NftCreationFormProvider._repository,
+    SessionProviders.session,
   ],
 );
 
@@ -134,6 +137,12 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
 
     late Transaction transaction;
 
+    final keychainServiceKeyPairMap = ref
+        .watch(SessionProviders.session)
+        .loggedIn!
+        .wallet
+        .keychainServiceKeyPairMap;
+
     transaction = Transaction.token(
       token: Token(
         accountSelectedName: selectedAccount!.name,
@@ -141,6 +150,8 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply.toDouble(),
         seed: formState.seed,
+        keychainServiceKeyPair: keychainServiceKeyPairMap[formState.name] ??
+            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
         type: 'non-fungible',
         aeip: [2],
         properties: formState.propertiesConverted,
@@ -559,6 +570,12 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
 
     late Transaction transaction;
 
+    final keychainServiceKeyPairMap = ref
+        .watch(SessionProviders.session)
+        .loggedIn!
+        .wallet
+        .keychainServiceKeyPairMap;
+
     transaction = Transaction.token(
       token: Token(
         name: state.name,
@@ -566,6 +583,8 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         initialSupply: state.initialSupply.toDouble(),
         accountSelectedName: selectedAccount!.name,
         seed: state.seed,
+        keychainServiceKeyPair: keychainServiceKeyPairMap[state.name] ??
+            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
         type: 'non-fungible',
         aeip: [2],
         properties: state.propertiesConverted,

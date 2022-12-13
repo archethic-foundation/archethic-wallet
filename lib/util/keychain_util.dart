@@ -244,8 +244,8 @@ class KeychainUtil {
   }
 
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
+    Keychain keychain,
     HiveAppWalletDTO? appWallet,
-    String? seed,
     String currency,
     String tokenName, {
     bool loadBalance = true,
@@ -254,9 +254,6 @@ class KeychainUtil {
 
     HiveAppWalletDTO currentAppWallet;
     try {
-      /// Get KeyChain Wallet
-      final keychain = await sl.get<ApiService>().getKeychain(seed!);
-
       /// Creation of a new appWallet
       if (appWallet == null) {
         final addressKeychain =

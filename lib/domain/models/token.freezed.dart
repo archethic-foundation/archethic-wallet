@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Token {
   String get seed => throw _privateConstructorUsedError;
+  KeychainServiceKeyPair get keychainServiceKeyPair =>
+      throw _privateConstructorUsedError;
   String get accountSelectedName => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
@@ -36,6 +38,7 @@ abstract class $TokenCopyWith<$Res> {
   @useResult
   $Res call(
       {String seed,
+      KeychainServiceKeyPair keychainServiceKeyPair,
       String accountSelectedName,
       String name,
       String symbol,
@@ -43,6 +46,8 @@ abstract class $TokenCopyWith<$Res> {
       String type,
       List<TokenProperty> properties,
       List<int> aeip});
+
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
 }
 
 /// @nodoc
@@ -59,6 +64,7 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
   @override
   $Res call({
     Object? seed = null,
+    Object? keychainServiceKeyPair = null,
     Object? accountSelectedName = null,
     Object? name = null,
     Object? symbol = null,
@@ -72,6 +78,10 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
+      keychainServiceKeyPair: null == keychainServiceKeyPair
+          ? _value.keychainServiceKeyPair
+          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
+              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -102,6 +112,15 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
               as List<int>,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair {
+    return $KeychainServiceKeyPairCopyWith<$Res>(_value.keychainServiceKeyPair,
+        (value) {
+      return _then(_value.copyWith(keychainServiceKeyPair: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -112,6 +131,7 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
   @useResult
   $Res call(
       {String seed,
+      KeychainServiceKeyPair keychainServiceKeyPair,
       String accountSelectedName,
       String name,
       String symbol,
@@ -119,6 +139,9 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
       String type,
       List<TokenProperty> properties,
       List<int> aeip});
+
+  @override
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
 }
 
 /// @nodoc
@@ -131,6 +154,7 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
   @override
   $Res call({
     Object? seed = null,
+    Object? keychainServiceKeyPair = null,
     Object? accountSelectedName = null,
     Object? name = null,
     Object? symbol = null,
@@ -144,6 +168,10 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
+      keychainServiceKeyPair: null == keychainServiceKeyPair
+          ? _value.keychainServiceKeyPair
+          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
+              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -181,6 +209,7 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
 class _$_Token extends _Token {
   const _$_Token(
       {required this.seed,
+      required this.keychainServiceKeyPair,
       required this.accountSelectedName,
       required this.name,
       required this.symbol,
@@ -194,6 +223,8 @@ class _$_Token extends _Token {
 
   @override
   final String seed;
+  @override
+  final KeychainServiceKeyPair keychainServiceKeyPair;
   @override
   final String accountSelectedName;
   @override
@@ -220,7 +251,7 @@ class _$_Token extends _Token {
 
   @override
   String toString() {
-    return 'Token(seed: $seed, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
+    return 'Token(seed: $seed, keychainServiceKeyPair: $keychainServiceKeyPair, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
   }
 
   @override
@@ -229,6 +260,8 @@ class _$_Token extends _Token {
         (other.runtimeType == runtimeType &&
             other is _$_Token &&
             (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.keychainServiceKeyPair, keychainServiceKeyPair) ||
+                other.keychainServiceKeyPair == keychainServiceKeyPair) &&
             (identical(other.accountSelectedName, accountSelectedName) ||
                 other.accountSelectedName == accountSelectedName) &&
             (identical(other.name, name) || other.name == name) &&
@@ -245,6 +278,7 @@ class _$_Token extends _Token {
   int get hashCode => Object.hash(
       runtimeType,
       seed,
+      keychainServiceKeyPair,
       accountSelectedName,
       name,
       symbol,
@@ -263,6 +297,7 @@ class _$_Token extends _Token {
 abstract class _Token extends Token {
   const factory _Token(
       {required final String seed,
+      required final KeychainServiceKeyPair keychainServiceKeyPair,
       required final String accountSelectedName,
       required final String name,
       required final String symbol,
@@ -274,6 +309,8 @@ abstract class _Token extends Token {
 
   @override
   String get seed;
+  @override
+  KeychainServiceKeyPair get keychainServiceKeyPair;
   @override
   String get accountSelectedName;
   @override

@@ -442,6 +442,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                           if (newSession == null) {
                             setState(() {
                               _mnemonicIsValid = false;
+                              isPressed = false;
                             });
                             UIUtil.showSnackbar(
                               localizations.noKeychain,

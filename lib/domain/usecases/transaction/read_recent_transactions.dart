@@ -3,6 +3,7 @@ import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/read_usecases.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -10,10 +11,12 @@ class ReadRecentTransactionsCommand {
   const ReadRecentTransactionsCommand({
     required this.account,
     required this.walletSeed,
+    required this.keychainServiceKeyPair,
   });
 
   final Account account;
   final String walletSeed;
+  final KeychainServiceKeyPair keychainServiceKeyPair;
 }
 
 @immutable
@@ -78,6 +81,7 @@ class ReadRecentTransactionsUseCases
         lastAddress: lastTransactionAddress,
       ),
       walletSeed: command.walletSeed,
+      keychainServiceKeyPair: command.keychainServiceKeyPair,
     );
     final remoteRecentTransactions = recentTransactionsResult.valueOrNull;
 

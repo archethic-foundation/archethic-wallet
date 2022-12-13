@@ -202,7 +202,8 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                 searchController.text,
                 context,
                 session.wallet.seed,
-                session.wallet.appKeychain.getAccountSelected()!.name,
+                session.wallet.keychainServiceKeyPairMap[
+                    session.wallet.appKeychain.getAccountSelected()!.name]!,
               );
             },
           ),

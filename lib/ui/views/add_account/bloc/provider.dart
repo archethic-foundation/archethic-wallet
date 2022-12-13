@@ -30,6 +30,7 @@ final _addAccountFormProvider =
     AccountProviders.selectedAccount,
     AddAccountFormProvider._repository,
     AccountProviders.sortedAccounts,
+    SessionProviders.session,
   ],
 );
 
@@ -104,7 +105,6 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
-        ref.read(SessionProviders.session.notifier).refresh();
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
             transactionType: TransactionSendEventType.keychain,

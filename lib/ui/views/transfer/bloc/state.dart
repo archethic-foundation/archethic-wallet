@@ -42,7 +42,7 @@ class TransferFormState with _$TransferFormState {
       errorAddressText == '' && errorAmountText == '' && errorMessageText == '';
 
   bool get canTransfer =>
-      feeEstimation.value != null && feeEstimation.value! > 0;
+      feeEstimation.value != null && feeEstimation.value! > 0 && isControlsOk;
 
   bool showMaxAmountButton(AvailablePrimaryCurrency primaryCurrency) {
     switch (transferType) {

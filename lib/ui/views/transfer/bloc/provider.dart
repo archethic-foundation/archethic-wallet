@@ -2,6 +2,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
@@ -12,6 +13,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -39,6 +41,7 @@ final _transferFormProvider =
     TransferFormProvider._repository,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
     PrimaryCurrencyProviders.convertedValue,
+    SessionProviders.session,
   ],
 );
 
@@ -328,6 +331,12 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     late Transaction transaction;
 
+    final keychainServiceKeyPairMap = ref
+        .watch(SessionProviders.session)
+        .loggedIn!
+        .wallet
+        .keychainServiceKeyPairMap;
+
     switch (state.transferType) {
       case TransferType.token:
         transaction = Transaction.transfer(
@@ -337,6 +346,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             seed: formState.seed,
+            keychainServiceKeyPair:
+                keychainServiceKeyPairMap[selectedAccount.name] ??
+                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'fungible',
             aeip: [2],
@@ -355,6 +367,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             seed: formState.seed,
+            keychainServiceKeyPair:
+                keychainServiceKeyPairMap[selectedAccount.name] ??
+                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
           ),
         );
         break;
@@ -366,6 +381,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             seed: formState.seed,
+            keychainServiceKeyPair:
+                keychainServiceKeyPairMap[selectedAccount.name] ??
+                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             aeip: [2],
@@ -672,6 +690,12 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     late Transaction transaction;
 
+    final keychainServiceKeyPairMap = ref
+        .watch(SessionProviders.session)
+        .loggedIn!
+        .wallet
+        .keychainServiceKeyPairMap;
+
     switch (state.transferType) {
       case TransferType.token:
         transaction = Transaction.transfer(
@@ -681,6 +705,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             seed: state.seed,
+            keychainServiceKeyPair:
+                keychainServiceKeyPairMap[selectedAccount.name] ??
+                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'fungible',
             tokenId: 0,
@@ -698,6 +725,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             seed: state.seed,
+            keychainServiceKeyPair:
+                keychainServiceKeyPairMap[selectedAccount.name] ??
+                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
           ),
         );
         break;
@@ -709,6 +739,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             seed: state.seed,
+            keychainServiceKeyPair:
+                keychainServiceKeyPairMap[selectedAccount.name] ??
+                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             tokenId: 1,
