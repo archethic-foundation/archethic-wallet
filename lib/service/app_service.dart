@@ -901,8 +901,9 @@ class AppService {
           }
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
             final tokenMap = await sl.get<ApiService>().getToken(
-                [transaction.data!.ledger!.token!.transfers![i].tokenAddress!],
-                request: 'symbol',);
+              [transaction.data!.ledger!.token!.transfers![i].tokenAddress!],
+              request: 'symbol',
+            );
             var tokenSymbol = '';
             if (tokenMap[transaction
                     .data!.ledger!.token!.transfers![i].tokenAddress!] !=
@@ -1022,11 +1023,6 @@ class AppService {
       dev.log('Failed to get transaction fees', error: e, stackTrace: stack);
     }
     return fromBigInt(transactionFee.fee).toDouble();
-  }
-
-  Future<Keychain> getKeychain(String seed) async {
-    final keychain = await sl.get<ApiService>().getKeychain(seed);
-    return keychain;
   }
 
   Future<TokenInformations?> getNFT(
