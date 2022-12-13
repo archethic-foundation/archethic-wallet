@@ -178,11 +178,11 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
             LengthLimitingTextInputFormatter(68),
           ],
         ),
-        Container(
+        Padding(
           padding: const EdgeInsets.only(top: 20),
-          width: MediaQuery.of(context).size.width,
-          child: AppButtonTiny(
+          child: AppButtonTinyWithoutExpanded(
             AppButtonTinyType.primary,
+            width: MediaQuery.of(context).size.width,
             localizations.search,
             Dimens.buttonTopDimens,
             key: const Key('search'),
