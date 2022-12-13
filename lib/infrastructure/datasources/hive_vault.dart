@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 // Package imports:
 import 'package:aewallet/model/data/secured_settings.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
@@ -21,6 +22,8 @@ class HiveVaultDatasource {
   static const String _yubikeyClientID = 'archethic_wallet_yubikeyClientID';
   static const String _yubikeyClientAPIKey =
       'archethic_wallet_yubikeyClientAPIKey';
+  static const String _keychainServicesKeyPair =
+      'archethic_keychainServicesKeyPair';
 
   final List<int> secureKey = Hive.generateSecureKey();
 
@@ -107,6 +110,31 @@ class HiveVaultDatasource {
 
   String getYubikeyClientID() => _getValue(_yubikeyClientID, defaultValue: '');
 
+  Future<void> setKeychainServiceKeyPairMap(
+    Map<String, KeychainServiceKeyPair> v,
+  ) {
+    try {
+      return _setValue(
+        _keychainServicesKeyPair,
+        json.encode(v),
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Map<String, KeychainServiceKeyPair> getKeychainServiceKeyPairMap() {
+    try {
+      final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
+      json.decode(_getValue(_keychainServicesKeyPair)).forEach((key, value) {
+        keychainServiceKeyPairMap[key] = KeychainServiceKeyPair.fromJson(value);
+      });
+      return keychainServiceKeyPairMap;
+    } catch (_) {
+      return {};
+    }
+  }
+
   Future<void> clearAll() async {
     await _box.clear();
   }
@@ -117,5 +145,6 @@ class HiveVaultDatasource {
         pin: getPin(),
         yubikeyClientAPIKey: getYubikeyClientAPIKey(),
         yubikeyClientID: getYubikeyClientID(),
+        keychainServiceKeyPairMap: getKeychainServiceKeyPairMap(),
       );
 }

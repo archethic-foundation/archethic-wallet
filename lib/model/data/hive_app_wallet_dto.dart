@@ -6,6 +6,7 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
@@ -25,10 +26,12 @@ class HiveAppWalletDTO extends HiveObject {
 
   AppWallet toModel({
     required String seed,
+    required Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap,
   }) =>
       AppWallet(
         appKeychain: appKeychain,
         seed: seed,
+        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
       );
 
   /// Keychain

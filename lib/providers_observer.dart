@@ -39,7 +39,7 @@ class ProvidersLogger extends ProviderObserver {
   }
 
   @override
-  void didDisposeProvider(ProviderBase provider, ProviderContainer containers) {
+  void didDisposeProvider(ProviderBase provider, ProviderContainer container) {
     if (provider.name != null) {
       log('didDisposeProvider', name: '${provider.name}');
     }

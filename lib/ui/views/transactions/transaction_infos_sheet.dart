@@ -64,7 +64,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
               AccountBalance.cryptoCurrencyLabel,
               context,
-              selectedAccount.name,
+              session.wallet.keychainServiceKeyPairMap[selectedAccount.name]!,
             ),
         builder: (
           BuildContext context,

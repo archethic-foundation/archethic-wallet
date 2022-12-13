@@ -21,6 +21,8 @@ mixin _$SecuredSettings {
   String? get password => throw _privateConstructorUsedError;
   String? get yubikeyClientID => throw _privateConstructorUsedError;
   String? get yubikeyClientAPIKey => throw _privateConstructorUsedError;
+  Map<String, KeychainServiceKeyPair>? get keychainServiceKeyPairMap =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SecuredSettingsCopyWith<SecuredSettings> get copyWith =>
@@ -38,7 +40,8 @@ abstract class $SecuredSettingsCopyWith<$Res> {
       String? pin,
       String? password,
       String? yubikeyClientID,
-      String? yubikeyClientAPIKey});
+      String? yubikeyClientAPIKey,
+      Map<String, KeychainServiceKeyPair>? keychainServiceKeyPairMap});
 }
 
 /// @nodoc
@@ -59,6 +62,7 @@ class _$SecuredSettingsCopyWithImpl<$Res, $Val extends SecuredSettings>
     Object? password = freezed,
     Object? yubikeyClientID = freezed,
     Object? yubikeyClientAPIKey = freezed,
+    Object? keychainServiceKeyPairMap = freezed,
   }) {
     return _then(_value.copyWith(
       seed: freezed == seed
@@ -81,6 +85,10 @@ class _$SecuredSettingsCopyWithImpl<$Res, $Val extends SecuredSettings>
           ? _value.yubikeyClientAPIKey
           : yubikeyClientAPIKey // ignore: cast_nullable_to_non_nullable
               as String?,
+      keychainServiceKeyPairMap: freezed == keychainServiceKeyPairMap
+          ? _value.keychainServiceKeyPairMap
+          : keychainServiceKeyPairMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, KeychainServiceKeyPair>?,
     ) as $Val);
   }
 }
@@ -98,7 +106,8 @@ abstract class _$$_SecuredSettingsCopyWith<$Res>
       String? pin,
       String? password,
       String? yubikeyClientID,
-      String? yubikeyClientAPIKey});
+      String? yubikeyClientAPIKey,
+      Map<String, KeychainServiceKeyPair>? keychainServiceKeyPairMap});
 }
 
 /// @nodoc
@@ -117,6 +126,7 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
     Object? password = freezed,
     Object? yubikeyClientID = freezed,
     Object? yubikeyClientAPIKey = freezed,
+    Object? keychainServiceKeyPairMap = freezed,
   }) {
     return _then(_$_SecuredSettings(
       seed: freezed == seed
@@ -139,6 +149,10 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
           ? _value.yubikeyClientAPIKey
           : yubikeyClientAPIKey // ignore: cast_nullable_to_non_nullable
               as String?,
+      keychainServiceKeyPairMap: freezed == keychainServiceKeyPairMap
+          ? _value._keychainServiceKeyPairMap
+          : keychainServiceKeyPairMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, KeychainServiceKeyPair>?,
     ));
   }
 }
@@ -151,8 +165,10 @@ class _$_SecuredSettings extends _SecuredSettings {
       this.pin,
       this.password,
       this.yubikeyClientID,
-      this.yubikeyClientAPIKey})
-      : super._();
+      this.yubikeyClientAPIKey,
+      final Map<String, KeychainServiceKeyPair>? keychainServiceKeyPairMap})
+      : _keychainServiceKeyPairMap = keychainServiceKeyPairMap,
+        super._();
 
   @override
   final String? seed;
@@ -164,10 +180,18 @@ class _$_SecuredSettings extends _SecuredSettings {
   final String? yubikeyClientID;
   @override
   final String? yubikeyClientAPIKey;
+  final Map<String, KeychainServiceKeyPair>? _keychainServiceKeyPairMap;
+  @override
+  Map<String, KeychainServiceKeyPair>? get keychainServiceKeyPairMap {
+    final value = _keychainServiceKeyPairMap;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString() {
-    return 'SecuredSettings(seed: $seed, pin: $pin, password: $password, yubikeyClientID: $yubikeyClientID, yubikeyClientAPIKey: $yubikeyClientAPIKey)';
+    return 'SecuredSettings(seed: $seed, pin: $pin, password: $password, yubikeyClientID: $yubikeyClientID, yubikeyClientAPIKey: $yubikeyClientAPIKey, keychainServiceKeyPairMap: $keychainServiceKeyPairMap)';
   }
 
   @override
@@ -182,12 +206,20 @@ class _$_SecuredSettings extends _SecuredSettings {
             (identical(other.yubikeyClientID, yubikeyClientID) ||
                 other.yubikeyClientID == yubikeyClientID) &&
             (identical(other.yubikeyClientAPIKey, yubikeyClientAPIKey) ||
-                other.yubikeyClientAPIKey == yubikeyClientAPIKey));
+                other.yubikeyClientAPIKey == yubikeyClientAPIKey) &&
+            const DeepCollectionEquality().equals(
+                other._keychainServiceKeyPairMap, _keychainServiceKeyPairMap));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, seed, pin, password, yubikeyClientID, yubikeyClientAPIKey);
+      runtimeType,
+      seed,
+      pin,
+      password,
+      yubikeyClientID,
+      yubikeyClientAPIKey,
+      const DeepCollectionEquality().hash(_keychainServiceKeyPairMap));
 
   @JsonKey(ignore: true)
   @override
@@ -202,7 +234,9 @@ abstract class _SecuredSettings extends SecuredSettings {
       final String? pin,
       final String? password,
       final String? yubikeyClientID,
-      final String? yubikeyClientAPIKey}) = _$_SecuredSettings;
+      final String? yubikeyClientAPIKey,
+      final Map<String, KeychainServiceKeyPair>?
+          keychainServiceKeyPairMap}) = _$_SecuredSettings;
   const _SecuredSettings._() : super._();
 
   @override
@@ -215,6 +249,8 @@ abstract class _SecuredSettings extends SecuredSettings {
   String? get yubikeyClientID;
   @override
   String? get yubikeyClientAPIKey;
+  @override
+  Map<String, KeychainServiceKeyPair>? get keychainServiceKeyPairMap;
   @override
   @JsonKey(ignore: true)
   _$$_SecuredSettingsCopyWith<_$_SecuredSettings> get copyWith =>

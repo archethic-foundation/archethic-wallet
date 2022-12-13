@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:typed_data';
+
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/token.dart';
@@ -10,6 +12,7 @@ import 'package:aewallet/infrastructure/repositories/transaction_token_builder.d
 import 'package:aewallet/infrastructure/repositories/transaction_transfer_builder.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -53,13 +56,14 @@ class ArchethicTransactionRepository
   Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
     required Account account,
     required String walletSeed,
+    required KeychainServiceKeyPair keychainServiceKeyPair,
   }) async {
     return Result.guard(
       () async {
         return _appService.getAccountRecentTransactions(
           account.lastAddress!,
           walletSeed,
-          account.name,
+          keychainServiceKeyPair,
           account.recentTransactions ?? [],
         );
       },
@@ -149,6 +153,12 @@ class ArchethicTransactionRepository
     return TransferTransactionBuilder.build(
       index: index,
       keychain: keychain,
+      keyPair: archethic.KeyPair(
+        privateKey:
+            Uint8List.fromList(transfer.keychainServiceKeyPair.privateKey),
+        publicKey:
+            Uint8List.fromList(transfer.keychainServiceKeyPair.publicKey),
+      ),
       originPrivateKey: originPrivateKey,
       serviceName: service,
       tokenTransferList: tokenTransferList,
@@ -185,6 +195,10 @@ class ArchethicTransactionRepository
       tokenType: token.type,
       index: index,
       keychain: keychain,
+      keyPair: archethic.KeyPair(
+        privateKey: Uint8List.fromList(token.keychainServiceKeyPair.privateKey),
+        publicKey: Uint8List.fromList(token.keychainServiceKeyPair.publicKey),
+      ),
       originPrivateKey: originPrivateKey,
       serviceName: service,
       aeip: token.aeip,

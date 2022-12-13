@@ -14,6 +14,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     required String tokenSymbol,
     required String serviceName,
     required archethic.Keychain keychain,
+    required archethic.KeyPair keyPair,
     required int index,
     required String originPrivateKey,
     required String tokenType,
@@ -40,10 +41,8 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
         tokenPropertiesNotProtected[tokenProperty.propertyName] =
             tokenProperty.propertyValue;
       } else {
-        final walletKeyPair = keychain.deriveKeypair(serviceName);
-
         final authorizedPublicKeys = List<String>.empty(growable: true)
-          ..add(archethic.uint8ListToHex(walletKeyPair.publicKey));
+          ..add(archethic.uint8ListToHex(keyPair.publicKey));
 
         for (final publicKey in tokenProperty.publicKeys) {
           authorizedPublicKeys.add(

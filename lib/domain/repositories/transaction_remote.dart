@@ -5,6 +5,7 @@ import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 
 typedef TransactionConfirmationHandler = Future<void> Function(
   TransactionConfirmation confirmation,
@@ -30,5 +31,6 @@ abstract class TransactionRemoteRepositoryInterface {
   Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
     required Account account,
     required String walletSeed,
+    required KeychainServiceKeyPair keychainServiceKeyPair,
   });
 }

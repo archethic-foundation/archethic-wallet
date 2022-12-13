@@ -40,20 +40,20 @@ final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>(
       : $_nftRepositoryHash,
 );
 typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
-String $_getNFTHash() => r'dbce756299b6546024e9904ff3086370ac7719da';
+String $_getNFTHash() => r'9e69b4372c57651dee0d59aea6b40c73fec51f1d';
 
 /// See also [_getNFT].
 class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
   _GetNFTProvider(
     this.address,
     this.seed,
-    this.name,
+    this.keychainServiceKeyPair,
   ) : super(
           (ref) => _getNFT(
             ref,
             address,
             seed,
-            name,
+            keychainServiceKeyPair,
           ),
           from: _getNFTProvider,
           name: r'_getNFTProvider',
@@ -65,14 +65,14 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
 
   final String address;
   final String seed;
-  final String name;
+  final KeychainServiceKeyPair keychainServiceKeyPair;
 
   @override
   bool operator ==(Object other) {
     return other is _GetNFTProvider &&
         other.address == address &&
         other.seed == seed &&
-        other.name == name;
+        other.keychainServiceKeyPair == keychainServiceKeyPair;
   }
 
   @override
@@ -80,7 +80,7 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, address.hashCode);
     hash = _SystemHash.combine(hash, seed.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, keychainServiceKeyPair.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -97,12 +97,12 @@ class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
   _GetNFTProvider call(
     String address,
     String seed,
-    String name,
+    KeychainServiceKeyPair keychainServiceKeyPair,
   ) {
     return _GetNFTProvider(
       address,
       seed,
-      name,
+      keychainServiceKeyPair,
     );
   }
 
@@ -113,7 +113,7 @@ class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
     return call(
       provider.address,
       provider.seed,
-      provider.name,
+      provider.keychainServiceKeyPair,
     );
   }
 

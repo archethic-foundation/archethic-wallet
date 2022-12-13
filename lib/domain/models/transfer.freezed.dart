@@ -17,17 +17,25 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Transfer {
   String get seed => throw _privateConstructorUsedError;
+  KeychainServiceKeyPair get keychainServiceKeyPair =>
+      throw _privateConstructorUsedError;
   String get accountSelectedName => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError; // expressed in UCO
   Address get recipientAddress => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String seed, String accountSelectedName,
-            String message, double amount, Address recipientAddress)
+    required TResult Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)
         uco,
     required TResult Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -42,11 +50,17 @@ mixin _$Transfer {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress)?
+    TResult? Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)?
         uco,
     TResult? Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -61,11 +75,17 @@ mixin _$Transfer {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress)?
+    TResult Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)?
         uco,
     TResult Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -111,10 +131,13 @@ abstract class $TransferCopyWith<$Res> {
   @useResult
   $Res call(
       {String seed,
+      KeychainServiceKeyPair keychainServiceKeyPair,
       String accountSelectedName,
       String message,
       double amount,
       Address recipientAddress});
+
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
 }
 
 /// @nodoc
@@ -131,6 +154,7 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
   @override
   $Res call({
     Object? seed = null,
+    Object? keychainServiceKeyPair = null,
     Object? accountSelectedName = null,
     Object? message = null,
     Object? amount = null,
@@ -141,6 +165,10 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
+      keychainServiceKeyPair: null == keychainServiceKeyPair
+          ? _value.keychainServiceKeyPair
+          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
+              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -159,6 +187,15 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
               as Address,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair {
+    return $KeychainServiceKeyPairCopyWith<$Res>(_value.keychainServiceKeyPair,
+        (value) {
+      return _then(_value.copyWith(keychainServiceKeyPair: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -171,10 +208,14 @@ abstract class _$$_TransferUcoCopyWith<$Res>
   @useResult
   $Res call(
       {String seed,
+      KeychainServiceKeyPair keychainServiceKeyPair,
       String accountSelectedName,
       String message,
       double amount,
       Address recipientAddress});
+
+  @override
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
 }
 
 /// @nodoc
@@ -189,6 +230,7 @@ class __$$_TransferUcoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? seed = null,
+    Object? keychainServiceKeyPair = null,
     Object? accountSelectedName = null,
     Object? message = null,
     Object? amount = null,
@@ -199,6 +241,10 @@ class __$$_TransferUcoCopyWithImpl<$Res>
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
+      keychainServiceKeyPair: null == keychainServiceKeyPair
+          ? _value.keychainServiceKeyPair
+          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
+              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -224,6 +270,7 @@ class __$$_TransferUcoCopyWithImpl<$Res>
 class _$_TransferUco extends _TransferUco {
   const _$_TransferUco(
       {required this.seed,
+      required this.keychainServiceKeyPair,
       required this.accountSelectedName,
       required this.message,
       required this.amount,
@@ -232,6 +279,8 @@ class _$_TransferUco extends _TransferUco {
 
   @override
   final String seed;
+  @override
+  final KeychainServiceKeyPair keychainServiceKeyPair;
   @override
   final String accountSelectedName;
   @override
@@ -244,7 +293,7 @@ class _$_TransferUco extends _TransferUco {
 
   @override
   String toString() {
-    return 'Transfer.uco(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress)';
+    return 'Transfer.uco(seed: $seed, keychainServiceKeyPair: $keychainServiceKeyPair, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress)';
   }
 
   @override
@@ -253,6 +302,8 @@ class _$_TransferUco extends _TransferUco {
         (other.runtimeType == runtimeType &&
             other is _$_TransferUco &&
             (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.keychainServiceKeyPair, keychainServiceKeyPair) ||
+                other.keychainServiceKeyPair == keychainServiceKeyPair) &&
             (identical(other.accountSelectedName, accountSelectedName) ||
                 other.accountSelectedName == accountSelectedName) &&
             (identical(other.message, message) || other.message == message) &&
@@ -262,8 +313,8 @@ class _$_TransferUco extends _TransferUco {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, seed, accountSelectedName,
-      message, amount, recipientAddress);
+  int get hashCode => Object.hash(runtimeType, seed, keychainServiceKeyPair,
+      accountSelectedName, message, amount, recipientAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -274,11 +325,17 @@ class _$_TransferUco extends _TransferUco {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String seed, String accountSelectedName,
-            String message, double amount, Address recipientAddress)
+    required TResult Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)
         uco,
     required TResult Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -290,17 +347,24 @@ class _$_TransferUco extends _TransferUco {
             List<int> aeip)
         token,
   }) {
-    return uco(seed, accountSelectedName, message, amount, recipientAddress);
+    return uco(seed, keychainServiceKeyPair, accountSelectedName, message,
+        amount, recipientAddress);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress)?
+    TResult? Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)?
         uco,
     TResult? Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -312,18 +376,24 @@ class _$_TransferUco extends _TransferUco {
             List<int> aeip)?
         token,
   }) {
-    return uco?.call(
-        seed, accountSelectedName, message, amount, recipientAddress);
+    return uco?.call(seed, keychainServiceKeyPair, accountSelectedName, message,
+        amount, recipientAddress);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress)?
+    TResult Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)?
         uco,
     TResult Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -337,7 +407,8 @@ class _$_TransferUco extends _TransferUco {
     required TResult orElse(),
   }) {
     if (uco != null) {
-      return uco(seed, accountSelectedName, message, amount, recipientAddress);
+      return uco(seed, keychainServiceKeyPair, accountSelectedName, message,
+          amount, recipientAddress);
     }
     return orElse();
   }
@@ -377,6 +448,7 @@ class _$_TransferUco extends _TransferUco {
 abstract class _TransferUco extends Transfer {
   const factory _TransferUco(
       {required final String seed,
+      required final KeychainServiceKeyPair keychainServiceKeyPair,
       required final String accountSelectedName,
       required final String message,
       required final double amount,
@@ -385,6 +457,8 @@ abstract class _TransferUco extends Transfer {
 
   @override
   String get seed;
+  @override
+  KeychainServiceKeyPair get keychainServiceKeyPair;
   @override
   String get accountSelectedName;
   @override
@@ -409,6 +483,7 @@ abstract class _$$_TransferTokenCopyWith<$Res>
   @useResult
   $Res call(
       {String seed,
+      KeychainServiceKeyPair keychainServiceKeyPair,
       String accountSelectedName,
       String message,
       double amount,
@@ -418,6 +493,9 @@ abstract class _$$_TransferTokenCopyWith<$Res>
       int? tokenId,
       Map<String, dynamic> properties,
       List<int> aeip});
+
+  @override
+  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
 }
 
 /// @nodoc
@@ -432,6 +510,7 @@ class __$$_TransferTokenCopyWithImpl<$Res>
   @override
   $Res call({
     Object? seed = null,
+    Object? keychainServiceKeyPair = null,
     Object? accountSelectedName = null,
     Object? message = null,
     Object? amount = null,
@@ -447,6 +526,10 @@ class __$$_TransferTokenCopyWithImpl<$Res>
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
+      keychainServiceKeyPair: null == keychainServiceKeyPair
+          ? _value.keychainServiceKeyPair
+          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
+              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -492,6 +575,7 @@ class __$$_TransferTokenCopyWithImpl<$Res>
 class _$_TransferToken extends _TransferToken {
   const _$_TransferToken(
       {required this.seed,
+      required this.keychainServiceKeyPair,
       required this.accountSelectedName,
       required this.message,
       required this.amount,
@@ -507,6 +591,8 @@ class _$_TransferToken extends _TransferToken {
 
   @override
   final String seed;
+  @override
+  final KeychainServiceKeyPair keychainServiceKeyPair;
   @override
   final String accountSelectedName;
   @override
@@ -538,7 +624,7 @@ class _$_TransferToken extends _TransferToken {
 
   @override
   String toString() {
-    return 'Transfer.token(seed: $seed, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress, type: $type, tokenAddress: $tokenAddress, tokenId: $tokenId, properties: $properties, aeip: $aeip)';
+    return 'Transfer.token(seed: $seed, keychainServiceKeyPair: $keychainServiceKeyPair, accountSelectedName: $accountSelectedName, message: $message, amount: $amount, recipientAddress: $recipientAddress, type: $type, tokenAddress: $tokenAddress, tokenId: $tokenId, properties: $properties, aeip: $aeip)';
   }
 
   @override
@@ -547,6 +633,8 @@ class _$_TransferToken extends _TransferToken {
         (other.runtimeType == runtimeType &&
             other is _$_TransferToken &&
             (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.keychainServiceKeyPair, keychainServiceKeyPair) ||
+                other.keychainServiceKeyPair == keychainServiceKeyPair) &&
             (identical(other.accountSelectedName, accountSelectedName) ||
                 other.accountSelectedName == accountSelectedName) &&
             (identical(other.message, message) || other.message == message) &&
@@ -566,6 +654,7 @@ class _$_TransferToken extends _TransferToken {
   int get hashCode => Object.hash(
       runtimeType,
       seed,
+      keychainServiceKeyPair,
       accountSelectedName,
       message,
       amount,
@@ -585,11 +674,17 @@ class _$_TransferToken extends _TransferToken {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String seed, String accountSelectedName,
-            String message, double amount, Address recipientAddress)
+    required TResult Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)
         uco,
     required TResult Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -601,18 +696,34 @@ class _$_TransferToken extends _TransferToken {
             List<int> aeip)
         token,
   }) {
-    return token(seed, accountSelectedName, message, amount, recipientAddress,
-        type, tokenAddress, tokenId, properties, aeip);
+    return token(
+        seed,
+        keychainServiceKeyPair,
+        accountSelectedName,
+        message,
+        amount,
+        recipientAddress,
+        type,
+        tokenAddress,
+        tokenId,
+        properties,
+        aeip);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress)?
+    TResult? Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)?
         uco,
     TResult? Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -624,18 +735,34 @@ class _$_TransferToken extends _TransferToken {
             List<int> aeip)?
         token,
   }) {
-    return token?.call(seed, accountSelectedName, message, amount,
-        recipientAddress, type, tokenAddress, tokenId, properties, aeip);
+    return token?.call(
+        seed,
+        keychainServiceKeyPair,
+        accountSelectedName,
+        message,
+        amount,
+        recipientAddress,
+        type,
+        tokenAddress,
+        tokenId,
+        properties,
+        aeip);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String seed, String accountSelectedName, String message,
-            double amount, Address recipientAddress)?
+    TResult Function(
+            String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
+            String accountSelectedName,
+            String message,
+            double amount,
+            Address recipientAddress)?
         uco,
     TResult Function(
             String seed,
+            KeychainServiceKeyPair keychainServiceKeyPair,
             String accountSelectedName,
             String message,
             double amount,
@@ -649,8 +776,18 @@ class _$_TransferToken extends _TransferToken {
     required TResult orElse(),
   }) {
     if (token != null) {
-      return token(seed, accountSelectedName, message, amount, recipientAddress,
-          type, tokenAddress, tokenId, properties, aeip);
+      return token(
+          seed,
+          keychainServiceKeyPair,
+          accountSelectedName,
+          message,
+          amount,
+          recipientAddress,
+          type,
+          tokenAddress,
+          tokenId,
+          properties,
+          aeip);
     }
     return orElse();
   }
@@ -690,6 +827,7 @@ class _$_TransferToken extends _TransferToken {
 abstract class _TransferToken extends Transfer {
   const factory _TransferToken(
       {required final String seed,
+      required final KeychainServiceKeyPair keychainServiceKeyPair,
       required final String accountSelectedName,
       required final String message,
       required final double amount,
@@ -703,6 +841,8 @@ abstract class _TransferToken extends Transfer {
 
   @override
   String get seed;
+  @override
+  KeychainServiceKeyPair get keychainServiceKeyPair;
   @override
   String get accountSelectedName;
   @override

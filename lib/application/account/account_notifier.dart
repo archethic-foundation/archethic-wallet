@@ -29,7 +29,10 @@ class _AccountNotifier
 
   Future<void> _refreshRecentTransactions(Account account) async {
     final session = ref.read(SessionProviders.session).loggedIn!;
-    await account.updateRecentTransactions(session.wallet.seed);
+    await account.updateRecentTransactions(
+      session.wallet.seed,
+      session.wallet.keychainServiceKeyPairMap[account.name]!,
+    );
   }
 
   Future<void> _refreshBalance(Account account) => account.updateBalance();
@@ -53,7 +56,7 @@ class _AccountNotifier
           final session = ref.read(SessionProviders.session).loggedIn!;
           await account.updateNFT(
             session.wallet.seed,
-            session.wallet.appKeychain.getAccountSelected()!.name,
+            session.wallet.keychainServiceKeyPairMap[account.name]!,
           );
         },
       );
@@ -68,7 +71,7 @@ class _AccountNotifier
           final session = ref.read(SessionProviders.session).loggedIn!;
           await account.updateNFT(
             session.wallet.seed,
-            session.wallet.appKeychain.getAccountSelected()!.name,
+            session.wallet.keychainServiceKeyPairMap[account.name]!,
           );
         },
       );

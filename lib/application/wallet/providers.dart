@@ -15,6 +15,8 @@ class _SessionNotifier extends Notifier<Session> {
 
   Future<void> restore() async {
     final seed = (await _vault).getSeed();
+    final keychainServiceKeyPairMap =
+        (await _vault).getKeychainServiceKeyPairMap();
     final appWalletDTO = await _dbHelper.getAppWallet();
 
     if (seed == null || appWalletDTO == null) {
@@ -23,7 +25,10 @@ class _SessionNotifier extends Notifier<Session> {
     }
 
     state = Session.loggedIn(
-      wallet: appWalletDTO.toModel(seed: seed),
+      wallet: appWalletDTO.toModel(
+        seed: seed,
+        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+      ),
     );
   }
 
@@ -35,9 +40,26 @@ class _SessionNotifier extends Notifier<Session> {
       SettingsProviders.settings.select((settings) => settings.currency),
     );
 
+    final keychain =
+        await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
+
+    final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
+    if (keychain.services != null) {
+      keychain.services!.forEach((key, value) {
+        final keyPair = keychain.deriveKeypair(key);
+        keychainServiceKeyPairMap[key.replaceAll('archethic-wallet-', '')] =
+            KeychainServiceKeyPair(
+          privateKey: keyPair.privateKey,
+          publicKey: keyPair.publicKey,
+        );
+      });
+      final vault = await HiveVaultDatasource.getInstance();
+      await vault.setKeychainServiceKeyPairMap(keychainServiceKeyPairMap);
+    }
+
     final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
+      keychain,
       HiveAppWalletDTO.fromModel(loggedInState.wallet),
-      loggedInState.wallet.seed,
       selectedCurrency.name,
       AccountBalance.cryptoCurrencyLabel,
     );
@@ -45,6 +67,7 @@ class _SessionNotifier extends Notifier<Session> {
 
     state = Session.loggedIn(
       wallet: loggedInState.wallet.copyWith(
+        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
         appKeychain: newWalletDTO.appKeychain,
       ),
     );
@@ -72,8 +95,24 @@ class _SessionNotifier extends Notifier<Session> {
       keychain,
       name,
     );
+
+    final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
+    keychain.services!.forEach((key, value) {
+      final keyPair = keychain.deriveKeypair(key);
+      keychainServiceKeyPairMap[key.replaceAll('archethic-wallet-', '')] =
+          KeychainServiceKeyPair(
+        privateKey: keyPair.privateKey,
+        publicKey: keyPair.publicKey,
+      );
+    });
+    final vault = await HiveVaultDatasource.getInstance();
+    await vault.setKeychainServiceKeyPairMap(keychainServiceKeyPairMap);
+
     state = Session.loggedIn(
-      wallet: newAppWalletDTO.toModel(seed: seed),
+      wallet: newAppWalletDTO.toModel(
+        seed: seed,
+        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+      ),
     );
   }
 
@@ -93,9 +132,11 @@ class _SessionNotifier extends Notifier<Session> {
     vault.setSeed(seed);
 
     try {
+      final keychain = await sl.get<ApiService>().getKeychain(seed);
+
       final appWallet = await KeychainUtil().getListAccountsFromKeychain(
+        keychain,
         null,
-        seed,
         settings.currency.name,
         AccountBalance.cryptoCurrencyLabel,
         loadBalance: false,
@@ -105,8 +146,22 @@ class _SessionNotifier extends Notifier<Session> {
         return null;
       }
 
+      final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
+      keychain.services!.forEach((key, value) {
+        final keyPair = keychain.deriveKeypair(key);
+        keychainServiceKeyPairMap[key.replaceAll('archethic-wallet-', '')] =
+            KeychainServiceKeyPair(
+          privateKey: keyPair.privateKey,
+          publicKey: keyPair.publicKey,
+        );
+      });
+      await vault.setKeychainServiceKeyPairMap(keychainServiceKeyPairMap);
+
       return state = LoggedInSession(
-        wallet: appWallet.toModel(seed: seed),
+        wallet: appWallet.toModel(
+          seed: seed,
+          keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+        ),
       );
     } catch (e) {
       return null;

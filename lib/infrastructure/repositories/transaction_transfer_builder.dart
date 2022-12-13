@@ -14,6 +14,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
     required List<archethic.TokenTransfer> tokenTransferList,
     required String serviceName,
     required archethic.Keychain keychain,
+    required archethic.KeyPair keyPair,
     required int index,
     required String originPrivateKey,
   }) async {
@@ -40,16 +41,15 @@ extension TransferTransactionBuilder on archethic.Transaction {
         ),
       );
 
-      final walletKeyPair = keychain.deriveKeypair(serviceName);
-
       final authorizedPublicKeys = List<String>.empty(growable: true)
-        ..add(archethic.uint8ListToHex(walletKeyPair.publicKey));
+        ..add(archethic.uint8ListToHex(keyPair.publicKey));
 
       for (final transfer in ucoTransferList) {
-        final firstTxListRecipientMap = await sl
-            .get<archethic.ApiService>()
-            .getTransactionChain({transfer.to!: ''},
-                request: 'previousPublicKey',);
+        final firstTxListRecipientMap =
+            await sl.get<archethic.ApiService>().getTransactionChain(
+          {transfer.to!: ''},
+          request: 'previousPublicKey',
+        );
         if (firstTxListRecipientMap.isNotEmpty) {
           final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
           if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
@@ -61,10 +61,11 @@ extension TransferTransactionBuilder on archethic.Transaction {
       }
 
       for (final transfer in tokenTransferList) {
-        final firstTxListRecipientMap = await sl
-            .get<archethic.ApiService>()
-            .getTransactionChain({transfer.to!: ''},
-                request: 'previousPublicKey',);
+        final firstTxListRecipientMap =
+            await sl.get<archethic.ApiService>().getTransactionChain(
+          {transfer.to!: ''},
+          request: 'previousPublicKey',
+        );
         if (firstTxListRecipientMap.isNotEmpty) {
           final firstTxListRecipient = firstTxListRecipientMap[transfer.to!];
           if (firstTxListRecipient != null && firstTxListRecipient.isNotEmpty) {
