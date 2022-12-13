@@ -148,6 +148,10 @@ class _TransferTextFieldAddressState
                   return;
                 }
                 sendAddressController.text = data.text!;
+                transferNotifier.setRecipientNameOrAddress(
+                  context: context,
+                  text: data.text!,
+                );
               });
             },
           ),
