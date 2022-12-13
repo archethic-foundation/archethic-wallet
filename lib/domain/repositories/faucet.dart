@@ -2,7 +2,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 
 abstract class FaucetRepositoryInterface {
-  /// Return [null] if device is not authorized to request Faucet
+  /// Return null if device is not authorized to request Faucet
   /// Else, returns the challenge.
   Future<Result<String, Failure>> requestChallenge({
     required String keychainAddress,
