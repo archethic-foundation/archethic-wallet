@@ -334,6 +334,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "qrInvalidPermissions" : MessageLookupByLibrary.simpleMessage("Veuillez accorder des autorisations à l\'appareil photo pour scanner les QR codes"),
     "qrMnemonicError" : MessageLookupByLibrary.simpleMessage("Le QR code ne contient pas de phrase secrète valide"),
     "qrUnknownError" : MessageLookupByLibrary.simpleMessage("Impossible de lire le QR code"),
+    "receive" : MessageLookupByLibrary.simpleMessage("Recevoir"),
     "recentTransactionsHeader" : MessageLookupByLibrary.simpleMessage("Transactions récentes"),
     "recentTransactionsNoTransactionYet" : MessageLookupByLibrary.simpleMessage("Aucune transaction pour le moment"),
     "recoveryPhrase" : MessageLookupByLibrary.simpleMessage("Phrase secrète"),

@@ -234,7 +234,7 @@
 	"transactionInfosKeySignature": "Signature",
 	"transactionBuyHeader": "Acheter des UCO ici",
 	"transactionsAllListHeader": "Transactions",
-	"infos": "Recevoir",
+	"receive": "Recevoir",
 	"buy": "Acheter",
 	"chart": "Cours",
 	"share": "Partager",
