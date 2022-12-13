@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-13T09:18:32.688389",
+  "@@last_modified": "2022-12-13T09:29:34.156032",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -1802,6 +1802,18 @@
   },
   "nftCreated": "NFT created :",
   "@nftCreated": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nextButton": "Next >",
+  "@nextButton": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "previousButton": "< Previous",
+  "@previousButton": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

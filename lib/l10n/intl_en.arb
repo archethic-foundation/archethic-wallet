@@ -2160,6 +2160,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nextButton": "Next >",
+  "@nextButton": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "previousButton": "< Previous",
+  "@previousButton": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftTabDescriptionHeader": "This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.",
   "@nftTabDescriptionHeader": {
     "type": "text",

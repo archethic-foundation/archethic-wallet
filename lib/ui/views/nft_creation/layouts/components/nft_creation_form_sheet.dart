@@ -16,21 +16,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-final globalKeyProvider =
-    Provider.autoDispose<GlobalKey<ContainedTabBarViewState>>(
-  (ref) {
-    return GlobalKey<ContainedTabBarViewState>();
-  },
-);
-
-class NftCreationFormSheet extends ConsumerWidget {
+class NftCreationFormSheet extends ConsumerStatefulWidget {
   const NftCreationFormSheet({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final _key = ref.read(globalKeyProvider);
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _NftCreationFormSheetState();
+}
+
+class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
+  final GlobalKey<ContainedTabBarViewState> _key = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final activeVibrations = ref.watch(
@@ -80,7 +80,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                       if (nftCreation.indexTab == 0)
                         AppButtonTinyWithoutExpanded(
                           AppButtonTinyType.primaryOutline,
-                          '< Previous',
+                          localizations.previousButton,
                           Dimens.buttonTopDimens,
                           key: const Key('previous'),
                           width: 100,
@@ -89,7 +89,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                       else
                         AppButtonTinyWithoutExpanded(
                           AppButtonTinyType.primary,
-                          '< Previous',
+                          localizations.previousButton,
                           Dimens.buttonTopDimens,
                           key: const Key('previous'),
                           width: 100,
@@ -104,7 +104,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                       if (nftCreation.indexTab == 3)
                         AppButtonTinyWithoutExpanded(
                           AppButtonTinyType.primaryOutline,
-                          'Next >',
+                          localizations.nextButton,
                           Dimens.buttonTopDimens,
                           key: const Key('next'),
                           width: 100,
@@ -113,7 +113,7 @@ class NftCreationFormSheet extends ConsumerWidget {
                       else
                         AppButtonTinyWithoutExpanded(
                           AppButtonTinyType.primary,
-                          'Next >',
+                          localizations.nextButton,
                           Dimens.buttonTopDimens,
                           key: const Key('next'),
                           width: 100,
