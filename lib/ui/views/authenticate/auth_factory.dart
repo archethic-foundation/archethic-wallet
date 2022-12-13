@@ -94,8 +94,9 @@ class AuthFactory {
   }) async {
     var auth = false;
     if (transitions) {
-      auth = await Navigator.of(context).push(
+      auth = await Navigator.of(context).pushOnce(
         MaterialPageRoute(
+          settings: const RouteSettings(name: YubikeyScreen.name),
           builder: (BuildContext context) {
             return YubikeyScreen(
               canNavigateBack: canCancel,
@@ -104,8 +105,9 @@ class AuthFactory {
         ),
       ) as bool;
     } else {
-      auth = await Navigator.of(context).push(
-        NoPushTransitionRoute(
+      auth = await Navigator.of(context).pushOnce(
+        NoTransitionRoute(
+          settings: const RouteSettings(name: YubikeyScreen.name),
           builder: (BuildContext context) {
             return YubikeyScreen(
               canNavigateBack: canCancel,
@@ -125,16 +127,18 @@ class AuthFactory {
   }) async {
     var auth = false;
     if (transitions) {
-      auth = await Navigator.of(context).push(
+      auth = await Navigator.of(context).pushOnce(
         MaterialPageRoute(
+          settings: const RouteSettings(name: PasswordScreen.name),
           builder: (BuildContext context) => PasswordScreen(
             canNavigateBack: canCancel,
           ),
         ),
       ) as bool;
     } else {
-      auth = await Navigator.of(context).push(
-        NoPushTransitionRoute(
+      auth = await Navigator.of(context).pushOnce(
+        NoTransitionRoute(
+          settings: const RouteSettings(name: PasswordScreen.name),
           builder: (BuildContext context) => PasswordScreen(
             canNavigateBack: canCancel,
           ),
@@ -153,8 +157,9 @@ class AuthFactory {
   }) async {
     var auth = false;
     if (transitions) {
-      auth = await Navigator.of(context).push(
+      auth = await Navigator.of(context).pushOnce(
         MaterialPageRoute(
+          settings: const RouteSettings(name: PinScreen.name),
           builder: (BuildContext context) => PinScreen(
             PinOverlayType.enterPin,
             canNavigateBack: canCancel,
@@ -162,8 +167,9 @@ class AuthFactory {
         ),
       ) as bool;
     } else {
-      auth = await Navigator.of(context).push(
-        NoPushTransitionRoute(
+      auth = await Navigator.of(context).pushOnce(
+        NoTransitionRoute(
+          settings: const RouteSettings(name: PinScreen.name),
           builder: (BuildContext context) {
             return PinScreen(
               PinOverlayType.enterPin,
@@ -182,7 +188,6 @@ class AuthFactory {
           context,
           AppLocalization.of(context)!.unlockBiometrics,
         );
-    await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }
 }

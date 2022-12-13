@@ -23,7 +23,7 @@ abstract class DurationFormatters {
       value.toString().padLeft(2, '0');
 
   static String hhmmss(Duration duration) =>
-      '${_twoDigitsFormatter(duration.inHours)}:${_twoDigitsFormatter(duration.inMinutes % 59)}:${_twoDigitsFormatter(duration.inSeconds % 59)}';
+      '${_twoDigitsFormatter(duration.inHours)}:${_twoDigitsFormatter(duration.inMinutes % 60)}:${_twoDigitsFormatter(duration.inSeconds % 60)}';
 }
 
 abstract class AppLockScreenProviders {
@@ -49,7 +49,8 @@ class AppLockScreen extends ConsumerWidget {
       SettingsProviders.settings.select((value) => value.activeVibrations),
     );
     final isLocked =
-        ref.watch(AuthenticationProviders.isLocked).valueOrNull ?? true;
+        ref.watch(AuthenticationProviders.isLockCountdownRunning).valueOrNull ??
+            true;
     final countDownString = ref
             .watch(
               AppLockScreenProviders.remainingLockSeconds,

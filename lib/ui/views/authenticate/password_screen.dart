@@ -8,7 +8,7 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/authenticate/lock_guard.dart';
+import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -21,6 +21,8 @@ class PasswordScreen extends ConsumerStatefulWidget {
     super.key,
     required this.canNavigateBack,
   });
+
+  static const name = 'PasswordScreen';
 
   final bool canNavigateBack;
 
@@ -42,7 +44,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     enterPasswordVisible = false;
     enterPasswordFocusNode = FocusNode();
     enterPasswordController = TextEditingController();
-    showLockScreenIfNeeded(context, ref);
+    showLockCountdownScreenIfNeeded(context, ref);
   }
 
   Future<void> _verifyPassword() async {
@@ -63,7 +65,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         return;
       },
       orElse: () async {
-        showLockScreenIfNeeded(context, ref);
+        showLockCountdownScreenIfNeeded(context, ref);
         enterPasswordController!.text = '';
       },
     );
