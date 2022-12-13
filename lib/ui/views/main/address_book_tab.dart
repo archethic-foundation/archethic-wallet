@@ -59,7 +59,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 20,
-          bottom: 90,
+          bottom: 80,
           left: 15,
           right: 15,
         ),
@@ -129,32 +129,27 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 10,
-              ),
-              child: Row(
-                children: <Widget>[
-                  AppButtonTiny(
-                    AppButtonTinyType.primary,
-                    localizations.addContact,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('addContact'),
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel,
-                      size: 14,
-                    ),
-                    onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: const AddContactSheet(),
-                      );
-                    },
+            Row(
+              children: <Widget>[
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  localizations.addContact,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('addContact'),
+                  icon: Icon(
+                    Icons.add,
+                    color: theme.mainButtonLabel,
+                    size: 14,
                   ),
-                ],
-              ),
+                  onPressed: () {
+                    Sheets.showAppHeightNineSheet(
+                      context: context,
+                      ref: ref,
+                      widget: const AddContactSheet(),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

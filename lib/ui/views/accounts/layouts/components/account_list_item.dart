@@ -58,7 +58,7 @@ class AccountListItem extends ConsumerWidget {
     return contact.map(
       data: (data) {
         return Padding(
-          padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
+          padding: const EdgeInsets.only(bottom: 8),
           child: GestureDetector(
             onTap: () async {
               sl.get<HapticUtil>().feedback(

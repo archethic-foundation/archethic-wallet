@@ -1,50 +1,63 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
-import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
+import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountsListWidget extends ConsumerWidget {
   const AccountsListWidget({
     super.key,
     this.currencyName,
+    required this.accountsList,
   });
   final String? currencyName;
-  static const int kMaxAccounts = 50;
+  final List<Account> accountsList;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final accounts =
-        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
-    return Container(
-      padding: const EdgeInsets.only(top: 20, bottom: 50),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
-            child: Text(
-              localizations.accountsListDescription,
-              textAlign: TextAlign.justify,
-              style: theme.textStyleSize12W400Primary,
-            ),
+    final settings = ref.watch(SettingsProviders.settings);
+
+    return Expanded(
+      child: ArchethicRefreshIndicator(
+        onRefresh: () => Future<void>.sync(() async {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                settings.activeVibrations,
+              );
+          await ref.read(SessionProviders.session.notifier).refresh();
+          await ref
+              .read(AccountProviders.selectedAccount.notifier)
+              .refreshRecentTransactions();
+        }),
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
           ),
-          for (int i = 0; i < accounts.length; i++)
-            AccountListItem(
-              account: accounts[i],
+          child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(
+              top: 15,
+              bottom: 15,
             ),
-          if (accounts.length < kMaxAccounts)
-            Row(
-              children: const [
-                AddAccountButton(),
-              ],
-            ),
-        ],
+            itemCount: accountsList.length,
+            itemBuilder: (BuildContext context, int index) {
+              // Build contact
+              return AccountListItem(
+                account: accountsList[index],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
