@@ -258,6 +258,7 @@ msix_config:
 # The following section is specific to Flutter.
 flutter:
   assets:
+    - assets/ssl/isrg-root-x1.pem
     - assets/icons/
     - assets/icons/currency/
     - assets/icons/languages/
