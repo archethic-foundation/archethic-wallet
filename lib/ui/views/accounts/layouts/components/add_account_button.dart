@@ -17,7 +17,6 @@ class AddAccountButton extends ConsumerStatefulWidget {
 }
 
 class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
-  bool? isPressed = false;
   final GlobalKey expandedKey = GlobalKey();
 
   @override
