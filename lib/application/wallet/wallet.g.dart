@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'f89e5876b3ab6c2de162de1a8fa82784e53e9574';
+String $_SessionNotifierHash() => r'83938f84ba45c7704ef727bb4a998b79c754eb2c';
 
 /// See also [_SessionNotifier].
 final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
@@ -45,16 +45,3 @@ abstract class _$SessionNotifier extends Notifier<Session> {
   @override
   Session build();
 }
-
-String $_archethicWalletKeychainHash() =>
-    r'8bdb02d5a592f835ff8a33cc09d0f722d3b8fb5a';
-
-/// See also [_archethicWalletKeychain].
-final _archethicWalletKeychainProvider = AutoDisposeFutureProvider<Keychain?>(
-  _archethicWalletKeychain,
-  name: r'_archethicWalletKeychainProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_archethicWalletKeychainHash,
-);
-typedef _ArchethicWalletKeychainRef = AutoDisposeFutureProviderRef<Keychain?>;

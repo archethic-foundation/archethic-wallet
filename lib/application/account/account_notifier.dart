@@ -31,7 +31,8 @@ class _AccountNotifier
     final session = ref.read(SessionProviders.session).loggedIn!;
     await account.updateRecentTransactions(
       session.wallet.seed,
-      session.wallet.keychainServiceKeyPairMap[account.name]!,
+      account.name,
+      session.wallet.keychainSecuredInfos,
     );
   }
 
@@ -56,7 +57,7 @@ class _AccountNotifier
           final session = ref.read(SessionProviders.session).loggedIn!;
           await account.updateNFT(
             session.wallet.seed,
-            session.wallet.keychainServiceKeyPairMap[account.name]!,
+            session.wallet.keychainSecuredInfos,
           );
         },
       );
@@ -71,7 +72,7 @@ class _AccountNotifier
           final session = ref.read(SessionProviders.session).loggedIn!;
           await account.updateNFT(
             session.wallet.seed,
-            session.wallet.keychainServiceKeyPairMap[account.name]!,
+            session.wallet.keychainSecuredInfos,
           );
         },
       );

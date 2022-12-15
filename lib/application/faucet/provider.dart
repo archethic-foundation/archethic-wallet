@@ -115,16 +115,17 @@ class _FaucetClaimNotifier extends AsyncNotifier<void> {
       if (accountLastAddress == null) {
         throw const Failure.invalidValue();
       }
-      final keychain = await ref.read(
-        SessionProviders.archethicWalletKeychain.future,
+
+      final keychainSecuredInfos = ref
+          .watch(SessionProviders.session)
+          .loggedIn!
+          .wallet
+          .keychainSecuredInfos;
+
+      final genesisAddressKeychain = deriveAddress(
+        uint8ListToHex(Uint8List.fromList(keychainSecuredInfos.seed)),
+        0,
       );
-
-      if (keychain!.seed == null) {
-        throw const Failure.invalidValue();
-      }
-
-      final genesisAddressKeychain =
-          deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
       final claimChallenge = (await repository.requestChallenge(
         deviceId: installationId,

@@ -10,16 +10,17 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
-import 'package:aewallet/model/transaction_input_with_tx_address.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AppService {
+class AppService with KeychainMixin {
   Future<Map<String, List<Transaction>>> getTransactionChain(
     Map<String, String> addresses,
     String? request,
@@ -46,151 +47,94 @@ class AppService {
     return transactionInputs;
   }
 
-  List<TransactionInputWithTxAddress> _removeDuplicates(
-    List<TransactionInputWithTxAddress> transactionInputs,
+  List<RecentTransaction> _removeRecentTransactionsDuplicates(
+    List<RecentTransaction> recentTransactions,
   ) =>
-      transactionInputs.fold<List<TransactionInputWithTxAddress>>(
+      recentTransactions.fold<List<RecentTransaction>>(
         [],
-        (keptTransactionInputs, element) {
-          final matchingIndex = keptTransactionInputs.indexWhere(
-            (keptTransactionInput) =>
-                keptTransactionInput.from == element.from &&
-                keptTransactionInput.tokenAddress == element.tokenAddress,
+        (keptRecentTransactions, element) {
+          final matchingIndex = keptRecentTransactions.indexWhere(
+            (keptRecentTransaction) =>
+                keptRecentTransaction.typeTx ==
+                    RecentTransaction.transferInput &&
+                keptRecentTransaction.from == element.from &&
+                keptRecentTransaction.type == element.type &&
+                (keptRecentTransaction.tokenInformations == null ||
+                    element.tokenInformations == null ||
+                    keptRecentTransaction.tokenInformations!.id ==
+                        element.tokenInformations!.id) &&
+                keptRecentTransaction.tokenAddress == element.tokenAddress,
           );
 
           if (matchingIndex == -1) {
             return [
-              ...keptTransactionInputs,
+              ...keptRecentTransactions,
               element,
             ];
           }
 
-          final matchingElement = keptTransactionInputs[matchingIndex];
-          if (matchingElement.timestamp > element.timestamp) {
-            return keptTransactionInputs;
+          final matchingElement = keptRecentTransactions[matchingIndex];
+          if (matchingElement.timestamp! > element.timestamp!) {
+            return keptRecentTransactions;
           }
 
           return [
-            for (var i = 0; i < keptTransactionInputs.length; i++)
-              i == matchingIndex ? element : keptTransactionInputs[i]
+            for (var i = 0; i < keptRecentTransactions.length; i++)
+              i == matchingIndex ? element : keptRecentTransactions[i]
           ];
         },
       );
 
-  Future<List<RecentTransaction>> getAccountRecentTransactions(
-    String lastAddress,
-    String seed,
-    KeychainServiceKeyPair keychainServiceKeyPair,
-    List<RecentTransaction> localRecentTransactionList,
-  ) async {
-    dev.log(
-      '>> START getRecentTransactions : ${DateTime.now().toString()}',
-    );
-
-    final lastAddressRecentTransaction = {lastAddress: ''};
-    var transactionInputsMap = <String, List<TransactionInput>>{};
-
-    // Get from local transactions, the last address to search only new tx
-    localRecentTransactionList.sort(
-      (RecentTransaction a, RecentTransaction b) =>
-          b.timestamp!.compareTo(a.timestamp!),
-    );
-    final localRecentTransactionLastAddress = localRecentTransactionList
-        .firstWhere(
-          (element) => element.typeTx != RecentTransaction.transferInput,
-          orElse: RecentTransaction.new,
-        )
-        .address;
-
-    // Load not in cached Tx inputs from last or genesis address
-    if (localRecentTransactionList.isNotEmpty &&
-        localRecentTransactionList.first.address != null &&
-        localRecentTransactionLastAddress != null &&
-        localRecentTransactionLastAddress.isNotEmpty) {
-      lastAddressRecentTransaction[lastAddress] =
-          localRecentTransactionLastAddress;
+  List<RecentTransaction> _populateRecentTransactionsFromTransactionInputs(
+    List<TransactionInput> transactionInputs,
+    String txAddress,
+  ) {
+    final recentTransactions = <RecentTransaction>[];
+    for (final transactionInput in transactionInputs) {
+      final recentTransaction = RecentTransaction()
+        ..address = transactionInput.from
+        ..amount = fromBigInt(transactionInput.amount).toDouble()
+        ..typeTx = RecentTransaction.transferInput
+        ..from = transactionInput.from
+        ..recipient = txAddress
+        ..timestamp = transactionInput.timestamp
+        ..fee = 0
+        ..tokenAddress = transactionInput.tokenAddress;
+      recentTransactions.add(recentTransaction);
     }
+    return recentTransactions;
+  }
 
-    // Get transaction chain for the last address with the paging on the last adress in cache (if exists)
-    var transactionChainMap = <String, List<Transaction>>{};
-    transactionChainMap = await getTransactionChain(
-      lastAddressRecentTransaction,
-      'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
-    );
-
-    // Get 10 last tx inputs for the last address (genesis address if new chain)
-    transactionInputsMap = await getTransactionInputs(
-      [lastAddress],
-      'from, type, spent, tokenAddress, amount, timestamp',
-      limit: 10,
-    );
-
-    // We remove inputs older than last address inputs and balances
-    if (localRecentTransactionList.isNotEmpty &&
-        localRecentTransactionList.first.timestamp != null) {
-      transactionInputsMap[lastAddress]!.removeWhere(
-        (element) =>
-            element.timestamp! <= localRecentTransactionList.first.timestamp!,
-      );
-      transactionInputsMap[lastAddress]!.removeWhere(
-        (element) => element.from! == lastAddress,
-      );
+  List<RecentTransaction> _populateRecentTransactionsFromUnspentOutputs(
+    List<UnspentOutputs> unspentOutputs,
+    int timestamp,
+    int fee,
+    String txAddress,
+  ) {
+    final recentTransactions = <RecentTransaction>[];
+    for (final unspentOutput in unspentOutputs) {
+      final recentTransaction = RecentTransaction()
+        ..address = unspentOutput.from
+        ..amount = fromBigInt(
+          unspentOutput.amount,
+        ).toDouble()
+        ..typeTx = RecentTransaction.transferInput
+        ..from = unspentOutput.from
+        ..recipient = txAddress
+        ..timestamp = timestamp
+        ..fee = fromBigInt(
+          fee,
+        ).toDouble()
+        ..tokenAddress = unspentOutput.tokenAddress;
+      recentTransactions.add(recentTransaction);
     }
+    return recentTransactions;
+  }
 
-    var recentTransactions = List<RecentTransaction>.empty(growable: true);
-
-    final transactionChain =
-        transactionChainMap[lastAddress] ?? <Transaction>[];
-    final transactionInputs =
-        transactionInputsMap[lastAddress] ?? <TransactionInput>[];
-
-    final tokensAddresses = <String>[];
-
-    // Transaction inputs filtering
-    final listTransactionInputsToFilter = <TransactionInputWithTxAddress>[];
-    for (final transaction in transactionChain) {
-      if (transaction.inputs != null) {
-        for (final transactionInput in transaction.inputs!) {
-          if (transaction.address != transactionInput.from &&
-              transactionInput.tokenAddress != transactionInput.from) {
-            final transactionInputWithTxAddress = TransactionInputWithTxAddress(
-              amount: transactionInput.amount ?? 0,
-              from: transactionInput.from ?? '',
-              spent: transactionInput.spent ?? false,
-              timestamp: transactionInput.timestamp ?? 0,
-              tokenAddress: transactionInput.tokenAddress,
-              tokenId: transactionInput.tokenId,
-              txAddress: transaction.address!,
-              type: transactionInput.type,
-            );
-            listTransactionInputsToFilter.add(transactionInputWithTxAddress);
-          }
-        }
-      }
-    }
-
-    // Remove duplicate inputs beetwen transactions in the chain
-    if (listTransactionInputsToFilter.isNotEmpty) {
-      final listTransactionInputsFiltered =
-          _removeDuplicates(listTransactionInputsToFilter)
-            ..sort(
-              (a, b) => b.timestamp.compareTo(a.timestamp),
-            );
-
-      for (final transactionInput in listTransactionInputsFiltered) {
-        final recentTransaction = RecentTransaction()
-          ..address = transactionInput.from
-          ..amount = fromBigInt(transactionInput.amount).toDouble()
-          ..typeTx = RecentTransaction.transferInput
-          ..from = transactionInput.from
-          ..recipient = transactionInput.txAddress
-          ..timestamp = transactionInput.timestamp
-          ..fee = 0
-          ..tokenAddress = transactionInput.tokenAddress;
-        recentTransactions.add(recentTransaction);
-      }
-    }
-
+  List<RecentTransaction> _populateRecentTransactionsFromTransactionChain(
+    List<Transaction> transactionChain,
+  ) {
+    final recentTransactions = <RecentTransaction>[];
     for (final transaction in transactionChain) {
       if (transaction.type! == 'token') {
         final recentTransaction = RecentTransaction()
@@ -216,7 +160,7 @@ class AppService {
                 fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
                     .toDouble()
             ..timestamp = transaction.validationStamp!.timestamp
-            ..from = lastAddress
+            ..from = transaction.address
             ..ownerships = transaction.data!.ownerships;
           recentTransactions.add(recentTransaction);
         }
@@ -232,41 +176,204 @@ class AppService {
                 fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
                     .toDouble()
             ..timestamp = transaction.validationStamp!.timestamp
-            ..from = lastAddress
+            ..from = transaction.address
             ..ownerships = transaction.data!.ownerships
             ..tokenAddress = transfer.tokenAddress;
           recentTransactions.add(recentTransaction);
         }
       }
     }
+    return recentTransactions;
+  }
 
-    // Transaction inputs
-    for (final transactionInput in transactionInputs) {
-      final recentTransaction = RecentTransaction()
-        ..address = transactionInput.from
-        ..amount = fromBigInt(transactionInput.amount).toDouble()
-        ..typeTx = RecentTransaction.transferInput
-        ..from = transactionInput.from
-        ..recipient = lastAddress
-        ..timestamp = transactionInput.timestamp
-        ..fee = 0
-        ..tokenAddress = transactionInput.tokenAddress;
-      recentTransactions.add(recentTransaction);
-    }
-
-    // Sort the list
-    recentTransactions.sort(
-      (RecentTransaction a, RecentTransaction b) =>
-          b.timestamp!.compareTo(a.timestamp!),
+  Future<List<RecentTransaction>> getAccountRecentTransactions(
+    String genesisAddress,
+    String lastAddress,
+    String seed,
+    String name,
+    KeychainSecuredInfos keychainSecuredInfos,
+    List<RecentTransaction> localRecentTransactionList,
+  ) async {
+    dev.log(
+      '>> START getRecentTransactions : ${DateTime.now().toString()}',
     );
 
-    // Reduce the list of recent transactions to 10 items max
-    if (recentTransactions.length > 10) {
-      recentTransactions = recentTransactions.sublist(0, 10);
+    // Get last transaction with inputs and unspent outputs
+    final lastTransaction = await sl.get<ApiService>().getLastTransaction(
+      [lastAddress],
+      request:
+          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, type, version } } }',
+    );
+
+    final keychain = keychainSecuredInfosToKeychain(keychainSecuredInfos);
+    final nameEncoded = Uri.encodeFull(
+      name,
+    );
+    var addressPaging = '';
+    var previousAddress = '';
+    if (lastTransaction[lastAddress] != null &&
+        lastTransaction[lastAddress]!.chainLength != null &&
+        lastTransaction[lastAddress]!.chainLength! > 1) {
+      if (lastTransaction[lastAddress]!.chainLength! > 11) {
+        addressPaging = uint8ListToHex(
+          keychain.deriveAddress(
+            'archethic-wallet-$nameEncoded',
+            index: lastTransaction[lastAddress]!.chainLength! - 11,
+          ),
+        );
+      }
+
+      previousAddress = uint8ListToHex(
+        keychain.deriveAddress(
+          'archethic-wallet-$nameEncoded',
+          index: lastTransaction[lastAddress]!.chainLength! - 1,
+        ),
+      );
+    }
+
+    // Get 9 previous transactions without inputs and with unspent outputs
+    var last9TransactionMap = <String, List<Transaction>>{};
+    if (previousAddress.isNotEmpty) {
+      last9TransactionMap = await getTransactionChain(
+        {previousAddress: addressPaging},
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, type, version } } } ',
+      );
+    }
+
+    var recentTransactions = <RecentTransaction>[];
+
+    // Merge inputs from last transaction + unspent outputs from last transaction + transactions from transaction chain
+    if (lastTransaction[lastAddress] != null &&
+        lastTransaction[lastAddress]!.inputs != null) {
+      recentTransactions.addAll(
+        _populateRecentTransactionsFromTransactionInputs(
+          lastTransaction[lastAddress]!.inputs!,
+          lastAddress,
+        ),
+      );
+    }
+
+    if (lastTransaction[lastAddress] != null) {
+      recentTransactions.addAll(
+        _populateRecentTransactionsFromTransactionChain(
+          [lastTransaction[lastAddress]!],
+        ),
+      );
+    }
+
+    if (lastTransaction[lastAddress] != null &&
+        lastTransaction[lastAddress]!.validationStamp != null &&
+        lastTransaction[lastAddress]!.validationStamp!.ledgerOperations !=
+            null &&
+        lastTransaction[lastAddress]!
+                .validationStamp!
+                .ledgerOperations!
+                .unspentOutputs !=
+            null) {
+      recentTransactions.addAll(
+        _populateRecentTransactionsFromUnspentOutputs(
+          lastTransaction[lastAddress]!
+              .validationStamp!
+              .ledgerOperations!
+              .unspentOutputs!,
+          lastTransaction[lastAddress]!.validationStamp!.timestamp ?? 0,
+          lastTransaction[lastAddress]!
+                  .validationStamp!
+                  .ledgerOperations!
+                  .fee ??
+              0,
+          lastAddress,
+        ),
+      );
+    }
+
+    if (last9TransactionMap[previousAddress] != null) {
+      for (final transaction in last9TransactionMap[previousAddress]!) {
+        if (transaction.validationStamp != null &&
+            transaction.validationStamp!.ledgerOperations != null &&
+            transaction.validationStamp!.ledgerOperations!.unspentOutputs !=
+                null) {
+          recentTransactions.addAll(
+            _populateRecentTransactionsFromUnspentOutputs(
+              transaction.validationStamp!.ledgerOperations!.unspentOutputs!,
+              transaction.validationStamp!.timestamp ?? 0,
+              transaction.validationStamp!.ledgerOperations!.fee ?? 0,
+              transaction.address!,
+            ),
+          );
+        }
+      }
+
+      recentTransactions.addAll(
+        _populateRecentTransactionsFromTransactionChain(
+          last9TransactionMap[previousAddress]!,
+        ),
+      );
+    }
+
+    // Remove doublons (on type / token address / from / timestamp)
+    if (recentTransactions.isNotEmpty) {
+      recentTransactions =
+          _removeRecentTransactionsDuplicates(recentTransactions);
+    }
+
+    // Remove transaction.from property existing in the 10 transactions address
+    final listTxAddress = <String>[lastAddress.toLowerCase()];
+    if (last9TransactionMap[previousAddress] != null) {
+      for (final transaction in last9TransactionMap[previousAddress]!) {
+        if (listTxAddress.contains(transaction.address!.toLowerCase()) ==
+            false) {
+          listTxAddress.add(transaction.address!.toLowerCase());
+        }
+      }
+    }
+
+    var recentTransactionsFiltered = <RecentTransaction>[];
+    for (final recentTransaction in recentTransactions) {
+      if (recentTransaction.typeTx != RecentTransaction.transferInput) {
+        recentTransactionsFiltered.add(recentTransaction);
+      } else {
+        if (listTxAddress.contains(recentTransaction.from!.toLowerCase()) ==
+            false) {
+          recentTransactionsFiltered.add(recentTransaction);
+        }
+      }
+    }
+
+    // Sort by timestamp desc
+    recentTransactionsFiltered.sort(
+      (a, b) => b.timestamp!.compareTo(a.timestamp!),
+    );
+
+    // Get 10 first transactions
+    recentTransactionsFiltered = recentTransactionsFiltered.sublist(
+      0,
+      recentTransactionsFiltered.length > 10
+          ? 10
+          : recentTransactionsFiltered.length,
+    );
+
+    // Get transaction inputs from genesis address if filtered list is < 10
+    if (recentTransactionsFiltered.length < 10) {
+      final genesisTransactionInputsMap = await getTransactionInputs(
+        [genesisAddress],
+        'from, type, spent, tokenAddress, amount, timestamp',
+        limit: 10 - recentTransactionsFiltered.length,
+      );
+
+      if (genesisTransactionInputsMap[genesisAddress] != null) {
+        recentTransactionsFiltered.addAll(
+          _populateRecentTransactionsFromTransactionInputs(
+            genesisTransactionInputsMap[genesisAddress]!,
+            genesisAddress,
+          ),
+        );
+      }
     }
 
     // Get token id
-    for (final recentTransaction in recentTransactions) {
+    final tokensAddresses = <String>[];
+    for (final recentTransaction in recentTransactionsFiltered) {
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty) {
         tokensAddresses.add(recentTransaction.tokenAddress!);
@@ -281,7 +388,7 @@ class AppService {
           tokensAddresses.toSet().toList(),
           request: 'genesis, name, id, supply, symbol, type',
         );
-    for (final recentTransaction in recentTransactions) {
+    for (final recentTransaction in recentTransactionsFiltered) {
       // Get token informations
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty) {
@@ -322,20 +429,28 @@ class AppService {
           .getTransactionOwnerships(ownershipsAddresses.toSet().toList());
     }
 
-    for (var recentTransaction in recentTransactions) {
-      if (recentTransaction.typeTx == RecentTransaction.transferInput &&
-          recentTransaction.address != null) {
-        recentTransaction = _decryptedSecret(
-          keypair: keychainServiceKeyPair,
-          ownerships: ownershipsMap[recentTransaction.address!] ?? [],
-          recentTransaction: recentTransaction,
-        );
-      } else {
-        recentTransaction = _decryptedSecret(
-          keypair: keychainServiceKeyPair,
-          ownerships: recentTransaction.ownerships ?? [],
-          recentTransaction: recentTransaction,
-        );
+    final keychainServiceKeyPair =
+        keychainSecuredInfos.services['archethic-wallet-$name']!.keyPair;
+    for (var recentTransaction in recentTransactionsFiltered) {
+      switch (recentTransaction.typeTx) {
+        case RecentTransaction.transferInput:
+          if (recentTransaction.from != null) {
+            recentTransaction = _decryptedSecret(
+              keypair: keychainServiceKeyPair!,
+              ownerships: ownershipsMap[recentTransaction.from!] ?? [],
+              recentTransaction: recentTransaction,
+            );
+          }
+          break;
+        case RecentTransaction.transferOutput:
+          if (recentTransaction.recipient != null) {
+            recentTransaction = _decryptedSecret(
+              keypair: keychainServiceKeyPair!,
+              ownerships: recentTransaction.ownerships ?? [],
+              recentTransaction: recentTransaction,
+            );
+          }
+          break;
       }
     }
 
@@ -347,15 +462,9 @@ class AppService {
       contactsAddresses.add(contact.address);
     }
 
-    final localRecentTransactionAddress = <String>[];
-    for (final localRecentTransaction in localRecentTransactionList) {
-      localRecentTransactionAddress.add(localRecentTransaction.address!);
-    }
-
     // Get last transactions for all tx and contacts
     final lastTransactionAddressesToSearch = [
       ...recentTransactionLastAddresses,
-      ...localRecentTransactionAddress,
       ...contactsAddresses
     ];
     final lastAddressesMap = await sl.get<ApiService>().getLastTransaction(
@@ -387,37 +496,17 @@ class AppService {
       contactsListUpdated.add(contact);
     }
 
-    recentTransactions = _updateContactInTx(
+    recentTransactionsFiltered = _updateContactInTx(
       contactsList: contactsListUpdated,
       lastAddressesMap: lastAddressesMap,
-      recentTransactions: recentTransactions,
-    );
-
-    final localRecentTransactionListUpdated = _updateContactInTx(
-      contactsList: contactsListUpdated,
-      lastAddressesMap: lastAddressesMap,
-      recentTransactions: localRecentTransactionList,
-    );
-
-    recentTransactions
-      ..addAll(localRecentTransactionListUpdated)
-
-      // Sort by date (desc)
-      ..sort(
-        (RecentTransaction a, RecentTransaction b) =>
-            b.timestamp!.compareTo(a.timestamp!),
-      );
-
-    recentTransactions = recentTransactions.sublist(
-      0,
-      recentTransactions.length > 10 ? 10 : recentTransactions.length,
+      recentTransactions: recentTransactionsFiltered,
     );
 
     dev.log(
       '>> END getRecentTransactions : ${DateTime.now().toString()}',
     );
 
-    return recentTransactions;
+    return recentTransactionsFiltered;
   }
 
   List<RecentTransaction> _updateContactInTx({
@@ -557,7 +646,8 @@ class AppService {
   Future<List<AccountToken>> getNFTList(
     String address,
     String seed,
-    KeychainServiceKeyPair keychainServiceKeyPair,
+    String name,
+    KeychainSecuredInfos keychainSecuredInfos,
   ) async {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
@@ -598,7 +688,8 @@ class AppService {
               secretMap[tokenBalance.address]!.data!.ownerships!.isNotEmpty) {
             tokenWithoutFile.addAll(
               _tokenPropertiesDecryptedSecret(
-                keypair: keychainServiceKeyPair,
+                keypair: keychainSecuredInfos
+                    .services['archethic-wallet-$name']!.keyPair!,
                 ownerships: secretMap[tokenBalance.address]!.data!.ownerships!,
               ),
             );

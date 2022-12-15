@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $AutoLockNotifierHash() => r'1f59d744f06d3b58e8a58981bd255f3e88fdbe09';
+String $AutoLockNotifierHash() => r'9f788b98ad0b6f93e9358074088376c4e435762e';
 
 /// See also [AutoLockNotifier].
 final autoLockNotifierProvider =

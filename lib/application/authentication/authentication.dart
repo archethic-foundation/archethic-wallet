@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';

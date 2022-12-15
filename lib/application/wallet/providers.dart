@@ -1,7 +1,7 @@
 part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
-class _SessionNotifier extends Notifier<Session> {
+class _SessionNotifier extends Notifier<Session> with KeychainMixin {
   HiveVaultDatasource? __vault;
   Future<HiveVaultDatasource> get _vault async =>
       __vault ??= await HiveVaultDatasource.getInstance();
@@ -15,8 +15,7 @@ class _SessionNotifier extends Notifier<Session> {
 
   Future<void> restore() async {
     final seed = (await _vault).getSeed();
-    final keychainServiceKeyPairMap =
-        (await _vault).getKeychainServiceKeyPairMap();
+    final keychainSecuredInfos = (await _vault).getKeychainSecuredInfos();
     final appWalletDTO = await _dbHelper.getAppWallet();
 
     if (seed == null || appWalletDTO == null) {
@@ -27,7 +26,7 @@ class _SessionNotifier extends Notifier<Session> {
     state = Session.loggedIn(
       wallet: appWalletDTO.toModel(
         seed: seed,
-        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+        keychainSecuredInfos: keychainSecuredInfos!,
       ),
     );
   }
@@ -43,19 +42,10 @@ class _SessionNotifier extends Notifier<Session> {
     final keychain =
         await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
 
-    final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
-    if (keychain.services != null) {
-      keychain.services!.forEach((key, value) {
-        final keyPair = keychain.deriveKeypair(key);
-        keychainServiceKeyPairMap[key.replaceAll('archethic-wallet-', '')] =
-            KeychainServiceKeyPair(
-          privateKey: keyPair.privateKey,
-          publicKey: keyPair.publicKey,
-        );
-      });
-      final vault = await HiveVaultDatasource.getInstance();
-      await vault.setKeychainServiceKeyPairMap(keychainServiceKeyPairMap);
-    }
+    final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+
+    final vault = await HiveVaultDatasource.getInstance();
+    await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
     final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
       keychain,
@@ -67,7 +57,7 @@ class _SessionNotifier extends Notifier<Session> {
 
     state = Session.loggedIn(
       wallet: loggedInState.wallet.copyWith(
-        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+        keychainSecuredInfos: keychainSecuredInfos,
         appKeychain: newWalletDTO.appKeychain,
       ),
     );
@@ -96,22 +86,15 @@ class _SessionNotifier extends Notifier<Session> {
       name,
     );
 
-    final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
-    keychain.services!.forEach((key, value) {
-      final keyPair = keychain.deriveKeypair(key);
-      keychainServiceKeyPairMap[key.replaceAll('archethic-wallet-', '')] =
-          KeychainServiceKeyPair(
-        privateKey: keyPair.privateKey,
-        publicKey: keyPair.publicKey,
-      );
-    });
+    final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+
     final vault = await HiveVaultDatasource.getInstance();
-    await vault.setKeychainServiceKeyPairMap(keychainServiceKeyPairMap);
+    await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
     state = Session.loggedIn(
       wallet: newAppWalletDTO.toModel(
         seed: seed,
-        keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+        keychainSecuredInfos: keychainSecuredInfos,
       ),
     );
   }
@@ -146,21 +129,14 @@ class _SessionNotifier extends Notifier<Session> {
         return null;
       }
 
-      final keychainServiceKeyPairMap = <String, KeychainServiceKeyPair>{};
-      keychain.services!.forEach((key, value) {
-        final keyPair = keychain.deriveKeypair(key);
-        keychainServiceKeyPairMap[key.replaceAll('archethic-wallet-', '')] =
-            KeychainServiceKeyPair(
-          privateKey: keyPair.privateKey,
-          publicKey: keyPair.publicKey,
-        );
-      });
-      await vault.setKeychainServiceKeyPairMap(keychainServiceKeyPairMap);
+      final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+
+      await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
       return state = LoggedInSession(
         wallet: appWallet.toModel(
           seed: seed,
-          keychainServiceKeyPairMap: keychainServiceKeyPairMap,
+          keychainSecuredInfos: keychainSecuredInfos,
         ),
       );
     } catch (e) {
@@ -169,16 +145,6 @@ class _SessionNotifier extends Notifier<Session> {
   }
 }
 
-@riverpod
-Future<Keychain?> _archethicWalletKeychain(Ref ref) async {
-  final loggedInSession = ref.watch(SessionProviders.session).loggedIn;
-  if (loggedInSession == null) return null;
-
-  return sl.get<ApiService>().getKeychain(loggedInSession.wallet.seed);
-}
-
 abstract class SessionProviders {
   static final session = _sessionNotifierProvider;
-
-  static final archethicWalletKeychain = _archethicWalletKeychainProvider;
 }

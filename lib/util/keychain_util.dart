@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
-
-// Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -14,10 +12,12 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
+import 'package:aewallet/model/keychain_secured_infos.dart';
+import 'package:aewallet/model/keychain_secured_infos_service.dart';
+import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 
@@ -433,6 +433,56 @@ class KeychainUtil {
         maxConfirmations: 0,
         response: 'ko',
       ),
+    );
+  }
+}
+
+mixin KeychainMixin {
+  /// Convert Keychain model to KeychainSecuredInfos
+  KeychainSecuredInfos keychainToKeychainSecuredInfos(
+    Keychain keychain,
+  ) {
+    final keychainSecuredInfosServiceMap =
+        <String, KeychainSecuredInfosService>{};
+    keychain.services!.forEach((key, value) {
+      final keyPair = keychain.deriveKeypair(key);
+
+      keychainSecuredInfosServiceMap[key] = KeychainSecuredInfosService(
+        curve: value.curve ?? '',
+        derivationPath: value.derivationPath ?? '',
+        hashAlgo: value.hashAlgo ?? '',
+        name: key.replaceAll('archethic-wallet-', ''),
+        keyPair: KeychainServiceKeyPair(
+          privateKey: keyPair.privateKey,
+          publicKey: keyPair.publicKey,
+        ),
+      );
+    });
+
+    return KeychainSecuredInfos(
+      seed: keychain.seed!,
+      version: keychain.version!,
+      services: keychainSecuredInfosServiceMap,
+    );
+  }
+
+  /// Convert KeychainSecuredInfos model to Keychain
+  Keychain keychainSecuredInfosToKeychain(
+    KeychainSecuredInfos keychainSecuredInfos,
+  ) {
+    final services = <String, Service>{};
+    keychainSecuredInfos.services.forEach((key, value) {
+      services[key] = Service(
+        curve: value.curve,
+        derivationPath: value.derivationPath,
+        hashAlgo: value.hashAlgo,
+      );
+    });
+
+    return Keychain(
+      Uint8List.fromList(keychainSecuredInfos.seed),
+      services: services,
+      version: keychainSecuredInfos.version,
     );
   }
 }
