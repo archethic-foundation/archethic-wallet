@@ -770,7 +770,7 @@ class AppService with KeychainMixin {
       if (authorizedPublicKey.encryptedSecretKey != null) {
         final aesKey = ecDecrypt(
           authorizedPublicKey.encryptedSecretKey,
-          keypair.privateKey,
+          Uint8List.fromList(keypair.privateKey),
         );
         final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
         try {
