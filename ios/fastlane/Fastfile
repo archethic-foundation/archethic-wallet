@@ -58,7 +58,7 @@ def flutter_build(versionName,number,format)
     sh(
       "flutter build #{format} --obfuscate --split-debug-info=build/sym/#{format} --build-name=#{
         versionName
-      } --build-number=#{number.to_s} --dart-define=AIRDROP_SECRET=\"#{ENV['airdropSecret']}\""
+        } --build-number=#{number.to_s} --dart-define=AIRDROP_SECRET=\"#{ENV['airdropSecret']}\" --dart-define=HCAPTCHA_SECRET_SITEKEY=\"#{ENV['hcaptchaSecretSiteKey']}\""
     )
   end
 end
