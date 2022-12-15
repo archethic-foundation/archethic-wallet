@@ -180,37 +180,52 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 20),
-          child: AppButtonTinyWithoutExpanded(
-            AppButtonTinyType.primary,
-            width: MediaQuery.of(context).size.width,
-            localizations.search,
-            Dimens.buttonTopDimens,
-            key: const Key('search'),
-            icon: Icon(
-              Icons.search,
-              color: theme.text,
-              size: 14,
-            ),
-            showProgressIndicator: nftSearchBar.loading,
-            onPressed: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
+          child: nftSearchBar.loading
+              ? AppButtonTinyWithoutExpanded(
+                  AppButtonTinyType.primaryOutline,
+                  width: MediaQuery.of(context).size.width,
+                  localizations.search,
+                  Dimens.buttonTopDimens,
+                  key: const Key('search'),
+                  icon: Icon(
+                    Icons.search,
+                    color: theme.text30,
+                    size: 14,
+                  ),
+                  showProgressIndicator: true,
+                  onPressed: () {},
+                )
+              : AppButtonTinyWithoutExpanded(
+                  AppButtonTinyType.primary,
+                  width: MediaQuery.of(context).size.width,
+                  localizations.search,
+                  Dimens.buttonTopDimens,
+                  key: const Key('search'),
+                  icon: Icon(
+                    Icons.search,
+                    color: theme.text,
+                    size: 14,
+                  ),
+                  showProgressIndicator: nftSearchBar.loading,
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
 
-              await nftSearchBarNotifier.searchNFT(
-                searchController.text,
-                context,
-                session.wallet.seed,
-                session
-                    .wallet
-                    .keychainSecuredInfos
-                    .services[
-                        'archethic-wallet-${session.wallet.appKeychain.getAccountSelected()!.name}']!
-                    .keyPair!,
-              );
-            },
-          ),
+                    await nftSearchBarNotifier.searchNFT(
+                      searchController.text,
+                      context,
+                      session.wallet.seed,
+                      session
+                          .wallet
+                          .keychainSecuredInfos
+                          .services[
+                              'archethic-wallet-${session.wallet.appKeychain.getAccountSelected()!.name}']!
+                          .keyPair!,
+                    );
+                  },
+                ),
         ),
       ],
     );
