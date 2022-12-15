@@ -35,7 +35,7 @@ packages:
       name: archethic_lib_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   archive:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       name: bottom_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   build:
     dependency: transitive
     description:
@@ -301,7 +301,7 @@ packages:
       name: decimal
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   device_info_plus:
     dependency: transitive
     description:
@@ -427,7 +427,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.2"
+    version: "5.2.4"
   filesize:
     dependency: "direct main"
     description:
@@ -514,7 +514,7 @@ packages:
       name: flutter_native_splash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.15"
+    version: "2.2.16"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -899,7 +899,7 @@ packages:
       name: loading_animation_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0+3"
+    version: "1.2.0+4"
   local_auth:
     dependency: "direct main"
     description:
@@ -913,7 +913,7 @@ packages:
       name: local_auth_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.15"
+    version: "1.0.16"
   local_auth_ios:
     dependency: transitive
     description:
@@ -948,7 +948,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.13"
+    version: "0.12.14"
   material_color_utilities:
     dependency: transitive
     description:
@@ -969,7 +969,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   mime_dart:
     dependency: "direct main"
     description:
@@ -1158,7 +1158,7 @@ packages:
       name: phoenix_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.2"
   photo_view:
     dependency: transitive
     description:
@@ -1256,7 +1256,7 @@ packages:
       name: rational
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.2"
   recase:
     dependency: transitive
     description:
@@ -1569,7 +1569,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   window_manager:
     dependency: "direct main"
     description:
