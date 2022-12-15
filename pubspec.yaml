@@ -219,6 +219,7 @@ dependencies:
   validators: ^3.0.0
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window
+  webview_flutter: ^3.0.4
   window_manager: ^0.2.8
 
   # Yubico dart library for Dart/Flutter
