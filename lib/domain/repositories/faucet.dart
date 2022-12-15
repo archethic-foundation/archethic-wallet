@@ -7,6 +7,7 @@ abstract class FaucetRepositoryInterface {
   Future<Result<String, Failure>> requestChallenge({
     required String keychainAddress,
     required String deviceId,
+    required String captchaToken,
   });
 
   /// Claims reward

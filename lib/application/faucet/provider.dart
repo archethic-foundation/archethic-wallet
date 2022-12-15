@@ -10,6 +10,7 @@ import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/functional_utils.dart';
 import 'package:aewallet/util/screen_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,6 +23,7 @@ FaucetRepositoryInterface _faucetRepository(Ref ref) {
 
 @Riverpod(keepAlive: true)
 Future<bool> _isDeviceCompatible(Ref ref) async {
+  if (kDebugMode) return true;
   if (ScreenUtil.isDesktopMode()) return false;
   if (ref.read(SettingsProviders.settings).network.network !=
       AvailableNetworks.archethicMainNet) return false;
@@ -94,7 +96,9 @@ class _FaucetClaimNotifier extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() => const AsyncValue.data(null);
 
-  Future<void> claim() async {
+  Future<void> claim({
+    required String captchaToken,
+  }) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final repository = ref.read(_faucetRepositoryProvider);
@@ -125,6 +129,7 @@ class _FaucetClaimNotifier extends AsyncNotifier<void> {
       final claimChallenge = (await repository.requestChallenge(
         deviceId: installationId,
         keychainAddress: genesisAddressKeychain,
+        captchaToken: captchaToken,
       ))
           .map(
         success: id,

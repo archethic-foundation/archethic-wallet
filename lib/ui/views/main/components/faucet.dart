@@ -9,6 +9,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/functional_utils.dart';
+import 'package:aewallet/util/hcaptcha.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -52,6 +53,7 @@ class FaucetBanner extends ConsumerWidget {
         ref.watch(FaucetProviders.claimRequest).isLoading;
 
     final localizations = AppLocalization.of(context)!;
+
     ref.listen(
       FaucetProviders.claimRequest,
       (previous, next) {
@@ -126,8 +128,18 @@ class FaucetBanner extends ConsumerWidget {
                 key: const Key('getUCO'),
                 width: 170,
                 onPressed: isFaucetRequestButtonActive
-                    ? () {
-                        ref.read(FaucetProviders.claimRequest.notifier).claim();
+                    ? () async {
+                        const siteKey = String.fromEnvironment(
+                          'HCAPTCHA_SECRET_SITEKEY',
+                        );
+                        HCaptcha.init(siteKey: siteKey);
+                        final token = await HCaptcha.show(context);
+
+                        if (token == null) return;
+
+                        ref.read(FaucetProviders.claimRequest.notifier).claim(
+                              captchaToken: token,
+                            );
                       }
                     : () {},
               ),

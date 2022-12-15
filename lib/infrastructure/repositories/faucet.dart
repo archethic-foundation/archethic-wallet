@@ -42,6 +42,7 @@ class FaucetRepository implements FaucetRepositoryInterface {
   Future<Result<String, Failure>> requestChallenge({
     required String keychainAddress,
     required String deviceId,
+    required String captchaToken,
   }) async =>
       Result.guard(() async {
         final response = await http.post(
@@ -54,6 +55,7 @@ class FaucetRepository implements FaucetRepositoryInterface {
           body: json.encode({
             'deviceId': deviceId,
             'keychainAddress': keychainAddress,
+            'token': captchaToken,
           }),
         );
 
