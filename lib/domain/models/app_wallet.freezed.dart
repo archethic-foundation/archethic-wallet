@@ -16,9 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppWallet {
-  String get seed => throw _privateConstructorUsedError;
+  String get seed =>
+      throw _privateConstructorUsedError; // TODO(redddwarf03): Mutualize keychain infos
   AppKeychain get appKeychain => throw _privateConstructorUsedError;
-  Map<String, KeychainServiceKeyPair> get keychainServiceKeyPairMap =>
+  KeychainSecuredInfos get keychainSecuredInfos =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -34,7 +35,9 @@ abstract class $AppWalletCopyWith<$Res> {
   $Res call(
       {String seed,
       AppKeychain appKeychain,
-      Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap});
+      KeychainSecuredInfos keychainSecuredInfos});
+
+  $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
 }
 
 /// @nodoc
@@ -52,7 +55,7 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
   $Res call({
     Object? seed = null,
     Object? appKeychain = null,
-    Object? keychainServiceKeyPairMap = null,
+    Object? keychainSecuredInfos = null,
   }) {
     return _then(_value.copyWith(
       seed: null == seed
@@ -63,11 +66,20 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
           ? _value.appKeychain
           : appKeychain // ignore: cast_nullable_to_non_nullable
               as AppKeychain,
-      keychainServiceKeyPairMap: null == keychainServiceKeyPairMap
-          ? _value.keychainServiceKeyPairMap
-          : keychainServiceKeyPairMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, KeychainServiceKeyPair>,
+      keychainSecuredInfos: null == keychainSecuredInfos
+          ? _value.keychainSecuredInfos
+          : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
+              as KeychainSecuredInfos,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos {
+    return $KeychainSecuredInfosCopyWith<$Res>(_value.keychainSecuredInfos,
+        (value) {
+      return _then(_value.copyWith(keychainSecuredInfos: value) as $Val);
+    });
   }
 }
 
@@ -81,7 +93,10 @@ abstract class _$$_AppWalletCopyWith<$Res> implements $AppWalletCopyWith<$Res> {
   $Res call(
       {String seed,
       AppKeychain appKeychain,
-      Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap});
+      KeychainSecuredInfos keychainSecuredInfos});
+
+  @override
+  $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
 }
 
 /// @nodoc
@@ -97,7 +112,7 @@ class __$$_AppWalletCopyWithImpl<$Res>
   $Res call({
     Object? seed = null,
     Object? appKeychain = null,
-    Object? keychainServiceKeyPairMap = null,
+    Object? keychainSecuredInfos = null,
   }) {
     return _then(_$_AppWallet(
       seed: null == seed
@@ -108,10 +123,10 @@ class __$$_AppWalletCopyWithImpl<$Res>
           ? _value.appKeychain
           : appKeychain // ignore: cast_nullable_to_non_nullable
               as AppKeychain,
-      keychainServiceKeyPairMap: null == keychainServiceKeyPairMap
-          ? _value._keychainServiceKeyPairMap
-          : keychainServiceKeyPairMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, KeychainServiceKeyPair>,
+      keychainSecuredInfos: null == keychainSecuredInfos
+          ? _value.keychainSecuredInfos
+          : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
+              as KeychainSecuredInfos,
     ));
   }
 }
@@ -122,26 +137,20 @@ class _$_AppWallet extends _AppWallet {
   const _$_AppWallet(
       {required this.seed,
       required this.appKeychain,
-      final Map<String, KeychainServiceKeyPair> keychainServiceKeyPairMap =
-          const {}})
-      : _keychainServiceKeyPairMap = keychainServiceKeyPairMap,
-        super._();
+      required this.keychainSecuredInfos})
+      : super._();
 
   @override
   final String seed;
+// TODO(redddwarf03): Mutualize keychain infos
   @override
   final AppKeychain appKeychain;
-  final Map<String, KeychainServiceKeyPair> _keychainServiceKeyPairMap;
   @override
-  @JsonKey()
-  Map<String, KeychainServiceKeyPair> get keychainServiceKeyPairMap {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_keychainServiceKeyPairMap);
-  }
+  final KeychainSecuredInfos keychainSecuredInfos;
 
   @override
   String toString() {
-    return 'AppWallet(seed: $seed, appKeychain: $appKeychain, keychainServiceKeyPairMap: $keychainServiceKeyPairMap)';
+    return 'AppWallet(seed: $seed, appKeychain: $appKeychain, keychainSecuredInfos: $keychainSecuredInfos)';
   }
 
   @override
@@ -152,13 +161,13 @@ class _$_AppWallet extends _AppWallet {
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.appKeychain, appKeychain) ||
                 other.appKeychain == appKeychain) &&
-            const DeepCollectionEquality().equals(
-                other._keychainServiceKeyPairMap, _keychainServiceKeyPairMap));
+            (identical(other.keychainSecuredInfos, keychainSecuredInfos) ||
+                other.keychainSecuredInfos == keychainSecuredInfos));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, seed, appKeychain,
-      const DeepCollectionEquality().hash(_keychainServiceKeyPairMap));
+  int get hashCode =>
+      Object.hash(runtimeType, seed, appKeychain, keychainSecuredInfos);
 
   @JsonKey(ignore: true)
   @override
@@ -171,16 +180,15 @@ abstract class _AppWallet extends AppWallet {
   const factory _AppWallet(
       {required final String seed,
       required final AppKeychain appKeychain,
-      final Map<String, KeychainServiceKeyPair>
-          keychainServiceKeyPairMap}) = _$_AppWallet;
+      required final KeychainSecuredInfos keychainSecuredInfos}) = _$_AppWallet;
   const _AppWallet._() : super._();
 
   @override
   String get seed;
-  @override
+  @override // TODO(redddwarf03): Mutualize keychain infos
   AppKeychain get appKeychain;
   @override
-  Map<String, KeychainServiceKeyPair> get keychainServiceKeyPairMap;
+  KeychainSecuredInfos get keychainSecuredInfos;
   @override
   @JsonKey(ignore: true)
   _$$_AppWalletCopyWith<_$_AppWallet> get copyWith =>

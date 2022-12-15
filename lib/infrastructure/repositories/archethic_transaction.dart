@@ -12,7 +12,7 @@ import 'package:aewallet/infrastructure/repositories/transaction_token_builder.d
 import 'package:aewallet/infrastructure/repositories/transaction_transfer_builder.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/model/keychain_service_keypair.dart';
+import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -56,14 +56,16 @@ class ArchethicTransactionRepository
   Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
     required Account account,
     required String walletSeed,
-    required KeychainServiceKeyPair keychainServiceKeyPair,
+    required KeychainSecuredInfos keychainSecuredInfos,
   }) async {
     return Result.guard(
       () async {
         return _appService.getAccountRecentTransactions(
+          account.genesisAddress,
           account.lastAddress!,
           walletSeed,
-          keychainServiceKeyPair,
+          account.name,
+          keychainSecuredInfos,
           account.recentTransactions ?? [],
         );
       },

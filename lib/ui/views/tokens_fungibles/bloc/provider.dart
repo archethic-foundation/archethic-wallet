@@ -10,7 +10,6 @@ import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -108,11 +107,11 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late Transaction transaction;
 
-    final keychainServiceKeyPairMap = ref
+    final keychainSecuredInfos = ref
         .watch(SessionProviders.session)
         .loggedIn!
         .wallet
-        .keychainServiceKeyPairMap;
+        .keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
@@ -121,8 +120,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
         seed: formState.seed,
-        keychainServiceKeyPair: keychainServiceKeyPairMap[state.name] ??
-            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+        keychainServiceKeyPair: keychainSecuredInfos
+            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
         type: 'fungible',
         aeip: [2],
         properties: [],
@@ -276,11 +275,11 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late Transaction transaction;
 
-    final keychainServiceKeyPairMap = ref
+    final keychainSecuredInfos = ref
         .watch(SessionProviders.session)
         .loggedIn!
         .wallet
-        .keychainServiceKeyPairMap;
+        .keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
@@ -289,8 +288,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         initialSupply: state.initialSupply,
         accountSelectedName: selectedAccount!.name,
         seed: state.seed,
-        keychainServiceKeyPair: keychainServiceKeyPairMap[state.name] ??
-            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+        keychainServiceKeyPair: keychainSecuredInfos
+            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
         type: 'fungible',
         aeip: [2],
         properties: [],

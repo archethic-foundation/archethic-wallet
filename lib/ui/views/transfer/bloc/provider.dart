@@ -13,7 +13,6 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -331,11 +330,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     late Transaction transaction;
 
-    final keychainServiceKeyPairMap = ref
+    final keychainSecuredInfos = ref
         .watch(SessionProviders.session)
         .loggedIn!
         .wallet
-        .keychainServiceKeyPairMap;
+        .keychainSecuredInfos;
 
     switch (state.transferType) {
       case TransferType.token:
@@ -346,9 +345,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             seed: formState.seed,
-            keychainServiceKeyPair:
-                keychainServiceKeyPairMap[selectedAccount.name] ??
-                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+            keychainServiceKeyPair: keychainSecuredInfos
+                .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'fungible',
             aeip: [2],
@@ -367,9 +365,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             seed: formState.seed,
-            keychainServiceKeyPair:
-                keychainServiceKeyPairMap[selectedAccount.name] ??
-                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+            keychainServiceKeyPair: keychainSecuredInfos
+                .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
           ),
         );
         break;
@@ -381,9 +378,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: formState.message,
             recipientAddress: recipientAddress,
             seed: formState.seed,
-            keychainServiceKeyPair:
-                keychainServiceKeyPairMap[selectedAccount.name] ??
-                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+            keychainServiceKeyPair: keychainSecuredInfos
+                .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             aeip: [2],
@@ -690,11 +686,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     late Transaction transaction;
 
-    final keychainServiceKeyPairMap = ref
+    final keychainSecuredInfos = ref
         .watch(SessionProviders.session)
         .loggedIn!
         .wallet
-        .keychainServiceKeyPairMap;
+        .keychainSecuredInfos;
 
     switch (state.transferType) {
       case TransferType.token:
@@ -705,9 +701,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             seed: state.seed,
-            keychainServiceKeyPair:
-                keychainServiceKeyPairMap[selectedAccount.name] ??
-                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+            keychainServiceKeyPair: keychainSecuredInfos
+                .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'fungible',
             tokenId: 0,
@@ -725,9 +720,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             seed: state.seed,
-            keychainServiceKeyPair:
-                keychainServiceKeyPairMap[selectedAccount.name] ??
-                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+            keychainServiceKeyPair: keychainSecuredInfos
+                .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
           ),
         );
         break;
@@ -739,9 +733,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             message: state.message,
             recipientAddress: state.recipient.address!,
             seed: state.seed,
-            keychainServiceKeyPair:
-                keychainServiceKeyPairMap[selectedAccount.name] ??
-                    const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+            keychainServiceKeyPair: keychainSecuredInfos
+                .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             tokenId: 1,

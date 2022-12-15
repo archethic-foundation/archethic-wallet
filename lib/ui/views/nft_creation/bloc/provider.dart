@@ -15,7 +15,6 @@ import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart'
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -137,11 +136,11 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
 
     late Transaction transaction;
 
-    final keychainServiceKeyPairMap = ref
+    final keychainSecuredInfos = ref
         .watch(SessionProviders.session)
         .loggedIn!
         .wallet
-        .keychainServiceKeyPairMap;
+        .keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
@@ -150,8 +149,8 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply.toDouble(),
         seed: formState.seed,
-        keychainServiceKeyPair: keychainServiceKeyPairMap[formState.name] ??
-            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+        keychainServiceKeyPair: keychainSecuredInfos
+            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
         type: 'non-fungible',
         aeip: [2],
         properties: formState.propertiesConverted,
@@ -570,11 +569,11 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
 
     late Transaction transaction;
 
-    final keychainServiceKeyPairMap = ref
+    final keychainSecuredInfos = ref
         .watch(SessionProviders.session)
         .loggedIn!
         .wallet
-        .keychainServiceKeyPairMap;
+        .keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
@@ -583,8 +582,8 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         initialSupply: state.initialSupply.toDouble(),
         accountSelectedName: selectedAccount!.name,
         seed: state.seed,
-        keychainServiceKeyPair: keychainServiceKeyPairMap[state.name] ??
-            const KeychainServiceKeyPair(privateKey: [], publicKey: []),
+        keychainServiceKeyPair: keychainSecuredInfos
+            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
         type: 'non-fungible',
         aeip: [2],
         properties: state.propertiesConverted,

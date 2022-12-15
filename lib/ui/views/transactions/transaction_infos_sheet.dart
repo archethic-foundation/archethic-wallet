@@ -64,7 +64,11 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
               AccountBalance.cryptoCurrencyLabel,
               context,
-              session.wallet.keychainServiceKeyPairMap[selectedAccount.name]!,
+              session
+                  .wallet
+                  .keychainSecuredInfos
+                  .services['archethic-wallet-${selectedAccount.name}']!
+                  .keyPair!,
             ),
         builder: (
           BuildContext context,

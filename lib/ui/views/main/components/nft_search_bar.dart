@@ -202,8 +202,12 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                 searchController.text,
                 context,
                 session.wallet.seed,
-                session.wallet.keychainServiceKeyPairMap[
-                    session.wallet.appKeychain.getAccountSelected()!.name]!,
+                session
+                    .wallet
+                    .keychainSecuredInfos
+                    .services[
+                        'archethic-wallet-${session.wallet.appKeychain.getAccountSelected()!.name}']!
+                    .keyPair!,
               );
             },
           ),

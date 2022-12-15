@@ -10,6 +10,7 @@ import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/functional_utils.dart';
 import 'package:aewallet/util/screen_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -111,16 +112,17 @@ class _FaucetClaimNotifier extends AsyncNotifier<void> {
       if (accountLastAddress == null) {
         throw const Failure.invalidValue();
       }
-      final keychain = await ref.read(
-        SessionProviders.archethicWalletKeychain.future,
+
+      final keychainSecuredInfos = ref
+          .watch(SessionProviders.session)
+          .loggedIn!
+          .wallet
+          .keychainSecuredInfos;
+
+      final genesisAddressKeychain = deriveAddress(
+        uint8ListToHex(Uint8List.fromList(keychainSecuredInfos.seed)),
+        0,
       );
-
-      if (keychain!.seed == null) {
-        throw const Failure.invalidValue();
-      }
-
-      final genesisAddressKeychain =
-          deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
       final claimChallenge = (await repository.requestChallenge(
         deviceId: installationId,
