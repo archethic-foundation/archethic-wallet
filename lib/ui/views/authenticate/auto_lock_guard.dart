@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/ui/util/app_lifecycle_recognizer.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Handles navigation to the lock screen
@@ -48,57 +46,73 @@ class AutoLockGuard extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _AutoLockGuardState();
 }
 
-class _AutoLockGuardState extends ConsumerState<AutoLockGuard> {
+class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
+    with WidgetsBindingObserver {
   // Set to [true] when the app is coming to foreground
   // while checking if authentication is necessary.
   bool unlockPending = true;
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) => _forceAuthentIfNeeded(context, ref),
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _forceAuthentIfNeeded(context, ref);
+        break;
+      case AppLifecycleState.inactive:
+        if (unlockPending == true) return;
+        setState(() {
+          unlockPending = true;
+        });
+
+        break;
+      case AppLifecycleState.paused:
+        ref.read(AuthenticationProviders.autoLock.notifier).scheduleAutolock();
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return AppLifecycleStateListener(
-      recognizers: [
-        AppBecomeInactiveRecognizer(
-          onRecognize: () {
-            if (unlockPending == true) return;
-            setState(() {
-              unlockPending = true;
-            });
-          },
-        ),
-        AppStartupRecognizer(
-          onRecognize: () => _forceAuthentIfNeeded(context, ref),
-        ),
-        AppResumeFromBackgroundRecognizer(
-          onRecognize: () => _forceAuthentIfNeeded(context, ref),
-        ),
-        AppToBackgroundRecognizer(
-          onRecognize: ref
-              .read(AuthenticationProviders.autoLock.notifier)
-              .scheduleAutolock,
-        ),
-      ],
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
-        child: unlockPending
-            ? WillPopScope(
-                onWillPop: () async => false,
-                child: SizedBox.expand(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          theme.background3Small!,
-                        ),
-                        fit: BoxFit.cover,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      child: unlockPending
+          ? WillPopScope(
+              onWillPop: () async => false,
+              child: SizedBox.expand(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        theme.background3Small!,
                       ),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-              )
-            : widget.child,
-      ),
+              ),
+            )
+          : widget.child,
     );
   }
 
@@ -109,7 +123,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard> {
     final shouldLockOnStartup = await ref.read(
       AuthenticationProviders.shouldLockOnStartup.future,
     );
-    log('LOCK : will show lock : $shouldLockOnStartup');
 
     if (shouldLockOnStartup) {
       await AuthFactory.forceAuthenticate(
