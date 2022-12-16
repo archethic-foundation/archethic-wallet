@@ -55,17 +55,10 @@ class AppService with KeychainMixin {
         (keptRecentTransactions, element) {
           final matchingIndex = keptRecentTransactions.indexWhere(
             (keptRecentTransaction) =>
-                (keptRecentTransaction.typeTx ==
-                        RecentTransaction.transferInput ||
-                    keptRecentTransaction.typeTx ==
-                        RecentTransaction.transferOutput) &&
                 keptRecentTransaction.typeTx == element.typeTx &&
                 keptRecentTransaction.from == element.from &&
                 keptRecentTransaction.type == element.type &&
-                (keptRecentTransaction.tokenInformations == null ||
-                    element.tokenInformations == null ||
-                    keptRecentTransaction.tokenInformations!.id ==
-                        element.tokenInformations!.id) &&
+                keptRecentTransaction.tokenAddress == element.tokenAddress &&
                 keptRecentTransaction.tokenAddress == element.tokenAddress,
           );
 
@@ -204,10 +197,16 @@ class AppService with KeychainMixin {
     var recentTransactions = <RecentTransaction>[...localRecentTransactionList];
 
     // Get last transaction with inputs and unspent outputs
-    final lastTransaction = await sl.get<ApiService>().getLastTransaction(
+    // TODO(reddwarf03): Bug GraphQL on type
+    /*final lastTransaction = await sl.get<ApiService>().getLastTransaction(
       [lastAddress],
       request:
           'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, type, version } } }',
+    );*/
+    final lastTransaction = await sl.get<ApiService>().getLastTransaction(
+      [lastAddress],
+      request:
+          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, spent, tokenAddress, tokenId, amount, timestamp }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, version } } }',
     );
 
     final keychain = keychainSecuredInfosToKeychain(keychainSecuredInfos);
@@ -271,8 +270,28 @@ class AppService with KeychainMixin {
     if (previousAddress.isNotEmpty) {
       last9TransactionMap = await getTransactionChain(
         {previousAddress: addressPaging},
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, type, version } } } ',
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, version } } } ',
       );
+    }
+
+    // Remove transaction from property existing in the 10 transactions address
+    final listTxAddress = <String>[
+      lastAddress.toLowerCase(),
+      previousAddress.toLowerCase()
+    ];
+    if (last9TransactionMap[previousAddress] != null) {
+      for (final transaction in last9TransactionMap[previousAddress]!) {
+        if (listTxAddress.contains(transaction.address!.toLowerCase()) ==
+            false) {
+          listTxAddress.add(transaction.address!.toLowerCase());
+        }
+      }
+      for (final recentTransaction in localRecentTransactionList) {
+        if (listTxAddress.contains(recentTransaction.address!.toLowerCase()) ==
+            false) {
+          listTxAddress.add(recentTransaction.address!.toLowerCase());
+        }
+      }
     }
 
     // Merge inputs from last transaction + unspent outputs from last transaction + transactions from transaction chain
@@ -364,20 +383,6 @@ class AppService with KeychainMixin {
     if (recentTransactions.isNotEmpty) {
       recentTransactions =
           _removeRecentTransactionsDuplicates(recentTransactions);
-    }
-
-    // Remove transaction.from property existing in the 10 transactions address
-    final listTxAddress = <String>[
-      lastAddress.toLowerCase(),
-      previousAddress.toLowerCase()
-    ];
-    if (last9TransactionMap[previousAddress] != null) {
-      for (final transaction in last9TransactionMap[previousAddress]!) {
-        if (listTxAddress.contains(transaction.address!.toLowerCase()) ==
-            false) {
-          listTxAddress.add(transaction.address!.toLowerCase());
-        }
-      }
     }
 
     var recentTransactionsFiltered = <RecentTransaction>[];
