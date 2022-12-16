@@ -194,6 +194,9 @@ class AppService with KeychainMixin {
       '>> START getRecentTransactions : ${DateTime.now().toString()}',
     );
 
+    // TODO(reddwarf03): Enable cache
+    localRecentTransactionList = [];
+
     var recentTransactions = <RecentTransaction>[...localRecentTransactionList];
 
     // Get last transaction with inputs and unspent outputs
