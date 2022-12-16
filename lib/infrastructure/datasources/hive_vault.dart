@@ -124,9 +124,11 @@ class HiveVaultDatasource {
   }
 
   KeychainSecuredInfos? getKeychainSecuredInfos() {
-    return KeychainSecuredInfos.fromJson(
-      json.decode(_getValue(_keychainSecuredInfos)),
-    );
+    try {
+      return json.decode(_getValue(_keychainSecuredInfos));
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> clearAll() async {
