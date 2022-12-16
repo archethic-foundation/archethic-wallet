@@ -1256,6 +1256,23 @@ class AppLocalization {
         name: 'tokenNameMissing');
   }
 
+  String get tokenNameUCO {
+    return Intl.message(
+        'Unfortunately, we have already taken this name of token.',
+        name: 'tokenNameUCO');
+  }
+
+  String get tokenSymbolUCO {
+    return Intl.message(
+        'Unfortunately, we have already taken this name of symbol.',
+        name: 'tokenSymbolUCO');
+  }
+
+  String get notOfficialUCOWarning {
+    return Intl.message('This is not the official UCO token.',
+        name: 'notOfficialUCOWarning');
+  }
+
   String get tokenSymbolMissing {
     return Intl.message('Choose a Symbol for the Token',
         name: 'tokenSymbolMissing');

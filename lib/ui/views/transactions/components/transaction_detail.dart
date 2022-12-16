@@ -14,6 +14,7 @@ import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -25,6 +26,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+
+const kFordiddenName = ['UCO', 'MUCO'];
 
 class TransactionDetail extends ConsumerWidget {
   const TransactionDetail({required this.transaction, super.key});
@@ -366,7 +369,33 @@ class TransactionDetail extends ConsumerWidget {
                               ),
                             ),
                         ],
-                      )
+                      ),
+                      Row(
+                        children: [
+                          if (transaction.tokenInformations != null &&
+                              (kFordiddenName.contains(
+                                    transaction.tokenInformations!.name,
+                                  ) ||
+                                  kFordiddenName.contains(
+                                    transaction.tokenInformations!.symbol,
+                                  )))
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Icon(
+                                  UiIcons.warning,
+                                  size: 10,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  localizations.notOfficialUCOWarning,
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                 ],

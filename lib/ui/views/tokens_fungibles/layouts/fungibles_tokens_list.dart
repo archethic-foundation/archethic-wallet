@@ -101,6 +101,8 @@ class _FungiblesTokensLine extends StatelessWidget {
   }
 }
 
+const kFordiddenName = ['UCO', 'MUCO'];
+
 class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   const _FungiblesTokensDetailTransfer({
     required this.accountFungibleToken,
@@ -112,6 +114,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final localizations = AppLocalization.of(context)!;
     return Column(
       children: [
         Card(
@@ -126,92 +129,121 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
           child: Container(
             padding: const EdgeInsets.all(9.5),
             width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: theme.backgroundDark!.withOpacity(0.3),
-                          border: Border.all(
-                            color: theme.backgroundDarkest!.withOpacity(0.2),
-                            width: 2,
-                          ),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.arrow_circle_up_outlined,
-                            color: theme.backgroundDarkest,
-                            size: 21,
-                          ),
-                          onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            await TransferSheet(
-                              transferType: TransferType.token,
-                              accountToken: accountFungibleToken,
-                              recipient: const TransferRecipient.address(
-                                address: Address(''),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: theme.backgroundDark!.withOpacity(0.3),
+                              border: Border.all(
+                                color:
+                                    theme.backgroundDarkest!.withOpacity(0.2),
+                                width: 2,
                               ),
-                            ).show(
-                              context: context,
-                              ref: ref,
-                            );
-                          },
-                        ),
+                            ),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_circle_up_outlined,
+                                color: theme.backgroundDarkest,
+                                size: 21,
+                              ),
+                              onPressed: () async {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
+                                    );
+                                await TransferSheet(
+                                  transferType: TransferType.token,
+                                  accountToken: accountFungibleToken,
+                                  recipient: const TransferRecipient.address(
+                                    address: Address(''),
+                                  ),
+                                ).show(
+                                  context: context,
+                                  ref: ref,
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Text(
+                              accountFungibleToken.tokenInformations!.name!,
+                              style: theme.textStyleSize12W600Primary,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
+                    ),
+                    if (preferences.showBalances == true)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            NumberUtil.formatThousands(
+                              accountFungibleToken.amount!,
+                            ),
+                            style: theme.textStyleSize12W400Primary,
+                          ),
+                          Text(
+                            accountFungibleToken.tokenInformations!.symbol!,
+                            style: theme.textStyleSize12W600Primary,
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '···········',
+                            style: theme.textStyleSize12W600Primary60,
+                          ),
+                          Text(
+                            accountFungibleToken.tokenInformations!.symbol!,
+                            style: theme.textStyleSize12W600Primary,
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: Text(
-                          accountFungibleToken.tokenInformations!.name!,
-                          style: theme.textStyleSize12W600Primary,
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
-                if (preferences.showBalances == true)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        NumberUtil.formatThousands(
-                          accountFungibleToken.amount!,
+                if (kFordiddenName.contains(
+                      accountFungibleToken.tokenInformations!.name,
+                    ) ||
+                    kFordiddenName.contains(
+                      accountFungibleToken.tokenInformations!.symbol,
+                    ))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(
+                          UiIcons.warning,
+                          size: 10,
                         ),
-                        style: theme.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        accountFungibleToken.tokenInformations!.symbol!,
-                        style: theme.textStyleSize12W600Primary,
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '···········',
-                        style: theme.textStyleSize12W600Primary60,
-                      ),
-                      Text(
-                        accountFungibleToken.tokenInformations!.symbol!,
-                        style: theme.textStyleSize12W600Primary,
-                      ),
-                    ],
-                  )
+                        const SizedBox(width: 5),
+                        Text(
+                          localizations.notOfficialUCOWarning,
+                          style: theme.textStyleSize10W100Primary,
+                          textAlign: TextAlign.end,
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
