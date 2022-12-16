@@ -15,11 +15,11 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
 
   Future<void> restore() async {
     final seed = (await _vault).getSeed();
-    final keychainSecuredInfos = (await _vault).getKeychainSecuredInfos();
+    var keychainSecuredInfos = (await _vault).getKeychainSecuredInfos();
     if (keychainSecuredInfos == null && seed != null) {
       // Create manually Keychain
       final keychain = await sl.get<ApiService>().getKeychain(seed);
-      final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+      keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
       (await _vault).setKeychainSecuredInfos(keychainSecuredInfos);
     }
     final appWalletDTO = await _dbHelper.getAppWallet();
