@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-13T09:29:34.156032",
+  "@@last_modified": "2022-12-16T00:52:20.332976",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -1580,6 +1580,24 @@
   },
   "tokenNameMissing": "Choose a Name for the Token",
   "@tokenNameMissing": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenNameUCO": "Unfortunately, we have already taken this name of token.",
+  "@tokenNameUCO": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenSymbolUCO": "Unfortunately, we have already taken this name of symbol.",
+  "@tokenSymbolUCO": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "notOfficialUCOWarning": "This is not the official UCO token.",
+  "@notOfficialUCOWarning": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

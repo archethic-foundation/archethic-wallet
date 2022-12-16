@@ -203,6 +203,14 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       );
       return false;
     }
+
+    if (state.name.trim() == 'UCO' || state.name.trim() == 'MUCO') {
+      state = state.copyWith(
+        errorNameText: AppLocalization.of(context)!.tokenNameUCO,
+      );
+      return false;
+    }
+
     return true;
   }
 
@@ -212,6 +220,13 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     if (state.symbol.isEmpty) {
       state = state.copyWith(
         errorSymbolText: AppLocalization.of(context)!.tokenSymbolMissing,
+      );
+      return false;
+    }
+
+    if (state.symbol.trim() == 'UCO' || state.symbol.trim() == 'MUCO') {
+      state = state.copyWith(
+        errorSymbolText: AppLocalization.of(context)!.tokenSymbolUCO,
       );
       return false;
     }
