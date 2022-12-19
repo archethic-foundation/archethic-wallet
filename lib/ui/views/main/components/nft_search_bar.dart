@@ -3,6 +3,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -31,12 +32,28 @@ class NFTSearchBar extends ConsumerStatefulWidget {
 }
 
 class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
-  TextEditingController searchController = TextEditingController();
+  late TextEditingController searchController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    searchController = TextEditingController();
+    _updateAdressTextController();
+  }
 
   @override
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  void _updateAdressTextController() {
+    searchController.text = ref
+        .read(
+          NftSearchBarProvider.nftSearchBar,
+        )
+        .searchCriteria;
   }
 
   @override
@@ -109,7 +126,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                             preferences.activeVibrations,
                           );
                       final scanResult = await UserDataUtil.getQRData(
-                        DataType.raw,
+                        DataType.address,
                         context,
                         ref,
                       );
@@ -134,7 +151,9 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                         );
                         return;
                       } else {
-                        searchController.text = scanResult;
+                        final address = Address(scanResult);
+                        nftSearchBarNotifier.setSearchCriteria(address.address);
+                        _updateAdressTextController();
                       }
                     },
                   )
@@ -151,7 +170,8 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                   if (data == null || data.text == null) {
                     return;
                   }
-                  searchController.text = data.text!;
+                  nftSearchBarNotifier.setSearchCriteria(data.text!);
+                  _updateAdressTextController();
                 });
               },
             ),

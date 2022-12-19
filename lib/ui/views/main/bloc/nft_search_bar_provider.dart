@@ -42,6 +42,12 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
     );
   }
 
+  void setSearchCriteria(String searchCriteria) {
+    state = state.copyWith(
+      searchCriteria: searchCriteria,
+    );
+  }
+
   void reset() {
     state = state.copyWith(
       loading: false,
