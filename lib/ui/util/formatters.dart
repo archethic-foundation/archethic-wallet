@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'dart:math';
+
 import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/services.dart';
 // Package imports:
@@ -209,5 +211,72 @@ class LowerCaseTextFormatter extends TextInputFormatter {
       text: newValue.text.toLowerCase(),
       selection: newValue.selection,
     );
+  }
+}
+
+class AmountTextInputFormatter extends TextInputFormatter {
+  AmountTextInputFormatter({
+    this.separator = ' ',
+    this.decimalSeparator = '.',
+    this.precision = 2,
+  });
+
+  String separator;
+  String decimalSeparator;
+  int precision;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final value = double.tryParse(newValue.text);
+    if (value == null) {
+      return newValue.copyWith(
+        text: oldValue.text,
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
+
+    final convertedValue = amountFormatter(value: value);
+    return newValue.copyWith(
+      text: convertedValue,
+      selection: TextSelection.collapsed(offset: convertedValue.length),
+    );
+  }
+}
+
+String amountFormatter({
+  required double value,
+  String separator = ' ',
+  String decimalSeparator = '.',
+  int precision = 2,
+}) {
+  final intPart = value.toInt();
+  final decimalPart = ((value - intPart) * pow(10, precision)).round();
+  return "${intPart.toString().splitFromRight(3, separator)}$decimalSeparator${decimalPart.toString().padLeft(precision, '0')}";
+}
+
+extension StringSplitExt on String {
+  String splitFromRight(int interval, String separator) {
+    final leftPartLength = length % interval;
+    final parts = length ~/ interval;
+
+    final resultBuilder = StringBuffer();
+
+    if (leftPartLength > 0) {
+      resultBuilder
+        ..write(substring(0, leftPartLength))
+        ..write(separator);
+    }
+
+    for (var i = 0; i < parts; i++) {
+      final offset = leftPartLength + i * interval;
+      resultBuilder.write(substring(offset, offset + interval));
+      if (i < parts - 1) {
+        resultBuilder.write(separator);
+      }
+    }
+    return resultBuilder.toString();
   }
 }
