@@ -94,25 +94,30 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      child: unlockPending
-          ? WillPopScope(
-              onWillPop: () async => false,
-              child: SizedBox.expand(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        theme.background3Small!,
+    return Stack(
+      children: [
+        widget.child,
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: unlockPending
+              ? WillPopScope(
+                  onWillPop: () async => false,
+                  child: SizedBox.expand(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            theme.background3Small!,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              ),
-            )
-          : widget.child,
+                )
+              : const SizedBox(),
+        ),
+      ],
     );
   }
 
