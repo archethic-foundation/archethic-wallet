@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -78,6 +80,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       case AppLifecycleState.inactive:
         if (unlockPending == true) return;
         setState(() {
+          _LockMask.show(context);
           unlockPending = true;
         });
 
@@ -92,34 +95,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   }
 
   @override
-  Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    return Stack(
-      children: [
-        widget.child,
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          child: unlockPending
-              ? WillPopScope(
-                  onWillPop: () async => false,
-                  child: SizedBox.expand(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            theme.background3Small!,
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              : const SizedBox(),
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => widget.child;
 
   Future<void> _forceAuthentIfNeeded(
     BuildContext context,
@@ -148,7 +124,51 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         .unscheduleAutolock();
 
     setState(() {
+      _LockMask.hide(context);
       unlockPending = false;
     });
+  }
+}
+
+class _LockMask extends ConsumerWidget {
+  const _LockMask();
+  static const routeName = 'LockMask';
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SizedBox.expand(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                theme.background3Small!,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static void show(BuildContext context) {
+    log('Show', name: routeName);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const _LockMask(),
+        settings: const RouteSettings(name: routeName),
+      ),
+    );
+  }
+
+  static void hide(BuildContext context) {
+    log('Hide', name: routeName);
+    Navigator.of(context).popUntil(
+      (route) => route.settings.name != routeName,
+    );
   }
 }
