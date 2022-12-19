@@ -41,7 +41,7 @@ final _faucetRepositoryProvider = Provider<FaucetRepositoryInterface>(
 );
 typedef _FaucetRepositoryRef = ProviderRef<FaucetRepositoryInterface>;
 String $_isDeviceCompatibleHash() =>
-    r'e2d2a03c1f372b8ac01ad47a7420757ba51c5712';
+    r'c54eaf1bcd1f7ead1000d74b66455af25632b5d6';
 
 /// See also [_isDeviceCompatible].
 final _isDeviceCompatibleProvider = FutureProvider<bool>(

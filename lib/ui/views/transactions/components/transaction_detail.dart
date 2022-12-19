@@ -4,6 +4,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -26,8 +27,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-
-const kFordiddenName = ['UCO', 'MUCO'];
 
 class TransactionDetail extends ConsumerWidget {
   const TransactionDetail({required this.transaction, super.key});
@@ -373,11 +372,11 @@ class TransactionDetail extends ConsumerWidget {
                       Row(
                         children: [
                           if (transaction.tokenInformations != null &&
-                              (kFordiddenName.contains(
+                              (kTokenFordiddenName.contains(
                                     transaction.tokenInformations!.name!
                                         .toUpperCase(),
                                   ) ||
-                                  kFordiddenName.contains(
+                                  kTokenFordiddenName.contains(
                                     transaction.tokenInformations!.symbol!
                                         .toUpperCase(),
                                   )))

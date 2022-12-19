@@ -2,6 +2,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -100,8 +101,6 @@ class _FungiblesTokensLine extends StatelessWidget {
     );
   }
 }
-
-const kFordiddenName = ['UCO', 'MUCO'];
 
 class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   const _FungiblesTokensDetailTransfer({
@@ -220,11 +219,11 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                       ),
                   ],
                 ),
-                if (kFordiddenName.contains(
+                if (kTokenFordiddenName.contains(
                       accountFungibleToken.tokenInformations!.name!
                           .toUpperCase(),
                     ) ||
-                    kFordiddenName.contains(
+                    kTokenFordiddenName.contains(
                       accountFungibleToken.tokenInformations!.symbol!
                           .toUpperCase(),
                     ))

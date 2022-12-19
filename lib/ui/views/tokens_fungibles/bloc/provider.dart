@@ -204,7 +204,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return false;
     }
 
-    if (state.name.trim() == 'UCO' || state.name.trim() == 'MUCO') {
+    if (kTokenFordiddenName.contains(state.name.toUpperCase())) {
       state = state.copyWith(
         errorNameText: AppLocalization.of(context)!.tokenNameUCO,
       );
@@ -224,7 +224,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return false;
     }
 
-    if (state.symbol.trim() == 'UCO' || state.symbol.trim() == 'MUCO') {
+    if (kTokenFordiddenName.contains(state.symbol.toUpperCase())) {
       state = state.copyWith(
         errorSymbolText: AppLocalization.of(context)!.tokenSymbolUCO,
       );

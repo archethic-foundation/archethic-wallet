@@ -4,6 +4,8 @@ import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'token.freezed.dart';
 
+const kTokenFordiddenName = ['UCO', 'MUCO'];
+
 /// Represents a token, blockchain agnostic.
 @freezed
 class Token with _$Token {
