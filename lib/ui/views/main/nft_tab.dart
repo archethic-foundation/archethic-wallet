@@ -36,30 +36,11 @@ class NFTTab extends ConsumerWidget {
   }
 }
 
-class NFTTabBody extends ConsumerStatefulWidget {
+class NFTTabBody extends ConsumerWidget {
   const NFTTabBody({super.key});
 
   @override
-  ConsumerState<NFTTabBody> createState() => _NFTTabBodyState();
-}
-
-class _NFTTabBodyState extends ConsumerState<NFTTabBody> {
-  TextEditingController searchController = TextEditingController();
-
-  @override
-  void initState() {
-    searchController.text = '';
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
