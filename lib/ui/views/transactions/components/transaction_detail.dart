@@ -374,10 +374,12 @@ class TransactionDetail extends ConsumerWidget {
                         children: [
                           if (transaction.tokenInformations != null &&
                               (kFordiddenName.contains(
-                                    transaction.tokenInformations!.name,
+                                    transaction.tokenInformations!.name!
+                                        .toUpperCase(),
                                   ) ||
                                   kFordiddenName.contains(
-                                    transaction.tokenInformations!.symbol,
+                                    transaction.tokenInformations!.symbol!
+                                        .toUpperCase(),
                                   )))
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,

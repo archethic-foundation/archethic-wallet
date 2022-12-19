@@ -221,10 +221,12 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                   ],
                 ),
                 if (kFordiddenName.contains(
-                      accountFungibleToken.tokenInformations!.name,
+                      accountFungibleToken.tokenInformations!.name!
+                          .toUpperCase(),
                     ) ||
                     kFordiddenName.contains(
-                      accountFungibleToken.tokenInformations!.symbol,
+                      accountFungibleToken.tokenInformations!.symbol!
+                          .toUpperCase(),
                     ))
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
