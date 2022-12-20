@@ -1,0 +1,8 @@
+Archethic Wallet - Version 2.0.4 Build 415
+
+- Fix compatibility errors for device with Android < 7.1
+- Fix autolock
+- Fix paste button in transfer page
+- Fix keychain not exists error
+- Fix recent transactions list
+- Improve performance
