@@ -61,11 +61,13 @@ Future<void> main() async {
     });
   }
 
-  // Fix LetsEncrypt root certificate for Android<7.1
-  final x1cert = await rootBundle.load('assets/ssl/isrg-root-x1.pem');
-  SecurityContext.defaultContext.setTrustedCertificatesBytes(
-    x1cert.buffer.asUint8List(),
-  );
+  if (!kIsWeb && Platform.isAndroid) {
+    // Fix LetsEncrypt root certificate for Android<7.1
+    final x1cert = await rootBundle.load('assets/ssl/isrg-root-x1.pem');
+    SecurityContext.defaultContext.setTrustedCertificatesBytes(
+      x1cert.buffer.asUint8List(),
+    );
+  }
 
   // Run app
   await SystemChrome.setPreferredOrientations(
