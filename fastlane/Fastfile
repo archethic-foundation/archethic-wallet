@@ -92,6 +92,21 @@ platform :android do
       aab: 'build/app/outputs/bundle/release/app-release.aab',
     )
   end
+
+   
+  desc "Publish to GooglePlay Alpha"
+  lane :alpha do 
+    desc "Deploy to alpha canal"
+    version_code = getVersionCode(getVersionInfo())
+    version_name = getVersionName(getVersionInfo())
+    flutter_build(version_name,version_code, "appbundle")
+
+    upload_to_play_store(
+      track: 'alpha',
+      version_code: version_code,
+      aab: 'build/app/outputs/bundle/release/app-release.aab',
+    )
+  end
 end
 
 def getVersionInfo()

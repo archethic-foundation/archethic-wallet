@@ -73,6 +73,14 @@ Publish to GooglePlay
 
 Publish to GooglePlay Beta
 
+### android alpha
+
+```sh
+[bundle exec] fastlane android alpha
+```
+
+Publish to GooglePlay Alpha
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
