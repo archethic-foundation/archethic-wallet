@@ -84,45 +84,23 @@ class AppService with KeychainMixin {
   List<RecentTransaction> _populateRecentTransactionsFromTransactionInputs(
     List<TransactionInput> transactionInputs,
     String txAddress,
+    int transactionTimeStamp,
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transactionInput in transactionInputs) {
-      final recentTransaction = RecentTransaction()
-        ..address = transactionInput.from
-        ..amount = fromBigInt(transactionInput.amount).toDouble()
-        ..typeTx = RecentTransaction.transferInput
-        ..from = transactionInput.from
-        ..recipient = txAddress
-        ..timestamp = transactionInput.timestamp
-        ..fee = 0
-        ..tokenAddress = transactionInput.tokenAddress;
-      recentTransactions.add(recentTransaction);
-    }
-    return recentTransactions;
-  }
-
-  List<RecentTransaction> _populateRecentTransactionsFromUnspentOutputs(
-    List<UnspentOutputs> unspentOutputs,
-    int timestamp,
-    int fee,
-    String txAddress,
-  ) {
-    final recentTransactions = <RecentTransaction>[];
-    for (final unspentOutput in unspentOutputs) {
-      final recentTransaction = RecentTransaction()
-        ..address = unspentOutput.from
-        ..amount = fromBigInt(
-          unspentOutput.amount,
-        ).toDouble()
-        ..typeTx = RecentTransaction.transferInput
-        ..from = unspentOutput.from
-        ..recipient = txAddress
-        ..timestamp = timestamp
-        ..fee = fromBigInt(
-          fee,
-        ).toDouble()
-        ..tokenAddress = unspentOutput.tokenAddress;
-      recentTransactions.add(recentTransaction);
+      if (transactionInput.from!.toUpperCase() != txAddress.toUpperCase() &&
+          transactionInput.timestamp! > transactionTimeStamp) {
+        final recentTransaction = RecentTransaction()
+          ..address = transactionInput.from
+          ..amount = fromBigInt(transactionInput.amount).toDouble()
+          ..typeTx = RecentTransaction.transferInput
+          ..from = transactionInput.from
+          ..recipient = txAddress
+          ..timestamp = transactionInput.timestamp
+          ..fee = 0
+          ..tokenAddress = transactionInput.tokenAddress;
+        recentTransactions.add(recentTransaction);
+      }
     }
     return recentTransactions;
   }
@@ -182,6 +160,45 @@ class AppService with KeychainMixin {
     return recentTransactions;
   }
 
+  Future<List<RecentTransaction>> _buildRecentTransactionFromTransaction(
+    List<RecentTransaction> recentTransactionList,
+    String address,
+  ) async {
+    var newRecentTransactionList = recentTransactionList;
+
+    final transaction = await sl.get<ApiService>().getTransaction(
+      [address],
+      request:
+          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, spent, tokenAddress, tokenId, amount, timestamp }',
+    );
+
+    if (transaction[address] != null && transaction[address]!.inputs != null) {
+      final transactionTimeStamp =
+          transaction[address]!.validationStamp!.timestamp!;
+      newRecentTransactionList
+        ..addAll(
+          _populateRecentTransactionsFromTransactionInputs(
+            transaction[address]!.inputs!,
+            address,
+            transactionTimeStamp,
+          ),
+        )
+        ..addAll(
+          _populateRecentTransactionsFromTransactionChain(
+            [transaction[address]!],
+          ),
+        );
+
+      // Remove doublons (on type / token address / from / timestamp)
+      if (newRecentTransactionList.isNotEmpty) {
+        newRecentTransactionList =
+            _removeRecentTransactionsDuplicates(newRecentTransactionList);
+      }
+    }
+
+    return newRecentTransactionList;
+  }
+
   Future<List<RecentTransaction>> getAccountRecentTransactions(
     String genesisAddress,
     String lastAddress,
@@ -195,191 +212,52 @@ class AppService with KeychainMixin {
     );
 
     // TODO(reddwarf03): Enable cache
-    localRecentTransactionList = [];
-
-    var recentTransactions = <RecentTransaction>[...localRecentTransactionList];
-
-    // Get last transaction with inputs and unspent outputs
-    // TODO(reddwarf03): Bug GraphQL on type
-    /*final lastTransaction = await sl.get<ApiService>().getLastTransaction(
-      [lastAddress],
-      request:
-          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, type, version } } }',
-    );*/
-    final lastTransaction = await sl.get<ApiService>().getLastTransaction(
-      [lastAddress],
-      request:
-          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, spent, tokenAddress, tokenId, amount, timestamp }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, version } } }',
-    );
+    //var recentTransactions = <RecentTransaction>[...localRecentTransactionList];
+    var recentTransactions = <RecentTransaction>[];
 
     final keychain = keychainSecuredInfosToKeychain(keychainSecuredInfos);
     final nameEncoded = Uri.encodeFull(
       name,
     );
-    var addressPaging = '';
-    var previousAddress = '';
-    if (lastTransaction[lastAddress] != null &&
-        lastTransaction[lastAddress]!.chainLength != null &&
-        lastTransaction[lastAddress]!.chainLength! > 1) {
-      if (lastTransaction[lastAddress]!.chainLength! > 11) {
-        addressPaging = uint8ListToHex(
-          keychain.deriveAddress(
-            'archethic-wallet-$nameEncoded',
-            index: lastTransaction[lastAddress]!.chainLength! - 11,
+
+    final lastIndex = await sl.get<ApiService>().getTransactionIndex(
+      [lastAddress],
+    );
+
+    var index = lastIndex[lastAddress] ?? 0;
+    String addressToSearch;
+    while (recentTransactions.length <= 10 && index > 0) {
+      addressToSearch = uint8ListToHex(
+        keychain.deriveAddress(
+          'archethic-wallet-$nameEncoded',
+          index: index,
+        ),
+      );
+
+      recentTransactions = await _buildRecentTransactionFromTransaction(
+        recentTransactions,
+        addressToSearch,
+      );
+      index--;
+    }
+
+    if (recentTransactions.length < 10) {
+      // Get transaction inputs from genesis address if filtered list is < 10
+      final genesisTransactionInputsMap = await getTransactionInputs(
+        [genesisAddress],
+        'from, type, spent, tokenAddress, amount, timestamp',
+        limit: 10 - recentTransactions.length,
+      );
+
+      if (genesisTransactionInputsMap[genesisAddress] != null) {
+        recentTransactions.addAll(
+          _populateRecentTransactionsFromTransactionInputs(
+            genesisTransactionInputsMap[genesisAddress]!,
+            genesisAddress,
+            0,
           ),
         );
       }
-
-      previousAddress = uint8ListToHex(
-        keychain.deriveAddress(
-          'archethic-wallet-$nameEncoded',
-          index: lastTransaction[lastAddress]!.chainLength! - 1,
-        ),
-      );
-    }
-
-    // Determination of the most recent address for the paging
-    if (localRecentTransactionList.isNotEmpty) {
-      final localRecentTransactionLastAddress = localRecentTransactionList
-          .firstWhere(
-            (element) => element.typeTx != RecentTransaction.transferInput,
-            orElse: RecentTransaction.new,
-          )
-          .address;
-
-      if (localRecentTransactionLastAddress != null) {
-        final indexSearch = <String>[localRecentTransactionLastAddress];
-        if (addressPaging.isNotEmpty) {
-          indexSearch.add(addressPaging);
-        }
-        localRecentTransactionList.sort(
-          (a, b) => b.timestamp!.compareTo(a.timestamp!),
-        );
-        final transactionIndexMap =
-            await sl.get<ApiService>().getTransactionIndex(indexSearch);
-        if (transactionIndexMap[addressPaging] == null) {
-          addressPaging = localRecentTransactionLastAddress;
-        } else {
-          if (transactionIndexMap[addressPaging]! <
-              transactionIndexMap[localRecentTransactionLastAddress]!) {
-            addressPaging = localRecentTransactionLastAddress;
-          }
-        }
-      }
-    }
-
-    // Get 9 previous transactions without inputs and with unspent outputs
-    var last9TransactionMap = <String, List<Transaction>>{};
-    if (previousAddress.isNotEmpty) {
-      last9TransactionMap = await getTransactionChain(
-        {previousAddress: addressPaging},
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } } , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, validationStamp {ledgerOperations {unspentOutputs { amount, from, timestamp, tokenAddress, tokenId, version } } } ',
-      );
-    }
-
-    // Remove transaction from property existing in the 10 transactions address
-    final listTxAddress = <String>[
-      lastAddress.toLowerCase(),
-      previousAddress.toLowerCase()
-    ];
-    if (last9TransactionMap[previousAddress] != null) {
-      for (final transaction in last9TransactionMap[previousAddress]!) {
-        if (listTxAddress.contains(transaction.address!.toLowerCase()) ==
-            false) {
-          listTxAddress.add(transaction.address!.toLowerCase());
-        }
-      }
-      for (final recentTransaction in localRecentTransactionList) {
-        if (listTxAddress.contains(recentTransaction.address!.toLowerCase()) ==
-            false) {
-          listTxAddress.add(recentTransaction.address!.toLowerCase());
-        }
-      }
-    }
-
-    // Merge inputs from last transaction + unspent outputs from last transaction + transactions from transaction chain
-    if (lastTransaction[lastAddress] != null &&
-        lastTransaction[lastAddress]!.inputs != null) {
-      recentTransactions.addAll(
-        _populateRecentTransactionsFromTransactionInputs(
-          lastTransaction[lastAddress]!.inputs!,
-          lastAddress,
-        ),
-      );
-    }
-
-    if (lastTransaction[lastAddress] != null) {
-      recentTransactions.addAll(
-        _populateRecentTransactionsFromTransactionChain(
-          [lastTransaction[lastAddress]!],
-        ),
-      );
-    }
-
-    if (lastTransaction[lastAddress] != null &&
-        lastTransaction[lastAddress]!.validationStamp != null &&
-        lastTransaction[lastAddress]!.validationStamp!.ledgerOperations !=
-            null &&
-        lastTransaction[lastAddress]!
-                .validationStamp!
-                .ledgerOperations!
-                .unspentOutputs !=
-            null) {
-      recentTransactions.addAll(
-        _populateRecentTransactionsFromUnspentOutputs(
-          lastTransaction[lastAddress]!
-              .validationStamp!
-              .ledgerOperations!
-              .unspentOutputs!,
-          lastTransaction[lastAddress]!.validationStamp!.timestamp ?? 0,
-          lastTransaction[lastAddress]!
-                  .validationStamp!
-                  .ledgerOperations!
-                  .fee ??
-              0,
-          lastAddress,
-        ),
-      );
-    }
-
-    if (last9TransactionMap[previousAddress] != null) {
-      for (final transaction in last9TransactionMap[previousAddress]!) {
-        if (transaction.validationStamp != null &&
-            transaction.validationStamp!.ledgerOperations != null &&
-            transaction.validationStamp!.ledgerOperations!.unspentOutputs !=
-                null) {
-          recentTransactions.addAll(
-            _populateRecentTransactionsFromUnspentOutputs(
-              transaction.validationStamp!.ledgerOperations!.unspentOutputs!,
-              transaction.validationStamp!.timestamp ?? 0,
-              transaction.validationStamp!.ledgerOperations!.fee ?? 0,
-              transaction.address!,
-            ),
-          );
-        }
-      }
-
-      recentTransactions.addAll(
-        _populateRecentTransactionsFromTransactionChain(
-          last9TransactionMap[previousAddress]!,
-        ),
-      );
-    }
-
-    // Get transaction inputs from genesis address if filtered list is < 10
-    final genesisTransactionInputsMap = await getTransactionInputs(
-      [genesisAddress],
-      'from, type, spent, tokenAddress, amount, timestamp',
-      limit: 10,
-    );
-
-    if (genesisTransactionInputsMap[genesisAddress] != null) {
-      recentTransactions.addAll(
-        _populateRecentTransactionsFromTransactionInputs(
-          genesisTransactionInputsMap[genesisAddress]!,
-          genesisAddress,
-        ),
-      );
     }
 
     // Remove doublons (on type / token address / from / timestamp)
@@ -388,34 +266,20 @@ class AppService with KeychainMixin {
           _removeRecentTransactionsDuplicates(recentTransactions);
     }
 
-    var recentTransactionsFiltered = <RecentTransaction>[];
-    for (final recentTransaction in recentTransactions) {
-      if (recentTransaction.typeTx != RecentTransaction.transferInput) {
-        recentTransactionsFiltered.add(recentTransaction);
-      } else {
-        if (listTxAddress.contains(recentTransaction.from!.toLowerCase()) ==
-            false) {
-          recentTransactionsFiltered.add(recentTransaction);
-        }
-      }
-    }
-
     // Sort by timestamp desc
-    recentTransactionsFiltered.sort(
+    recentTransactions.sort(
       (a, b) => b.timestamp!.compareTo(a.timestamp!),
     );
 
     // Get 10 first transactions
-    recentTransactionsFiltered = recentTransactionsFiltered.sublist(
+    recentTransactions = recentTransactions.sublist(
       0,
-      recentTransactionsFiltered.length > 10
-          ? 10
-          : recentTransactionsFiltered.length,
+      recentTransactions.length > 10 ? 10 : recentTransactions.length,
     );
 
     // Get token id
     final tokensAddresses = <String>[];
-    for (final recentTransaction in recentTransactionsFiltered) {
+    for (final recentTransaction in recentTransactions) {
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty) {
         tokensAddresses.add(recentTransaction.tokenAddress!);
@@ -430,7 +294,7 @@ class AppService with KeychainMixin {
           tokensAddresses.toSet().toList(),
           request: 'genesis, name, id, supply, symbol, type',
         );
-    for (final recentTransaction in recentTransactionsFiltered) {
+    for (final recentTransaction in recentTransactions) {
       // Get token informations
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty) {
@@ -456,8 +320,8 @@ class AppService with KeychainMixin {
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.recipient != null) {
-            recentTransactionLastAddresses.add(recentTransaction.recipient!);
-            ownershipsAddresses.add(recentTransaction.recipient!);
+            recentTransactionLastAddresses.add(recentTransaction.address!);
+            ownershipsAddresses.add(recentTransaction.address!);
           }
           break;
       }
@@ -473,7 +337,7 @@ class AppService with KeychainMixin {
 
     final keychainServiceKeyPair =
         keychainSecuredInfos.services['archethic-wallet-$name']!.keyPair;
-    for (var recentTransaction in recentTransactionsFiltered) {
+    for (var recentTransaction in recentTransactions) {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null) {
@@ -485,10 +349,10 @@ class AppService with KeychainMixin {
           }
           break;
         case RecentTransaction.transferOutput:
-          if (recentTransaction.recipient != null) {
+          if (recentTransaction.address != null) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
-              ownerships: recentTransaction.ownerships ?? [],
+              ownerships: ownershipsMap[recentTransaction.address!] ?? [],
               recentTransaction: recentTransaction,
             );
           }
@@ -538,17 +402,17 @@ class AppService with KeychainMixin {
       contactsListUpdated.add(contact);
     }
 
-    recentTransactionsFiltered = _updateContactInTx(
+    recentTransactions = _updateContactInTx(
       contactsList: contactsListUpdated,
       lastAddressesMap: lastAddressesMap,
-      recentTransactions: recentTransactionsFiltered,
+      recentTransactions: recentTransactions,
     );
 
     dev.log(
       '>> END getRecentTransactions : ${DateTime.now().toString()}',
     );
 
-    return recentTransactionsFiltered;
+    return recentTransactions;
   }
 
   List<RecentTransaction> _updateContactInTx({
