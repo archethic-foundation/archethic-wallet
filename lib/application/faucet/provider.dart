@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_info.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -11,6 +14,7 @@ import 'package:aewallet/util/functional_utils.dart';
 import 'package:aewallet/util/screen_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,6 +27,16 @@ FaucetRepositoryInterface _faucetRepository(Ref ref) {
 
 @Riverpod(keepAlive: true)
 Future<bool> _isDeviceCompatible(Ref ref) async {
+  if (!kIsWeb && Platform.isAndroid) {
+    final developerMode = await FlutterJailbreakDetection.developerMode;
+    log('developerMode: $developerMode');
+    if (developerMode) return false;
+  }
+  if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+    final jailbroken = await FlutterJailbreakDetection.jailbroken;
+    log('jailbroken: $jailbroken');
+    if (jailbroken) return false;
+  }
   if (kDebugMode) return true;
   if (ScreenUtil.isDesktopMode()) return false;
   if (ref.read(SettingsProviders.settings).network.network !=
