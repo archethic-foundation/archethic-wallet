@@ -240,6 +240,15 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required String text,
   }) async {
     if (!text.startsWith('@')) {
+      if (!Address(text).isValid) {
+        _setRecipient(
+          recipient: TransferRecipient.unknownContact(
+            name: text,
+          ),
+        );
+        return;
+      }
+
       final contact = await sl.get<DBHelper>().getContactWithAddress(text);
       if (contact != null) {
         _setRecipient(
