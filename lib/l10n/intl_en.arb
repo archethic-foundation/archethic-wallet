@@ -2766,6 +2766,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "getUCOInformationUnauthorized": "Your application is not authorized to access to the faucet. Please update your application with the last version.",
+  "@getUCOInformationUnauthorized": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "getUCOCount": "See you in %1h%2 to get new UCOs...",
   "@getUCOCount": {
     "placeholders": {}

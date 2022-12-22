@@ -174,6 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getUCOInformationAlreadyReceived" : MessageLookupByLibrary.simpleMessage("Vous avez déjà reçu vos UCOs."),
     "getUCOInformationBackendError" : MessageLookupByLibrary.simpleMessage("Une erreur s\'est produite. Essayer à nouveau plus tard."),
     "getUCOInformationInsufficientBalance" : MessageLookupByLibrary.simpleMessage("Le faucet est actuellement vide. Veuillez réitérer votre demande demain."),
+    "getUCOInformationUnauthorized" : MessageLookupByLibrary.simpleMessage("Votre application n\'est pas autorisée à accéder au faucet. Veuillez mettre à jour votre application avec la dernière version."),
     "go" : MessageLookupByLibrary.simpleMessage("Go !"),
     "hiddenCategories" : MessageLookupByLibrary.simpleMessage("Catégories masquées"),
     "iUnderstandTheRisks" : MessageLookupByLibrary.simpleMessage("Je comprends les risques"),

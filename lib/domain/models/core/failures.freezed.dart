@@ -22,6 +22,7 @@ mixin _$Failure {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) =>
@@ -32,6 +33,7 @@ mixin _$Failure {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) =>
@@ -42,6 +44,7 @@ mixin _$Failure {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -53,6 +56,7 @@ mixin _$Failure {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) =>
@@ -63,6 +67,7 @@ mixin _$Failure {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) =>
@@ -73,6 +78,7 @@ mixin _$Failure {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -139,6 +145,7 @@ class _$_LoggedOut extends _LoggedOut {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -152,6 +159,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -165,6 +173,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -182,6 +191,7 @@ class _$_LoggedOut extends _LoggedOut {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -195,6 +205,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -208,6 +219,7 @@ class _$_LoggedOut extends _LoggedOut {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -266,6 +278,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -279,6 +292,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -292,6 +306,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -309,6 +324,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -322,6 +338,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -335,6 +352,7 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -421,6 +439,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -434,6 +453,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -447,6 +467,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -464,6 +485,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -477,6 +499,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -490,6 +513,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -554,6 +578,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -567,6 +592,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -580,6 +606,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -597,6 +624,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -610,6 +638,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -623,6 +652,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -637,6 +667,139 @@ class _$_InsuffientFunds extends _InsuffientFunds {
 abstract class _InsuffientFunds extends Failure {
   const factory _InsuffientFunds() = _$_InsuffientFunds;
   const _InsuffientFunds._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_InauthorizedCopyWith<$Res> {
+  factory _$$_InauthorizedCopyWith(
+          _$_Inauthorized value, $Res Function(_$_Inauthorized) then) =
+      __$$_InauthorizedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_InauthorizedCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_Inauthorized>
+    implements _$$_InauthorizedCopyWith<$Res> {
+  __$$_InauthorizedCopyWithImpl(
+      _$_Inauthorized _value, $Res Function(_$_Inauthorized) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Inauthorized extends _Inauthorized {
+  const _$_Inauthorized() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.unauthorized()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Inauthorized);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
+    required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
+    required TResult Function() invalidValue,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return unauthorized();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return unauthorized?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
+    TResult Function()? invalidValue,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (unauthorized != null) {
+      return unauthorized();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return unauthorized(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return unauthorized?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (unauthorized != null) {
+      return unauthorized(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Inauthorized extends Failure {
+  const factory _Inauthorized() = _$_Inauthorized;
+  const _Inauthorized._() : super._();
 }
 
 /// @nodoc
@@ -681,6 +844,7 @@ class _$_InvalidValue extends _InvalidValue {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -694,6 +858,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -707,6 +872,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -724,6 +890,7 @@ class _$_InvalidValue extends _InvalidValue {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -737,6 +904,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -750,6 +918,7 @@ class _$_InvalidValue extends _InvalidValue {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
@@ -840,6 +1009,7 @@ class _$_OtherFailure extends _OtherFailure {
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
@@ -853,6 +1023,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
@@ -866,6 +1037,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
@@ -883,6 +1055,7 @@ class _$_OtherFailure extends _OtherFailure {
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
@@ -896,6 +1069,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
@@ -909,6 +1083,7 @@ class _$_OtherFailure extends _OtherFailure {
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),

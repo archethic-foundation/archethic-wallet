@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-16T01:05:00.603989",
+  "@@last_modified": "2022-12-22T09:42:09.701680",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -2762,6 +2762,12 @@
   },
   "getUCOInformationInsufficientBalance": "The faucet is currently empty. Please reiterate your request tomorrow.",
   "@getUCOInformationInsufficientBalance": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "getUCOInformationUnauthorized": "Your application is not authorized to access to the faucet. Please update your application with the last version.",
+  "@getUCOInformationUnauthorized": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -11,6 +11,7 @@ class Failure with _$Failure implements Exception {
     DateTime? cooldownEndDate,
   }) = _QuotaExceededFailure;
   const factory Failure.insufficientFunds() = _InsuffientFunds;
+  const factory Failure.unauthorized() = _Inauthorized;
   const factory Failure.invalidValue() = _InvalidValue;
   const factory Failure.other({
     Object? cause,
