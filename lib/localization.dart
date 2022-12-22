@@ -46,7 +46,7 @@ class AppLocalization {
   }
 
   String get welcomeDisclaimerChoice {
-    return Intl.message('I have read and agree to the terms of use',
+    return Intl.message('I have read and agree to the privacy policy',
         name: 'welcomeDisclaimerChoice');
   }
 

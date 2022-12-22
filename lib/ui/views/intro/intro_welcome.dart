@@ -136,7 +136,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                                     onPressed: () {
                                       UIUtil.showWebview(
                                         context,
-                                        'https://archethic.net',
+                                        'https://archethic.net/aewallet-privacy.html',
                                         localizations.welcomeDisclaimerLink,
                                       );
                                     },

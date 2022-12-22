@@ -294,7 +294,7 @@
 	"passwordStrengthWeak": "Votre mot de passe est faible.",
 	"passwordStrengthAlright": "Votre mot de passe est bon.",
 	"passwordStrengthStrong": "Votre mot de passe est fort.",
-	"welcomeDisclaimerChoice": "J'ai lu et j'accepte les conditions d'utilisation",
+	"welcomeDisclaimerChoice": "J'ai lu et j'accepte la politique de confidentialité",
 	"welcomeDisclaimerLink": "Conditions d'utilisation",
 	"showBalances": "Afficher les balances",
 	"showBlog": "Afficher le blog",
