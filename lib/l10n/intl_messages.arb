@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-22T09:42:09.701680",
+  "@@last_modified": "2022-12-22T23:50:43.292192",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -12,7 +12,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "welcomeDisclaimerChoice": "I have read and agree to the terms of use",
+  "welcomeDisclaimerChoice": "I have read and agree to the privacy policy",
   "@welcomeDisclaimerChoice": {
     "type": "text",
     "placeholders_order": [],

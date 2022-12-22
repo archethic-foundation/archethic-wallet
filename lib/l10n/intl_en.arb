@@ -1752,7 +1752,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "welcomeDisclaimerChoice": "I have read and agree to the terms of use",
+  "welcomeDisclaimerChoice": "I have read and agree to the privacy policy",
   "@welcomeDisclaimerChoice": {
     "type": "text",
     "placeholders_order": [],

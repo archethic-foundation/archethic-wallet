@@ -462,7 +462,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "walletFAQDesc" : MessageLookupByLibrary.simpleMessage("Have a question? Check here first!"),
     "walletFAQHeader" : MessageLookupByLibrary.simpleMessage("Wallet FAQ"),
     "warning" : MessageLookupByLibrary.simpleMessage("Warning"),
-    "welcomeDisclaimerChoice" : MessageLookupByLibrary.simpleMessage("I have read and agree to the terms of use"),
+    "welcomeDisclaimerChoice" : MessageLookupByLibrary.simpleMessage("I have read and agree to the privacy policy"),
     "welcomeDisclaimerLink" : MessageLookupByLibrary.simpleMessage("Terms of use"),
     "welcomeText" : MessageLookupByLibrary.simpleMessage("Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3"),
     "welcomeText2" : MessageLookupByLibrary.simpleMessage("Archethic gives back to humanity control over technology, and to each individual, control over their identity."),

@@ -459,7 +459,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "walletFAQDesc" : MessageLookupByLibrary.simpleMessage("Une question ? Vérifiez ici en premier !"),
     "walletFAQHeader" : MessageLookupByLibrary.simpleMessage("FAQ sur le portefeuille"),
     "warning" : MessageLookupByLibrary.simpleMessage("Attention"),
-    "welcomeDisclaimerChoice" : MessageLookupByLibrary.simpleMessage("J\'ai lu et j\'accepte les conditions d\'utilisation"),
+    "welcomeDisclaimerChoice" : MessageLookupByLibrary.simpleMessage("J\'ai lu et j\'accepte la politique de confidentialité"),
     "welcomeDisclaimerLink" : MessageLookupByLibrary.simpleMessage("Conditions d\'utilisation"),
     "welcomeText" : MessageLookupByLibrary.simpleMessage("Bienvenue dans l\'ère de l\'autonomie des\n{Humains; Nature; Applications}\ndu Web3."),
     "welcomeText2" : MessageLookupByLibrary.simpleMessage("Archethic redonne à l\'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité."),
