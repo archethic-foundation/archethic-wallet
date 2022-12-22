@@ -83,6 +83,8 @@ class _TransferTextFieldAddressState
             LengthLimitingTextInputFormatter(
               transfer.recipient.maybeWhen(
                 address: (_) => 68,
+                unknownContact: (_) => 68,
+                contact: (_) => 20,
                 orElse: () => 20,
               ),
             )
