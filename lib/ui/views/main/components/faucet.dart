@@ -78,6 +78,8 @@ class FaucetBanner extends ConsumerWidget {
                 localizations.getUCOInformationAlreadyReceived,
             insufficientFunds: (value) =>
                 localizations.getUCOInformationInsufficientBalance,
+            unauthorized: (value) =>
+                localizations.getUCOInformationUnauthorized,
             orElse: () => localizations.getUCOInformationBackendError,
           ),
           context,

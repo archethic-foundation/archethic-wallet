@@ -2164,6 +2164,12 @@ class AppLocalization {
         name: 'getUCOInformationInsufficientBalance');
   }
 
+  String get getUCOInformationUnauthorized {
+    return Intl.message(
+        'Your application is not authorized to access to the faucet. Please update your application with the last version.',
+        name: 'getUCOInformationUnauthorized');
+  }
+
   String get getUCOInformationBackendError {
     return Intl.message('An error occurred. Try again later.',
         name: 'getUCOInformationBackendError');

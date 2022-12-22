@@ -462,6 +462,7 @@
 	"getUCOInformationAlreadyReceived": "Vous avez déjà reçu vos UCOs.",
 	"getUCOInformationBackendError": "Une erreur s'est produite. Essayer à nouveau plus tard.",
 	"getUCOInformationInsufficientBalance": "Le faucet est actuellement vide. Veuillez réitérer votre demande demain.",
+	"getUCOInformationUnauthorized": "Votre application n'est pas autorisée à accéder au faucet. Veuillez mettre à jour votre application avec la dernière version.",
 	"getUCOCount": "Rdv dans %1h%2 pour obtenir de nouveaux UCOs...",
 	"@getUCOCount": {
 		"placeholders": {}

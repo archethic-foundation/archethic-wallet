@@ -123,6 +123,10 @@ class FaucetRepository implements FaucetRepositoryInterface {
               cooldownEndDate: limitReachedResponse.unlockTime,
             );
           }
+
+          if (jsonResponse['message'] == 'Unauthorized') {
+            throw const Failure.unauthorized();
+          }
         } on FormatException catch (_) {}
 
         if (response.statusCode != 200) {
