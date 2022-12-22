@@ -798,6 +798,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "noKeychain": "No keychain exists with this secret phrase.",
+  "@noKeychain": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "importWallet": "I already have a wallet",
   "@importWallet": {
     "type": "text",
