@@ -84,13 +84,11 @@ class AppService with KeychainMixin {
   List<RecentTransaction> _populateRecentTransactionsFromTransactionInputs(
     List<TransactionInput> transactionInputs,
     String txAddress,
-    int transactionTimeStamp,
     int mostRecentTimestamp,
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transactionInput in transactionInputs) {
       if (transactionInput.from!.toUpperCase() != txAddress.toUpperCase() &&
-          transactionInput.timestamp! > transactionTimeStamp &&
           transactionInput.timestamp! > mostRecentTimestamp) {
         final recentTransaction = RecentTransaction()
           ..address = transactionInput.from
@@ -172,34 +170,40 @@ class AppService with KeychainMixin {
     final transaction = await sl.get<ApiService>().getTransaction(
       [address],
       request:
-          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, spent, tokenAddress, tokenId, amount, timestamp }',
+          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }',
     );
 
-    if (transaction[address] != null && transaction[address]!.inputs != null) {
+    final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
+      [address],
+      request: 'from, spent, tokenAddress, tokenId, amount, timestamp',
+      limit: 10,
+    );
+
+    if (transaction[address] != null) {
       final transactionTimeStamp =
           transaction[address]!.validationStamp!.timestamp!;
 
-      if (transactionTimeStamp >= mostRecentTimestamp) {
-        newRecentTransactionList
-          ..addAll(
-            _populateRecentTransactionsFromTransactionInputs(
-              transaction[address]!.inputs!,
-              address,
-              transactionTimeStamp,
-              mostRecentTimestamp,
-            ),
-          )
-          ..addAll(
-            _populateRecentTransactionsFromTransactionChain(
-              [transaction[address]!],
-            ),
-          );
+      if (transactionInputs[address] != null) {
+        newRecentTransactionList.addAll(
+          _populateRecentTransactionsFromTransactionInputs(
+            transactionInputs[address]!,
+            address,
+            mostRecentTimestamp,
+          ),
+        );
+      }
 
-        // Remove doublons (on type / token address / from / timestamp)
-        if (newRecentTransactionList.isNotEmpty) {
-          newRecentTransactionList =
-              _removeRecentTransactionsDuplicates(newRecentTransactionList);
-        }
+      if (transactionTimeStamp > mostRecentTimestamp) {
+        newRecentTransactionList.addAll(
+          _populateRecentTransactionsFromTransactionChain(
+            [transaction[address]!],
+          ),
+        );
+      }
+      // Remove doublons (on type / token address / from / timestamp)
+      if (newRecentTransactionList.isNotEmpty) {
+        newRecentTransactionList =
+            _removeRecentTransactionsDuplicates(newRecentTransactionList);
       }
     }
 
@@ -243,7 +247,7 @@ class AppService with KeychainMixin {
     var nbRecentTransactions = 0;
     recentTransactions.addAll(localRecentTransactionList);
 
-    while (nbRecentTransactions <= 10 && index > 0) {
+    while (nbRecentTransactions < 10 && index > 0) {
       addressToSearch = uint8ListToHex(
         keychain.deriveAddress(
           'archethic-wallet-$nameEncoded',
@@ -274,7 +278,6 @@ class AppService with KeychainMixin {
           _populateRecentTransactionsFromTransactionInputs(
             genesisTransactionInputsMap[genesisAddress]!,
             genesisAddress,
-            0,
             mostRecentTimestamp,
           ),
         );
