@@ -85,11 +85,13 @@ class AppService with KeychainMixin {
     List<TransactionInput> transactionInputs,
     String txAddress,
     int transactionTimeStamp,
+    int mostRecentTimestamp,
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transactionInput in transactionInputs) {
       if (transactionInput.from!.toUpperCase() != txAddress.toUpperCase() &&
-          transactionInput.timestamp! > transactionTimeStamp) {
+          transactionInput.timestamp! > transactionTimeStamp &&
+          transactionInput.timestamp! > mostRecentTimestamp) {
         final recentTransaction = RecentTransaction()
           ..address = transactionInput.from
           ..amount = fromBigInt(transactionInput.amount).toDouble()
@@ -163,6 +165,7 @@ class AppService with KeychainMixin {
   Future<List<RecentTransaction>> _buildRecentTransactionFromTransaction(
     List<RecentTransaction> recentTransactionList,
     String address,
+    int mostRecentTimestamp,
   ) async {
     var newRecentTransactionList = recentTransactionList;
 
@@ -175,24 +178,28 @@ class AppService with KeychainMixin {
     if (transaction[address] != null && transaction[address]!.inputs != null) {
       final transactionTimeStamp =
           transaction[address]!.validationStamp!.timestamp!;
-      newRecentTransactionList
-        ..addAll(
-          _populateRecentTransactionsFromTransactionInputs(
-            transaction[address]!.inputs!,
-            address,
-            transactionTimeStamp,
-          ),
-        )
-        ..addAll(
-          _populateRecentTransactionsFromTransactionChain(
-            [transaction[address]!],
-          ),
-        );
 
-      // Remove doublons (on type / token address / from / timestamp)
-      if (newRecentTransactionList.isNotEmpty) {
-        newRecentTransactionList =
-            _removeRecentTransactionsDuplicates(newRecentTransactionList);
+      if (transactionTimeStamp >= mostRecentTimestamp) {
+        newRecentTransactionList
+          ..addAll(
+            _populateRecentTransactionsFromTransactionInputs(
+              transaction[address]!.inputs!,
+              address,
+              transactionTimeStamp,
+              mostRecentTimestamp,
+            ),
+          )
+          ..addAll(
+            _populateRecentTransactionsFromTransactionChain(
+              [transaction[address]!],
+            ),
+          );
+
+        // Remove doublons (on type / token address / from / timestamp)
+        if (newRecentTransactionList.isNotEmpty) {
+          newRecentTransactionList =
+              _removeRecentTransactionsDuplicates(newRecentTransactionList);
+        }
       }
     }
 
@@ -211,8 +218,15 @@ class AppService with KeychainMixin {
       '>> START getRecentTransactions : ${DateTime.now().toString()}',
     );
 
-    // TODO(reddwarf03): Enable cache
-    //var recentTransactions = <RecentTransaction>[...localRecentTransactionList];
+    // get the most recent movement in cache
+    var mostRecentTimestamp = 0;
+    if (localRecentTransactionList.isNotEmpty) {
+      localRecentTransactionList.sort(
+        (a, b) => b.timestamp!.compareTo(a.timestamp!),
+      );
+      mostRecentTimestamp = localRecentTransactionList.first.timestamp ?? 0;
+    }
+
     var recentTransactions = <RecentTransaction>[];
 
     final keychain = keychainSecuredInfosToKeychain(keychainSecuredInfos);
@@ -226,7 +240,10 @@ class AppService with KeychainMixin {
 
     var index = lastIndex[lastAddress] ?? 0;
     String addressToSearch;
-    while (recentTransactions.length <= 10 && index > 0) {
+    var nbRecentTransactions = 0;
+    recentTransactions.addAll(localRecentTransactionList);
+
+    while (nbRecentTransactions <= 10 && index > 0) {
       addressToSearch = uint8ListToHex(
         keychain.deriveAddress(
           'archethic-wallet-$nameEncoded',
@@ -237,16 +254,19 @@ class AppService with KeychainMixin {
       recentTransactions = await _buildRecentTransactionFromTransaction(
         recentTransactions,
         addressToSearch,
+        mostRecentTimestamp,
       );
+
       index--;
+      nbRecentTransactions = recentTransactions.length;
     }
 
-    if (recentTransactions.length < 10) {
+    if (nbRecentTransactions < 10) {
       // Get transaction inputs from genesis address if filtered list is < 10
       final genesisTransactionInputsMap = await getTransactionInputs(
         [genesisAddress],
         'from, type, spent, tokenAddress, amount, timestamp',
-        limit: 10 - recentTransactions.length,
+        limit: 10 - nbRecentTransactions,
       );
 
       if (genesisTransactionInputsMap[genesisAddress] != null) {
@@ -255,6 +275,7 @@ class AppService with KeychainMixin {
             genesisTransactionInputsMap[genesisAddress]!,
             genesisAddress,
             0,
+            mostRecentTimestamp,
           ),
         );
       }
@@ -281,7 +302,8 @@ class AppService with KeychainMixin {
     final tokensAddresses = <String>[];
     for (final recentTransaction in recentTransactions) {
       if (recentTransaction.tokenAddress != null &&
-          recentTransaction.tokenAddress!.isNotEmpty) {
+          recentTransaction.tokenAddress!.isNotEmpty &&
+          recentTransaction.timestamp! > mostRecentTimestamp) {
         tokensAddresses.add(recentTransaction.tokenAddress!);
       }
     }
@@ -297,7 +319,8 @@ class AppService with KeychainMixin {
     for (final recentTransaction in recentTransactions) {
       // Get token informations
       if (recentTransaction.tokenAddress != null &&
-          recentTransaction.tokenAddress!.isNotEmpty) {
+          recentTransaction.tokenAddress!.isNotEmpty &&
+          recentTransaction.timestamp! > mostRecentTimestamp) {
         final token = tokensAddressMap[recentTransaction.tokenAddress];
         if (token != null) {
           recentTransaction.tokenInformations = TokenInformations(
@@ -314,14 +337,18 @@ class AppService with KeychainMixin {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null) {
+            if (recentTransaction.timestamp! > mostRecentTimestamp) {
+              ownershipsAddresses.add(recentTransaction.from!);
+            }
             recentTransactionLastAddresses.add(recentTransaction.from!);
-            ownershipsAddresses.add(recentTransaction.from!);
           }
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.recipient != null) {
+            if (recentTransaction.timestamp! > mostRecentTimestamp) {
+              ownershipsAddresses.add(recentTransaction.address!);
+            }
             recentTransactionLastAddresses.add(recentTransaction.address!);
-            ownershipsAddresses.add(recentTransaction.address!);
           }
           break;
       }
@@ -340,7 +367,8 @@ class AppService with KeychainMixin {
     for (var recentTransaction in recentTransactions) {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
-          if (recentTransaction.from != null) {
+          if (recentTransaction.from != null &&
+              recentTransaction.timestamp! > mostRecentTimestamp) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
               ownerships: ownershipsMap[recentTransaction.from!] ?? [],
@@ -349,7 +377,8 @@ class AppService with KeychainMixin {
           }
           break;
         case RecentTransaction.transferOutput:
-          if (recentTransaction.address != null) {
+          if (recentTransaction.address != null &&
+              recentTransaction.timestamp! > mostRecentTimestamp) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
               ownerships: ownershipsMap[recentTransaction.address!] ?? [],
