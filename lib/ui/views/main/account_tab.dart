@@ -54,6 +54,7 @@ class AccountTab extends ConsumerWidget {
                 dragDevices: {
                   PointerDeviceKind.touch,
                   PointerDeviceKind.mouse,
+                  PointerDeviceKind.trackpad,
                 },
               ),
               child: Column(

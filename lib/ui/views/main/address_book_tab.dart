@@ -71,6 +71,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                   dragDevices: {
                     PointerDeviceKind.touch,
                     PointerDeviceKind.mouse,
+                    PointerDeviceKind.trackpad,
                   },
                 ),
                 child: Column(
