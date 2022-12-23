@@ -129,7 +129,6 @@ class _IntroNewWalletDisclaimerState
                                 rightMargin: 0,
                                 labelText: localizations
                                     .introNewWalletGetFirstInfosNameBlank,
-                                autofocus: true,
                                 focusNode: nameFocusNode,
                                 autocorrect: false,
                                 controller: nameController,
