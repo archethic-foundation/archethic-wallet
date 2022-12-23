@@ -109,7 +109,7 @@ class _TransferTextFieldAmountState
               amount: double.tryParse(text) ?? 0,
             );
           },
-          textInputAction: TextInputAction.done,
+          textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
           labelText: transfer.transferType == TransferType.uco
@@ -152,7 +152,6 @@ class _TransferTextFieldAmountState
           prefixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
               transfer.showMaxAmountButton(primaryCurrency),
           keyboardType: const TextInputType.numberWithOptions(
-            signed: true,
             decimal: true,
           ),
         ),

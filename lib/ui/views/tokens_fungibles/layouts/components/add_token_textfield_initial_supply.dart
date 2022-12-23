@@ -22,9 +22,9 @@ class _AddTokenTextFieldInitialSupplyState
     final addToken = ref.read(AddTokenFormProvider.addTokenForm);
     initialSupplyFocusNode = FocusNode();
     initialSupplyController = TextEditingController(
-        text: addToken.initialSupply == 0
-            ? ''
-            : addToken.initialSupply.toString(),);
+      text:
+          addToken.initialSupply == 0 ? '' : addToken.initialSupply.toString(),
+    );
   }
 
   @override
@@ -49,7 +49,7 @@ class _AddTokenTextFieldInitialSupplyState
       cursorColor: theme.text,
       textInputAction: TextInputAction.next,
       labelText: localizations.tokenInitialSupplyHint,
-      keyboardType: TextInputType.number,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
       style: theme.textStyleSize16W600Primary,
       inputFormatters: [
         LengthLimitingTextInputFormatter(23),

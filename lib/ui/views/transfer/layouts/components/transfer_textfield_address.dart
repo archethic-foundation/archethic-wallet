@@ -89,7 +89,7 @@ class _TransferTextFieldAddressState
               ),
             )
           ],
-          textInputAction: TextInputAction.done,
+          textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
           labelText: AppLocalization.of(context)!.enterAddress,

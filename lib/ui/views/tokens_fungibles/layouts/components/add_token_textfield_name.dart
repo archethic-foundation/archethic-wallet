@@ -43,7 +43,6 @@ class _AddTokenTextFieldNameState extends ConsumerState<AddTokenTextFieldName> {
       focusNode: nameFocusNode,
       controller: nameController,
       cursorColor: theme.text,
-      autofocus: true,
       textInputAction: TextInputAction.next,
       labelText: localizations.tokenNameHint,
       autocorrect: false,
