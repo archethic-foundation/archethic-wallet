@@ -1,0 +1,8 @@
+Archethic Wallet - Version 2.0.4 Build 417
+
+- Fix keychain not exists error in transfer process and NFT creation
+- Forbid faucet for jailbreak devices or with developper mode activated 
+- Add cache management
+- Fix typo
+- Add link to privacy policy in welcome page
+- Fix error when user enters a contact with malformated address in transfer screen
