@@ -1,0 +1,7 @@
+cd ./tests/maestro
+adb install test-android.apk
+maestro test android-flow.yaml
+
+maestro studio
+scrcpy
+192.168.1.41

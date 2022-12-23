@@ -1,0 +1,10 @@
+appId: tech.archethic.wallet
+---
+- launchApp:
+    appId: "tech.archethic.wallet"
+    stopApp: true
+    clearState: true
+- assertVisible: "NOUVEAU PORTEFEUILLE"
+- tapOn: "privacyPolicyAgree"
+- tapOn: 
+    id: "importWallet"
