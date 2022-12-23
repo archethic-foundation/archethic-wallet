@@ -1,6 +1,7 @@
 cd ./tests/maestro
 adb install test-android.apk
-maestro test android-flow.yaml
+
+maestro test tests/maestro/ios-flow.yaml
 
 maestro studio
 scrcpy

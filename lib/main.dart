@@ -102,6 +102,7 @@ class App extends ConsumerWidget {
       textStyle: theme.textStyleSize14W700Background,
       backgroundColor: theme.background,
       child: MaterialApp(
+        //showSemanticsDebugger: true,
         debugShowCheckedModeBanner: false,
         title: 'Archethic Wallet',
         theme: ThemeData(

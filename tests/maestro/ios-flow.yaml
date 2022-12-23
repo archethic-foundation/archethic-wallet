@@ -5,6 +5,23 @@ appId: tech.archethic.wallet
     stopApp: true
     clearState: true
 - assertVisible: "NOUVEAU PORTEFEUILLE"
-- tapOn: "privacyPolicyAgree"
 - tapOn: 
-    id: "importWallet"
+    text: "J'ai lu et j'accepte la politique de confidentialité"
+- tapOn: 
+    text: "J'ai lu et j'accepte la politique de confidentialité"
+- tapOn: 
+    text: "Nouveau portefeuille"
+- assertVisible: "Bienvenue dans le Wallet Archethic."
+- inputRandomPersonName
+- tapOn:
+    text: "toto"
+- assertVisible: "Réseaux"
+- tapOn: 
+    text: "Archethic Dev Network"
+- assertVisible: "Veuillez préciser votre point d'accès"
+- tapOn:
+    text: "Ok"
+- assertVisible: "Bienvenue dans le Wallet Archethic"
+- tapOn:
+    text: "Ok"
+
