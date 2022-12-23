@@ -41,6 +41,7 @@ class AccountsListWidget extends ConsumerWidget {
             dragDevices: {
               PointerDeviceKind.touch,
               PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
             },
           ),
           child: ListView.builder(
