@@ -1,0 +1,6 @@
+Archethic Wallet - Version 2.0.6 Build 418
+
+- Fix errors when account's name contains a special character
+- Add trackpad to scroll without left click
+- Fix keyboard type to admit the decimal point
+- Remove autofocus on new keychain page onboarding process
