@@ -142,15 +142,19 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         .wallet
         .keychainSecuredInfos;
 
+    final nameEncoded = Uri.encodeFull(
+      selectedAccount!.name,
+    );
+
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount!.name,
+        accountSelectedName: selectedAccount.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply.toDouble(),
         seed: formState.seed,
         keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
+            .services['archethic-wallet-$nameEncoded']!.keyPair!,
         type: 'non-fungible',
         aeip: [2],
         properties: formState.propertiesConverted,
@@ -575,15 +579,19 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         .wallet
         .keychainSecuredInfos;
 
+    final nameEncoded = Uri.encodeFull(
+      selectedAccount!.name,
+    );
+
     transaction = Transaction.token(
       token: Token(
         name: state.name,
         symbol: state.symbol,
         initialSupply: state.initialSupply.toDouble(),
-        accountSelectedName: selectedAccount!.name,
+        accountSelectedName: selectedAccount.name,
         seed: state.seed,
         keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
+            .services['archethic-wallet-$nameEncoded']!.keyPair!,
         type: 'non-fungible',
         aeip: [2],
         properties: state.propertiesConverted,

@@ -366,7 +366,7 @@ class AppService with KeychainMixin {
     }
 
     final keychainServiceKeyPair =
-        keychainSecuredInfos.services['archethic-wallet-$name']!.keyPair;
+        keychainSecuredInfos.services['archethic-wallet-$nameEncoded']!.keyPair;
     for (var recentTransaction in recentTransactions) {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
@@ -590,6 +590,9 @@ class AppService with KeychainMixin {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
     final nftList = List<AccountToken>.empty(growable: true);
+    final nameEncoded = Uri.encodeFull(
+      name,
+    );
 
     final tokenAddressList = <String>[];
     if (balance == null) {
@@ -627,7 +630,7 @@ class AppService with KeychainMixin {
             tokenWithoutFile.addAll(
               _tokenPropertiesDecryptedSecret(
                 keypair: keychainSecuredInfos
-                    .services['archethic-wallet-$name']!.keyPair!,
+                    .services['archethic-wallet-$nameEncoded']!.keyPair!,
                 ownerships: secretMap[tokenBalance.address]!.data!.ownerships!,
               ),
             );
