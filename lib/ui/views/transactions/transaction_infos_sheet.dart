@@ -54,6 +54,10 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
+    final nameEncoded = Uri.encodeFull(
+      selectedAccount.name,
+    );
+
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -64,11 +68,8 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
               AccountBalance.cryptoCurrencyLabel,
               context,
-              session
-                  .wallet
-                  .keychainSecuredInfos
-                  .services['archethic-wallet-${selectedAccount.name}']!
-                  .keyPair!,
+              session.wallet.keychainSecuredInfos
+                  .services['archethic-wallet-$nameEncoded']!.keyPair!,
             ),
         builder: (
           BuildContext context,

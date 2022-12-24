@@ -113,15 +113,19 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         .wallet
         .keychainSecuredInfos;
 
+    final nameEncoded = Uri.encodeFull(
+      selectedAccount!.name,
+    );
+
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount!.name,
+        accountSelectedName: selectedAccount.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
         seed: formState.seed,
         keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
+            .services['archethic-wallet-$nameEncoded']!.keyPair!,
         type: 'fungible',
         aeip: [2],
         properties: [],
@@ -296,15 +300,19 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         .wallet
         .keychainSecuredInfos;
 
+    final nameEncoded = Uri.encodeFull(
+      selectedAccount!.name,
+    );
+
     transaction = Transaction.token(
       token: Token(
         name: state.name,
         symbol: state.symbol,
         initialSupply: state.initialSupply,
-        accountSelectedName: selectedAccount!.name,
+        accountSelectedName: selectedAccount.name,
         seed: state.seed,
         keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-${selectedAccount.name}']!.keyPair!,
+            .services['archethic-wallet-$nameEncoded']!.keyPair!,
         type: 'fungible',
         aeip: [2],
         properties: [],
