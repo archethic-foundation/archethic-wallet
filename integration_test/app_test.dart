@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
-import 'package:aewallet/main.dart';
+import 'package:aewallet/main.dart' as app;
+import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
@@ -17,8 +18,12 @@ void main() {
     nativeAutomatorConfig: nativeAutomatorConfig,
     nativeAutomation: true,
     ($) async {
-      // Replace with your own app widget.
-      await $.pumpWidgetAndSettle(const App());
+      await app.main();
+      await $.pump(const Duration(milliseconds: 1000));
+      expect(
+        $(const IntroWelcome()),
+        findsOneWidget,
+      );
     },
   );
 }
