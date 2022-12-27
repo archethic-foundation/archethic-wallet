@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-22T14:21:44.556203",
+  "@@last_modified": "2022-12-27T20:11:01.874104",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -1460,6 +1460,18 @@
   },
   "informations": "Informations",
   "@informations": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "updateAvailableTitle": "App Update",
+  "@updateAvailableTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "updateAvailableDesc": "A new version (%1) is available.\n\nPlease update the app.",
+  "@updateAvailableDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

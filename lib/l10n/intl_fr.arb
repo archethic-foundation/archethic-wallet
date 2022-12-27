@@ -143,6 +143,8 @@
 	"ok": "Ok",
 	"addressInfos": "Mon adresse publique pour recevoir des fonds",
 	"informations": "Informations",
+	"updateAvailableTitle": "Mise à jour de l'application",
+	"updateAvailableDesc": "Une nouvelle version (%1) est disponible.\n\nVeuillez mettre à jour l'application.",
 	"nodesHeader": "Noeuds",
 	"nodesHeaderDesc": "Informations sur les nœuds",
 	"createToken": "Créer un jeton",

@@ -1169,6 +1169,16 @@ class AppLocalization {
     return Intl.message('Informations', name: 'informations');
   }
 
+  String get updateAvailableTitle {
+    return Intl.message('App Update', name: 'updateAvailableTitle');
+  }
+
+  String get updateAvailableDesc {
+    return Intl.message(
+        'A new version (%1) is available.\n\nPlease update the app.',
+        name: 'updateAvailableDesc');
+  }
+
   String get nodesHeader {
     return Intl.message('Nodes', name: 'nodesHeader');
   }

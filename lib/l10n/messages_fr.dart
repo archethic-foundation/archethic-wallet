@@ -454,6 +454,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "unlockNFCYubikey" : MessageLookupByLibrary.simpleMessage("S\'authentifier pour débloquer"),
     "unlockPin" : MessageLookupByLibrary.simpleMessage("Entrer le code PIN pour déverrouiller"),
     "update" : MessageLookupByLibrary.simpleMessage("Mettre à jour"),
+    "updateAvailableDesc" : MessageLookupByLibrary.simpleMessage("Une nouvelle version (%1) est disponible.\n\nVeuillez mettre à jour l\'application."),
+    "updateAvailableTitle" : MessageLookupByLibrary.simpleMessage("Mise à jour de l\'application"),
     "version" : MessageLookupByLibrary.simpleMessage("Version : "),
     "viewAddressBook" : MessageLookupByLibrary.simpleMessage("Afficher mon carnet d\'adresses"),
     "viewExplorer" : MessageLookupByLibrary.simpleMessage("Voir dans l\'explorer"),
