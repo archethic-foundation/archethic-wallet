@@ -1,8 +1,0 @@
-cd ./tests/maestro
-adb install test-android.apk
-
-maestro test tests/maestro/ios-flow.yaml
-
-maestro studio
-scrcpy
-192.168.1.41
