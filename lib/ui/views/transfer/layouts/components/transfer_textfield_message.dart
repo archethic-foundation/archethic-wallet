@@ -52,7 +52,7 @@ class _TransferTextFieldMessageState
           message: text,
         );
       },
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.newline,
       keyboardType: TextInputType.multiline,
       textAlign: TextAlign.left,
       style: theme.textStyleSize14W600Primary,
