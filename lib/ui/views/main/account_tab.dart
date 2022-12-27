@@ -6,6 +6,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
+import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/faucet.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
@@ -27,7 +28,6 @@ class AccountTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-
     final isDeviceFaucetCompatible =
         ref.watch(FaucetProviders.isDeviceCompatible).valueOrNull ?? false;
 
@@ -57,92 +57,100 @@ class AccountTab extends ConsumerWidget {
                   PointerDeviceKind.trackpad,
                 },
               ),
-              child: Column(
-                children: <Widget>[
-                  /// BACKGROUND IMAGE
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          theme.background2Small!,
+              child: Stack(
+                children: [
+                  Column(
+                    children: <Widget>[
+                      /// BACKGROUND IMAGE
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              theme.background2Small!,
+                            ),
+                            fit: BoxFit.fitHeight,
+                            opacity: 0.7,
+                          ),
                         ),
-                        fit: BoxFit.fitHeight,
-                        opacity: 0.7,
-                      ),
-                    ),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 10,
-                          bottom: 50,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            /// BALANCE
-                            const BalanceInfos(),
-                            const SizedBox(
-                              height: 10,
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).padding.top + 10,
+                              bottom: 50,
                             ),
+                            child: Column(
+                              children: <Widget>[
+                                /// BALANCE
+                                const BalanceInfos(),
+                                const SizedBox(
+                                  height: 10,
+                                ),
 
-                            /// PRICE CHART
-                            if (preferences.showPriceChart)
-                              Stack(
-                                children: const <Widget>[
-                                  BalanceInfosChart(),
-                                ],
-                              )
-                            else
-                              const SizedBox(),
+                                /// PRICE CHART
+                                if (preferences.showPriceChart)
+                                  Stack(
+                                    children: const <Widget>[
+                                      BalanceInfosChart(),
+                                    ],
+                                  )
+                                else
+                                  const SizedBox(),
 
-                            /// KPI
-                            if (preferences.showPriceChart)
-                              const BalanceInfosKpi()
-                            else
-                              const SizedBox(),
+                                /// KPI
+                                if (preferences.showPriceChart)
+                                  const BalanceInfosKpi()
+                                else
+                                  const SizedBox(),
 
-                            Divider(
-                              height: 1,
-                              color: theme.backgroundDarkest!.withOpacity(0.1),
-                            ),
+                                Divider(
+                                  height: 1,
+                                  color:
+                                      theme.backgroundDarkest!.withOpacity(0.1),
+                                ),
 
-                            if (isDeviceFaucetCompatible) const FaucetBanner(),
-                            if (isDeviceFaucetCompatible)
-                              Divider(
-                                height: 1,
-                                color:
-                                    theme.backgroundDarkest!.withOpacity(0.1),
-                              ),
+                                if (isDeviceFaucetCompatible)
+                                  const FaucetBanner(),
+                                if (isDeviceFaucetCompatible)
+                                  Divider(
+                                    height: 1,
+                                    color: theme.backgroundDarkest!
+                                        .withOpacity(0.1),
+                                  ),
 
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const MenuWidgetWallet(),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Divider(
-                              height: 1,
-                              color: theme.backgroundDarkest!.withOpacity(0.1),
-                            ),
-                            const ExpandablePageView(
-                              children: [
-                                TxList(),
-                                FungiblesTokensListWidget(),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                const MenuWidgetWallet(),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Divider(
+                                  height: 1,
+                                  color:
+                                      theme.backgroundDarkest!.withOpacity(0.1),
+                                ),
+                                const ExpandablePageView(
+                                  children: [
+                                    TxList(),
+                                    FungiblesTokensListWidget(),
+                                  ],
+                                ),
+
+                                /// BLOG
+                                const LastArticles(),
+                                const SizedBox(
+                                  height: 30,
+                                ),
                               ],
                             ),
-
-                            /// BLOG
-                            const LastArticles(),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
+                  const AppUpdateButton(),
                 ],
               ),
             ),

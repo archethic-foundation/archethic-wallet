@@ -858,6 +858,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "updateAvailableTitle": "App Update",
+  "@updateAvailableTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "updateAvailableDesc": "A new version (%1) is available.\n\nPlease update the app.",
+  "@updateAvailableDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nodesHeader": "Nodes",
   "@nodesHeader": {
     "type": "text",
