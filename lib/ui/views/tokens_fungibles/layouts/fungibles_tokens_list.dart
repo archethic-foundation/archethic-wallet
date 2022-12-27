@@ -35,7 +35,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
         color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
         child: Padding(
-          padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+          padding: const EdgeInsets.only(left: 5, right: 5, top: 6),
           child: Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
@@ -93,7 +93,7 @@ class _FungiblesTokensLine extends StatelessWidget {
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 6),
         child: _FungiblesTokensDetailTransfer(
           accountFungibleToken: accountToken,
         ),
