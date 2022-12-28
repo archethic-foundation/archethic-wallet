@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_appVersionInfoRepositoryHash() =>
+String _$_appVersionInfoRepositoryHash() =>
     r'7cdbbaab20bf993f94c7c133bc4caeeb713c9ba8';
 
 /// See also [_appVersionInfoRepository].
@@ -38,10 +38,11 @@ final _appVersionInfoRepositoryProvider = Provider<AppVersionInfoRepository>(
   name: r'_appVersionInfoRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_appVersionInfoRepositoryHash,
+      : _$_appVersionInfoRepositoryHash,
 );
 typedef _AppVersionInfoRepositoryRef = ProviderRef<AppVersionInfoRepository>;
-String $_getAppVersionInfoHash() => r'8e07c50337a8d43e85be8bdb17d759ebde8e49a1';
+String _$_getAppVersionInfoHash() =>
+    r'8e07c50337a8d43e85be8bdb17d759ebde8e49a1';
 
 /// See also [_getAppVersionInfo].
 final _getAppVersionInfoProvider = FutureProvider<AppVersionInfo>(
@@ -49,6 +50,6 @@ final _getAppVersionInfoProvider = FutureProvider<AppVersionInfo>(
   name: r'_getAppVersionInfoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_getAppVersionInfoHash,
+      : _$_getAppVersionInfoHash,
 );
 typedef _GetAppVersionInfoRef = FutureProviderRef<AppVersionInfo>;

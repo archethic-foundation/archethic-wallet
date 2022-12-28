@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
 
@@ -444,6 +444,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   Map<File, List<String>>? get file {
     final value = _file;
     if (value == null) return null;
+    if (_file is EqualUnmodifiableMapView) return _file;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(value);
   }
@@ -481,6 +482,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @override
   @JsonKey()
   List<NftCreationFormStateProperty> get properties {
+    if (_properties is EqualUnmodifiableListView) return _properties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_properties);
   }
@@ -714,7 +716,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
   @override
   $Res call({
     Object? propertyName = null,
-    Object? propertyValue = null,
+    Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
     return _then(_value.copyWith(
@@ -722,7 +724,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: null == propertyValue
+      propertyValue: freezed == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -763,7 +765,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
   @override
   $Res call({
     Object? propertyName = null,
-    Object? propertyValue = null,
+    Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
     return _then(_$_NftCreationFormStateProperty(
@@ -771,7 +773,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: null == propertyValue
+      propertyValue: freezed == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -802,6 +804,7 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   @override
   @JsonKey()
   List<PropertyAccessRecipient> get publicKeys {
+    if (_publicKeys is EqualUnmodifiableListView) return _publicKeys;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_publicKeys);
   }

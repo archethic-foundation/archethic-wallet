@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_blogRepositoryHash() => r'489a3e6f726a3cab2476b8ea878f6d7c2dfd1c77';
+String _$_blogRepositoryHash() => r'489a3e6f726a3cab2476b8ea878f6d7c2dfd1c77';
 
 /// See also [_blogRepository].
 final _blogRepositoryProvider = AutoDisposeProvider<BlogRepository>(
@@ -37,10 +37,10 @@ final _blogRepositoryProvider = AutoDisposeProvider<BlogRepository>(
   name: r'_blogRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_blogRepositoryHash,
+      : _$_blogRepositoryHash,
 );
 typedef _BlogRepositoryRef = AutoDisposeProviderRef<BlogRepository>;
-String $_fetchArticlesHash() => r'e356594c7d452ce3a34f404240a4e7b4b4192fc5';
+String _$_fetchArticlesHash() => r'e356594c7d452ce3a34f404240a4e7b4b4192fc5';
 
 /// See also [_fetchArticles].
 final _fetchArticlesProvider = AutoDisposeFutureProvider<List<GhostPost>>(
@@ -48,6 +48,6 @@ final _fetchArticlesProvider = AutoDisposeFutureProvider<List<GhostPost>>(
   name: r'_fetchArticlesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_fetchArticlesHash,
+      : _$_fetchArticlesHash,
 );
 typedef _FetchArticlesRef = AutoDisposeFutureProviderRef<List<GhostPost>>;

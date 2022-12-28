@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'nft_category.dart';
 
@@ -53,7 +53,7 @@ class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
@@ -61,7 +61,7 @@ class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -96,7 +96,7 @@ class __$$_NftCategoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? image = null,
   }) {
     return _then(_$_NftCategory(
@@ -104,7 +104,7 @@ class __$$_NftCategoryCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name ? _value.name : name,
+      name: freezed == name ? _value.name! : name,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
