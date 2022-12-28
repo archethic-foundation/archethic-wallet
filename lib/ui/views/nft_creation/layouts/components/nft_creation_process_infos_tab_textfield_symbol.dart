@@ -68,7 +68,6 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
           keyboardType: TextInputType.text,
           style: theme.textStyleSize16W600Primary,
           inputFormatters: [
-            UpperCaseTextFormatter(),
             LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (text) async {
