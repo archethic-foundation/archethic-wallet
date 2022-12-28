@@ -13,23 +13,20 @@ NFTRepository _nftRepository(_NftRepositoryRef ref) => NFTRepository();
 Future<TokenInformations?> _getNFT(
   _GetNFTRef ref,
   String address,
-  String seed,
   KeychainServiceKeyPair keychainServiceKeyPair,
 ) async {
   return ref
       .watch(_nftRepositoryProvider)
-      .getNFT(address, seed, keychainServiceKeyPair);
+      .getNFT(address, keychainServiceKeyPair);
 }
 
 class NFTRepository {
   Future<TokenInformations?> getNFT(
     String address,
-    String seed,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
-    final tokenInformations = await sl
-        .get<AppService>()
-        .getNFT(address, seed, keychainServiceKeyPair);
+    final tokenInformations =
+        await sl.get<AppService>().getNFT(address, keychainServiceKeyPair);
     return tokenInformations;
   }
 }

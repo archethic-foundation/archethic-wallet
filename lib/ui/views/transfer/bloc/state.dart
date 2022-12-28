@@ -17,7 +17,6 @@ enum TransferProcessStep { form, confirmation }
 class TransferFormState with _$TransferFormState {
   const factory TransferFormState({
     @Default(TransferType.uco) TransferType transferType,
-    required String seed,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
 
     // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)

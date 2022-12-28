@@ -1,11 +1,9 @@
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -78,8 +76,6 @@ class TransferSheet extends ConsumerWidget {
 
     if (selectedAccount == null) return const SizedBox();
 
-    final seed = ref.watch(SessionProviders.session).loggedIn!.wallet.seed;
-
     return ProviderScope(
       overrides: [
         TransferFormProvider.initialTransferForm.overrideWithValue(
@@ -87,7 +83,6 @@ class TransferSheet extends ConsumerWidget {
             feeEstimation: const AsyncValue.data(0),
             transferType: transferType,
             accountToken: accountToken,
-            seed: seed,
             recipient: recipient,
             accountBalance: selectedAccount.balance!,
             amount: transferType == TransferType.nft ? 1 : 0,

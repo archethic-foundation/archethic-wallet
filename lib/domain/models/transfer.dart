@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/model/address.dart';
-import 'package:aewallet/model/keychain_service_keypair.dart';
+import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'transfer.freezed.dart';
 
@@ -9,8 +9,8 @@ part 'transfer.freezed.dart';
 class Transfer with _$Transfer {
   const Transfer._();
   const factory Transfer.uco({
-    required String seed,
-    required KeychainServiceKeyPair keychainServiceKeyPair,
+    required KeychainSecuredInfos keychainSecuredInfos,
+    required String transactionLastAddress,
     required String accountSelectedName,
     required String message,
     required double amount, // expressed in UCO
@@ -18,8 +18,8 @@ class Transfer with _$Transfer {
   }) = _TransferUco;
 
   const factory Transfer.token({
-    required String seed,
-    required KeychainServiceKeyPair keychainServiceKeyPair,
+    required KeychainSecuredInfos keychainSecuredInfos,
+    required String transactionLastAddress,
     required String accountSelectedName,
     required String message,
     required double amount, // expressed in token

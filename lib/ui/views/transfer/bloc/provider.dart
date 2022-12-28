@@ -345,21 +345,16 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         .wallet
         .keychainSecuredInfos;
 
-    final nameEncoded = Uri.encodeFull(
-      selectedAccount!.name,
-    );
-
     switch (state.transferType) {
       case TransferType.token:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount.name,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
-            seed: formState.seed,
-            keychainServiceKeyPair: keychainSecuredInfos
-                .services['archethic-wallet-$nameEncoded']!.keyPair!,
+            keychainSecuredInfos: keychainSecuredInfos,
+            transactionLastAddress: selectedAccount.lastAddress!,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'fungible',
             aeip: [2],
@@ -373,26 +368,24 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.uco:
         transaction = Transaction.transfer(
           transfer: Transfer.uco(
-            accountSelectedName: selectedAccount.name,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
-            seed: formState.seed,
-            keychainServiceKeyPair: keychainSecuredInfos
-                .services['archethic-wallet-$nameEncoded']!.keyPair!,
+            keychainSecuredInfos: keychainSecuredInfos,
+            transactionLastAddress: selectedAccount.lastAddress!,
           ),
         );
         break;
       case TransferType.nft:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount.name,
+            accountSelectedName: selectedAccount!.name,
             amount: formState.amount,
             message: formState.message,
             recipientAddress: recipientAddress,
-            seed: formState.seed,
-            keychainServiceKeyPair: keychainSecuredInfos
-                .services['archethic-wallet-$nameEncoded']!.keyPair!,
+            keychainSecuredInfos: keychainSecuredInfos,
+            transactionLastAddress: selectedAccount.lastAddress!,
             tokenAddress: formState.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             aeip: [2],
@@ -705,21 +698,16 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         .wallet
         .keychainSecuredInfos;
 
-    final nameEncoded = Uri.encodeFull(
-      selectedAccount!.name,
-    );
-
     switch (state.transferType) {
       case TransferType.token:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount.name,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
-            seed: state.seed,
-            keychainServiceKeyPair: keychainSecuredInfos
-                .services['archethic-wallet-$nameEncoded']!.keyPair!,
+            keychainSecuredInfos: keychainSecuredInfos,
+            transactionLastAddress: selectedAccount.lastAddress!,
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'fungible',
             tokenId: 0,
@@ -732,26 +720,24 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case TransferType.uco:
         transaction = Transaction.transfer(
           transfer: Transfer.uco(
-            accountSelectedName: selectedAccount.name,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
-            seed: state.seed,
-            keychainServiceKeyPair: keychainSecuredInfos
-                .services['archethic-wallet-$nameEncoded']!.keyPair!,
+            keychainSecuredInfos: keychainSecuredInfos,
+            transactionLastAddress: selectedAccount.lastAddress!,
           ),
         );
         break;
       case TransferType.nft:
         transaction = Transaction.transfer(
           transfer: Transfer.token(
-            accountSelectedName: selectedAccount.name,
+            accountSelectedName: selectedAccount!.name,
             amount: amountInUCO,
             message: state.message,
             recipientAddress: state.recipient.address!,
-            seed: state.seed,
-            keychainServiceKeyPair: keychainSecuredInfos
-                .services['archethic-wallet-$nameEncoded']!.keyPair!,
+            keychainSecuredInfos: keychainSecuredInfos,
+            transactionLastAddress: selectedAccount.lastAddress!,
             tokenAddress: state.accountToken?.tokenInformations!.address,
             type: 'non-fungible',
             tokenId: 1,

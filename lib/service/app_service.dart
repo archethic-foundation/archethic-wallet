@@ -213,7 +213,6 @@ class AppService with KeychainMixin {
   Future<List<RecentTransaction>> getAccountRecentTransactions(
     String genesisAddress,
     String lastAddress,
-    String seed,
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
     List<RecentTransaction> localRecentTransactionList,
@@ -583,7 +582,6 @@ class AppService with KeychainMixin {
 
   Future<List<AccountToken>> getNFTList(
     String address,
-    String seed,
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
   ) async {
@@ -725,7 +723,6 @@ class AppService with KeychainMixin {
   }
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
-    String seed,
     String address,
     DateFormat dateFormat,
     String cryptoCurrency,
@@ -1032,7 +1029,6 @@ class AppService with KeychainMixin {
 
   Future<TokenInformations?> getNFT(
     String address,
-    String seed,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final tokenMap = await sl.get<ApiService>().getToken(

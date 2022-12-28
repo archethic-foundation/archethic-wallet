@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddTokenFormState {
-  String get seed => throw _privateConstructorUsedError;
   AddTokenProcessStep get addTokenProcessStep =>
       throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
@@ -41,8 +40,7 @@ abstract class $AddTokenFormStateCopyWith<$Res> {
       _$AddTokenFormStateCopyWithImpl<$Res, AddTokenFormState>;
   @useResult
   $Res call(
-      {String seed,
-      AddTokenProcessStep addTokenProcessStep,
+      {AddTokenProcessStep addTokenProcessStep,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
       String name,
@@ -67,7 +65,6 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = null,
     Object? addTokenProcessStep = null,
     Object? feeEstimation = null,
     Object? accountBalance = null,
@@ -80,10 +77,6 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
     Object? errorAmountText = null,
   }) {
     return _then(_value.copyWith(
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as String,
       addTokenProcessStep: null == addTokenProcessStep
           ? _value.addTokenProcessStep
           : addTokenProcessStep // ignore: cast_nullable_to_non_nullable
@@ -137,8 +130,7 @@ abstract class _$$_AddTokenFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String seed,
-      AddTokenProcessStep addTokenProcessStep,
+      {AddTokenProcessStep addTokenProcessStep,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
       String name,
@@ -161,7 +153,6 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = null,
     Object? addTokenProcessStep = null,
     Object? feeEstimation = null,
     Object? accountBalance = null,
@@ -174,10 +165,6 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
     Object? errorAmountText = null,
   }) {
     return _then(_$_AddTokenFormState(
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as String,
       addTokenProcessStep: null == addTokenProcessStep
           ? _value.addTokenProcessStep
           : addTokenProcessStep // ignore: cast_nullable_to_non_nullable
@@ -226,8 +213,7 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
 
 class _$_AddTokenFormState extends _AddTokenFormState {
   const _$_AddTokenFormState(
-      {required this.seed,
-      this.addTokenProcessStep = AddTokenProcessStep.form,
+      {this.addTokenProcessStep = AddTokenProcessStep.form,
       required this.feeEstimation,
       required this.accountBalance,
       this.name = '',
@@ -239,8 +225,6 @@ class _$_AddTokenFormState extends _AddTokenFormState {
       this.errorAmountText = ''})
       : super._();
 
-  @override
-  final String seed;
   @override
   @JsonKey()
   final AddTokenProcessStep addTokenProcessStep;
@@ -272,7 +256,7 @@ class _$_AddTokenFormState extends _AddTokenFormState {
 
   @override
   String toString() {
-    return 'AddTokenFormState(seed: $seed, addTokenProcessStep: $addTokenProcessStep, feeEstimation: $feeEstimation, accountBalance: $accountBalance, name: $name, symbol: $symbol, initialSupply: $initialSupply, errorNameText: $errorNameText, errorSymbolText: $errorSymbolText, errorInitialSupplyText: $errorInitialSupplyText, errorAmountText: $errorAmountText)';
+    return 'AddTokenFormState(addTokenProcessStep: $addTokenProcessStep, feeEstimation: $feeEstimation, accountBalance: $accountBalance, name: $name, symbol: $symbol, initialSupply: $initialSupply, errorNameText: $errorNameText, errorSymbolText: $errorSymbolText, errorInitialSupplyText: $errorInitialSupplyText, errorAmountText: $errorAmountText)';
   }
 
   @override
@@ -280,7 +264,6 @@ class _$_AddTokenFormState extends _AddTokenFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AddTokenFormState &&
-            (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.addTokenProcessStep, addTokenProcessStep) ||
                 other.addTokenProcessStep == addTokenProcessStep) &&
             (identical(other.feeEstimation, feeEstimation) ||
@@ -304,7 +287,6 @@ class _$_AddTokenFormState extends _AddTokenFormState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      seed,
       addTokenProcessStep,
       feeEstimation,
       accountBalance,
@@ -326,8 +308,7 @@ class _$_AddTokenFormState extends _AddTokenFormState {
 
 abstract class _AddTokenFormState extends AddTokenFormState {
   const factory _AddTokenFormState(
-      {required final String seed,
-      final AddTokenProcessStep addTokenProcessStep,
+      {final AddTokenProcessStep addTokenProcessStep,
       required final AsyncValue<double> feeEstimation,
       required final AccountBalance accountBalance,
       final String name,
@@ -339,8 +320,6 @@ abstract class _AddTokenFormState extends AddTokenFormState {
       final String errorAmountText}) = _$_AddTokenFormState;
   const _AddTokenFormState._() : super._();
 
-  @override
-  String get seed;
   @override
   AddTokenProcessStep get addTokenProcessStep;
   @override

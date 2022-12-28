@@ -49,11 +49,9 @@ final _nftCreationFormProvider = NotifierProvider.family<
 
 class NftCreationFormNotifierParams {
   const NftCreationFormNotifierParams({
-    required this.seed,
     required this.selectedAccount,
     required this.currentNftCategoryIndex,
   });
-  final String seed;
   final Account selectedAccount;
   final int currentNftCategoryIndex;
 }
@@ -69,7 +67,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     return NftCreationFormState(
       feeEstimation: const AsyncValue.data(0),
       initialSupply: 1,
-      seed: arg.seed,
       propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
         publicKey: PublicKey(''),
       ),
@@ -142,19 +139,14 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         .wallet
         .keychainSecuredInfos;
 
-    final nameEncoded = Uri.encodeFull(
-      selectedAccount!.name,
-    );
-
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount.name,
+        accountSelectedName: selectedAccount!.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply.toDouble(),
-        seed: formState.seed,
-        keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-$nameEncoded']!.keyPair!,
+        keychainSecuredInfos: keychainSecuredInfos,
+        transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
         aeip: [2],
         properties: formState.propertiesConverted,
@@ -587,19 +579,14 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         .wallet
         .keychainSecuredInfos;
 
-    final nameEncoded = Uri.encodeFull(
-      selectedAccount!.name,
-    );
-
     transaction = Transaction.token(
       token: Token(
         name: state.name,
         symbol: state.symbol,
         initialSupply: state.initialSupply.toDouble(),
-        accountSelectedName: selectedAccount.name,
-        seed: state.seed,
-        keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-$nameEncoded']!.keyPair!,
+        accountSelectedName: selectedAccount!.name,
+        keychainSecuredInfos: keychainSecuredInfos,
+        transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
         aeip: [2],
         properties: state.propertiesConverted,

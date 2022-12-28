@@ -11,11 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddTokenSheet extends ConsumerWidget {
   const AddTokenSheet({
-    required this.seed,
     super.key,
   });
-
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,25 +29,19 @@ class AddTokenSheet extends ConsumerWidget {
         AddTokenFormProvider.initialAddTokenForm.overrideWithValue(
           AddTokenFormState(
             feeEstimation: const AsyncValue.data(0),
-            seed: seed,
             accountBalance: selectedAccount.balance!,
           ),
         ),
       ],
-      child: AddTokenSheetBody(
-        seed: seed,
-      ),
+      child: const AddTokenSheetBody(),
     );
   }
 }
 
 class AddTokenSheetBody extends ConsumerWidget {
   const AddTokenSheetBody({
-    required this.seed,
     super.key,
   });
-
-  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

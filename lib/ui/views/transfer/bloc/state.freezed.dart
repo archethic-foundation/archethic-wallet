@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TransferFormState {
   TransferType get transferType => throw _privateConstructorUsedError;
-  String get seed => throw _privateConstructorUsedError;
   TransferProcessStep get transferProcessStep =>
       throw _privateConstructorUsedError; // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
@@ -48,7 +47,6 @@ abstract class $TransferFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {TransferType transferType,
-      String seed,
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
       bool defineMaxAmountInProgress,
@@ -79,7 +77,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
   @override
   $Res call({
     Object? transferType = null,
-    Object? seed = null,
     Object? transferProcessStep = null,
     Object? feeEstimation = null,
     Object? defineMaxAmountInProgress = null,
@@ -98,10 +95,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
               as TransferType,
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as String,
       transferProcessStep: null == transferProcessStep
           ? _value.transferProcessStep
           : transferProcessStep // ignore: cast_nullable_to_non_nullable
@@ -172,7 +165,6 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
   @useResult
   $Res call(
       {TransferType transferType,
-      String seed,
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
       bool defineMaxAmountInProgress,
@@ -202,7 +194,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? transferType = null,
-    Object? seed = null,
     Object? transferProcessStep = null,
     Object? feeEstimation = null,
     Object? defineMaxAmountInProgress = null,
@@ -221,10 +212,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
               as TransferType,
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as String,
       transferProcessStep: null == transferProcessStep
           ? _value.transferProcessStep
           : transferProcessStep // ignore: cast_nullable_to_non_nullable
@@ -282,7 +269,6 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
 class _$_TransferFormState extends _TransferFormState {
   const _$_TransferFormState(
       {this.transferType = TransferType.uco,
-      required this.seed,
       this.transferProcessStep = TransferProcessStep.form,
       required this.feeEstimation,
       this.defineMaxAmountInProgress = false,
@@ -300,8 +286,6 @@ class _$_TransferFormState extends _TransferFormState {
   @override
   @JsonKey()
   final TransferType transferType;
-  @override
-  final String seed;
   @override
   @JsonKey()
   final TransferProcessStep transferProcessStep;
@@ -341,7 +325,7 @@ class _$_TransferFormState extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, seed: $seed, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -351,7 +335,6 @@ class _$_TransferFormState extends _TransferFormState {
             other is _$_TransferFormState &&
             (identical(other.transferType, transferType) ||
                 other.transferType == transferType) &&
-            (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.transferProcessStep, transferProcessStep) ||
                 other.transferProcessStep == transferProcessStep) &&
             (identical(other.feeEstimation, feeEstimation) ||
@@ -381,7 +364,6 @@ class _$_TransferFormState extends _TransferFormState {
   int get hashCode => Object.hash(
       runtimeType,
       transferType,
-      seed,
       transferProcessStep,
       feeEstimation,
       defineMaxAmountInProgress,
@@ -406,7 +388,6 @@ class _$_TransferFormState extends _TransferFormState {
 abstract class _TransferFormState extends TransferFormState {
   const factory _TransferFormState(
       {final TransferType transferType,
-      required final String seed,
       final TransferProcessStep transferProcessStep,
       required final AsyncValue<double> feeEstimation,
       final bool defineMaxAmountInProgress,
@@ -423,8 +404,6 @@ abstract class _TransferFormState extends TransferFormState {
 
   @override
   TransferType get transferType;
-  @override
-  String get seed;
   @override
   TransferProcessStep get transferProcessStep;
   @override // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)

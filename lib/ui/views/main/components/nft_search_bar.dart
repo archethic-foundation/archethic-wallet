@@ -239,7 +239,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                     await nftSearchBarNotifier.searchNFT(
                       searchController.text,
                       context,
-                      session.wallet.seed,
                       session.wallet.keychainSecuredInfos
                           .services['archethic-wallet-$nameEncoded']!.keyPair!,
                     );
