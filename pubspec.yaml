@@ -44,6 +44,9 @@ dependencies:
   # Collections and utilities functions and classes related to collections.
   collection: ^1.16.0
 
+  # Flutter plugin for discovering the state of the network (WiFi & mobile/cellular) connectivity on Android and iOS.
+  connectivity_plus: ^3.0.2
+
   # Encapsulates TabController, TabBar and TabBarView into a single customizable Widget.
   contained_tab_bar_view: ^0.8.0
 
