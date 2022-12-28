@@ -86,10 +86,11 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
               // TODO(reddwarf03): Activate when plugin usesd in notifier works correctly
-              if (!kIsWeb &&
-                  connectivityStatusProvider != ConnectivityStatus.isConnected)
-                const MainAppBarIconNConnection()
-              else if (hasNotifications)
+              //if (!kIsWeb &&
+              //    connectivityStatusProvider != ConnectivityStatus.isConnected)
+              //  const MainAppBarIconNConnection()
+              //else
+              if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
