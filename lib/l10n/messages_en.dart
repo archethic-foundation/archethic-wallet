@@ -352,7 +352,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "removeContact" : MessageLookupByLibrary.simpleMessage("Remove Contact"),
     "removeContactConfirmation" : MessageLookupByLibrary.simpleMessage("Are you sure you want to delete %1?"),
     "removePublicKey" : MessageLookupByLibrary.simpleMessage("Remove public key"),
-    "removeWallet" : MessageLookupByLibrary.simpleMessage("Remove Wallet"),
+    "removeWallet" : MessageLookupByLibrary.simpleMessage("Remove Wallet from this device"),
     "removeWalletAction" : MessageLookupByLibrary.simpleMessage("Delete"),
     "removeWalletDescription" : MessageLookupByLibrary.simpleMessage("You can find it at any time with your secret phrase"),
     "removeWalletDetail" : MessageLookupByLibrary.simpleMessage("You are about to remove all Archethic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again"),

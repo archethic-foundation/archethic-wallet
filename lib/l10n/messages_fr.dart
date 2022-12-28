@@ -353,7 +353,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "removeContact" : MessageLookupByLibrary.simpleMessage("Supprimer contact"),
     "removeContactConfirmation" : MessageLookupByLibrary.simpleMessage("Êtes-vous sûr(e) de vouloir supprimer %1 ?"),
     "removePublicKey" : MessageLookupByLibrary.simpleMessage("Retirer la clé publique"),
-    "removeWallet" : MessageLookupByLibrary.simpleMessage("Supprimer le wallet"),
+    "removeWallet" : MessageLookupByLibrary.simpleMessage("Supprimer le wallet de cet appareil"),
     "removeWalletAction" : MessageLookupByLibrary.simpleMessage("Supprimer"),
     "removeWalletDescription" : MessageLookupByLibrary.simpleMessage("Vous pouvez le retrouver à tout moment grâce à votre phrase secrète"),
     "removeWalletDetail" : MessageLookupByLibrary.simpleMessage("Vous vous apprêtez à supprimer toutes les données liées à Archethic de cet appareil. Si votre phrase secrète n\'est pas sauvegardée, vous ne pourrez plus jamais accéder à votre portefeuille"),

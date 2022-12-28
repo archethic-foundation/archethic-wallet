@@ -498,7 +498,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "removeWallet": "Remove Wallet",
+  "removeWallet": "Remove Wallet from this device",
   "@removeWallet": {
     "type": "text",
     "placeholders_order": [],
