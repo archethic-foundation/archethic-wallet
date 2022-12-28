@@ -83,7 +83,7 @@
 	"changeCurrencyHeader": "Devise",
 	"changeCurrencyDesc": "Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de %1",
 	"language": "Langue",
-	"removeWallet": "Supprimer le wallet",
+	"removeWallet": "Supprimer le wallet de cet appareil",
 	"resyncWallet": "Resynchroniser le wallet",
 	"resyncWalletAreYouSure": "Etes-vous sûr(e) de vouloir vider votre cache et recharger les informations à partir de la blockchain ?\n\nCette action requiert quelques secondes et est sans risque car elle recharge uniquement vos transactions récentes.",
 	"resyncWalletDescription": "Vider le cache et recharger les informations de la blockchain",
