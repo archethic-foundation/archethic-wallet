@@ -41,6 +41,7 @@ mixin _$NftCreationFormState {
   String get error => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   int get initialSupply => throw _privateConstructorUsedError;
+  bool get checkPreventUserPublicInfo => throw _privateConstructorUsedError;
   archethic.Transaction? get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -77,6 +78,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       String error,
       String symbol,
       int initialSupply,
+      bool checkPreventUserPublicInfo,
       archethic.Transaction? transaction});
 
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
@@ -118,6 +120,7 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? error = null,
     Object? symbol = null,
     Object? initialSupply = null,
+    Object? checkPreventUserPublicInfo = null,
     Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
@@ -209,6 +212,10 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.initialSupply
           : initialSupply // ignore: cast_nullable_to_non_nullable
               as int,
+      checkPreventUserPublicInfo: null == checkPreventUserPublicInfo
+          ? _value.checkPreventUserPublicInfo
+          : checkPreventUserPublicInfo // ignore: cast_nullable_to_non_nullable
+              as bool,
       transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
@@ -257,6 +264,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       String error,
       String symbol,
       int initialSupply,
+      bool checkPreventUserPublicInfo,
       archethic.Transaction? transaction});
 
   @override
@@ -296,6 +304,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? error = null,
     Object? symbol = null,
     Object? initialSupply = null,
+    Object? checkPreventUserPublicInfo = null,
     Object? transaction = freezed,
   }) {
     return _then(_$_NftCreationFormState(
@@ -387,6 +396,10 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
           ? _value.initialSupply
           : initialSupply // ignore: cast_nullable_to_non_nullable
               as int,
+      checkPreventUserPublicInfo: null == checkPreventUserPublicInfo
+          ? _value.checkPreventUserPublicInfo
+          : checkPreventUserPublicInfo // ignore: cast_nullable_to_non_nullable
+              as bool,
       transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
@@ -421,6 +434,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       this.error = '',
       this.symbol = '',
       this.initialSupply = 1,
+      this.checkPreventUserPublicInfo = false,
       this.transaction})
       : _file = file,
         _properties = properties,
@@ -497,11 +511,14 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @JsonKey()
   final int initialSupply;
   @override
+  @JsonKey()
+  final bool checkPreventUserPublicInfo;
+  @override
   final archethic.Transaction? transaction;
 
   @override
   String toString() {
-    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, transaction: $transaction)';
+    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
   }
 
   @override
@@ -550,6 +567,10 @@ class _$_NftCreationFormState extends _NftCreationFormState {
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.initialSupply, initialSupply) ||
                 other.initialSupply == initialSupply) &&
+            (identical(other.checkPreventUserPublicInfo,
+                    checkPreventUserPublicInfo) ||
+                other.checkPreventUserPublicInfo ==
+                    checkPreventUserPublicInfo) &&
             (identical(other.transaction, transaction) ||
                 other.transaction == transaction));
   }
@@ -579,6 +600,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         error,
         symbol,
         initialSupply,
+        checkPreventUserPublicInfo,
         transaction
       ]);
 
@@ -614,6 +636,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final String error,
       final String symbol,
       final int initialSupply,
+      final bool checkPreventUserPublicInfo,
       final archethic.Transaction? transaction}) = _$_NftCreationFormState;
   const _NftCreationFormState._() : super._();
 
@@ -661,6 +684,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   String get symbol;
   @override
   int get initialSupply;
+  @override
+  bool get checkPreventUserPublicInfo;
   @override
   archethic.Transaction? get transaction;
   @override

@@ -84,7 +84,7 @@ class FlatTheme implements BaseTheme {
   @override
   Color? negativeAmount = Colors.red;
   @override
-  Color? warning = Colors.yellow[600];
+  Color? warning = Colors.redAccent[400];
 
   @override
   Color? textDark = const Color(0xFF000000);

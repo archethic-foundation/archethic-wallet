@@ -26,6 +26,13 @@ class NftCreationDetail extends ConsumerWidget {
         ),
       ),
     );
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ).notifier,
+    );
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -100,6 +107,26 @@ class NftCreationDetail extends ConsumerWidget {
                   nftCreation.symbolFees(context),
                 ),
                 style: theme.textStyleSize12W400Primary,
+              ),
+            ],
+          ),
+          SheetDetailCard(
+            children: [
+              Expanded(
+                child: CheckboxListTile(
+                  title: Text(
+                    localizations.nftInfosCreationConfirmationWarning,
+                    style: theme.textStyleSize12W400Primary,
+                  ),
+                  value: nftCreation.checkPreventUserPublicInfo,
+                  onChanged: (newValue) {
+                    nftCreationNotifier
+                        .setCheckPreventUserPublicInfo(newValue ?? false);
+                  },
+                  checkColor: theme.background,
+                  activeColor: theme.text,
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
               ),
             ],
           ),

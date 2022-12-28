@@ -174,6 +174,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final nftCreation = ref.watch(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -233,39 +240,54 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.confirm,
-                            Dimens.buttonTopDimens,
-                            key: const Key('confirm'),
-                            icon: Icon(
-                              Icons.check,
-                              color: theme.mainButtonLabel,
-                              size: 14,
-                            ),
-                            onPressed: () async {
-                              // Authenticate
-                              final authMethod = AuthenticationMethod(
-                                ref.read(
-                                  AuthenticationProviders.settings.select(
-                                    (settings) => settings.authenticationMethod,
+                          if (nftCreation.canConfirmNFTCreation == false)
+                            AppButtonTiny(
+                              AppButtonTinyType.primaryOutline,
+                              localizations.confirm,
+                              Dimens.buttonTopDimens,
+                              key: const Key('confirm'),
+                              icon: Icon(
+                                Icons.check,
+                                color: theme.mainButtonLabel!.withOpacity(0.3),
+                                size: 14,
+                              ),
+                              onPressed: () {},
+                            )
+                          else
+                            AppButtonTiny(
+                              AppButtonTinyType.primary,
+                              localizations.confirm,
+                              Dimens.buttonTopDimens,
+                              key: const Key('confirm'),
+                              icon: Icon(
+                                Icons.check,
+                                color: theme.mainButtonLabel,
+                                size: 14,
+                              ),
+                              onPressed: () async {
+                                // Authenticate
+                                final authMethod = AuthenticationMethod(
+                                  ref.read(
+                                    AuthenticationProviders.settings.select(
+                                      (settings) =>
+                                          settings.authenticationMethod,
+                                    ),
                                   ),
-                                ),
-                              );
-                              final auth = await AuthFactory.authenticate(
-                                context,
-                                ref,
-                                authMethod: authMethod,
-                                activeVibrations: ref
-                                    .watch(SettingsProviders.settings)
-                                    .activeVibrations,
-                              );
-                              if (auth) {
-                                EventTaxiImpl.singleton()
-                                    .fire(AuthenticatedEvent());
-                              }
-                            },
-                          )
+                                );
+                                final auth = await AuthFactory.authenticate(
+                                  context,
+                                  ref,
+                                  authMethod: authMethod,
+                                  activeVibrations: ref
+                                      .watch(SettingsProviders.settings)
+                                      .activeVibrations,
+                                );
+                                if (auth) {
+                                  EventTaxiImpl.singleton()
+                                      .fire(AuthenticatedEvent());
+                                }
+                              },
+                            )
                         ],
                       ),
                       Row(
@@ -283,6 +305,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             onPressed: () {
                               nftCreationNotifier
                                 ..setIndexTab(NftCreationTab.summary.index)
+                                ..setCheckPreventUserPublicInfo(false)
                                 ..setNftCreationProcessStep(
                                   NftCreationProcessStep.form,
                                 );

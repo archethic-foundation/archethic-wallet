@@ -46,6 +46,7 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default('') String error,
     @Default('') String symbol,
     @Default(1) int initialSupply,
+    @Default(false) bool checkPreventUserPublicInfo,
     archethic.Transaction? transaction,
   }) = _NftCreationFormState;
   const NftCreationFormState._();
@@ -65,6 +66,8 @@ class NftCreationFormState with _$NftCreationFormState {
         contact: (contact) => contact.name.isNotEmpty,
         unknownContact: (name) => false,
       );
+
+  bool get canConfirmNFTCreation => checkPreventUserPublicInfo;
 
   String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 
