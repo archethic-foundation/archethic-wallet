@@ -184,6 +184,14 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     );
   }
 
+  void setCheckPreventUserPublicInfo(
+    bool checkPreventUserPublicInfo,
+  ) {
+    state = state.copyWith(
+      checkPreventUserPublicInfo: checkPreventUserPublicInfo,
+    );
+  }
+
   Future<void> setFees(
     BuildContext context,
   ) async {

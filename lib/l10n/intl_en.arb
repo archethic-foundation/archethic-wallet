@@ -2466,6 +2466,30 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftInfosWarning": "Limitation of this wallet application version",
+  "@nftInfosWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftInfosWarningDesc": "Except for the properties that you voluntarily choose to protect access to, the information in the NFT that you are going to create will be PUBLIC information, therefore accessible to everyone.\nDo not create an NFT with sensitive or personal data that you do not wish to disclose.\nThe protection of images or documents, a mechanism already proposed by the Archethic blockchain, will be proposed in a future release of the wallet application.",
+  "@nftInfosWarningDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftInfosCreationConfirmationWarning": "I declare that I'm aware that the content of my NFT will be PUBLIC, except for properties specifically set up as protected.",
+  "@nftInfosCreationConfirmationWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftInfosImportWarning": "Before importing, please remove the metadata (EXIF) from your images or documents if you don't want them to be public.",
+  "@nftInfosImportWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftPropertyNameEmpty": "Please, enter a name.",
   "@nftPropertyNameEmpty": {
     "type": "text",

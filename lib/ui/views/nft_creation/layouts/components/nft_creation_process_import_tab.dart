@@ -16,6 +16,7 @@ class _NFTCreationProcessImportTabState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -23,39 +24,61 @@ class _NFTCreationProcessImportTabState
         ),
       ),
     );
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
 
-    return SingleChildScrollView(
-      physics: nftCreation.file == null
-          ? const NeverScrollableScrollPhysics()
-          : const AlwaysScrollableScrollPhysics(),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height + 250,
-        child: Container(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Text(
-                  ref.watch(
-                    NftCategoryProviders.getDescriptionHeader(
-                      context: context,
-                      id: nftCreation.currentNftCategoryIndex,
+    return ArchethicScrollbar(
+      child: Container(
+        padding:
+            EdgeInsets.only(top: 20, left: 20, right: 20, bottom: bottom + 80),
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Text(
+                ref.watch(
+                  NftCategoryProviders.getDescriptionHeader(
+                    context: context,
+                    id: nftCreation.currentNftCategoryIndex,
+                  ),
+                ),
+                style: theme.textStyleSize12W100Primary,
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Icon(
+                      UiIcons.warning,
+                      color: theme.warning,
+                      size: 12,
                     ),
                   ),
-                  style: theme.textStyleSize12W100Primary,
-                  textAlign: TextAlign.justify,
-                ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      localizations.nftInfosImportWarning,
+                      style: theme.textStyleSize12W100PrimaryWarning,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
               ),
-              const NFTCreationProcessImportTabFile(),
-              const NFTCreationProcessImportTabImage(),
-              const NFTCreationProcessImportTabCamera(),
-              //const NFTCreationProcessFileAccess(),
-              const NFTCreationProcessFilePreview()
-            ],
-          ),
+            ),
+
+            const NFTCreationProcessImportTabFile(),
+            const NFTCreationProcessImportTabImage(),
+            const NFTCreationProcessImportTabCamera(),
+            //const NFTCreationProcessFileAccess(),
+            const NFTCreationProcessFilePreview()
+          ],
         ),
       ),
     );

@@ -130,7 +130,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                 ),
                 Expanded(
                   child: Container(
-                    constraints: const BoxConstraints.expand(height: 100),
+                    constraints: const BoxConstraints.expand(height: 150),
                     child: ContainedTabBarView(
                       key: _key,
                       initialIndex: nftCreation.indexTab,

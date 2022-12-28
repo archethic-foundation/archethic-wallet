@@ -2019,6 +2019,29 @@ class AppLocalization {
         name: 'nftInfosDescription');
   }
 
+  String get nftInfosWarning {
+    return Intl.message('Limitation of this wallet application version',
+        name: 'nftInfosWarning');
+  }
+
+  String get nftInfosWarningDesc {
+    return Intl.message(
+        'Except for the properties that you voluntarily choose to protect access to, the information in the NFT that you are going to create will be PUBLIC information, therefore accessible to everyone.\nDo not create an NFT with sensitive or personal data that you do not wish to disclose.\nThe protection of images or documents is a mechanism already proposed by the Archethic blockchain, will be also proposed in a future release of the wallet application.',
+        name: 'nftInfosWarningDesc');
+  }
+
+  String get nftInfosCreationConfirmationWarning {
+    return Intl.message(
+        'I declare that I am aware that the content of my NFT will be PUBLIC, except for properties specifically set up as protected.',
+        name: 'nftInfosCreationConfirmationWarning');
+  }
+
+  String get nftInfosImportWarning {
+    return Intl.message(
+        'Before importing, please remove the metadata (EXIF) from your images or documents if you don\'t want them to be public.',
+        name: 'nftInfosImportWarning');
+  }
+
   String get nftPropertyNameEmpty {
     return Intl.message('Please, enter a name.', name: 'nftPropertyNameEmpty');
   }
