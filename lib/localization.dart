@@ -753,7 +753,7 @@ class AppLocalization {
   }
 
   String get removeWallet {
-    return Intl.message('Remove Wallet', name: 'removeWallet');
+    return Intl.message('Remove Wallet from this device', name: 'removeWallet');
   }
 
   String get removeWalletDescription {
