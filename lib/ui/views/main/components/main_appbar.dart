@@ -17,6 +17,7 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -85,10 +86,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
               // TODO(reddwarf03): Activate when plugin usesd in notifier works correctly
-              //if (connectivityStatusProvider != ConnectivityStatus.isConnected)
-              //  const MainAppBarIconNConnection()
-              //else
-              if (hasNotifications)
+              if (!kIsWeb &&
+                  connectivityStatusProvider != ConnectivityStatus.isConnected)
+                const MainAppBarIconNConnection()
+              else if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
