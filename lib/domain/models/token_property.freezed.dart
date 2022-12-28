@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'token_property.dart';
 
@@ -52,7 +52,7 @@ class _$TokenPropertyCopyWithImpl<$Res, $Val extends TokenProperty>
   @override
   $Res call({
     Object? propertyName = null,
-    Object? propertyValue = null,
+    Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
     return _then(_value.copyWith(
@@ -60,7 +60,7 @@ class _$TokenPropertyCopyWithImpl<$Res, $Val extends TokenProperty>
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: null == propertyValue
+      propertyValue: freezed == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -98,7 +98,7 @@ class __$$_TokenPropertyCopyWithImpl<$Res>
   @override
   $Res call({
     Object? propertyName = null,
-    Object? propertyValue = null,
+    Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
     return _then(_$_TokenProperty(
@@ -106,7 +106,7 @@ class __$$_TokenPropertyCopyWithImpl<$Res>
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: null == propertyValue
+      propertyValue: freezed == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -135,6 +135,7 @@ class _$_TokenProperty extends _TokenProperty {
   final List<TokenPropertyAccess> _publicKeys;
   @override
   List<TokenPropertyAccess> get publicKeys {
+    if (_publicKeys is EqualUnmodifiableListView) return _publicKeys;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_publicKeys);
   }

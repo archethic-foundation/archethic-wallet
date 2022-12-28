@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'transfer.dart';
 
@@ -618,6 +618,7 @@ class _$_TransferToken extends _TransferToken {
   final Map<String, dynamic> _properties;
   @override
   Map<String, dynamic> get properties {
+    if (_properties is EqualUnmodifiableMapView) return _properties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_properties);
   }
@@ -625,6 +626,7 @@ class _$_TransferToken extends _TransferToken {
   final List<int> _aeip;
   @override
   List<int> get aeip {
+    if (_aeip is EqualUnmodifiableListView) return _aeip;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_aeip);
   }

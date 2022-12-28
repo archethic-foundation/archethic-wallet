@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_nftCategoryRepositoryHash() =>
+String _$_nftCategoryRepositoryHash() =>
     r'a38f8405031299f092dbef55597261545db4103c';
 
 /// See also [_nftCategoryRepository].
@@ -39,11 +39,11 @@ final _nftCategoryRepositoryProvider =
   name: r'_nftCategoryRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_nftCategoryRepositoryHash,
+      : _$_nftCategoryRepositoryHash,
 );
 typedef _NftCategoryRepositoryRef
     = AutoDisposeProviderRef<NFTCategoryRepository>;
-String $_selectedAccountNftCategoriesHash() =>
+String _$_selectedAccountNftCategoriesHash() =>
     r'14c939211bff7bc3c39aedd5aa134a7cac928c4f';
 
 /// See also [_selectedAccountNftCategories].
@@ -61,7 +61,7 @@ class _SelectedAccountNftCategoriesProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_selectedAccountNftCategoriesHash,
+                  : _$_selectedAccountNftCategoriesHash,
         );
 
   final BuildContext context;
@@ -119,7 +119,7 @@ class _SelectedAccountNftCategoriesFamily
   String? get name => r'_selectedAccountNftCategoriesProvider';
 }
 
-String $_fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
+String _$_fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
 
 /// See also [_fetchNftCategory].
 class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
@@ -137,7 +137,7 @@ class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_fetchNftCategoryHash,
+                  : _$_fetchNftCategoryHash,
         );
 
   final BuildContext context;
@@ -198,7 +198,7 @@ class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
   String? get name => r'_fetchNftCategoryProvider';
 }
 
-String $_getNbNFTInCategoryHash() =>
+String _$_getNbNFTInCategoryHash() =>
     r'6015ccc4a96e15a7d434528af26f7111386d7d15';
 
 /// See also [_getNbNFTInCategory].
@@ -217,7 +217,7 @@ class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getNbNFTInCategoryHash,
+                  : _$_getNbNFTInCategoryHash,
         );
 
   final Account account;
@@ -278,7 +278,7 @@ class _GetNbNFTInCategoryFamily extends Family<int> {
   String? get name => r'_getNbNFTInCategoryProvider';
 }
 
-String $_getListByDefaultHash() => r'8538d843366645b4a7c60a792cc8bf4f5af89e64';
+String _$_getListByDefaultHash() => r'8538d843366645b4a7c60a792cc8bf4f5af89e64';
 
 /// See also [_getListByDefault].
 class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
@@ -294,7 +294,7 @@ class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getListByDefaultHash,
+                  : _$_getListByDefaultHash,
         );
 
   final BuildContext context;
@@ -348,7 +348,7 @@ class _GetListByDefaultFamily extends Family<List<NftCategory>> {
   String? get name => r'_getListByDefaultProvider';
 }
 
-String $_updateNftCategoryListHash() =>
+String _$_updateNftCategoryListHash() =>
     r'c3d71c277aee70da60524f024c6de9d48a60288c';
 
 /// See also [_updateNftCategoryList].
@@ -367,7 +367,7 @@ class _UpdateNftCategoryListProvider extends AutoDisposeFutureProvider<void> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_updateNftCategoryListHash,
+                  : _$_updateNftCategoryListHash,
         );
 
   final List<NftCategory> nftCategoryListCustomized;
@@ -428,7 +428,7 @@ class _UpdateNftCategoryListFamily extends Family<AsyncValue<void>> {
   String? get name => r'_updateNftCategoryListProvider';
 }
 
-String $_getDescriptionHeaderHash() =>
+String _$_getDescriptionHeaderHash() =>
     r'185dffe43711a9f602f89b67628173a12657f14a';
 
 /// See also [_getDescriptionHeader].
@@ -447,7 +447,7 @@ class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getDescriptionHeaderHash,
+                  : _$_getDescriptionHeaderHash,
         );
 
   final BuildContext context;

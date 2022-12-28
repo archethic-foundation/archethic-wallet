@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $AutoLockNotifierHash() => r'9f788b98ad0b6f93e9358074088376c4e435762e';
+String _$AutoLockNotifierHash() => r'9f788b98ad0b6f93e9358074088376c4e435762e';
 
 /// See also [AutoLockNotifier].
 final autoLockNotifierProvider =
@@ -38,7 +38,7 @@ final autoLockNotifierProvider =
   name: r'autoLockNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $AutoLockNotifierHash,
+      : _$AutoLockNotifierHash,
 );
 typedef AutoLockNotifierRef = AsyncNotifierProviderRef<AutoLockState>;
 
