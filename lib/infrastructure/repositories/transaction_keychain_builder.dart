@@ -10,7 +10,6 @@ extension KeychainTransactionBuilder on archethic.Transaction {
   /// Builds a creation of keychain Transaction
   static Future<archethic.Transaction> build({
     required String nameAccount,
-    required String seed,
     required archethic.Keychain keychain,
     required String originPrivateKey,
   }) async {
@@ -31,8 +30,9 @@ extension KeychainTransactionBuilder on archethic.Transaction {
     );
 
     final keychainTransaction = archethic.Transaction(
-            type: 'keychain', data: archethic.Transaction.initData(),)
-        .setContent(jsonEncode(keychain.toDID()));
+      type: 'keychain',
+      data: archethic.Transaction.initData(),
+    ).setContent(jsonEncode(keychain.toDID()));
 
     final authorizedKeys = List<archethic.AuthorizedKey>.empty(growable: true);
     final authorizedKeysList =
@@ -44,7 +44,8 @@ extension KeychainTransactionBuilder on archethic.Transaction {
       authorizedKeys.add(
         archethic.AuthorizedKey(
           encryptedSecretKey: archethic.uint8ListToHex(
-              archethic.ecEncrypt(aesKey, authorizedKey.publicKey),),
+            archethic.ecEncrypt(aesKey, authorizedKey.publicKey),
+          ),
           publicKey: authorizedKey.publicKey,
         ),
       );

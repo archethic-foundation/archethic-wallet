@@ -52,12 +52,10 @@ part 'components/nft_creation_process_summary_tab.dart';
 
 class NftCreationProcessSheet extends ConsumerWidget {
   const NftCreationProcessSheet({
-    required this.seed,
     required this.currentNftCategoryIndex,
     super.key,
   });
 
-  final String seed;
   final int currentNftCategoryIndex;
 
   @override
@@ -75,7 +73,6 @@ class NftCreationProcessSheet extends ConsumerWidget {
         NftCreationFormProvider.nftCreationFormArgs.overrideWithValue(
           NftCreationFormNotifierParams(
             currentNftCategoryIndex: currentNftCategoryIndex,
-            seed: seed,
             selectedAccount: selectedAccount,
           ),
         ),

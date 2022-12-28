@@ -63,7 +63,6 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: FutureBuilder<List<TransactionInfos>>(
         future: sl.get<AppService>().getTransactionAllInfos(
-              session.wallet.seed,
               widget.txAddress,
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
               AccountBalance.cryptoCurrencyLabel,

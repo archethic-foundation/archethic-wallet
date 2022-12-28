@@ -80,7 +80,6 @@ class ReadRecentTransactionsUseCases
       account: command.account.copyWith(
         lastAddress: lastTransactionAddress,
       ),
-      walletSeed: command.walletSeed,
       keychainSecuredInfos: command.keychainSecuredInfos,
     );
     final remoteRecentTransactions = recentTransactionsResult.valueOrNull;

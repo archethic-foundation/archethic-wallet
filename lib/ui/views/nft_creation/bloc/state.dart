@@ -23,7 +23,6 @@ enum NftCreationTab { import, infos, properties, summary }
 @freezed
 class NftCreationFormState with _$NftCreationFormState {
   const factory NftCreationFormState({
-    required String seed,
     @Default(NftCreationProcessStep.form)
         NftCreationProcessStep nftCreationProcessStep,
     @Default(0) int currentNftCategoryIndex,

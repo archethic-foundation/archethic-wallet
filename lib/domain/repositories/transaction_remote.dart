@@ -30,7 +30,6 @@ abstract class TransactionRemoteRepositoryInterface {
 
   Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
     required Account account,
-    required String walletSeed,
     required KeychainSecuredInfos keychainSecuredInfos,
   });
 }

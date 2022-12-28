@@ -59,7 +59,6 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
   Future<void> searchNFT(
     String searchCriteria,
     BuildContext context,
-    String seed,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
     final localizations = AppLocalization.of(context);
@@ -83,7 +82,6 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
     final tokenInformations = await ref.watch(
       NFTProviders.getNFT(
         searchCriteria,
-        seed,
         keychainServiceKeyPair,
       ).future,
     );
