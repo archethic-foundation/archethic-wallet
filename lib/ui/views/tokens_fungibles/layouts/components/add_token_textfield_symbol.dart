@@ -52,7 +52,6 @@ class _AddTokenTextFieldSymbolState
           keyboardType: TextInputType.text,
           style: theme.textStyleSize16W600Primary,
           inputFormatters: [
-            UpperCaseTextFormatter(),
             LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (text) async {
