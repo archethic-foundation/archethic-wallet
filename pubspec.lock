@@ -39,9 +39,11 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      name: archethic_lib_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: dev
+      resolved-ref: "431173c3f0859032aaf3c5d999fa6250d1e051e1"
+      url: "https://github.com/archethic-foundation/libdart.git"
+    source: git
     version: "2.0.3"
   archive:
     dependency: transitive
