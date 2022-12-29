@@ -313,11 +313,31 @@ class AppService with KeychainMixin {
     final recentTransactionLastAddresses = <String>[];
     final ownershipsAddresses = <String>[];
 
-    // Search token informations
-    final tokensAddressMap = await sl.get<ApiService>().getToken(
-          tokensAddresses.toSet().toList(),
+    // Search token information
+    final tokensAddressMap = <String, Token>{};
+    var antiSpam = 0;
+    var futures = <Future>[];
+    for (final tokenAddress in tokensAddresses.toSet()) {
+      // Delay the API call if we have made more than 20 requests
+      if (antiSpam > 0 && antiSpam % 19 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getToken(
+          [tokenAddress],
           request: 'genesis, name, id, supply, symbol, type',
-        );
+        ),
+      );
+      antiSpam++;
+    }
+
+    var getTokens = await Future.wait(futures);
+    for (final getToken in getTokens) {
+      tokensAddressMap.addAll(getToken);
+    }
+
     for (final recentTransaction in recentTransactions) {
       // Get token informations
       if (recentTransaction.tokenAddress != null &&
@@ -357,11 +377,27 @@ class AppService with KeychainMixin {
     }
 
     // Get List of ownerships
-    var ownershipsMap = <String, List<Ownership>>{};
-    if (ownershipsAddresses.isNotEmpty) {
-      ownershipsMap = await sl
-          .get<ApiService>()
-          .getTransactionOwnerships(ownershipsAddresses.toSet().toList());
+    final ownershipsMap = <String, List<Ownership>>{};
+    antiSpam = 0;
+    futures = <Future>[];
+    for (final ownershipsAddress in ownershipsAddresses.toSet()) {
+      // Delay the API call if we have made more than 20 requests
+      if (antiSpam > 0 && antiSpam % 19 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getTransactionOwnerships(
+          [ownershipsAddress],
+        ),
+      );
+      antiSpam++;
+    }
+
+    final getTransactionOwnerships = await Future.wait(futures);
+    for (final getTransactionOwnership in getTransactionOwnerships) {
+      ownershipsMap.addAll(getTransactionOwnership);
     }
 
     final keychainServiceKeyPair =
@@ -404,10 +440,31 @@ class AppService with KeychainMixin {
       ...recentTransactionLastAddresses,
       ...contactsAddresses
     ];
-    final lastAddressesMap = await sl.get<ApiService>().getLastTransaction(
-          lastTransactionAddressesToSearch.toSet().toList(),
+
+    final lastAddressesMap = <String, Transaction>{};
+    antiSpam = 0;
+    futures = <Future>[];
+    for (final lastTransactionAddressToSearch
+        in lastTransactionAddressesToSearch.toSet()) {
+      // Delay the API call if we have made more than 20 requests
+      if (antiSpam > 0 && antiSpam % 19 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getLastTransaction(
+          [lastTransactionAddressToSearch],
           request: 'address',
-        );
+        ),
+      );
+      antiSpam++;
+    }
+
+    final getLastTransactions = await Future.wait(futures);
+    for (final getLastTransaction in getLastTransactions) {
+      lastAddressesMap.addAll(getLastTransaction);
+    }
 
     // We complete map with last address not found because no tx in the chain
     for (final lastTransactionAddressToSearch
@@ -532,6 +589,10 @@ class AppService with KeychainMixin {
   }
 
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
+    dev.log(
+      '>> START getFungiblesTokensList : ${DateTime.now().toString()}',
+    );
+
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
     final fungiblesTokensList = List<AccountToken>.empty(growable: true);
@@ -547,10 +608,30 @@ class AppService with KeychainMixin {
         }
       }
 
-      final tokenMap = await sl.get<ApiService>().getToken(
-            tokenAddressList.toSet().toList(),
+      // Search token informations
+      final tokenMap = <String, Token>{};
+      var antiSpam = 0;
+      final futures = <Future>[];
+      for (final tokenAddress in tokenAddressList.toSet()) {
+        // Delay the API call if we have made more than 20 requests
+        if (antiSpam > 0 && antiSpam % 19 == 0) {
+          await Future.delayed(const Duration(seconds: 1));
+        }
+
+        // Make the API call and update the antiSpam counter
+        futures.add(
+          sl.get<ApiService>().getToken(
+            [tokenAddress],
             request: 'genesis, name, id, supply, symbol, type',
-          );
+          ),
+        );
+        antiSpam++;
+      }
+
+      final getTokens = await Future.wait(futures);
+      for (final getToken in getTokens) {
+        tokenMap.addAll(getToken);
+      }
 
       for (final tokenBalance in balance.token!) {
         final token = tokenMap[tokenBalance.address];
@@ -576,6 +657,10 @@ class AppService with KeychainMixin {
             a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
       );
     }
+
+    dev.log(
+      '>> END getFungiblesTokensList : ${DateTime.now().toString()}',
+    );
 
     return fungiblesTokensList;
   }
@@ -691,8 +776,30 @@ class AppService with KeychainMixin {
   Future<Map<String, Balance>> getBalanceGetResponse(
     List<String> addresses,
   ) async {
-    final balanceMap =
-        await sl.get<ApiService>().fetchBalance(addresses.toSet().toList());
+    // Search token informations
+    final balanceMap = <String, Balance>{};
+    var antiSpam = 0;
+    final futures = <Future>[];
+    for (final tokenAddress in addresses.toSet()) {
+      // Delay the API call if we have made more than 20 requests
+      if (antiSpam > 0 && antiSpam % 19 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().fetchBalance(
+          [tokenAddress],
+        ),
+      );
+      antiSpam++;
+    }
+
+    final fetchBalances = await Future.wait(futures);
+    for (final fetchBalance in fetchBalances) {
+      balanceMap.addAll(fetchBalance);
+    }
+
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
       final balance = balanceMap[address] ??
