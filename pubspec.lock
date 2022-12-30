@@ -644,11 +644,9 @@ packages:
   ghost:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: e6573c23f2498eeb5e428b9911b39433518987d8
-      url: "https://github.com/redDwarf03/dart_ghost.git"
-    source: git
+      name: ghost
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.2"
   glob:
     dependency: transitive
