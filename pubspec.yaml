@@ -123,11 +123,7 @@ dependencies:
   get_it: ^7.2.0
 
   # Ghost CMS API client that closely follows the official implementation
-  #ghost: ^1.0.2
-  ghost:
-    git:
-      url: https://github.com/redDwarf03/dart_ghost.git
-      ref: main
+  ghost: ^2.0.2
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
   gql: ^0.14.0
