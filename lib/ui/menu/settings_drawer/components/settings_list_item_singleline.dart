@@ -33,7 +33,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
         onPressed?.call();
       },
       child: Container(
-        height: 70,
+        height: 90,
         margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
