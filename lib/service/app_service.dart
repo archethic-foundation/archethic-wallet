@@ -319,7 +319,7 @@ class AppService with KeychainMixin {
     var futures = <Future>[];
     for (final tokenAddress in tokensAddresses.toSet()) {
       // Delay the API call if we have made more than 20 requests
-      if (antiSpam > 0 && antiSpam % 19 == 0) {
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -382,7 +382,7 @@ class AppService with KeychainMixin {
     futures = <Future>[];
     for (final ownershipsAddress in ownershipsAddresses.toSet()) {
       // Delay the API call if we have made more than 20 requests
-      if (antiSpam > 0 && antiSpam % 19 == 0) {
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -447,7 +447,7 @@ class AppService with KeychainMixin {
     for (final lastTransactionAddressToSearch
         in lastTransactionAddressesToSearch.toSet()) {
       // Delay the API call if we have made more than 20 requests
-      if (antiSpam > 0 && antiSpam % 19 == 0) {
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -614,7 +614,7 @@ class AppService with KeychainMixin {
       final futures = <Future>[];
       for (final tokenAddress in tokenAddressList.toSet()) {
         // Delay the API call if we have made more than 20 requests
-        if (antiSpam > 0 && antiSpam % 19 == 0) {
+        if (antiSpam > 0 && antiSpam % 15 == 0) {
           await Future.delayed(const Duration(seconds: 1));
         }
 
@@ -782,7 +782,7 @@ class AppService with KeychainMixin {
     final futures = <Future>[];
     for (final tokenAddress in addresses.toSet()) {
       // Delay the API call if we have made more than 20 requests
-      if (antiSpam > 0 && antiSpam % 19 == 0) {
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
