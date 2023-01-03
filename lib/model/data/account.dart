@@ -169,18 +169,15 @@ class Account extends HiveObject {
     final balanceGetResponse = balanceGetResponseMap[lastAddress]!;
     final accountBalance = AccountBalance(
       nativeTokenName: AccountBalance.cryptoCurrencyLabel,
-      nativeTokenValue: balanceGetResponse.uco == null
-          ? 0
-          : fromBigInt(balanceGetResponse.uco).toDouble(),
+      nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),
     );
-    if (balanceGetResponse.token != null) {
-      for (final token in balanceGetResponse.token!) {
-        if (token.tokenId != null) {
-          if (token.tokenId == 0) {
-            accountBalance.tokensFungiblesNb++;
-          } else {
-            accountBalance.nftNb++;
-          }
+
+    for (final token in balanceGetResponse.token) {
+      if (token.tokenId != null) {
+        if (token.tokenId == 0) {
+          accountBalance.tokensFungiblesNb++;
+        } else {
+          accountBalance.nftNb++;
         }
       }
     }
