@@ -8,6 +8,8 @@ class TransactionError with _$TransactionError {
   const TransactionError._();
   const factory TransactionError.timeout() = _TransactionTimeout;
   const factory TransactionError.connectivity() = _TransactionConnectionError;
+  const factory TransactionError.consensusNotReached() =
+      _TransactionConsensusNotReachedError;
   const factory TransactionError.invalidTransaction() = _TransactionInvalid;
   const factory TransactionError.invalidConfirmation() =
       _TransactionInvalidConfirmation;
@@ -20,6 +22,7 @@ class TransactionError with _$TransactionError {
   String get message => map(
         timeout: (_) => 'connection timeout',
         connectivity: (_) => 'connectivity issue',
+        consensusNotReached: (_) => 'consensus not reached',
         invalidTransaction: (_) => 'invalid transaction',
         invalidConfirmation: (_) => 'invalid confirmation',
         insufficientFunds: (_) => 'insufficient funds',

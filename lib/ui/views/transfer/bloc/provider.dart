@@ -787,6 +787,24 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               ),
             );
           },
+          consensusNotReached: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: localizations.consensusNotReached,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          timeout: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: localizations.transactionTimeOut,
+                nbConfirmations: 0,
+              ),
+            );
+          },
           invalidConfirmation: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
@@ -813,7 +831,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
                 transactionType: TransactionSendEventType.transfer,
-                response: localizations.keychainNotExistWarning,
+                response: localizations.genericError,
                 nbConfirmations: 0,
               ),
             );

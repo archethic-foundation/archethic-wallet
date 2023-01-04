@@ -2165,6 +2165,24 @@ class AppLocalization {
         name: 'keychainNotExistWarning');
   }
 
+  String get consensusNotReached {
+    return Intl.message(
+        'The consensus is not reached. Please retry your request...',
+        name: 'consensusNotReached');
+  }
+
+  String get transactionTimeOut {
+    return Intl.message(
+        'The transaction encountered a timeout issue. Please retry your request...',
+        name: 'transactionTimeOut');
+  }
+
+  String get genericError {
+    return Intl.message(
+        'We\'re sorry, but an error has occurred. Please retry your request...',
+        name: 'genericError');
+  }
+
   String get noConnection {
     return Intl.message(
         'The connection to the network could not be completed. Please check your network settings.',

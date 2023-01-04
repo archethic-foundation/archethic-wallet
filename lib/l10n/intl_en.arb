@@ -2394,6 +2394,24 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "consensusNotReached": "The consensus is not reached. Please retry your request...",
+  "@consensusNotReached": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionTimeOut": "The transaction encountered a timeout issue. Please retry your request...",
+  "@transactionTimeOut": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "genericError": "We're sorry, but an error has occurred. Please retry your request...",
+  "@genericError": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "noConnection": "The connection to the network could not be completed. Please check your network settings.",
   "@noConnection": {
     "type": "text",
