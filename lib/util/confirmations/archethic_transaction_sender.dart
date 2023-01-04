@@ -202,6 +202,14 @@ mixin ArchethicTransactionParser {
         return const TransactionError.insufficientFunds();
       }
 
+      if (reason == 'consensus not reached') {
+        return const TransactionError.consensusNotReached();
+      }
+
+      if (reason == 'timeout' || reason == 'connection timeout') {
+        return const TransactionError.timeout();
+      }
+
       return TransactionError.other(reason: reason);
     } catch (e) {
       return const TransactionError.other();

@@ -630,6 +630,24 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
               ),
             );
           },
+          consensusNotReached: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.consensusNotReached,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          timeout: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.transactionTimeOut,
+                nbConfirmations: 0,
+              ),
+            );
+          },
           invalidConfirmation: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
@@ -656,7 +674,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
                 transactionType: TransactionSendEventType.token,
-                response: localizations.keychainNotExistWarning,
+                response: localizations.genericError,
                 nbConfirmations: 0,
               ),
             );

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-12-28T14:06:33.670184",
+  "@@last_modified": "2023-01-04T10:58:28.703070",
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -2762,6 +2762,24 @@
   },
   "keychainNotExistWarning": "Keychain doesn't exist.",
   "@keychainNotExistWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "consensusNotReached": "The consensus is not reached. Please retry your request...",
+  "@consensusNotReached": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionTimeOut": "The transaction encountered a timeout issue. Please retry your request...",
+  "@transactionTimeOut": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "genericError": "We're sorry, but an error has occurred. Please retry your request...",
+  "@genericError": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
