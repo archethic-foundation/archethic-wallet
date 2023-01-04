@@ -2,9 +2,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:pdfx/pdfx.dart';
 
 class TokenUtil {
@@ -15,7 +15,7 @@ class TokenUtil {
     Uint8List? valueFileDecoded;
     Uint8List? imageDecoded;
     final tokenMap =
-        await sl.get<ApiService>().getToken([address], request: 'properties');
+        await sl.get<AppService>().getToken([address], request: 'properties');
     if (tokenMap.isEmpty) {
       return Uint8List.fromList([]);
     }

@@ -11,6 +11,7 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -121,7 +122,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           .get<ApiService>()
           .getLastTransaction([event.transactionAddress!]);
       final transaction = transactionMap[event.transactionAddress!];
-      final tokenMap = await sl.get<ApiService>().getToken(
+      final tokenMap = await sl.get<AppService>().getToken(
         [transaction!.data!.ledger!.token!.transfers![0].tokenAddress!],
         request: 'id',
       );
