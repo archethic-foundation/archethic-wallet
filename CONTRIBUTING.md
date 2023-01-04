@@ -135,23 +135,12 @@ Application is composed of 4 layers. Here is the folder structure matching each 
   - **application :** Business logic components.
   - **infrastructure :** This is the **domain/repositories** implementations. All third party SDK/API dependent code should end up here.
 
-
 ### Layers role & interactions
 
 Rather than reinventing the wheel, I encourage you to check [this excellent diagram from resocoder.com](https://resocoder.com/wp-content/uploads/2020/03/DDD-Flutter-Diagram-v3.svg) out.
 
-
-
 ### Libraries / Technical choices
 
-#### State management
-Application state management heavily relies on [Riverpod](https://riverpod.dev/).
-
-#### Dependency injection
-Dependency injection relies on [Riverpod](https://riverpod.dev/) too.
-
-There is still a non neglectable part using the excellent [GetIt](https://pub.dev/packages/get_it) library.
-
-#### Blockchain interaction
-
-Blockchain interaction is extracted to the [archethic_lib_dart](https://pub.dev/packages/archethic_lib_dart) package.
+- **Application state management** heavily relies on [Riverpod](https://riverpod.dev/).
+- **Dependency injection** relies on [Riverpod](https://riverpod.dev/) too. There is still a non neglectable part using the excellent [GetIt](https://pub.dev/packages/get_it) library.
+- **Blockchain interaction** is extracted to the [archethic_lib_dart](https://pub.dev/packages/archethic_lib_dart) package.
