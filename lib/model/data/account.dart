@@ -271,7 +271,7 @@ class Account extends HiveObject {
     bool? favorite = false,
   }) async {
     final localOrRemoteToken = tokenId ??
-        (await sl.get<ApiService>().getToken([tokenAddress!]))[tokenAddress]!
+        (await sl.get<AppService>().getToken([tokenAddress!]))[tokenAddress]!
             .id;
 
     nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);

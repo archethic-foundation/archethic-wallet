@@ -68,7 +68,7 @@ class _CheckTransactionNotifier
           }
 
           final symbolMap = await sl
-              .get<ApiService>()
+              .get<AppService>()
               .getToken(tokenAddressList, request: 'symbol, type');
 
           final transactionsToNotify = <ReceivedTransaction>[];
