@@ -88,21 +88,13 @@ class _TransferTextFieldAmountState
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
           inputFormatters: [
-            AmountTextInputFormatter(),
-            LengthLimitingTextInputFormatter(16),
-            CurrencyFormatter(
-              maxDecimalDigits: primaryCurrency.primaryCurrency ==
+            AmountTextInputFormatter(
+              precision: primaryCurrency.primaryCurrency ==
                       AvailablePrimaryCurrencyEnum.native
                   ? 8
                   : localCurrencyFormat.decimalDigits!,
             ),
-            LocalCurrencyFormatter(
-              active: false,
-              currencyFormat: localCurrencyFormat,
-            ),
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^\d+\.?\d{0,8}'),
-            ),
+            LengthLimitingTextInputFormatter(16),
           ],
           onChanged: (String text) async {
             await transferNotifier.setAmount(
@@ -153,7 +145,6 @@ class _TransferTextFieldAmountState
           prefixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
               transfer.showMaxAmountButton(primaryCurrency),
           keyboardType: const TextInputType.numberWithOptions(
-            signed: true,
             decimal: true,
           ),
         ),
