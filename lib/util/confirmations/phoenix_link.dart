@@ -79,7 +79,8 @@ class PhoenixLink extends Link {
       await streamController?.close();
       //this will be called once the caller stops listening to the stream
       // (yield* stops if there is no one listening)
-      if (phoenixSubscriptionId != null) {
+      if (channel.state == PhoenixChannelState.joined &&
+          phoenixSubscriptionId != null) {
         channel.push('unsubscribe', {'subscriptionId': phoenixSubscriptionId});
       }
     }
