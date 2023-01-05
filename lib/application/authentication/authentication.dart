@@ -1,4 +1,6 @@
+import 'dart:async';
 
+import 'package:aewallet/application/utils.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
@@ -70,6 +72,11 @@ abstract class AuthenticationProviders {
   static final autoLock =
       AsyncNotifierProvider<AutoLockNotifier, AutoLockState>(
     AutoLockNotifier.new,
+  );
+
+  static final autoLockMaskVisibility = AutoLockMaskVisibilityProvider(
+    (ref) => AutoLockMaskVisibility.visible,
+    name: 'AutoLockMaskVisibilityProvider',
   );
 
   static final passwordAuthentication = StateNotifierProvider<

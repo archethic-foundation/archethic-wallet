@@ -305,6 +305,8 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
+          await ref.ensuresAutolockMaskHidden();
+
           final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
           final mnemonic = AppMnemomics.seedToMnemonic(
             seed!,
