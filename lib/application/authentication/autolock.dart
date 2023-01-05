@@ -66,3 +66,28 @@ class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
     state = const AsyncValue.data(AutoLockState());
   }
 }
+
+/// The [AutoLockGuard] widget visibility
+/// Set to [AutoLockMaskVisiblity.visible] when the app is coming to foreground
+/// while checking if authentication is necessary.
+typedef AutoLockMaskVisibilityProvider = StateProvider<AutoLockMaskVisibility>;
+
+enum AutoLockMaskVisibility {
+  hidden,
+  visible,
+}
+
+extension AutoLockMaskVisibilityProviderExt on WidgetRef {
+  /// Ensures the AutoLockMask screen is dismissed.
+  ///
+  /// This is extremely important to wait for AutoLockMask to be dismissed
+  /// when Navigating after any operation that changes the application state :
+  ///   - biometrics verification
+  ///   - screen capture
+  ///   - camera usage
+  ///   - ...
+  Future<void> ensuresAutolockMaskHidden() async => waitUntil(
+        AuthenticationProviders.autoLockMaskVisibility,
+        (_, next) => next == AutoLockMaskVisibility.hidden,
+      );
+}

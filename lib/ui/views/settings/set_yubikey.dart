@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
@@ -310,6 +311,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
+          await ref.ensuresAutolockMaskHidden();
+
           Navigator.of(context).pop(true);
         }
       }
