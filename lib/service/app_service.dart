@@ -16,6 +16,7 @@ import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:aewallet/util/queue.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,7 +42,7 @@ class AppService with KeychainMixin {
     var antiSpam = 0;
     final futures = <Future>[];
     for (final address in addresses.toSet()) {
-      // Delay the API call if we have made more than 20 requests
+      // Delay the API call if we have made more than 15 requests
       if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
@@ -74,7 +75,7 @@ class AppService with KeychainMixin {
     var antiSpam = 0;
     final futures = <Future>[];
     for (final address in addresses.toSet()) {
-      // Delay the API call if we have made more than 20 requests
+      // Delay the API call if we have made more than 15 requests
       if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
@@ -414,7 +415,7 @@ class AppService with KeychainMixin {
     var antiSpam = 0;
     var futures = <Future>[];
     for (final ownershipsAddress in ownershipsAddresses.toSet()) {
-      // Delay the API call if we have made more than 20 requests
+      // Delay the API call if we have made more than 15 requests
       if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
@@ -479,7 +480,7 @@ class AppService with KeychainMixin {
     futures = <Future>[];
     for (final lastTransactionAddressToSearch
         in lastTransactionAddressesToSearch.toSet()) {
-      // Delay the API call if we have made more than 20 requests
+      // Delay the API call if we have made more than 15 requests
       if (antiSpam > 0 && antiSpam % 15 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
@@ -790,29 +791,14 @@ class AppService with KeychainMixin {
   Future<Map<String, Balance>> getBalanceGetResponse(
     List<String> addresses,
   ) async {
+    final tasks = addresses.toSet().map(
+          (address) => () => sl.get<ApiService>().fetchBalance(
+                [address],
+              ),
+        );
+
     // Search token informations
-    final balanceMap = <String, Balance>{};
-    var antiSpam = 0;
-    final futures = <Future>[];
-    for (final tokenAddress in addresses.toSet()) {
-      // Delay the API call if we have made more than 20 requests
-      if (antiSpam > 0 && antiSpam % 15 == 0) {
-        await Future.delayed(const Duration(seconds: 1));
-      }
-
-      // Make the API call and update the antiSpam counter
-      futures.add(
-        sl.get<ApiService>().fetchBalance(
-          [tokenAddress],
-        ),
-      );
-      antiSpam++;
-    }
-
-    final fetchBalances = await Future.wait(futures);
-    for (final fetchBalance in fetchBalances) {
-      balanceMap.addAll(fetchBalance);
-    }
+    final balanceMap = await OperationQueue.run<Balance>(tasks);
 
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
