@@ -39,11 +39,9 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      path: "."
-      ref: dev
-      resolved-ref: "431173c3f0859032aaf3c5d999fa6250d1e051e1"
-      url: "https://github.com/archethic-foundation/libdart.git"
-    source: git
+      name: archethic_lib_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.3"
   archive:
     dependency: transitive
@@ -93,7 +91,7 @@ packages:
       name: barcode_scan2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.2"
+    version: "4.2.3"
   bip39_mnemonic:
     dependency: "direct main"
     description:
@@ -177,7 +175,7 @@ packages:
       name: checked_yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   cli_util:
     dependency: transitive
     description:
@@ -537,7 +535,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -710,14 +708,14 @@ packages:
       name: graphql
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.2-beta.6"
+    version: "5.1.2"
   graphql_flutter:
     dependency: "direct main"
     description:
       name: graphql_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.1-beta.5"
+    version: "5.1.1"
   graphs:
     dependency: transitive
     description:
@@ -794,7 +792,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.2"
+    version: "3.3.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -822,7 +820,7 @@ packages:
       name: image_picker_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.6+4"
+    version: "0.8.6+5"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -1277,21 +1275,21 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.1"
   riverpod_annotation:
     dependency: "direct main"
     description:
       name: riverpod_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.0.6"
   riverpod_generator:
     dependency: "direct dev"
     description:
       name: riverpod_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.0.6"
   rxdart:
     dependency: "direct main"
     description:
@@ -1305,7 +1303,7 @@ packages:
       name: screen_retriever
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   secp256k1:
     dependency: transitive
     description:
@@ -1611,7 +1609,7 @@ packages:
       name: window_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.8"
+    version: "0.2.9"
   x25519:
     dependency: transitive
     description:
