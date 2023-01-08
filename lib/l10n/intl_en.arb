@@ -2789,51 +2789,5 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
-  },
-  "getUCOButton": "Get UCOs",
-  "@getUCOButton": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCODescription1": "Bring ARCHETHIC to life with your first  ",
-  "@getUCODescription1": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCOInformation": "In a few minutes you will receive your UCOs which will allow you to use the Archethic network and the features of your wallet.",
-  "@getUCOInformation": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCOInformationAlreadyReceived": "You have already received your UCOs.",
-  "@getUCOInformationAlreadyReceived": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCOInformationBackendError": "An error occurred. Try again later.",
-  "@getUCOInformationBackendError": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCOInformationInsufficientBalance": "The faucet is currently empty. Please reiterate your request tomorrow.",
-  "@getUCOInformationInsufficientBalance": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCOInformationUnauthorized": "Your application is not authorized to access to the faucet. Please update your application with the last version.",
-  "@getUCOInformationUnauthorized": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "getUCOCount": "See you in %1h%2 to get new UCOs...",
-  "@getUCOCount": {
-    "placeholders": {}
   }
 }
