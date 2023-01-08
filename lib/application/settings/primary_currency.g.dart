@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_convertedValueHash() => r'95ca331144d703ff515b6ec618c8a18d7b18e25e';
+String $_convertedValueHash() => r'95ca331144d703ff515b6ec618c8a18d7b18e25e';
 
 /// See also [_convertedValue].
 class _ConvertedValueProvider extends AutoDisposeProvider<double> {
@@ -47,7 +47,7 @@ class _ConvertedValueProvider extends AutoDisposeProvider<double> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_convertedValueHash,
+                  : $_convertedValueHash,
         );
 
   final double amount;
@@ -108,7 +108,7 @@ class _ConvertedValueFamily extends Family<double> {
   String? get name => r'_convertedValueProvider';
 }
 
-String _$_convertedValueLabelHash() =>
+String $_convertedValueLabelHash() =>
     r'd6786e9e48ba90083afd92be1adac47cb9034f82';
 
 /// See also [_convertedValueLabel].
@@ -129,7 +129,7 @@ class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_convertedValueLabelHash,
+                  : $_convertedValueLabelHash,
         );
 
   final double amount;
@@ -196,7 +196,7 @@ class _ConvertedValueLabelFamily extends Family<String> {
   String? get name => r'_convertedValueLabelProvider';
 }
 
-String _$_selectedPrimaryCurrencyHash() =>
+String $_selectedPrimaryCurrencyHash() =>
     r'461c4d91fad8f2c6e7d605148b016131376e1293';
 
 /// See also [_selectedPrimaryCurrency].
@@ -206,7 +206,7 @@ final _selectedPrimaryCurrencyProvider =
   name: r'_selectedPrimaryCurrencyProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_selectedPrimaryCurrencyHash,
+      : $_selectedPrimaryCurrencyHash,
 );
 typedef _SelectedPrimaryCurrencyRef
     = AutoDisposeProviderRef<AvailablePrimaryCurrency>;

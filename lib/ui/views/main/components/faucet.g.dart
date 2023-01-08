@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_isFaucetRequestButtonActiveHash() =>
+String $_isFaucetRequestButtonActiveHash() =>
     r'95430dc2f8679f214ea8cfeedfac8d3af9e6fb80';
 
 /// True if the Faucet claim button should be active
@@ -40,6 +40,6 @@ final _isFaucetRequestButtonActiveProvider = Provider<bool>(
   name: r'_isFaucetRequestButtonActiveProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_isFaucetRequestButtonActiveHash,
+      : $_isFaucetRequestButtonActiveHash,
 );
 typedef _IsFaucetRequestButtonActiveRef = ProviderRef<bool>;

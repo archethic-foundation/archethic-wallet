@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_CheckTransactionNotifierHash() =>
+String $_CheckTransactionNotifierHash() =>
     r'55f9b158b62d42fd9d31278c0ef912afe0c8ce89';
 
 /// See also [_CheckTransactionNotifier].
@@ -39,7 +39,7 @@ final _checkTransactionNotifierProvider =
   name: r'_checkTransactionNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_CheckTransactionNotifierHash,
+      : $_CheckTransactionNotifierHash,
 );
 typedef _CheckTransactionNotifierRef
     = AsyncNotifierProviderRef<List<ReceivedTransaction>>;
