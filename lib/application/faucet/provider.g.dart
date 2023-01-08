@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_faucetRepositoryHash() => r'0700aacd141f765b45a052ac90ef9a6d3ca9aaa1';
+String $_faucetRepositoryHash() => r'0700aacd141f765b45a052ac90ef9a6d3ca9aaa1';
 
 /// See also [_faucetRepository].
 final _faucetRepositoryProvider = Provider<FaucetRepositoryInterface>(
@@ -37,10 +37,10 @@ final _faucetRepositoryProvider = Provider<FaucetRepositoryInterface>(
   name: r'_faucetRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_faucetRepositoryHash,
+      : $_faucetRepositoryHash,
 );
 typedef _FaucetRepositoryRef = ProviderRef<FaucetRepositoryInterface>;
-String _$_isDeviceCompatibleHash() =>
+String $_isDeviceCompatibleHash() =>
     r'c11848497c1c7d309333aa09e5cafad57cb5b2f6';
 
 /// See also [_isDeviceCompatible].
@@ -49,10 +49,10 @@ final _isDeviceCompatibleProvider = FutureProvider<bool>(
   name: r'_isDeviceCompatibleProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_isDeviceCompatibleHash,
+      : $_isDeviceCompatibleHash,
 );
 typedef _IsDeviceCompatibleRef = FutureProviderRef<bool>;
-String _$_isFaucetEnabledHash() => r'828846b82c9029b973cb4bda1dae1c4de1f15be7';
+String $_isFaucetEnabledHash() => r'828846b82c9029b973cb4bda1dae1c4de1f15be7';
 
 /// See also [_isFaucetEnabled].
 final _isFaucetEnabledProvider = FutureProvider<bool>(
@@ -60,6 +60,6 @@ final _isFaucetEnabledProvider = FutureProvider<bool>(
   name: r'_isFaucetEnabledProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_isFaucetEnabledHash,
+      : $_isFaucetEnabledHash,
 );
 typedef _IsFaucetEnabledRef = FutureProviderRef<bool>;
