@@ -30,8 +30,6 @@ class HivePreferencesDatasource {
   static const String lock = 'archethic_wallet_lock';
   static const String lockTimeout = 'archethic_wallet_lock_timeout';
   static const String autoLockDate = 'archethic_wallet_autolock_date';
-  static const String faucetClaimCooldownEndDate =
-      'archethic_wallet_faucet_claim_cooldown_end_date';
   static const String hasShownRootWarning =
       'archethic_wallet_has_shown_root_warning';
   static const String pinAttempts = 'archethic_wallet_pin_attempts';
@@ -253,19 +251,5 @@ class HivePreferencesDatasource {
 
   Future<void> clearAutoLockTriggerDate() async {
     await _removeValue(autoLockDate);
-  }
-
-  DateTime? getFaucetClaimCooldownEndDate() {
-    return DateTime.tryParse(
-      _getValue(faucetClaimCooldownEndDate, defaultValue: ''),
-    );
-  }
-
-  Future<void> setFaucetClaimCooldownEndDate(DateTime date) {
-    return _setValue(faucetClaimCooldownEndDate, date.toIso8601String());
-  }
-
-  Future<void> clearFaucetClaimCooldownEndDate() {
-    return _removeValue(faucetClaimCooldownEndDate);
   }
 }
