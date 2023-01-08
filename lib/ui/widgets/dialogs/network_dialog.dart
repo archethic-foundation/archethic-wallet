@@ -128,6 +128,7 @@ class NetworkDialog {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   AppTextField(
+                                    key: const Key('networkChoice'),
                                     leftMargin: 0,
                                     rightMargin: 0,
                                     focusNode: endpointFocusNode,

@@ -143,3 +143,5 @@ node_modules/
 Appfile
 fastlane/metadata/**/Preview.html
 report.xml
+/windows/
+/linux/

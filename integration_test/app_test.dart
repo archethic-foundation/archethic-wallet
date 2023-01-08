@@ -1,54 +1,62 @@
-// Flutter imports:
-/*import 'package:flutter/material.dart';
+//@Timeout(Duration(seconds: 90))
+import 'dart:async';
 
-// Package imports:
-import 'package:integration_test/integration_test.dart';
-
-// Project imports:
-import 'package:aeroot/main.dart' as app;
-
-// Package imports:
+import 'package:aewallet/main.dart' as app;
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:patrol/patrol.dart';
 
+import 'config.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  patrolTest('As a user I can create a Wallet',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    await app.main();
 
-  testWidgets('Create new account', (WidgetTester tester) async {
-    app.main();
-    await Future.delayed(const Duration(seconds: 2));
-    await tester.pumpAndSettle();
-    final Finder buttonNewWallet = find.byKey(const Key('newWallet'));
-    await tester.tap(buttonNewWallet);
-    await Future.delayed(const Duration(seconds: 2));
-    final Finder buttonUnderstandButton =
-        find.byKey(const Key('understandButton'));
-    await tester.tap(buttonUnderstandButton);
-    await Future.delayed(const Duration(seconds: 2));
-    final Finder buttonIveBackedItUp = find.byKey(const Key('iveBackedItUp'));
-    await tester.tap(buttonIveBackedItUp);
-    await Future.delayed(const Duration(seconds: 5));
-    await tester.pump();
-    final Finder buttonYes = find.byKey(const Key('yes'));
-    await tester.tap(buttonYes);
-    await Future.delayed(const Duration(seconds: 2));
-    final Finder pinButton1 = find.byKey(const Key('pinButton1'));
-    await tester.tap(pinButton1);
-    await tester.tap(pinButton1);
-    await tester.tap(pinButton1);
-    await tester.tap(pinButton1);
-    await tester.tap(pinButton1);
-    await tester.tap(pinButton1);
-    await Future.delayed(const Duration(seconds: 2));
-    final Finder pinButtonConfirm1 = find.byKey(const Key('pinButton1'));
-    await tester.tap(pinButtonConfirm1);
-    await tester.tap(pinButtonConfirm1);
-    await tester.tap(pinButtonConfirm1);
-    await tester.tap(pinButtonConfirm1);
-    await tester.tap(pinButtonConfirm1);
-    await tester.tap(pinButtonConfirm1);
-    await Future.delayed(const Duration(seconds: 5));
-    await tester.pump();
-    expect(find.byKey(const Key('UCO')), findsOneWidget);
+    // accepter les conditions et créer un nouveau wallet
+    await $(CheckboxListTile).tap();
+    await $(#newWallet).tap();
+
+    // entrer un nom dans le champ et OK
+    await $(#walletName).enterText('test_wallet_001');
+    await $(#okButton).tap();
+
+// répondre non à la quesition et vérifier que l'on est sur la saiie de nom
+    await $('Non').tap();
+
+// taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
+
+    //await $('Archethic Main Network').tap();
+
+    // tap sur testnet
+    //await $('Archethic Test Network').tap();
+
+    // répondre oui à la question et vérifier que l'on arrive sur
+    await $(#okButton).tap();
+    await $('Oui').tap();
+    await $(#understandButton).tap();
+    await $(#iveBackedItUp).tap();
+    //await $(#backUpButton).tap();
+    await $(#pass).tap();
+    await $('Oui').tap();
+    await $('PIN').tap();
+
+    // code pin 000000 avec confirmation
+    await pincode000000wConfirmation($);
   });
-}*/
+
+  patrolTest('As a user I can send UCOs',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    await app.main();
+  });
+
+  Future<void> pincode000000wConfirmation(PatrolTester $) async {
+    // code pin 000000 avec confirmation
+    var length = 12;
+    for (var i = length; i >= 1; i--) {
+      await $('0').tap();
+    }
+  }
+}

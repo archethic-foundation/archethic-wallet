@@ -125,6 +125,7 @@ class _IntroNewWalletDisclaimerState
                                 height: 30,
                               ),
                               AppTextField(
+                                key: const Key('walletName'),
                                 leftMargin: 0,
                                 rightMargin: 0,
                                 labelText: localizations
@@ -156,6 +157,7 @@ class _IntroNewWalletDisclaimerState
                                 color: theme.text15,
                               ),
                               NetworkChoiceInfos(
+                                key: const Key('networkChoiceinfos'),
                                 onTap: () {
                                   NetworkDialog.getDialog(
                                     context,
