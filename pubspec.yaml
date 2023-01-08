@@ -214,14 +214,8 @@ dependencies:
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
   url_launcher: ^6.1.7
 
-  # Generate UUIDs
-  uuid: ^3.0.7
-
   # String validation and sanitization for Dart
   validators: ^3.0.0
-
-  # This plugin allows Flutter desktop apps to resizing and repositioning the window
-  webview_flutter: ^3.0.4
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
   window_manager: ^0.2.8
