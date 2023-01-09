@@ -50,10 +50,6 @@ class AutoLockGuard extends ConsumerStatefulWidget {
 
 class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     with WidgetsBindingObserver {
-  // Set to [true] when the app is coming to foreground
-  // while checking if authentication is necessary.
-  bool unlockPending = true;
-
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -78,11 +74,12 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         _forceAuthentIfNeeded(context, ref);
         break;
       case AppLifecycleState.inactive:
-        if (unlockPending == true) return;
-        setState(() {
-          _LockMask.show(context);
-          unlockPending = true;
-        });
+        if (ref.read(AuthenticationProviders.autoLockMaskVisibility) ==
+            AutoLockMaskVisibility.visible) return;
+        _LockMask.show(context);
+        ref
+            .read(AuthenticationProviders.autoLockMaskVisibility.notifier)
+            .state = AutoLockMaskVisibility.visible;
 
         break;
       case AppLifecycleState.paused:
@@ -123,10 +120,9 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         .read(AuthenticationProviders.autoLock.notifier)
         .unscheduleAutolock();
 
-    setState(() {
-      _LockMask.hide(context);
-      unlockPending = false;
-    });
+    _LockMask.hide(context);
+    ref.read(AuthenticationProviders.autoLockMaskVisibility.notifier).state =
+        AutoLockMaskVisibility.hidden;
   }
 }
 
