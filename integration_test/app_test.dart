@@ -23,40 +23,55 @@ void main() {
     await $(#okButton).tap();
 
 // répondre non à la quesition et vérifier que l'on est sur la saiie de nom
-    await $('Non').tap();
+    await $('No').tap();
 
-// taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
+    // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
 
     //await $('Archethic Main Network').tap();
 
     // tap sur testnet
     //await $('Archethic Test Network').tap();
 
-    // répondre oui à la question et vérifier que l'on arrive sur
+    // répondre oui à la question
     await $(#okButton).tap();
-    await $('Oui').tap();
+    await $('Yes').tap();
     await $(#understandButton).tap();
     await $(#iveBackedItUp).tap();
     //await $(#backUpButton).tap();
     await $(#pass).tap();
-    await $('Oui').tap();
+    await $('Yes').tap();
     await $('PIN').tap();
 
-    // code pin 000000 avec confirmation
-    await pincode000000wConfirmation($);
-  });
-
-  patrolTest('As a user I can send UCOs',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
-    await app.main();
-  });
-
-  Future<void> pincode000000wConfirmation(PatrolTester $) async {
     // code pin 000000 avec confirmation
     var length = 12;
     for (var i = length; i >= 1; i--) {
       await $('0').tap();
     }
-  }
+
+    await Future.delayed(const Duration(seconds: 60));
+    expect($(#UCO), findsOneWidget);
+  });
+
+  patrolTest('As a user I can receive UCOs',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    //await app.main();
+
+    await $('RECEIVE').tap();
+    expect($(#qrcode), findsOneWidget);
+  });
+
+  patrolTest('As a user I can see my transaction history',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    expect($(#recentTransactionsNoTransactionYet), findsOneWidget);
+  });
+
+  patrolTest('As a user I can create a NFT',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    $(#nftTab).tap();
+    $(#noCategoryNFTs).tap();
+    $(#createNFTbutton).tap();
+  });
 }
