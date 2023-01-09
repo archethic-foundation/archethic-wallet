@@ -1,4 +1,3 @@
-import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:patrol/patrol.dart';
 
 const patrolConfig = PatrolTesterConfig(/*findTimeout: Duration(seconds: 90)*/);

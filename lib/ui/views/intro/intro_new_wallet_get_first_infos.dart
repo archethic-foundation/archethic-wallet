@@ -125,7 +125,7 @@ class _IntroNewWalletDisclaimerState
                                 height: 30,
                               ),
                               AppTextField(
-                                key: const Key('walletName'),
+                                key: const Key('newAccountName'),
                                 leftMargin: 0,
                                 rightMargin: 0,
                                 labelText: localizations

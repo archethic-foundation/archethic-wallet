@@ -19,7 +19,7 @@ void main() {
     await $(#newWallet).tap();
 
     // entrer un nom dans le champ et OK
-    await $(#walletName).enterText('test_wallet_001');
+    await $(#newAccountName).enterText('test_wallet_001');
     await $(#okButton).tap();
 
 // répondre non à la quesition et vérifier que l'on est sur la saiie de nom
@@ -43,7 +43,7 @@ void main() {
     await $('PIN').tap();
 
     // code pin 000000 avec confirmation
-    var length = 12;
+    const length = 12;
     for (var i = length; i >= 1; i--) {
       await $('0').tap();
     }
