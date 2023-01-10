@@ -309,6 +309,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                   AlignmentDirectional.center,
                                               children: <Widget>[
                                                 TextFormField(
+                                                  key: Key('seedWord$index'),
                                                   controller:
                                                       textEditingController,
                                                   focusNode: focusNode,
