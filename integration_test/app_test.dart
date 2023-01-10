@@ -23,7 +23,7 @@ void main() {
     await $(#okButton).tap();
 
 // répondre non à la quesition et vérifier que l'on est sur la saiie de nom
-    await $('No').tap();
+    await $(#cancelButton).tap();
 
     // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
 
@@ -34,12 +34,13 @@ void main() {
 
     // répondre oui à la question
     await $(#okButton).tap();
-    await $('Yes').tap();
+    await $(#okButton).tap();
     await $(#understandButton).tap();
     await $(#iveBackedItUp).tap();
     //await $(#backUpButton).tap();
     await $(#pass).tap();
-    await $('Yes').tap();
+
+    await $(#okButton).tap();
     await $('PIN').tap();
 
     // code pin 000000 avec confirmation

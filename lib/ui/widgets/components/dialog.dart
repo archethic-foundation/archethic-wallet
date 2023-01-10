@@ -61,6 +61,7 @@ class AppDialogs {
           ),
           actions: <Widget>[
             _AppDialogsButton(
+              key: const Key('cancelButton'),
               textButton: cancelText!,
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
@@ -74,6 +75,7 @@ class AppDialogs {
               },
             ),
             _AppDialogsButton(
+              key: const Key('okButton'),
               textButton: buttonText,
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
@@ -144,6 +146,7 @@ class _AppDialogsButton extends ConsumerWidget {
   const _AppDialogsButton({
     required this.textButton,
     required this.onPressed,
+    super.key,
   });
 
   final VoidCallback onPressed;

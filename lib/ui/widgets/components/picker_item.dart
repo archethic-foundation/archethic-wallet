@@ -81,6 +81,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                   setState(() {});
                 }
               },
+              key: Key('$index'),
               child: Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(vertical: 4),
