@@ -7,7 +7,7 @@ import 'package:patrol/patrol.dart';
 import 'config.dart';
 
 void main() {
-  patrolTest('As a user I can retrieve my wallet',
+  patrolTest('As a user I can create a NFT',
       nativeAutomatorConfig: nativeAutomatorConfig,
       nativeAutomation: true, ($) async {
     await app.main();
@@ -50,11 +50,6 @@ void main() {
       await $(finder).enterText(seedWord[index]);
     }
     await $(#ok).tap();
-  });
-
-  patrolTest('As a user I can create a NFT',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
     $(#nftTab).tap();
     $(#noCategoryNFTs).tap();
     $(#createNFTbutton).tap();

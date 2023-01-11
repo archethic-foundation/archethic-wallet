@@ -23,8 +23,7 @@ void main() {
 
     // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
     final netNameFinder = createFinder(RegExp('.*Archethic Main Network.*'));
-    $(netNameFinder).tap();
-    $(netNameFinder).tap();
+    await $(netNameFinder).tap();
     final testNetFinder = createFinder(RegExp('.*testnet.*'));
     await $(testNetFinder).tap();
 

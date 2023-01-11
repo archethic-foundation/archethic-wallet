@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'nft_oparations_test.dart' as nft_oparations_test;
+import 'nft_operations_test.dart' as nft_oparations_test;
 import 'wallet_creation_test.dart' as wallet_creation_test;
 import 'wallet_use_test.dart' as wallet_use_test;
 
