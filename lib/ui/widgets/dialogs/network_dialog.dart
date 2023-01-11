@@ -96,12 +96,12 @@ class NetworkDialog {
                                   height: 30,
                                 ),
                                 Text(
-                                  ref
-                                      .read(SettingsProviders.settings)
-                                      .network
-                                      .getDisplayName(context),
-                                  style: theme.textStyleSize10W100Primary,
-                                ),
+                                    ref
+                                        .read(SettingsProviders.settings)
+                                        .network
+                                        .getDisplayName(context),
+                                    style: theme.textStyleSize10W100Primary,
+                                    key: Key('networkName')),
                                 const SizedBox(
                                   height: 20,
                                 ),

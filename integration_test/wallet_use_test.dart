@@ -1,6 +1,4 @@
 //@Timeout(Duration(seconds: 90))
-import 'dart:async';
-
 import 'package:aewallet/main.dart' as app;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,7 +13,8 @@ void main() {
     await app.main();
     await $(CheckboxListTile).tap();
     await $(#importWallet).tap();
-    await $(#testNetButton).tap();
+    final finder = createFinder(RegExp('.*testnet.*'));
+    await $(finder).tap();
 
     final seedWord = [
       'pave',
@@ -51,5 +50,27 @@ void main() {
       await $(finder).enterText(seedWord[index]);
     }
     await $(#ok).tap();
+  });
+
+  patrolTest('As a user I can receive UCOs',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    await app.main();
+    await $(#receiveUCObutton).tap();
+    expect($(#qrcode), findsOneWidget);
+  });
+
+  patrolTest('As a user I can send UCOs',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    await app.main();
+    await $(#sendUCObutton).tap();
+    expect($(#qrcode), findsOneWidget);
+  });
+
+  patrolTest('As a user I can see my transaction history',
+      nativeAutomatorConfig: nativeAutomatorConfig,
+      nativeAutomation: true, ($) async {
+    expect($(#recentTransactionsNoTransactionYet), findsOneWidget);
   });
 }

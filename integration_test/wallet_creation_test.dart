@@ -53,65 +53,6 @@ void main() {
     expect($(#UCO), findsOneWidget);
   });
 
-  patrolTest('As a user I can retrieve my wallet',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
-    await app.main();
-    await $(CheckboxListTile).tap();
-    await $(#alreadyHaveAwallet).tap();
-    await $(#testNetButton).tap();
-
-    final seedWord = [
-      'pave',
-      'shrug',
-      'coffee',
-      'daughter',
-      'hip',
-      'mechanic',
-      'scale',
-      'trigger',
-      'lake',
-      'resist',
-      'way',
-      'repair',
-      'good',
-      'animal',
-      'tennis',
-      'boost',
-      'walk',
-      'story',
-      'dash',
-      'brass',
-      'buzz',
-      'orphan',
-      'feed',
-      'connect'
-    ];
-
-    const length = 24;
-    for (var index = 1; index <= length; index++) {
-      final finder = createFinder(Key('seedWord$index'));
-      await $(finder).tap();
-      await $(finder).enterText(seedWord[index]);
-    }
-    await $(#ok).tap();
-  });
-
-  patrolTest('As a user I can receive UCOs',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
-    //await app.main();
-
-    await $('RECEIVE').tap();
-    expect($(#qrcode), findsOneWidget);
-  });
-
-  patrolTest('As a user I can see my transaction history',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
-    expect($(#recentTransactionsNoTransactionYet), findsOneWidget);
-  });
-
   patrolTest('As a user I can create a NFT',
       nativeAutomatorConfig: nativeAutomatorConfig,
       nativeAutomation: true, ($) async {
