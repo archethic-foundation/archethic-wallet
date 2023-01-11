@@ -426,6 +426,15 @@ extension AppStyles on BaseTheme {
       color: text60,
     );
   }
+
+  TextStyle get textStyleSize12W400EquinoxConnectivityBanner {
+    return TextStyle(
+      fontFamily: mainFont,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
+      color: bannerTextColor,
+    );
+  }
 }
 
 class AppFontSizes {

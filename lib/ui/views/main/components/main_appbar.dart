@@ -2,7 +2,6 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -17,7 +16,6 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,7 +44,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
@@ -85,11 +82,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 preferences.showBalances
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
-              // TODO(reddwarf03): Activate when plugin usesd in notifier works correctly
-              //if (!kIsWeb &&
-              //    connectivityStatusProvider != ConnectivityStatus.isConnected)
-              //  const MainAppBarIconNConnection()
-              //else
               if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
@@ -196,28 +188,6 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
         final preferencesNotifier =
             ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setShowBalances(true);
-      },
-    );
-  }
-}
-
-class MainAppBarIconNConnection extends ConsumerWidget {
-  const MainAppBarIconNConnection({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(SettingsProviders.settings);
-    return IconButton(
-      icon: Icon(
-        UiIcons.warning,
-        color: theme.warning,
-      ),
-      onPressed: () async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
       },
     );
   }

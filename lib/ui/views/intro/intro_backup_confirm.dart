@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -12,6 +13,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -218,300 +220,324 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.read(SettingsProviders.settings);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              theme.background3Small!,
-            ),
-            fit: BoxFit.fitHeight,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
-          ),
-        ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
-            ),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(start: 15),
-                      height: 50,
-                      width: 50,
-                      child: BackButton(
-                        key: const Key('back'),
-                        color: theme.text,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ],
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          key: _scaffoldKey,
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  theme.background3Small!,
                 ),
-                Expanded(
-                  child: ArchethicScrollbar(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                fit: BoxFit.fitHeight,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[theme.backgroundDark!, theme.background!],
+              ),
+            ),
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  top: MediaQuery.of(context).size.height * 0.075,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
                         Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                          ),
-                          alignment: AlignmentDirectional.centerStart,
-                          child: AutoSizeText(
-                            localizations.confirmSecretPhrase,
-                            style: theme.textStyleSize24W700EquinoxPrimary,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          child: AutoSizeText(
-                            localizations.confirmSecretPhraseExplanation,
-                            style: theme.textStyleSize14W600Primary,
-                            textAlign: TextAlign.justify,
-                            maxLines: 6,
-                            stepGranularity: 0.5,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          child: Wrap(
-                            spacing: 10,
-                            children: wordListSelected
-                                .asMap()
-                                .entries
-                                .map((MapEntry entry) {
-                              return SizedBox(
-                                height: 35,
-                                child: Chip(
-                                  avatar: CircleAvatar(
-                                    backgroundColor: Colors.grey.shade800,
-                                    child: Text(
-                                      (entry.key + 1).toString(),
-                                      style: theme.textStyleSize12W100Primary60,
-                                    ),
-                                  ),
-                                  label: Text(
-                                    entry.value,
-                                    style: theme.textStyleSize12W400Primary,
-                                  ),
-                                  onDeleted: () {
-                                    setState(() {
-                                      wordListToSelect.add(entry.value);
-                                      wordListSelected.removeAt(entry.key);
-                                    });
-                                  },
-                                  deleteIconColor: Colors.white,
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Divider(
-                          height: 15,
-                          color: theme.text60,
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 20,
-                            end: 20,
-                            top: 15,
-                          ),
-                          child: Wrap(
-                            spacing: 10,
-                            children: wordListToSelect
-                                .asMap()
-                                .entries
-                                .map((MapEntry entry) {
-                              return SizedBox(
-                                height: 35,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    wordListSelected.add(entry.value);
-                                    wordListToSelect.removeAt(entry.key);
-                                    setState(() {});
-                                  },
-                                  child: Chip(
-                                    label: Text(
-                                      entry.value,
-                                      style: theme.textStyleSize12W400Primary,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                          margin: const EdgeInsetsDirectional.only(start: 15),
+                          height: 50,
+                          width: 50,
+                          child: BackButton(
+                            key: const Key('back'),
+                            color: theme.text,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
                         ),
                       ],
                     ),
-                  ),
+                    Expanded(
+                      child: ArchethicScrollbar(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                start: 20,
+                                end: 20,
+                              ),
+                              alignment: AlignmentDirectional.centerStart,
+                              child: AutoSizeText(
+                                localizations.confirmSecretPhrase,
+                                style: theme.textStyleSize24W700EquinoxPrimary,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                start: 20,
+                                end: 20,
+                                top: 15,
+                              ),
+                              child: AutoSizeText(
+                                localizations.confirmSecretPhraseExplanation,
+                                style: theme.textStyleSize14W600Primary,
+                                textAlign: TextAlign.justify,
+                                maxLines: 6,
+                                stepGranularity: 0.5,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                start: 20,
+                                end: 20,
+                                top: 15,
+                              ),
+                              child: Wrap(
+                                spacing: 10,
+                                children: wordListSelected
+                                    .asMap()
+                                    .entries
+                                    .map((MapEntry entry) {
+                                  return SizedBox(
+                                    height: 35,
+                                    child: Chip(
+                                      avatar: CircleAvatar(
+                                        backgroundColor: Colors.grey.shade800,
+                                        child: Text(
+                                          (entry.key + 1).toString(),
+                                          style: theme
+                                              .textStyleSize12W100Primary60,
+                                        ),
+                                      ),
+                                      label: Text(
+                                        entry.value,
+                                        style: theme.textStyleSize12W400Primary,
+                                      ),
+                                      onDeleted: () {
+                                        setState(() {
+                                          wordListToSelect.add(entry.value);
+                                          wordListSelected.removeAt(entry.key);
+                                        });
+                                      },
+                                      deleteIconColor: Colors.white,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            Divider(
+                              height: 15,
+                              color: theme.text60,
+                            ),
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                start: 20,
+                                end: 20,
+                                top: 15,
+                              ),
+                              child: Wrap(
+                                spacing: 10,
+                                children: wordListToSelect
+                                    .asMap()
+                                    .entries
+                                    .map((MapEntry entry) {
+                                  return SizedBox(
+                                    height: 35,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        wordListSelected.add(entry.value);
+                                        wordListToSelect.removeAt(entry.key);
+                                        setState(() {});
+                                      },
+                                      child: Chip(
+                                        label: Text(
+                                          entry.value,
+                                          style:
+                                              theme.textStyleSize12W400Primary,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (settings.network.network ==
+                            AvailableNetworks.archethicTestNet ||
+                        kDebugMode)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              if (wordListSelected.length != 24 ||
+                                  connectivityStatusProvider ==
+                                      ConnectivityStatus.isDisconnected)
+                                AppButtonTiny(
+                                  AppButtonTinyType.primaryOutline,
+                                  localizations.confirm,
+                                  Dimens.buttonTopDimens,
+                                  key: const Key('confirm'),
+                                  onPressed: () {},
+                                )
+                              else
+                                AppButtonTiny(
+                                  AppButtonTinyType.primary,
+                                  localizations.confirm,
+                                  Dimens.buttonTopDimens,
+                                  key: const Key('confirm'),
+                                  onPressed: () async {
+                                    var orderOk = true;
+
+                                    for (var i = 0;
+                                        i < originalWordsList.length;
+                                        i++) {
+                                      if (originalWordsList[i] !=
+                                          wordListSelected[i]) {
+                                        orderOk = false;
+                                      }
+                                    }
+                                    if (orderOk == false) {
+                                      setState(() {
+                                        UIUtil.showSnackbar(
+                                          localizations.confirmSecretPhraseKo,
+                                          context,
+                                          ref,
+                                          theme.text!,
+                                          theme.snackBarShadow!,
+                                        );
+                                      });
+                                    } else {
+                                      await _launchSecurityConfiguration(
+                                        widget.name!,
+                                        widget.seed!,
+                                      );
+                                    }
+                                  },
+                                ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              if (connectivityStatusProvider ==
+                                  ConnectivityStatus.isConnected)
+                                AppButtonTiny(
+                                  AppButtonTinyType.primary,
+                                  localizations.pass,
+                                  Dimens.buttonBottomDimens,
+                                  key: const Key('pass'),
+                                  onPressed: () {
+                                    AppDialogs.showConfirmDialog(
+                                      context,
+                                      ref,
+                                      localizations
+                                          .passBackupConfirmationDisclaimer,
+                                      localizations
+                                          .passBackupConfirmationMessage,
+                                      localizations.yes,
+                                      () async {
+                                        await _launchSecurityConfiguration(
+                                          widget.name!,
+                                          widget.seed!,
+                                        );
+                                      },
+                                      titleStyle: theme
+                                          .textStyleSize14W600EquinoxPrimaryRed,
+                                      additionalContent:
+                                          localizations.archethicDoesntKeepCopy,
+                                      additionalContentStyle:
+                                          theme.textStyleSize12W300PrimaryRed,
+                                    );
+                                  },
+                                )
+                              else
+                                AppButtonTiny(
+                                  AppButtonTinyType.primaryOutline,
+                                  localizations.pass,
+                                  Dimens.buttonBottomDimens,
+                                  key: const Key('pass'),
+                                  onPressed: () {},
+                                ),
+                            ],
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              if (wordListSelected.length != 24 ||
+                                  connectivityStatusProvider ==
+                                      ConnectivityStatus.isDisconnected)
+                                AppButtonTiny(
+                                  AppButtonTinyType.primaryOutline,
+                                  localizations.confirm,
+                                  Dimens.buttonBottomDimens,
+                                  key: const Key('confirm'),
+                                  onPressed: () {},
+                                )
+                              else
+                                AppButtonTiny(
+                                  AppButtonTinyType.primary,
+                                  localizations.confirm,
+                                  Dimens.buttonBottomDimens,
+                                  key: const Key('confirm'),
+                                  onPressed: () async {
+                                    var orderOk = true;
+
+                                    for (var i = 0;
+                                        i < originalWordsList.length;
+                                        i++) {
+                                      if (originalWordsList[i] !=
+                                          wordListSelected[i]) {
+                                        orderOk = false;
+                                      }
+                                    }
+                                    if (orderOk == false) {
+                                      setState(() {
+                                        UIUtil.showSnackbar(
+                                          localizations.confirmSecretPhraseKo,
+                                          context,
+                                          ref,
+                                          theme.text!,
+                                          theme.snackBarShadow!,
+                                        );
+                                      });
+                                    } else {
+                                      await _launchSecurityConfiguration(
+                                        widget.name!,
+                                        widget.seed!,
+                                      );
+                                    }
+                                  },
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
-                if (settings.network.network ==
-                        AvailableNetworks.archethicTestNet ||
-                    kDebugMode)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          if (wordListSelected.length != 24)
-                            AppButtonTiny(
-                              AppButtonTinyType.primaryOutline,
-                              localizations.confirm,
-                              Dimens.buttonTopDimens,
-                              key: const Key('confirm'),
-                              onPressed: () {},
-                            )
-                          else
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              localizations.confirm,
-                              Dimens.buttonTopDimens,
-                              key: const Key('confirm'),
-                              onPressed: () async {
-                                var orderOk = true;
-
-                                for (var i = 0;
-                                    i < originalWordsList.length;
-                                    i++) {
-                                  if (originalWordsList[i] !=
-                                      wordListSelected[i]) {
-                                    orderOk = false;
-                                  }
-                                }
-                                if (orderOk == false) {
-                                  setState(() {
-                                    UIUtil.showSnackbar(
-                                      localizations.confirmSecretPhraseKo,
-                                      context,
-                                      ref,
-                                      theme.text!,
-                                      theme.snackBarShadow!,
-                                    );
-                                  });
-                                } else {
-                                  await _launchSecurityConfiguration(
-                                    widget.name!,
-                                    widget.seed!,
-                                  );
-                                }
-                              },
-                            ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.pass,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('pass'),
-                            onPressed: () {
-                              AppDialogs.showConfirmDialog(
-                                context,
-                                ref,
-                                localizations.passBackupConfirmationDisclaimer,
-                                localizations.passBackupConfirmationMessage,
-                                localizations.yes,
-                                () async {
-                                  await _launchSecurityConfiguration(
-                                    widget.name!,
-                                    widget.seed!,
-                                  );
-                                },
-                                titleStyle:
-                                    theme.textStyleSize14W600EquinoxPrimaryRed,
-                                additionalContent:
-                                    localizations.archethicDoesntKeepCopy,
-                                additionalContentStyle:
-                                    theme.textStyleSize12W300PrimaryRed,
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          if (wordListSelected.length != 24)
-                            AppButtonTiny(
-                              AppButtonTinyType.primaryOutline,
-                              localizations.confirm,
-                              Dimens.buttonBottomDimens,
-                              key: const Key('confirm'),
-                              onPressed: () {},
-                            )
-                          else
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              localizations.confirm,
-                              Dimens.buttonBottomDimens,
-                              key: const Key('confirm'),
-                              onPressed: () async {
-                                var orderOk = true;
-
-                                for (var i = 0;
-                                    i < originalWordsList.length;
-                                    i++) {
-                                  if (originalWordsList[i] !=
-                                      wordListSelected[i]) {
-                                    orderOk = false;
-                                  }
-                                }
-                                if (orderOk == false) {
-                                  setState(() {
-                                    UIUtil.showSnackbar(
-                                      localizations.confirmSecretPhraseKo,
-                                      context,
-                                      ref,
-                                      theme.text!,
-                                      theme.snackBarShadow!,
-                                    );
-                                  });
-                                } else {
-                                  await _launchSecurityConfiguration(
-                                    widget.name!,
-                                    widget.seed!,
-                                  );
-                                }
-                              },
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        const BannerConnectivity(),
+      ],
     );
   }
 

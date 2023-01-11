@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -59,6 +60,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected =
         ref.read(AccountProviders.selectedAccount).valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
     return SafeArea(
@@ -147,59 +149,88 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
           if (widget.displaySendButton)
             Row(
               children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.send,
-                  Dimens.buttonTopDimens,
-                  key: const Key('sendNFT'),
-                  icon: Icon(
-                    UiIcons.send,
-                    color: theme.mainButtonLabel,
-                    size: 14,
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isConnected)
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.send,
+                    Dimens.buttonTopDimens,
+                    key: const Key('sendNFT'),
+                    icon: Icon(
+                      UiIcons.send,
+                      color: theme.mainButtonLabel,
+                      size: 14,
+                    ),
+                    onPressed: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      await TransferSheet(
+                        transferType: TransferType.nft,
+                        accountToken: accountSelected.accountNFT!.firstWhere(
+                          (element) =>
+                              element.tokenInformations!.id ==
+                              widget.tokenInformations.id,
+                        ),
+                        recipient: const TransferRecipient.address(
+                          address: Address(''),
+                        ),
+                      ).show(
+                        context: context,
+                        ref: ref,
+                      );
+                    },
+                  )
+                else
+                  AppButtonTiny(
+                    AppButtonTinyType.primaryOutline,
+                    localizations.send,
+                    Dimens.buttonTopDimens,
+                    key: const Key('sendNFT'),
+                    icon: Icon(
+                      UiIcons.send,
+                      color: theme.mainButtonLabel!.withOpacity(0.3),
+                      size: 14,
+                    ),
+                    onPressed: () {},
                   ),
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    await TransferSheet(
-                      transferType: TransferType.nft,
-                      accountToken: accountSelected.accountNFT!.firstWhere(
-                        (element) =>
-                            element.tokenInformations!.id ==
-                            widget.tokenInformations.id,
-                      ),
-                      recipient: const TransferRecipient.address(
-                        address: Address(''),
-                      ),
-                    ).show(
-                      context: context,
-                      ref: ref,
-                    );
-                  },
-                ),
               ],
             ),
           Row(
             children: <Widget>[
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.viewExplorer,
-                Dimens.buttonBottomDimens,
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: theme.mainButtonLabel,
-                  size: 14,
+              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  localizations.viewExplorer,
+                  Dimens.buttonBottomDimens,
+                  icon: Icon(
+                    Icons.more_horiz,
+                    color: theme.mainButtonLabel,
+                    size: 14,
+                  ),
+                  key: const Key('viewExplorer'),
+                  onPressed: () async {
+                    UIUtil.showWebview(
+                      context,
+                      '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
+                      '',
+                    );
+                  },
+                )
+              else
+                AppButtonTiny(
+                  AppButtonTinyType.primaryOutline,
+                  localizations.viewExplorer,
+                  Dimens.buttonBottomDimens,
+                  icon: Icon(
+                    Icons.more_horiz,
+                    color: theme.mainButtonLabel!.withOpacity(0.3),
+                    size: 14,
+                  ),
+                  key: const Key('viewExplorer'),
+                  onPressed: () {},
                 ),
-                key: const Key('viewExplorer'),
-                onPressed: () async {
-                  UIUtil.showWebview(
-                    context,
-                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
-                    '',
-                  );
-                },
-              ),
             ],
           ),
         ],

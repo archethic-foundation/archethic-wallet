@@ -39,34 +39,40 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
 
   Future<void> refresh() async {
     if (state.isLoggedOut) return;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return;
+    }
 
     final loggedInState = state.loggedIn!;
     final selectedCurrency = ref.read(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
 
-    final keychain =
-        await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
+    try {
+      final keychain =
+          await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
 
-    final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+      final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
 
-    final vault = await HiveVaultDatasource.getInstance();
-    await vault.setKeychainSecuredInfos(keychainSecuredInfos);
+      final vault = await HiveVaultDatasource.getInstance();
+      await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
-    final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
-      keychain,
-      HiveAppWalletDTO.fromModel(loggedInState.wallet),
-      selectedCurrency.name,
-      AccountBalance.cryptoCurrencyLabel,
-    );
-    if (newWalletDTO == null) return;
+      final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
+        keychain,
+        HiveAppWalletDTO.fromModel(loggedInState.wallet),
+        selectedCurrency.name,
+        AccountBalance.cryptoCurrencyLabel,
+      );
+      if (newWalletDTO == null) return;
 
-    state = Session.loggedIn(
-      wallet: loggedInState.wallet.copyWith(
-        keychainSecuredInfos: keychainSecuredInfos,
-        appKeychain: newWalletDTO.appKeychain,
-      ),
-    );
+      state = Session.loggedIn(
+        wallet: loggedInState.wallet.copyWith(
+          keychainSecuredInfos: keychainSecuredInfos,
+          appKeychain: newWalletDTO.appKeychain,
+        ),
+      );
+    } catch (e) {}
   }
 
   Future<void> logout() async {

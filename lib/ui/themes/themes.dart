@@ -119,4 +119,9 @@ abstract class BaseTheme {
   Decoration getDecorationSheet();
 
   Color? favoriteIconColor;
+
+  // Banner connectivity
+  Color? bannerColor;
+  Color? bannerShadowColor;
+  Color? bannerTextColor;
 }

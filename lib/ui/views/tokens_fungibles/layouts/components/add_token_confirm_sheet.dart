@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -155,6 +156,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return SafeArea(
       minimum:
@@ -188,38 +190,54 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.confirm,
-                      Dimens.buttonTopDimens,
-                      key: const Key('confirm'),
-                      icon: Icon(
-                        Icons.check,
-                        color: theme.text,
-                        size: 14,
-                      ),
-                      onPressed: () async {
-                        // Authenticate
-                        final authMethod = AuthenticationMethod(
-                          ref.read(
-                            AuthenticationProviders.settings.select(
-                              (settings) => settings.authenticationMethod,
+                    if (connectivityStatusProvider ==
+                        ConnectivityStatus.isConnected)
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
+                        localizations.confirm,
+                        Dimens.buttonTopDimens,
+                        key: const Key('confirm'),
+                        icon: Icon(
+                          Icons.check,
+                          color: theme.text,
+                          size: 14,
+                        ),
+                        onPressed: () async {
+                          // Authenticate
+                          final authMethod = AuthenticationMethod(
+                            ref.read(
+                              AuthenticationProviders.settings.select(
+                                (settings) => settings.authenticationMethod,
+                              ),
                             ),
-                          ),
-                        );
-                        final auth = await AuthFactory.authenticate(
-                          context,
-                          ref,
-                          authMethod: authMethod,
-                          activeVibrations: ref
-                              .watch(SettingsProviders.settings)
-                              .activeVibrations,
-                        );
-                        if (auth) {
-                          EventTaxiImpl.singleton().fire(AuthenticatedEvent());
-                        }
-                      },
-                    )
+                          );
+                          final auth = await AuthFactory.authenticate(
+                            context,
+                            ref,
+                            authMethod: authMethod,
+                            activeVibrations: ref
+                                .watch(SettingsProviders.settings)
+                                .activeVibrations,
+                          );
+                          if (auth) {
+                            EventTaxiImpl.singleton()
+                                .fire(AuthenticatedEvent());
+                          }
+                        },
+                      )
+                    else
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
+                        localizations.confirm,
+                        Dimens.buttonTopDimens,
+                        key: const Key('confirm'),
+                        icon: Icon(
+                          Icons.check,
+                          color: theme.text30,
+                          size: 14,
+                        ),
+                        onPressed: () {},
+                      ),
                   ],
                 ),
                 Row(

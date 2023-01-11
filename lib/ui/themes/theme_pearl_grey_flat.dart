@@ -238,4 +238,12 @@ class PearlGreyFlatTheme implements BaseTheme {
 
   @override
   Color? favoriteIconColor = const Color(0xFF151515);
+
+  // Banner connectivity
+  @override
+  Color? bannerColor = Colors.red;
+  @override
+  Color? bannerShadowColor = Colors.white.withOpacity(0.8);
+  @override
+  Color? bannerTextColor = Colors.white;
 }

@@ -1,11 +1,13 @@
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
+import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -64,40 +66,47 @@ class _HomePageState extends ConsumerState<HomePage>
       },
     );
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      appBar: const MainAppBar(),
-      bottomNavigationBar: const MainBottomBar(),
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
-      backgroundColor: theme.background,
-      drawer: SizedBox(
-        width: Responsive.drawerWidth(context),
-        child: const Drawer(
-          child: SettingsSheetWallet(),
+    return Stack(
+      children: [
+        Scaffold(
+          extendBodyBehindAppBar: true,
+          extendBody: true,
+          appBar: const MainAppBar(),
+          bottomNavigationBar: const MainBottomBar(),
+          drawerEdgeDragWidth: 0,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: theme.background,
+          drawer: SizedBox(
+            width: Responsive.drawerWidth(context),
+            child: const Drawer(
+              child: SettingsSheetWallet(),
+            ),
+          ),
+          body: IncomingTransactionsNotifier(
+            child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: bottomBarPageController,
+              onPageChanged: (int page) {
+                ref
+                    .read(SettingsProviders.settings.notifier)
+                    .setMainScreenCurrentPage(page);
+                if (page == 3) {
+                  ref
+                      .read(AccountProviders.selectedAccount.notifier)
+                      .refreshNFTs();
+                }
+              },
+              children: const [
+                AddressBookTab(),
+                KeychainTab(),
+                AccountTab(),
+                NFTTab(),
+              ],
+            ),
+          ),
         ),
-      ),
-      body: IncomingTransactionsNotifier(
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: bottomBarPageController,
-          onPageChanged: (int page) {
-            ref
-                .read(SettingsProviders.settings.notifier)
-                .setMainScreenCurrentPage(page);
-            if (page == 3) {
-              ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
-            }
-          },
-          children: const [
-            AddressBookTab(),
-            KeychainTab(),
-            AccountTab(),
-            NFTTab(),
-          ],
-        ),
-      ),
+        const BannerConnectivity(),
+      ],
     );
   }
 }
@@ -150,6 +159,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     if (session == null) return const SizedBox();
 
     return Column(
@@ -209,7 +219,9 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               children: <Widget>[
-                if (accountSelected!.balance!.isNativeTokenValuePositive())
+                if (accountSelected!.balance!.isNativeTokenValuePositive() &&
+                    connectivityStatusProvider ==
+                        ConnectivityStatus.isConnected)
                   AppButtonTiny(
                     AppButtonTinyType.primary,
                     localizations.createFungibleToken,

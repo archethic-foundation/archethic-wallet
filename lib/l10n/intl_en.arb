@@ -1,5 +1,11 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
+  "noConnectionBanner": "No connection",
+  "@noConnectionBanner": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
