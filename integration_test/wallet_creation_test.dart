@@ -26,11 +26,11 @@ void main() {
     await $(#cancelButton).tap();
 
     // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
+    final finder = createFinder(RegExp('.*Archethic Main Network.*'));
+    $(finder).tap();
 
-    //await $('Archethic Main Network').tap();
-
-    // tap sur testnet
-    //await $('Archethic Test Network').tap();
+    final testNetFinder = createFinder(RegExp('.*testnet.*'));
+    await $(testNetFinder).tap();
 
     // répondre oui à la question
     await $(#okButton).tap();
