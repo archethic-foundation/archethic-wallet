@@ -20,27 +20,28 @@ void main() {
 
     // entrer un nom dans le champ et OK
     await $(#newAccountName).enterText('test_wallet_001');
+
+    // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
+    final netNameFinder = createFinder(RegExp('.*Archethic Main Network.*'));
+    $(netNameFinder).tap();
+    $(netNameFinder).tap();
+    final testNetFinder = createFinder(RegExp('.*testnet.*'));
+    await $(testNetFinder).tap();
+
     await $(#okButton).tap();
 
 // répondre non à la quesition et vérifier que l'on est sur la saiie de nom
     await $(#cancelButton).tap();
 
-    // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
-    final finder = createFinder(RegExp('.*Archethic Main Network.*'));
-    $(finder).tap();
-
-    final testNetFinder = createFinder(RegExp('.*testnet.*'));
-    await $(testNetFinder).tap();
-
     // répondre oui à la question
     await $(#okButton).tap();
-    await $(#okButton).tap();
+    await $(#yesButton).tap();
     await $(#understandButton).tap();
     await $(#iveBackedItUp).tap();
     //await $(#backUpButton).tap();
     await $(#pass).tap();
 
-    await $(#okButton).tap();
+    await $(#yesButton).tap();
     await $('PIN').tap();
 
     // code pin 000000 avec confirmation
@@ -51,13 +52,5 @@ void main() {
 
     await Future.delayed(const Duration(seconds: 60));
     expect($(#UCO), findsOneWidget);
-  });
-
-  patrolTest('As a user I can create a NFT',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
-    $(#nftTab).tap();
-    $(#noCategoryNFTs).tap();
-    $(#createNFTbutton).tap();
   });
 }

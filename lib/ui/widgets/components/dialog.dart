@@ -75,7 +75,7 @@ class AppDialogs {
               },
             ),
             _AppDialogsButton(
-              key: const Key('okButton'),
+              key: const Key('yesButton'),
               textButton: buttonText,
               onPressed: () {
                 sl.get<HapticUtil>().feedback(
