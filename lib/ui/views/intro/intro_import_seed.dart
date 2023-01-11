@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -9,6 +10,7 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -82,421 +84,440 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         (settings) => settings.languageSeed,
       ),
     );
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              theme.background2Small!,
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  theme.background2Small!,
+                ),
+                fit: BoxFit.fitHeight,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[theme.backgroundDark!, theme.background!],
+              ),
             ),
-            fit: BoxFit.fitHeight,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
-          ),
-        ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
-            ),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  top: MediaQuery.of(context).size.height * 0.075,
+                ),
+                child: Column(
                   children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: smallScreen(context) ? 15 : 20,
+                          ),
+                          height: 50,
+                          width: 50,
+                          child: BackButton(
+                            key: const Key('back'),
+                            color: theme.text,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                start: 15,
+                              ),
+                              height: 50,
+                              width: 50,
+                              child: TextButton(
+                                onPressed: () async {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
+
+                                  ref
+                                      .read(SettingsProviders.settings.notifier)
+                                      .setLanguageSeed('en');
+                                },
+                                child: languageSeed == 'en'
+                                    ? Image.asset(
+                                        'assets/icons/languages/united-states.png',
+                                      )
+                                    : Opacity(
+                                        opacity: 0.3,
+                                        child: Image.asset(
+                                          'assets/icons/languages/united-states.png',
+                                        ),
+                                      ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsetsDirectional.only(
+                                start: 15,
+                              ),
+                              height: 50,
+                              width: 50,
+                              child: TextButton(
+                                onPressed: () async {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
+
+                                  ref
+                                      .read(SettingsProviders.settings.notifier)
+                                      .setLanguageSeed('fr');
+                                },
+                                child: languageSeed == 'fr'
+                                    ? Image.asset(
+                                        'assets/icons/languages/france.png',
+                                      )
+                                    : Opacity(
+                                        opacity: 0.3,
+                                        child: Image.asset(
+                                          'assets/icons/languages/france.png',
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                     Container(
                       margin: EdgeInsetsDirectional.only(
-                        start: smallScreen(context) ? 15 : 20,
+                        start: smallScreen(context) ? 30 : 40,
+                        end: smallScreen(context) ? 30 : 40,
+                        top: 10,
                       ),
-                      height: 50,
-                      width: 50,
-                      child: BackButton(
-                        key: const Key('back'),
-                        color: theme.text,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                      alignment: AlignmentDirectional.centerStart,
+                      child: AutoSizeText(
+                        localizations.importSecretPhrase,
+                        style: theme.textStyleSize28W700Primary,
+                        maxLines: 1,
+                        stepGranularity: 0.1,
+                      ),
+                    ),
+                    Expanded(
+                      child: ArchethicScrollbar(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: smallScreen(context) ? 30 : 40,
+                                right: smallScreen(context) ? 30 : 40,
+                                top: 15,
+                              ),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                localizations.importSecretPhraseHint,
+                                style: theme.textStyleSize16W600Primary,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            if (_mnemonicError != '')
+                              SizedBox(
+                                height: 40,
+                                child: Text(
+                                  _mnemonicError,
+                                  style: theme.textStyleSize14W200Primary,
+                                ),
+                              )
+                            else
+                              const SizedBox(
+                                height: 40,
+                              ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              child: Column(
+                                children: <Widget>[
+                                  const SizedBox(height: 10),
+                                  GridView.count(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    childAspectRatio: 1.2,
+                                    shrinkWrap: true,
+                                    crossAxisCount: 4,
+                                    children: List.generate(24, (index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              (index + 1).toString(),
+                                              style: theme
+                                                  .textStyleSize12W100Primary,
+                                            ),
+                                            Autocomplete<String>(
+                                              optionsBuilder: (
+                                                TextEditingValue
+                                                    textEditingValue,
+                                              ) {
+                                                if (textEditingValue.text ==
+                                                    '') {
+                                                  return const Iterable<
+                                                      String>.empty();
+                                                }
+                                                return AppMnemomics.getLanguage(
+                                                  languageSeed,
+                                                ).list.where((String option) {
+                                                  return option.startsWith(
+                                                    unorm.nfkd(
+                                                      textEditingValue.text
+                                                          .toLowerCase(),
+                                                    ),
+                                                  );
+                                                });
+                                              },
+                                              onSelected: (String selection) {
+                                                phrase[index] = selection;
+                                                if (!AppMnemomics.isValidWord(
+                                                  selection,
+                                                  languageCode: languageSeed,
+                                                )) {
+                                                  setState(() {
+                                                    _mnemonicIsValid = false;
+                                                    _mnemonicError =
+                                                        localizations
+                                                            .mnemonicInvalidWord
+                                                            .replaceAll(
+                                                      '%1',
+                                                      selection,
+                                                    );
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    _mnemonicError = '';
+                                                    _mnemonicIsValid = true;
+                                                  });
+                                                }
+                                              },
+                                              fieldViewBuilder: (
+                                                context,
+                                                textEditingController,
+                                                focusNode,
+                                                onFieldSubmitted,
+                                              ) {
+                                                return Stack(
+                                                  alignment:
+                                                      AlignmentDirectional
+                                                          .center,
+                                                  children: <Widget>[
+                                                    TextFormField(
+                                                      controller:
+                                                          textEditingController,
+                                                      focusNode: focusNode,
+                                                      style: theme
+                                                          .textStyleSize12W400Primary,
+                                                      autocorrect: false,
+                                                      onChanged: (value) {
+                                                        final _value =
+                                                            value.trim();
+                                                        if (_value.isEmpty) {
+                                                          return;
+                                                        }
+                                                        phrase[index] = _value;
+                                                        if (!AppMnemomics
+                                                            .isValidWord(
+                                                          _value,
+                                                          languageCode:
+                                                              languageSeed,
+                                                        )) {
+                                                          setState(() {
+                                                            _mnemonicIsValid =
+                                                                false;
+                                                            _mnemonicError =
+                                                                localizations
+                                                                    .mnemonicInvalidWord
+                                                                    .replaceAll(
+                                                              '%1',
+                                                              value,
+                                                            );
+                                                          });
+                                                        } else {
+                                                          setState(() {
+                                                            _mnemonicError = '';
+                                                            _mnemonicIsValid =
+                                                                true;
+                                                          });
+                                                        }
+                                                      },
+                                                    ),
+                                                    Positioned(
+                                                      bottom: 1,
+                                                      child: Container(
+                                                        height: 1,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          gradient:
+                                                              theme.gradient,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 15,
-                          ),
-                          height: 50,
-                          width: 50,
-                          child: TextButton(
-                            onPressed: () async {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
-
-                              ref
-                                  .read(SettingsProviders.settings.notifier)
-                                  .setLanguageSeed('en');
-                            },
-                            child: languageSeed == 'en'
-                                ? Image.asset(
-                                    'assets/icons/languages/united-states.png',
-                                  )
-                                : Opacity(
-                                    opacity: 0.3,
-                                    child: Image.asset(
-                                      'assets/icons/languages/united-states.png',
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                            start: 15,
-                          ),
-                          height: 50,
-                          width: 50,
-                          child: TextButton(
-                            onPressed: () async {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
-
-                              ref
-                                  .read(SettingsProviders.settings.notifier)
-                                  .setLanguageSeed('fr');
-                            },
-                            child: languageSeed == 'fr'
-                                ? Image.asset(
-                                    'assets/icons/languages/france.png',
-                                  )
-                                : Opacity(
-                                    opacity: 0.3,
-                                    child: Image.asset(
-                                      'assets/icons/languages/france.png',
-                                    ),
-                                  ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: smallScreen(context) ? 30 : 40,
-                    end: smallScreen(context) ? 30 : 40,
-                    top: 10,
-                  ),
-                  alignment: AlignmentDirectional.centerStart,
-                  child: AutoSizeText(
-                    localizations.importSecretPhrase,
-                    style: theme.textStyleSize28W700Primary,
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                  ),
-                ),
-                Expanded(
-                  child: ArchethicScrollbar(
-                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: smallScreen(context) ? 30 : 40,
-                            right: smallScreen(context) ? 30 : 40,
-                            top: 15,
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            localizations.importSecretPhraseHint,
-                            style: theme.textStyleSize16W600Primary,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        if (_mnemonicError != '')
-                          SizedBox(
-                            height: 40,
-                            child: Text(
-                              _mnemonicError,
-                              style: theme.textStyleSize14W200Primary,
-                            ),
+                        if (isPressed == true ||
+                            phrase.contains('') ||
+                            connectivityStatusProvider ==
+                                ConnectivityStatus.isDisconnected)
+                          AppButtonTiny(
+                            AppButtonTinyType.primaryOutline,
+                            localizations.ok,
+                            Dimens.buttonTopDimens,
+                            key: const Key('ok'),
+                            onPressed: () {},
                           )
                         else
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(height: 10),
-                              GridView.count(
-                                physics: const NeverScrollableScrollPhysics(),
-                                childAspectRatio: 1.2,
-                                shrinkWrap: true,
-                                crossAxisCount: 4,
-                                children: List.generate(24, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10,
-                                      right: 10,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          (index + 1).toString(),
-                                          style:
-                                              theme.textStyleSize12W100Primary,
-                                        ),
-                                        Autocomplete<String>(
-                                          optionsBuilder: (
-                                            TextEditingValue textEditingValue,
-                                          ) {
-                                            if (textEditingValue.text == '') {
-                                              return const Iterable<
-                                                  String>.empty();
-                                            }
-                                            return AppMnemomics.getLanguage(
-                                              languageSeed,
-                                            ).list.where((String option) {
-                                              return option.startsWith(
-                                                unorm.nfkd(
-                                                  textEditingValue.text
-                                                      .toLowerCase(),
-                                                ),
-                                              );
-                                            });
-                                          },
-                                          onSelected: (String selection) {
-                                            phrase[index] = selection;
-                                            if (!AppMnemomics.isValidWord(
-                                              selection,
-                                              languageCode: languageSeed,
-                                            )) {
-                                              setState(() {
-                                                _mnemonicIsValid = false;
-                                                _mnemonicError = localizations
-                                                    .mnemonicInvalidWord
-                                                    .replaceAll(
-                                                  '%1',
-                                                  selection,
-                                                );
-                                              });
-                                            } else {
-                                              setState(() {
-                                                _mnemonicError = '';
-                                                _mnemonicIsValid = true;
-                                              });
-                                            }
-                                          },
-                                          fieldViewBuilder: (
-                                            context,
-                                            textEditingController,
-                                            focusNode,
-                                            onFieldSubmitted,
-                                          ) {
-                                            return Stack(
-                                              alignment:
-                                                  AlignmentDirectional.center,
-                                              children: <Widget>[
-                                                TextFormField(
-                                                  controller:
-                                                      textEditingController,
-                                                  focusNode: focusNode,
-                                                  style: theme
-                                                      .textStyleSize12W400Primary,
-                                                  autocorrect: false,
-                                                  onChanged: (value) {
-                                                    final _value = value.trim();
-                                                    if (_value.isEmpty) {
-                                                      return;
-                                                    }
-                                                    phrase[index] = _value;
-                                                    if (!AppMnemomics
-                                                        .isValidWord(
-                                                      _value,
-                                                      languageCode:
-                                                          languageSeed,
-                                                    )) {
-                                                      setState(() {
-                                                        _mnemonicIsValid =
-                                                            false;
-                                                        _mnemonicError =
-                                                            localizations
-                                                                .mnemonicInvalidWord
-                                                                .replaceAll(
-                                                          '%1',
-                                                          value,
-                                                        );
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        _mnemonicError = '';
-                                                        _mnemonicIsValid = true;
-                                                      });
-                                                    }
-                                                  },
-                                                ),
-                                                Positioned(
-                                                  bottom: 1,
-                                                  child: Container(
-                                                    height: 1,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    decoration: BoxDecoration(
-                                                      gradient: theme.gradient,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    if (isPressed == true || phrase.contains(''))
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.ok,
-                        Dimens.buttonTopDimens,
-                        key: const Key('ok'),
-                        onPressed: () {},
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.ok,
-                        Dimens.buttonTopDimens,
-                        key: const Key('ok'),
-                        onPressed: () async {
-                          setState(() {
-                            _mnemonicError = '';
-                            isPressed = true;
-                          });
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
+                            localizations.ok,
+                            Dimens.buttonTopDimens,
+                            key: const Key('ok'),
+                            onPressed: () async {
+                              setState(() {
+                                _mnemonicError = '';
+                                isPressed = true;
+                              });
 
-                          _mnemonicIsValid = true;
-                          for (final word in phrase) {
-                            final _word = word.trim();
-                            if (_word == '') {
-                              _mnemonicIsValid = false;
-                              _mnemonicError = localizations.mnemonicSizeError;
-                            } else {
-                              if (AppMnemomics.isValidWord(
-                                    _word,
-                                    languageCode: languageSeed,
-                                  ) ==
-                                  false) {
-                                _mnemonicIsValid = false;
-                                _mnemonicError = localizations
-                                    .mnemonicInvalidWord
-                                    .replaceAll('%1', _word);
+                              _mnemonicIsValid = true;
+                              for (final word in phrase) {
+                                final _word = word.trim();
+                                if (_word == '') {
+                                  _mnemonicIsValid = false;
+                                  _mnemonicError =
+                                      localizations.mnemonicSizeError;
+                                } else {
+                                  if (AppMnemomics.isValidWord(
+                                        _word,
+                                        languageCode: languageSeed,
+                                      ) ==
+                                      false) {
+                                    _mnemonicIsValid = false;
+                                    _mnemonicError = localizations
+                                        .mnemonicInvalidWord
+                                        .replaceAll('%1', _word);
+                                  }
+                                }
                               }
-                            }
-                          }
 
-                          if (!_mnemonicIsValid) {
-                            UIUtil.showSnackbar(
-                              _mnemonicError,
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
-                            );
-                            setState(() {
-                              isPressed = false;
-                            });
-                            return;
-                          }
-                          ShowSendingAnimation.build(context, theme);
-                          final newSession = await ref
-                              .read(SessionProviders.session.notifier)
-                              .restoreFromMnemonics(
-                                mnemonics: phrase,
-                                languageCode: languageSeed,
+                              if (!_mnemonicIsValid) {
+                                UIUtil.showSnackbar(
+                                  _mnemonicError,
+                                  context,
+                                  ref,
+                                  theme.text!,
+                                  theme.snackBarShadow!,
+                                );
+                                setState(() {
+                                  isPressed = false;
+                                });
+                                return;
+                              }
+                              ShowSendingAnimation.build(context, theme);
+                              final newSession = await ref
+                                  .read(SessionProviders.session.notifier)
+                                  .restoreFromMnemonics(
+                                    mnemonics: phrase,
+                                    languageCode: languageSeed,
+                                  );
+
+                              if (newSession == null) {
+                                setState(() {
+                                  _mnemonicIsValid = false;
+                                  isPressed = false;
+                                });
+                                UIUtil.showSnackbar(
+                                  localizations.noKeychain,
+                                  context,
+                                  ref,
+                                  theme.text!,
+                                  theme.snackBarShadow!,
+                                );
+                                Navigator.of(context).pop();
+                                return;
+                              }
+
+                              await _accountsDialog(
+                                newSession.wallet.appKeychain.accounts,
                               );
 
-                          if (newSession == null) {
-                            setState(() {
-                              _mnemonicIsValid = false;
-                              isPressed = false;
-                            });
-                            UIUtil.showSnackbar(
-                              localizations.noKeychain,
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
-                            );
-                            Navigator.of(context).pop();
-                            return;
-                          }
+                              final selectedAccount = await ref.read(
+                                AccountProviders.selectedAccount.future,
+                              );
+                              ref
+                                  .read(
+                                    AccountProviders.account(
+                                      selectedAccount!.name,
+                                    ).notifier,
+                                  )
+                                  .refreshRecentTransactions();
+                              ref
+                                  .read(
+                                    AccountProviders.account(
+                                      selectedAccount.name,
+                                    ).notifier,
+                                  )
+                                  .refreshNFTs();
+                              final securityConfigOk =
+                                  await _launchSecurityConfiguration(
+                                selectedAccount.name,
+                                newSession.wallet.seed,
+                              );
+                              setState(() {
+                                isPressed = false;
+                              });
 
-                          await _accountsDialog(
-                            newSession.wallet.appKeychain.accounts,
-                          );
-
-                          final selectedAccount = await ref.read(
-                            AccountProviders.selectedAccount.future,
-                          );
-                          ref
-                              .read(
-                                AccountProviders.account(
-                                  selectedAccount!.name,
-                                ).notifier,
-                              )
-                              .refreshRecentTransactions();
-                          ref
-                              .read(
-                                AccountProviders.account(
-                                  selectedAccount.name,
-                                ).notifier,
-                              )
-                              .refreshNFTs();
-                          final securityConfigOk =
-                              await _launchSecurityConfiguration(
-                            selectedAccount.name,
-                            newSession.wallet.seed,
-                          );
-                          setState(() {
-                            isPressed = false;
-                          });
-
-                          if (securityConfigOk == false) {
-                            Navigator.of(context).pop(false);
-                          }
-                        },
-                      ),
+                              if (securityConfigOk == false) {
+                                Navigator.of(context).pop(false);
+                              }
+                            },
+                          ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        const BannerConnectivity(),
+      ],
     );
   }
 

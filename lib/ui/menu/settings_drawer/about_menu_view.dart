@@ -11,7 +11,7 @@ class AboutMenuView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.drawerBackground,
@@ -111,18 +111,20 @@ class AboutMenuView extends ConsumerWidget {
                         },
                       ),*/
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLine(
-                        heading: localizations.aboutPrivacyPolicy,
-                        headingStyle: theme.textStyleSize16W600Primary,
-                        icon: UiIcons.privacy_policy,
-                        onPressed: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://archethic.net/aewallet-privacy.html',
-                            localizations.aboutPrivacyPolicy,
-                          );
-                        },
-                      ),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        _SettingsListItem.singleLine(
+                          heading: localizations.aboutPrivacyPolicy,
+                          headingStyle: theme.textStyleSize16W600Primary,
+                          icon: UiIcons.privacy_policy,
+                          onPressed: () async {
+                            UIUtil.showWebview(
+                              context,
+                              'https://archethic.net/aewallet-privacy.html',
+                              localizations.aboutPrivacyPolicy,
+                            );
+                          },
+                        ),
                     ],
                   ),
                   //List Top Gradient End

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';

@@ -1407,6 +1407,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  super_banners:
+    dependency: "direct main"
+    description:
+      name: super_banners
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   synchronized:
     dependency: transitive
     description:

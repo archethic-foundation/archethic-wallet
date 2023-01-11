@@ -13,7 +13,7 @@ class SecurityMenuView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
-
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.drawerBackground,
@@ -83,8 +83,12 @@ class SecurityMenuView extends ConsumerWidget {
                       const _BackupSecretPhraseListItem(),
                       const _PinPadShuffleSettingsListItem(),
                       const _SettingsListItem.spacer(),
-                      const _SyncBlockchainSettingsListItem(),
-                      const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _SyncBlockchainSettingsListItem(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,

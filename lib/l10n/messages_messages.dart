@@ -280,6 +280,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nftWithoutCategory" : MessageLookupByLibrary.simpleMessage("Without category"),
     "no" : MessageLookupByLibrary.simpleMessage("No"),
     "noConnection" : MessageLookupByLibrary.simpleMessage("The connection to the network could not be completed. Please check your network settings."),
+    "noConnectionBanner" : MessageLookupByLibrary.simpleMessage("No connection"),
     "noData" : MessageLookupByLibrary.simpleMessage("No data"),
     "noKeychain" : MessageLookupByLibrary.simpleMessage("No keychain exists with this secret phrase."),
     "noNFT" : MessageLookupByLibrary.simpleMessage("No NFT"),

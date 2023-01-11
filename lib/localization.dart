@@ -33,6 +33,10 @@ class AppLocalization {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
+  String get noConnectionBanner {
+    return Intl.message('No connection', name: 'noConnectionBanner');
+  }
+
   String get welcomeText {
     return Intl.message(
         'Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3',

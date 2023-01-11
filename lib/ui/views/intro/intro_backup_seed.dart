@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
@@ -48,196 +50,207 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
         (settings) => settings.languageSeed,
       ),
     );
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: theme.backgroundDarkest,
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              theme.background4Small!,
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: theme.backgroundDarkest,
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  theme.background4Small!,
+                ),
+                fit: BoxFit.fitHeight,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[theme.backgroundDark!, theme.background!],
+              ),
             ),
-            fit: BoxFit.fitHeight,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
-          ),
-        ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
-            ),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  top: MediaQuery.of(context).size.height * 0.075,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
                         children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin:
+                                    const EdgeInsetsDirectional.only(start: 15),
+                                height: 50,
+                                width: 50,
+                                child: BackButton(
+                                  key: const Key('back'),
+                                  color: theme.text,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsetsDirectional.only(
+                                      start: 15,
+                                    ),
+                                    height: 50,
+                                    width: 50,
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        sl.get<HapticUtil>().feedback(
+                                              FeedbackType.light,
+                                              preferences.activeVibrations,
+                                            );
+                                        seed = AppSeeds.generateSeed();
+                                        mnemonic = AppMnemomics.seedToMnemonic(
+                                          seed!,
+                                        );
+                                        ref
+                                            .read(
+                                              SettingsProviders
+                                                  .settings.notifier,
+                                            )
+                                            .setLanguageSeed('en');
+                                      },
+                                      child: language == 'en'
+                                          ? Image.asset(
+                                              'assets/icons/languages/united-states.png',
+                                            )
+                                          : Opacity(
+                                              opacity: 0.3,
+                                              child: Image.asset(
+                                                'assets/icons/languages/united-states.png',
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsetsDirectional.only(
+                                      start: 15,
+                                    ),
+                                    height: 50,
+                                    width: 50,
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        sl.get<HapticUtil>().feedback(
+                                              FeedbackType.light,
+                                              preferences.activeVibrations,
+                                            );
+                                        seed = AppSeeds.generateSeed();
+                                        mnemonic = AppMnemomics.seedToMnemonic(
+                                          seed!,
+                                          languageCode: 'fr',
+                                        );
+
+                                        ref
+                                            .read(
+                                              SettingsProviders
+                                                  .settings.notifier,
+                                            )
+                                            .setLanguageSeed('fr');
+                                      },
+                                      child: language == 'fr'
+                                          ? Image.asset(
+                                              'assets/icons/languages/france.png',
+                                            )
+                                          : Opacity(
+                                              opacity: 0.3,
+                                              child: Image.asset(
+                                                'assets/icons/languages/france.png',
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                           Container(
-                            margin: const EdgeInsetsDirectional.only(start: 15),
-                            height: 50,
-                            width: 50,
-                            child: BackButton(
-                              key: const Key('back'),
-                              color: theme.text,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+                            margin: const EdgeInsetsDirectional.only(
+                              top: 10,
+                            ),
+                            child: AutoSizeText(
+                              localizations.recoveryPhrase,
+                              style: theme.textStyleSize24W700EquinoxPrimary,
                             ),
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsetsDirectional.only(
-                                  start: 15,
-                                ),
-                                height: 50,
-                                width: 50,
-                                child: TextButton(
-                                  onPressed: () async {
-                                    sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          preferences.activeVibrations,
-                                        );
-                                    seed = AppSeeds.generateSeed();
-                                    mnemonic = AppMnemomics.seedToMnemonic(
-                                      seed!,
-                                    );
-                                    ref
-                                        .read(
-                                          SettingsProviders.settings.notifier,
-                                        )
-                                        .setLanguageSeed('en');
-                                  },
-                                  child: language == 'en'
-                                      ? Image.asset(
-                                          'assets/icons/languages/united-states.png',
-                                        )
-                                      : Opacity(
-                                          opacity: 0.3,
-                                          child: Image.asset(
-                                            'assets/icons/languages/united-states.png',
-                                          ),
-                                        ),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsetsDirectional.only(
-                                  start: 15,
-                                ),
-                                height: 50,
-                                width: 50,
-                                child: TextButton(
-                                  onPressed: () async {
-                                    sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          preferences.activeVibrations,
-                                        );
-                                    seed = AppSeeds.generateSeed();
-                                    mnemonic = AppMnemomics.seedToMnemonic(
-                                      seed!,
-                                      languageCode: 'fr',
-                                    );
-
-                                    ref
-                                        .read(
-                                          SettingsProviders.settings.notifier,
-                                        )
-                                        .setLanguageSeed('fr');
-                                  },
-                                  child: language == 'fr'
-                                      ? Image.asset(
-                                          'assets/icons/languages/france.png',
-                                        )
-                                      : Opacity(
-                                          opacity: 0.3,
-                                          child: Image.asset(
-                                            'assets/icons/languages/france.png',
-                                          ),
-                                        ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsetsDirectional.only(
-                          top: 10,
-                        ),
-                        child: AutoSizeText(
-                          localizations.recoveryPhrase,
-                          style: theme.textStyleSize24W700EquinoxPrimary,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      if (mnemonic != null)
-                        Expanded(
-                          child: ArchethicScrollbar(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: MnemonicDisplay(
-                                wordList: mnemonic!,
-                                explanation: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: AutoSizeText(
-                                    localizations
-                                        .recoveryPhraseIntroExplanation,
-                                    textAlign: TextAlign.justify,
-                                    style: theme.textStyleSize12W100Primary,
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          if (mnemonic != null)
+                            Expanded(
+                              child: ArchethicScrollbar(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: MnemonicDisplay(
+                                    wordList: mnemonic!,
+                                    explanation: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: AutoSizeText(
+                                        localizations
+                                            .recoveryPhraseIntroExplanation,
+                                        textAlign: TextAlign.justify,
+                                        style: theme.textStyleSize12W100Primary,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        )
-                      else
-                        const Text(''),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    if (isPressed == true)
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.iveBackedItUp,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('iveBackedItUp'),
-                        onPressed: () {},
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.iveBackedItUp,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('iveBackedItUp'),
-                        onPressed: () async {
-                          Navigator.of(context).pushNamed(
-                            '/intro_backup_confirm',
-                            arguments: {'name': widget.name, 'seed': seed},
-                          );
-                        },
+                            )
+                          else
+                            const Text(''),
+                        ],
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        if (isPressed == true ||
+                            connectivityStatusProvider ==
+                                ConnectivityStatus.isDisconnected)
+                          AppButtonTiny(
+                            AppButtonTinyType.primaryOutline,
+                            localizations.iveBackedItUp,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('iveBackedItUp'),
+                            onPressed: () {},
+                          )
+                        else
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
+                            localizations.iveBackedItUp,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('iveBackedItUp'),
+                            onPressed: () async {
+                              Navigator.of(context).pushNamed(
+                                '/intro_backup_confirm',
+                                arguments: {'name': widget.name, 'seed': seed},
+                              );
+                            },
+                          ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        const BannerConnectivity(),
+      ],
     );
   }
 }

@@ -44,7 +44,6 @@ class _AddAccountTextFieldNameState
       focusNode: nameFocusNode,
       controller: nameController,
       cursorColor: theme.text,
-      autofocus: true,
       textInputAction: TextInputAction.next,
       labelText: localizations.introNewWalletGetFirstInfosNameBlank,
       autocorrect: false,

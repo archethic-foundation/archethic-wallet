@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -51,6 +52,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
     final session = ref.watch(SessionProviders.session).loggedIn!;
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (selectedAccount == null) return const SizedBox();
 
@@ -132,24 +134,40 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  AppButtonTiny(
-                                    AppButtonTinyType.primary,
-                                    localizations.viewExplorer,
-                                    Dimens.buttonBottomDimens,
-                                    icon: Icon(
-                                      Icons.more_horiz,
-                                      color: theme.mainButtonLabel,
-                                      size: 14,
+                                  if (connectivityStatusProvider ==
+                                      ConnectivityStatus.isConnected)
+                                    AppButtonTiny(
+                                      AppButtonTinyType.primary,
+                                      localizations.viewExplorer,
+                                      Dimens.buttonBottomDimens,
+                                      icon: Icon(
+                                        Icons.more_horiz,
+                                        color: theme.mainButtonLabel,
+                                        size: 14,
+                                      ),
+                                      key: const Key('viewExplorer'),
+                                      onPressed: () async {
+                                        UIUtil.showWebview(
+                                          context,
+                                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.txAddress}',
+                                          '',
+                                        );
+                                      },
+                                    )
+                                  else
+                                    AppButtonTiny(
+                                      AppButtonTinyType.primaryOutline,
+                                      localizations.viewExplorer,
+                                      Dimens.buttonBottomDimens,
+                                      icon: Icon(
+                                        Icons.more_horiz,
+                                        color: theme.mainButtonLabel!
+                                            .withOpacity(0.3),
+                                        size: 14,
+                                      ),
+                                      key: const Key('viewExplorer'),
+                                      onPressed: () {},
                                     ),
-                                    key: const Key('viewExplorer'),
-                                    onPressed: () async {
-                                      UIUtil.showWebview(
-                                        context,
-                                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.txAddress}',
-                                        '',
-                                      );
-                                    },
-                                  ),
                                 ],
                               ),
                             ],
