@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -67,6 +68,7 @@ class AddContactSheetBody extends ConsumerWidget {
         ref.watch(ContactCreationFormProvider.contactCreationForm);
     final contactCreationNotifier =
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     ref.listen<ContactCreationFormState>(
       ContactCreationFormProvider.contactCreationForm,
@@ -146,7 +148,9 @@ class AddContactSheetBody extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (contactCreation.canCreateContact)
+                    if (contactCreation.canCreateContact &&
+                        connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
                         localizations.addContact,

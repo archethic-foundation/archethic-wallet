@@ -1,3 +1,4 @@
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
@@ -23,6 +24,7 @@ final _contactCreationFormProvider = NotifierProvider.autoDispose<
     ContactCreationFormProvider.initialContactCreationForm,
     ContactProviders.isContactExistsWithName,
     ContactProviders.isContactExistsWithAddress,
+    connectivityStatusProviders,
   ],
 );
 
@@ -73,6 +75,11 @@ class ContactCreationFormNotifier
   }
 
   Future<String> _getGenesisPublicKey(String address) async {
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return '';
+    }
+
     final publicKeyMap = await sl.get<ApiService>().getTransactionChain(
       {address: ''},
       request: 'previousPublicKey',

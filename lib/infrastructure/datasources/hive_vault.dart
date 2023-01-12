@@ -125,7 +125,8 @@ class HiveVaultDatasource {
 
   KeychainSecuredInfos? getKeychainSecuredInfos() {
     try {
-      return json.decode(_getValue(_keychainSecuredInfos));
+      final map = json.decode(_getValue(_keychainSecuredInfos));
+      return KeychainSecuredInfos.fromJson(map);
     } catch (e) {
       return null;
     }

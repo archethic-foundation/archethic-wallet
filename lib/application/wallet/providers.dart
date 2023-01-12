@@ -2,10 +2,6 @@ part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
 class _SessionNotifier extends Notifier<Session> with KeychainMixin {
-  HiveVaultDatasource? __vault;
-  Future<HiveVaultDatasource> get _vault async =>
-      __vault ??= await HiveVaultDatasource.getInstance();
-
   final DBHelper _dbHelper = sl.get<DBHelper>();
 
   @override
@@ -14,13 +10,15 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
   }
 
   Future<void> restore() async {
-    final seed = (await _vault).getSeed();
-    var keychainSecuredInfos = (await _vault).getKeychainSecuredInfos();
+    final vault = await HiveVaultDatasource.getInstance();
+
+    final seed = vault.getSeed();
+    var keychainSecuredInfos = vault.getKeychainSecuredInfos();
     if (keychainSecuredInfos == null && seed != null) {
       // Create manually Keychain
       final keychain = await sl.get<ApiService>().getKeychain(seed);
       keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
-      (await _vault).setKeychainSecuredInfos(keychainSecuredInfos);
+      await vault.setKeychainSecuredInfos(keychainSecuredInfos);
     }
     final appWalletDTO = await _dbHelper.getAppWallet();
 
