@@ -12,6 +12,7 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
@@ -85,6 +86,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       ),
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
     return Stack(
       children: [
         Scaffold(
@@ -212,9 +214,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                         child: Column(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(
-                                left: smallScreen(context) ? 30 : 40,
-                                right: smallScreen(context) ? 30 : 40,
+                              margin: const EdgeInsets.only(
+                                left: 30,
+                                right: 30,
                                 top: 15,
                               ),
                               alignment: Alignment.centerLeft,
@@ -239,30 +241,23 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               const SizedBox(
                                 height: 40,
                               ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: Column(
-                                children: <Widget>[
-                                  const SizedBox(height: 10),
-                                  GridView.count(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    childAspectRatio: 1.2,
-                                    shrinkWrap: true,
-                                    crossAxisCount: 4,
-                                    children: List.generate(24, (index) {
-                                      return Padding(
+                            Column(
+                              children: <Widget>[
+                                GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  childAspectRatio: 1 / 0.4,
+                                  shrinkWrap: true,
+                                  crossAxisCount: 4,
+                                  children: List.generate(24, (index) {
+                                    return SizedBox(
+                                      height: 50,
+                                      child: Padding(
                                         padding: const EdgeInsets.only(
                                           left: 10,
                                           right: 10,
                                         ),
                                         child: Column(
                                           children: [
-                                            Text(
-                                              (index + 1).toString(),
-                                              style: theme
-                                                  .textStyleSize12W100Primary,
-                                            ),
                                             Autocomplete<String>(
                                               optionsBuilder: (
                                                 TextEditingValue
@@ -306,6 +301,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                     _mnemonicIsValid = true;
                                                   });
                                                 }
+                                                FocusScope.of(context)
+                                                    .nextFocus();
                                               },
                                               fieldViewBuilder: (
                                                 context,
@@ -319,6 +316,16 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                           .center,
                                                   children: <Widget>[
                                                     TextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      decoration:
+                                                          InputDecoration(
+                                                              labelText: (index +
+                                                                      1)
+                                                                  .toString()),
+                                                      inputFormatters: [
+                                                        LowerCaseTextFormatter()
+                                                      ],
                                                       controller:
                                                           textEditingController,
                                                       focusNode: focusNode,
@@ -379,11 +386,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                             ),
                                           ],
                                         ),
-                                      );
-                                    }),
-                                  ),
-                                ],
-                              ),
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -392,10 +399,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (isPressed == true ||
-                            phrase.contains('') ||
-                            connectivityStatusProvider ==
-                                ConnectivityStatus.isDisconnected)
+                        if (isPressed == true || phrase.contains(''))
                           AppButtonTiny(
                             AppButtonTinyType.primaryOutline,
                             localizations.ok,
