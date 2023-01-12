@@ -95,7 +95,9 @@ class AccountTab extends ConsumerWidget {
                                 ),
 
                                 /// PRICE CHART
-                                if (preferences.showPriceChart)
+                                if (preferences.showPriceChart &&
+                                    connectivityStatusProvider ==
+                                        ConnectivityStatus.isConnected)
                                   Stack(
                                     children: const <Widget>[
                                       BalanceInfosChart(),
@@ -105,7 +107,9 @@ class AccountTab extends ConsumerWidget {
                                   const SizedBox(),
 
                                 /// KPI
-                                if (preferences.showPriceChart)
+                                if (preferences.showPriceChart &&
+                                    connectivityStatusProvider ==
+                                        ConnectivityStatus.isConnected)
                                   const BalanceInfosKpi()
                                 else
                                   const SizedBox(),

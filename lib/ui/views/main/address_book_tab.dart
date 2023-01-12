@@ -1,3 +1,4 @@
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -44,6 +45,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
         search: searchNameController.text,
       ),
     );
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return Container(
       padding: const EdgeInsets.only(left: 15, right: 15),
       height: MediaQuery.of(context).size.height,
@@ -132,24 +134,39 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
             ),
             Row(
               children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addContact,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addContact'),
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.mainButtonLabel,
-                    size: 14,
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isConnected)
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.addContact,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('addContact'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.mainButtonLabel,
+                      size: 14,
+                    ),
+                    onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: const AddContactSheet(),
+                      );
+                    },
+                  )
+                else
+                  AppButtonTiny(
+                    AppButtonTinyType.primaryOutline,
+                    localizations.addContact,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('addContact'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.mainButtonLabel!.withOpacity(0.3),
+                      size: 14,
+                    ),
+                    onPressed: () {},
                   ),
-                  onPressed: () {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const AddContactSheet(),
-                    );
-                  },
-                ),
               ],
             ),
           ],

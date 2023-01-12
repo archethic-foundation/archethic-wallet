@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -42,6 +43,12 @@ class _CheckTransactionNotifier
     _checkTransactionsTimer = Timer.periodic(
       const Duration(seconds: 30),
       (Timer t) async {
+        final connectivityStatusProvider =
+            ref.watch(connectivityStatusProviders);
+        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+          return;
+        }
+
         try {
           final accounts = await ref.read(AccountProviders.accounts.future);
 

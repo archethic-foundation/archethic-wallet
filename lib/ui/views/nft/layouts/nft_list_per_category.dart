@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
@@ -33,93 +34,99 @@ class NFTListPerCategory extends ConsumerWidget {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              theme.background2Small!,
-            ),
-            fit: BoxFit.fitHeight,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
-          ),
-        ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-            ),
-            child: Column(
-              children: <Widget>[
-                NFTHeader(
-                  currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
-                  displayCategoryName: true,
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  theme.background2Small!,
                 ),
-                Expanded(
-                  child: NFTList(
-                    currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
-                  ),
+                fit: BoxFit.fitHeight,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[theme.backgroundDark!, theme.background!],
+              ),
+            ),
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
                 ),
-                Row(
+                child: Column(
                   children: <Widget>[
-                    if (accountSelected.balance!.isNativeTokenValuePositive() &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.createNFT,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createNFT'),
-                        icon: Icon(
-                          RpgAwesome.mining_diamonds,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          Navigator.of(context).pushNamed(
-                            '/nft_creation',
-                            arguments: {
-                              'seed': ref
-                                  .read(SessionProviders.session)
-                                  .loggedIn!
-                                  .wallet
-                                  .seed,
-                              'currentNftCategoryIndex':
-                                  currentNftCategoryIndex,
-                            },
-                          );
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.createNFT,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createNFT'),
-                        icon: Icon(
-                          RpgAwesome.mining_diamonds,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
+                    NFTHeader(
+                      currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
+                      displayCategoryName: true,
+                    ),
+                    Expanded(
+                      child: NFTList(
+                        currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
                       ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        if (accountSelected.balance!
+                                .isNativeTokenValuePositive() &&
+                            connectivityStatusProvider ==
+                                ConnectivityStatus.isConnected)
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
+                            localizations.createNFT,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('createNFT'),
+                            icon: Icon(
+                              RpgAwesome.mining_diamonds,
+                              color: theme.mainButtonLabel,
+                              size: 14,
+                            ),
+                            onPressed: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+                              Navigator.of(context).pushNamed(
+                                '/nft_creation',
+                                arguments: {
+                                  'seed': ref
+                                      .read(SessionProviders.session)
+                                      .loggedIn!
+                                      .wallet
+                                      .seed,
+                                  'currentNftCategoryIndex':
+                                      currentNftCategoryIndex,
+                                },
+                              );
+                            },
+                          )
+                        else
+                          AppButtonTiny(
+                            AppButtonTinyType.primaryOutline,
+                            localizations.createNFT,
+                            Dimens.buttonBottomDimens,
+                            key: const Key('createNFT'),
+                            icon: Icon(
+                              RpgAwesome.mining_diamonds,
+                              color: theme.mainButtonLabel!.withOpacity(0.3),
+                              size: 14,
+                            ),
+                            onPressed: () {},
+                          ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        const BannerConnectivity(),
+      ],
     );
   }
 }
