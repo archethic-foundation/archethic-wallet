@@ -37,7 +37,7 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
 
   Future<void> refresh() async {
     if (state.isLoggedOut) return;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final connectivityStatusProvider = ref.read(connectivityStatusProviders);
     if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return;
     }
