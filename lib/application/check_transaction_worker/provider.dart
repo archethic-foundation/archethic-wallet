@@ -44,7 +44,7 @@ class _CheckTransactionNotifier
       const Duration(seconds: 30),
       (Timer t) async {
         final connectivityStatusProvider =
-            ref.watch(connectivityStatusProviders);
+            ref.read(connectivityStatusProviders);
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
           return;
         }

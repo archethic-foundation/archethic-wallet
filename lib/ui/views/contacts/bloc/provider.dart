@@ -75,7 +75,7 @@ class ContactCreationFormNotifier
   }
 
   Future<String> _getGenesisPublicKey(String address) async {
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final connectivityStatusProvider = ref.read(connectivityStatusProviders);
     if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return '';
     }
