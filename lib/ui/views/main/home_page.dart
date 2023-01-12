@@ -224,9 +224,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         ref: ref,
-                        widget: AddTokenSheet(
-                          seed: session.wallet.seed,
-                        ),
+                        widget: const AddTokenSheet(),
                       );
                     },
                   )

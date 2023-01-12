@@ -113,19 +113,14 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         .wallet
         .keychainSecuredInfos;
 
-    final nameEncoded = Uri.encodeFull(
-      selectedAccount!.name,
-    );
-
     transaction = Transaction.token(
       token: Token(
-        accountSelectedName: selectedAccount.name,
+        accountSelectedName: selectedAccount!.name,
         name: formState.name,
         symbol: formState.symbol,
         initialSupply: formState.initialSupply,
-        seed: formState.seed,
-        keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-$nameEncoded']!.keyPair!,
+        keychainSecuredInfos: keychainSecuredInfos,
+        transactionLastAddress: selectedAccount.lastAddress!,
         type: 'fungible',
         aeip: [2],
         properties: [],
@@ -300,19 +295,14 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         .wallet
         .keychainSecuredInfos;
 
-    final nameEncoded = Uri.encodeFull(
-      selectedAccount!.name,
-    );
-
     transaction = Transaction.token(
       token: Token(
         name: state.name,
         symbol: state.symbol,
         initialSupply: state.initialSupply,
-        accountSelectedName: selectedAccount.name,
-        seed: state.seed,
-        keychainServiceKeyPair: keychainSecuredInfos
-            .services['archethic-wallet-$nameEncoded']!.keyPair!,
+        accountSelectedName: selectedAccount!.name,
+        keychainSecuredInfos: keychainSecuredInfos,
+        transactionLastAddress: selectedAccount.lastAddress!,
         type: 'fungible',
         aeip: [2],
         properties: [],
@@ -348,6 +338,24 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
               ),
             );
           },
+          consensusNotReached: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.consensusNotReached,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          timeout: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.token,
+                response: localizations.transactionTimeOut,
+                nbConfirmations: 0,
+              ),
+            );
+          },
           invalidConfirmation: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
@@ -374,7 +382,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
                 transactionType: TransactionSendEventType.token,
-                response: localizations.keychainNotExistWarning,
+                response: localizations.genericError,
                 nbConfirmations: 0,
               ),
             );

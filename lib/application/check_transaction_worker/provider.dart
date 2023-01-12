@@ -24,17 +24,20 @@ class _CheckTransactionNotifier
 
   Future<void> _cancelCheck() async {
     if (_checkTransactionsTimer == null) return;
-    log('[CheckTransactionScheduler] cancelling scheduler');
+    log('cancelling scheduler', name: 'CheckTransactionScheduler');
     _checkTransactionsTimer?.cancel();
     _checkTransactionsTimer = null;
   }
 
   Future<void> _scheduleCheck() async {
     if (_checkTransactionsTimer != null && _checkTransactionsTimer!.isActive) {
-      log('[CheckTransactionScheduler] start abort : scheduler already running');
+      log(
+        'start abort : scheduler already running',
+        name: 'CheckTransactionScheduler',
+      );
       return;
     }
-    log('[CheckTransactionScheduler] starting scheduler');
+    log('starting scheduler', name: 'CheckTransactionScheduler');
 
     _checkTransactionsTimer = Timer.periodic(
       const Duration(seconds: 30),
@@ -65,7 +68,7 @@ class _CheckTransactionNotifier
           }
 
           final symbolMap = await sl
-              .get<ApiService>()
+              .get<AppService>()
               .getToken(tokenAddressList, request: 'symbol, type');
 
           final transactionsToNotify = <ReceivedTransaction>[];
@@ -128,7 +131,8 @@ class _CheckTransactionNotifier
           state = AsyncValue.data(transactionsToNotify);
         } catch (e, stack) {
           log(
-            '[CheckTransactionScheduler] refresh failed.',
+            'refresh failed.',
+            name: 'CheckTransactionScheduler',
             error: e,
             stackTrace: stack,
           );
@@ -165,146 +169,3 @@ class _CheckTransactionNotifier
     state = const AsyncValue.data([]);
   }
 }
-
-
-
-// Stream<ReceivedTransaction> _checkTransactions(
-//   Ref ref,
-// ) async* {
-//   Timer? _checkTransactionsTimer;
-//   final streamController = StreamController<ReceivedTransaction>.broadcast();
-
-//   Future<void> _cancelCheck() async {
-//     if (_checkTransactionsTimer == null) return;
-//     log('[CheckTransactionScheduler] cancelling scheduler');
-//     _checkTransactionsTimer?.cancel();
-//     _checkTransactionsTimer = null;
-//   }
-
-//   void _scheduleCheck() {
-//     if (_checkTransactionsTimer != null && _checkTransactionsTimer!.isActive) {
-//       log('[CheckTransactionScheduler] start abort : scheduler already running');
-//       return;
-//     }
-//     log('[CheckTransactionScheduler] starting scheduler');
-
-//     _checkTransactionsTimer = Timer.periodic(
-//       const Duration(seconds: 30),
-//       (Timer t) async {
-//         try {
-//           final accounts = await ref.read(AccountProviders.accounts.future);
-
-//           var transactionInputMap = <String, List<TransactionInput>>{};
-//           final lastAddressContactList = <String>[];
-//           for (final account in accounts) {
-//             if (account.lastAddress != null) {
-//               lastAddressContactList.add(account.lastAddress!);
-//             }
-//           }
-//           transactionInputMap = await sl.get<AppService>().getTransactionInputs(
-//                 lastAddressContactList,
-//                 'from, amount, timestamp, tokenAddress ',
-//               );
-
-//           final tokenAddressList = <String>[];
-//           for (final transactionInputList in transactionInputMap.values) {
-//             for (final transactionInput in transactionInputList) {
-//               if (transactionInput.tokenAddress != null &&
-//                   transactionInput.tokenAddress!.isNotEmpty) {
-//                 tokenAddressList.add(transactionInput.tokenAddress!);
-//               }
-//             }
-//           }
-
-//           final symbolMap = await sl
-//               .get<ApiService>()
-//               .getToken(tokenAddressList, request: 'symbol, type');
-
-//           for (final account in accounts) {
-//             final transactionInputList =
-//                 transactionInputMap[account.lastAddress!] ?? [];
-//             for (final transactionInput in transactionInputList) {
-//               if (account.lastLoadingTransactionInputs != null &&
-//                   transactionInput.timestamp! <=
-//                       account.lastLoadingTransactionInputs!) {
-//                 continue;
-//               }
-//               if (transactionInput.from != account.lastAddress) {
-//                 var symbol = 'UCO';
-//                 if (symbolMap.isNotEmpty &&
-//                     symbolMap[transactionInput.tokenAddress] != null) {
-//                   switch (symbolMap[transactionInput.tokenAddress]!.type) {
-//                     case 'non-fungible':
-//                       if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
-//                               null &&
-//                           symbolMap[transactionInput.tokenAddress!]!
-//                               .symbol!
-//                               .isNotEmpty) {
-//                         symbol =
-//                             symbolMap[transactionInput.tokenAddress!]!.symbol!;
-//                       } else {
-//                         symbol = 'NFT';
-//                       }
-//                       break;
-//                     case 'fungible':
-//                       if (symbolMap[transactionInput.tokenAddress!]!.symbol !=
-//                               null &&
-//                           symbolMap[transactionInput.tokenAddress!]!
-//                               .symbol!
-//                               .isNotEmpty) {
-//                         symbol =
-//                             symbolMap[transactionInput.tokenAddress!]!.symbol!;
-//                       } else {
-//                         symbol = 'token(s)';
-//                       }
-//                       break;
-//                   }
-//                 }
-//                 streamController.add(
-//                   ReceivedTransaction(
-//                     accountName: account.name,
-//                     amount: transactionInput.amount ?? 0,
-//                     currencySymbol: symbol,
-//                   ),
-//                 );
-
-//                 await ref
-//                     .read(AccountProviders.account(account.name).notifier)
-//                     .refreshRecentTransactions();
-//               }
-//             }
-//           }
-//         } catch (e, stack) {
-//           log(
-//             '[CheckTransactionScheduler] refresh failed.',
-//             error: e,
-//             stackTrace: stack,
-//           );
-//         }
-//       },
-//     );
-//   }
-
-//   ref.onDispose(
-//     () {
-//       _cancelCheck();
-//       streamController.close();
-//     },
-//   );
-
-//   final activeNotifications = ref.watch(
-//     SettingsProviders.settings.select(
-//       (settings) => settings.activeNotifications,
-//     ),
-//   );
-//   final isLoggedIn = ref
-//       .watch(SessionProviders.session.select((session) => session.isLoggedIn));
-
-//   if (!activeNotifications || !isLoggedIn) {
-//     await _cancelCheck();
-//     return;
-//   }
-
-//   _scheduleCheck();
-//   yield* streamController.stream;
-// }

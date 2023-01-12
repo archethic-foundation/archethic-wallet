@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
 
@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$NftCreationFormState {
-  String get seed => throw _privateConstructorUsedError;
   NftCreationProcessStep get nftCreationProcessStep =>
       throw _privateConstructorUsedError;
   int get currentNftCategoryIndex => throw _privateConstructorUsedError;
@@ -56,8 +55,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       _$NftCreationFormStateCopyWithImpl<$Res, NftCreationFormState>;
   @useResult
   $Res call(
-      {String seed,
-      NftCreationProcessStep nftCreationProcessStep,
+      {NftCreationProcessStep nftCreationProcessStep,
       int currentNftCategoryIndex,
       int indexTab,
       AsyncValue<double> feeEstimation,
@@ -98,7 +96,6 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = null,
     Object? nftCreationProcessStep = null,
     Object? currentNftCategoryIndex = null,
     Object? indexTab = null,
@@ -124,10 +121,6 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? transaction = freezed,
   }) {
     return _then(_value.copyWith(
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as String,
       nftCreationProcessStep: null == nftCreationProcessStep
           ? _value.nftCreationProcessStep
           : nftCreationProcessStep // ignore: cast_nullable_to_non_nullable
@@ -242,8 +235,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String seed,
-      NftCreationProcessStep nftCreationProcessStep,
+      {NftCreationProcessStep nftCreationProcessStep,
       int currentNftCategoryIndex,
       int indexTab,
       AsyncValue<double> feeEstimation,
@@ -282,7 +274,6 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = null,
     Object? nftCreationProcessStep = null,
     Object? currentNftCategoryIndex = null,
     Object? indexTab = null,
@@ -308,10 +299,6 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? transaction = freezed,
   }) {
     return _then(_$_NftCreationFormState(
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as String,
       nftCreationProcessStep: null == nftCreationProcessStep
           ? _value.nftCreationProcessStep
           : nftCreationProcessStep // ignore: cast_nullable_to_non_nullable
@@ -412,8 +399,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
 
 class _$_NftCreationFormState extends _NftCreationFormState {
   const _$_NftCreationFormState(
-      {required this.seed,
-      this.nftCreationProcessStep = NftCreationProcessStep.form,
+      {this.nftCreationProcessStep = NftCreationProcessStep.form,
       this.currentNftCategoryIndex = 0,
       this.indexTab = 0,
       required this.feeEstimation,
@@ -441,8 +427,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         super._();
 
   @override
-  final String seed;
-  @override
   @JsonKey()
   final NftCreationProcessStep nftCreationProcessStep;
   @override
@@ -460,6 +444,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   Map<File, List<String>>? get file {
     final value = _file;
     if (value == null) return null;
+    if (_file is EqualUnmodifiableMapView) return _file;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(value);
   }
@@ -497,6 +482,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @override
   @JsonKey()
   List<NftCreationFormStateProperty> get properties {
+    if (_properties is EqualUnmodifiableListView) return _properties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_properties);
   }
@@ -518,7 +504,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
 
   @override
   String toString() {
-    return 'NftCreationFormState(seed: $seed, nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
+    return 'NftCreationFormState(nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
   }
 
   @override
@@ -526,7 +512,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NftCreationFormState &&
-            (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.nftCreationProcessStep, nftCreationProcessStep) ||
                 other.nftCreationProcessStep == nftCreationProcessStep) &&
             (identical(
@@ -578,7 +563,6 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        seed,
         nftCreationProcessStep,
         currentNftCategoryIndex,
         indexTab,
@@ -614,8 +598,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
 
 abstract class _NftCreationFormState extends NftCreationFormState {
   const factory _NftCreationFormState(
-      {required final String seed,
-      final NftCreationProcessStep nftCreationProcessStep,
+      {final NftCreationProcessStep nftCreationProcessStep,
       final int currentNftCategoryIndex,
       final int indexTab,
       required final AsyncValue<double> feeEstimation,
@@ -640,8 +623,6 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final archethic.Transaction? transaction}) = _$_NftCreationFormState;
   const _NftCreationFormState._() : super._();
 
-  @override
-  String get seed;
   @override
   NftCreationProcessStep get nftCreationProcessStep;
   @override
@@ -735,7 +716,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
   @override
   $Res call({
     Object? propertyName = null,
-    Object? propertyValue = null,
+    Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
     return _then(_value.copyWith(
@@ -743,7 +724,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: null == propertyValue
+      propertyValue: freezed == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -784,7 +765,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
   @override
   $Res call({
     Object? propertyName = null,
-    Object? propertyValue = null,
+    Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
     return _then(_$_NftCreationFormStateProperty(
@@ -792,7 +773,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
               as String,
-      propertyValue: null == propertyValue
+      propertyValue: freezed == propertyValue
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -823,6 +804,7 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   @override
   @JsonKey()
   List<PropertyAccessRecipient> get publicKeys {
+    if (_publicKeys is EqualUnmodifiableListView) return _publicKeys;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_publicKeys);
   }

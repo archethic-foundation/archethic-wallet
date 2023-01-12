@@ -753,7 +753,7 @@ class AppLocalization {
   }
 
   String get removeWallet {
-    return Intl.message('Remove Wallet', name: 'removeWallet');
+    return Intl.message('Remove Wallet from this device', name: 'removeWallet');
   }
 
   String get removeWalletDescription {
@@ -2165,52 +2165,28 @@ class AppLocalization {
         name: 'keychainNotExistWarning');
   }
 
+  String get consensusNotReached {
+    return Intl.message(
+        'The consensus is not reached. Please retry your request...',
+        name: 'consensusNotReached');
+  }
+
+  String get transactionTimeOut {
+    return Intl.message(
+        'The transaction encountered a timeout issue. Please retry your request...',
+        name: 'transactionTimeOut');
+  }
+
+  String get genericError {
+    return Intl.message(
+        'We\'re sorry, but an error has occurred. Please retry your request...',
+        name: 'genericError');
+  }
+
   String get noConnection {
     return Intl.message(
         'The connection to the network could not be completed. Please check your network settings.',
         name: 'noConnection');
-  }
-
-  String get getUCOButton {
-    return Intl.message('Get UCOs', name: 'getUCOButton');
-  }
-
-  String get getUCODescription1 {
-    return Intl.message('Bring ARCHETHIC to life with your first  ',
-        name: 'getUCODescription1');
-  }
-
-  String get getUCOInformation {
-    return Intl.message(
-        'In a few minutes you will receive your UCOs which will allow you to use the Archethic network and the features of your wallet.',
-        name: 'getUCOInformation');
-  }
-
-  String get getUCOInformationAlreadyReceived {
-    return Intl.message('You have already received your UCOs.',
-        name: 'getUCOInformationAlreadyReceived');
-  }
-
-  String get getUCOInformationInsufficientBalance {
-    return Intl.message(
-        'The faucet is currently empty. Please reiterate your request tomorrow.',
-        name: 'getUCOInformationInsufficientBalance');
-  }
-
-  String get getUCOInformationUnauthorized {
-    return Intl.message(
-        'Your application is not authorized to access to the faucet. Please update your application with the last version.',
-        name: 'getUCOInformationUnauthorized');
-  }
-
-  String get getUCOInformationBackendError {
-    return Intl.message('An error occurred. Try again later.',
-        name: 'getUCOInformationBackendError');
-  }
-
-  String get getUCOCount {
-    return Intl.message('See you in HHhMM to get new UCOs...',
-        name: 'getUCOCount');
   }
 }
 

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'transaction_event.dart';
 
@@ -20,6 +20,7 @@ mixin _$TransactionError {
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -30,6 +31,7 @@ mixin _$TransactionError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -40,6 +42,7 @@ mixin _$TransactionError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -51,6 +54,8 @@ mixin _$TransactionError {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -63,6 +68,8 @@ mixin _$TransactionError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -74,6 +81,8 @@ mixin _$TransactionError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -142,6 +151,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -155,6 +165,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -168,6 +179,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -185,6 +197,8 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -200,6 +214,8 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -214,6 +230,8 @@ class _$_TransactionTimeout extends _TransactionTimeout {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -276,6 +294,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -289,6 +308,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -302,6 +322,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -319,6 +340,8 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -334,6 +357,8 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -348,6 +373,8 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -365,6 +392,152 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
 abstract class _TransactionConnectionError extends TransactionError {
   const factory _TransactionConnectionError() = _$_TransactionConnectionError;
   const _TransactionConnectionError._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_TransactionConsensusNotReachedErrorCopyWith<$Res> {
+  factory _$$_TransactionConsensusNotReachedErrorCopyWith(
+          _$_TransactionConsensusNotReachedError value,
+          $Res Function(_$_TransactionConsensusNotReachedError) then) =
+      __$$_TransactionConsensusNotReachedErrorCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_TransactionConsensusNotReachedErrorCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res,
+        _$_TransactionConsensusNotReachedError>
+    implements _$$_TransactionConsensusNotReachedErrorCopyWith<$Res> {
+  __$$_TransactionConsensusNotReachedErrorCopyWithImpl(
+      _$_TransactionConsensusNotReachedError _value,
+      $Res Function(_$_TransactionConsensusNotReachedError) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_TransactionConsensusNotReachedError
+    extends _TransactionConsensusNotReachedError {
+  const _$_TransactionConsensusNotReachedError() : super._();
+
+  @override
+  String toString() {
+    return 'TransactionError.consensusNotReached()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionConsensusNotReachedError);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() timeout,
+    required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
+    required TResult Function() invalidTransaction,
+    required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
+    required TResult Function(String? reason) other,
+  }) {
+    return consensusNotReached();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function(String? reason)? other,
+  }) {
+    return consensusNotReached?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? timeout,
+    TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
+    TResult Function()? invalidTransaction,
+    TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
+    TResult Function(String? reason)? other,
+    required TResult orElse(),
+  }) {
+    if (consensusNotReached != null) {
+      return consensusNotReached();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransactionTimeout value) timeout,
+    required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
+    required TResult Function(_TransactionInvalid value) invalidTransaction,
+    required TResult Function(_TransactionInvalidConfirmation value)
+        invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
+    required TResult Function(_TransactionOtherError value) other,
+  }) {
+    return consensusNotReached(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
+        invalidConfirmation,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionOtherError value)? other,
+  }) {
+    return consensusNotReached?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransactionTimeout value)? timeout,
+    TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
+    TResult Function(_TransactionInvalid value)? invalidTransaction,
+    TResult Function(_TransactionInvalidConfirmation value)?
+        invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionOtherError value)? other,
+    required TResult orElse(),
+  }) {
+    if (consensusNotReached != null) {
+      return consensusNotReached(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TransactionConsensusNotReachedError extends TransactionError {
+  const factory _TransactionConsensusNotReachedError() =
+      _$_TransactionConsensusNotReachedError;
+  const _TransactionConsensusNotReachedError._() : super._();
 }
 
 /// @nodoc
@@ -407,6 +580,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -420,6 +594,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -433,6 +608,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -450,6 +626,8 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -465,6 +643,8 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -479,6 +659,8 @@ class _$_TransactionInvalid extends _TransactionInvalid {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -543,6 +725,7 @@ class _$_TransactionInvalidConfirmation
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -556,6 +739,7 @@ class _$_TransactionInvalidConfirmation
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -569,6 +753,7 @@ class _$_TransactionInvalidConfirmation
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -586,6 +771,8 @@ class _$_TransactionInvalidConfirmation
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -601,6 +788,8 @@ class _$_TransactionInvalidConfirmation
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -615,6 +804,8 @@ class _$_TransactionInvalidConfirmation
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -679,6 +870,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -692,6 +884,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -705,6 +898,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -722,6 +916,8 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -737,6 +933,8 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -751,6 +949,8 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -838,6 +1038,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   TResult when<TResult extends Object?>({
     required TResult Function() timeout,
     required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
@@ -851,6 +1052,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? timeout,
     TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
@@ -864,6 +1066,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? timeout,
     TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
@@ -881,6 +1084,8 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionTimeout value) timeout,
     required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
     required TResult Function(_TransactionInvalid value) invalidTransaction,
     required TResult Function(_TransactionInvalidConfirmation value)
         invalidConfirmation,
@@ -896,6 +1101,8 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_TransactionTimeout value)? timeout,
     TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult? Function(_TransactionInvalid value)? invalidTransaction,
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
@@ -910,6 +1117,8 @@ class _$_TransactionOtherError extends _TransactionOtherError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionTimeout value)? timeout,
     TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
     TResult Function(_TransactionInvalid value)? invalidTransaction,
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,

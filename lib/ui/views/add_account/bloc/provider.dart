@@ -126,6 +126,24 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
               ),
             );
           },
+          consensusNotReached: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.consensusNotReached,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          timeout: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.transactionTimeOut,
+                nbConfirmations: 0,
+              ),
+            );
+          },
           invalidConfirmation: (_) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
@@ -139,8 +157,8 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
           other: (error) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType.token,
-                response: localizations.keychainNotExistWarning,
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.genericError,
                 nbConfirmations: 0,
               ),
             );
@@ -148,7 +166,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
           orElse: () {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
-                transactionType: TransactionSendEventType.token,
+                transactionType: TransactionSendEventType.keychain,
                 response: '',
                 nbConfirmations: 0,
               ),

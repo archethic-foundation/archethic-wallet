@@ -16,6 +16,7 @@ import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:aewallet/util/queue.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -32,18 +33,70 @@ class AppService with KeychainMixin {
     return transactionChainMap;
   }
 
+  Future<Map<String, Token>> getToken(
+    List<String> addresses, {
+    String request =
+        'genesis, name, id, supply, symbol, type, properties, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
+  }) async {
+    final tokenMap = <String, Token>{};
+    var antiSpam = 0;
+    final futures = <Future>[];
+    for (final address in addresses.toSet()) {
+      // Delay the API call if we have made more than 15 requests
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getToken(
+          [address],
+          request: request,
+        ),
+      );
+      antiSpam++;
+    }
+
+    final getTokens = await Future.wait(futures);
+    for (final getToken in getTokens) {
+      tokenMap.addAll(getToken);
+    }
+
+    return tokenMap;
+  }
+
   Future<Map<String, List<TransactionInput>>> getTransactionInputs(
     List<String> addresses,
     String request, {
     int limit = 0,
     int pagingOffset = 0,
   }) async {
-    final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
-          addresses.toSet().toList(),
+    final transactionInputs = <String, List<TransactionInput>>{};
+    var antiSpam = 0;
+    final futures = <Future>[];
+    for (final address in addresses.toSet()) {
+      // Delay the API call if we have made more than 15 requests
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getTransactionInputs(
+          [address],
           request: request,
           limit: limit,
           pagingOffset: pagingOffset,
-        );
+        ),
+      );
+      antiSpam++;
+    }
+
+    final getTransactionInputs = await Future.wait(futures);
+    for (final getTransactionInput in getTransactionInputs) {
+      transactionInputs.addAll(getTransactionInput);
+    }
+
     return transactionInputs;
   }
 
@@ -213,7 +266,6 @@ class AppService with KeychainMixin {
   Future<List<RecentTransaction>> getAccountRecentTransactions(
     String genesisAddress,
     String lastAddress,
-    String seed,
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
     List<RecentTransaction> localRecentTransactionList,
@@ -315,10 +367,11 @@ class AppService with KeychainMixin {
     final ownershipsAddresses = <String>[];
 
     // Search token informations
-    final tokensAddressMap = await sl.get<ApiService>().getToken(
+    final tokensAddressMap = await sl.get<AppService>().getToken(
           tokensAddresses.toSet().toList(),
           request: 'genesis, name, id, supply, symbol, type',
         );
+
     for (final recentTransaction in recentTransactions) {
       // Get token informations
       if (recentTransaction.tokenAddress != null &&
@@ -358,11 +411,27 @@ class AppService with KeychainMixin {
     }
 
     // Get List of ownerships
-    var ownershipsMap = <String, List<Ownership>>{};
-    if (ownershipsAddresses.isNotEmpty) {
-      ownershipsMap = await sl
-          .get<ApiService>()
-          .getTransactionOwnerships(ownershipsAddresses.toSet().toList());
+    final ownershipsMap = <String, List<Ownership>>{};
+    var antiSpam = 0;
+    var futures = <Future>[];
+    for (final ownershipsAddress in ownershipsAddresses.toSet()) {
+      // Delay the API call if we have made more than 15 requests
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getTransactionOwnerships(
+          [ownershipsAddress],
+        ),
+      );
+      antiSpam++;
+    }
+
+    final getTransactionOwnerships = await Future.wait(futures);
+    for (final getTransactionOwnership in getTransactionOwnerships) {
+      ownershipsMap.addAll(getTransactionOwnership);
     }
 
     final keychainServiceKeyPair =
@@ -405,10 +474,31 @@ class AppService with KeychainMixin {
       ...recentTransactionLastAddresses,
       ...contactsAddresses
     ];
-    final lastAddressesMap = await sl.get<ApiService>().getLastTransaction(
-          lastTransactionAddressesToSearch.toSet().toList(),
+
+    final lastAddressesMap = <String, Transaction>{};
+    antiSpam = 0;
+    futures = <Future>[];
+    for (final lastTransactionAddressToSearch
+        in lastTransactionAddressesToSearch.toSet()) {
+      // Delay the API call if we have made more than 15 requests
+      if (antiSpam > 0 && antiSpam % 15 == 0) {
+        await Future.delayed(const Duration(seconds: 1));
+      }
+
+      // Make the API call and update the antiSpam counter
+      futures.add(
+        sl.get<ApiService>().getLastTransaction(
+          [lastTransactionAddressToSearch],
           request: 'address',
-        );
+        ),
+      );
+      antiSpam++;
+    }
+
+    final getLastTransactions = await Future.wait(futures);
+    for (final getLastTransaction in getLastTransactions) {
+      lastAddressesMap.addAll(getLastTransaction);
+    }
 
     // We complete map with last address not found because no tx in the chain
     for (final lastTransactionAddressToSearch
@@ -533,6 +623,10 @@ class AppService with KeychainMixin {
   }
 
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
+    dev.log(
+      '>> START getFungiblesTokensList : ${DateTime.now().toString()}',
+    );
+
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
     final fungiblesTokensList = List<AccountToken>.empty(growable: true);
@@ -548,7 +642,8 @@ class AppService with KeychainMixin {
         }
       }
 
-      final tokenMap = await sl.get<ApiService>().getToken(
+      // Search token informations
+      final tokenMap = await sl.get<AppService>().getToken(
             tokenAddressList.toSet().toList(),
             request: 'genesis, name, id, supply, symbol, type',
           );
@@ -578,12 +673,15 @@ class AppService with KeychainMixin {
       );
     }
 
+    dev.log(
+      '>> END getFungiblesTokensList : ${DateTime.now().toString()}',
+    );
+
     return fungiblesTokensList;
   }
 
   Future<List<AccountToken>> getNFTList(
     String address,
-    String seed,
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
   ) async {
@@ -605,7 +703,7 @@ class AppService with KeychainMixin {
         }
       }
 
-      final tokenMap = await sl.get<ApiService>().getToken(
+      final tokenMap = await sl.get<AppService>().getToken(
             tokenAddressList.toSet().toList(),
           );
 
@@ -693,8 +791,15 @@ class AppService with KeychainMixin {
   Future<Map<String, Balance>> getBalanceGetResponse(
     List<String> addresses,
   ) async {
-    final balanceMap =
-        await sl.get<ApiService>().fetchBalance(addresses.toSet().toList());
+    final tasks = addresses.toSet().map(
+          (address) => () => sl.get<ApiService>().fetchBalance(
+                [address],
+              ),
+        );
+
+    // Search token informations
+    final balanceMap = await OperationQueue.run<Balance>(tasks);
+
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
       final balance = balanceMap[address] ??
@@ -725,7 +830,6 @@ class AppService with KeychainMixin {
   }
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
-    String seed,
     String address,
     DateFormat dateFormat,
     String cryptoCurrency,
@@ -906,7 +1010,7 @@ class AppService with KeychainMixin {
             );
           }
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
-            final tokenMap = await sl.get<ApiService>().getToken(
+            final tokenMap = await sl.get<AppService>().getToken(
               [transaction.data!.ledger!.token!.transfers![i].tokenAddress!],
               request: 'symbol',
             );
@@ -1032,10 +1136,9 @@ class AppService with KeychainMixin {
 
   Future<TokenInformations?> getNFT(
     String address,
-    String seed,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
-    final tokenMap = await sl.get<ApiService>().getToken(
+    final tokenMap = await sl.get<AppService>().getToken(
       [address],
     );
 

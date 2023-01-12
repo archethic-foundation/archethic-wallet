@@ -30,7 +30,6 @@ class _AccountNotifier
   Future<void> _refreshRecentTransactions(Account account) async {
     final session = ref.read(SessionProviders.session).loggedIn!;
     await account.updateRecentTransactions(
-      session.wallet.seed,
       account.name,
       session.wallet.keychainSecuredInfos,
     );
@@ -40,9 +39,13 @@ class _AccountNotifier
 
   Future<void> refreshRecentTransactions() => _refresh(
         (account) async {
-          await _refreshRecentTransactions(account);
-          await _refreshBalance(account);
-          await account.updateFungiblesTokens();
+          log('${DateTime.now().toString()} Start method refreshRecentTransactions');
+          await Future.wait([
+            _refreshRecentTransactions(account),
+            _refreshBalance(account),
+            account.updateFungiblesTokens(),
+          ]);
+          log('${DateTime.now().toString()} End method refreshRecentTransactions');
         },
       );
 
@@ -56,7 +59,6 @@ class _AccountNotifier
         (account) async {
           final session = ref.read(SessionProviders.session).loggedIn!;
           await account.updateNFT(
-            session.wallet.seed,
             session.wallet.keychainSecuredInfos,
           );
         },
@@ -66,14 +68,17 @@ class _AccountNotifier
 
   Future<void> refreshAll() => _refresh(
         (account) async {
-          await _refreshRecentTransactions(account);
-          await _refreshBalance(account);
-          await account.updateFungiblesTokens();
+          log('${DateTime.now().toString()} Start method refreshAll');
           final session = ref.read(SessionProviders.session).loggedIn!;
-          await account.updateNFT(
-            session.wallet.seed,
-            session.wallet.keychainSecuredInfos,
-          );
+          await Future.wait([
+            _refreshRecentTransactions(account),
+            _refreshBalance(account),
+            account.updateFungiblesTokens(),
+            account.updateNFT(
+              session.wallet.keychainSecuredInfos,
+            ),
+          ]);
+          log('${DateTime.now().toString()} End method refreshAll');
         },
       );
 }

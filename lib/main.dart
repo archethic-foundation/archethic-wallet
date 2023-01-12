@@ -191,7 +191,6 @@ class App extends ConsumerWidget {
               final args = settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<NftCreationProcessSheet>(
                 builder: (_) => NftCreationProcessSheet(
-                  seed: args['seed'] as String,
                   currentNftCategoryIndex:
                       args['currentNftCategoryIndex'] as int,
                 ),

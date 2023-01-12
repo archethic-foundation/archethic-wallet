@@ -53,8 +53,8 @@ class _AddTokenTextFieldInitialSupplyState
       style: theme.textStyleSize16W600Primary,
       inputFormatters: [
         LengthLimitingTextInputFormatter(23),
-        FilteringTextInputFormatter.allow(
-          RegExp(r'^\d+\.?\d{0,8}'),
+        AmountTextInputFormatter(
+          precision: 8,
         ),
       ],
       onChanged: (text) async {

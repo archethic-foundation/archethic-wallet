@@ -16,6 +16,7 @@ The following is a set of guidelines for contributing to Archethic Wallet which 
   * [Your First Code Contribution](#your-first-code-contribution)
   * [Pull Requests](#pull-requests)
      * [Git Commit Messages](#git-commit-messages)
+  * [Code architecture](#code-architecture)
 
 
 ## Code of Conduct
@@ -117,3 +118,29 @@ The process described here has several goals:
     * :arrow_up: `:arrow_up:` when upgrading dependencies
     * :arrow_down: `:arrow_down:` when downgrading dependencies
     * :shirt: `:shirt:` when removing linter warnings
+
+## Code architecture
+
+A migration to hexagonal architecture is ongoing. We describe here the target architecture.
+
+### Big picture
+
+Application is composed of 4 layers. Here is the folder structure matching each layers :
+
+  - **domain :** Core data structures and logic. Everything in here is third party component agnostic.
+    - **models :** Data structures.
+    - **repositories :** Interfaces describing interactions with **models**.
+    - **usecases :** Complex use cases implementation.
+  - **ui :** All the display/user-interaction components
+  - **application :** Business logic components.
+  - **infrastructure :** This is the **domain/repositories** implementations. All third party SDK/API dependent code should end up here.
+
+### Layers role & interactions
+
+Rather than reinventing the wheel, I encourage you to check [this excellent diagram from resocoder.com](https://resocoder.com/wp-content/uploads/2020/03/DDD-Flutter-Diagram-v3.svg) out.
+
+### Libraries / Technical choices
+
+- **Application state management** heavily relies on [Riverpod](https://riverpod.dev/).
+- **Dependency injection** relies on [Riverpod](https://riverpod.dev/) too. There is still a non neglectable part using the excellent [GetIt](https://pub.dev/packages/get_it) library.
+- **Blockchain interaction** is extracted to the [archethic_lib_dart](https://pub.dev/packages/archethic_lib_dart) package.

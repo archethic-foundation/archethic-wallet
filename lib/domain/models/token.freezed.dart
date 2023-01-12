@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'token.dart';
 
@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Token {
-  String get seed => throw _privateConstructorUsedError;
-  KeychainServiceKeyPair get keychainServiceKeyPair =>
+  KeychainSecuredInfos get keychainSecuredInfos =>
       throw _privateConstructorUsedError;
+  String get transactionLastAddress => throw _privateConstructorUsedError;
   String get accountSelectedName => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
@@ -37,8 +37,8 @@ abstract class $TokenCopyWith<$Res> {
       _$TokenCopyWithImpl<$Res, Token>;
   @useResult
   $Res call(
-      {String seed,
-      KeychainServiceKeyPair keychainServiceKeyPair,
+      {KeychainSecuredInfos keychainSecuredInfos,
+      String transactionLastAddress,
       String accountSelectedName,
       String name,
       String symbol,
@@ -47,7 +47,7 @@ abstract class $TokenCopyWith<$Res> {
       List<TokenProperty> properties,
       List<int> aeip});
 
-  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
+  $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
 }
 
 /// @nodoc
@@ -63,8 +63,8 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = null,
-    Object? keychainServiceKeyPair = null,
+    Object? keychainSecuredInfos = null,
+    Object? transactionLastAddress = null,
     Object? accountSelectedName = null,
     Object? name = null,
     Object? symbol = null,
@@ -74,14 +74,14 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
     Object? aeip = null,
   }) {
     return _then(_value.copyWith(
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
+      keychainSecuredInfos: null == keychainSecuredInfos
+          ? _value.keychainSecuredInfos
+          : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
+              as KeychainSecuredInfos,
+      transactionLastAddress: null == transactionLastAddress
+          ? _value.transactionLastAddress
+          : transactionLastAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      keychainServiceKeyPair: null == keychainServiceKeyPair
-          ? _value.keychainServiceKeyPair
-          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
-              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -115,10 +115,10 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
 
   @override
   @pragma('vm:prefer-inline')
-  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair {
-    return $KeychainServiceKeyPairCopyWith<$Res>(_value.keychainServiceKeyPair,
+  $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos {
+    return $KeychainSecuredInfosCopyWith<$Res>(_value.keychainSecuredInfos,
         (value) {
-      return _then(_value.copyWith(keychainServiceKeyPair: value) as $Val);
+      return _then(_value.copyWith(keychainSecuredInfos: value) as $Val);
     });
   }
 }
@@ -130,8 +130,8 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String seed,
-      KeychainServiceKeyPair keychainServiceKeyPair,
+      {KeychainSecuredInfos keychainSecuredInfos,
+      String transactionLastAddress,
       String accountSelectedName,
       String name,
       String symbol,
@@ -141,7 +141,7 @@ abstract class _$$_TokenCopyWith<$Res> implements $TokenCopyWith<$Res> {
       List<int> aeip});
 
   @override
-  $KeychainServiceKeyPairCopyWith<$Res> get keychainServiceKeyPair;
+  $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
 }
 
 /// @nodoc
@@ -153,8 +153,8 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? seed = null,
-    Object? keychainServiceKeyPair = null,
+    Object? keychainSecuredInfos = null,
+    Object? transactionLastAddress = null,
     Object? accountSelectedName = null,
     Object? name = null,
     Object? symbol = null,
@@ -164,14 +164,14 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
     Object? aeip = null,
   }) {
     return _then(_$_Token(
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
+      keychainSecuredInfos: null == keychainSecuredInfos
+          ? _value.keychainSecuredInfos
+          : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
+              as KeychainSecuredInfos,
+      transactionLastAddress: null == transactionLastAddress
+          ? _value.transactionLastAddress
+          : transactionLastAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      keychainServiceKeyPair: null == keychainServiceKeyPair
-          ? _value.keychainServiceKeyPair
-          : keychainServiceKeyPair // ignore: cast_nullable_to_non_nullable
-              as KeychainServiceKeyPair,
       accountSelectedName: null == accountSelectedName
           ? _value.accountSelectedName
           : accountSelectedName // ignore: cast_nullable_to_non_nullable
@@ -208,8 +208,8 @@ class __$$_TokenCopyWithImpl<$Res> extends _$TokenCopyWithImpl<$Res, _$_Token>
 
 class _$_Token extends _Token {
   const _$_Token(
-      {required this.seed,
-      required this.keychainServiceKeyPair,
+      {required this.keychainSecuredInfos,
+      required this.transactionLastAddress,
       required this.accountSelectedName,
       required this.name,
       required this.symbol,
@@ -222,9 +222,9 @@ class _$_Token extends _Token {
         super._();
 
   @override
-  final String seed;
+  final KeychainSecuredInfos keychainSecuredInfos;
   @override
-  final KeychainServiceKeyPair keychainServiceKeyPair;
+  final String transactionLastAddress;
   @override
   final String accountSelectedName;
   @override
@@ -238,6 +238,7 @@ class _$_Token extends _Token {
   final List<TokenProperty> _properties;
   @override
   List<TokenProperty> get properties {
+    if (_properties is EqualUnmodifiableListView) return _properties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_properties);
   }
@@ -245,13 +246,14 @@ class _$_Token extends _Token {
   final List<int> _aeip;
   @override
   List<int> get aeip {
+    if (_aeip is EqualUnmodifiableListView) return _aeip;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_aeip);
   }
 
   @override
   String toString() {
-    return 'Token(seed: $seed, keychainServiceKeyPair: $keychainServiceKeyPair, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
+    return 'Token(keychainSecuredInfos: $keychainSecuredInfos, transactionLastAddress: $transactionLastAddress, accountSelectedName: $accountSelectedName, name: $name, symbol: $symbol, initialSupply: $initialSupply, type: $type, properties: $properties, aeip: $aeip)';
   }
 
   @override
@@ -259,9 +261,10 @@ class _$_Token extends _Token {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Token &&
-            (identical(other.seed, seed) || other.seed == seed) &&
-            (identical(other.keychainServiceKeyPair, keychainServiceKeyPair) ||
-                other.keychainServiceKeyPair == keychainServiceKeyPair) &&
+            (identical(other.keychainSecuredInfos, keychainSecuredInfos) ||
+                other.keychainSecuredInfos == keychainSecuredInfos) &&
+            (identical(other.transactionLastAddress, transactionLastAddress) ||
+                other.transactionLastAddress == transactionLastAddress) &&
             (identical(other.accountSelectedName, accountSelectedName) ||
                 other.accountSelectedName == accountSelectedName) &&
             (identical(other.name, name) || other.name == name) &&
@@ -277,8 +280,8 @@ class _$_Token extends _Token {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      seed,
-      keychainServiceKeyPair,
+      keychainSecuredInfos,
+      transactionLastAddress,
       accountSelectedName,
       name,
       symbol,
@@ -296,8 +299,8 @@ class _$_Token extends _Token {
 
 abstract class _Token extends Token {
   const factory _Token(
-      {required final String seed,
-      required final KeychainServiceKeyPair keychainServiceKeyPair,
+      {required final KeychainSecuredInfos keychainSecuredInfos,
+      required final String transactionLastAddress,
       required final String accountSelectedName,
       required final String name,
       required final String symbol,
@@ -308,9 +311,9 @@ abstract class _Token extends Token {
   const _Token._() : super._();
 
   @override
-  String get seed;
+  KeychainSecuredInfos get keychainSecuredInfos;
   @override
-  KeychainServiceKeyPair get keychainServiceKeyPair;
+  String get transactionLastAddress;
   @override
   String get accountSelectedName;
   @override

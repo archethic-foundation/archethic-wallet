@@ -1,13 +1,11 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/faucet/provider.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
-import 'package:aewallet/ui/views/main/components/faucet.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list.dart';
@@ -28,8 +26,6 @@ class AccountTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final isDeviceFaucetCompatible =
-        ref.watch(FaucetProviders.isDeviceCompatible).valueOrNull ?? false;
 
     return Column(
       children: [
@@ -109,15 +105,6 @@ class AccountTab extends ConsumerWidget {
                                   color:
                                       theme.backgroundDarkest!.withOpacity(0.1),
                                 ),
-
-                                if (isDeviceFaucetCompatible)
-                                  const FaucetBanner(),
-                                if (isDeviceFaucetCompatible)
-                                  Divider(
-                                    height: 1,
-                                    color: theme.backgroundDarkest!
-                                        .withOpacity(0.1),
-                                  ),
 
                                 const SizedBox(
                                   height: 15,

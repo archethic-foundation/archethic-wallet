@@ -11,7 +11,6 @@ enum AddTokenProcessStep { form, confirmation }
 @freezed
 class AddTokenFormState with _$AddTokenFormState {
   const factory AddTokenFormState({
-    required String seed,
     @Default(AddTokenProcessStep.form) AddTokenProcessStep addTokenProcessStep,
     required AsyncValue<double> feeEstimation,
     required AccountBalance accountBalance,
