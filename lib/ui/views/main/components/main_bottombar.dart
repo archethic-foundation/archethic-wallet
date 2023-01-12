@@ -37,6 +37,7 @@ class MainBottomBar extends ConsumerWidget {
                 .setMainScreenCurrentPage,
             items: <BottomBarItem>[
               BottomBarItem(
+                key: const Key('bottomBarAddressBook'),
                 icon: const Icon(
                   UiIcons.address_book_menu,
                   size: 30,
@@ -48,6 +49,7 @@ class MainBottomBar extends ConsumerWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
+                key: Key('bottomBarKeyChain'),
                 icon: const Icon(
                   UiIcons.keychain,
                   size: 30,
@@ -59,6 +61,7 @@ class MainBottomBar extends ConsumerWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
+                key: const Key('bottomBarMain'),
                 icon: const Icon(
                   UiIcons.main,
                   size: 30,
@@ -70,6 +73,7 @@ class MainBottomBar extends ConsumerWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
+                key: Key('bottomBarAddressNFTlink'),
                 icon: const Icon(
                   UiIcons.nft,
                   size: 30,

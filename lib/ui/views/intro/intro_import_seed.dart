@@ -309,6 +309,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                   AlignmentDirectional.center,
                                               children: <Widget>[
                                                 TextFormField(
+                                                  key: Key('seedWord$index'),
                                                   controller:
                                                       textEditingController,
                                                   focusNode: focusNode,
@@ -383,7 +384,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                         AppButtonTinyType.primaryOutline,
                         localizations.ok,
                         Dimens.buttonTopDimens,
-                        key: const Key('ok'),
+                        key: const Key('seedWordsOKbutton'),
                         onPressed: () {},
                       )
                     else
@@ -391,7 +392,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                         AppButtonTinyType.primary,
                         localizations.ok,
                         Dimens.buttonTopDimens,
-                        key: const Key('ok'),
+                        key: const Key('seedWordsOKbutton'),
                         onPressed: () async {
                           setState(() {
                             _mnemonicError = '';

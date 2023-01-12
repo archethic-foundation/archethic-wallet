@@ -96,12 +96,12 @@ class NetworkDialog {
                                   height: 30,
                                 ),
                                 Text(
-                                  ref
-                                      .read(SettingsProviders.settings)
-                                      .network
-                                      .getDisplayName(context),
-                                  style: theme.textStyleSize10W100Primary,
-                                ),
+                                    ref
+                                        .read(SettingsProviders.settings)
+                                        .network
+                                        .getDisplayName(context),
+                                    style: theme.textStyleSize10W100Primary,
+                                    key: const Key('networkName')),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -128,6 +128,7 @@ class NetworkDialog {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   AppTextField(
+                                    key: const Key('networkChoice'),
                                     leftMargin: 0,
                                     rightMargin: 0,
                                     focusNode: endpointFocusNode,
