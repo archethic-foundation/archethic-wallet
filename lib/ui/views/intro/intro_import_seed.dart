@@ -245,7 +245,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               children: <Widget>[
                                 GridView.count(
                                   physics: const NeverScrollableScrollPhysics(),
-                                  childAspectRatio: 1 / 0.4,
+                                  childAspectRatio: 1 / 0.6,
                                   shrinkWrap: true,
                                   crossAxisCount: 4,
                                   children: List.generate(24, (index) {
@@ -399,7 +399,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (isPressed == true || phrase.contains(''))
+                        if (isPressed == true ||
+                            phrase.contains('') ||
+                            connectivityStatusProvider ==
+                                ConnectivityStatus.isDisconnected)
                           AppButtonTiny(
                             AppButtonTinyType.primaryOutline,
                             localizations.ok,
