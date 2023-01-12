@@ -43,13 +43,30 @@ void main() {
       'connect'
     ];
 
-    const length = 24;
-    for (var index = 1; index <= length; index++) {
+    const length = 23;
+    for (var index = 0; index <= length; index++) {
       final finder = createFinder(Key('seedWord$index'));
-      await $(finder).tap();
+      await $(finder).scrollTo().tap();
       await $(finder).enterText(seedWord[index]);
+      //await $.native.pressBack();
     }
-    await $(#ok).tap();
+
+    await $(#seedWordsOKbutton).tap();
+    await Future.delayed(const Duration(seconds: 60));
+
+    final keychainFinder = createFinder(RegExp('HFF'));
+    await $(keychainFinder).waitUntilVisible().tap();
+    await Future.delayed(const Duration(seconds: 60));
+
+    final pinButtonFinder = createFinder(RegExp('PIN'));
+    await $(pinButtonFinder).tap();
+    await Future.delayed(const Duration(seconds: 60));
+
+    // code pin 000000 avec confirmation
+    const pinLength = 12;
+    for (var i = pinLength; i >= 1; i--) {
+      await $('0').tap();
+    }
   });
 
   patrolTest('As a user I can receive UCOs',
