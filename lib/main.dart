@@ -12,6 +12,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
+import 'package:aewallet/rpc/server.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
@@ -36,6 +37,9 @@ import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
+  if (ArchethicRPCServer.isPlatformCompatible) {
+    ArchethicRPCServer().run();
+  }
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();

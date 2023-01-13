@@ -2,6 +2,7 @@
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'transaction.freezed.dart';
 
 /// Represents a transaction, blockchain agnostic.
