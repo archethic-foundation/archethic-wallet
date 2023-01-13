@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/domain/service/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -63,4 +64,10 @@ Future<void> setupServiceLocator() async {
     sl.unregister<OracleService>();
   }
   sl.registerLazySingleton<OracleService>(() => OracleService(network));
+
+  if (sl.isRegistered<RemoteCommandDispatcher>()) {
+    sl.unregister<RemoteCommandDispatcher>();
+  }
+  sl.registerLazySingleton<RemoteCommandDispatcher>(
+      RemoteCommandDispatcher.new);
 }
