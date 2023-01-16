@@ -49,7 +49,6 @@ void main() {
       await $('0').tap();
     }
 
-    await Future.delayed(const Duration(seconds: 60));
     expect($(#UCO), findsOneWidget);
   });
 }
