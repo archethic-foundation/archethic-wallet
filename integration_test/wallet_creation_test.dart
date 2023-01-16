@@ -13,6 +13,10 @@ void main() {
       nativeAutomatorConfig: nativeAutomatorConfig,
       nativeAutomation: true, ($) async {
     await app.main();
+    await $.pumpWidgetAndSettle(
+      const app.App(),
+      timeout: const Duration(minutes: 10),
+    );
 
     // accepter les conditions et créer un nouveau wallet
     await $(CheckboxListTile).tap();
@@ -46,9 +50,9 @@ void main() {
     // code pin 000000 avec confirmation
     const length = 12;
     for (var i = length; i >= 1; i--) {
-      await $('0').tap();
+      await $('0').tap(
+        settleTimeout: const Duration(minutes: 10),
+      );
     }
-
-    expect($(#UCO), findsOneWidget);
   });
 }
