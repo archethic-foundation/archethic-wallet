@@ -512,6 +512,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         theme.pickerItemIconEnabled,
         AuthMethod.pin,
         true,
+        key: const Key('accessModePIN'),
       ),
       PickerItem(
         const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
@@ -580,9 +581,17 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   Future<void> _accountsDialog(List<Account> accounts) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (final account in accounts) {
-      pickerItemsList
-          .add(PickerItem(account.name, null, null, null, account, true));
+    for (var i = 0; i < accounts.length; i++) {
+      final account = accounts[i];
+      pickerItemsList.add(PickerItem(
+        account.name,
+        null,
+        null,
+        null,
+        account,
+        true,
+        key: Key('accountName$i'),
+      ));
     }
 
     final selection = await showDialog<Account>(

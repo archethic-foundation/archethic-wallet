@@ -46,27 +46,24 @@ void main() {
 
     const length = 23;
     for (var index = 0; index <= length; index++) {
-      final finder = createFinder(Key('seedWord$index'));
-      await $(finder).scrollTo().tap();
-      await $(finder).enterText(seedWord[index]);
+      final seedWordFieldFinder = createFinder(Key('seedWord$index'));
+      await $(seedWordFieldFinder).scrollTo().tap();
+      await $(seedWordFieldFinder).enterText(seedWord[index]);
       //await $.native.pressBack();
     }
+    await $(#seedWordsOKbutton).tap(
+      settleTimeout: const Duration(minutes: 10),
+    );
 
-    await $(#seedWordsOKbutton).tap();
-    await Future.delayed(const Duration(seconds: 60));
-
-    final keychainFinder = createFinder(RegExp('HFF'));
-    await $(keychainFinder).waitUntilVisible().tap();
-    await Future.delayed(const Duration(seconds: 60));
-
-    final pinButtonFinder = createFinder(RegExp('PIN'));
-    await $(pinButtonFinder).tap();
-    await Future.delayed(const Duration(seconds: 60));
+    //await $(#accountName0).waitUntilVisible().tap();
+    await $(#accessModePIN).tap();
 
     // code pin 000000 avec confirmation
     const pinLength = 12;
     for (var i = pinLength; i >= 1; i--) {
-      await $('0').tap();
+      await $('0').tap(
+        settleTimeout: const Duration(minutes: 10),
+      );
     }
   });
 }
