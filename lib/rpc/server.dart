@@ -1,19 +1,21 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:aewallet/rpc/dto/transaction.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:shelf/shelf.dart';
+import 'package:json_rpc_2/json_rpc_2.dart';
+import 'package:web_socket_channel/io.dart';
 
-part 'server.freezed.dart';
-part 'server.g.dart';
 part 'sign_transaction_handler.dart';
+
+class ArchethicRPCErrors {
+  static const userRejected = 4001;
+  static const unauthorized = 4100;
+  static const unsupportedMethod = 4200;
+}
 
 class ArchethicRPCServer {
   static const LOG_NAME = 'RPC Server';
-  static const HOST = '0.0.0.0';
+  static const HOST = '127.0.0.1';
   static const PORT = 12345;
 
   static bool get isPlatformCompatible {
@@ -24,60 +26,34 @@ class ArchethicRPCServer {
     runZonedGuarded(
       () async {
         log('Starting at ws://$HOST:$PORT', name: LOG_NAME);
-        final socketServer = await HttpServer.bind(
+        final server = await HttpServer.bind(
           HOST,
           PORT,
           shared: true,
         );
 
-        socketServer.listen(
-          onRequest,
-          onError: (error, stack) {
-            log(
-              'WebSocket listen ERROR',
-              error: error,
-              stackTrace: stack,
-              name: LOG_NAME,
+        server.listen((HttpRequest request) async {
+          log('Received request', name: LOG_NAME);
+          final socket = await WebSocketTransformer.upgrade(request);
+          final channel = IOWebSocketChannel(socket);
+          final server = Server(channel.cast<String>())
+            ..registerMethod(
+              'signTx',
+              (Parameters params) {
+                throw RpcException(
+                  ArchethicRPCErrors.unsupportedMethod,
+                  'Not implemented yet',
+                );
+              },
             );
-          },
-          onDone: () {
-            log(
-              'WebSocket listen DONE',
-              name: LOG_NAME,
-            );
-          },
-        );
+          await server.listen();
+        });
       },
       (error, stack) {
         log(
           'WebSocket server failed',
           error: error,
           stackTrace: stack,
-          name: LOG_NAME,
-        );
-      },
-    );
-  }
-
-  Future<void> onRequest(HttpRequest request) async {
-    log('request : $request', name: LOG_NAME);
-    final socket = await WebSocketTransformer.upgrade(request);
-    socket.listen(
-      (event) {
-        log('request : ${event}', name: LOG_NAME);
-        socket.add('response to $event');
-      },
-      onError: (error, stack) {
-        log(
-          'WebSocket ERROR',
-          error: error,
-          stackTrace: stack,
-          name: LOG_NAME,
-        );
-      },
-      onDone: () {
-        log(
-          'WebSocket DONE',
           name: LOG_NAME,
         );
       },
