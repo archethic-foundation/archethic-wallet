@@ -4,7 +4,8 @@
     "description": "Archethic communication extension.",
     "manifest_version": 2,
     "icons": {
-        "128": "icon-128.png"
+        "128": "icon-128.png",
+        "64": "icon-64.png"
     },
     "content_scripts": [
         {
@@ -13,7 +14,7 @@
                 "file://*/*"
             ],
             "js": [
-                "contentscript.js"
+                "content/content.js"
             ]
         }
     ],
