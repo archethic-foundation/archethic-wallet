@@ -9,6 +9,9 @@
 # packages, and plugins designed to encourage good coding practices.
 analyzer:
   exclude:
+    - '**/*.js'
+    - '**/*.ts'
+    - '**/*.json'
     - test/.test_coverage.dart
     - lib/localization.dart
     - lib/l10n/*
