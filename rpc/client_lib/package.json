@@ -1,0 +1,26 @@
+{
+  "name": "archethic_wallet_rpc_client",
+  "author": "",
+  "license": "ISC",
+  "version": "1.0.0",
+  "description": "ArchethicWallet RPC communication client",
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch"
+  },
+  "dependencies": {
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "microbundle": "^0.15.1"
+  }
+}
