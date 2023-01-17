@@ -33,10 +33,16 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for barcode scanning.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Protect the access to the app</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo library permission is required for upload photo to create NFT.</string>
 	<key>UILaunchStoryboardName</key>
@@ -51,7 +57,10 @@
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
@@ -66,10 +75,6 @@
 		<string>8B5D</string>
 		<string>8FC1</string>
 		<string>FE00</string>
-	</array>
-	<key>NSBonjourServices</key>
-	<array>
-		<string>_dartobservatory._tcp</string>
 	</array>
 	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
 	<array>
@@ -346,7 +351,5 @@
 		<string>E828BD080F</string>
 		<string>F0000000030001</string>
 	</array>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string></string>
 </dict>
 </plist>
