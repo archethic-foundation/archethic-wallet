@@ -49,7 +49,7 @@ class MainBottomBar extends ConsumerWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
-                key: Key('bottomBarKeyChain'),
+                key: const Key('bottomBarKeyChain'),
                 icon: const Icon(
                   UiIcons.keychain,
                   size: 30,
@@ -73,7 +73,7 @@ class MainBottomBar extends ConsumerWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
-                key: Key('bottomBarAddressNFTlink'),
+                key: const Key('bottomBarAddressNFTlink'),
                 icon: const Icon(
                   UiIcons.nft,
                   size: 30,
