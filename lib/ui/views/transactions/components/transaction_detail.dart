@@ -14,6 +14,7 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
+import 'package:aewallet/ui/views/transactions/components/transaction_icon.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -59,6 +60,20 @@ class TransactionDetail extends ConsumerWidget {
       return const SizedBox();
     }
 
+    // Component Color
+    final borderColor = transaction.typeTx == RecentTransaction.transferOutput
+        ? theme.backgroundRecentTxListCardTransferOutput!
+        : transaction.typeTx! == RecentTransaction.tokenCreation
+            ? theme.backgroundRecentTxListCardTokenCreation!
+            : theme.backgroundRecentTxListCardTransferInput!;
+
+    final backgroundColor =
+        transaction.typeTx == RecentTransaction.transferOutput
+            ? theme.backgroundRecentTxListCardTransferOutput
+            : transaction.typeTx! == RecentTransaction.tokenCreation
+                ? theme.backgroundRecentTxListCardTokenCreation
+                : theme.backgroundRecentTxListCardTransferInput;
+
     return GestureDetector(
       onTap: () {
         sl.get<HapticUtil>().feedback(
@@ -85,22 +100,19 @@ class TransactionDetail extends ConsumerWidget {
           Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: transaction.typeTx == RecentTransaction.transferOutput
-                    ? theme.backgroundRecentTxListCardTransferOutput!
-                    : transaction.typeTx! == RecentTransaction.tokenCreation
-                        ? theme.backgroundRecentTxListCardTokenCreation!
-                        : theme.backgroundRecentTxListCardTransferInput!,
+                color: borderColor,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
-            color: transaction.typeTx == RecentTransaction.transferOutput
-                ? theme.backgroundRecentTxListCardTransferOutput
-                : transaction.typeTx! == RecentTransaction.tokenCreation
-                    ? theme.backgroundRecentTxListCardTokenCreation
-                    : theme.backgroundRecentTxListCardTransferInput,
+            color: backgroundColor,
             child: Container(
-              padding: const EdgeInsets.all(9.5),
+              padding: const EdgeInsets.only(
+                left: 8.5,
+                top: 9.5,
+                right: 9.5,
+                bottom: 9.5,
+              ),
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: <Widget>[
@@ -240,18 +252,17 @@ class TransactionDetail extends ConsumerWidget {
                               )
                     ],
                   ),
-                  Column(
-                    children: <Widget>[
-                      Row(children: <Widget>[
-                        _TransactionIcon(
-                          transaction: transaction,
-                        ),
-                      ]),
-                    ],
+                  Container(
+                    margin: const EdgeInsets.only(
+                      top: 3,
+                    ),
+                    child: TransactionIcon(
+                      transaction: transaction,
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(
-                      left: 40,
+                      left: 25,
                     ),
                     child: Column(
                       children: <Widget>[
@@ -426,36 +437,5 @@ class TransactionDetail extends ConsumerWidget {
         ],
       ),
     );
-  }
-}
-
-class _TransactionIcon extends ConsumerWidget {
-  const _TransactionIcon({
-    required this.transaction,
-  });
-
-  final RecentTransaction transaction;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    if (transaction.typeTx == RecentTransaction.transferInput) {
-      return Icon(
-        UiIcons.receive,
-        color: theme.text,
-        size: 30,
-      );
-    }
-
-    if (transaction.typeTx == RecentTransaction.transferOutput) {
-      return Icon(
-        UiIcons.send,
-        color: theme.text,
-        size: 30,
-      );
-    }
-
-    return Container();
   }
 }
