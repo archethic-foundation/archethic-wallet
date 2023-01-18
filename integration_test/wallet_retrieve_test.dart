@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
 import 'config.dart';
-import 'user_actions.dart';
 
 void main() {
   patrolTest('As a user I can retrieve my wallet',
