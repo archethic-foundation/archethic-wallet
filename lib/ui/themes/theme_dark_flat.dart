@@ -118,13 +118,13 @@ class DarkFlatTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.white.withOpacity(0.1);
+      Colors.white.withOpacity(0.3);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.1);
+      Colors.blueAccent[100]!.withOpacity(0.3);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.greenAccent[100]!.withOpacity(0.1);
+      Colors.greenAccent[100]!.withOpacity(0.3);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
   @override
