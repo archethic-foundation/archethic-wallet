@@ -1,1 +1,0 @@
-{"version":3,"file":"index.umd.js","sources":["../src/index.js"],"sourcesContent":["\nexport default function sendTx() {\n    console.log(\"It's alive !!s\")\n}"],"names":["console","log"],"mappings":"kPACe,WACXA,QAAQC,IAAI,iBAChB"}

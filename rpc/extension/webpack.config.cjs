@@ -13,6 +13,7 @@ module.exports = [
     {
         devtool: 'source-map',
         entry: [
+            path.resolve(__dirname, 'src', 'content', 'inpage.js'),
             path.resolve(__dirname, 'src', 'content', 'content.js')
         ],
         output: {

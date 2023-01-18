@@ -1,1 +1,0 @@
-{"version":3,"file":"index.module.js","sources":["../src/index.js"],"sourcesContent":["\nexport default function sendTx() {\n    console.log(\"It's alive !!s\")\n}"],"names":["console","log"],"mappings":"AACe,aACXA,QAAQC,IAAI,iBAChB"}

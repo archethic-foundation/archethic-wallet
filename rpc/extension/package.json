@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "webpack --mode production --config webpack.config.cjs",
+    "build-dev": "webpack --mode development --config webpack.config.cjs",
     "watch": "webpack --mode development --watch --progress --config webpack.config.cjs",
     "clean": "rm -R build dist",
     "package": "npm run build && mkdir -p dist && cp -R src/manifest.json static/* build/content dist/ && cd dist && zip -r archethic_wallet_extension.zip *"
