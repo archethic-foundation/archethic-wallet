@@ -1,5 +1,6 @@
 //@Timeout(Duration(seconds: 90))
 import 'package:aewallet/main.dart' as app;
+import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
@@ -61,6 +62,6 @@ void main() {
         settleTimeout: const Duration(minutes: 10),
       );
     }
-    expect($(#recentTransactions), findsOneWidget);
+    await $(TxListLine).at(0).tap();
   });
 }
