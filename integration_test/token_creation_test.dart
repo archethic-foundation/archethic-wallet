@@ -66,20 +66,15 @@ void main() {
       );
     }
 
-    await $(#tokenTab).tap();
-    await $(#tokenCreate).tap();
-    await $(#nftCreateButton).tap();
-    await $(#nftNameButton).enterText('nftTest');
-    await $(#nextButton).tap();
-    await $(#nftImportPicture).tap();
-//add mock with a smple picture
-    await $(#nextButton).tap();
-    await $(#nftName).enterText('nftTest');
-    await $(#nftValue).enterText('10');
-    await $(#nextButton).tap();
-    await $(#nftCreationConfirmation).tap();
-    await $(#nftCreationFinalConfirmation).tap();
-
+    await $(#fungibleTokenTab).tap();
+    await $(#createTokenFungible).tap();
+    await $(#ftName).enterText('ftTest');
+    await $(#ftSymbol).enterText('DCO');
+    await $(#ftOffer).enterText('10');
+    await $(#createToken).tap();
+    await $(#confirm).tap(
+      settleTimeout: const Duration(minutes: 10),
+    );
     // code pin 000000
     const pinConfirmationLength = 6;
     for (var i = pinConfirmationLength; i >= 1; i--) {

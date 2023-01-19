@@ -172,6 +172,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                 textAlign: TextAlign.center,
               ),
               Text(
+                key: const Key('fungibleTokenTab'),
                 localizations.tokensHeader,
                 style: theme.textStyleSize14W600EquinoxPrimary,
                 textAlign: TextAlign.center,
