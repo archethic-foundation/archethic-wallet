@@ -94,7 +94,9 @@ class _HomePageState extends ConsumerState<HomePage>
             AddressBookTab(),
             KeychainTab(),
             AccountTab(),
-            NFTTab(),
+            NFTTab(
+              key: Key('bottomBarAddressNFTlink'),
+            ),
           ],
         ),
       ),

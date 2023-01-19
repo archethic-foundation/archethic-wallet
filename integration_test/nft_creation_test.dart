@@ -67,18 +67,18 @@ void main() {
     }
 
     await $(#bottomBarAddressNFTlink).tap();
-    await $(#nftNocategory).tap();
-    await $(#nftCreateButton).tap();
-    await $(#nftNameButton).enterText('nftTest');
-    await $(#nextButton).tap();
-    await $(#nftImportPicture).tap();
-//add mock with a smple picture
-    await $(#nextButton).tap();
+    await $(#nftCategory0).tap();
+    await $(#createNFT).tap();
+    await $(#nftCreationField).first.enterText('nftTest');
+    await $(#next).tap();
+    await $(#nftImportPhoto).tap();
+//TODO(tecuzin): Add mock with a simple picture
+    await $(#next).tap();
     await $(#nftName).enterText('nftTest');
     await $(#nftValue).enterText('10');
-    await $(#nextButton).tap();
+    await $(#next).tap();
     await $(#nftCreationConfirmation).tap();
-    await $(#nftCreationFinalConfirmation).tap();
+    await $(#createTheNFT).tap();
 
     // code pin 000000
     const pinConfirmationLength = 6;

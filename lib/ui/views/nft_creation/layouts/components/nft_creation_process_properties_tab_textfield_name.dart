@@ -85,6 +85,7 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
       },
       suffixButton: hasQRCode
           ? TextFieldButton(
+              key: const Key('nftName'),
               icon: FontAwesomeIcons.qrcode,
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(

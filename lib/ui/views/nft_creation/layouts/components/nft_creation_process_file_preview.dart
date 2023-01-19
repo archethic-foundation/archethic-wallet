@@ -45,6 +45,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Align(
               child: Text(
+                key: const Key('nftCreationConfirmation'),
                 '[${nftCreation.symbol}]',
                 style: theme.textStyleSize12W400Primary,
               ),

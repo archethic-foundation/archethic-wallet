@@ -58,6 +58,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
                       width: 20,
                     ),
                     Text(
+                      key: const Key('nftImportPhoto'),
                       localizations.nftAddImportPhoto,
                       style: theme.textStyleSize12W400Primary,
                     ),

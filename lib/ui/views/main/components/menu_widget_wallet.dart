@@ -50,6 +50,7 @@ class MenuWidgetWallet extends ConsumerWidget {
               children: <Widget>[
                 if (accountSelected.balance!.isNativeTokenValuePositive())
                   _ActionButton(
+                    key: const Key('sendUCObutton'),
                     text: localizations.send,
                     icon: UiIcons.send,
                     onTap: () async {
@@ -76,6 +77,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   ),
                 if (contact != null)
                   _ActionButton(
+                    key: const Key('receiveUCObutton'),
                     text: localizations.receive,
                     icon: UiIcons.receive,
                     onTap: () async {
@@ -147,6 +149,7 @@ class _ActionButton extends ConsumerWidget {
     required this.text,
     required this.icon,
     this.enabled = true,
+    super.key,
   });
 
   final VoidCallback? onTap;
