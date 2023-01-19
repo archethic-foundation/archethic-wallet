@@ -23,6 +23,7 @@ class TxList extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Column(
+      key: const Key('recentTransactions'),
       children: [
         if (recentTransactions != null)
           recentTransactions.isEmpty

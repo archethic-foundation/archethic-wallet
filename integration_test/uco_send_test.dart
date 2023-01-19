@@ -45,15 +45,12 @@ void main() {
     const length = 23;
     for (var index = 0; index <= length; index++) {
       final seedWordFieldFinder = createFinder(Key('seedWord$index'));
-      await $(seedWordFieldFinder).scrollTo().tap();
-      await $(seedWordFieldFinder).enterText(seedWord[index]);
-      //await $.native.pressBack();
+      await $(seedWordFieldFinder).scrollTo().enterText(seedWord[index]);
     }
     await $(#seedWordsOKbutton).tap(
       settleTimeout: const Duration(minutes: 10),
     );
 
-    //await $(#accountName0).waitUntilVisible().tap();
     await $(#accessModePIN).tap();
 
     // code pin 000000 avec confirmation

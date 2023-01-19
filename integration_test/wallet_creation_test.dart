@@ -41,7 +41,6 @@ void main() {
     await $(#yesButton).tap();
     await $(#understandButton).tap();
     await $(#iveBackedItUp).tap();
-    //await $(#backUpButton).tap();
     await $(#pass).tap();
 
     await $(#yesButton).tap();
