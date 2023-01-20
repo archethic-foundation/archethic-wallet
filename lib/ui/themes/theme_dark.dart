@@ -118,13 +118,13 @@ class DarkTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.white.withOpacity(0.3);
+      Colors.white.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.3);
+      Colors.blueAccent[100]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.greenAccent[100]!.withOpacity(0.3);
+      Colors.greenAccent[100]!.withOpacity(0.2);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
   @override

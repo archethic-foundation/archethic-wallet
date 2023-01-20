@@ -119,13 +119,13 @@ class FlatTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.grey.withOpacity(0.3);
+      Colors.redAccent[200]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.3);
+      Colors.blueAccent[100]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.green.withOpacity(0.3);
+      Colors.green.withOpacity(0.2);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
   @override
