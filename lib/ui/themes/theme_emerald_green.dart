@@ -117,7 +117,7 @@ class EmeraldGreenTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.white.withOpacity(0.3);
+      Colors.redAccent[400]!.withOpacity(0.3);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
       Colors.blueAccent[100]!.withOpacity(0.3);
