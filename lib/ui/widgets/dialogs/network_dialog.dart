@@ -101,7 +101,7 @@ class NetworkDialog {
                                         .network
                                         .getDisplayName(context),
                                     style: theme.textStyleSize10W100Primary,
-                                    key: const Key('networkName')),
+                                    key: const Key('networkName'),),
                                 const SizedBox(
                                   height: 20,
                                 ),

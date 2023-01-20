@@ -1,8 +1,6 @@
 //@Timeout(Duration(seconds: 90))
 import 'package:aewallet/main.dart' as app;
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:path/path.dart';
 import 'package:patrol/patrol.dart';
 
 import 'config.dart';
@@ -68,7 +66,7 @@ void main() {
     await $(#nft0).tap();
     await $(#nftSendButton).tap();
     await $(#nftReceiverAddress).enterText(
-        '00009fe64c7600473a26596058b07f8a4866947b062e7132127f8e9edc05747fd3de');
+        '00009fe64c7600473a26596058b07f8a4866947b062e7132127f8e9edc05747fd3de',);
     await $(#nftSend).tap();
     await $(#nftSendConfirmation).tap();
     // code pin 000000

@@ -2,7 +2,6 @@
 import 'package:aewallet/main.dart' as app;
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
 import 'config.dart';
@@ -52,6 +51,10 @@ void main() {
     await $(#seedWordsOKbutton).tap(
       settleTimeout: const Duration(minutes: 10),
     );
+
+    await $(#accountName1).tap();
+    //final accountSelector = createFinder(RegExp('.*HFF.*'));
+    //await $(accountSelector).tap();
 
     await $(#accessModePIN).tap();
 

@@ -63,7 +63,7 @@ void main() {
 
     await $(#sendUCObutton).tap();
     await $(#UCOreceiverAddress).enterText(
-        '00009fe64c7600473a26596058b07f8a4866947b062e7132127f8e9edc05747fd3de');
+        '00009fe64c7600473a26596058b07f8a4866947b062e7132127f8e9edc05747fd3de',);
     await $(#ucoTransferAmount).enterText('100');
     expect($(#transferFeesCalculation).exists, equals(true));
     await $(#ucoTransferButtonOK).tap();
