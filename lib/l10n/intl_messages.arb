@@ -360,6 +360,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "enterEndpointUseByNetwork": "The endpoint is already used by a network",
+  "@enterEndpointUseByNetwork": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "enterEndpointHeader": "Please, specify your endpoint",
   "@enterEndpointHeader": {
     "type": "text",

@@ -304,6 +304,7 @@
 	"showBlog": "Afficher le blog",
 	"enterEndpointBlank": "Le point d'accès est obligatoire.",
 	"enterEndpointNotValid": "Le point d'accès n'est pas valide.",
+  "enterEndpointUseByNetwork": "Le point d'accès est déjà utilisé par un réseau.",
 	"enterEndpointHeader": "Veuillez préciser votre point d'accès.",
 	"introNewWalletGetFirstInfosWelcome": "Bienvenue dans le Wallet Archethic.",
 	"introNewWalletGetFirstInfosNameRequest": "Quel nom souhaitez-vous donner à ce compte, compte qui sera stocké dans votre porte-clés décentralisé ?",

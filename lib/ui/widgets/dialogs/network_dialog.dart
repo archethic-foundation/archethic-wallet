@@ -93,6 +93,31 @@ class NetworkDialog {
                               });
                             }
 
+                            Future<List<Node>> getNodeFromNetwork(
+                              AvailableNetworks network,
+                            ) async {
+                              final networkSetting = NetworksSetting(
+                                network: network,
+                                networkDevEndpoint: '',
+                              );
+
+                              final link = networkSetting.getLink();
+
+                              final nodeListMain = await ApiService(
+                                link,
+                              ).getNodeList();
+
+                              return nodeListMain;
+                            }
+
+                            bool hasUriInNode(Uri uri, List<Node> nodes) {
+                              return nodes.any(
+                                (node) =>
+                                    node.ip == uri.host &&
+                                    node.port == uri.port,
+                              );
+                            }
+
                             if (endpointController.text.isEmpty) {
                               setError(localizations.enterEndpointBlank);
                               return;
@@ -110,32 +135,28 @@ class NetworkDialog {
                             }
 
                             try {
-                              final nodeListMain = await ApiService(
-                                'https://mainnet.archethic.net',
-                              ).getNodeList();
+                              final nodeListMain = await getNodeFromNetwork(
+                                AvailableNetworks.archethicMainNet,
+                              );
 
-                              final nodeListTest = await ApiService(
-                                'https://testnet.archethic.net',
-                              ).getNodeList();
+                              final nodeListTest = await getNodeFromNetwork(
+                                AvailableNetworks.archethicTestNet,
+                              );
 
-                              if (nodeListMain.any(
-                                (node) =>
-                                    node.ip == uriInput.host &&
-                                    node.port == uriInput.port,
-                              )) {
-                                setError(localizations.enterEndpointNotValid);
+                              if (hasUriInNode(uriInput, nodeListMain)) {
+                                setError(
+                                  localizations.enterEndpointUseByNetwork,
+                                );
                                 return;
                               }
-                              if (nodeListTest.any(
-                                (node) =>
-                                    node.ip == uriInput.host &&
-                                    node.port == uriInput.port,
-                              )) {
-                                setError(localizations.enterEndpointNotValid);
+                              if (hasUriInNode(uriInput, nodeListTest)) {
+                                setError(
+                                  localizations.enterEndpointUseByNetwork,
+                                );
                                 return;
                               }
                             } catch (e) {
-                              setError(localizations.enterEndpointNotValid);
+                              setError(localizations.enterEndpointUseByNetwork);
                               return;
                             }
 
