@@ -110,7 +110,7 @@ class NetworkDialog {
                               return nodeListMain;
                             }
 
-                            bool hasUriInNode(Uri uri, List<Node> nodes) {
+                            bool hasUriInNodes(Uri uri, List<Node> nodes) {
                               return nodes.any(
                                 (node) =>
                                     node.ip == uri.host &&
@@ -143,13 +143,8 @@ class NetworkDialog {
                                 AvailableNetworks.archethicTestNet,
                               );
 
-                              if (hasUriInNode(uriInput, nodeListMain)) {
-                                setError(
-                                  localizations.enterEndpointUseByNetwork,
-                                );
-                                return;
-                              }
-                              if (hasUriInNode(uriInput, nodeListTest)) {
+                              if (hasUriInNodes(uriInput, nodeListMain) ||
+                                  hasUriInNodes(uriInput, nodeListTest)) {
                                 setError(
                                   localizations.enterEndpointUseByNetwork,
                                 );
@@ -211,7 +206,7 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
     return _NetworkAlertDialog(
       title: const Padding(
         padding: EdgeInsets.only(bottom: 10),
-        child: _NetworkDevnetLogo(),
+        child: _NetworkDevnetHeader(),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -305,8 +300,8 @@ class _NetworkTitle extends ConsumerWidget {
   }
 }
 
-class _NetworkDevnetLogo extends ConsumerWidget {
-  const _NetworkDevnetLogo();
+class _NetworkDevnetHeader extends ConsumerWidget {
+  const _NetworkDevnetHeader();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
