@@ -272,8 +272,8 @@ class _NetworkDevnetHeader extends ConsumerWidget {
           height: 30,
         ),
         Text(
-          ref.read(SettingsProviders.settings).network.getDisplayName(context),
           key: const Key('networkName'),
+          ref.read(SettingsProviders.settings).network.getDisplayName(context),
           style: theme.textStyleSize10W100Primary,
         ),
         const SizedBox(
