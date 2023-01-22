@@ -151,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterEndpointBlank" : MessageLookupByLibrary.simpleMessage("Le point d\'accès est obligatoire."),
     "enterEndpointHeader" : MessageLookupByLibrary.simpleMessage("Veuillez préciser votre point d\'accès."),
     "enterEndpointNotValid" : MessageLookupByLibrary.simpleMessage("Le point d\'accès n\'est pas valide."),
+    "enterEndpointUseByNetwork" : MessageLookupByLibrary.simpleMessage("Le point d\'accès est déjà utilisé par un réseau."),
     "enterPasswordHint" : MessageLookupByLibrary.simpleMessage("Saisissez votre mot de passe"),
     "enterPublicKey" : MessageLookupByLibrary.simpleMessage("Enter la clé publique"),
     "enterYubikeyAPIKeyEmpty" : MessageLookupByLibrary.simpleMessage("La clé client de l\'API est obligatoire"),

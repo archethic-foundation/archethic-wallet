@@ -303,6 +303,11 @@ class AppLocalization {
         name: 'enterEndpointNotValid');
   }
 
+  String get enterEndpointUseByNetwork {
+    return Intl.message('The endpoint is already used by a network',
+        name: 'enterEndpointUseByNetwork');
+  }
+
   String get enterEndpointHeader {
     return Intl.message('Please, specify your endpoint',
         name: 'enterEndpointHeader');

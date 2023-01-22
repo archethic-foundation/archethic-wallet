@@ -152,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterEndpointBlank" : MessageLookupByLibrary.simpleMessage("The endpoint cannot be empty"),
     "enterEndpointHeader" : MessageLookupByLibrary.simpleMessage("Please, specify your endpoint"),
     "enterEndpointNotValid" : MessageLookupByLibrary.simpleMessage("The endpoint is not valid"),
+    "enterEndpointUseByNetwork" : MessageLookupByLibrary.simpleMessage("The endpoint is already used by a network"),
     "enterPasswordHint" : MessageLookupByLibrary.simpleMessage("Enter your password"),
     "enterPublicKey" : MessageLookupByLibrary.simpleMessage("Enter Public Key"),
     "enterYubikeyAPIKeyEmpty" : MessageLookupByLibrary.simpleMessage("The API Key is mandatory"),
