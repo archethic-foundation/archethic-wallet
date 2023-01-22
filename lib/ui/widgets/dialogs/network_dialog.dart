@@ -8,7 +8,9 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +23,7 @@ class NetworkDialog {
     NetworksSetting curNetworksSetting,
   ) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
     String? endpointError;
@@ -52,22 +55,8 @@ class NetworkDialog {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        final localizations = AppLocalization.of(context)!;
-        final theme = ref.watch(ThemeProviders.selectedTheme);
-        return AlertDialog(
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(
-              localizations.networksHeader,
-              style: theme.textStyleSize24W700EquinoxPrimary,
-            ),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: theme.text45!,
-            ),
-          ),
+        return _NetworkAlertDialog(
+          title: const _NetworkTitle(),
           content: PickerWidget(
             pickerItems: pickerItemsList,
             selectedIndex: curNetworksSetting.getIndex(),
@@ -76,146 +65,72 @@ class NetworkDialog {
               await ref
                   .read(SettingsProviders.settings.notifier)
                   .setNetwork(selectedNetworkSettings);
+
+              // If selected network is DevNet
+              // Show a dialog to enter a custom network
+              // else use the network selected
               if (selectedNetworkSettings.network ==
                   AvailableNetworks.archethicDevNet) {
                 endpointController.text =
                     selectedNetworkSettings.networkDevEndpoint;
+
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {
                     return StatefulBuilder(
                       builder: (context, setState) {
-                        return AlertDialog(
-                          title: Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              children: [
-                                SvgPicture.asset(
-                                  '${theme.assetsFolder!}${theme.logoAlone!}.svg',
-                                  height: 30,
-                                ),
-                                Text(
-                                    ref
-                                        .read(SettingsProviders.settings)
-                                        .network
-                                        .getDisplayName(context),
-                                    style: theme.textStyleSize10W100Primary,
-                                    key: const Key('networkName'),),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  localizations.enterEndpointHeader,
-                                  style: theme.textStyleSize16W400Primary,
-                                ),
-                              ],
-                            ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(16),
-                            ),
-                            side: BorderSide(
-                              color: theme.text45!,
-                            ),
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  AppTextField(
-                                    key: const Key('networkChoice'),
-                                    leftMargin: 0,
-                                    rightMargin: 0,
-                                    focusNode: endpointFocusNode,
-                                    controller: endpointController,
-                                    labelText: localizations.enterEndpoint,
-                                    keyboardType: TextInputType.text,
-                                    style: theme.textStyleSize14W600Primary,
-                                    inputFormatters: <TextInputFormatter>[
-                                      LengthLimitingTextInputFormatter(28),
-                                    ],
-                                  ),
-                                  Text(
-                                    'http://xxx.xxx.xxx.xxx:xxxx',
-                                    style: theme.textStyleSize12W400Primary,
-                                  ),
-                                  if (endpointError != null)
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        top: 5,
-                                        bottom: 5,
-                                      ),
-                                      child: Text(
-                                        endpointError!,
-                                        style: theme.textStyleSize14W600Primary,
-                                      ),
-                                    )
-                                  else
-                                    const SizedBox(),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  AppButtonTiny(
-                                    AppButtonTinyType.primary,
-                                    localizations.ok,
-                                    Dimens.buttonTopDimens,
-                                    key: const Key('addEndpoint'),
-                                    onPressed: () async {
-                                      endpointError = '';
-                                      if (endpointController.text.isEmpty) {
-                                        setState(() {
-                                          endpointError =
-                                              localizations.enterEndpointBlank;
-                                          FocusScope.of(context).requestFocus(
-                                            endpointFocusNode,
-                                          );
-                                        });
-                                      } else {
-                                        if (Uri.parse(
-                                              endpointController.text,
-                                            ).isAbsolute ==
-                                            false) {
-                                          setState(() {
-                                            endpointError = localizations
-                                                .enterEndpointNotValid;
-                                            FocusScope.of(context).requestFocus(
-                                              endpointFocusNode,
-                                            );
-                                          });
-                                        } else {
-                                          await ref
-                                              .read(
-                                                SettingsProviders
-                                                    .settings.notifier,
-                                              )
-                                              .setNetwork(
-                                                NetworksSetting(
-                                                  network:
-                                                      selectedNetworkSettings
-                                                          .network,
-                                                  networkDevEndpoint:
-                                                      endpointController.text,
-                                                ),
-                                              );
+                        return _NetworkDialogCustomInput(
+                          endpointFocusNode: endpointFocusNode,
+                          endpointController: endpointController,
+                          endpointError: endpointError,
+                          onSubmitNetwork: () async {
+                            void setError(String errorText) {
+                              setState(() {
+                                endpointError = errorText;
+                                FocusScope.of(context).requestFocus(
+                                  endpointFocusNode,
+                                );
+                              });
+                            }
 
-                                          Navigator.pop(context);
-                                        }
-                                      }
-                                    },
+                            if (endpointController.text.isEmpty) {
+                              setError(localizations.enterEndpointBlank);
+                              return;
+                            }
+                            if (Uri.parse(endpointController.text).isAbsolute ==
+                                false) {
+                              setError(localizations.enterEndpointNotValid);
+                              return;
+                            }
+
+                            try {
+                              final nodeList =
+                                  await sl.get<ApiService>().getNodeList();
+                              // TODO : Check each node => I currently don't now what there are in a Node
+                              if (nodeList.any((node) =>
+                                  node.ip == endpointController.text)) {
+                                setError(localizations.enterEndpointNotValid);
+                                return;
+                              }
+                            } catch (e) {
+                              setError(localizations.enterEndpointNotValid);
+                              return;
+                            }
+
+                            await ref
+                                .read(
+                                  SettingsProviders.settings.notifier,
+                                )
+                                .setNetwork(
+                                  NetworksSetting(
+                                    network: AvailableNetworks.archethicDevNet,
+                                    networkDevEndpoint: endpointController.text,
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                );
+
+                            Navigator.pop(context);
+                          },
                         );
                       },
                     );
@@ -229,6 +144,176 @@ class NetworkDialog {
           ),
         );
       },
+    );
+  }
+}
+
+class _NetworkDialogCustomInput extends ConsumerWidget {
+  const _NetworkDialogCustomInput({
+    required this.endpointFocusNode,
+    required this.endpointController,
+    required this.endpointError,
+    required this.onSubmitNetwork,
+  });
+
+  final FocusNode endpointFocusNode;
+  final TextEditingController endpointController;
+  final String? endpointError;
+  final Function() onSubmitNetwork;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return _NetworkAlertDialog(
+      title: const Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: _NetworkDevnetLogo(),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              AppTextField(
+                key: const Key('networkChoice'),
+                leftMargin: 0,
+                rightMargin: 0,
+                focusNode: endpointFocusNode,
+                controller: endpointController,
+                labelText: localizations.enterEndpoint,
+                keyboardType: TextInputType.text,
+                style: theme.textStyleSize14W600Primary,
+                inputFormatters: <TextInputFormatter>[
+                  LengthLimitingTextInputFormatter(28),
+                ],
+              ),
+              Text(
+                'http://xxx.xxx.xxx.xxx:xxxx',
+                style: theme.textStyleSize12W400Primary,
+              ),
+              if (endpointError != null)
+                _NetworkErrorMessage(
+                  endpointError: endpointError,
+                )
+              else
+                const SizedBox(),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              AppButtonTiny(
+                AppButtonTinyType.primary,
+                localizations.ok,
+                Dimens.buttonTopDimens,
+                key: const Key('addEndpoint'),
+                onPressed: onSubmitNetwork,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NetworkAlertDialog extends ConsumerWidget {
+  const _NetworkAlertDialog({required this.content, required this.title});
+
+  final Widget content;
+  final Widget title;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return AlertDialog(
+      title: title,
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        side: BorderSide(
+          color: theme.text45!,
+        ),
+      ),
+      content: content,
+    );
+  }
+}
+
+class _NetworkTitle extends ConsumerWidget {
+  const _NetworkTitle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Text(
+        localizations.networksHeader,
+        style: theme.textStyleSize24W700EquinoxPrimary,
+      ),
+    );
+  }
+}
+
+class _NetworkDevnetLogo extends ConsumerWidget {
+  const _NetworkDevnetLogo();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
+
+    return Column(
+      children: [
+        SvgPicture.asset(
+          '${theme.assetsFolder!}${theme.logoAlone!}.svg',
+          height: 30,
+        ),
+        Text(
+          ref.read(SettingsProviders.settings).network.getDisplayName(context),
+          key: const Key('networkName'),
+          style: theme.textStyleSize10W100Primary,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          localizations.enterEndpointHeader,
+          style: theme.textStyleSize16W400Primary,
+        ),
+      ],
+    );
+  }
+}
+
+class _NetworkErrorMessage extends ConsumerWidget {
+  const _NetworkErrorMessage({
+    required this.endpointError,
+  });
+
+  final String? endpointError;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 5,
+        bottom: 5,
+      ),
+      child: Text(
+        endpointError!,
+        style: theme.textStyleSize14W600Primary,
+      ),
     );
   }
 }
