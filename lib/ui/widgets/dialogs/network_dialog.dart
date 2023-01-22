@@ -8,7 +8,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -98,18 +97,40 @@ class NetworkDialog {
                               setError(localizations.enterEndpointBlank);
                               return;
                             }
-                            if (Uri.parse(endpointController.text).isAbsolute ==
-                                false) {
+
+                            // Uri seem to accept whitespace. So I need to remove bad formated Uri.
+                            final textCleaned =
+                                endpointController.text.replaceAll(' ', '');
+
+                            final uriInput = Uri.parse(textCleaned);
+
+                            if (uriInput.isAbsolute == false) {
                               setError(localizations.enterEndpointNotValid);
                               return;
                             }
 
                             try {
-                              final nodeList =
-                                  await sl.get<ApiService>().getNodeList();
-                              // TODO : Check each node => I currently don't now what there are in a Node
-                              if (nodeList.any((node) =>
-                                  node.ip == endpointController.text)) {
+                              final nodeListMain = await ApiService(
+                                'https://mainnet.archethic.net',
+                              ).getNodeList();
+
+                              final nodeListTest = await ApiService(
+                                'https://testnet.archethic.net',
+                              ).getNodeList();
+
+                              if (nodeListMain.any(
+                                (node) =>
+                                    node.ip == uriInput.host &&
+                                    node.port == uriInput.port,
+                              )) {
+                                setError(localizations.enterEndpointNotValid);
+                                return;
+                              }
+                              if (nodeListTest.any(
+                                (node) =>
+                                    node.ip == uriInput.host &&
+                                    node.port == uriInput.port,
+                              )) {
                                 setError(localizations.enterEndpointNotValid);
                                 return;
                               }
@@ -125,7 +146,7 @@ class NetworkDialog {
                                 .setNetwork(
                                   NetworksSetting(
                                     network: AvailableNetworks.archethicDevNet,
-                                    networkDevEndpoint: endpointController.text,
+                                    networkDevEndpoint: textCleaned,
                                   ),
                                 );
 
