@@ -2795,5 +2795,17 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "connectivityWarningHeader": "Check your internet connection.",
+  "@connectivityWarningHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "connectivityWarningDesc": "You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.",
+  "@connectivityWarningDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

@@ -10,9 +10,9 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
@@ -87,32 +87,32 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return Stack(
-      children: [
-        Scaffold(
-          resizeToAvoidBottomInset: true,
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  theme.background2Small!,
-                ),
-                fit: BoxFit.fitHeight,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[theme.backgroundDark!, theme.background!],
-              ),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background2Small!,
             ),
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075,
-                ),
-                child: Column(
+            fit: BoxFit.fitHeight,
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[theme.backgroundDark!, theme.background!],
+          ),
+        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
+            minimum: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
+            child: Stack(
+              children: [
+                Column(
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -320,9 +320,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                           TextInputAction.next,
                                                       decoration:
                                                           InputDecoration(
-                                                              labelText: (index +
-                                                                      1)
-                                                                  .toString()),
+                                                        labelText: (index + 1)
+                                                            .toString(),
+                                                      ),
                                                       inputFormatters: [
                                                         LowerCaseTextFormatter()
                                                       ],
@@ -370,7 +370,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                       child: Container(
                                                         height: 1,
                                                         width: MediaQuery.of(
-                                                                context)
+                                                                context,)
                                                             .size
                                                             .width,
                                                         decoration:
@@ -519,12 +519,17 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                     ),
                   ],
                 ),
-              ),
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isDisconnected)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: MainAppBarIconNetworkWarning(),
+                  ),
+              ],
             ),
           ),
         ),
-        const BannerConnectivity(),
-      ],
+      ),
     );
   }
 

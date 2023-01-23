@@ -108,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSecretPhrase" : MessageLookupByLibrary.simpleMessage("Confirm your secret phrase."),
     "confirmSecretPhraseExplanation" : MessageLookupByLibrary.simpleMessage("Select the words to put them in the correct order."),
     "confirmSecretPhraseKo" : MessageLookupByLibrary.simpleMessage("The order is not correct."),
+    "connectivityWarningDesc" : MessageLookupByLibrary.simpleMessage("You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled."),
+    "connectivityWarningHeader" : MessageLookupByLibrary.simpleMessage("Check your internet connection."),
     "consensusNotReached" : MessageLookupByLibrary.simpleMessage("The consensus is not reached. Please retry your request..."),
     "contactAdded" : MessageLookupByLibrary.simpleMessage("%1 added to address book."),
     "contactAddressInfoExternalContact" : MessageLookupByLibrary.simpleMessage("The following QR Code contains the address of your contact.\n\nYou can use this address to send funds or tokens to your contact.\n\nTo use it, you can :\n- either scan the QR Code above,\n- or click on it to copy the address."),

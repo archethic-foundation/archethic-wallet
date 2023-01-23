@@ -107,6 +107,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSecretPhrase" : MessageLookupByLibrary.simpleMessage("Confirmez votre phrase secrète."),
     "confirmSecretPhraseExplanation" : MessageLookupByLibrary.simpleMessage("Sélectionnez les mots pour les mettre dans le bon ordre."),
     "confirmSecretPhraseKo" : MessageLookupByLibrary.simpleMessage("L\'ordre n\'est pas correct."),
+    "connectivityWarningDesc" : MessageLookupByLibrary.simpleMessage("Vous pouvez utiliser l\'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités seront désactivées."),
+    "connectivityWarningHeader" : MessageLookupByLibrary.simpleMessage("Vérifiez votre connexion internet."),
     "consensusNotReached" : MessageLookupByLibrary.simpleMessage("Le consensus n\'est pas atteint. Veuillez réitérer votre demande..."),
     "contactAdded" : MessageLookupByLibrary.simpleMessage("%1 ajouté au carnet d\'adresses."),
     "contactAddressInfoExternalContact" : MessageLookupByLibrary.simpleMessage("Le QR Code suivant contient l\'adresse de votre contact.\n\nVous pouvez utiliser cette adresse pour envoyer des fonds ou des tokens à votre contact.\n\nPour l\'utiliser, vous pouvez :\n- soit scanner le QR Code ci-dessus,\n- soit cliquer dessus pour copier l\'adresse."),

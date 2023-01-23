@@ -7,7 +7,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
-import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -66,47 +65,40 @@ class _HomePageState extends ConsumerState<HomePage>
       },
     );
 
-    return Stack(
-      children: [
-        Scaffold(
-          extendBodyBehindAppBar: true,
-          extendBody: true,
-          appBar: const MainAppBar(),
-          bottomNavigationBar: const MainBottomBar(),
-          drawerEdgeDragWidth: 0,
-          resizeToAvoidBottomInset: false,
-          backgroundColor: theme.background,
-          drawer: SizedBox(
-            width: Responsive.drawerWidth(context),
-            child: const Drawer(
-              child: SettingsSheetWallet(),
-            ),
-          ),
-          body: IncomingTransactionsNotifier(
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: bottomBarPageController,
-              onPageChanged: (int page) {
-                ref
-                    .read(SettingsProviders.settings.notifier)
-                    .setMainScreenCurrentPage(page);
-                if (page == 3) {
-                  ref
-                      .read(AccountProviders.selectedAccount.notifier)
-                      .refreshNFTs();
-                }
-              },
-              children: const [
-                AddressBookTab(),
-                KeychainTab(),
-                AccountTab(),
-                NFTTab(),
-              ],
-            ),
-          ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: const MainAppBar(),
+      bottomNavigationBar: const MainBottomBar(),
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: theme.background,
+      drawer: SizedBox(
+        width: Responsive.drawerWidth(context),
+        child: const Drawer(
+          child: SettingsSheetWallet(),
         ),
-        const BannerConnectivity(),
-      ],
+      ),
+      body: IncomingTransactionsNotifier(
+        child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: bottomBarPageController,
+          onPageChanged: (int page) {
+            ref
+                .read(SettingsProviders.settings.notifier)
+                .setMainScreenCurrentPage(page);
+            if (page == 3) {
+              ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+            }
+          },
+          children: const [
+            AddressBookTab(),
+            KeychainTab(),
+            AccountTab(),
+            NFTTab(),
+          ],
+        ),
+      ),
     );
   }
 }

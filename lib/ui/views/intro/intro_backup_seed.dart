@@ -3,8 +3,8 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -52,33 +52,33 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return Stack(
-      children: [
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: theme.backgroundDarkest,
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  theme.background4Small!,
-                ),
-                fit: BoxFit.fitHeight,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[theme.backgroundDark!, theme.background!],
-              ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: theme.backgroundDarkest,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background4Small!,
             ),
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075,
-                ),
-                child: Column(
+            fit: BoxFit.fitHeight,
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[theme.backgroundDark!, theme.background!],
+          ),
+        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
+            minimum: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
+            child: Stack(
+              children: [
+                Column(
                   children: <Widget>[
                     Expanded(
                       child: Column(
@@ -99,82 +99,86 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   },
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsetsDirectional.only(
-                                      start: 15,
-                                    ),
-                                    height: 50,
-                                    width: 50,
-                                    child: TextButton(
-                                      onPressed: () async {
-                                        sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              preferences.activeVibrations,
-                                            );
-                                        seed = AppSeeds.generateSeed();
-                                        mnemonic = AppMnemomics.seedToMnemonic(
-                                          seed!,
-                                        );
-                                        ref
-                                            .read(
-                                              SettingsProviders
-                                                  .settings.notifier,
-                                            )
-                                            .setLanguageSeed('en');
-                                      },
-                                      child: language == 'en'
-                                          ? Image.asset(
-                                              'assets/icons/languages/united-states.png',
-                                            )
-                                          : Opacity(
-                                              opacity: 0.3,
-                                              child: Image.asset(
+                              if (connectivityStatusProvider ==
+                                  ConnectivityStatus.isConnected)
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsetsDirectional.only(
+                                        start: 15,
+                                      ),
+                                      height: 50,
+                                      width: 50,
+                                      child: TextButton(
+                                        onPressed: () async {
+                                          sl.get<HapticUtil>().feedback(
+                                                FeedbackType.light,
+                                                preferences.activeVibrations,
+                                              );
+                                          seed = AppSeeds.generateSeed();
+                                          mnemonic =
+                                              AppMnemomics.seedToMnemonic(
+                                            seed!,
+                                          );
+                                          ref
+                                              .read(
+                                                SettingsProviders
+                                                    .settings.notifier,
+                                              )
+                                              .setLanguageSeed('en');
+                                        },
+                                        child: language == 'en'
+                                            ? Image.asset(
                                                 'assets/icons/languages/united-states.png',
+                                              )
+                                            : Opacity(
+                                                opacity: 0.3,
+                                                child: Image.asset(
+                                                  'assets/icons/languages/united-states.png',
+                                                ),
                                               ),
-                                            ),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsetsDirectional.only(
-                                      start: 15,
-                                    ),
-                                    height: 50,
-                                    width: 50,
-                                    child: TextButton(
-                                      onPressed: () async {
-                                        sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              preferences.activeVibrations,
-                                            );
-                                        seed = AppSeeds.generateSeed();
-                                        mnemonic = AppMnemomics.seedToMnemonic(
-                                          seed!,
-                                          languageCode: 'fr',
-                                        );
+                                    Container(
+                                      margin: const EdgeInsetsDirectional.only(
+                                        start: 15,
+                                      ),
+                                      height: 50,
+                                      width: 50,
+                                      child: TextButton(
+                                        onPressed: () async {
+                                          sl.get<HapticUtil>().feedback(
+                                                FeedbackType.light,
+                                                preferences.activeVibrations,
+                                              );
+                                          seed = AppSeeds.generateSeed();
+                                          mnemonic =
+                                              AppMnemomics.seedToMnemonic(
+                                            seed!,
+                                            languageCode: 'fr',
+                                          );
 
-                                        ref
-                                            .read(
-                                              SettingsProviders
-                                                  .settings.notifier,
-                                            )
-                                            .setLanguageSeed('fr');
-                                      },
-                                      child: language == 'fr'
-                                          ? Image.asset(
-                                              'assets/icons/languages/france.png',
-                                            )
-                                          : Opacity(
-                                              opacity: 0.3,
-                                              child: Image.asset(
+                                          ref
+                                              .read(
+                                                SettingsProviders
+                                                    .settings.notifier,
+                                              )
+                                              .setLanguageSeed('fr');
+                                        },
+                                        child: language == 'fr'
+                                            ? Image.asset(
                                                 'assets/icons/languages/france.png',
+                                              )
+                                            : Opacity(
+                                                opacity: 0.3,
+                                                child: Image.asset(
+                                                  'assets/icons/languages/france.png',
+                                                ),
                                               ),
-                                            ),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
+                                  ],
+                                )
                             ],
                           ),
                           Container(
@@ -194,7 +198,10 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                               child: ArchethicScrollbar(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
+                                    left: 10,
+                                    right: 10,
+                                    bottom: 20,
+                                  ),
                                   child: MnemonicDisplay(
                                     wordList: mnemonic!,
                                     explanation: Align(
@@ -245,12 +252,17 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                     ),
                   ],
                 ),
-              ),
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isDisconnected)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: MainAppBarIconNetworkWarning(),
+                  ),
+              ],
             ),
           ),
         ),
-        const BannerConnectivity(),
-      ],
+      ),
     );
   }
 }

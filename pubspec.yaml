@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.7+420
+version: 2.0.7+423
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
@@ -204,9 +204,6 @@ dependencies:
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^6.3.0
-
-  # Display angled banners on top of your content with super_banners!
-  super_banners: ^0.0.1
 
   # Tuple data structure
   tuple: ^2.0.1
