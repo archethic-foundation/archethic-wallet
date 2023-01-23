@@ -2,12 +2,14 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
@@ -44,6 +46,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),
@@ -82,7 +85,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 preferences.showBalances
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
-              if (hasNotifications)
+              if (connectivityStatusProvider ==
+                  ConnectivityStatus.isDisconnected)
+                const MainAppBarIconNetworkWarning()
+              else if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()

@@ -2192,6 +2192,17 @@ class AppLocalization {
         'The connection to the network could not be completed. Please check your network settings.',
         name: 'noConnection');
   }
+
+  String get connectivityWarningHeader {
+    return Intl.message('Check your internet connection.',
+        name: 'connectivityWarningHeader');
+  }
+
+  String get connectivityWarningDesc {
+    return Intl.message(
+        'You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.',
+        name: 'connectivityWarningDesc');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

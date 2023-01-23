@@ -5,8 +5,8 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -33,28 +33,28 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return Stack(
-      children: [
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  theme.background4Small!,
-                ),
-                fit: BoxFit.fitHeight,
-                opacity: 0.8,
-              ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background4Small!,
             ),
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075,
-                ),
-                child: Column(
+            fit: BoxFit.fitHeight,
+            opacity: 0.8,
+          ),
+        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
+            minimum: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
+            child: Stack(
+              children: [
+                Column(
                   children: <Widget>[
                     Expanded(
                       child: SingleChildScrollView(
@@ -244,12 +244,17 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     ),
                   ],
                 ),
-              ),
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isDisconnected)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: MainAppBarIconNetworkWarning(),
+                  ),
+              ],
             ),
           ),
         ),
-        const BannerConnectivity(),
-      ],
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2023-01-11T22:38:11.917110",
+  "@@last_modified": "2023-01-23T23:09:19.216250",
   "noConnectionBanner": "No connection",
   "@noConnectionBanner": {
     "type": "text",
@@ -2792,6 +2792,18 @@
   },
   "noConnection": "The connection to the network could not be completed. Please check your network settings.",
   "@noConnection": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "connectivityWarningHeader": "Check your internet connection.",
+  "@connectivityWarningHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "connectivityWarningDesc": "You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.",
+  "@connectivityWarningDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

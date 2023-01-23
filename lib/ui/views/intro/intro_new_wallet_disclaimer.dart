@@ -2,8 +2,8 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/banner_connectivity.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -22,32 +22,32 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return Stack(
-      children: [
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  theme.background1Small!,
-                ),
-                fit: BoxFit.fitHeight,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[theme.backgroundDark!, theme.background!],
-              ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background1Small!,
             ),
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075,
-                ),
-                child: Column(
+            fit: BoxFit.fitHeight,
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[theme.backgroundDark!, theme.background!],
+          ),
+        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
+            minimum: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
+            child: Stack(
+              children: [
+                Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
@@ -186,12 +186,17 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                     ),
                   ],
                 ),
-              ),
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isDisconnected)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: MainAppBarIconNetworkWarning(),
+                  ),
+              ],
             ),
           ),
         ),
-        const BannerConnectivity(),
-      ],
+      ),
     );
   }
 }
