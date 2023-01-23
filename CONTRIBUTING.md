@@ -144,3 +144,28 @@ Rather than reinventing the wheel, I encourage you to check [this excellent diag
 - **Application state management** heavily relies on [Riverpod](https://riverpod.dev/).
 - **Dependency injection** relies on [Riverpod](https://riverpod.dev/) too. There is still a non neglectable part using the excellent [GetIt](https://pub.dev/packages/get_it) library.
 - **Blockchain interaction** is extracted to the [archethic_lib_dart](https://pub.dev/packages/archethic_lib_dart) package.
+
+
+## Tools
+
+### Translations
+
+- By default, the application is in **English**.
+
+- All texts (labels, messages, ...) must be written in the file ``lib/localization.dart``.
+  - Once written, in the terminal, run the command ``flutter pub pub run intl_generator:extract_to_arb --output-dir=lib/l10n lib/localization.dart`` which allows to transfer the key in ``lib/i10n/intl_message.arb``.
+  - From this file, duplicate the added or updated content in the file ``lib/i10n/intl_en.dart`` and declare the French translation in ``lib/i10n/intl_en.dart``. 
+  - Once the files per language are updated, in the terminal, run the command ``flutter pub pub run intl_generator:generate_from_arb --output-dir=lib/l10n --no-use-deferred-loading lib/localization.dart lib/l10n/intl_*.arb`` to update the arb files.
+
+
+- To get the labels in the widgets, you have to use ```final localizations = AppLocalization.of(context)!;``` then retrieve the value of the label with its key.
+
+All information about internationalization with Flutter is available in the [official documentation](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
+ 
+### Riverpod generator
+
+- To start the code generator, run the following command: ``run build_runner watch``. See [Riverpod generator documentation](https://pub.dev/packages/riverpod_generator)
+
+### Icon generator
+
+- To convert all svg icons from ``assets/fonts`` folder, run the following commande: ``icon_font_generator --from=assets/icons/menu --class-name=UiIcons --out-font=assets/fonts/ui_icons.ttf --out-flutter=lib/ui/widgets/components/icons.dart``. See [Icon Font Generator documentation](https://pub.dev/packages/icon_font_generator) 
