@@ -138,7 +138,7 @@ class NetworkDialog {
                   },
                 );
               }
-              await setupServiceLocator();
+              await updateServiceLocatorNetworkDependencies();
 
               Navigator.pop(context, selectedNetworkSettings);
             },
