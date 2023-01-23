@@ -7,14 +7,14 @@ part 'command_dispatcher.freezed.dart';
 
 @freezed
 class RemoteCommand with _$RemoteCommand {
-  const RemoteCommand._();
   const factory RemoteCommand() = _RemoteCommand;
+  const RemoteCommand._();
 }
 
 @freezed
 class RemoteResult {
-  const RemoteResult._();
   const factory RemoteResult() = _RemoteResult;
+  const RemoteResult._();
 }
 
 typedef RemoteCommandDispatcher
