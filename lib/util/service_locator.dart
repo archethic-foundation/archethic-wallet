@@ -13,61 +13,35 @@ import 'package:coingecko_api/coingecko_api.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {
-  if (sl.isRegistered<AppService>()) {
-    sl.unregister<AppService>();
-  }
-  sl.registerLazySingleton<AppService>(AppService.new);
+  sl
+    ..registerLazySingleton<AppService>(AppService.new)
+    ..registerLazySingleton<CoinGeckoApi>(CoinGeckoApi.new)
+    ..registerLazySingleton<DBHelper>(DBHelper.new)
+    ..registerLazySingleton<HapticUtil>(HapticUtil.new)
+    ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
+    ..registerLazySingleton<NFCUtil>(NFCUtil.new)
+    ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
+    ..registerLazySingleton<RemoteCommandDispatcher>(
+      RemoteCommandDispatcher.new,
+    );
 
-  if (sl.isRegistered<CoinGeckoApi>()) {
-    sl.unregister<CoinGeckoApi>();
-  }
-  sl.registerLazySingleton<CoinGeckoApi>(CoinGeckoApi.new);
+  await _setupServiceLocatorNetworkDependencies();
+}
 
-  if (sl.isRegistered<DBHelper>()) {
-    sl.unregister<DBHelper>();
-  }
-  sl.registerLazySingleton<DBHelper>(DBHelper.new);
-
-  if (sl.isRegistered<HapticUtil>()) {
-    sl.unregister<HapticUtil>();
-  }
-  sl.registerLazySingleton<HapticUtil>(HapticUtil.new);
-
-  if (sl.isRegistered<BiometricUtil>()) {
-    sl.unregister<BiometricUtil>();
-  }
-  sl.registerLazySingleton<BiometricUtil>(BiometricUtil.new);
-
-  if (sl.isRegistered<NFCUtil>()) {
-    sl.unregister<NFCUtil>();
-  }
-  sl.registerLazySingleton<NFCUtil>(NFCUtil.new);
-
-  if (sl.isRegistered<LedgerNanoSImpl>()) {
-    sl.unregister<LedgerNanoSImpl>();
-  }
-  sl.registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new);
-
+Future<void> _setupServiceLocatorNetworkDependencies() async {
   final preferences = await HivePreferencesDatasource.getInstance();
   final network = preferences.getNetwork().getLink();
-  if (sl.isRegistered<ApiService>()) {
-    sl.unregister<ApiService>();
-  }
-  sl.registerLazySingleton<ApiService>(() => ApiService(network));
+  sl
+    ..registerLazySingleton<ApiService>(() => ApiService(network))
+    ..registerLazySingleton<AddressService>(() => AddressService(network))
+    ..registerLazySingleton<OracleService>(() => OracleService(network));
+}
 
-  if (sl.isRegistered<AddressService>()) {
-    sl.unregister<AddressService>();
-  }
-  sl.registerLazySingleton<AddressService>(() => AddressService(network));
+Future<void> updateServiceLocatorNetworkDependencies() async {
+  sl
+    ..unregister<ApiService>()
+    ..unregister<AddressService>()
+    ..unregister<OracleService>();
 
-  if (sl.isRegistered<OracleService>()) {
-    sl.unregister<OracleService>();
-  }
-  sl.registerLazySingleton<OracleService>(() => OracleService(network));
-
-  if (sl.isRegistered<RemoteCommandDispatcher>()) {
-    sl.unregister<RemoteCommandDispatcher>();
-  }
-  sl.registerLazySingleton<RemoteCommandDispatcher>(
-      RemoteCommandDispatcher.new);
+  await _setupServiceLocatorNetworkDependencies();
 }
