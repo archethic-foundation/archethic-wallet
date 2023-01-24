@@ -625,7 +625,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         account,
         true,
         key: Key('accountName$i'),
-      ));
+      ),);
     }
 
     final selection = await showDialog<Account>(
