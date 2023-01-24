@@ -57,7 +57,8 @@ int _getNbNFTInCategory(
 }) {
   var count = 0;
   if (account.nftInfosOffChainList == null ||
-      account.nftInfosOffChainList!.isEmpty) {
+      account.nftInfosOffChainList!.isEmpty ||
+      account.accountNFT == null) {
     return count;
   }
 
