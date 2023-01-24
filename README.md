@@ -79,6 +79,14 @@ Now, you can send some UCO and see your transactions
 
 Patrol is a flutter package, you can install it using a simple `flutter pub get`
 
+Documentation is avaliable at :
+
+- Their Gitlab repository https://github.com/leancodepl/patrol
+- The Patrol_CLI repository https://github.com/leancodepl/patrol/tree/master/packages/patrol_cli
+- The patrol official documentation https://patrol.leancode.co/
+- The patrol library documentation https://pub.dev/documentation/patrol/latest/patrol/patrol-library.html
+- https://pub.dev/packages/patrol
+
 ### Run the tests
 
 All the tests are located in `integration_test`
