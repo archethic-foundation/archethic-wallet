@@ -194,7 +194,7 @@ class _IntroNewWalletDisclaimerState
                             Dimens.buttonBottomDimens,
                             key: const Key('okButton'),
                             onPressed: () {
-                              if (nameController.text.isEmpty) {
+                              if (nameController.text.trim().isEmpty) {
                                 UIUtil.showSnackbar(
                                   localizations
                                       .introNewWalletGetFirstInfosNameBlank,
