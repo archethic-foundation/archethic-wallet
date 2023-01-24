@@ -16,7 +16,7 @@ class CustomizationMenuView extends ConsumerWidget {
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
-
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.drawerBackground,
@@ -89,11 +89,20 @@ class CustomizationMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       const _ShowBalancesSettingsListItem(),
                       const _SettingsListItem.spacer(),
-                      const _ShowBlogSettingsListItem(),
-                      const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _ShowBlogSettingsListItem(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
-                      if (hasNotifications) const _SettingsListItem.spacer(),
-                      if (hasNotifications)
+                      if (hasNotifications &&
+                          connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected)
+                        const _SettingsListItem.spacer(),
+                      if (hasNotifications &&
+                          connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected)
                         const _ActiveNotificationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ActiveVibrationsSettingsListItem(),

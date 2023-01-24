@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -38,6 +39,7 @@ class AddTokenFormSheet extends ConsumerWidget {
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -98,7 +100,9 @@ class AddTokenFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (addToken.canAddToken)
+                    if (addToken.canAddToken &&
+                        connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
                         localizations.createToken,

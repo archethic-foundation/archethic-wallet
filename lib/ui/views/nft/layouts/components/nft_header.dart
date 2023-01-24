@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class NFTHeader extends ConsumerWidget {
           (element) => element.id == currentNftCategoryIndex,
         )
         .first;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,40 +62,43 @@ class NFTHeader extends ConsumerWidget {
         const BalanceIndicatorWidget(
           displaySwitchButton: false,
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, top: 10),
-          child: Column(
-            children: [
-              Hero(
-                tag: 'nftCategory${nftCategory.name!}',
-                child: Card(
-                  elevation: 5,
-                  shadowColor: Colors.black,
-                  color: theme.backgroundDark,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    side: const BorderSide(
-                      color: Colors.white10,
+        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
+          const MainAppBarIconNetworkWarning()
+        else
+          Padding(
+            padding: const EdgeInsets.only(right: 10, top: 10),
+            child: Column(
+              children: [
+                Hero(
+                  tag: 'nftCategory${nftCategory.name!}',
+                  child: Card(
+                    elevation: 5,
+                    shadowColor: Colors.black,
+                    color: theme.backgroundDark,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      side: const BorderSide(
+                        color: Colors.white10,
+                      ),
                     ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
-                      nftCategory.image,
-                      width: 50,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        nftCategory.image,
+                        width: 50,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              if (displayCategoryName)
-                Text(
-                  nftCategory.name!,
-                  textAlign: TextAlign.center,
-                  style: theme.textStyleSize12W100Primary,
-                ),
-            ],
+                if (displayCategoryName)
+                  Text(
+                    nftCategory.name!,
+                    textAlign: TextAlign.center,
+                    style: theme.textStyleSize12W100Primary,
+                  ),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

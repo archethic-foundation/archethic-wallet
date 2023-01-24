@@ -2,10 +2,6 @@ part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
 class _SessionNotifier extends Notifier<Session> with KeychainMixin {
-  HiveVaultDatasource? __vault;
-  Future<HiveVaultDatasource> get _vault async =>
-      __vault ??= await HiveVaultDatasource.getInstance();
-
   final DBHelper _dbHelper = sl.get<DBHelper>();
 
   @override
@@ -14,13 +10,15 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
   }
 
   Future<void> restore() async {
-    final seed = (await _vault).getSeed();
-    var keychainSecuredInfos = (await _vault).getKeychainSecuredInfos();
+    final vault = await HiveVaultDatasource.getInstance();
+
+    final seed = vault.getSeed();
+    var keychainSecuredInfos = vault.getKeychainSecuredInfos();
     if (keychainSecuredInfos == null && seed != null) {
       // Create manually Keychain
       final keychain = await sl.get<ApiService>().getKeychain(seed);
       keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
-      (await _vault).setKeychainSecuredInfos(keychainSecuredInfos);
+      await vault.setKeychainSecuredInfos(keychainSecuredInfos);
     }
     final appWalletDTO = await _dbHelper.getAppWallet();
 
@@ -39,34 +37,40 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
 
   Future<void> refresh() async {
     if (state.isLoggedOut) return;
+    final connectivityStatusProvider = ref.read(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return;
+    }
 
     final loggedInState = state.loggedIn!;
     final selectedCurrency = ref.read(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
 
-    final keychain =
-        await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
+    try {
+      final keychain =
+          await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
 
-    final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+      final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
 
-    final vault = await HiveVaultDatasource.getInstance();
-    await vault.setKeychainSecuredInfos(keychainSecuredInfos);
+      final vault = await HiveVaultDatasource.getInstance();
+      await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
-    final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
-      keychain,
-      HiveAppWalletDTO.fromModel(loggedInState.wallet),
-      selectedCurrency.name,
-      AccountBalance.cryptoCurrencyLabel,
-    );
-    if (newWalletDTO == null) return;
+      final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
+        keychain,
+        HiveAppWalletDTO.fromModel(loggedInState.wallet),
+        selectedCurrency.name,
+        AccountBalance.cryptoCurrencyLabel,
+      );
+      if (newWalletDTO == null) return;
 
-    state = Session.loggedIn(
-      wallet: loggedInState.wallet.copyWith(
-        keychainSecuredInfos: keychainSecuredInfos,
-        appKeychain: newWalletDTO.appKeychain,
-      ),
-    );
+      state = Session.loggedIn(
+        wallet: loggedInState.wallet.copyWith(
+          keychainSecuredInfos: keychainSecuredInfos,
+          appKeychain: newWalletDTO.appKeychain,
+        ),
+      );
+    } catch (e) {}
   }
 
   Future<void> logout() async {

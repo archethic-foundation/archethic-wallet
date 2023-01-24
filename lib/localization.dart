@@ -33,6 +33,10 @@ class AppLocalization {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
+  String get noConnectionBanner {
+    return Intl.message('No connection', name: 'noConnectionBanner');
+  }
+
   String get welcomeText {
     return Intl.message(
         'Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3',
@@ -2187,6 +2191,17 @@ class AppLocalization {
     return Intl.message(
         'The connection to the network could not be completed. Please check your network settings.',
         name: 'noConnection');
+  }
+
+  String get connectivityWarningHeader {
+    return Intl.message('Check your internet connection.',
+        name: 'connectivityWarningHeader');
+  }
+
+  String get connectivityWarningDesc {
+    return Intl.message(
+        'You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.',
+        name: 'connectivityWarningDesc');
   }
 }
 

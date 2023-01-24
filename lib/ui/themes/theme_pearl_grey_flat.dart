@@ -117,13 +117,13 @@ class PearlGreyFlatTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.grey.withOpacity(0.1);
+      Colors.redAccent[400]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.1);
+      Colors.blueAccent[100]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.green.withOpacity(0.1);
+      Colors.green.withOpacity(0.3);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
   @override
@@ -238,4 +238,12 @@ class PearlGreyFlatTheme implements BaseTheme {
 
   @override
   Color? favoriteIconColor = const Color(0xFF151515);
+
+  // Banner connectivity
+  @override
+  Color? bannerColor = Colors.red;
+  @override
+  Color? bannerShadowColor = Colors.white.withOpacity(0.8);
+  @override
+  Color? bannerTextColor = Colors.white;
 }

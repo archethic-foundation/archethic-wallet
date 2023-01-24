@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -30,6 +31,7 @@ class MenuWidgetWallet extends ConsumerWidget {
         .valueOrNull;
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -48,7 +50,9 @@ class MenuWidgetWallet extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (accountSelected.balance!.isNativeTokenValuePositive())
+                if (accountSelected.balance!.isNativeTokenValuePositive() &&
+                    connectivityStatusProvider ==
+                        ConnectivityStatus.isConnected)
                   _ActionButton(
                     key: const Key('sendUCObutton'),
                     text: localizations.send,
@@ -101,21 +105,29 @@ class MenuWidgetWallet extends ConsumerWidget {
                     icon: UiIcons.receive,
                     enabled: false,
                   ),
-                _ActionButton(
-                  text: localizations.buy,
-                  icon: UiIcons.buy,
-                  onTap: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const BuySheet(),
-                    );
-                  },
-                ),
+                if (connectivityStatusProvider ==
+                    ConnectivityStatus.isConnected)
+                  _ActionButton(
+                    text: localizations.buy,
+                    icon: UiIcons.buy,
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: const BuySheet(),
+                      );
+                    },
+                  )
+                else
+                  _ActionButton(
+                    text: localizations.buy,
+                    icon: UiIcons.buy,
+                    enabled: false,
+                  ),
                 /*if (kIsWeb || Platform.isMacOS)
               Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),

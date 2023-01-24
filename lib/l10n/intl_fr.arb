@@ -1,5 +1,6 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
+	"noConnectionBanner": "Pas de connexion",
 	"welcomeText": "Bienvenue dans l'ère de l'autonomie des\n{Humains; Nature; Applications}\ndu Web3.",
 	"welcomeText2": "Archethic redonne à l'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité.",
 	"cancel": "Annuler",
@@ -465,5 +466,7 @@
 	"nftAddImportUrl": "Url",
 	"nftAddPreview": "Votre NFT (Aperçu)",
 	"nftAddFileSize": "Taille: ",
-	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?"
+	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?",
+	"connectivityWarningHeader": "Vérifiez votre connexion internet.",
+	"connectivityWarningDesc": "Vous pouvez utiliser l'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités seront désactivées."
 }

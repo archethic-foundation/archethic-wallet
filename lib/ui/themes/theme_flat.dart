@@ -119,13 +119,13 @@ class FlatTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.grey.withOpacity(0.1);
+      Colors.redAccent[200]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.1);
+      Colors.blueAccent[100]!.withOpacity(0.2);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.green.withOpacity(0.1);
+      Colors.green.withOpacity(0.2);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
   @override
@@ -239,4 +239,12 @@ class FlatTheme implements BaseTheme {
 
   @override
   Color? favoriteIconColor = const Color.fromARGB(255, 88, 88, 88);
+
+  // Banner connectivity
+  @override
+  Color? bannerColor = Colors.red;
+  @override
+  Color? bannerShadowColor = Colors.white.withOpacity(0.8);
+  @override
+  Color? bannerTextColor = Colors.white;
 }

@@ -59,6 +59,20 @@ class TransactionDetail extends ConsumerWidget {
       return const SizedBox();
     }
 
+    // Component Color
+    final borderColor = transaction.typeTx == RecentTransaction.transferOutput
+        ? theme.backgroundRecentTxListCardTransferOutput!
+        : transaction.typeTx! == RecentTransaction.tokenCreation
+            ? theme.backgroundRecentTxListCardTokenCreation!
+            : theme.backgroundRecentTxListCardTransferInput!;
+
+    final backgroundColor =
+        transaction.typeTx == RecentTransaction.transferOutput
+            ? theme.backgroundRecentTxListCardTransferOutput
+            : transaction.typeTx! == RecentTransaction.tokenCreation
+                ? theme.backgroundRecentTxListCardTokenCreation
+                : theme.backgroundRecentTxListCardTransferInput;
+
     return GestureDetector(
       onTap: () {
         sl.get<HapticUtil>().feedback(
@@ -85,20 +99,12 @@ class TransactionDetail extends ConsumerWidget {
           Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: transaction.typeTx == RecentTransaction.transferOutput
-                    ? theme.backgroundRecentTxListCardTransferOutput!
-                    : transaction.typeTx! == RecentTransaction.tokenCreation
-                        ? theme.backgroundRecentTxListCardTokenCreation!
-                        : theme.backgroundRecentTxListCardTransferInput!,
+                color: borderColor,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
-            color: transaction.typeTx == RecentTransaction.transferOutput
-                ? theme.backgroundRecentTxListCardTransferOutput
-                : transaction.typeTx! == RecentTransaction.tokenCreation
-                    ? theme.backgroundRecentTxListCardTokenCreation
-                    : theme.backgroundRecentTxListCardTransferInput,
+            color: backgroundColor,
             child: Container(
               padding: const EdgeInsets.all(9.5),
               width: MediaQuery.of(context).size.width,

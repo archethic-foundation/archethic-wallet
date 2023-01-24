@@ -117,13 +117,13 @@ class EmeraldGreenTheme implements BaseTheme {
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.white.withOpacity(0.1);
+      Colors.redAccent[400]!.withOpacity(0.3);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.1);
+      Colors.blueAccent[100]!.withOpacity(0.3);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.greenAccent[100]!.withOpacity(0.1);
+      Colors.greenAccent[100]!.withOpacity(0.3);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
   @override
@@ -238,4 +238,12 @@ class EmeraldGreenTheme implements BaseTheme {
 
   @override
   Color? favoriteIconColor = const Color(0xFF00A4DB);
+
+  // Banner connectivity
+  @override
+  Color? bannerColor = Colors.red;
+  @override
+  Color? bannerShadowColor = Colors.white.withOpacity(0.8);
+  @override
+  Color? bannerTextColor = Colors.white;
 }

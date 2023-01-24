@@ -99,7 +99,7 @@ class _TransferTextFieldAmountState
           onChanged: (String text) async {
             await transferNotifier.setAmount(
               context: context,
-              amount: double.tryParse(text) ?? 0,
+              amount: double.tryParse(text.replaceAll(' ', '')) ?? 0,
             );
           },
           textInputAction: TextInputAction.next,

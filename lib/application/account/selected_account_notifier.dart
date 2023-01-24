@@ -23,6 +23,11 @@ class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
   Future<void> _refresh(
     Future<void> Function(_AccountNotifier accountNotifier) doRefresh,
   ) async {
+    final connectivityStatusProvider = ref.read(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return;
+    }
+
     final accountName = state.valueOrNull?.name;
     if (accountName == null) return;
     final accountNotifier = ref.read(

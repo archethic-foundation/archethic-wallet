@@ -19,6 +19,7 @@ class MainMenuView extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (selectedAccount == null) return const SizedBox();
 
@@ -66,32 +67,40 @@ class MainMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.informations),
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLineWithInfos(
-                        heading: localizations.aeWebsiteLinkHeader,
-                        info: localizations.aeWebsiteLinkDesc,
-                        icon: UiIcons.link_archethic_website,
-                        onPressed: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://www.archethic.net',
-                            localizations.aeWebsiteLinkHeader,
-                          );
-                        },
-                      ),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLineWithInfos(
-                        heading: localizations.labLinkHeader,
-                        info: localizations.labLinkDesc,
-                        icon: UiIcons.link_archethic_lab,
-                        onPressed: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://www.archethic.net/lab.html',
-                            localizations.labLinkHeader,
-                          );
-                        },
-                      ),
-                      const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        _SettingsListItem.singleLineWithInfos(
+                          heading: localizations.aeWebsiteLinkHeader,
+                          info: localizations.aeWebsiteLinkDesc,
+                          icon: UiIcons.link_archethic_website,
+                          onPressed: () async {
+                            UIUtil.showWebview(
+                              context,
+                              'https://www.archethic.net',
+                              localizations.aeWebsiteLinkHeader,
+                            );
+                          },
+                        ),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        _SettingsListItem.singleLineWithInfos(
+                          heading: localizations.labLinkHeader,
+                          info: localizations.labLinkDesc,
+                          icon: UiIcons.link_archethic_lab,
+                          onPressed: () async {
+                            UIUtil.showWebview(
+                              context,
+                              'https://www.archethic.net/lab.html',
+                              localizations.labLinkHeader,
+                            );
+                          },
+                        ),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,

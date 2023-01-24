@@ -28,6 +28,7 @@ class _NFTCreationProcessSummaryTabState
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
     );
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -53,7 +54,9 @@ class _NFTCreationProcessSummaryTabState
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          if (nftCreation.canCreateNFT)
+                          if (nftCreation.canCreateNFT &&
+                              connectivityStatusProvider ==
+                                  ConnectivityStatus.isConnected)
                             AppButtonTiny(
                               AppButtonTinyType.primary,
                               AppLocalization.of(context)!.createTheNFT,

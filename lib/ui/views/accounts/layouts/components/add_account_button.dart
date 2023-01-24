@@ -1,3 +1,4 @@
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
@@ -24,26 +25,40 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final session = ref.watch(SessionProviders.session).loggedIn;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return AppButtonTiny(
-      AppButtonTinyType.primary,
-      localizations.addAccount,
-      Dimens.buttonBottomDimens,
-      key: const Key('addAccount'),
-      icon: Icon(
-        Icons.add,
-        color: theme.mainButtonLabel,
-        size: 14,
-      ),
-      onPressed: () async {
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: AddAccountSheet(
-            seed: session!.wallet.seed,
-          ),
-        );
-      },
-    );
+    return connectivityStatusProvider == ConnectivityStatus.isConnected
+        ? AppButtonTiny(
+            AppButtonTinyType.primary,
+            localizations.addAccount,
+            Dimens.buttonBottomDimens,
+            key: const Key('addAccount'),
+            icon: Icon(
+              Icons.add,
+              color: theme.mainButtonLabel,
+              size: 14,
+            ),
+            onPressed: () async {
+              Sheets.showAppHeightNineSheet(
+                context: context,
+                ref: ref,
+                widget: AddAccountSheet(
+                  seed: session!.wallet.seed,
+                ),
+              );
+            },
+          )
+        : AppButtonTiny(
+            AppButtonTinyType.primaryOutline,
+            localizations.addAccount,
+            Dimens.buttonBottomDimens,
+            key: const Key('addAccount'),
+            icon: Icon(
+              Icons.add,
+              color: theme.mainButtonLabel!.withOpacity(0.3),
+              size: 14,
+            ),
+            onPressed: () {},
+          );
   }
 }

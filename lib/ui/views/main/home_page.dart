@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -152,6 +153,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     if (session == null) return const SizedBox();
 
     return Column(
@@ -212,7 +214,9 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               children: <Widget>[
-                if (accountSelected!.balance!.isNativeTokenValuePositive())
+                if (accountSelected!.balance!.isNativeTokenValuePositive() &&
+                    connectivityStatusProvider ==
+                        ConnectivityStatus.isConnected)
                   AppButtonTiny(
                     AppButtonTinyType.primary,
                     localizations.createFungibleToken,

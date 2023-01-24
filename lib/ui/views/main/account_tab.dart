@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/blog.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -26,6 +27,7 @@ class AccountTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Column(
       children: [
@@ -37,6 +39,14 @@ class AccountTab extends ConsumerWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
+
+              final connectivityStatusProvider =
+                  ref.watch(connectivityStatusProviders);
+              if (connectivityStatusProvider ==
+                  ConnectivityStatus.isDisconnected) {
+                return;
+              }
+
               await ref
                   .read(AccountProviders.selectedAccount.notifier)
                   .refreshRecentTransactions();
@@ -85,7 +95,9 @@ class AccountTab extends ConsumerWidget {
                                 ),
 
                                 /// PRICE CHART
-                                if (preferences.showPriceChart)
+                                if (preferences.showPriceChart &&
+                                    connectivityStatusProvider ==
+                                        ConnectivityStatus.isConnected)
                                   Stack(
                                     children: const <Widget>[
                                       BalanceInfosChart(),
@@ -95,7 +107,9 @@ class AccountTab extends ConsumerWidget {
                                   const SizedBox(),
 
                                 /// KPI
-                                if (preferences.showPriceChart)
+                                if (preferences.showPriceChart &&
+                                    connectivityStatusProvider ==
+                                        ConnectivityStatus.isConnected)
                                   const BalanceInfosKpi()
                                 else
                                   const SizedBox(),
@@ -126,7 +140,9 @@ class AccountTab extends ConsumerWidget {
                                 ),
 
                                 /// BLOG
-                                const LastArticles(),
+                                if (connectivityStatusProvider ==
+                                    ConnectivityStatus.isConnected)
+                                  const LastArticles(),
                                 const SizedBox(
                                   height: 30,
                                 ),

@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -31,6 +32,12 @@ class AccountsListWidget extends ConsumerWidget {
                 FeedbackType.light,
                 settings.activeVibrations,
               );
+          final connectivityStatusProvider =
+              ref.watch(connectivityStatusProviders);
+          if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+            return;
+          }
+
           await ref.read(SessionProviders.session.notifier).refresh();
           await ref
               .read(AccountProviders.selectedAccount.notifier)

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:aewallet/application/app_version_update_info.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -19,6 +20,11 @@ class AppUpdateButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb || Platform.isWindows) {
+      return const SizedBox();
+    }
+
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return const SizedBox();
     }
 

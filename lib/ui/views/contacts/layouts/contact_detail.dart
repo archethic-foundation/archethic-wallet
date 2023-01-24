@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -40,6 +41,8 @@ class ContactDetail extends ConsumerWidget {
         contact.name,
       ),
     );
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -227,24 +230,39 @@ class ContactDetail extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.viewExplorer,
-                      Dimens.buttonBottomDimens,
-                      icon: Icon(
-                        Icons.more_horiz,
-                        color: theme.mainButtonLabel,
-                        size: 14,
+                    if (connectivityStatusProvider ==
+                        ConnectivityStatus.isConnected)
+                      AppButtonTiny(
+                        AppButtonTinyType.primary,
+                        localizations.viewExplorer,
+                        Dimens.buttonBottomDimens,
+                        icon: Icon(
+                          Icons.more_horiz,
+                          color: theme.mainButtonLabel,
+                          size: 14,
+                        ),
+                        key: const Key('viewExplorer'),
+                        onPressed: () async {
+                          UIUtil.showWebview(
+                            context,
+                            '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
+                            '',
+                          );
+                        },
+                      )
+                    else
+                      AppButtonTiny(
+                        AppButtonTinyType.primaryOutline,
+                        localizations.viewExplorer,
+                        Dimens.buttonBottomDimens,
+                        icon: Icon(
+                          Icons.more_horiz,
+                          color: theme.mainButtonLabel!.withOpacity(0.3),
+                          size: 14,
+                        ),
+                        key: const Key('viewExplorer'),
+                        onPressed: () {},
                       ),
-                      key: const Key('viewExplorer'),
-                      onPressed: () async {
-                        UIUtil.showWebview(
-                          context,
-                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
-                          '',
-                        );
-                      },
-                    ),
                   ],
                 ),
               ],

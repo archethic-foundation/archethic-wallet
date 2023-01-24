@@ -9,6 +9,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
@@ -84,12 +85,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 preferences.showBalances
                     ? const MainAppBarIconBalanceShowed()
                     : const MainAppBarIconBalanceNotShowed(),
-              // TODO(reddwarf03): Activate when plugin usesd in notifier works correctly
-              //if (!kIsWeb &&
-              //    connectivityStatusProvider != ConnectivityStatus.isConnected)
-              //  const MainAppBarIconNConnection()
-              //else
-              if (hasNotifications)
+              if (connectivityStatusProvider ==
+                  ConnectivityStatus.isDisconnected)
+                const MainAppBarIconNetworkWarning()
+              else if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
                     : const MainAppBarIconNotificationDisabled()
@@ -195,28 +194,6 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
         final preferencesNotifier =
             ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setShowBalances(true);
-      },
-    );
-  }
-}
-
-class MainAppBarIconNConnection extends ConsumerWidget {
-  const MainAppBarIconNConnection({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(SettingsProviders.settings);
-    return IconButton(
-      icon: Icon(
-        UiIcons.warning,
-        color: theme.warning,
-      ),
-      onPressed: () async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
       },
     );
   }

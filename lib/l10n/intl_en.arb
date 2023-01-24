@@ -1,5 +1,11 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
+  "noConnectionBanner": "No connection",
+  "@noConnectionBanner": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
   "@welcomeText": {
     "type": "text",
@@ -2786,6 +2792,18 @@
   },
   "createNFTConfirmation": "Are you sure you want to create this NFT?",
   "@createNFTConfirmation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "connectivityWarningHeader": "Check your internet connection.",
+  "@connectivityWarningHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "connectivityWarningDesc": "You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.",
+  "@connectivityWarningDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -1,3 +1,4 @@
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -69,7 +70,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
     final nftSearchBarNotifier = ref.watch(
       NftSearchBarProvider.nftSearchBar.notifier,
     );
-
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     ref.listen<NftSearchBarState>(
       NftSearchBarProvider.nftSearchBar,
       (_, nftSearchBar) {
@@ -215,35 +216,52 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                   showProgressIndicator: true,
                   onPressed: () {},
                 )
-              : AppButtonTinyWithoutExpanded(
-                  AppButtonTinyType.primary,
-                  width: MediaQuery.of(context).size.width,
-                  localizations.search,
-                  Dimens.buttonTopDimens,
-                  key: const Key('search'),
-                  icon: Icon(
-                    Icons.search,
-                    color: theme.text,
-                    size: 14,
-                  ),
-                  showProgressIndicator: nftSearchBar.loading,
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
+              : connectivityStatusProvider == ConnectivityStatus.isConnected
+                  ? AppButtonTinyWithoutExpanded(
+                      AppButtonTinyType.primary,
+                      width: MediaQuery.of(context).size.width,
+                      localizations.search,
+                      Dimens.buttonTopDimens,
+                      key: const Key('search'),
+                      icon: Icon(
+                        Icons.search,
+                        color: theme.text,
+                        size: 14,
+                      ),
+                      showProgressIndicator: nftSearchBar.loading,
+                      onPressed: () async {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              preferences.activeVibrations,
+                            );
+                        final nameEncoded = Uri.encodeFull(
+                          session.wallet.appKeychain.getAccountSelected()!.name,
                         );
-                    final nameEncoded = Uri.encodeFull(
-                      session.wallet.appKeychain.getAccountSelected()!.name,
-                    );
 
-                    await nftSearchBarNotifier.searchNFT(
-                      searchController.text,
-                      context,
-                      session.wallet.keychainSecuredInfos
-                          .services['archethic-wallet-$nameEncoded']!.keyPair!,
-                    );
-                  },
-                ),
+                        await nftSearchBarNotifier.searchNFT(
+                          searchController.text,
+                          context,
+                          session
+                              .wallet
+                              .keychainSecuredInfos
+                              .services['archethic-wallet-$nameEncoded']!
+                              .keyPair!,
+                        );
+                      },
+                    )
+                  : AppButtonTinyWithoutExpanded(
+                      AppButtonTinyType.primaryOutline,
+                      width: MediaQuery.of(context).size.width,
+                      localizations.search,
+                      Dimens.buttonTopDimens,
+                      key: const Key('search'),
+                      icon: Icon(
+                        Icons.search,
+                        color: theme.text30,
+                        size: 14,
+                      ),
+                      onPressed: () {},
+                    ),
         ),
       ],
     );

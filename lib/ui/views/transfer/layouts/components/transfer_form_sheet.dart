@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -34,6 +35,7 @@ class TransferFormSheet extends ConsumerWidget {
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final transfer = ref.watch(TransferFormProvider.transferForm);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -86,7 +88,9 @@ class TransferFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (transfer.canTransfer)
+                    if (transfer.canTransfer &&
+                        connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
                         actionButtonTitle ?? localizations.send,
