@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
@@ -93,31 +94,6 @@ class NetworkDialog {
                               });
                             }
 
-                            Future<List<Node>> getNodeFromNetwork(
-                              AvailableNetworks network,
-                            ) async {
-                              final networkSetting = NetworksSetting(
-                                network: network,
-                                networkDevEndpoint: '',
-                              );
-
-                              final link = networkSetting.getLink();
-
-                              final nodeListMain = await ApiService(
-                                link,
-                              ).getNodeList();
-
-                              return nodeListMain;
-                            }
-
-                            bool hasUriInNodes(Uri uri, List<Node> nodes) {
-                              return nodes.any(
-                                (node) =>
-                                    node.ip == uri.host &&
-                                    node.port == uri.port,
-                              );
-                            }
-
                             if (endpointController.text.isEmpty) {
                               setError(localizations.enterEndpointBlank);
                               return;
@@ -134,24 +110,13 @@ class NetworkDialog {
                               return;
                             }
 
-                            try {
-                              final nodeListMain = await getNodeFromNetwork(
-                                AvailableNetworks.archethicMainNet,
+                            if (await ref.watch(
+                              NetworkProvider.isReservedNodeUri(uri: uriInput)
+                                  .future,
+                            )) {
+                              setError(
+                                localizations.enterEndpointUseByNetwork,
                               );
-
-                              final nodeListTest = await getNodeFromNetwork(
-                                AvailableNetworks.archethicTestNet,
-                              );
-
-                              if (hasUriInNodes(uriInput, nodeListMain) ||
-                                  hasUriInNodes(uriInput, nodeListTest)) {
-                                setError(
-                                  localizations.enterEndpointUseByNetwork,
-                                );
-                                return;
-                              }
-                            } catch (e) {
-                              setError(localizations.enterEndpointUseByNetwork);
                               return;
                             }
 
