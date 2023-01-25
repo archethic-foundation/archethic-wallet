@@ -1,25 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'command_dispatcher.freezed.dart';
-
-@freezed
-class RemoteCommand with _$RemoteCommand {
-  const factory RemoteCommand() = _RemoteCommand;
-  const RemoteCommand._();
-}
-
-@freezed
-class RemoteResult {
-  const factory RemoteResult() = _RemoteResult;
-  const RemoteResult._();
-}
-
-typedef RemoteCommandDispatcher
-    = CommandDispatcher<RemoteCommand, RemoteResult>;
-
 class Command<C> {
   Command(
     this.completer,

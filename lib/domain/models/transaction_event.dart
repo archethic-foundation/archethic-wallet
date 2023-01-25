@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'transaction_event.freezed.dart';
 
 @freezed
-class TransactionError with _$TransactionError {
+class TransactionError with _$TransactionError implements Exception {
   const TransactionError._();
   const factory TransactionError.timeout() = _TransactionTimeout;
   const factory TransactionError.connectivity() = _TransactionConnectionError;

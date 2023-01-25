@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/domain/service/command_dispatcher.dart';
+import 'package:aewallet/domain/service/commands/sign_transaction.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -21,8 +22,9 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
-    ..registerLazySingleton<RemoteCommandDispatcher>(
-      RemoteCommandDispatcher.new,
+    ..registerLazySingleton<
+        CommandDispatcher<SignTransactionCommand, SignTransactionResult>>(
+      CommandDispatcher<SignTransactionCommand, SignTransactionResult>.new,
     );
 
   await _setupServiceLocatorNetworkDependencies();
