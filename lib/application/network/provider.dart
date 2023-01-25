@@ -47,7 +47,7 @@ Future<bool> _isReservedNodeUri(
   if (DefaultNetworksHost.archethicMainNetHost.value == uri.host) return true;
   if (DefaultNetworksHost.archethicTestNetHost.value == uri.host) return true;
 
-  // Check if reserved node of network is used
+  // Check if reserved nodes of network is used
   final nodeListMain = await ref.watch(
     _networkNodesProvider(
       network: AvailableNetworks.archethicMainNet,
