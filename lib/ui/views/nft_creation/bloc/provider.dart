@@ -435,7 +435,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     final fileDecoded = File(file.path).readAsBytesSync();
     final file64 = base64Encode(fileDecoded);
     final typeMime = Mime.getTypesFromExtension(
-      path.extension(file.path).replaceAll('.', ''),
+      path.extension(file.path).toLowerCase().replaceAll('.', ''),
     )![0];
 
     Uint8List? fileDecodedForPreview;

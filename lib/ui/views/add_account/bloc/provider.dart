@@ -68,7 +68,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
   bool controlName(
     BuildContext context,
   ) {
-    if (state.name.isEmpty) {
+    if (state.name.trim().isEmpty) {
       state = state.copyWith(
         errorText:
             AppLocalization.of(context)!.introNewWalletGetFirstInfosNameBlank,

@@ -134,31 +134,56 @@ class TransactionDetail extends ConsumerWidget {
                                     if (settings.showBalances == true)
                                       if (transaction.typeTx ==
                                           RecentTransaction.transferOutput)
-                                        if (transaction.tokenInformations ==
-                                            null)
-                                          AutoSizeText(
-                                            '-${NumberUtil.formatThousands(transaction.amount!, round: true)} ${AccountBalance.cryptoCurrencyLabel}',
-                                            style: theme
-                                                .textStyleSize12W400Primary,
-                                          )
-                                        else
-                                          AutoSizeText(
-                                            '-${NumberUtil.formatThousands(transaction.amount!, round: true)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
-                                            style: theme
-                                                .textStyleSize12W400Primary,
-                                          )
-                                      else if (transaction.tokenInformations ==
-                                          null)
-                                        AutoSizeText(
-                                          '${NumberUtil.formatThousands(transaction.amount!, round: true)} ${AccountBalance.cryptoCurrencyLabel}',
-                                          style:
-                                              theme.textStyleSize12W400Primary,
+                                        Row(
+                                          children: [
+                                            if (transaction.tokenInformations ==
+                                                null)
+                                              AutoSizeText(
+                                                '-${NumberUtil.formatThousands(transaction.amount!, round: true)} ${AccountBalance.cryptoCurrencyLabel}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              )
+                                            else
+                                              AutoSizeText(
+                                                '-${NumberUtil.formatThousands(transaction.amount!, round: true)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            const FaIcon(
+                                              FontAwesomeIcons.arrowTurnUp,
+                                              size: 12,
+                                              color: Colors.red,
+                                            )
+                                          ],
                                         )
                                       else
-                                        AutoSizeText(
-                                          '${NumberUtil.formatThousands(transaction.amount!, round: true)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
-                                          style:
-                                              theme.textStyleSize12W400Primary,
+                                        Row(
+                                          children: [
+                                            if (transaction.tokenInformations ==
+                                                null)
+                                              AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!, round: true)} ${AccountBalance.cryptoCurrencyLabel}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              )
+                                            else
+                                              AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!, round: true)} ${transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            const FaIcon(
+                                              FontAwesomeIcons.arrowTurnDown,
+                                              size: 12,
+                                              color: Colors.green,
+                                            )
+                                          ],
                                         )
                                     else
                                       AutoSizeText(
@@ -210,31 +235,56 @@ class TransactionDetail extends ConsumerWidget {
                                     if (settings.showBalances == true)
                                       if (transaction.typeTx ==
                                           RecentTransaction.transferOutput)
-                                        if (transaction.tokenInformations ==
-                                            null)
-                                          AutoSizeText(
-                                            '-${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
-                                            style: theme
-                                                .textStyleSize12W400Primary,
-                                          )
-                                        else
-                                          AutoSizeText(
-                                            '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                            style: theme
-                                                .textStyleSize12W400Primary,
-                                          )
-                                      else if (transaction.tokenInformations ==
-                                          null)
-                                        AutoSizeText(
-                                          '${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
-                                          style:
-                                              theme.textStyleSize12W400Primary,
+                                        Row(
+                                          children: [
+                                            if (transaction.tokenInformations ==
+                                                null)
+                                              AutoSizeText(
+                                                '-${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              )
+                                            else
+                                              AutoSizeText(
+                                                '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            const FaIcon(
+                                              FontAwesomeIcons.arrowTurnUp,
+                                              size: 12,
+                                              color: Colors.red,
+                                            )
+                                          ],
                                         )
                                       else
-                                        AutoSizeText(
-                                          '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                          style:
-                                              theme.textStyleSize12W400Primary,
+                                        Row(
+                                          children: [
+                                            if (transaction.tokenInformations ==
+                                                null)
+                                              AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!)} ${AccountBalance.cryptoCurrencyLabel}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              )
+                                            else
+                                              AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                                style: theme
+                                                    .textStyleSize12W400Primary,
+                                              ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            const FaIcon(
+                                              FontAwesomeIcons.arrowTurnDown,
+                                              size: 12,
+                                              color: Colors.green,
+                                            )
+                                          ],
                                         )
                                     else
                                       AutoSizeText(
@@ -266,6 +316,9 @@ class TransactionDetail extends ConsumerWidget {
                                   style: theme.textStyleSize12W400Primary,
                                 ),
                               ),
+                            const SizedBox(
+                              width: 2,
+                            ),
                           ],
                         ),
                       if (transaction.typeTx ==
