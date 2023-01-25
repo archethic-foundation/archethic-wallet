@@ -1,0 +1,15 @@
+Archethic Wallet - Version 2.0.8 Build 427
+
+Main Improvements
+- Add network in main menu
+- Improve UI/UX
+- Add information when app's new version is available
+- Manage offline behaviour
+- Improve performances
+- Add disclaimer in NFT creation process
+- Allow token's symbol lowercase
+
+Main Fix bugs
+- Fix keychain not exists message
+- Fix loss of NFT storage when creating a new profile
+- Fix lockscreen and biometrics conflict
