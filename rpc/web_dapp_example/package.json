@@ -3,7 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "webpack"
+    "clean": "rm dist/main.js",
+    "build": "webpack",
+    "dev": "webpack --mode development --watch"
   },
   "dependencies": {
     "archethic_wallet_rpc_client": "file:../client_lib"

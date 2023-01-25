@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -453,15 +454,13 @@ class KeychainUtil {
   }
 }
 
-mixin KeychainMixin {
+extension KeychainConversionsExt on Keychain {
   /// Convert Keychain model to KeychainSecuredInfos
-  KeychainSecuredInfos keychainToKeychainSecuredInfos(
-    Keychain keychain,
-  ) {
+  KeychainSecuredInfos toKeychainSecuredInfos() {
     final keychainSecuredInfosServiceMap =
         <String, KeychainSecuredInfosService>{};
-    keychain.services.forEach((key, value) {
-      final keyPair = keychain.deriveKeypair(key);
+    services.forEach((key, value) {
+      final keyPair = deriveKeypair(key);
 
       keychainSecuredInfosServiceMap[key] = KeychainSecuredInfosService(
         curve: value.curve,
@@ -476,19 +475,19 @@ mixin KeychainMixin {
     });
 
     return KeychainSecuredInfos(
-      seed: keychain.seed!,
-      version: keychain.version,
+      seed: seed!,
+      version: version,
       services: keychainSecuredInfosServiceMap,
     );
   }
+}
 
+extension KeychainSecuredInfosConversionsExt on KeychainSecuredInfos {
   /// Convert KeychainSecuredInfos model to Keychain
-  Keychain keychainSecuredInfosToKeychain(
-    KeychainSecuredInfos keychainSecuredInfos,
-  ) {
-    final services = <String, Service>{};
-    keychainSecuredInfos.services.forEach((key, value) {
-      services[key] = Service(
+  Keychain toKeychain() {
+    final keychainServices = <String, Service>{};
+    services.forEach((key, value) {
+      keychainServices[key] = Service(
         curve: value.curve,
         derivationPath: value.derivationPath,
         hashAlgo: value.hashAlgo,
@@ -496,9 +495,9 @@ mixin KeychainMixin {
     });
 
     return Keychain(
-      seed: Uint8List.fromList(keychainSecuredInfos.seed),
-      services: services,
-      version: keychainSecuredInfos.version,
+      seed: Uint8List.fromList(seed),
+      services: keychainServices,
+      version: version,
     );
   }
 }

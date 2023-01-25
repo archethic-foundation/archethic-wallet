@@ -180,6 +180,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
 
 abstract class AddAccountFormProvider {
   static final _repository = Provider<TransactionRemoteRepositoryInterface>(
+    // TODO(Chralu): factorize that repository declaration
     (ref) {
       final networkSettings = ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),

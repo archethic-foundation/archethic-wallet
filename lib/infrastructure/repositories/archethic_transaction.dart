@@ -20,7 +20,6 @@ import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 class ArchethicTransactionRepository
-    with KeychainMixin
     implements TransactionRemoteRepositoryInterface {
   ArchethicTransactionRepository({
     required this.phoenixHttpEndpoint,
@@ -116,8 +115,7 @@ class ArchethicTransactionRepository
       transfer.accountSelectedName,
     );
     final service = 'archethic-wallet-$nameEncoded';
-    final keychain =
-        keychainSecuredInfosToKeychain(transfer.keychainSecuredInfos);
+    final keychain = transfer.keychainSecuredInfos.toKeychain();
 
     final indexMap = await apiService.getTransactionIndex(
       [transfer.transactionLastAddress],
@@ -172,7 +170,7 @@ class ArchethicTransactionRepository
     Token token,
   ) async {
     final originPrivateKey = apiService.getOriginKey();
-    final keychain = keychainSecuredInfosToKeychain(token.keychainSecuredInfos);
+    final keychain = token.keychainSecuredInfos.toKeychain();
 
     final nameEncoded = Uri.encodeFull(
       token.accountSelectedName,
@@ -257,29 +255,11 @@ class ArchethicTransactionRepository
       phoenixHttpEndpoint: phoenixHttpEndpoint,
       websocketEndpoint: websocketEndpoint,
     );
-
-    transaction.map(
-      transfer: (transfer) async {
-        transactionSender.send(
-          transaction: await _buildTransaction(transfer),
-          onConfirmation: onConfirmation,
-          onError: onError,
-        );
-      },
-      token: (token) async {
-        transactionSender.send(
-          transaction: await _buildTransaction(token),
-          onConfirmation: onConfirmation,
-          onError: onError,
-        );
-      },
-      keychain: (keychain) async {
-        transactionSender.send(
-          transaction: await _buildTransaction(keychain),
-          onConfirmation: onConfirmation,
-          onError: onError,
-        );
-      },
+    // ignore: cascade_invocations
+    transactionSender.send(
+      transaction: await _buildTransaction(transaction),
+      onConfirmation: onConfirmation,
+      onError: onError,
     );
   }
 }

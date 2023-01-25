@@ -15,8 +15,8 @@
   "unpkg": "./dist/index.umd.js",
   "scripts": {
     "build": "microbundle --target web",
-    "clean": "rm -R dist",
-    "dev": "microbundle watch"
+    "clean": "rm -Rf dist",
+    "dev": "microbundle watch --target web --compress false"
   },
   "dependencies": {
     "json-rpc-2.0": "^1.4.2",

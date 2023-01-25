@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -45,6 +46,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 50),

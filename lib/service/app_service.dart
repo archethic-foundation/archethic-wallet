@@ -21,7 +21,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AppService with KeychainMixin {
+class AppService {
   Future<Map<String, List<Transaction>>> getTransactionChain(
     Map<String, String> addresses,
     String? request,
@@ -285,7 +285,7 @@ class AppService with KeychainMixin {
 
     var recentTransactions = <RecentTransaction>[];
 
-    final keychain = keychainSecuredInfosToKeychain(keychainSecuredInfos);
+    final keychain = keychainSecuredInfos.toKeychain();
     final nameEncoded = Uri.encodeFull(
       name,
     );
