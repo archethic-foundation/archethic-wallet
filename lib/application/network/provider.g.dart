@@ -169,7 +169,7 @@ class _NetworkNodesFamily extends Family<AsyncValue<List<Node>>> {
   String? get name => r'_networkNodesProvider';
 }
 
-String $_isReservedNodeUriHash() => r'3f71b1eaa866dad51e8263b46aad7d6f4737a451';
+String $_isReservedNodeUriHash() => r'60dab84965fa35027911aaa0cabff6c5523183b5';
 
 /// See also [_isReservedNodeUri].
 class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
