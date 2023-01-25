@@ -9,6 +9,7 @@ part of 'rpc_sign_transaction_command.dart';
 _$_RpcSignTransactionCommand _$$_RpcSignTransactionCommandFromJson(
         Map<String, dynamic> json) =>
     _$_RpcSignTransactionCommand(
+      source: json['source'] as String,
       accountName: json['accountName'] as String,
       data: json['data'] as Map<String, dynamic>,
       type: json['type'] as String,
@@ -18,6 +19,7 @@ _$_RpcSignTransactionCommand _$$_RpcSignTransactionCommandFromJson(
 Map<String, dynamic> _$$_RpcSignTransactionCommandToJson(
         _$_RpcSignTransactionCommand instance) =>
     <String, dynamic>{
+      'source': instance.source,
       'accountName': instance.accountName,
       'data': instance.data,
       'type': instance.type,

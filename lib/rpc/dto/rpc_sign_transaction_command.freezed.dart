@@ -21,6 +21,9 @@ RpcSignTransactionCommand _$RpcSignTransactionCommandFromJson(
 
 /// @nodoc
 mixin _$RpcSignTransactionCommand {
+  /// DApp name
+  String get source => throw _privateConstructorUsedError;
+
   /// Service
   String get accountName => throw _privateConstructorUsedError;
 
@@ -46,7 +49,8 @@ abstract class $RpcSignTransactionCommandCopyWith<$Res> {
       _$RpcSignTransactionCommandCopyWithImpl<$Res, RpcSignTransactionCommand>;
   @useResult
   $Res call(
-      {String accountName,
+      {String source,
+      String accountName,
       Map<String, dynamic> data,
       String type,
       int version});
@@ -66,12 +70,17 @@ class _$RpcSignTransactionCommandCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? source = null,
     Object? accountName = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
     return _then(_value.copyWith(
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
       accountName: null == accountName
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
@@ -102,7 +111,8 @@ abstract class _$$_RpcSignTransactionCommandCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String accountName,
+      {String source,
+      String accountName,
       Map<String, dynamic> data,
       String type,
       int version});
@@ -121,12 +131,17 @@ class __$$_RpcSignTransactionCommandCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? source = null,
     Object? accountName = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
     return _then(_$_RpcSignTransactionCommand(
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
       accountName: null == accountName
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
@@ -151,7 +166,8 @@ class __$$_RpcSignTransactionCommandCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RpcSignTransactionCommand extends _RpcSignTransactionCommand {
   const _$_RpcSignTransactionCommand(
-      {required this.accountName,
+      {required this.source,
+      required this.accountName,
       required final Map<String, dynamic> data,
       required this.type,
       required this.version})
@@ -160,6 +176,10 @@ class _$_RpcSignTransactionCommand extends _RpcSignTransactionCommand {
 
   factory _$_RpcSignTransactionCommand.fromJson(Map<String, dynamic> json) =>
       _$$_RpcSignTransactionCommandFromJson(json);
+
+  /// DApp name
+  @override
+  final String source;
 
   /// Service
   @override
@@ -186,7 +206,7 @@ class _$_RpcSignTransactionCommand extends _RpcSignTransactionCommand {
 
   @override
   String toString() {
-    return 'RpcSignTransactionCommand(accountName: $accountName, data: $data, type: $type, version: $version)';
+    return 'RpcSignTransactionCommand(source: $source, accountName: $accountName, data: $data, type: $type, version: $version)';
   }
 
   @override
@@ -194,6 +214,7 @@ class _$_RpcSignTransactionCommand extends _RpcSignTransactionCommand {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RpcSignTransactionCommand &&
+            (identical(other.source, source) || other.source == source) &&
             (identical(other.accountName, accountName) ||
                 other.accountName == accountName) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
@@ -203,7 +224,7 @@ class _$_RpcSignTransactionCommand extends _RpcSignTransactionCommand {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, accountName,
+  int get hashCode => Object.hash(runtimeType, source, accountName,
       const DeepCollectionEquality().hash(_data), type, version);
 
   @JsonKey(ignore: true)
@@ -223,7 +244,8 @@ class _$_RpcSignTransactionCommand extends _RpcSignTransactionCommand {
 
 abstract class _RpcSignTransactionCommand extends RpcSignTransactionCommand {
   const factory _RpcSignTransactionCommand(
-      {required final String accountName,
+      {required final String source,
+      required final String accountName,
       required final Map<String, dynamic> data,
       required final String type,
       required final int version}) = _$_RpcSignTransactionCommand;
@@ -232,6 +254,10 @@ abstract class _RpcSignTransactionCommand extends RpcSignTransactionCommand {
   factory _RpcSignTransactionCommand.fromJson(Map<String, dynamic> json) =
       _$_RpcSignTransactionCommand.fromJson;
 
+  @override
+
+  /// DApp name
+  String get source;
   @override
 
   /// Service

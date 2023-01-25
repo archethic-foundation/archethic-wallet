@@ -1242,6 +1242,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "transactionSignatureCommandReceivedNotification": "Application %1 wants to send a transaction with your %2 account.",
+  "@transactionSignatureCommandReceivedNotification": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "transactionInputNotification": "You have received %1 %2 on your %3 account",
   "@transactionInputNotification": {
     "type": "text",

@@ -992,6 +992,12 @@ class AppLocalization {
         name: 'activateNotifications');
   }
 
+  String get transactionSignatureCommandReceivedNotification {
+    return Intl.message(
+        'Application %1 wants to send a transaction with your %2 account.',
+        name: 'transactionSignatureCommandReceivedNotification');
+  }
+
   String get transactionInputNotification {
     return Intl.message('You have received %1 %2 on your %3 account',
         name: 'transactionInputNotification');

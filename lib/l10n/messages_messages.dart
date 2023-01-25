@@ -437,6 +437,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "transactionInfosKeyValidationStamp" : MessageLookupByLibrary.simpleMessage("Validation Stamp"),
     "transactionInfosKeyVersion" : MessageLookupByLibrary.simpleMessage("Version"),
     "transactionInputNotification" : MessageLookupByLibrary.simpleMessage("You have received %1 %2 on your %3 account"),
+    "transactionSignatureCommandReceivedNotification" : MessageLookupByLibrary.simpleMessage("Application %1 wants to send a transaction with your %2 account."),
     "transactionTimeOut" : MessageLookupByLibrary.simpleMessage("The transaction encountered a timeout issue. Please retry your request..."),
     "transactionsAllListHeader" : MessageLookupByLibrary.simpleMessage("Transactions"),
     "transferConfirmed" : MessageLookupByLibrary.simpleMessage("The transfer was created with %1 confirmations on %2"),

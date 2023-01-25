@@ -102,6 +102,9 @@ class TransactionData with _$TransactionData {
 @freezed
 class SignTransactionCommand with _$SignTransactionCommand {
   const factory SignTransactionCommand({
+    /// Source application name
+    required String source,
+
     /// Service
     required String accountName,
 

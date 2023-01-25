@@ -192,6 +192,9 @@ part 'rpc_sign_transaction_command.g.dart';
 @freezed
 class RpcSignTransactionCommand with _$RpcSignTransactionCommand {
   const factory RpcSignTransactionCommand({
+    /// DApp name
+    required String source,
+
     /// Service
     required String accountName,
 
@@ -211,6 +214,7 @@ class RpcSignTransactionCommand with _$RpcSignTransactionCommand {
 
   SignTransactionCommand toModel() {
     return SignTransactionCommand(
+      source: source,
       accountName: accountName,
       data: archethic.Data.fromJson(data),
       type: type,
