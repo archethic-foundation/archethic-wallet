@@ -332,6 +332,7 @@
 	"selectAccountDescSeveral": "Votre porte-clés contient plusieurs comptes. Quel compte souhaitez-vous gérer en premier dans l'application ? Vous pourrez en créer ou sélectionner d'autres quand vous le souhaitez.",
 	"activateVibrations": "Activer les vibrations",
 	"activateNotifications": "Activer les notifications",
+	"transactionSignatureCommandReceivedNotification": "L'application %1 souhaite envoyer une transaction avec votre compte %2.",
 	"transactionInputNotification": "Vous avez reçu %1 %2 sur votre compte %3",
 	"searchField": "Recherche...",
 	"search": "Rechercher",

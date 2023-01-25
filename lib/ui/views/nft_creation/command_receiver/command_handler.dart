@@ -8,9 +8,11 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/service/command_dispatcher.dart';
 import 'package:aewallet/domain/service/commands/sign_transaction.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
+import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -30,49 +32,86 @@ class NftCreationCommandHandler extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    commandDispatcher.handler = (p0) async {
-      log('>>>> Handle ');
-
-      final operationCompleter =
-          Completer<Result<TransactionConfirmation, TransactionError>>();
-
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      final transactionSender = ArchethicTransactionSender(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
+    commandDispatcher.handler = (command) async {
+      _showNotification(
+        context: context,
+        ref: ref,
+        command: command,
       );
 
-      final transaction = await p0.toArchethicTransaction(
-        ref,
-        sl.get<archethic.ApiService>(),
+      return _sendTransaction(
+        context: context,
+        ref: ref,
+        command: command,
       );
-
-      // ignore: cascade_invocations
-      transactionSender.send(
-        transaction: transaction,
-        onConfirmation: (confirmation) async {
-          if (confirmation.isFullyConfirmed) {
-            log('Final confirmation received : $confirmation', name: logName);
-            operationCompleter.complete(
-              Result.success(confirmation),
-            );
-            return;
-          }
-          log('Confirmation received : $confirmation', name: logName);
-        },
-        onError: (error) async {
-          log('Transaction error received', name: logName, error: error);
-          operationCompleter.complete(
-            Result.failure(error),
-          );
-        },
-      );
-
-      return operationCompleter.future;
     };
     return child;
+  }
+
+  Future<void> _showNotification({
+    required BuildContext context,
+    required WidgetRef ref,
+    required SignTransactionCommand command,
+  }) async {
+    final message = AppLocalization.of(context)!
+        .transactionSignatureCommandReceivedNotification;
+
+    NotificationsUtil.showNotification(
+      title: 'Archethic',
+      body: message
+          .replaceAll(
+            '%1',
+            command.source,
+          )
+          .replaceAll('%2', command.accountName),
+    );
+  }
+
+  Future<Result<TransactionConfirmation, TransactionError>> _sendTransaction({
+    required BuildContext context,
+    required WidgetRef ref,
+    required SignTransactionCommand command,
+  }) async {
+    log('>>>> Handle ');
+
+    final operationCompleter =
+        Completer<Result<TransactionConfirmation, TransactionError>>();
+
+    final networkSettings = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.network),
+    );
+    final transactionSender = ArchethicTransactionSender(
+      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
+      websocketEndpoint: networkSettings.getWebsocketUri(),
+    );
+
+    final transaction = await command.toArchethicTransaction(
+      ref,
+      sl.get<archethic.ApiService>(),
+    );
+
+    // ignore: cascade_invocations
+    transactionSender.send(
+      transaction: transaction,
+      onConfirmation: (confirmation) async {
+        if (confirmation.isFullyConfirmed) {
+          log('Final confirmation received : $confirmation', name: logName);
+          operationCompleter.complete(
+            Result.success(confirmation),
+          );
+          return;
+        }
+        log('Confirmation received : $confirmation', name: logName);
+      },
+      onError: (error) async {
+        log('Transaction error received', name: logName, error: error);
+        operationCompleter.complete(
+          Result.failure(error),
+        );
+      },
+    );
+
+    return operationCompleter.future;
   }
 }
 

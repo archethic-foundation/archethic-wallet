@@ -1343,6 +1343,9 @@ abstract class _TransactionData extends TransactionData {
 
 /// @nodoc
 mixin _$SignTransactionCommand {
+  /// Source application name
+  String get source => throw _privateConstructorUsedError;
+
   /// Service
   String get accountName => throw _privateConstructorUsedError;
 
@@ -1367,7 +1370,11 @@ abstract class $SignTransactionCommandCopyWith<$Res> {
       _$SignTransactionCommandCopyWithImpl<$Res, SignTransactionCommand>;
   @useResult
   $Res call(
-      {String accountName, archethic.Data data, String type, int version});
+      {String source,
+      String accountName,
+      archethic.Data data,
+      String type,
+      int version});
 }
 
 /// @nodoc
@@ -1384,12 +1391,17 @@ class _$SignTransactionCommandCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? source = null,
     Object? accountName = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
     return _then(_value.copyWith(
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
       accountName: null == accountName
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
@@ -1419,7 +1431,11 @@ abstract class _$$_SignTransactionCommandCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String accountName, archethic.Data data, String type, int version});
+      {String source,
+      String accountName,
+      archethic.Data data,
+      String type,
+      int version});
 }
 
 /// @nodoc
@@ -1434,12 +1450,17 @@ class __$$_SignTransactionCommandCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? source = null,
     Object? accountName = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
     return _then(_$_SignTransactionCommand(
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
       accountName: null == accountName
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
@@ -1464,11 +1485,16 @@ class __$$_SignTransactionCommandCopyWithImpl<$Res>
 
 class _$_SignTransactionCommand extends _SignTransactionCommand {
   const _$_SignTransactionCommand(
-      {required this.accountName,
+      {required this.source,
+      required this.accountName,
       required this.data,
       required this.type,
       required this.version})
       : super._();
+
+  /// Source application name
+  @override
+  final String source;
 
   /// Service
   @override
@@ -1488,7 +1514,7 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
   @override
   String toString() {
-    return 'SignTransactionCommand(accountName: $accountName, data: $data, type: $type, version: $version)';
+    return 'SignTransactionCommand(source: $source, accountName: $accountName, data: $data, type: $type, version: $version)';
   }
 
   @override
@@ -1496,6 +1522,7 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SignTransactionCommand &&
+            (identical(other.source, source) || other.source == source) &&
             (identical(other.accountName, accountName) ||
                 other.accountName == accountName) &&
             (identical(other.data, data) || other.data == data) &&
@@ -1505,7 +1532,7 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, accountName, data, type, version);
+      Object.hash(runtimeType, source, accountName, data, type, version);
 
   @JsonKey(ignore: true)
   @override
@@ -1517,12 +1544,17 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
 abstract class _SignTransactionCommand extends SignTransactionCommand {
   const factory _SignTransactionCommand(
-      {required final String accountName,
+      {required final String source,
+      required final String accountName,
       required final archethic.Data data,
       required final String type,
       required final int version}) = _$_SignTransactionCommand;
   const _SignTransactionCommand._() : super._();
 
+  @override
+
+  /// Source application name
+  String get source;
   @override
 
   /// Service
