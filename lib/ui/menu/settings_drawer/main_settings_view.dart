@@ -48,6 +48,18 @@ class MainMenuView extends ConsumerWidget {
                   ListView(
                     padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Align(
+                          child: Text(
+                            ref
+                                .read(SettingsProviders.settings)
+                                .network
+                                .getDisplayName(context),
+                            style: theme.textStyleSize12W400Primary,
+                          ),
+                        ),
+                      ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.preferences),
                       const _SettingsListItem.spacer(),
