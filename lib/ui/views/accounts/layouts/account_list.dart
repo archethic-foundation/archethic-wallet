@@ -1,10 +1,12 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
@@ -24,6 +26,7 @@ class AccountsListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
+    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Expanded(
       child: ArchethicRefreshIndicator(
@@ -32,6 +35,7 @@ class AccountsListWidget extends ConsumerWidget {
                 FeedbackType.light,
                 settings.activeVibrations,
               );
+          ShowSendingAnimation.build(context, theme);
           final connectivityStatusProvider =
               ref.watch(connectivityStatusProviders);
           if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
@@ -42,6 +46,8 @@ class AccountsListWidget extends ConsumerWidget {
           await ref
               .read(AccountProviders.selectedAccount.notifier)
               .refreshRecentTransactions();
+
+          Navigator.of(context).pop();
         }),
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(

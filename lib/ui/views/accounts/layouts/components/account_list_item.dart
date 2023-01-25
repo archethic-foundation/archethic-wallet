@@ -42,6 +42,7 @@ class AccountListItem extends ConsumerWidget {
 
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
+
     final asyncFiatAmount = ref.watch(
       MarketPriceProviders.convertedToSelectedCurrency(
         nativeAmount: account.balance?.nativeTokenValue ?? 0,
@@ -70,7 +71,8 @@ class AccountListItem extends ConsumerWidget {
                     ),
                   );
 
-              if (selectedAccount!.name != account.name) {
+              if (selectedAccount == null ||
+                  selectedAccount.name != account.name) {
                 ShowSendingAnimation.build(context, theme);
                 await ref
                     .read(AccountProviders.accounts.notifier)
@@ -156,7 +158,7 @@ class AccountListItem extends ConsumerWidget {
                                   style: theme.textStyleSize12W400Primary,
                                 ),
                                 AutoSizeText(
-                                  '${account.balance!.nativeTokenValueToString()} ${selectedAccount!.balance!.nativeTokenName}',
+                                  '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
                                   style: theme.textStyleSize12W400Primary,
                                   textAlign: TextAlign.end,
                                 ),
