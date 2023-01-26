@@ -2200,7 +2200,7 @@ class AppLocalization {
 
   String get connectivityWarningDesc {
     return Intl.message(
-        'You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.',
+        'You can use the application when your connection is interrupted, but the information may be outdated and some features are disabled.',
         name: 'connectivityWarningDesc');
   }
 }

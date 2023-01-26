@@ -468,5 +468,5 @@
 	"nftAddFileSize": "Taille: ",
 	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?",
 	"connectivityWarningHeader": "Vérifiez votre connexion internet.",
-	"connectivityWarningDesc": "Vous pouvez utiliser l'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités seront désactivées."
+	"connectivityWarningDesc": "Vous pouvez utiliser l'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités sont désactivées."
 }

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2023-01-23T23:09:19.216250",
+  "@@last_modified": "2023-01-26T09:11:55.691638",
   "noConnectionBanner": "No connection",
   "@noConnectionBanner": {
     "type": "text",
@@ -2802,7 +2802,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "connectivityWarningDesc": "You can use the application when your connection is interrupted, but the information may be outdated and some features will be disabled.",
+  "connectivityWarningDesc": "You can use the application when your connection is interrupted, but the information may be outdated and some features are disabled.",
   "@connectivityWarningDesc": {
     "type": "text",
     "placeholders_order": [],
