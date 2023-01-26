@@ -12,7 +12,7 @@ final versionStringProvider =
     final packageInfo = await PackageInfo.fromPlatform();
     if (!kIsWeb && Platform.isWindows) {
       // TODO(reddwarf03): Not optimal but ok for the moment
-      return '${localizations.version} 2.0.6';
+      return '${localizations.version} 2.0.8';
     } else {
       return '${localizations.version} ${packageInfo.version} - ${localizations.build} ${packageInfo.buildNumber}';
     }
