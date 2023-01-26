@@ -14,11 +14,11 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/banner_connectivity_not_available.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -534,10 +534,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                 ),
                 if (connectivityStatusProvider ==
                     ConnectivityStatus.isDisconnected)
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: MainAppBarIconNetworkWarning(),
-                  ),
+                  const BannerConnectivityNotAvailable(),
               ],
             ),
           ),
