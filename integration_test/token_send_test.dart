@@ -45,6 +45,7 @@ void main() {
     const length = 23;
     for (var index = 0; index <= length; index++) {
       final seedWordFieldFinder = createFinder(Key('seedWord$index'));
+      await $(seedWordFieldFinder).tap();
       await $(seedWordFieldFinder).scrollTo().enterText(seedWord[index]);
     }
     await $(#seedWordsOKbutton).tap(

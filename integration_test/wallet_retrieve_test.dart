@@ -46,15 +46,16 @@ void main() {
     const length = 23;
     for (var index = 0; index <= length; index++) {
       final seedWordFieldFinder = createFinder(Key('seedWord$index'));
+      await $(seedWordFieldFinder).tap();
       await $(seedWordFieldFinder).scrollTo().enterText(seedWord[index]);
     }
     await $(#seedWordsOKbutton).tap(
       settleTimeout: const Duration(minutes: 10),
     );
 
-    await $(#accountName1).tap();
-    //final accountSelector = createFinder(RegExp('.*HFF.*'));
-    //await $(accountSelector).tap();
+    await $(#accountNameDAVID).tap();
+    //final accountSelector = createFinder(RegExp('.*0.*'));
+    //await $(accountSelector).scrollTo().tap();
 
     await $(#accessModePIN).tap();
 

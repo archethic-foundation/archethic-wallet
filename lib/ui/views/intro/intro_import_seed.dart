@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
@@ -416,7 +417,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             AppButtonTinyType.primary,
                             localizations.ok,
                             Dimens.buttonTopDimens,
-                            key: const Key('okseedWordsOKbutton'),
+                            key: const Key('seedWordsOKbutton'),
                             onPressed: () async {
                               setState(() {
                                 _mnemonicError = '';
@@ -617,15 +618,20 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (var i = 0; i < accounts.length; i++) {
       final account = accounts[i];
-      pickerItemsList.add(PickerItem(
-        account.name,
-        null,
-        null,
-        null,
-        account,
-        true,
-        key: Key('accountName$i'),
-      ),);
+      pickerItemsList.add(
+        PickerItem(
+          account.name,
+          null,
+          null,
+          null,
+          account,
+          true,
+          key: Key('accountName${account.name}'),
+        ),
+      );
+      log(
+        '<<accountName${account.name}>>',
+      );
     }
 
     final selection = await showDialog<Account>(
