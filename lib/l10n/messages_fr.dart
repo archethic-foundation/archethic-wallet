@@ -107,7 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSecretPhrase" : MessageLookupByLibrary.simpleMessage("Confirmez votre phrase secrète."),
     "confirmSecretPhraseExplanation" : MessageLookupByLibrary.simpleMessage("Sélectionnez les mots pour les mettre dans le bon ordre."),
     "confirmSecretPhraseKo" : MessageLookupByLibrary.simpleMessage("L\'ordre n\'est pas correct."),
-    "connectivityWarningDesc" : MessageLookupByLibrary.simpleMessage("Vous pouvez utiliser l\'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités seront désactivées."),
+    "connectivityWarningDesc" : MessageLookupByLibrary.simpleMessage("Vous pouvez utiliser l\'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités sont désactivées."),
     "connectivityWarningHeader" : MessageLookupByLibrary.simpleMessage("Vérifiez votre connexion internet."),
     "consensusNotReached" : MessageLookupByLibrary.simpleMessage("Le consensus n\'est pas atteint. Veuillez réitérer votre demande..."),
     "contactAdded" : MessageLookupByLibrary.simpleMessage("%1 ajouté au carnet d\'adresses."),
