@@ -702,6 +702,30 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "userCancelledOperation": "User cancelled operation",
+  "@userCancelledOperation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionConfirmationFormHeader": "Transaction send confirmation",
+  "@transactionConfirmationFormHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "unknownAccount": "Account %1 does not exist.",
+  "@unknownAccount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "invalidTransaction": "Transaction is invalid",
+  "@invalidTransaction": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "invalidAddress": "Address entered is invalid",
   "@invalidAddress": {
     "type": "text",

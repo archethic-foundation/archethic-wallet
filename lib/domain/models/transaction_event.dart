@@ -16,6 +16,10 @@ class TransactionError with _$TransactionError implements Exception {
       _TransactionInvalidConfirmation;
   const factory TransactionError.insufficientFunds() =
       _TransactionInsufficientFunds;
+  const factory TransactionError.userRejected() = _TransactionUserRejected;
+  const factory TransactionError.unknownAccount({
+    required String accountName,
+  }) = _TransactionUnknownAccount;
   const factory TransactionError.other({
     String? reason,
   }) = _TransactionOtherError;
@@ -27,6 +31,8 @@ class TransactionError with _$TransactionError implements Exception {
         invalidTransaction: (_) => 'invalid transaction',
         invalidConfirmation: (_) => 'invalid confirmation',
         insufficientFunds: (_) => 'insufficient funds',
+        userRejected: (_) => 'user rejected',
+        unknownAccount: (_) => 'unknown account',
         other: (other) => other.reason ?? 'other reason',
       );
 }
@@ -42,14 +48,16 @@ class TransactionConfirmation with _$TransactionConfirmation {
   const TransactionConfirmation._();
 
   bool get isFullyConfirmed => nbConfirmations >= maxConfirmations;
+  bool get isEnoughConfirmed => isEnoughConfirmations(
+        nbConfirmations,
+        maxConfirmations,
+      );
 
   double get confirmationRatio => max(1, maxConfirmations / nbConfirmations);
 
-  static bool isEnoughConfirmations(int nbConfirmations, int maxConfirmations) {
-    if (nbConfirmations > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  static bool isEnoughConfirmations(
+    int nbConfirmations,
+    int maxConfirmations,
+  ) =>
+      nbConfirmations > 0;
 }
