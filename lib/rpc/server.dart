@@ -18,6 +18,8 @@ class ArchethicRPCErrors {
         invalidConfirmation: (_) => ArchethicRPCErrors.consensusNotReached,
         invalidTransaction: (_) => ArchethicRPCErrors.invalidTransaction,
         insufficientFunds: (_) => ArchethicRPCErrors.insufficientFunds,
+        userRejected: (_) => ArchethicRPCErrors.userRejected,
+        unknownAccount: (_) => ArchethicRPCErrors.unknownAccount,
         other: (_) => ArchethicRPCErrors.other,
       );
 
@@ -32,6 +34,7 @@ class ArchethicRPCErrors {
   static const consensusNotReached = 5002;
   static const invalidTransaction = 5003;
   static const insufficientFunds = 5004;
+  static const unknownAccount = 5005;
 }
 
 class ArchethicRPCServer {
