@@ -12,7 +12,7 @@ slots:
     interface: dbus
     bus: session
     name: tech.archethic.aewallet
-    
+  
 apps:
   aewallet:
     command: aewallet
