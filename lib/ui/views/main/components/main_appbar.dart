@@ -9,10 +9,10 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -87,7 +87,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     : const MainAppBarIconBalanceNotShowed(),
               if (connectivityStatusProvider ==
                   ConnectivityStatus.isDisconnected)
-                const MainAppBarIconNetworkWarning()
+                const IconNetworkWarning()
               else if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()

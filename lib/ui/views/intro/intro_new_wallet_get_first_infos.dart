@@ -10,8 +10,8 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/banner_connectivity_not_available.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -236,7 +236,9 @@ class _IntroNewWalletDisclaimerState
                 ),
                 if (connectivityStatusProvider ==
                     ConnectivityStatus.isDisconnected)
-                  const BannerConnectivityNotAvailable(),
+                  const IconNetworkWarning(
+                    alignment: Alignment.topRight,
+                  ),
               ],
             ),
           ),

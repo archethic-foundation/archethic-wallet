@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:ui';
+
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -10,7 +12,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/banner_connectivity_not_available.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
@@ -26,7 +28,7 @@ class IntroWelcome extends ConsumerStatefulWidget {
 }
 
 class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
-  bool checkedValue = false;
+  bool cguChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: const _AppBar(),
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -50,7 +53,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
               SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
+              top: MediaQuery.of(context).size.height * 0.02,
             ),
             child: Stack(
               children: [
@@ -60,10 +63,10 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     _Footer(
                       isConnectivityAvailable: connectivityStatusProvider ==
                           ConnectivityStatus.isConnected,
-                      checkedValue: checkedValue,
+                      cguChecked: cguChecked,
                       onToggleCGU: (newValue) {
                         setState(() {
-                          checkedValue = newValue!;
+                          cguChecked = newValue!;
                         });
                       },
                     ),
@@ -71,10 +74,38 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                 ),
                 if (connectivityStatusProvider ==
                     ConnectivityStatus.isDisconnected)
-                  const BannerConnectivityNotAvailable(),
-                const _Language(),
+                  const IconNetworkWarning(
+                    alignment: Alignment.topRight,
+                  ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
+  const _AppBar();
+
+  @override
+  Size get preferredSize => AppBar().preferredSize;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return PreferredSize(
+      preferredSize: Size(MediaQuery.of(context).size.width, 40),
+      child: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: AppBar(
+            backgroundColor: theme.background40,
+            actions: const <Widget>[
+              _Language(),
+            ],
           ),
         ),
       ),
@@ -87,18 +118,17 @@ class _Language extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: IconButton(
-        icon: const Icon(
-          UiIcons.language,
-          color: Colors.blue,
-          size: 25,
-        ),
-        onPressed: () async {
-          await LanguageDialog.getDialog(context, ref);
-        },
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return IconButton(
+      icon: Icon(
+        UiIcons.language,
+        color: theme.iconDrawer,
+        size: 25,
       ),
+      onPressed: () async {
+        await LanguageDialog.getDialog(context, ref);
+      },
     );
   }
 }
@@ -115,8 +145,8 @@ class _Main extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const <Widget>[
             _LogoArchethic(),
-            _WelcomTextFirst(),
-            _WelcomTextSecond(),
+            _WelcomeTextFirst(),
+            _WelcomeTextSecond(),
           ],
         ),
       ),
@@ -151,8 +181,8 @@ class _LogoArchethic extends ConsumerWidget {
   }
 }
 
-class _WelcomTextFirst extends ConsumerWidget {
-  const _WelcomTextFirst();
+class _WelcomeTextFirst extends ConsumerWidget {
+  const _WelcomeTextFirst();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,8 +202,8 @@ class _WelcomTextFirst extends ConsumerWidget {
   }
 }
 
-class _WelcomTextSecond extends ConsumerWidget {
-  const _WelcomTextSecond();
+class _WelcomeTextSecond extends ConsumerWidget {
+  const _WelcomeTextSecond();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -197,31 +227,41 @@ class _WelcomTextSecond extends ConsumerWidget {
 class _Footer extends ConsumerWidget {
   const _Footer({
     required this.isConnectivityAvailable,
-    required this.checkedValue,
+    required this.cguChecked,
     required this.onToggleCGU,
   });
 
   final bool isConnectivityAvailable;
-  final bool checkedValue;
+  final bool cguChecked;
   final Function(bool? newValue) onToggleCGU;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: <Widget>[
-        _CGU(
-          isConnectivityAvailable: isConnectivityAvailable,
-          checkedValue: checkedValue,
-          onToggleCGU: onToggleCGU,
+        Column(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (isConnectivityAvailable)
+                  _CGU(
+                    cguChecked: cguChecked,
+                    onToggleCGU: onToggleCGU,
+                  ),
+                const _VersionInfo(),
+              ],
+            ),
+          ],
         ),
         const SizedBox(
           height: 10,
         ),
         _ButtonNewWallet(
-          checkedValue: checkedValue,
+          cguChecked: cguChecked,
         ),
         _ButtonImportWallet(
-          checkedValue: checkedValue,
+          cguChecked: cguChecked,
         ),
       ],
     );
@@ -230,13 +270,11 @@ class _Footer extends ConsumerWidget {
 
 class _CGU extends ConsumerWidget {
   const _CGU({
-    required this.isConnectivityAvailable,
-    required this.checkedValue,
+    required this.cguChecked,
     required this.onToggleCGU,
   });
 
-  final bool isConnectivityAvailable;
-  final bool checkedValue;
+  final bool cguChecked;
   final Function(bool? newValue) onToggleCGU;
 
   @override
@@ -244,81 +282,81 @@ class _CGU extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return Column(
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (isConnectivityAvailable)
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 15,
-                        right: 15,
-                      ),
-                      child: CheckboxListTile(
-                        title: Text(
-                          localizations.welcomeDisclaimerChoice,
-                          style: theme.textStyleSize14W600Primary,
-                        ),
-                        value: checkedValue,
-                        onChanged: onToggleCGU,
-                        checkColor: theme.background,
-                        activeColor: theme.text,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        secondary: TextFieldButton(
-                          icon: UiIcons.privacy_policy,
-                          onPressed: () {
-                            UIUtil.showWebview(
-                              context,
-                              'https://archethic.net/aewallet-privacy.html',
-                              localizations.welcomeDisclaimerLink,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 15,
+              right: 15,
+            ),
+            child: CheckboxListTile(
+              title: Text(
+                localizations.welcomeDisclaimerChoice,
+                style: theme.textStyleSize14W600Primary,
               ),
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 30,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Consumer(
-                    builder: (context, ref, child) {
-                      final asyncVersionString = ref.watch(
-                        versionStringProvider(
-                          AppLocalization.of(context)!,
-                        ),
-                      );
-
-                      return Text(
-                        asyncVersionString.asData?.value ?? '',
-                        textAlign: TextAlign.left,
-                        style: theme.textStyleSize10W100Primary,
-                      );
-                    },
-                  ),
-                ],
+              value: cguChecked,
+              onChanged: onToggleCGU,
+              checkColor: theme.background,
+              activeColor: theme.text,
+              controlAffinity: ListTileControlAffinity.leading,
+              secondary: TextFieldButton(
+                icon: UiIcons.privacy_policy,
+                onPressed: () {
+                  UIUtil.showWebview(
+                    context,
+                    'https://archethic.net/aewallet-privacy.html',
+                    localizations.welcomeDisclaimerLink,
+                  );
+                },
               ),
             ),
-          ],
+          ),
         ),
       ],
     );
   }
 }
 
-class _ButtonNewWallet extends ConsumerWidget {
-  const _ButtonNewWallet({required this.checkedValue});
+class _VersionInfo extends ConsumerWidget {
+  const _VersionInfo();
 
-  final bool checkedValue;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 30,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Consumer(
+            builder: (context, ref, child) {
+              final asyncVersionString = ref.watch(
+                versionStringProvider(
+                  AppLocalization.of(context)!,
+                ),
+              );
+
+              return Text(
+                asyncVersionString.asData?.value ?? '',
+                textAlign: TextAlign.left,
+                style: theme.textStyleSize10W100Primary,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ButtonNewWallet extends ConsumerWidget {
+  const _ButtonNewWallet({required this.cguChecked});
+
+  final bool cguChecked;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -326,10 +364,11 @@ class _ButtonNewWallet extends ConsumerWidget {
 
     return _ButtonAction(
       key: const Key('newWallet'),
-      outline: !checkedValue,
+      enabled: !cguChecked,
       label: localizations.newWallet,
+      dimension: Dimens.buttonTopDimens,
       onPressed: () async {
-        if (checkedValue) {
+        if (cguChecked) {
           await ref.read(SettingsProviders.settings.notifier).setNetwork(
                 const NetworksSetting(
                   network: AvailableNetworks.archethicMainNet,
@@ -346,9 +385,9 @@ class _ButtonNewWallet extends ConsumerWidget {
 }
 
 class _ButtonImportWallet extends ConsumerWidget {
-  const _ButtonImportWallet({required this.checkedValue});
+  const _ButtonImportWallet({required this.cguChecked});
 
-  final bool checkedValue;
+  final bool cguChecked;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -356,10 +395,11 @@ class _ButtonImportWallet extends ConsumerWidget {
 
     return _ButtonAction(
       key: const Key('importWallet'),
-      outline: !checkedValue,
+      enabled: !cguChecked,
       label: localizations.importWallet,
+      dimension: Dimens.buttonBottomDimens,
       onPressed: () async {
-        if (checkedValue) {
+        if (cguChecked) {
           await NetworkDialog.getDialog(
             context,
             ref,
@@ -379,14 +419,16 @@ class _ButtonImportWallet extends ConsumerWidget {
 class _ButtonAction extends ConsumerWidget {
   const _ButtonAction({
     required super.key,
-    required this.outline,
+    required this.enabled,
     required this.onPressed,
     required this.label,
+    required this.dimension,
   });
 
-  final bool outline;
+  final bool enabled;
   final Function() onPressed;
   final String label;
+  final List<double> dimension;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -394,11 +436,11 @@ class _ButtonAction extends ConsumerWidget {
       children: <Widget>[
         // Import Wallet Button
         AppButtonTiny(
-          outline
+          enabled
               ? AppButtonTinyType.primaryOutline
               : AppButtonTinyType.primary,
           label,
-          Dimens.buttonBottomDimens,
+          dimension,
           key: key,
           onPressed: onPressed,
         ),

@@ -9,7 +9,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
-import 'package:aewallet/ui/widgets/components/banner_connectivity_not_available.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -233,7 +233,9 @@ class _IntroConfigureSecurityState
                 ),
                 if (connectivityStatusProvider ==
                     ConnectivityStatus.isDisconnected)
-                  const BannerConnectivityNotAvailable(),
+                  const IconNetworkWarning(
+                    alignment: Alignment.topRight,
+                  ),
               ],
             ),
           ),
