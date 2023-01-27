@@ -22,10 +22,12 @@ class NFTListDetail extends ConsumerWidget {
     super.key,
     required this.tokenInformations,
     required this.index,
+    this.roundBorder = false,
   });
 
   final TokenInformations tokenInformations;
   final int index;
+  final bool roundBorder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -129,9 +131,16 @@ class NFTListDetail extends ConsumerWidget {
                           );
                         }
                         if (snapshot.hasData) {
-                          return Image.memory(
-                            snapshot.data!,
-                          );
+                          return roundBorder == true
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.memory(
+                                    snapshot.data!,
+                                  ),
+                                )
+                              : Image.memory(
+                                  snapshot.data!,
+                                );
                         } else {
                           return SizedBox(
                             width: 200,
