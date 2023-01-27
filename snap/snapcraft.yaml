@@ -16,7 +16,7 @@ slots:
 apps:
   aewallet:
     command: aewallet
-    extensions: [flutter-master]
+    extensions: [flutter-stable]
     plugs:
     - network
     slots:
@@ -24,6 +24,6 @@ apps:
 
 parts:
   aewallet:
-    source: https://github.com/archethic-foundation/archethic-wallet
+    source: .
     plugin: flutter
     flutter-target: lib/main.dart
