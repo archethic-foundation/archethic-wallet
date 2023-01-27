@@ -113,7 +113,7 @@ class NFTTabBody extends ConsumerWidget {
                             child: NftCategoryMenu(),
                           ),
                           const SizedBox(
-                            height: 100,
+                            height: 50,
                           ),
                         ],
                       ),
