@@ -3,6 +3,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -82,8 +83,12 @@ class NFTList extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount:
+                Responsive.isDesktop(context) || Responsive.isTablet(context)
+                    ? 3
+                    : 2,
+            crossAxisSpacing: 20,
           ),
           primary: false,
           shrinkWrap: true,

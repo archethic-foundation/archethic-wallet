@@ -3,6 +3,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -36,15 +37,18 @@ class NftCategoryMenu extends ConsumerWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         padding: const EdgeInsets.only(
           left: 10,
           right: 10,
         ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.8,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount:
+              Responsive.isDesktop(context) || Responsive.isTablet(context)
+                  ? 3
+                  : 2,
           crossAxisSpacing: 20,
+          childAspectRatio: 0.8,
         ),
         itemCount: nftCategories.length,
         itemBuilder: (context, index) {
