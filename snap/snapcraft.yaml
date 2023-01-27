@@ -1,0 +1,29 @@
+name: aewallet
+version: 2.0.8
+summary: Archethic Wallet
+description: Decentralized & cryptocurrency non-custodial hot wallet on Archethic blockchain
+
+confinement: devmode
+base: core18
+grade: stable
+
+slots:
+  dbus-aewallet:
+    interface: dbus
+    bus: session
+    name: tech.archethic.aewallet
+    
+apps:
+  aewallet:
+    command: aewallet
+    extensions: [flutter-master]
+    plugs:
+    - network
+    slots:
+    - dbus-aewallet
+
+parts:
+  aewallet:
+    source: https://github.com/archethic-foundation/archethic-wallet
+    plugin: flutter
+    flutter-target: lib/main.dart
