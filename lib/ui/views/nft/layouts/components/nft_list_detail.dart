@@ -49,7 +49,6 @@ class NFTListDetail extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Text(
             tokenInformations.name!,
@@ -130,14 +129,8 @@ class NFTListDetail extends ConsumerWidget {
                           );
                         }
                         if (snapshot.hasData) {
-                          return SizedBox(
-                            width: 200,
-                            height: 130,
-                            child: Image.memory(
-                              snapshot.data!,
-                              height: 130,
-                              fit: BoxFit.fitHeight,
-                            ),
+                          return Image.memory(
+                            snapshot.data!,
                           );
                         } else {
                           return SizedBox(

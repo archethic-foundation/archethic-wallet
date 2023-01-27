@@ -87,33 +87,35 @@ class NFTTabBody extends ConsumerWidget {
                         opacity: 0.7,
                       ),
                     ),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 10,
-                          left: 20,
-                          right: 20,
-                          bottom: 10,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              AppLocalization.of(context)!
-                                  .nftTabDescriptionHeader,
-                              style: theme.textStyleSize12W400Primary,
-                              textAlign: TextAlign.justify,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const NFTSearchBar(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const NftCategoryMenu(),
-                          ],
-                        ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 10,
+                        left: 20,
+                        right: 20,
+                        bottom: 10,
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            AppLocalization.of(context)!
+                                .nftTabDescriptionHeader,
+                            style: theme.textStyleSize12W400Primary,
+                            textAlign: TextAlign.justify,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const NFTSearchBar(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Expanded(
+                            child: NftCategoryMenu(),
+                          ),
+                          const SizedBox(
+                            height: 100,
+                          ),
+                        ],
                       ),
                     ),
                   ),
