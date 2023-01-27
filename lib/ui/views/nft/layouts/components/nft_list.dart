@@ -1,11 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:ui';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -78,24 +82,31 @@ class NFTList extends ConsumerWidget {
         ),
       );
     }
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          primary: false,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.trackpad,
+          },
+        ),
+        child: DynamicHeightGridView(
+          crossAxisCount:
+              Responsive.isDesktop(context) || Responsive.isTablet(context)
+                  ? 3
+                  : 2,
+          crossAxisSpacing: 20,
           shrinkWrap: true,
           itemCount: accountTokenList.length,
-          padding: const EdgeInsets.only(top: 20, bottom: 20),
-          itemBuilder: (context, index) {
+          builder: (context, index) {
             final tokenInformations =
                 accountTokenList[index].tokenInformations!;
-
             return NFTListDetail(
               tokenInformations: tokenInformations,
               index: index,
+              roundBorder: true,
             );
           },
         ),

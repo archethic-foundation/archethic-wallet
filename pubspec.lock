@@ -365,6 +365,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.6"
+  dynamic_height_grid_view:
+    dependency: "direct main"
+    description:
+      name: dynamic_height_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   ecdsa:
     dependency: transitive
     description:
