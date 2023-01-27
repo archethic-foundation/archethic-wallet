@@ -18,8 +18,8 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/banner_connectivity_not_available.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -534,7 +534,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                 ),
                 if (connectivityStatusProvider ==
                     ConnectivityStatus.isDisconnected)
-                  const BannerConnectivityNotAvailable(),
+                  const IconNetworkWarning(
+                    alignment: Alignment.topRight,
+                  ),
               ],
             ),
           ),

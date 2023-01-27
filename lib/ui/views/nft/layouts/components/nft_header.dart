@@ -2,9 +2,9 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/main_appBar_icon_network_warning.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -63,7 +63,7 @@ class NFTHeader extends ConsumerWidget {
           displaySwitchButton: false,
         ),
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
-          const MainAppBarIconNetworkWarning()
+          const IconNetworkWarning()
         else
           Padding(
             padding: const EdgeInsets.only(right: 10, top: 10),
