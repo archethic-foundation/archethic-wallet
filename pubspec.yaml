@@ -242,7 +242,7 @@ dev_dependencies:
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.7.0
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
-  patrol: ^0.10.6
+  patrol: ^0.10.8
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
 
