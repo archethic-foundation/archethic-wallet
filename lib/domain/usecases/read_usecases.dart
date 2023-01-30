@@ -6,7 +6,7 @@ import 'package:aewallet/domain/usecases/usecase.dart';
 
 /// Handles read strategies and persistent cache.
 mixin ReadStrategy<CommandT, ValueT> {
-  final String _logPrefix = '[Read ${ValueT.toString()} Usecase]';
+  final String _logName = 'Read ${ValueT.toString()} Usecase';
 
   /// Reads data from local data source.
   Future<ValueT?> getLocal(CommandT command);
@@ -18,30 +18,32 @@ mixin ReadStrategy<CommandT, ValueT> {
   Future<ValueT?> getRemote(CommandT command);
 
   Future<Result<ValueT, Failure>> _getFromRemoteFirst(CommandT command) async {
-    log('$_logPrefix Get from remote first');
+    log('Get from remote first', name: _logName);
     try {
       final remoteValue = await getRemote(command);
 
       if (remoteValue != null) {
-        log('$_logPrefix Using and saving remote value');
+        log('Using and saving remote value', name: _logName);
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Remote read failed', error: e, stackTrace: stackTrace);
+      log('Remote read failed',
+          name: _logName, error: e, stackTrace: stackTrace);
     }
 
     try {
       final localValue = await getLocal(command);
       if (localValue != null) {
-        log('$_logPrefix Using local value');
+        log('Using local value', name: _logName);
         return Result.success(localValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Local read failed', error: e, stackTrace: stackTrace);
+      log('Local read failed',
+          name: _logName, error: e, stackTrace: stackTrace);
     }
 
-    log('$_logPrefix Unable to fetch local or remote value');
+    log('Unable to fetch local or remote value', name: _logName);
     return const Result.failure(
       Failure.other(
         cause: 'Unable to fetch local or remote value',
@@ -50,30 +52,32 @@ mixin ReadStrategy<CommandT, ValueT> {
   }
 
   Future<Result<ValueT, Failure>> _getFromLocalFirst(CommandT command) async {
-    log('$_logPrefix Get from local first');
+    log('Get from local first', name: _logName);
 
     try {
       final localValue = await getLocal(command);
       if (localValue != null) {
-        log('$_logPrefix Using local value');
+        log('Using local value', name: _logName);
         return Result.success(localValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Local read failed', error: e, stackTrace: stackTrace);
+      log('Local read failed',
+          name: _logName, error: e, stackTrace: stackTrace);
     }
 
     try {
       final remoteValue = await getRemote(command);
       if (remoteValue != null) {
-        log('$_logPrefix Using and saving remote value');
+        log('Using and saving remote value', name: _logName);
 
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
     } catch (e, stackTrace) {
-      log('$_logPrefix : Remote read failed', error: e, stackTrace: stackTrace);
+      log('Remote read failed',
+          name: _logName, error: e, stackTrace: stackTrace);
     }
-    log('$_logPrefix Unable to fetch local or remote value');
+    log('Unable to fetch local or remote value', name: _logName);
 
     return const Result.failure(
       Failure.other(
