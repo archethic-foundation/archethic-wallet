@@ -21,8 +21,8 @@ class AuthentificationMethodDialog {
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final settingsNotifier = ref.watch(
+    final theme = ref.read(ThemeProviders.selectedTheme);
+    final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
     );
     final pickerItemsList = List<PickerItem>.empty(growable: true);

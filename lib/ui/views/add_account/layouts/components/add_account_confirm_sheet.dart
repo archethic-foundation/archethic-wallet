@@ -210,7 +210,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                           ref,
                           authMethod: authMethod,
                           activeVibrations: ref
-                              .watch(SettingsProviders.settings)
+                              .read(SettingsProviders.settings)
                               .activeVibrations,
                         );
                         if (auth) {

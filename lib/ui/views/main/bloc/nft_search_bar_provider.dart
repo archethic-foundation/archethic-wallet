@@ -79,7 +79,7 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
       tokenInformations: null,
     );
 
-    final tokenInformations = await ref.watch(
+    final tokenInformations = await ref.read(
       NFTProviders.getNFT(
         searchCriteria,
         keychainServiceKeyPair,

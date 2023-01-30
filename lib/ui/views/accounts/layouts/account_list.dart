@@ -37,7 +37,7 @@ class AccountsListWidget extends ConsumerWidget {
               );
           ShowSendingAnimation.build(context, theme);
           final connectivityStatusProvider =
-              ref.watch(connectivityStatusProviders);
+              ref.read(connectivityStatusProviders);
           if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
             return;
           }

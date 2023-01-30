@@ -18,7 +18,7 @@ class IncomingTransactionsNotifier extends ConsumerWidget {
 
   void _listenCheckTransactions(BuildContext context, WidgetRef ref) {
     final receivedTransactionList =
-        ref.watch(CheckTransactionsProvider.provider).valueOrNull;
+        ref.read(CheckTransactionsProvider.provider).valueOrNull;
 
     if (receivedTransactionList == null || receivedTransactionList.isEmpty) {
       return;
@@ -32,7 +32,8 @@ class IncomingTransactionsNotifier extends ConsumerWidget {
             .replaceAll(
               '%1',
               NumberUtil.formatThousands(
-                  fromBigInt(receivedTransaction.amount),),
+                fromBigInt(receivedTransaction.amount),
+              ),
             )
             .replaceAll('%2', receivedTransaction.currencySymbol)
             .replaceAll('%3', receivedTransaction.accountName),

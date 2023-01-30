@@ -75,7 +75,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
             if (displayChevron != null && displayChevron == true)
               FaIcon(
                 FontAwesomeIcons.chevronRight,
-                color: ref.watch(ThemeProviders.selectedTheme).iconDrawer,
+                color: theme.iconDrawer,
                 size: 15,
               ),
           ],
@@ -101,7 +101,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     return TextButton(
       onPressed: () {
         if (onPressed == null) return;
@@ -134,7 +134,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
             ),
             FaIcon(
               FontAwesomeIcons.chevronRight,
-              color: ref.watch(ThemeProviders.selectedTheme).iconDrawer,
+              color: theme.iconDrawer,
               size: 15,
             ),
           ],

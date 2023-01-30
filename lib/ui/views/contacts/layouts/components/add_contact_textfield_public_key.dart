@@ -32,7 +32,7 @@ class _AddContactTextFieldPublicKeyState
 
   void _updatePublicKeyTextController() {
     final contactCreation =
-        ref.watch(ContactCreationFormProvider.contactCreationForm);
+        ref.read(ContactCreationFormProvider.contactCreationForm);
     publicKeyController.text = contactCreation.publicKey;
   }
 

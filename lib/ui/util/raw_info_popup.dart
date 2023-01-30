@@ -10,7 +10,7 @@ class RawInfoPopup {
     LongPressEndDetails details,
     String info,
   ) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
 
     return showMenu(
       color: theme.backgroundDark,

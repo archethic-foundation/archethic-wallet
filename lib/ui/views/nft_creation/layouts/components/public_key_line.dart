@@ -73,7 +73,7 @@ class PublicKeyLine extends ConsumerWidget {
                           preferences.activeVibrations,
                         );
                     ref
-                        .watch(
+                        .read(
                           NftCreationFormProvider.nftCreationForm(
                             ref.read(
                               NftCreationFormProvider.nftCreationFormArgs,

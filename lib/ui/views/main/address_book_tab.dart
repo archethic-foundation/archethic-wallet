@@ -111,7 +111,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                         LengthLimitingTextInputFormatter(20),
                       ],
                       onChanged: (text) {
-                        ref.watch(
+                        ref.read(
                           ContactProviders.fetchContacts(
                             search: text,
                           ),

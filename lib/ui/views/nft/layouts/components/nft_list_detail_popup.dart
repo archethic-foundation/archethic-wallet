@@ -18,7 +18,7 @@ class NFTListDetailPopup {
     LongPressEndDetails details,
     TokenInformations tokenInformations,
   ) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
     final localizations = AppLocalization.of(context)!;
 
     return showMenu(
@@ -58,9 +58,9 @@ class NFTListDetailPopup {
     required String value,
     required TokenInformations tokenInformations,
   }) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
 
-    final preferences = ref.watch(SettingsProviders.settings);
+    final preferences = ref.read(SettingsProviders.settings);
     return PopupMenuItem(
       value: value,
       onTap: () async {

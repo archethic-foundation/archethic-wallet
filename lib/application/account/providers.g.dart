@@ -61,7 +61,7 @@ abstract class _$AccountsNotifier
 }
 
 String $_SelectedAccountNotifierHash() =>
-    r'e9781499f376aec00dfef02eb652a216c5630ebe';
+    r'92372abd1516b94f62efe537520f0b03e5ff581f';
 
 /// See also [_SelectedAccountNotifier].
 final _selectedAccountNotifierProvider =

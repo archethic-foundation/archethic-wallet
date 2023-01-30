@@ -19,8 +19,9 @@ double _convertedValue(
   required double tokenPrice,
 }) {
   final primaryCurrency = ref.watch(
-    SettingsProviders.settings
-        .select((settings) => settings.primaryCurrency.primaryCurrency),
+    SettingsProviders.settings.select(
+      (settings) => settings.primaryCurrency.primaryCurrency,
+    ),
   );
   if (primaryCurrency == AvailablePrimaryCurrencyEnum.native) {
     return PrimaryCurrencyConverter.networkCurrencyToSelectedCurrency(
@@ -104,7 +105,7 @@ abstract class PrimaryCurrencyConverter {
     if (amountEntered == 0 || tokenPriceAmount == 0) {
       return 0;
     }
-    final currency = ref.watch(
+    final currency = ref.read(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
     final localCurrencyFormat = NumberFormat.currency(

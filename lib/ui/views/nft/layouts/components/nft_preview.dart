@@ -171,7 +171,7 @@ class NFTPreviewWidget extends ConsumerWidget {
     WidgetRef ref,
     Map<String, dynamic> property,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(

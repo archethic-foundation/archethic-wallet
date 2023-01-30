@@ -127,7 +127,7 @@ class _TransferTextFieldAmountState
                 );
                 return;
               }
-              final selectedCurrencyMarketPrice = await ref.watch(
+              final selectedCurrencyMarketPrice = await ref.read(
                 MarketPriceProviders.selectedCurrencyMarketPrice.future,
               );
 

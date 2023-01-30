@@ -73,7 +73,7 @@ class AddTokenSheetBody extends ConsumerWidget {
           duration: const Duration(seconds: 5),
         );
 
-        ref.watch(AddTokenFormProvider.addTokenForm.notifier).setErrors(
+        ref.read(AddTokenFormProvider.addTokenForm.notifier).setErrors(
               errorAmountText: '',
               errorInitialSupplyText: '',
               errorNameText: '',

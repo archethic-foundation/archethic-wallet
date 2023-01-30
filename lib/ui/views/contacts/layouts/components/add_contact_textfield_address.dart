@@ -34,7 +34,7 @@ class _AddContactTextFieldAddressState
 
   void _updateAdressTextController() {
     final contactCreation =
-        ref.watch(ContactCreationFormProvider.contactCreationForm);
+        ref.read(ContactCreationFormProvider.contactCreationForm);
     addressController.text = contactCreation.address;
   }
 

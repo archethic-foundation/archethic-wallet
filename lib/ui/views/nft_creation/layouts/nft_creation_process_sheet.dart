@@ -122,7 +122,7 @@ class NftCreationSheetBody extends ConsumerWidget {
           NftCreationFormProvider.nftCreationFormArgs,
         );
         ref
-            .watch(
+            .read(
               NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
             )
             .setError('');

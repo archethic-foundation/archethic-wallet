@@ -47,13 +47,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
+      final theme = ref.read(ThemeProviders.selectedTheme);
       ShowSendingAnimation.build(
         context,
         theme,
       );
       ref
-          .watch(
+          .read(
             NftCreationFormProvider.nftCreationForm(
               ref.read(
                 NftCreationFormProvider.nftCreationFormArgs,
@@ -66,7 +66,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
+      final theme = ref.read(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         _showSendFailed(event, theme);
@@ -78,7 +78,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
             event.nbConfirmations!,
             event.maxConfirmations!,
           )) {
-        final nftCreation = ref.watch(
+        final nftCreation = ref.read(
           NftCreationFormProvider.nftCreationForm(
             ref.read(
               NftCreationFormProvider.nftCreationFormArgs,
@@ -283,7 +283,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                                   ref,
                                   authMethod: authMethod,
                                   activeVibrations: ref
-                                      .watch(SettingsProviders.settings)
+                                      .read(SettingsProviders.settings)
                                       .activeVibrations,
                                 );
                                 if (auth) {

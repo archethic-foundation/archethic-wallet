@@ -69,7 +69,7 @@ class AddAccountSheetBody extends ConsumerWidget {
           duration: const Duration(seconds: 5),
         );
 
-        ref.watch(AddAccountFormProvider.addAccountForm.notifier).setError(
+        ref.read(AddAccountFormProvider.addAccountForm.notifier).setError(
               '',
             );
       },

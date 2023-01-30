@@ -46,7 +46,7 @@ class ContactsDialog {
       context: context,
       builder: (BuildContext context) {
         final localizations = AppLocalization.of(context)!;
-        final theme = ref.watch(ThemeProviders.selectedTheme);
+        final theme = ref.read(ThemeProviders.selectedTheme);
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(

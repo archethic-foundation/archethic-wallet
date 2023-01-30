@@ -134,7 +134,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     late Transaction transaction;
 
     final keychainSecuredInfos = ref
-        .watch(SessionProviders.session)
+        .read(SessionProviders.session)
         .loggedIn!
         .wallet
         .keychainSecuredInfos;
@@ -574,7 +574,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     late Transaction transaction;
 
     final keychainSecuredInfos = ref
-        .watch(SessionProviders.session)
+        .read(SessionProviders.session)
         .loggedIn!
         .wallet
         .keychainSecuredInfos;

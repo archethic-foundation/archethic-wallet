@@ -535,7 +535,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[
       PickerItem(
@@ -613,7 +613,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   }
 
   Future<void> _accountsDialog(List<Account> accounts) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (var i = 0; i < accounts.length; i++) {
       final account = accounts[i];

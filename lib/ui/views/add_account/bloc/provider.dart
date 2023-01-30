@@ -77,7 +77,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     }
 
     final accounts =
-        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
+        ref.read(AccountProviders.sortedAccounts).valueOrNull ?? [];
     if (accounts
         .where((Account element) => element.name == state.name)
         .isNotEmpty) {

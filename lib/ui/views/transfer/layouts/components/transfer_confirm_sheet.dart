@@ -54,13 +54,13 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
+      final theme = ref.read(ThemeProviders.selectedTheme);
       ShowSendingAnimation.build(
         context,
         theme,
       );
 
-      ref.watch(TransferFormProvider.transferForm.notifier).send(context);
+      ref.read(TransferFormProvider.transferForm.notifier).send(context);
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
@@ -252,7 +252,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                             ref,
                             authMethod: authMethod,
                             activeVibrations: ref
-                                .watch(SettingsProviders.settings)
+                                .read(SettingsProviders.settings)
                                 .activeVibrations,
                           );
                           if (auth) {
