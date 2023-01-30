@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_remoteRepositoriesHash() =>
+String _$_remoteRepositoriesHash() =>
     r'1ba53f6e3f0404d6fb6bb5ab12bebe74865d75bd';
 
 /// See also [_remoteRepositories].
@@ -38,10 +38,10 @@ final _remoteRepositoriesProvider = Provider<List<MarketRepositoryInterface>>(
   name: r'_remoteRepositoriesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_remoteRepositoriesHash,
+      : _$_remoteRepositoriesHash,
 );
 typedef _RemoteRepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
-String $_localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
+String _$_localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
 
 /// See also [_localRepository].
 final _localRepositoryProvider = Provider<MarketLocalRepositoryInterface>(
@@ -49,10 +49,10 @@ final _localRepositoryProvider = Provider<MarketLocalRepositoryInterface>(
   name: r'_localRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_localRepositoryHash,
+      : _$_localRepositoryHash,
 );
 typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
-String $_currencyMarketPriceHash() =>
+String _$_currencyMarketPriceHash() =>
     r'efad345fa611b0debca8ea8a11fb6cf153862c40';
 
 /// See also [_currencyMarketPrice].
@@ -69,7 +69,7 @@ class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_currencyMarketPriceHash,
+                  : _$_currencyMarketPriceHash,
         );
 
   final AvailableCurrencyEnum currency;
@@ -123,7 +123,7 @@ class _CurrencyMarketPriceFamily extends Family<AsyncValue<MarketPrice>> {
   String? get name => r'_currencyMarketPriceProvider';
 }
 
-String $_selectedCurrencyMarketPriceHash() =>
+String _$_selectedCurrencyMarketPriceHash() =>
     r'c0ae4863d169c53ec8cd68defe5cba06e55ff646';
 
 /// See also [_selectedCurrencyMarketPrice].
@@ -132,10 +132,10 @@ final _selectedCurrencyMarketPriceProvider = FutureProvider<MarketPrice>(
   name: r'_selectedCurrencyMarketPriceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_selectedCurrencyMarketPriceHash,
+      : _$_selectedCurrencyMarketPriceHash,
 );
 typedef _SelectedCurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
-String $_convertedToSelectedCurrencyHash() =>
+String _$_convertedToSelectedCurrencyHash() =>
     r'14676bcb79ec50eed6b6457e45add978ecccf121';
 
 /// See also [_convertedToSelectedCurrency].
@@ -153,7 +153,7 @@ class _ConvertedToSelectedCurrencyProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_convertedToSelectedCurrencyHash,
+                  : _$_convertedToSelectedCurrencyHash,
         );
 
   final double nativeAmount;
