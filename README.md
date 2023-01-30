@@ -70,6 +70,7 @@ All news about wallet are available on the [Archethic Youtube Channel](https://w
 ## How to test the Archethic Wallet
 
 To test Archethic Wallet with Faucet:
+
 - Copy your address from the wallet and paste on the [Archethic Testnet Faucet](https://testnet.archethic.net/faucet) 
 - Click on 'Transfer 100 UCO'
 - Refresh your dashboard</br>
@@ -79,61 +80,21 @@ Now, you can send some UCO and see your transactions
 
 Patrol is a flutter package, you can install it using a simple `flutter pub get`
 
-Documentation is avaliable at :
-
-- Their Gitlab repository https://github.com/leancodepl/patrol
-- The Patrol_CLI repository https://github.com/leancodepl/patrol/tree/master/packages/patrol_cli
-- The patrol official documentation https://patrol.leancode.co/
-- The patrol library documentation https://pub.dev/documentation/patrol/latest/patrol/patrol-library.html
-- https://pub.dev/packages/patrol
-
-### Run the tests
-
-All the tests are located in `integration_test`
-
-To list the compatible connected devices and emulators
-
-> patrol devices
-
-To run all the tests :
-
-Connect your device or launch your compatible Emulator
-
-> patrol drive
-
-To run a single specification :
-
-> patrol drive --spec integration_test/<spec_file>_test.dart
-
-To run Patrol on a spectfic device :
-
-> patrol drive -D <device_name>
-
-To update Patrol :
-
-> patrol update
-
-### Ignoring tests
-
-By default, Patrol runs all the files ending with `_test.dart` and containing a `patrolTest` lock. You can ignore files by removing the test or adding a `_skip` just before the extension `<example>_test_skip.dart`
-
-### TODOs / Improvements
-
-- script UCO retrieval from Faucet
-- Watch Patrol improvements (Account popup selection does not work for an unknown reason)
-- Implement a full scenario (`all_test_skip.dart`).
+Full patrol using on this project can be found [here](integration_test/README.md)
 
 ## Setup this Application for developers
 
 ### Pre-requisites
+
 - Flutter 3.0+
 - Dart 2.17+
 
 ### Instructions
+
 - Download the repo into a folder
 - Goto the folder and from terminal run `flutter pub get` to get the packages
-- Once packages are installed 
-    - You can build and run the program for emulator from VSCode Flutter SDK Tools
+- Once packages are installed :
+    - You can build and run the program for emulator from VSCode Flutter SDK Tools.
     - You can build for android emulator if already installed.
 - Once the packages and installed and application is built
 - Run the program with `flutter run`
