@@ -4,7 +4,8 @@ import 'package:aewallet/main.dart' as app;
 import 'package:flutter/material.dart';
 import 'package:patrol/patrol.dart';
 
-import 'config.dart';
+import 'action/pin_confirmation.dart';
+import 'config/config.dart';
 
 void main() {
   patrolTest('As a user I can create a Wallet',
@@ -45,11 +46,7 @@ void main() {
     await $('PIN').tap();
 
     // code pin 000000 avec confirmation
-    const length = 12;
-    for (var i = length; i >= 1; i--) {
-      await $('0').tap(
-        settleTimeout: const Duration(minutes: 10),
-      );
-    }
+    await validPinConfirmation($);
+    await validPinConfirmation($);
   });
 }

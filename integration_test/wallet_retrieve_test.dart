@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
 import 'action/import_wallet.dart';
-import 'config.dart';
+import 'config/config.dart';
 
 void main() {
   patrolTest(

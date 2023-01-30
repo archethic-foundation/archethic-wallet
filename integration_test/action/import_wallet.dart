@@ -1,38 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:patrol/patrol.dart';
 
+import '../config/config.dart';
+
 Future<void> importWalletAction(PatrolTester $) async {
   await $(CheckboxListTile).tap();
   await $(#importWallet).tap();
   final finder = createFinder(RegExp('.*testnet.*'));
   await $(finder).tap();
 
-  final seedWord = [
-    'pave',
-    'shrug',
-    'coffee',
-    'daughter',
-    'hip',
-    'mechanic',
-    'scale',
-    'trigger',
-    'lake',
-    'resist',
-    'way',
-    'repair',
-    'good',
-    'animal',
-    'tennis',
-    'boost',
-    'walk',
-    'story',
-    'dash',
-    'brass',
-    'buzz',
-    'orphan',
-    'feed',
-    'connect'
-  ];
+  final seedWord = testWalletConf.seed;
 
   const length = 23;
   for (var index = 0; index <= length; index++) {
