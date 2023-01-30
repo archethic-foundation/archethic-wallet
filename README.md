@@ -117,6 +117,12 @@ To update Patrol :
 
 By default, Patrol runs all the files ending with `_test.dart` and containing a `patrolTest` lock. You can ignore files by removing the test or adding a `_skip` just before the extension `<example>_test_skip.dart`
 
+### TODOs / Improvements
+
+- script UCO retrieval from Faucet
+- Watch Patrol improvements (Account popup selection does not work for an unknown reason)
+- Implement a full scenario (`all_test_skip.dart`).
+
 ## Setup this Application for developers
 
 ### Pre-requisites
