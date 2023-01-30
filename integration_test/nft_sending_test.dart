@@ -7,7 +7,7 @@ import 'action/pin_confirmation.dart';
 import 'config/config.dart';
 
 void main() {
-  patrolTest('As a user I can sent a NFT',
+  patrolTest('As a user I can send a NFT',
       nativeAutomatorConfig: nativeAutomatorConfig,
       nativeAutomation: true, ($) async {
     await app.main();

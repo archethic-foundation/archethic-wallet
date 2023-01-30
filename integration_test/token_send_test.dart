@@ -7,7 +7,7 @@ import 'action/pin_confirmation.dart';
 import 'config/config.dart';
 
 void main() {
-  patrolTest('As a user I can create a token',
+  patrolTest('As a user I can send a token',
       nativeAutomatorConfig: nativeAutomatorConfig,
       nativeAutomation: true, ($) async {
     await app.main();
