@@ -23,6 +23,7 @@ class TxList extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Column(
+      key: const Key('recentTransactions'),
       children: [
         if (recentTransactions != null)
           recentTransactions.isEmpty
@@ -67,7 +68,7 @@ class TxList extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: recentTransactions
                       .map(
-                        (recentTransaction) => _TxListLine(
+                        (recentTransaction) => TxListLine(
                           recentTransaction: recentTransaction,
                         ),
                       )
@@ -78,8 +79,9 @@ class TxList extends ConsumerWidget {
   }
 }
 
-class _TxListLine extends ConsumerWidget {
-  const _TxListLine({
+class TxListLine extends ConsumerWidget {
+  const TxListLine({
+    super.key,
     required this.recentTransaction,
   });
 

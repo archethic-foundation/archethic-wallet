@@ -233,14 +233,16 @@ dev_dependencies:
   freezed: ^2.3.2
   hive_generator: ^2.0.0
   # Integration Tests
-  #integration_test:
-  #  sdk: flutter
+  integration_test:
+    sdk: flutter
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.4.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.5.4
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.7.0
+  # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
+  patrol: ^0.10.8
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
 

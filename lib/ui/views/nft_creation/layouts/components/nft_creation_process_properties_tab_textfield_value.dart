@@ -66,6 +66,7 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
     );
 
     return AppTextField(
+      key: const Key('nftValue'),
       focusNode: nftPropertyValueFocusNode,
       controller: nftPropertyValueController,
       cursorColor: theme.text,

@@ -17,10 +17,12 @@ class PickerItem {
     this.iconColor,
     this.value,
     this.enabled, {
+    this.key,
     this.displayed = true,
     this.decorationImageItem,
     this.subLabel,
   });
+  Key? key;
   String label;
   String? description;
   String? icon;
@@ -81,6 +83,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                   setState(() {});
                 }
               },
+              key: pickerItem.key,
               child: Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(vertical: 4),

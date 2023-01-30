@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
@@ -316,6 +317,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                           .center,
                                                   children: <Widget>[
                                                     TextFormField(
+                                                      key:
+                                                          Key('seedWord$index'),
                                                       textInputAction:
                                                           TextInputAction.next,
                                                       decoration:
@@ -370,9 +373,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                       child: Container(
                                                         height: 1,
                                                         width: MediaQuery.of(
-                                                                context,)
-                                                            .size
-                                                            .width,
+                                                          context,
+                                                        ).size.width,
                                                         decoration:
                                                             BoxDecoration(
                                                           gradient:
@@ -407,7 +409,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             AppButtonTinyType.primaryOutline,
                             localizations.ok,
                             Dimens.buttonTopDimens,
-                            key: const Key('ok'),
+                            key: const Key('seedWordsOKbutton'),
                             onPressed: () {},
                           )
                         else
@@ -415,7 +417,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             AppButtonTinyType.primary,
                             localizations.ok,
                             Dimens.buttonTopDimens,
-                            key: const Key('ok'),
+                            key: const Key('seedWordsOKbutton'),
                             onPressed: () async {
                               setState(() {
                                 _mnemonicError = '';
@@ -544,6 +546,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         theme.pickerItemIconEnabled,
         AuthMethod.pin,
         true,
+        key: const Key('accessModePIN'),
       ),
       PickerItem(
         const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
@@ -552,6 +555,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         theme.pickerItemIconEnabled,
         AuthMethod.password,
         true,
+        key: const Key('accessModePassword'),
       )
     ];
     if (biometricsAvalaible) {
@@ -612,9 +616,22 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   Future<void> _accountsDialog(List<Account> accounts) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (final account in accounts) {
-      pickerItemsList
-          .add(PickerItem(account.name, null, null, null, account, true));
+    for (var i = 0; i < accounts.length; i++) {
+      final account = accounts[i];
+      pickerItemsList.add(
+        PickerItem(
+          account.name,
+          null,
+          null,
+          null,
+          account,
+          true,
+          key: Key('accountName${account.name}'),
+        ),
+      );
+      log(
+        '<<accountName${account.name}>>',
+      );
     }
 
     final selection = await showDialog<Account>(

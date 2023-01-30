@@ -66,15 +66,21 @@ class AddTokenFormSheet extends ConsumerWidget {
                       children: <Widget>[
                         const Padding(
                           padding: EdgeInsets.only(top: 20),
-                          child: AddTokenTextFieldName(),
+                          child: AddTokenTextFieldName(
+                            key: Key('ftName'),
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(top: 20),
-                          child: AddTokenTextFieldSymbol(),
+                          child: AddTokenTextFieldSymbol(
+                            key: Key('ftSymbol'),
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(top: 20),
-                          child: AddTokenTextFieldInitialSupply(),
+                          child: AddTokenTextFieldInitialSupply(
+                            key: Key('ftOffer'),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),

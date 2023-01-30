@@ -60,6 +60,7 @@ class NftCategoryMenu extends ConsumerWidget {
             ),
           );
           return InkWell(
+            key: Key('nftCategory$index'),
             onTap: () {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,
