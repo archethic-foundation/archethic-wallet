@@ -340,7 +340,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     late Transaction transaction;
 
     final keychainSecuredInfos = ref
-        .watch(SessionProviders.session)
+        .read(SessionProviders.session)
         .loggedIn!
         .wallet
         .keychainSecuredInfos;
@@ -476,7 +476,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       errorAmountText: '',
     );
 
-    final selectedCurrencyMarketPrice = await ref.watch(
+    final selectedCurrencyMarketPrice = await ref.read(
       MarketPriceProviders.selectedCurrencyMarketPrice.future,
     );
 
@@ -693,7 +693,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     late Transaction transaction;
 
     final keychainSecuredInfos = ref
-        .watch(SessionProviders.session)
+        .read(SessionProviders.session)
         .loggedIn!
         .wallet
         .keychainSecuredInfos;

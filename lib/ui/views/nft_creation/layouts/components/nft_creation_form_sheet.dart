@@ -183,7 +183,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                           NftCreationFormProvider.nftCreationFormArgs,
                         );
                         ref
-                            .watch(
+                            .read(
                               NftCreationFormProvider.nftCreationForm(
                                 nftCreationArgs,
                               ).notifier,
@@ -192,7 +192,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                         if (index == NftCreationTab.summary.index) {
                           if (nftCreation.name.isEmpty ||
                               nftCreation.fileDecodedForPreview == null) {
-                            ref.watch(
+                            ref.read(
                               NftCreationFormProvider.nftCreationForm(
                                 nftCreationArgs,
                               ).notifier,
@@ -201,7 +201,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                               ..controlName(context);
                           }
                           ref
-                              .watch(
+                              .read(
                                 NftCreationFormProvider.nftCreationForm(
                                   nftCreationArgs,
                                 ).notifier,

@@ -38,7 +38,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
     final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final nftCreationArgs = ref.read(
+    final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
     );
     final nftCreation =

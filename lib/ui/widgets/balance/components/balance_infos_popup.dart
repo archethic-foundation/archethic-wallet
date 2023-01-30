@@ -128,7 +128,7 @@ class BalanceInfosPopup {
   static void _copyAmount(BuildContext context, WidgetRef ref, String amount) {
     Clipboard.setData(ClipboardData(text: amount));
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final theme = ref.read(ThemeProviders.selectedTheme);
     UIUtil.showSnackbar(
       localizations.amountCopied,
       context,

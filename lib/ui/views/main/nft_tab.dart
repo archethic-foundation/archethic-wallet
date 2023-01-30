@@ -56,7 +56,7 @@ class NFTTabBody extends ConsumerWidget {
                   );
 
               final connectivityStatusProvider =
-                  ref.watch(connectivityStatusProviders);
+                  ref.read(connectivityStatusProviders);
               if (connectivityStatusProvider ==
                   ConnectivityStatus.isDisconnected) {
                 return;

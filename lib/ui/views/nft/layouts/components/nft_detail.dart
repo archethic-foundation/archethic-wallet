@@ -59,7 +59,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
     final localizations = AppLocalization.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected =
-        ref.read(AccountProviders.selectedAccount).valueOrNull;
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();

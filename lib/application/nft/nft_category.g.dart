@@ -199,7 +199,7 @@ class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
 }
 
 String $_getNbNFTInCategoryHash() =>
-    r'6015ccc4a96e15a7d434528af26f7111386d7d15';
+    r'99a8437aa88eaa3ba56d8b6701a7dfca89a6d58f';
 
 /// See also [_getNbNFTInCategory].
 class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {

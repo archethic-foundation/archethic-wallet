@@ -126,7 +126,7 @@ class ReorderableWidget extends ConsumerWidget {
                   final nftCategory = nftCategoryToSort.removeAt(oldIndex);
                   nftCategoryToSort.insert(newIndex, nftCategory);
 
-                  ref.watch(
+                  ref.read(
                     NftCategoryProviders.updateNftCategoryList(
                       nftCategoryListCustomized: nftCategoryToSort,
                       account: accountSelected,
@@ -151,7 +151,7 @@ class ReorderableWidget extends ConsumerWidget {
                                     nftCategoryToSort.removeWhere(
                                       (element) => element.id == nftCategory.id,
                                     );
-                                    ref.watch(
+                                    ref.read(
                                       NftCategoryProviders
                                           .updateNftCategoryList(
                                         nftCategoryListCustomized:
@@ -209,7 +209,7 @@ class ReorderableWidget extends ConsumerWidget {
                                 );
                                 nftCategoryToSort.add(nftCategory);
 
-                                ref.watch(
+                                ref.read(
                                   NftCategoryProviders.updateNftCategoryList(
                                     nftCategoryListCustomized:
                                         nftCategoryToSort,

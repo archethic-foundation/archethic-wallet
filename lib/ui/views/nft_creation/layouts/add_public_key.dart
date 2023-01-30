@@ -138,7 +138,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                       );
 
                                   ref
-                                      .watch(
+                                      .read(
                                         NftCreationFormProvider.nftCreationForm(
                                           ref.read(
                                             NftCreationFormProvider

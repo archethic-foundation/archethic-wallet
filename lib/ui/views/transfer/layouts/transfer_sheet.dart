@@ -135,7 +135,7 @@ class TransferSheetBody extends ConsumerWidget {
           duration: const Duration(seconds: 5),
         );
 
-        ref.watch(TransferFormProvider.transferForm.notifier).setErrors(
+        ref.read(TransferFormProvider.transferForm.notifier).setErrors(
               errorAddressText: '',
               errorAmountText: '',
               errorMessageText: '',

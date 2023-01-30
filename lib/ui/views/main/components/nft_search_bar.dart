@@ -62,7 +62,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final session = ref.read(SessionProviders.session).loggedIn!;
+    final session = ref.watch(SessionProviders.session).loggedIn!;
     final localizations = AppLocalization.of(context)!;
     final nftSearchBar = ref.watch(
       NftSearchBarProvider.nftSearchBar,
@@ -101,7 +101,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
         );
 
         ref
-            .watch(
+            .read(
               NftSearchBarProvider.nftSearchBar.notifier,
             )
             .setError('');
