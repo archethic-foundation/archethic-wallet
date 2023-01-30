@@ -17,14 +17,13 @@ void main() {
       timeout: const Duration(minutes: 10),
     );
 
-    // accepter les conditions et créer un nouveau wallet
+    // Accept conditions and request a new wallet
     await $(CheckboxListTile).tap();
     await $(#newWallet).tap();
 
-    // entrer un nom dans le champ et OK
     await $(#newAccountName).enterText('test_wallet_001');
 
-    // taper sur le réseau et vérifier que l'on arrive sur la sélection de réseau
+    // Select the testnet network
     final netNameFinder = createFinder(RegExp('.*Archethic Main Network.*'));
     await $(netNameFinder).tap();
     final testNetFinder = createFinder(RegExp('.*testnet.*'));
@@ -32,10 +31,8 @@ void main() {
 
     await $(#okButton).tap();
 
-// répondre non à la quesition et vérifier que l'on est sur la saiie de nom
+    // test the confirmation dialog and pass the backup verification stage
     await $(#cancelButton).tap();
-
-    // répondre oui à la question
     await $(#okButton).tap();
     await $(#yesButton).tap();
     await $(#understandButton).tap();
@@ -45,7 +42,6 @@ void main() {
     await $(#yesButton).tap();
     await $('PIN').tap();
 
-    // code pin 000000 avec confirmation
     await validPinConfirmation($);
     await validPinConfirmation($);
   });
