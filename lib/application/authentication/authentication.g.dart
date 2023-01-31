@@ -29,20 +29,23 @@ class _SystemHash {
   }
 }
 
-String $AutoLockNotifierHash() => r'9f788b98ad0b6f93e9358074088376c4e435762e';
+String $StartupAuthentNotifierHash() =>
+    r'd381d95824b0be7ef3c697fc3c6a91ebbd26c467';
 
-/// See also [AutoLockNotifier].
-final autoLockNotifierProvider =
-    AsyncNotifierProvider<AutoLockNotifier, AutoLockState>(
-  AutoLockNotifier.new,
-  name: r'autoLockNotifierProvider',
+/// See also [StartupAuthentNotifier].
+final startupAuthentNotifierProvider =
+    AsyncNotifierProvider<StartupAuthentNotifier, StartupAuthentState>(
+  StartupAuthentNotifier.new,
+  name: r'startupAuthentNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $AutoLockNotifierHash,
+      : $StartupAuthentNotifierHash,
 );
-typedef AutoLockNotifierRef = AsyncNotifierProviderRef<AutoLockState>;
+typedef StartupAuthentNotifierRef
+    = AsyncNotifierProviderRef<StartupAuthentState>;
 
-abstract class _$AutoLockNotifier extends AsyncNotifier<AutoLockState> {
+abstract class _$StartupAuthentNotifier
+    extends AsyncNotifier<StartupAuthentState> {
   @override
-  FutureOr<AutoLockState> build();
+  FutureOr<StartupAuthentState> build();
 }
