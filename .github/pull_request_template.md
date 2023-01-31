@@ -16,12 +16,13 @@ Please delete options that are not relevant.
 
 ## Material used:
 
-- [ ] iOS (Smarthphone/Tablet)
-- [ ] Android (Smarthphone/Tablet)
-- [ ] Browser
-- [ ] Linux
-- [ ] Windows
-- [ ] iOS (Mac)
+Please delete options that are not relevant.
+- iOS (Smarthphone/Tablet)
+- Android (Smarthphone/Tablet)
+- Browser
+- Linux
+- Windows
+- iOS (Mac)
 
 ## How Has This Been Tested?
 
