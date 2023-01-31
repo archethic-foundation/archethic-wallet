@@ -41,8 +41,10 @@ class BiometricUtil {
     BuildContext context,
     String message,
   ) async {
-    final hasBiometricsEnrolled = await hasBiometrics();
-    if (hasBiometricsEnrolled) {
+    try {
+      final hasBiometricsEnrolled = await hasBiometrics();
+      if (!hasBiometricsEnrolled) return false;
+
       final localAuth = LocalAuthentication();
       return localAuth.authenticate(
         localizedReason: message,
@@ -51,7 +53,8 @@ class BiometricUtil {
           biometricOnly: true,
         ),
       );
+    } catch (e) {
+      return false;
     }
-    return false;
   }
 }
