@@ -14,10 +14,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'authentication.freezed.dart';
 part 'authentication.g.dart';
-part 'autolock.dart';
 part 'password.dart';
 part 'pin.dart';
 part 'settings.dart';
+part 'startup_authent.dart';
 
 abstract class AuthenticationProviders {
   static final _authenticationRepository =
@@ -25,6 +25,7 @@ abstract class AuthenticationProviders {
     (ref) => AuthenticationRepository(),
   );
 
+  /// Whether the application is locked.
   static final isLockCountdownRunning = FutureProvider<bool>(
     (ref) async {
       final lockCountDownDuration = await ref.watch(lockCountdown.future);
@@ -32,6 +33,8 @@ abstract class AuthenticationProviders {
     },
   );
 
+  /// Counts remaining lock duration.
+  /// Lock occurs when authentication failed too much times.
   static final lockCountdown = StreamProvider<Duration>(
     (ref) async* {
       final lockDate = await ref
@@ -57,10 +60,12 @@ abstract class AuthenticationProviders {
     },
   );
 
-  static final shouldLockOnStartup = FutureProvider<bool>(
+  /// Should request the user authentication when
+  /// application is displayed.
+  static final shouldAuthentOnStartup = FutureProvider<bool>(
     (ref) async {
       final autolockState = await ref.watch(
-        AuthenticationProviders.autoLock.future,
+        AuthenticationProviders.startupAuthentication.future,
       );
       final isLockCountdownRunning = await ref
           .watch(AuthenticationProviders.isLockCountdownRunning.future);
@@ -69,14 +74,14 @@ abstract class AuthenticationProviders {
     },
   );
 
-  static final autoLock =
-      AsyncNotifierProvider<AutoLockNotifier, AutoLockState>(
-    AutoLockNotifier.new,
+  static final startupAuthentication =
+      AsyncNotifierProvider<StartupAuthentNotifier, StartupAuthentState>(
+    StartupAuthentNotifier.new,
   );
 
-  static final autoLockMaskVisibility = AutoLockMaskVisibilityProvider(
-    (ref) => AutoLockMaskVisibility.visible,
-    name: 'AutoLockMaskVisibilityProvider',
+  static final startupMaskVisibility = StartupMaskVisibilityProvider(
+    (ref) => StartupMaskVisibility.visible,
+    name: 'StartupMaskVisibilityProvider',
   );
 
   static final passwordAuthentication = StateNotifierProvider<
@@ -96,7 +101,7 @@ abstract class AuthenticationProviders {
 
   static Future<void> reset(Ref ref) async {
     await ref.read(AuthenticationProviders.settings.notifier).reset();
-    await ref.read(autoLock.notifier).unscheduleAutolock();
+    await ref.read(startupAuthentication.notifier).unscheduleAutolock();
     ref.read(_authenticationRepository)
       ..resetFailedAttempts()
       ..resetLock();

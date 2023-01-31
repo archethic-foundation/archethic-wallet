@@ -1,13 +1,13 @@
 part of 'authentication.dart';
 
 @freezed
-class AutoLockState with _$AutoLockState {
-  const factory AutoLockState({
+class StartupAuthentState with _$StartupAuthentState {
+  const factory StartupAuthentState({
     /// After that date, application should lock when displayed
     DateTime? lockDate,
-  }) = _AutoLockState;
+  }) = _StartupAuthentState;
 
-  const AutoLockState._();
+  const StartupAuthentState._();
 
   bool get shouldLock {
     if (lockDate == null) return false;
@@ -16,21 +16,21 @@ class AutoLockState with _$AutoLockState {
 }
 
 @Riverpod(keepAlive: true)
-class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
+class StartupAuthentNotifier extends AsyncNotifier<StartupAuthentState> {
   @override
-  Future<AutoLockState> build() async {
+  Future<StartupAuthentState> build() async {
     final autoLockOption = ref.watch(
       AuthenticationProviders.settings.select((settings) => settings.lock),
     );
 
     if (autoLockOption == UnlockOption.no) {
-      return const AutoLockState();
+      return const StartupAuthentState();
     }
 
     final lockDate = await ref
         .watch(AuthenticationProviders._authenticationRepository)
         .getAutoLockTriggerDate();
-    return AutoLockState(
+    return StartupAuthentState(
       lockDate: lockDate,
     );
   }
@@ -44,7 +44,7 @@ class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
     );
 
     if (autoLockOption == UnlockOption.no) {
-      state = const AsyncValue.data(AutoLockState());
+      state = const AsyncValue.data(StartupAuthentState());
       return;
     }
 
@@ -63,16 +63,16 @@ class AutoLockNotifier extends AsyncNotifier<AutoLockState> {
     await ref
         .read(AuthenticationProviders._authenticationRepository)
         .removeAutoLockTriggerDate();
-    state = const AsyncValue.data(AutoLockState());
+    state = const AsyncValue.data(StartupAuthentState());
   }
 }
 
 /// The [AutoLockGuard] widget visibility
-/// Set to [AutoLockMaskVisiblity.visible] when the app is coming to foreground
+/// Set to [StartupMaskVisibility.visible] when the app is coming to foreground
 /// while checking if authentication is necessary.
-typedef AutoLockMaskVisibilityProvider = StateProvider<AutoLockMaskVisibility>;
+typedef StartupMaskVisibilityProvider = StateProvider<StartupMaskVisibility>;
 
-enum AutoLockMaskVisibility {
+enum StartupMaskVisibility {
   hidden,
   visible,
 }
@@ -87,7 +87,7 @@ extension AutoLockMaskVisibilityProviderExt on WidgetRef {
   ///   - camera usage
   ///   - ...
   Future<void> ensuresAutolockMaskHidden() async => waitUntil(
-        AuthenticationProviders.autoLockMaskVisibility,
-        (_, next) => next == AutoLockMaskVisibility.hidden,
+        AuthenticationProviders.startupMaskVisibility,
+        (_, next) => next == StartupMaskVisibility.hidden,
       );
 }
