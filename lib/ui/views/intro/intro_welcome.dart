@@ -37,6 +37,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
       appBar: const _AppBar(),
       body: DecoratedBox(
         decoration: BoxDecoration(
@@ -72,11 +73,6 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                     ),
                   ],
                 ),
-                if (connectivityStatusProvider ==
-                    ConnectivityStatus.isDisconnected)
-                  const IconNetworkWarning(
-                    alignment: Alignment.topRight,
-                  ),
               ],
             ),
           ),
@@ -94,17 +90,22 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 40),
       child: ClipRRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: AppBar(
-            backgroundColor: theme.background40,
-            actions: const <Widget>[
-              _Language(),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: <Widget>[
+              const _Language(),
+              if (connectivityStatusProvider ==
+                  ConnectivityStatus.isDisconnected)
+                const IconNetworkWarning(
+                  alignment: Alignment.topRight,
+                ),
             ],
           ),
         ),
@@ -121,6 +122,7 @@ class _Language extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return IconButton(
+      padding: const EdgeInsets.only(bottom: 4),
       icon: Icon(
         UiIcons.language,
         color: theme.iconDrawer,
