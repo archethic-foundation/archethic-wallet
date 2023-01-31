@@ -7,6 +7,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:synchronized/synchronized.dart';
 
 /// Handles navigation to the lock screen
 mixin LockGuardMixin {
@@ -50,8 +51,11 @@ class AutoLockGuard extends ConsumerStatefulWidget {
 
 class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     with WidgetsBindingObserver {
+  static late final _forceAuthenticationLock;
+
   @override
   void initState() {
+    _forceAuthenticationLock = Lock();
     WidgetsBinding.instance.addObserver(this);
 
     SchedulerBinding.instance.addPostFrameCallback(
@@ -74,16 +78,17 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         _forceAuthentIfNeeded(context, ref);
         break;
       case AppLifecycleState.inactive:
-        if (ref.read(AuthenticationProviders.autoLockMaskVisibility) ==
-            AutoLockMaskVisibility.visible) return;
+        if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
+            StartupMaskVisibility.visible) return;
         _LockMask.show(context);
-        ref
-            .read(AuthenticationProviders.autoLockMaskVisibility.notifier)
-            .state = AutoLockMaskVisibility.visible;
+        ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
+            StartupMaskVisibility.visible;
 
         break;
       case AppLifecycleState.paused:
-        ref.read(AuthenticationProviders.autoLock.notifier).scheduleAutolock();
+        ref
+            .read(AuthenticationProviders.startupAuthentication.notifier)
+            .scheduleAutolock();
         break;
       case AppLifecycleState.detached:
         break;
@@ -98,31 +103,37 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     BuildContext context,
     WidgetRef ref,
   ) async {
-    final shouldLockOnStartup = await ref.read(
-      AuthenticationProviders.shouldLockOnStartup.future,
-    );
+    if (_forceAuthenticationLock.inLock) {
+      return;
+    }
 
-    if (shouldLockOnStartup) {
-      await AuthFactory.forceAuthenticate(
-        context,
-        ref,
-        authMethod: ref.read(
-          AuthenticationProviders.settings.select(
-            (authSettings) => AuthenticationMethod(
-              authSettings.authenticationMethod,
+    await _forceAuthenticationLock.synchronized(() async {
+      final shouldLockOnStartup = await ref.read(
+        AuthenticationProviders.shouldAuthentOnStartup.future,
+      );
+
+      if (shouldLockOnStartup) {
+        await AuthFactory.forceAuthenticate(
+          context,
+          ref,
+          authMethod: ref.read(
+            AuthenticationProviders.settings.select(
+              (authSettings) => AuthenticationMethod(
+                authSettings.authenticationMethod,
+              ),
             ),
           ),
-        ),
-        canCancel: false,
-      );
-    }
-    await ref
-        .read(AuthenticationProviders.autoLock.notifier)
-        .unscheduleAutolock();
+          canCancel: false,
+        );
+      }
+      await ref
+          .read(AuthenticationProviders.startupAuthentication.notifier)
+          .unscheduleAutolock();
 
-    _LockMask.hide(context);
-    ref.read(AuthenticationProviders.autoLockMaskVisibility.notifier).state =
-        AutoLockMaskVisibility.hidden;
+      _LockMask.hide(context);
+      ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
+          StartupMaskVisibility.hidden;
+    });
   }
 }
 
