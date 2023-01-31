@@ -200,6 +200,7 @@ dependencies:
   quiver: ^3.2.1
 
   # A package exposing annotations for riverpod_generator
+  requests: ^4.7.0
   riverpod_annotation: 1.0.6
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
