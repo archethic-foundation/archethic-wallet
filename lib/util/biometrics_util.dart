@@ -50,7 +50,6 @@ class BiometricUtil {
         localizedReason: message,
         options: const AuthenticationOptions(
           useErrorDialogs: false,
-          biometricOnly: true,
         ),
       );
     } catch (e) {
