@@ -1,4 +1,3 @@
-//@Timeout(Duration(seconds: 90))
 import 'package:aewallet/main.dart' as app;
 import 'package:patrol/patrol.dart';
 
