@@ -6,11 +6,11 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/service_locator.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +26,6 @@ class NetworkDialog {
     final localizations = AppLocalization.of(context)!;
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
-    String? endpointError;
 
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableNetworks.values) {
@@ -83,15 +82,15 @@ class NetworkDialog {
                         return _NetworkDialogCustomInput(
                           endpointFocusNode: endpointFocusNode,
                           endpointController: endpointController,
-                          endpointError: endpointError,
                           onSubmitNetwork: () async {
                             void setError(String errorText) {
-                              setState(() {
-                                endpointError = errorText;
-                                FocusScope.of(context).requestFocus(
-                                  endpointFocusNode,
-                                );
-                              });
+                              UIUtil.showSnackbar(
+                                errorText,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
                             }
 
                             if (endpointController.text.isEmpty) {
@@ -154,13 +153,11 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
   const _NetworkDialogCustomInput({
     required this.endpointFocusNode,
     required this.endpointController,
-    required this.endpointError,
     required this.onSubmitNetwork,
   });
 
   final FocusNode endpointFocusNode;
   final TextEditingController endpointController;
-  final String? endpointError;
   final Function() onSubmitNetwork;
 
   @override
@@ -189,19 +186,14 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
                 keyboardType: TextInputType.text,
                 style: theme.textStyleSize14W600Primary,
                 inputFormatters: <TextInputFormatter>[
-                  LengthLimitingTextInputFormatter(28),
+                  LengthLimitingTextInputFormatter(200),
                 ],
               ),
               Text(
                 'http://xxx.xxx.xxx.xxx:xxxx',
                 style: theme.textStyleSize12W400Primary,
               ),
-              if (endpointError != null)
-                _NetworkErrorMessage(
-                  endpointError: endpointError,
-                )
-              else
-                const SizedBox(),
+              const SizedBox(),
             ],
           ),
           const SizedBox(
@@ -292,30 +284,6 @@ class _NetworkDevnetHeader extends ConsumerWidget {
           style: theme.textStyleSize16W400Primary,
         ),
       ],
-    );
-  }
-}
-
-class _NetworkErrorMessage extends ConsumerWidget {
-  const _NetworkErrorMessage({
-    required this.endpointError,
-  });
-
-  final String? endpointError;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 5,
-        bottom: 5,
-      ),
-      child: Text(
-        endpointError!,
-        style: theme.textStyleSize14W600Primary,
-      ),
     );
   }
 }
