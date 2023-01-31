@@ -199,8 +199,10 @@ dependencies:
   # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
   quiver: ^3.2.1
 
-  # A package exposing annotations for riverpod_generator
+  # A flutter library that helps with http requests and stored cookies
   requests: ^4.7.0
+
+  # A package exposing annotations for riverpod_generator
   riverpod_annotation: 1.0.6
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
