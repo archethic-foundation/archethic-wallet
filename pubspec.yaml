@@ -211,6 +211,9 @@ dependencies:
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^6.3.0
 
+  # Mutex & Lock
+  synchronized: ^3.0.1
+
   # Tuple data structure
   tuple: ^2.0.1
 
