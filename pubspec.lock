@@ -1338,6 +1338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+  requests:
+    dependency: "direct main"
+    description:
+      name: requests
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.7.0"
   riverpod:
     dependency: transitive
     description:
