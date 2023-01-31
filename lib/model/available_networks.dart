@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 
 enum AvailableNetworks { archethicMainNet, archethicTestNet, archethicDevNet }
 
+enum DefaultNetworksHost {
+  archethicMainNetHost('mainnet.archethic.net'),
+  archethicTestNetHost('testnet.archethic.net');
+
+  const DefaultNetworksHost(this.value);
+  final String value;
+}
+
 @immutable
 class NetworksSetting extends SettingSelectionItem {
   const NetworksSetting({
@@ -30,9 +38,9 @@ class NetworksSetting extends SettingSelectionItem {
   String getLink() {
     switch (network) {
       case AvailableNetworks.archethicMainNet:
-        return 'https://mainnet.archethic.net';
+        return 'https://${DefaultNetworksHost.archethicMainNetHost.value}';
       case AvailableNetworks.archethicTestNet:
-        return 'https://testnet.archethic.net';
+        return 'https://${DefaultNetworksHost.archethicTestNetHost.value}';
       case AvailableNetworks.archethicDevNet:
         return networkDevEndpoint;
     }
@@ -41,9 +49,9 @@ class NetworksSetting extends SettingSelectionItem {
   String getPhoenixHttpLink() {
     switch (network) {
       case AvailableNetworks.archethicMainNet:
-        return 'https://mainnet.archethic.net/socket/websocket';
+        return 'https://${DefaultNetworksHost.archethicMainNetHost.value}/socket/websocket';
       case AvailableNetworks.archethicTestNet:
-        return 'https://testnet.archethic.net/socket/websocket';
+        return 'https://${DefaultNetworksHost.archethicTestNetHost.value}/socket/websocket';
       case AvailableNetworks.archethicDevNet:
         return '$networkDevEndpoint/socket/websocket';
     }
@@ -52,9 +60,9 @@ class NetworksSetting extends SettingSelectionItem {
   String getWebsocketUri() {
     switch (network) {
       case AvailableNetworks.archethicMainNet:
-        return 'wss://mainnet.archethic.net/socket/websocket';
+        return 'wss://${DefaultNetworksHost.archethicMainNetHost.value}/socket/websocket';
       case AvailableNetworks.archethicTestNet:
-        return 'wss://testnet.archethic.net/socket/websocket';
+        return 'wss://${DefaultNetworksHost.archethicTestNetHost.value}/socket/websocket';
       case AvailableNetworks.archethicDevNet:
         return '${networkDevEndpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket';
     }

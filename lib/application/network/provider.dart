@@ -6,16 +6,30 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'provider.g.dart';
 
 @riverpod
-Future<List<Node>> _networkNodes(
-  _NetworkNodesRef ref, {
+String _networkLink(
+  _NetworkLinkRef ref, {
   required AvailableNetworks network,
-}) async {
+}) {
   final networkSetting = NetworksSetting(
     network: network,
     networkDevEndpoint: '',
   );
 
   final link = networkSetting.getLink();
+
+  return link;
+}
+
+@riverpod
+Future<List<Node>> _networkNodes(
+  _NetworkNodesRef ref, {
+  required AvailableNetworks network,
+}) async {
+  final link = ref.read(
+    _networkLinkProvider(
+      network: network,
+    ),
+  );
 
   final nodeListMain = await ApiService(
     link,
@@ -29,6 +43,11 @@ Future<bool> _isReservedNodeUri(
   _IsReservedNodeUriRef ref, {
   required Uri uri,
 }) async {
+  // Check if default uri is used
+  if (DefaultNetworksHost.archethicMainNetHost.value == uri.host) return true;
+  if (DefaultNetworksHost.archethicTestNetHost.value == uri.host) return true;
+
+  // Check if reserved node of network is used
   final nodeListMain = await ref.watch(
     _networkNodesProvider(
       network: AvailableNetworks.archethicMainNet,
@@ -46,6 +65,7 @@ Future<bool> _isReservedNodeUri(
 }
 
 abstract class NetworkProvider {
+  static final networkLink = _networkLinkProvider;
   static final networkNodes = _networkNodesProvider;
   static final isReservedNodeUri = _isReservedNodeUriProvider;
 }

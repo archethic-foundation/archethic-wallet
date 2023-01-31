@@ -29,7 +29,77 @@ class _SystemHash {
   }
 }
 
-String $_networkNodesHash() => r'5b20cd42d0d005bab5f70c9ee0462de6cc927596';
+String $_networkLinkHash() => r'a1ad177b35a24e339a2202520047ef4199644dc4';
+
+/// See also [_networkLink].
+class _NetworkLinkProvider extends AutoDisposeProvider<String> {
+  _NetworkLinkProvider({
+    required this.network,
+  }) : super(
+          (ref) => _networkLink(
+            ref,
+            network: network,
+          ),
+          from: _networkLinkProvider,
+          name: r'_networkLinkProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_networkLinkHash,
+        );
+
+  final AvailableNetworks network;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _NetworkLinkProvider && other.network == network;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, network.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _NetworkLinkRef = AutoDisposeProviderRef<String>;
+
+/// See also [_networkLink].
+final _networkLinkProvider = _NetworkLinkFamily();
+
+class _NetworkLinkFamily extends Family<String> {
+  _NetworkLinkFamily();
+
+  _NetworkLinkProvider call({
+    required AvailableNetworks network,
+  }) {
+    return _NetworkLinkProvider(
+      network: network,
+    );
+  }
+
+  @override
+  AutoDisposeProvider<String> getProviderOverride(
+    covariant _NetworkLinkProvider provider,
+  ) {
+    return call(
+      network: provider.network,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_networkLinkProvider';
+}
+
+String $_networkNodesHash() => r'9e80abce0e872f3536ca1c81cd6d2710eda2ba87';
 
 /// See also [_networkNodes].
 class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
@@ -99,7 +169,7 @@ class _NetworkNodesFamily extends Family<AsyncValue<List<Node>>> {
   String? get name => r'_networkNodesProvider';
 }
 
-String $_isReservedNodeUriHash() => r'6abbdddb9412c19197e1f1a11290f2d9e328d08c';
+String $_isReservedNodeUriHash() => r'3f71b1eaa866dad51e8263b46aad7d6f4737a451';
 
 /// See also [_isReservedNodeUri].
 class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
