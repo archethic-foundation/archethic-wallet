@@ -5,6 +5,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'nft_category.g.dart';
@@ -80,20 +81,32 @@ List<NftCategory> _getListByDefault(
   _GetListByDefaultRef ref, {
   required BuildContext context,
 }) {
-  return ref.read(_nftCategoryRepositoryProvider).getListByDefault(context);
+  return ref.watch(_nftCategoryRepositoryProvider).getListByDefault(context);
 }
 
 @riverpod
-Future<void> _updateNftCategoryList(
-  _UpdateNftCategoryListRef ref, {
-  required List<NftCategory> nftCategoryListCustomized,
-  required Account account,
-}) async {
-  ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
-        nftCategoryListCustomized,
-        account,
-      );
-  return;
+List<NftCategory> _listNFTCategoryHidden(
+  _GetListByDefaultRef ref, {
+  required BuildContext context,
+}) {
+  final nftCategoryToHidden =
+      ref.watch(_nftCategoryRepositoryProvider).getListByDefault(context);
+
+  final listNftCategory = ref
+      .watch(
+        NftCategoryProviders.selectedAccountNftCategories(
+          context: context,
+        ),
+      )
+      .valueOrNull;
+
+  if (listNftCategory == null) {
+    return nftCategoryToHidden;
+  }
+  for (final nftCategory in listNftCategory) {
+    nftCategoryToHidden.removeWhere((element) => element.id == nftCategory.id);
+  }
+  return nftCategoryToHidden;
 }
 
 @riverpod
@@ -206,12 +219,29 @@ class NFTCategoryRepository {
 }
 
 abstract class NftCategoryProviders {
+  // TODO (reddwarf03): Distinct actions and infos' provider: change the name for example getNbNFTInCategory -> nbNFTInCategory; fetchNftCategories -> nftCategories
+  // and let for example updateNftCategoryList because it's not a provider; it's an action
   static final nftCategoryRepository = _nftCategoryRepositoryProvider;
   static final fetchNftCategories = _fetchNftCategoryProvider;
+  static final listNFTCategoryHidden = _listNFTCategoryHiddenProvider;
   static final selectedAccountNftCategories =
       _selectedAccountNftCategoriesProvider;
   static final getNbNFTInCategory = _getNbNFTInCategoryProvider;
   static final getListByDefault = _getListByDefaultProvider;
-  static final updateNftCategoryList = _updateNftCategoryListProvider;
   static final getDescriptionHeader = _getDescriptionHeaderProvider;
+}
+
+abstract class NftCategoryProvidersActions {
+  static Future<void> updateNftCategoryList(
+    WidgetRef ref, {
+    required List<NftCategory> nftCategoryListCustomized,
+    required Account account,
+  }) async {
+    ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
+          nftCategoryListCustomized,
+          account,
+        );
+    ref.invalidate(NftCategoryProviders.selectedAccountNftCategories);
+    return;
+  }
 }
