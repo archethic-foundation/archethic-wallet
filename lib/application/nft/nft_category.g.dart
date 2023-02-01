@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_nftCategoryRepositoryHash() =>
+String $_nftCategoryRepositoryHash() =>
     r'a38f8405031299f092dbef55597261545db4103c';
 
 /// See also [_nftCategoryRepository].
@@ -39,11 +39,11 @@ final _nftCategoryRepositoryProvider =
   name: r'_nftCategoryRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_nftCategoryRepositoryHash,
+      : $_nftCategoryRepositoryHash,
 );
 typedef _NftCategoryRepositoryRef
     = AutoDisposeProviderRef<NFTCategoryRepository>;
-String _$_selectedAccountNftCategoriesHash() =>
+String $_selectedAccountNftCategoriesHash() =>
     r'14c939211bff7bc3c39aedd5aa134a7cac928c4f';
 
 /// See also [_selectedAccountNftCategories].
@@ -61,7 +61,7 @@ class _SelectedAccountNftCategoriesProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_selectedAccountNftCategoriesHash,
+                  : $_selectedAccountNftCategoriesHash,
         );
 
   final BuildContext context;
@@ -119,7 +119,7 @@ class _SelectedAccountNftCategoriesFamily
   String? get name => r'_selectedAccountNftCategoriesProvider';
 }
 
-String _$_fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
+String $_fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
 
 /// See also [_fetchNftCategory].
 class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
@@ -137,7 +137,7 @@ class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_fetchNftCategoryHash,
+                  : $_fetchNftCategoryHash,
         );
 
   final BuildContext context;
@@ -198,7 +198,7 @@ class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
   String? get name => r'_fetchNftCategoryProvider';
 }
 
-String _$_getNbNFTInCategoryHash() =>
+String $_getNbNFTInCategoryHash() =>
     r'99a8437aa88eaa3ba56d8b6701a7dfca89a6d58f';
 
 /// See also [_getNbNFTInCategory].
@@ -217,7 +217,7 @@ class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getNbNFTInCategoryHash,
+                  : $_getNbNFTInCategoryHash,
         );
 
   final Account account;
@@ -278,7 +278,7 @@ class _GetNbNFTInCategoryFamily extends Family<int> {
   String? get name => r'_getNbNFTInCategoryProvider';
 }
 
-String _$_getListByDefaultHash() => r'8538d843366645b4a7c60a792cc8bf4f5af89e64';
+String $_getListByDefaultHash() => r'9512b96c85cc9b4ac7c455dd875784ae2c880d9e';
 
 /// See also [_getListByDefault].
 class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
@@ -294,7 +294,7 @@ class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getListByDefaultHash,
+                  : $_getListByDefaultHash,
         );
 
   final BuildContext context;
@@ -348,73 +348,65 @@ class _GetListByDefaultFamily extends Family<List<NftCategory>> {
   String? get name => r'_getListByDefaultProvider';
 }
 
-String _$_updateNftCategoryListHash() =>
-    r'c3d71c277aee70da60524f024c6de9d48a60288c';
+String $_listNFTCategoryHiddenHash() =>
+    r'ea0858e984f5a91c285cc1f97941383dd49dd4a7';
 
-/// See also [_updateNftCategoryList].
-class _UpdateNftCategoryListProvider extends AutoDisposeFutureProvider<void> {
-  _UpdateNftCategoryListProvider({
-    required this.nftCategoryListCustomized,
-    required this.account,
+/// See also [_listNFTCategoryHidden].
+class _ListNFTCategoryHiddenProvider
+    extends AutoDisposeProvider<List<NftCategory>> {
+  _ListNFTCategoryHiddenProvider({
+    required this.context,
   }) : super(
-          (ref) => _updateNftCategoryList(
+          (ref) => _listNFTCategoryHidden(
             ref,
-            nftCategoryListCustomized: nftCategoryListCustomized,
-            account: account,
+            context: context,
           ),
-          from: _updateNftCategoryListProvider,
-          name: r'_updateNftCategoryListProvider',
+          from: _listNFTCategoryHiddenProvider,
+          name: r'_listNFTCategoryHiddenProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_updateNftCategoryListHash,
+                  : $_listNFTCategoryHiddenHash,
         );
 
-  final List<NftCategory> nftCategoryListCustomized;
-  final Account account;
+  final BuildContext context;
 
   @override
   bool operator ==(Object other) {
-    return other is _UpdateNftCategoryListProvider &&
-        other.nftCategoryListCustomized == nftCategoryListCustomized &&
-        other.account == account;
+    return other is _ListNFTCategoryHiddenProvider && other.context == context;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, nftCategoryListCustomized.hashCode);
-    hash = _SystemHash.combine(hash, account.hashCode);
+    hash = _SystemHash.combine(hash, context.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-typedef _UpdateNftCategoryListRef = AutoDisposeFutureProviderRef<void>;
+typedef _ListNFTCategoryHiddenRef = AutoDisposeProviderRef<List<NftCategory>>;
 
-/// See also [_updateNftCategoryList].
-final _updateNftCategoryListProvider = _UpdateNftCategoryListFamily();
+/// See also [_listNFTCategoryHidden].
+final _listNFTCategoryHiddenProvider = _ListNFTCategoryHiddenFamily();
 
-class _UpdateNftCategoryListFamily extends Family<AsyncValue<void>> {
-  _UpdateNftCategoryListFamily();
+class _ListNFTCategoryHiddenFamily extends Family<List<NftCategory>> {
+  _ListNFTCategoryHiddenFamily();
 
-  _UpdateNftCategoryListProvider call({
-    required List<NftCategory> nftCategoryListCustomized,
-    required Account account,
+  _ListNFTCategoryHiddenProvider call({
+    required BuildContext context,
   }) {
-    return _UpdateNftCategoryListProvider(
-      nftCategoryListCustomized: nftCategoryListCustomized,
-      account: account,
+    return _ListNFTCategoryHiddenProvider(
+      context: context,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<void> getProviderOverride(
-    covariant _UpdateNftCategoryListProvider provider,
+  AutoDisposeProvider<List<NftCategory>> getProviderOverride(
+    covariant _ListNFTCategoryHiddenProvider provider,
   ) {
     return call(
-      nftCategoryListCustomized: provider.nftCategoryListCustomized,
-      account: provider.account,
+      context: provider.context,
     );
   }
 
@@ -425,10 +417,10 @@ class _UpdateNftCategoryListFamily extends Family<AsyncValue<void>> {
   List<ProviderOrFamily>? get dependencies => null;
 
   @override
-  String? get name => r'_updateNftCategoryListProvider';
+  String? get name => r'_listNFTCategoryHiddenProvider';
 }
 
-String _$_getDescriptionHeaderHash() =>
+String $_getDescriptionHeaderHash() =>
     r'185dffe43711a9f602f89b67628173a12657f14a';
 
 /// See also [_getDescriptionHeader].
@@ -447,7 +439,7 @@ class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getDescriptionHeaderHash,
+                  : $_getDescriptionHeaderHash,
         );
 
   final BuildContext context;
