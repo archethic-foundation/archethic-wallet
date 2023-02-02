@@ -1,14 +1,14 @@
-flutter_app: 
+flutter_app:
   command: aewallet
   arch: x64
   parent: /usr/local/lib
 
 control:
-  Package: Archethic Wallet
+  Package: aewallet
   Version: 2.0.8
   Architecture: amd64
   Essential: no
   Priority: optional
-  Depends: libsecret-1-0, libjsoncpp1
+  Depends: libcap2,libglib2.0-dev,libgtk-3-0,libjpeg-turbo8,libjsoncpp25,liblz4-1,liblzma5,libsecret-1-0,libzstd1
   Maintainer: Archethic
   Description: Decentralized & cryptocurrency non-custodial hot wallet on Archethic blockchain

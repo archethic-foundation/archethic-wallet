@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=2.0.8
-Name=Archethic Wallet
+Name=aewallet
 Comment=Decentralized & cryptocurrency non-custodial hot wallet on Archethic blockchain
 Exec=aewallet
 Icon=${SNAP}/meta/gui/aewallet.png
