@@ -8,8 +8,8 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/domain/service/command_dispatcher.dart';
-import 'package:aewallet/domain/service/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
+import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -154,7 +154,7 @@ class App extends ConsumerWidget {
               );
             case '/home':
               return NoTransitionRoute<HomePage>(
-                builder: (_) => NftCreationCommandHandler(
+                builder: (_) => SignTransactionCommandHandler(
                   child: const AutoLockGuard(child: HomePage()),
                 ),
                 settings: settings,
