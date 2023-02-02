@@ -51,11 +51,10 @@ class AutoLockGuard extends ConsumerStatefulWidget {
 
 class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     with WidgetsBindingObserver {
-  static late final _forceAuthenticationLock;
+  static final _forceAuthenticationLock = Lock();
 
   @override
   void initState() {
-    _forceAuthenticationLock = Lock();
     WidgetsBinding.instance.addObserver(this);
 
     SchedulerBinding.instance.addPostFrameCallback(
