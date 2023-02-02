@@ -1,10 +1,10 @@
 flutter_app:
-  command: aewallet
+  command: archethic-wallet
   arch: x64
   parent: /usr/local/lib
 
 control:
-  Package: aewallet
+  Package: archethic-wallet
   Version: 2.0.8
   Architecture: amd64
   Essential: no
