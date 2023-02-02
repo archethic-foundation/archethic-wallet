@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/command_dispatcher.dart';
-import 'package:aewallet/domain/service/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
+import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/rpc/dto/rpc_sign_transaction_command.dart';
 import 'package:aewallet/rpc/dto/rpc_sign_transaction_result.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';

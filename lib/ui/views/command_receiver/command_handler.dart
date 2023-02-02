@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/command_dispatcher.dart';
-import 'package:aewallet/domain/service/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
+import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/command_receiver/transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -19,8 +19,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NftCreationCommandHandler extends ConsumerWidget {
-  NftCreationCommandHandler({
+class SignTransactionCommandHandler extends ConsumerWidget {
+  SignTransactionCommandHandler({
     super.key,
     required this.child,
   });
@@ -34,13 +34,16 @@ class NftCreationCommandHandler extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     commandDispatcher.handler = (command) async {
-      final apiService = sl.get<archethic.ApiService>();
-      final account = await command.findAccount(ref, apiService);
+      final account = await ref.read(
+        AccountProviders.account(command.accountName).future,
+      );
+
       if (account == null) {
-        final error = TransactionError.unknownAccount(
-          accountName: command.accountName,
+        return Result.failure(
+          TransactionError.unknownAccount(
+            accountName: command.accountName,
+          ),
         );
-        return Result.failure(error);
       }
 
       _showNotification(
@@ -79,18 +82,6 @@ class NftCreationCommandHandler extends ConsumerWidget {
 }
 
 extension SignTransactionCommandConversion on SignTransactionCommand {
-  Future<Account?> findAccount(
-    WidgetRef ref,
-    archethic.ApiService apiService,
-  ) async {
-    final wallet = ref.read(SessionProviders.session).loggedIn?.wallet;
-    if (wallet == null) return null;
-    return wallet.appKeychain.accounts.cast<Account?>().firstWhere(
-          (account) => account?.name == accountName,
-          orElse: () => null,
-        );
-  }
-
   Future<archethic.Transaction?> toArchethicTransaction(
     WidgetRef ref,
     archethic.ApiService apiService,

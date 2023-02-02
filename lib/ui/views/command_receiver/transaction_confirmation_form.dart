@@ -6,7 +6,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/themes.dart';
