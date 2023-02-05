@@ -97,7 +97,8 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                               bottom: 40,
                             ),
                             child: QRCodeWithOptions(
-                              infoQRCode: widget.tokenInformations.address!,
+                              infoQRCode: widget.tokenInformations.address!
+                                  .toUpperCase(),
                               size: 150,
                               messageCopied: localizations.addressCopied,
                             ),
