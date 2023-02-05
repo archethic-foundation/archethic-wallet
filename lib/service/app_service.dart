@@ -1074,7 +1074,7 @@ class AppService with KeychainMixin {
         ..add(
           uint8ListToHex(
             Uint8List.fromList(keychainServiceKeyPair.publicKey),
-          ),
+          ).toUpperCase(),
         );
 
       for (final transfer in listUcoTransfer) {

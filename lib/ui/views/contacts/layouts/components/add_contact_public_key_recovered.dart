@@ -37,7 +37,7 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
             height: 10,
           ),
           SelectableText(
-            contactCreation.publicKeyRecovered,
+            contactCreation.publicKeyRecovered.toUpperCase(),
             textAlign: TextAlign.left,
             style: theme.textStyleSize14W100Primary,
           ),

@@ -177,7 +177,8 @@ class AddContactSheetBody extends ConsumerWidget {
                               name: '@${contactCreation.name}',
                               address: contactCreation.address,
                               type: ContactType.externalContact.name,
-                              publicKey: contactCreation.publicKeyToStore,
+                              publicKey: contactCreation.publicKeyToStore
+                                  .toUpperCase(),
                               favorite: false,
                             );
                             ref.read(

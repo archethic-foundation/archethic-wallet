@@ -205,7 +205,7 @@ class ContactDetail extends ConsumerWidget {
                 ],
                 views: [
                   ContactDetailTab(
-                    infoQRCode: contact.address,
+                    infoQRCode: contact.address.toUpperCase(),
                     description:
                         contact.type == ContactType.keychainService.name
                             ? localizations.contactAddressInfoKeychainService
@@ -213,7 +213,7 @@ class ContactDetail extends ConsumerWidget {
                     messageCopied: localizations.addressCopied,
                   ),
                   ContactDetailTab(
-                    infoQRCode: contact.publicKey,
+                    infoQRCode: contact.publicKey.toUpperCase(),
                     description:
                         contact.type == ContactType.keychainService.name
                             ? localizations.contactPublicKeyInfoKeychainService
