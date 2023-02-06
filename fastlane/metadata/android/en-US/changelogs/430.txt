@@ -1,0 +1,4 @@
+Archethic Wallet - Version 2.0.9 Build 430
+
+- Add Language choice for First Screen
+- Fix bugs with biometrics
