@@ -2,6 +2,7 @@
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/rpc/deeplink_handler.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -11,6 +12,7 @@ import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiService, AddressService, OracleService;
 import 'package:coingecko_api/coingecko_api.dart';
+import 'package:deeplink_rpc/deeplink_rpc.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {
@@ -25,6 +27,10 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<
         CommandDispatcher<SignTransactionCommand, SignTransactionResult>>(
       CommandDispatcher<SignTransactionCommand, SignTransactionResult>.new,
+    )
+    ..registerLazySingleton<DeeplinkRpcReceiver>(
+      () => DeeplinkRpcReceiver()
+        ..registerHandler(deeplinkRpcSignTransactionHandler),
     );
 
   await _setupServiceLocatorNetworkDependencies();

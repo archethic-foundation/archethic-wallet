@@ -10,16 +10,16 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
+import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
-import 'package:aewallet/rpc/server.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
-import 'package:aewallet/ui/views/command_receiver/command_handler.dart';
+import 'package:aewallet/ui/views/command_receiver/sign_transaction/sign_transaction_command_handler.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
@@ -31,6 +31,7 @@ import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:deeplink_rpc/deeplink_rpc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -118,6 +119,7 @@ class App extends ConsumerWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final deeplinkRpcReceiver = sl.get<DeeplinkRpcReceiver>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
@@ -147,6 +149,11 @@ class App extends ConsumerWidget {
         supportedLocales: ref.read(LanguageProviders.availableLocales),
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
+          if (deeplinkRpcReceiver.canHandle(settings.name)) {
+            deeplinkRpcReceiver.handle(settings.name);
+            return null;
+          }
+
           switch (settings.name) {
             case '/':
               return NoTransitionRoute<Splash>(
