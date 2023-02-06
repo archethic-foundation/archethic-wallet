@@ -9,7 +9,7 @@ import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/views/command_receiver/transaction_confirmation_form.dart';
+import 'package:aewallet/ui/views/command_receiver/sign_transaction/sign_transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
