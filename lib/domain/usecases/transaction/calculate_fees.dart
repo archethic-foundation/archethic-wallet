@@ -21,7 +21,7 @@ class CalculateFeesUsecase
           return const Result.success(0);
         }
 
-        if (transaction.transfer.recipientAddress.isValid) {
+        if (transaction.transfer.recipientAddress.isValid()) {
           return const Result.failure(Failure.invalidValue());
         }
       },

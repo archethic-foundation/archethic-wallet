@@ -10,7 +10,6 @@ import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -18,6 +17,7 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -218,7 +218,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
     final transactionTypeMap = await sl
         .get<AppService>()
-        .getTransaction([state.recipient.address!.address], request: 'type');
+        .getTransaction([state.recipient.address!.address!], request: 'type');
     if (transactionTypeMap[state.recipient.address!.address] == null) {
       return true;
     }
@@ -240,7 +240,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required String text,
   }) async {
     if (!text.startsWith('@')) {
-      if (!Address(text).isValid) {
+      if (!archethic.Address(address: text).isValid()) {
         _setRecipient(
           recipient: TransferRecipient.unknownContact(
             name: text,
@@ -258,7 +258,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
       } else {
         _setRecipient(
-          recipient: TransferRecipient.address(address: Address(text)),
+          recipient: TransferRecipient.address(
+              address: archethic.Address(address: text),),
         );
       }
 
@@ -304,10 +305,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
   Future<void> setContactAddress({
     required BuildContext context,
-    required Address address,
+    required archethic.Address address,
   }) async {
     final contact = await sl.get<DBHelper>().getContactWithAddress(
-          address.address,
+          address.address!,
         );
 
     if (contact != null) {
@@ -530,7 +531,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   ) {
     if (state.transferType == TransferType.uco &&
         (state.recipient.address == null ||
-            state.recipient.address!.address.isEmpty)) {
+            state.recipient.address!.address == null ||
+            state.recipient.address!.address!.isEmpty)) {
       state = state.copyWith(
         errorAmountText: AppLocalization.of(context)!.maxSendRecipientMissing,
       );
@@ -634,10 +636,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   ) async {
     final error = state.recipient.when(
       address: (address) {
-        if (address.address.isEmpty) {
+        if (address.address == null || address.address!.isEmpty) {
           return AppLocalization.of(context)!.addressMissing;
         }
-        if (!address.isValid) {
+        if (!address.isValid()) {
           return AppLocalization.of(context)!.invalidAddress;
         }
         if (accountSelected.lastAddress == address.address) {
@@ -652,7 +654,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           return AppLocalization.of(context)!.addressMissing;
         }
 
-        if (!Address(contact.address).isValid) {
+        if (!archethic.Address(address: contact.address).isValid()) {
           return AppLocalization.of(context)!.invalidAddress;
         }
 

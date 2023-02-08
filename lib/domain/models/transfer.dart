@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/keychain_secured_infos.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'transfer.freezed.dart';
 

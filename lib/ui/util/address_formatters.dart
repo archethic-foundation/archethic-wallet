@@ -1,11 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show addressFormatControl;
 
 // Object to represent an account address or address URI,
 // and provide useful utilities
-class Address {
-  const Address(this._address);
+class AddressFormatters {
+  const AddressFormatters(this._address);
 
   final String _address;
 
@@ -49,9 +47,5 @@ class Address {
     } else {
       return '${addressUpperCased.substring(0, 11)}...${addressUpperCased.substring(_address.length - 2)}';
     }
-  }
-
-  bool get isValid {
-    return addressFormatControl(_address);
   }
 }

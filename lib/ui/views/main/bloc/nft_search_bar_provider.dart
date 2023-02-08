@@ -1,8 +1,8 @@
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -68,8 +68,8 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
     }
 
     if (!Address(
-      searchCriteria,
-    ).isValid) {
+      address: searchCriteria,
+    ).isValid()) {
       state = state.copyWith(error: localizations!.invalidAddress);
       return;
     }

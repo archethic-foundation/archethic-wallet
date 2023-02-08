@@ -4,9 +4,9 @@ import 'dart:developer' as dev;
 
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/util/seeds.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,8 +39,8 @@ class UserDataUtil {
         return dataTrim;
       }
     } else if (type == DataType.address) {
-      final address = Address(dataTrim);
-      if (address.isValid) {
+      final address = Address(address: dataTrim);
+      if (address.isValid()) {
         return address.address;
       }
     } else if (type == DataType.seed) {

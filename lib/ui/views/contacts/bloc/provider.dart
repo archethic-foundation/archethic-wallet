@@ -1,7 +1,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -41,7 +40,7 @@ class ContactCreationFormNotifier
     state = state.copyWith(name: name, error: '');
 
     if ((state.publicKey.isEmpty && state.publicKeyRecovered.isEmpty) &&
-        Address(state.address).isValid) {
+        Address(address: state.address).isValid()) {
       final publicKey = await _getGenesisPublicKey(state.address);
       if (publicKey.isNotEmpty) {
         state = state.copyWith(publicKeyRecovered: publicKey);
@@ -57,7 +56,7 @@ class ContactCreationFormNotifier
   Future<void> setAddress(String address, BuildContext context) async {
     state = state.copyWith(address: address, error: '');
 
-    if (Address(address).isValid) {
+    if (Address(address: address).isValid()) {
       final publicKey = await _getGenesisPublicKey(state.address);
       if (publicKey.isNotEmpty) {
         state = state.copyWith(publicKeyRecovered: publicKey);
@@ -138,7 +137,7 @@ class ContactCreationFormNotifier
       return false;
     }
 
-    if (!Address(state.address).isValid) {
+    if (!Address(address: state.address).isValid()) {
       state = state.copyWith(
         error: AppLocalization.of(context)!.invalidAddress,
       );

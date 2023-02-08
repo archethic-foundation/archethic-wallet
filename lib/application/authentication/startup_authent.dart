@@ -67,7 +67,7 @@ class StartupAuthentNotifier extends AsyncNotifier<StartupAuthentState> {
   }
 }
 
-/// The [AutoLockGuard] widget visibility
+/// The AutoLockGuard widget visibility
 /// Set to [StartupMaskVisibility.visible] when the app is coming to foreground
 /// while checking if authentication is necessary.
 typedef StartupMaskVisibilityProvider = StateProvider<StartupMaskVisibility>;

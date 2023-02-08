@@ -6,10 +6,10 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -21,6 +21,7 @@ import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -332,10 +333,14 @@ class TransactionDetail extends ConsumerWidget {
                               const Text('')
                             else
                               Text(
-                                '${localizations.txListFrom} ${Address(
-                                  transaction.contactInformations == null
-                                      ? transaction.from!
-                                      : transaction.contactInformations!.format,
+                                '${localizations.txListFrom} ${AddressFormatters(
+                                  Address(
+                                    address:
+                                        transaction.contactInformations == null
+                                            ? transaction.from!
+                                            : transaction
+                                                .contactInformations!.format,
+                                  ).address!,
                                 ).getShortString4()}',
                                 style: theme.textStyleSize12W400Primary,
                               )
@@ -352,10 +357,14 @@ class TransactionDetail extends ConsumerWidget {
                               const Text('')
                             else
                               Text(
-                                '${localizations.txListTo} ${Address(
-                                  transaction.contactInformations == null
-                                      ? transaction.recipient!
-                                      : transaction.contactInformations!.format,
+                                '${localizations.txListTo} ${AddressFormatters(
+                                  Address(
+                                    address:
+                                        transaction.contactInformations == null
+                                            ? transaction.recipient!
+                                            : transaction
+                                                .contactInformations!.format,
+                                  ).address!,
                                 ).getShortString4()}',
                                 style: theme.textStyleSize12W400Primary,
                               )

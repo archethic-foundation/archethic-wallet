@@ -5,7 +5,6 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
@@ -15,6 +14,7 @@ import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -65,7 +65,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                       await const TransferSheet(
                         transferType: TransferType.uco,
                         recipient: TransferRecipient.address(
-                          address: Address(''),
+                          address: Address(address: ''),
                         ),
                       ).show(
                         context: context,
