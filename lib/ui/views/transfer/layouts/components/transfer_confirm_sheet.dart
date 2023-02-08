@@ -123,8 +123,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           .get<ApiService>()
           .getLastTransaction([event.transactionAddress!]);
       final transaction = transactionMap[event.transactionAddress!];
-      final tokenMap = await sl.get<AppService>().getToken(
-        [transaction!.data!.ledger!.token!.transfers![0].tokenAddress!],
+      final tokenMap = await sl.get<ApiService>().getToken(
+        [transaction!.data!.ledger!.token!.transfers[0].tokenAddress!],
         request: 'id',
       );
 
@@ -133,7 +133,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       );
 
       await selectedAccount!.removeftInfosOffChain(
-        tokenMap[transaction.data!.ledger!.token!.transfers![0].tokenAddress!]!
+        tokenMap[transaction.data!.ledger!.token!.transfers[0].tokenAddress!]!
             .id,
       ); // TODO(reddwarf03): we should not interact directly with data source. Use Providers instead. (3)
 

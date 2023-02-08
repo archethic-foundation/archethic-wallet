@@ -165,19 +165,19 @@ class AppService with KeychainMixin {
     for (final transaction in transactionChain) {
       if (transaction.type! == 'token') {
         final recentTransaction = RecentTransaction()
-          ..address = transaction.address
+          ..address = transaction.address!.address
           ..timestamp = transaction.validationStamp!.timestamp
           ..typeTx = RecentTransaction.tokenCreation
           ..fee = fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
               .toDouble()
-          ..tokenAddress = transaction.address;
+          ..tokenAddress = transaction.address!.address;
         recentTransactions.add(recentTransaction);
       }
 
       if (transaction.type! == 'transfer') {
         for (final transfer in transaction.data!.ledger!.uco!.transfers!) {
           final recentTransaction = RecentTransaction()
-            ..address = transaction.address
+            ..address = transaction.address!.address
             ..typeTx = RecentTransaction.transferOutput
             ..amount = fromBigInt(
               transfer.amount,
@@ -187,13 +187,13 @@ class AppService with KeychainMixin {
                 fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
                     .toDouble()
             ..timestamp = transaction.validationStamp!.timestamp
-            ..from = transaction.address
+            ..from = transaction.address!.address
             ..ownerships = transaction.data!.ownerships;
           recentTransactions.add(recentTransaction);
         }
         for (final transfer in transaction.data!.ledger!.token!.transfers!) {
           final recentTransaction = RecentTransaction()
-            ..address = transaction.address
+            ..address = transaction.address!.address
             ..typeTx = RecentTransaction.transferOutput
             ..amount = fromBigInt(
               transfer.amount,
@@ -203,7 +203,7 @@ class AppService with KeychainMixin {
                 fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
                     .toDouble()
             ..timestamp = transaction.validationStamp!.timestamp
-            ..from = transaction.address
+            ..from = transaction.address!.address
             ..ownerships = transaction.data!.ownerships
             ..tokenAddress = transfer.tokenAddress;
           recentTransactions.add(recentTransaction);
@@ -604,7 +604,7 @@ class AppService with KeychainMixin {
       return recentTransaction;
     }
     for (final ownership in ownerships) {
-      final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
+      final authorizedPublicKey = ownership.authorizedPublicKeys.firstWhere(
         (AuthorizedKey authKey) =>
             authKey.publicKey!.toUpperCase() ==
             uint8ListToHex(Uint8List.fromList(keypair.publicKey)).toUpperCase(),
@@ -636,7 +636,7 @@ class AppService with KeychainMixin {
       return [];
     }
     if (balance.token != null) {
-      for (final tokenBalance in balance.token!) {
+      for (final tokenBalance in balance.token) {
         if (tokenBalance.address != null) {
           tokenAddressList.add(tokenBalance.address!);
         }
@@ -648,7 +648,7 @@ class AppService with KeychainMixin {
             request: 'genesis, name, id, supply, symbol, type',
           );
 
-      for (final tokenBalance in balance.token!) {
+      for (final tokenBalance in balance.token) {
         final token = tokenMap[tokenBalance.address];
         if (token != null && token.type == 'fungible') {
           final tokenInformations = TokenInformations(
@@ -696,66 +696,64 @@ class AppService with KeychainMixin {
     if (balance == null) {
       return [];
     }
-    if (balance.token != null) {
-      for (final tokenBalance in balance.token!) {
-        if (tokenBalance.address != null) {
-          tokenAddressList.add(tokenBalance.address!);
-        }
+
+    for (final tokenBalance in balance.token) {
+      if (tokenBalance.address != null) {
+        tokenAddressList.add(tokenBalance.address!);
       }
-
-      final tokenMap = await sl.get<AppService>().getToken(
-            tokenAddressList.toSet().toList(),
-          );
-
-      // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
-
-      final secretMap = await sl.get<ApiService>().getTransaction(
-            tokenAddressList.toSet().toList(),
-            request:
-                'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
-          );
-
-      for (final tokenBalance in balance.token!) {
-        final token = tokenMap[tokenBalance.address];
-        if (token != null && token.type == 'non-fungible') {
-          final tokenWithoutFile = token.tokenProperties!
-            ..removeWhere((key, value) => key == 'content');
-
-          if (secretMap[tokenBalance.address] != null &&
-              secretMap[tokenBalance.address]!.data != null &&
-              secretMap[tokenBalance.address]!.data!.ownerships != null &&
-              secretMap[tokenBalance.address]!.data!.ownerships!.isNotEmpty) {
-            tokenWithoutFile.addAll(
-              _tokenPropertiesDecryptedSecret(
-                keypair: keychainSecuredInfos
-                    .services['archethic-wallet-$nameEncoded']!.keyPair!,
-                ownerships: secretMap[tokenBalance.address]!.data!.ownerships!,
-              ),
-            );
-          }
-
-          final tokenInformations = TokenInformations(
-            address: tokenBalance.address,
-            name: token.name,
-            id: token.id,
-            aeip: token.aeip,
-            type: token.type,
-            supply: fromBigInt(token.supply).toDouble(),
-            symbol: token.symbol,
-            tokenProperties: tokenWithoutFile,
-          );
-          final accountNFT = AccountToken(
-            tokenInformations: tokenInformations,
-            amount: fromBigInt(tokenBalance.amount).toDouble(),
-          );
-          nftList.add(accountNFT);
-        }
-      }
-      nftList.sort(
-        (a, b) =>
-            a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
-      );
     }
+
+    final tokenMap = await sl.get<ApiService>().getToken(
+          tokenAddressList.toSet().toList(),
+        );
+
+    // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
+
+    final secretMap = await sl.get<ApiService>().getTransaction(
+          tokenAddressList.toSet().toList(),
+          request:
+              'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
+        );
+
+    for (final tokenBalance in balance.token) {
+      final token = tokenMap[tokenBalance.address];
+      if (token != null && token.type == 'non-fungible') {
+        final tokenWithoutFile = token.tokenProperties
+          ..removeWhere((key, value) => key == 'content');
+
+        if (secretMap[tokenBalance.address] != null &&
+            secretMap[tokenBalance.address]!.data != null &&
+            secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
+          tokenWithoutFile.addAll(
+            _tokenPropertiesDecryptedSecret(
+              keypair: keychainSecuredInfos
+                  .services['archethic-wallet-$nameEncoded']!.keyPair!,
+              ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
+            ),
+          );
+        }
+
+        final tokenInformations = TokenInformations(
+          address: tokenBalance.address,
+          name: token.name,
+          id: token.id,
+          aeip: token.aeip,
+          type: token.type,
+          supply: fromBigInt(token.supply).toDouble(),
+          symbol: token.symbol,
+          tokenProperties: tokenWithoutFile,
+        );
+        final accountNFT = AccountToken(
+          tokenInformations: tokenInformations,
+          amount: fromBigInt(tokenBalance.amount).toDouble(),
+        );
+        nftList.add(accountNFT);
+      }
+    }
+    nftList.sort(
+      (a, b) =>
+          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
+    );
 
     return nftList;
   }
@@ -766,7 +764,7 @@ class AppService with KeychainMixin {
   }) {
     final propertiesDecrypted = <String, dynamic>{};
     for (final ownership in ownerships) {
-      final authorizedPublicKey = ownership.authorizedPublicKeys!.firstWhere(
+      final authorizedPublicKey = ownership.authorizedPublicKeys.firstWhere(
         (AuthorizedKey authKey) =>
             authKey.publicKey!.toUpperCase() ==
             uint8ListToHex(Uint8List.fromList(keypair.publicKey)).toUpperCase(),
@@ -806,9 +804,9 @@ class AppService with KeychainMixin {
           Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
       final balanceTokenList = List<TokenBalance>.empty(growable: true);
       if (balance.token != null) {
-        for (var i = 0; i < balance.token!.length; i++) {
+        for (var i = 0; i < balance.token.length; i++) {
           var balanceToken = TokenBalance();
-          balanceToken = balance.token![i];
+          balanceToken = balance.token[i];
           balanceTokenList.add(balanceToken);
         }
         balance.token = balanceTokenList;
@@ -852,7 +850,7 @@ class AppService with KeychainMixin {
         TransactionInfos(
           domain: '',
           titleInfo: 'Address',
-          valueInfo: transaction.address!,
+          valueInfo: transaction.address!.address!,
         ),
       );
     }
@@ -892,11 +890,9 @@ class AppService with KeychainMixin {
           ),
         );
       }
-      if (transaction.data!.ownerships != null &&
-          transaction.data!.ownerships!.isNotEmpty) {
-        for (final ownership in transaction.data!.ownerships!) {
-          final authorizedPublicKey =
-              ownership.authorizedPublicKeys!.firstWhere(
+      if (transaction.data!.ownerships.isNotEmpty) {
+        for (final ownership in transaction.data!.ownerships) {
+          final authorizedPublicKey = ownership.authorizedPublicKeys.firstWhere(
             (AuthorizedKey authKey) =>
                 authKey.publicKey!.toUpperCase() ==
                 uint8ListToHex(
@@ -922,8 +918,7 @@ class AppService with KeychainMixin {
       }
       if (transaction.data!.ledger != null &&
           transaction.data!.ledger!.uco != null &&
-          transaction.data!.ledger!.uco!.transfers != null &&
-          transaction.data!.ledger!.uco!.transfers!.isNotEmpty) {
+          transaction.data!.ledger!.uco!.transfers.isNotEmpty) {
         transactionsInfos.add(
           TransactionInfos(
             domain: 'UCOLedger',
@@ -932,13 +927,13 @@ class AppService with KeychainMixin {
           ),
         );
         for (var i = 0;
-            i < transaction.data!.ledger!.uco!.transfers!.length;
+            i < transaction.data!.ledger!.uco!.transfers.length;
             i++) {
-          if (transaction.data!.ledger!.uco!.transfers![i].to != null) {
+          if (transaction.data!.ledger!.uco!.transfers[i].to != null) {
             var recipientContactName = '';
 
             final contact = await sl.get<DBHelper>().getContactWithAddress(
-                  transaction.data!.ledger!.uco!.transfers![i].to!,
+                  transaction.data!.ledger!.uco!.transfers[i].to!,
                 );
             if (contact != null && contact.name.length > 1) {
               recipientContactName = contact.name.substring(1);
@@ -949,7 +944,7 @@ class AppService with KeychainMixin {
                 TransactionInfos(
                   domain: 'UCOLedger',
                   titleInfo: 'To',
-                  valueInfo: transaction.data!.ledger!.uco!.transfers![i].to!,
+                  valueInfo: transaction.data!.ledger!.uco!.transfers[i].to!,
                 ),
               );
             } else {
@@ -958,18 +953,18 @@ class AppService with KeychainMixin {
                   domain: 'UCOLedger',
                   titleInfo: 'To',
                   valueInfo:
-                      '$recipientContactName\n${transaction.data!.ledger!.uco!.transfers![i].to!}',
+                      '$recipientContactName\n${transaction.data!.ledger!.uco!.transfers[i].to!}',
                 ),
               );
             }
           }
-          if (transaction.data!.ledger!.uco!.transfers![i].amount != null) {
+          if (transaction.data!.ledger!.uco!.transfers[i].amount != null) {
             transactionsInfos.add(
               TransactionInfos(
                 domain: 'UCOLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${NumberUtil.formatThousands(fromBigInt(transaction.data!.ledger!.uco!.transfers![i].amount))} $cryptoCurrency',
+                    '${NumberUtil.formatThousands(fromBigInt(transaction.data!.ledger!.uco!.transfers[i].amount))} $cryptoCurrency',
               ),
             );
           }
@@ -977,8 +972,7 @@ class AppService with KeychainMixin {
       }
       if (transaction.data!.ledger != null &&
           transaction.data!.ledger!.token != null &&
-          transaction.data!.ledger!.token!.transfers != null &&
-          transaction.data!.ledger!.token!.transfers!.isNotEmpty) {
+          transaction.data!.ledger!.token!.transfers.isNotEmpty) {
         transactionsInfos.add(
           TransactionInfos(
             domain: 'TokenLedger',
@@ -987,39 +981,39 @@ class AppService with KeychainMixin {
           ),
         );
         for (var i = 0;
-            i < transaction.data!.ledger!.token!.transfers!.length;
+            i < transaction.data!.ledger!.token!.transfers.length;
             i++) {
-          if (transaction.data!.ledger!.token!.transfers![i].tokenAddress !=
+          if (transaction.data!.ledger!.token!.transfers[i].tokenAddress !=
               null) {
             transactionsInfos.add(
               TransactionInfos(
                 domain: 'TokenLedger',
                 titleInfo: 'Token',
-                valueInfo: transaction
-                    .data!.ledger!.token!.transfers![i].tokenAddress!,
+                valueInfo:
+                    transaction.data!.ledger!.token!.transfers[i].tokenAddress!,
               ),
             );
           }
-          if (transaction.data!.ledger!.token!.transfers![i].to != null) {
+          if (transaction.data!.ledger!.token!.transfers[i].to != null) {
             transactionsInfos.add(
               TransactionInfos(
                 domain: 'TokenLedger',
                 titleInfo: 'To',
-                valueInfo: transaction.data!.ledger!.token!.transfers![i].to!,
+                valueInfo: transaction.data!.ledger!.token!.transfers[i].to!,
               ),
             );
           }
-          if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
-            final tokenMap = await sl.get<AppService>().getToken(
-              [transaction.data!.ledger!.token!.transfers![i].tokenAddress!],
+          if (transaction.data!.ledger!.token!.transfers[i].amount != null) {
+            final tokenMap = await sl.get<ApiService>().getToken(
+              [transaction.data!.ledger!.token!.transfers[i].tokenAddress!],
               request: 'symbol',
             );
             var tokenSymbol = '';
             if (tokenMap[transaction
-                    .data!.ledger!.token!.transfers![i].tokenAddress!] !=
+                    .data!.ledger!.token!.transfers[i].tokenAddress!] !=
                 null) {
               tokenSymbol = tokenMap[transaction
-                          .data!.ledger!.token!.transfers![i].tokenAddress!]!
+                          .data!.ledger!.token!.transfers[i].tokenAddress!]!
                       .symbol ??
                   '';
             }
@@ -1028,7 +1022,7 @@ class AppService with KeychainMixin {
                 domain: 'TokenLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${NumberUtil.formatThousands(fromBigInt(transaction.data!.ledger!.token!.transfers![i].amount))} $tokenSymbol',
+                    '${NumberUtil.formatThousands(fromBigInt(transaction.data!.ledger!.token!.transfers[i].amount))} $tokenSymbol',
               ),
             );
           }
@@ -1053,13 +1047,13 @@ class AppService with KeychainMixin {
     final transaction =
         Transaction(type: 'transfer', data: Transaction.initData());
     for (final transfer in listUcoTransfer) {
-      transaction.addUCOTransfer(transfer.to, transfer.amount!);
+      transaction.addUCOTransfer(transfer.to!, transfer.amount!);
     }
     for (final transfer in listTokenTransfer) {
       transaction.addTokenTransfer(
-        transfer.to,
+        transfer.to!,
         transfer.amount!,
-        transfer.tokenAddress,
+        transfer.tokenAddress!,
         tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!,
       );
     }
@@ -1117,10 +1111,11 @@ class AppService with KeychainMixin {
         );
       }
 
-      transaction.addOwnership(aesEncrypt(message, aesKey), authorizedKeys);
+      transaction.addOwnership(
+          uint8ListToHex(aesEncrypt(message, aesKey)), authorizedKeys);
     }
 
-    var transactionFee = TransactionFee();
+    var transactionFee = const TransactionFee();
     final lastTransaction = lastTransactionMap[address];
     transaction
         .build(seed, lastTransaction!.chainLength ?? 0)
@@ -1157,17 +1152,16 @@ class AppService with KeychainMixin {
 
     final token = tokenMap[address]!;
 
-    final tokenWithoutFile = token.tokenProperties!
+    final tokenWithoutFile = token.tokenProperties
       ..removeWhere((key, value) => key == 'content');
 
     if (secretMap[address] != null &&
         secretMap[address]!.data != null &&
-        secretMap[address]!.data!.ownerships != null &&
-        secretMap[address]!.data!.ownerships!.isNotEmpty) {
+        secretMap[address]!.data!.ownerships.isNotEmpty) {
       tokenWithoutFile.addAll(
         _tokenPropertiesDecryptedSecret(
           keypair: keychainServiceKeyPair,
-          ownerships: secretMap[address]!.data!.ownerships!,
+          ownerships: secretMap[address]!.data!.ownerships,
         ),
       );
     }

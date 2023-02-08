@@ -20,8 +20,8 @@ class TokenUtil {
       return Uint8List.fromList([]);
     }
     final token = tokenMap[address]!;
-    if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
-      token.tokenProperties!.forEach((key, value) {
+    if (token.tokenProperties != null && token.tokenProperties.isNotEmpty) {
+      token.tokenProperties.forEach((key, value) {
         if (key == 'content') {
           value.forEach((key, value) {
             if (key == 'raw') {

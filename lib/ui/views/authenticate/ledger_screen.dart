@@ -186,7 +186,7 @@ class _SignTransactionButton extends StatelessWidget {
         );
         for (final transfer in ucoTransferList!) {
           transaction.addUCOTransfer(
-            transfer.to,
+            transfer.to!,
             transfer.amount!,
           );
         }

@@ -29,8 +29,7 @@ class _SystemHash {
   }
 }
 
-String $StartupAuthentNotifierHash() =>
-    r'd381d95824b0be7ef3c697fc3c6a91ebbd26c467';
+String _$AutoLockNotifierHash() => r'9f788b98ad0b6f93e9358074088376c4e435762e';
 
 /// See also [StartupAuthentNotifier].
 final startupAuthentNotifierProvider =
@@ -39,7 +38,7 @@ final startupAuthentNotifierProvider =
   name: r'startupAuthentNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $StartupAuthentNotifierHash,
+      : _$AutoLockNotifierHash,
 );
 typedef StartupAuthentNotifierRef
     = AsyncNotifierProviderRef<StartupAuthentState>;

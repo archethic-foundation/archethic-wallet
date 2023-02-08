@@ -23,13 +23,13 @@ extension TransferTransactionBuilder on archethic.Transaction {
       data: archethic.Transaction.initData(),
     );
     for (final transfer in ucoTransferList) {
-      transaction.addUCOTransfer(transfer.to, transfer.amount!);
+      transaction.addUCOTransfer(transfer.to!, transfer.amount!);
     }
     for (final transfer in tokenTransferList) {
       transaction.addTokenTransfer(
-        transfer.to,
+        transfer.to!,
         transfer.amount!,
-        transfer.tokenAddress,
+        transfer.tokenAddress!,
         tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!,
       );
     }
@@ -42,7 +42,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
       );
 
       final authorizedPublicKeys = List<String>.empty(growable: true)
-        ..add(archethic.uint8ListToHex(keyPair.publicKey));
+        ..add(archethic.uint8ListToHex(keyPair.publicKey!));
 
       for (final transfer in ucoTransferList) {
         final firstTxListRecipientMap =
@@ -89,7 +89,9 @@ extension TransferTransactionBuilder on archethic.Transaction {
       }
 
       transaction.addOwnership(
-        archethic.aesEncrypt(utf8.encode(message), aesKey),
+        archethic.uint8ListToHex(
+          archethic.aesEncrypt(utf8.encode(message), aesKey),
+        ),
         authorizedKeys,
       );
     }

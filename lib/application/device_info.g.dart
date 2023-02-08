@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_deviceInfoRepositoryHash() =>
+String _$_deviceInfoRepositoryHash() =>
     r'c3fd974e71cc6de779146c10d9813d82c620e85d';
 
 /// See also [_deviceInfoRepository].
@@ -38,10 +38,10 @@ final _deviceInfoRepositoryProvider = Provider<DeviceInfoRepositoryInterface>(
   name: r'_deviceInfoRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_deviceInfoRepositoryHash,
+      : _$_deviceInfoRepositoryHash,
 );
 typedef _DeviceInfoRepositoryRef = ProviderRef<DeviceInfoRepositoryInterface>;
-String $_installationIdHash() => r'3731950a3232f2db42099228140ebc5fa99b22a0';
+String _$_installationIdHash() => r'3731950a3232f2db42099228140ebc5fa99b22a0';
 
 /// See also [_installationId].
 final _installationIdProvider = FutureProvider<String>(
@@ -49,6 +49,6 @@ final _installationIdProvider = FutureProvider<String>(
   name: r'_installationIdProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_installationIdHash,
+      : _$_installationIdHash,
 );
 typedef _InstallationIdRef = FutureProviderRef<String>;

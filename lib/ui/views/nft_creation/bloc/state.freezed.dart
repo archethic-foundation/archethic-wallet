@@ -80,6 +80,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       archethic.Transaction? transaction});
 
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
+  $TransactionCopyWith<$Res>? get transaction;
 }
 
 /// @nodoc
@@ -224,6 +225,18 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
       return _then(_value.copyWith(propertyAccessRecipient: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TransactionCopyWith<$Res>? get transaction {
+    if (_value.transaction == null) {
+      return null;
+    }
+
+    return $TransactionCopyWith<$Res>(_value.transaction!, (value) {
+      return _then(_value.copyWith(transaction: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -261,6 +274,8 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
 
   @override
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient;
+  @override
+  $TransactionCopyWith<$Res>? get transaction;
 }
 
 /// @nodoc
