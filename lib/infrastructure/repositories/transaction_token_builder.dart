@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:aewallet/domain/models/token_property.dart';
+import 'package:aewallet/model/address.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 
@@ -42,7 +43,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
             tokenProperty.propertyValue;
       } else {
         final authorizedPublicKeys = List<String>.empty(growable: true)
-          ..add(archethic.uint8ListToHex(keyPair.publicKey));
+          ..add(archethic.uint8ListToHex(keyPair.publicKey!));
 
         for (final publicKey in tokenProperty.publicKeys) {
           authorizedPublicKeys.add(
@@ -66,7 +67,9 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
         tokenPropertiesProtected[tokenProperty.propertyName] =
             tokenProperty.propertyValue;
         transaction.addOwnership(
-          archethic.aesEncrypt(json.encode(tokenPropertiesProtected), aesKey),
+          archethic.uint8ListToHex(
+            archethic.aesEncrypt(json.encode(tokenPropertiesProtected), aesKey),
+          ),
           authorizedKeys,
         );
       }
@@ -86,10 +89,14 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     );
     transaction
       ..setContent(content)
-      ..address = archethic.uint8ListToHex(
-        keychain.deriveAddress(
-          serviceName,
-          index: index + 1,
+      ..setAddress(
+        Address(
+          archethic.uint8ListToHex(
+            keychain.deriveAddress(
+              serviceName,
+              index: index + 1,
+            ),
+          ),
         ),
       );
 

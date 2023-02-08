@@ -83,7 +83,7 @@ class DBHelper {
 
     var lastAddress = '';
     if (lastTransactionMap[address] != null) {
-      lastAddress = lastTransactionMap[address]!.address ?? '';
+      lastAddress = lastTransactionMap[address]!.address!.address ?? '';
     }
     if (lastAddress == '') {
       lastAddress = address;
@@ -94,7 +94,8 @@ class DBHelper {
       var lastAddressContact = '';
       if (lastTransactionMap[contact.address] != null &&
           lastTransactionMap[contact.address]!.address != null) {
-        lastAddressContact = lastTransactionMap[contact.address]!.address!;
+        lastAddressContact =
+            lastTransactionMap[contact.address]!.address!.address!;
       }
 
       if (lastAddressContact.isEmpty) {

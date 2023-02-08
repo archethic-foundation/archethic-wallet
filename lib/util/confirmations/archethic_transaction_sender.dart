@@ -54,12 +54,12 @@ class ArchethicTransactionSender
     );
 
     _listenTransactionConfirmed(
-      transaction.address!,
+      transaction.address!.address!,
       onConfirmation,
       onError,
     );
     _listenTransactionError(
-      transaction.address!,
+      transaction.address!.address!,
       onError,
     );
 

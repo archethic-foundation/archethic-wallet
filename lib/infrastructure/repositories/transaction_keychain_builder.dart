@@ -38,8 +38,8 @@ extension KeychainTransactionBuilder on archethic.Transaction {
     final authorizedKeysList =
         lastTransactionKeychainMap[genesisAddressKeychain]!
             .data!
-            .ownerships![0]
-            .authorizedPublicKeys!;
+            .ownerships[0]
+            .authorizedPublicKeys;
     for (final authorizedKey in authorizedKeysList) {
       authorizedKeys.add(
         archethic.AuthorizedKey(
@@ -52,7 +52,7 @@ extension KeychainTransactionBuilder on archethic.Transaction {
     }
 
     keychainTransaction.addOwnership(
-      archethic.aesEncrypt(keychain.encode(), aesKey),
+      archethic.uint8ListToHex(archethic.aesEncrypt(keychain.encode(), aesKey)),
       authorizedKeys,
     );
 

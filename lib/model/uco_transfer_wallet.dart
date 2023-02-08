@@ -1,23 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// [UCOTransferWallet] represents the an asset transfer
-class UCOTransferWallet extends UCOTransfer {
-  UCOTransferWallet({super.amount, super.to, this.toContactName});
+part 'uco_transfer_wallet.freezed.dart';
+part 'uco_transfer_wallet.g.dart';
+
+@Freezed(makeCollectionsUnmodifiable: false)
+class UCOTransferWallet with _$UCOTransferWallet {
+  const factory UCOTransferWallet({
+    int? amount,
+    String? to,
+    String? toContactName,
+  }) = _UCOTransferWallet;
+  const UCOTransferWallet._();
 
   factory UCOTransferWallet.fromJson(Map<String, dynamic> json) =>
-      UCOTransferWallet(
-        amount:
-            json['amount'] == null ? null : toBigInt(json['amount'].toDouble()),
-        to: json['to'],
-        toContactName: json['toContactName'],
-      );
-
-  String? toContactName;
-
-  @override
-  Map<String, dynamic> toJson() =>
-      {'amount': amount, 'to': to, 'toContactName': toContactName};
+      _$UCOTransferWalletFromJson(json);
 }

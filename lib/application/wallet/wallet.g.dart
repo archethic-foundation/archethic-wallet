@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'6d0dd31827f3d39303bdb5881ae53e8df3909bd2';
+String _$_SessionNotifierHash() => r'49d9166191451beac82a926e245830e3afbc98ea';
 
 /// See also [_SessionNotifier].
 final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
@@ -37,7 +37,7 @@ final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(
   name: r'_sessionNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_SessionNotifierHash,
+      : _$_SessionNotifierHash,
 );
 typedef _SessionNotifierRef = NotifierProviderRef<Session>;
 

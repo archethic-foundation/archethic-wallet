@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_sortedAccountsHash() => r'890718a09341a058dd459b77bc4e8472b7a6bd92';
+String _$_sortedAccountsHash() => r'890718a09341a058dd459b77bc4e8472b7a6bd92';
 
 /// See also [_sortedAccounts].
 final _sortedAccountsProvider = AutoDisposeFutureProvider<List<Account>>(
@@ -37,10 +37,10 @@ final _sortedAccountsProvider = AutoDisposeFutureProvider<List<Account>>(
   name: r'_sortedAccountsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_sortedAccountsHash,
+      : _$_sortedAccountsHash,
 );
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
-String $_AccountsNotifierHash() => r'325f4d06b122c7eadd0d8dcdf10d4084307ca5f4';
+String _$_AccountsNotifierHash() => r'325f4d06b122c7eadd0d8dcdf10d4084307ca5f4';
 
 /// See also [_AccountsNotifier].
 final _accountsNotifierProvider =
@@ -49,7 +49,7 @@ final _accountsNotifierProvider =
   name: r'_accountsNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_AccountsNotifierHash,
+      : _$_AccountsNotifierHash,
 );
 typedef _AccountsNotifierRef
     = AutoDisposeAsyncNotifierProviderRef<List<Account>>;
@@ -60,8 +60,8 @@ abstract class _$AccountsNotifier
   FutureOr<List<Account>> build();
 }
 
-String $_SelectedAccountNotifierHash() =>
-    r'92372abd1516b94f62efe537520f0b03e5ff581f';
+String _$_SelectedAccountNotifierHash() =>
+    r'e9781499f376aec00dfef02eb652a216c5630ebe';
 
 /// See also [_SelectedAccountNotifier].
 final _selectedAccountNotifierProvider =
@@ -70,7 +70,7 @@ final _selectedAccountNotifierProvider =
   name: r'_selectedAccountNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_SelectedAccountNotifierHash,
+      : _$_SelectedAccountNotifierHash,
 );
 typedef _SelectedAccountNotifierRef
     = AutoDisposeAsyncNotifierProviderRef<Account?>;
@@ -81,7 +81,7 @@ abstract class _$SelectedAccountNotifier
   FutureOr<Account?> build();
 }
 
-String $_selectedAccountNameHash() =>
+String _$_selectedAccountNameHash() =>
     r'ed92e55365a9b6566dfdec965483b9f54e6bcaf3';
 
 /// See also [_selectedAccountName].
@@ -90,6 +90,6 @@ final _selectedAccountNameProvider = AutoDisposeFutureProvider<String?>(
   name: r'_selectedAccountNameProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_selectedAccountNameHash,
+      : _$_selectedAccountNameHash,
 );
 typedef _SelectedAccountNameRef = AutoDisposeFutureProviderRef<String?>;
