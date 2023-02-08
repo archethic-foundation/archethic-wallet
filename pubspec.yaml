@@ -149,7 +149,7 @@ dependencies:
   intl: ^0.17.0
 
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.0
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
