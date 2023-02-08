@@ -175,7 +175,7 @@ class AppService with KeychainMixin {
       }
 
       if (transaction.type! == 'transfer') {
-        for (final transfer in transaction.data!.ledger!.uco!.transfers!) {
+        for (final transfer in transaction.data!.ledger!.uco!.transfers) {
           final recentTransaction = RecentTransaction()
             ..address = transaction.address!.address
             ..typeTx = RecentTransaction.transferOutput
@@ -191,7 +191,7 @@ class AppService with KeychainMixin {
             ..ownerships = transaction.data!.ownerships;
           recentTransactions.add(recentTransaction);
         }
-        for (final transfer in transaction.data!.ledger!.token!.transfers!) {
+        for (final transfer in transaction.data!.ledger!.token!.transfers) {
           final recentTransaction = RecentTransaction()
             ..address = transaction.address!.address
             ..typeTx = RecentTransaction.transferOutput
@@ -507,7 +507,8 @@ class AppService with KeychainMixin {
         lastAddressesMap[lastTransactionAddressToSearch] = Transaction(
           type: '',
           data: Transaction.initData(),
-          address: lastTransactionAddressToSearch.toLowerCase(),
+          address:
+              Address(address: lastTransactionAddressToSearch.toLowerCase()),
         );
       }
     }
@@ -515,10 +516,10 @@ class AppService with KeychainMixin {
     // Update contacts' last address
     for (final contact in contactsList) {
       if (lastAddressesMap[contact.address] != null &&
-          lastAddressesMap[contact.address]!.address!.toLowerCase() !=
+          lastAddressesMap[contact.address]!.address!.address!.toLowerCase() !=
               contact.address.toLowerCase()) {
-        contact.address =
-            lastAddressesMap[contact.address]!.address ?? contact.address;
+        contact.address = lastAddressesMap[contact.address]!.address!.address ??
+            contact.address;
         await sl.get<DBHelper>().saveContact(contact);
       }
       contactsListUpdated.add(contact);
@@ -554,6 +555,7 @@ class AppService with KeychainMixin {
                       (contact) =>
                           lastAddressesMap[recentTransaction.from!]!
                               .address!
+                              .address!
                               .toLowerCase() ==
                           contact.address.toLowerCase(),
                     )
@@ -576,6 +578,7 @@ class AppService with KeychainMixin {
                     .where(
                       (contact) =>
                           lastAddressesMap[recentTransaction.recipient!]!
+                              .address!
                               .address!
                               .toLowerCase() ==
                           contact.address.toLowerCase(),
@@ -635,43 +638,42 @@ class AppService with KeychainMixin {
     if (balance == null) {
       return [];
     }
-    if (balance.token != null) {
-      for (final tokenBalance in balance.token) {
-        if (tokenBalance.address != null) {
-          tokenAddressList.add(tokenBalance.address!);
-        }
-      }
 
-      // Search token informations
-      final tokenMap = await sl.get<AppService>().getToken(
-            tokenAddressList.toSet().toList(),
-            request: 'genesis, name, id, supply, symbol, type',
-          );
-
-      for (final tokenBalance in balance.token) {
-        final token = tokenMap[tokenBalance.address];
-        if (token != null && token.type == 'fungible') {
-          final tokenInformations = TokenInformations(
-            address: tokenBalance.address,
-            aeip: token.aeip,
-            name: token.name,
-            id: token.id,
-            type: token.type,
-            supply: fromBigInt(token.supply).toDouble(),
-            symbol: token.symbol,
-          );
-          final accountFungibleToken = AccountToken(
-            tokenInformations: tokenInformations,
-            amount: fromBigInt(tokenBalance.amount).toDouble(),
-          );
-          fungiblesTokensList.add(accountFungibleToken);
-        }
+    for (final tokenBalance in balance.token) {
+      if (tokenBalance.address != null) {
+        tokenAddressList.add(tokenBalance.address!);
       }
-      fungiblesTokensList.sort(
-        (a, b) =>
-            a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
-      );
     }
+
+    // Search token informations
+    final tokenMap = await sl.get<AppService>().getToken(
+          tokenAddressList.toSet().toList(),
+          request: 'genesis, name, id, supply, symbol, type',
+        );
+
+    for (final tokenBalance in balance.token) {
+      final token = tokenMap[tokenBalance.address];
+      if (token != null && token.type == 'fungible') {
+        final tokenInformations = TokenInformations(
+          address: tokenBalance.address,
+          aeip: token.aeip,
+          name: token.name,
+          id: token.id,
+          type: token.type,
+          supply: fromBigInt(token.supply).toDouble(),
+          symbol: token.symbol,
+        );
+        final accountFungibleToken = AccountToken(
+          tokenInformations: tokenInformations,
+          amount: fromBigInt(tokenBalance.amount).toDouble(),
+        );
+        fungiblesTokensList.add(accountFungibleToken);
+      }
+    }
+    fungiblesTokensList.sort(
+      (a, b) =>
+          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
+    );
 
     dev.log(
       '>> END getFungiblesTokensList : ${DateTime.now().toString()}',
@@ -800,17 +802,17 @@ class AppService with KeychainMixin {
 
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
-      final balance = balanceMap[address] ??
+      var balance = balanceMap[address] ??
           Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
       final balanceTokenList = List<TokenBalance>.empty(growable: true);
-      if (balance.token != null) {
-        for (var i = 0; i < balance.token.length; i++) {
-          var balanceToken = TokenBalance();
-          balanceToken = balance.token[i];
-          balanceTokenList.add(balanceToken);
-        }
-        balance.token = balanceTokenList;
+
+      for (var i = 0; i < balance.token.length; i++) {
+        var balanceToken = const TokenBalance();
+        balanceToken = balance.token[i];
+        balanceTokenList.add(balanceToken);
       }
+      balance = balance.copyWith(token: balanceTokenList);
+
       balancesToReturn[address] = balance;
     }
     return balancesToReturn;
@@ -1112,7 +1114,7 @@ class AppService with KeychainMixin {
       }
 
       transaction.addOwnership(
-          uint8ListToHex(aesEncrypt(message, aesKey)), authorizedKeys);
+          uint8ListToHex(aesEncrypt(message, aesKey)), authorizedKeys,);
     }
 
     var transactionFee = const TransactionFee();

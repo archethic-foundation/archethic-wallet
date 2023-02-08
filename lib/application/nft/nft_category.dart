@@ -219,7 +219,7 @@ class NFTCategoryRepository {
 }
 
 abstract class NftCategoryProviders {
-  // TODO (reddwarf03): Distinct actions and infos' provider: change the name for example getNbNFTInCategory -> nbNFTInCategory; fetchNftCategories -> nftCategories
+  // TODO(reddwarf03): Distinct actions and infos' provider: change the name for example getNbNFTInCategory -> nbNFTInCategory; fetchNftCategories -> nftCategories
   // and let for example updateNftCategoryList because it's not a provider; it's an action
   static final nftCategoryRepository = _nftCategoryRepositoryProvider;
   static final fetchNftCategories = _fetchNftCategoryProvider;

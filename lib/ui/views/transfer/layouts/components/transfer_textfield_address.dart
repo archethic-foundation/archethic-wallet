@@ -54,7 +54,7 @@ class _TransferTextFieldAddressState
   void _updateAdressTextController() {
     final recipient = ref.read(TransferFormProvider.transferForm).recipient;
     sendAddressController.text = recipient.when(
-      address: (address) => address.address,
+      address: (address) => address.address!,
       contact: (contact) => contact.name,
       unknownContact: (name) => name,
     );
@@ -125,7 +125,7 @@ class _TransferTextFieldAddressState
                       return;
                     } else {
                       // Is a URI
-                      final address = Address(scanResult);
+                      final address = Address(address: scanResult);
                       await transferNotifier.setContactAddress(
                         context: context,
                         address: address,

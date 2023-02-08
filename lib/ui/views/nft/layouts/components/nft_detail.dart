@@ -4,7 +4,6 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -19,6 +18,7 @@ import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -175,7 +175,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                               widget.tokenInformations.id,
                         ),
                         recipient: const TransferRecipient.address(
-                          address: Address(''),
+                          address: Address(address: ''),
                         ),
                       ).show(
                         context: context,

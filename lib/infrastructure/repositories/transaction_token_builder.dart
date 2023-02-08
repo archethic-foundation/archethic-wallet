@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:aewallet/domain/models/token_property.dart';
-import 'package:aewallet/model/address.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 
@@ -84,14 +83,12 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
       tokenProperties: tokenPropertiesNotProtected,
     );
 
-    final content = archethic.tokenToJsonForTxDataContent(
-      token,
-    );
+    final content = token.tokenToJsonForTxDataContent();
     transaction
       ..setContent(content)
       ..setAddress(
-        Address(
-          archethic.uint8ListToHex(
+        archethic.Address(
+          address: archethic.uint8ListToHex(
             keychain.deriveAddress(
               serviceName,
               index: index + 1,

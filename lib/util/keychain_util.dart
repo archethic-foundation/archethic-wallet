@@ -91,13 +91,13 @@ class KeychainUtil {
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final keychain = Keychain(hexToUint8List(keychainSeed), version: 1)
-      ..addService(kServiceName, kDerivationPath);
+    final keychain = Keychain(seed: hexToUint8List(keychainSeed), version: 1)
+        .copyWithService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
     final keychainTransaction = sl.get<ApiService>().newKeychainTransaction(
           keychainSeed,
-          <String>[uint8ListToHex(walletKeyPair.publicKey)],
+          <String>[uint8ListToHex(walletKeyPair.publicKey!)],
           hexToUint8List(originPrivateKey),
           serviceName: kServiceName,
           derivationPath: kDerivationPath,
@@ -156,7 +156,7 @@ class KeychainUtil {
     final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
-    keychain.addService(kServiceName, kDerivationPath);
+    keychain.copyWithService(kServiceName, kDerivationPath);
 
     final lastTransactionKeychainMap =
         await sl.get<ApiService>().getLastTransaction(
@@ -265,7 +265,8 @@ class KeychainUtil {
             await sl.get<ApiService>().getLastTransaction([addressKeychain]);
 
         currentAppWallet = await sl.get<DBHelper>().createAppWallet(
-            lastTransactionMap[addressKeychain]!.address!.address!);
+              lastTransactionMap[addressKeychain]!.address!.address!,
+            );
       } else {
         currentAppWallet = appWallet;
       }
@@ -493,7 +494,7 @@ mixin KeychainMixin {
     });
 
     return Keychain(
-      Uint8List.fromList(keychainSecuredInfos.seed),
+      seed: Uint8List.fromList(keychainSecuredInfos.seed),
       services: services,
       version: keychainSecuredInfos.version,
     );

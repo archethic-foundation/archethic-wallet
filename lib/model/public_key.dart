@@ -4,6 +4,9 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 // Object to represent an public key,
 // and provide useful utilities
+
+const kPublicKeyLength = 68;
+
 class PublicKey {
   const PublicKey(this._publicKey);
 
@@ -12,6 +15,12 @@ class PublicKey {
   String get publicKey => _publicKey;
 
   bool get isValid {
-    return addressFormatControl(_publicKey);
+    if (!isHex(_publicKey)) {
+      return false;
+    }
+    if (_publicKey.length != kPublicKeyLength) {
+      return false;
+    }
+    return true;
   }
 }

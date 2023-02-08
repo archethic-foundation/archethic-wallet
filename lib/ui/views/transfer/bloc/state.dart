@@ -1,8 +1,8 @@
-import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -85,9 +85,9 @@ class TransferRecipient with _$TransferRecipient {
 
   Address? get address => when(
         address: (address) => address,
-        contact: (contact) => Address(contact.address),
+        contact: (contact) => Address(address: contact.address),
         unknownContact: (_) => null,
       );
 
-  bool get isAddressValid => (address ?? const Address('')).isValid;
+  bool get isAddressValid => (address ?? const Address(address: '')).isValid();
 }
