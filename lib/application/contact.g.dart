@@ -29,8 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_contactRepositoryHash() =>
-    r'cf712b6cccb80060dda6cf8b5e0115332d394211';
+String $_contactRepositoryHash() => r'cf712b6cccb80060dda6cf8b5e0115332d394211';
 
 /// See also [_contactRepository].
 final _contactRepositoryProvider = AutoDisposeProvider<ContactRepository>(
@@ -38,10 +37,10 @@ final _contactRepositoryProvider = AutoDisposeProvider<ContactRepository>(
   name: r'_contactRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_contactRepositoryHash,
+      : $_contactRepositoryHash,
 );
 typedef _ContactRepositoryRef = AutoDisposeProviderRef<ContactRepository>;
-String _$_fetchContactsHash() => r'e577c0c6beecb77d4217b611093c1e6f9e62b8e2';
+String $_fetchContactsHash() => r'e577c0c6beecb77d4217b611093c1e6f9e62b8e2';
 
 /// See also [_fetchContacts].
 class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
@@ -57,7 +56,7 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_fetchContactsHash,
+                  : $_fetchContactsHash,
         );
 
   final String search;
@@ -111,7 +110,7 @@ class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
   String? get name => r'_fetchContactsProvider';
 }
 
-String _$_getSelectedContactHash() =>
+String $_getSelectedContactHash() =>
     r'c7007a7b315479cced6245a02482fb73e0ad6b65';
 
 /// See also [_getSelectedContact].
@@ -120,10 +119,10 @@ final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>(
   name: r'_getSelectedContactProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_getSelectedContactHash,
+      : $_getSelectedContactHash,
 );
 typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact>;
-String _$_getContactWithNameHash() =>
+String $_getContactWithNameHash() =>
     r'7272ba74ac24402574cf64136acc86fa939f3ca3';
 
 /// See also [_getContactWithName].
@@ -140,7 +139,7 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getContactWithNameHash,
+                  : $_getContactWithNameHash,
         );
 
   final String name;
@@ -194,7 +193,7 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
   String? get name => r'_getContactWithNameProvider';
 }
 
-String _$_getContactWithAddressHash() =>
+String $_getContactWithAddressHash() =>
     r'5d7e119dd654939aebe4963994fc8b0888a944c4';
 
 /// See also [_getContactWithAddress].
@@ -212,7 +211,7 @@ class _GetContactWithAddressProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getContactWithAddressHash,
+                  : $_getContactWithAddressHash,
         );
 
   final String address;
@@ -266,7 +265,7 @@ class _GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
   String? get name => r'_getContactWithAddressProvider';
 }
 
-String _$_getContactWithPublicKeyHash() =>
+String $_getContactWithPublicKeyHash() =>
     r'62108be30a37c84a8cde033d6705e9aecf8b355f';
 
 /// See also [_getContactWithPublicKey].
@@ -284,7 +283,7 @@ class _GetContactWithPublicKeyProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getContactWithPublicKeyHash,
+                  : $_getContactWithPublicKeyHash,
         );
 
   final String publicKey;
@@ -339,7 +338,7 @@ class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact>> {
   String? get name => r'_getContactWithPublicKeyProvider';
 }
 
-String _$_saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
+String $_saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
 
 /// See also [_saveContact].
 class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
@@ -355,7 +354,7 @@ class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_saveContactHash,
+                  : $_saveContactHash,
         );
 
   final Contact? contact;
@@ -409,7 +408,7 @@ class _SaveContactFamily extends Family<AsyncValue<void>> {
   String? get name => r'_saveContactProvider';
 }
 
-String _$_deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
+String $_deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
 
 /// See also [_deleteContact].
 class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
@@ -425,7 +424,7 @@ class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_deleteContactHash,
+                  : $_deleteContactHash,
         );
 
   final Contact? contact;
@@ -479,7 +478,7 @@ class _DeleteContactFamily extends Family<AsyncValue<void>> {
   String? get name => r'_deleteContactProvider';
 }
 
-String _$_isContactExistsWithNameHash() =>
+String $_isContactExistsWithNameHash() =>
     r'af7f5b8a34da3b3530efd34c75a5a930c0576100';
 
 /// See also [_isContactExistsWithName].
@@ -496,7 +495,7 @@ class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_isContactExistsWithNameHash,
+                  : $_isContactExistsWithNameHash,
         );
 
   final String? name;
@@ -550,7 +549,7 @@ class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
   String? get name => r'_isContactExistsWithNameProvider';
 }
 
-String _$_isContactExistsWithAddressHash() =>
+String $_isContactExistsWithAddressHash() =>
     r'4a2281e577a2bfa9fee0005c51763af7ad2b687b';
 
 /// See also [_isContactExistsWithAddress].
@@ -568,7 +567,7 @@ class _IsContactExistsWithAddressProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_isContactExistsWithAddressHash,
+                  : $_isContactExistsWithAddressHash,
         );
 
   final String? address;

@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_selectedThemeHash() => r'a8bbf6b1dc34a9fdc3b2b2c2fe58eee891226b4f';
+String $_selectedThemeHash() => r'a8bbf6b1dc34a9fdc3b2b2c2fe58eee891226b4f';
 
 /// See also [_selectedTheme].
 final _selectedThemeProvider = Provider<BaseTheme>(
@@ -37,6 +37,6 @@ final _selectedThemeProvider = Provider<BaseTheme>(
   name: r'_selectedThemeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_selectedThemeHash,
+      : $_selectedThemeHash,
 );
 typedef _SelectedThemeRef = ProviderRef<BaseTheme>;

@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_nftRepositoryHash() => r'c16cc640004fbaf88bbe6c50e643bbe5b8c577ed';
+String $_nftRepositoryHash() => r'c16cc640004fbaf88bbe6c50e643bbe5b8c577ed';
 
 /// See also [_nftRepository].
 final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>(
@@ -37,10 +37,10 @@ final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>(
   name: r'_nftRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_nftRepositoryHash,
+      : $_nftRepositoryHash,
 );
 typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
-String _$_getNFTHash() => r'9e69b4372c57651dee0d59aea6b40c73fec51f1d';
+String $_getNFTHash() => r'bd8af3a8e0ab3eace21cb12d4b5fc266453014a6';
 
 /// See also [_getNFT].
 class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
@@ -58,7 +58,7 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$_getNFTHash,
+                  : $_getNFTHash,
         );
 
   final String address;

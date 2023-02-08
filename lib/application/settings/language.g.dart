@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$_selectedLanguageHash() => r'c63fc0ebfcfac294c5aad3f7132338ffb10ab0f1';
+String $_selectedLanguageHash() => r'c63fc0ebfcfac294c5aad3f7132338ffb10ab0f1';
 
 /// See also [_selectedLanguage].
 final _selectedLanguageProvider = Provider<AvailableLanguage>(
@@ -37,10 +37,10 @@ final _selectedLanguageProvider = Provider<AvailableLanguage>(
   name: r'_selectedLanguageProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_selectedLanguageHash,
+      : $_selectedLanguageHash,
 );
 typedef _SelectedLanguageRef = ProviderRef<AvailableLanguage>;
-String _$_selectedLocaleHash() => r'b1fa4f810786d439212304efb93e2e420b1d1993';
+String $_selectedLocaleHash() => r'b1fa4f810786d439212304efb93e2e420b1d1993';
 
 /// Resolves the selected locale
 ///
@@ -53,10 +53,10 @@ final _selectedLocaleProvider = Provider<Locale>(
   name: r'_selectedLocaleProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_selectedLocaleHash,
+      : $_selectedLocaleHash,
 );
 typedef _SelectedLocaleRef = ProviderRef<Locale>;
-String _$_availableLocalesHash() => r'6410cb4632cd07d7908474099e9c859a83fc02a8';
+String $_availableLocalesHash() => r'6410cb4632cd07d7908474099e9c859a83fc02a8';
 
 /// See also [_availableLocales].
 final _availableLocalesProvider = Provider<List<Locale>>(
@@ -64,6 +64,6 @@ final _availableLocalesProvider = Provider<List<Locale>>(
   name: r'_availableLocalesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_availableLocalesHash,
+      : $_availableLocalesHash,
 );
 typedef _AvailableLocalesRef = ProviderRef<List<Locale>>;
