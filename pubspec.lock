@@ -44,11 +44,12 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      name: archethic_lib_dart
-      sha256: "99a6bd357413f62d16acaffe7addfda616b320361c4e06ae72e84f628d74ccbf"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
+      path: "."
+      ref: dev
+      resolved-ref: ff9103ad21cad8481f11d782b6d34912892ad272
+      url: "https://github.com/archethic-foundation/libdart.git"
+    source: git
+    version: "2.0.4"
   archive:
     dependency: transitive
     description:
@@ -93,10 +94,10 @@ packages:
     dependency: "direct main"
     description:
       name: badges
-      sha256: "727580d938b7a1ff47ea42df730d581415606b4224cfa708671c10287f8d3fe6"
+      sha256: "461031a60efbb95276f52107f63d5d45008b5ca1eb7f8ca440cadda9ec2143b0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "3.0.2"
   barcode_scan2:
     dependency: "direct main"
     description:

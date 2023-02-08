@@ -28,10 +28,10 @@ dependencies:
   auto_size_text: ^3.0.0
 
   # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
-  badges: ^2.0.3
+  badges: ^3.0.2
 
   # A flutter plugin for scanning 2D barcodes and QRCodes via camera
-  barcode_scan2: ^4.2.2
+  barcode_scan2: ^4.2.3
 
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39_mnemonic: ^3.0.5
@@ -76,7 +76,7 @@ dependencies:
   expandable: ^5.0.1
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.2.4
+  file_picker: ^5.2.5
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
@@ -88,7 +88,7 @@ dependencies:
     sdk: flutter
 
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
-  flutter_jailbreak_detection: ^1.8.0
+  flutter_jailbreak_detection: ^1.10.0
 
   # Makes in-text links clickable
   flutter_linkify: ^5.0.2
@@ -99,7 +99,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.2.16
+  flutter_native_splash: ^2.2.17
 
   # State management
   flutter_riverpod: 2.1.1
@@ -130,7 +130,7 @@ dependencies:
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
   gql: ^0.14.0
-  graphql_flutter: ^5.1.1
+  graphql_flutter: ^5.1.2
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
   hive: ^2.2.3
@@ -143,7 +143,7 @@ dependencies:
   icon_font_generator: ^3.2.0
 
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
-  image_picker: ^0.8.6
+  image_picker: ^0.8.6+1
 
   # Localization
   intl: ^0.17.0
@@ -182,7 +182,7 @@ dependencies:
   path: ^1.8.2
 
   # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
-  path_provider: ^2.0.11
+  path_provider: ^2.0.12
 
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
   pdfx: 2.2.0
@@ -211,7 +211,7 @@ dependencies:
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^6.3.0
 
-  # Mutex & Lock
+  # Lock mechanism to prevent concurrent access to asynchronous code.
   synchronized: ^3.0.1
 
   # Tuple data structure
@@ -221,7 +221,7 @@ dependencies:
   unorm_dart: ^0.2.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.7
+  url_launcher: ^6.1.8
 
   # String validation and sanitization for Dart
   validators: ^3.0.0
@@ -242,11 +242,11 @@ dev_dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.4.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
-  json_serializable: ^6.5.4
+  json_serializable: ^6.6.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
-  msix: ^3.7.0
+  msix: ^3.8.0
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
-  patrol: ^0.10.8
+  patrol: ^0.10.11
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
 
