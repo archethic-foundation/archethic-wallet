@@ -7,7 +7,7 @@ import 'package:aewallet/domain/models/token_property_access.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -46,7 +46,7 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default('') String symbol,
     @Default(1) int initialSupply,
     @Default(false) bool checkPreventUserPublicInfo,
-    archethic.Transaction? transaction,
+    Transaction? transaction,
   }) = _NftCreationFormState;
   const NftCreationFormState._();
 

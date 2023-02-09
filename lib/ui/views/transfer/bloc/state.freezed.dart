@@ -512,6 +512,8 @@ abstract class _$$_TransferDestinationAddressCopyWith<$Res> {
       __$$_TransferDestinationAddressCopyWithImpl<$Res>;
   @useResult
   $Res call({Address address});
+
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -534,6 +536,14 @@ class __$$_TransferDestinationAddressCopyWithImpl<$Res>
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res> get address {
+    return $AddressCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value));
+    });
   }
 }
 
