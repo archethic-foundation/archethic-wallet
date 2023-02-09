@@ -25,8 +25,9 @@ class NotificationsUtil {
     const android = AndroidInitializationSettings('@drawable/ic_notification');
     const iOS = IOSInitializationSettings();
     const macOS = MacOSInitializationSettings();
+    const linux = LinuxInitializationSettings(defaultActionName: 'Open notification');
     const settings =
-        InitializationSettings(android: android, iOS: iOS, macOS: macOS);
+        InitializationSettings(android: android, iOS: iOS, macOS: macOS, linux: linux);
     await _notifications.initialize(
       settings,
       onSelectNotification: (payload) async {

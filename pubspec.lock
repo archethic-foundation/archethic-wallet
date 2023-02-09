@@ -705,7 +705,8 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_to_debian
-      url: "https://pub.dartlang.org"
+      sha256: "9a980f964f9a6e00ca49b947a5807853e206ddc3a25168c0b541db46caaa826a"
+      url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
   flutter_vibrate:
@@ -1199,7 +1200,8 @@ packages:
     dependency: transitive
     description:
       name: mime_type
-      url: "https://pub.dartlang.org"
+      sha256: "2ad6e67d3d2de9ac0f8ef5352d998fd103cb21351ae8c02fb0c78b079b37d275"
+      url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
   msix:
