@@ -38,6 +38,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
           activeNotifications: !kIsWeb &&
               (Platform.isIOS == true ||
                   Platform.isAndroid == true ||
+                  Platform.isLinux == true ||
                   Platform.isMacOS == true),
           activeVibrations: true,
           currency: AvailableCurrencyEnum.usd,
