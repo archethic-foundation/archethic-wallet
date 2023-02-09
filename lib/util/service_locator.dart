@@ -28,8 +28,8 @@ Future<void> setupServiceLocator() async {
         CommandDispatcher<SignTransactionCommand, SignTransactionResult>>(
       CommandDispatcher<SignTransactionCommand, SignTransactionResult>.new,
     )
-    ..registerLazySingleton<DeeplinkRpcReceiver>(
-      () => DeeplinkRpcReceiver()
+    ..registerLazySingleton<DeeplinkRpcRequestReceiver>(
+      () => DeeplinkRpcRequestReceiver()
         ..registerHandler(deeplinkRpcSignTransactionHandler),
     );
 
