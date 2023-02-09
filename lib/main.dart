@@ -119,7 +119,7 @@ class App extends ConsumerWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deeplinkRpcReceiver = sl.get<DeeplinkRpcReceiver>();
+    final deeplinkRpcReceiver = sl.get<DeeplinkRpcRequestReceiver>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 

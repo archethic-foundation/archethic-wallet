@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:deeplink_rpc/src/data/request.dart';
+import 'package:deeplink_rpc/src/data/response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'handler.freezed.dart';
@@ -28,12 +31,31 @@ class DeeplinkRpcRoute with _$DeeplinkRpcRoute {
   }
 }
 
+abstract class DeeplinkRpcHandler {
+  DeeplinkRpcRoute get route;
+}
+
 @freezed
-class DeeplinkRpcHandler with _$DeeplinkRpcHandler {
-  const DeeplinkRpcHandler._();
-  const factory DeeplinkRpcHandler({
+class DeeplinkRpcRequestHandler
+    with _$DeeplinkRpcRequestHandler
+    implements DeeplinkRpcHandler {
+  const DeeplinkRpcRequestHandler._();
+
+  const factory DeeplinkRpcRequestHandler({
     required DeeplinkRpcRoute route,
-    required Future<Map<String, dynamic>> Function(DeeplinkRpcRequest request)
+    required FutureOr<Map<String, dynamic>> Function(DeeplinkRpcRequest request)
         handle,
-  }) = _DeeplinkRpcHandler;
+  }) = _DeeplinkRpcRequestHandler;
+}
+
+@freezed
+class DeeplinkRpcResponseHandler
+    with _$DeeplinkRpcResponseHandler
+    implements DeeplinkRpcHandler {
+  const DeeplinkRpcResponseHandler._();
+
+  const factory DeeplinkRpcResponseHandler({
+    required DeeplinkRpcRoute route,
+    required FutureOr<void> Function(DeeplinkRpcResponse response) handle,
+  }) = _DeeplinkRpcResponseHandler;
 }

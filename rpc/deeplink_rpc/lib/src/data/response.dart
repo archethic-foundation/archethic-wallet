@@ -12,11 +12,22 @@ class DeeplinkRpcResponse {
     required this.id,
     this.failure,
     this.result,
-  });
+  }) : assert(
+          failure == null || result == null,
+          'A response cannot be both success and failure.',
+        );
 
   final String id;
   final DeeplinkRpcFailure? failure;
   final dynamic result;
+
+  T map<T>({
+    required T Function(DeeplinkRpcFailure failure) failure,
+    required T Function(dynamic result) success,
+  }) {
+    if (this.failure != null) return failure(this.failure!);
+    return success(result);
+  }
 
   factory DeeplinkRpcResponse.failure({
     required String id,

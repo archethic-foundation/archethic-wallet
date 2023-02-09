@@ -8,7 +8,7 @@ import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_result.dart
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:deeplink_rpc/deeplink_rpc.dart';
 
-final deeplinkRpcSignTransactionHandler = DeeplinkRpcHandler(
+final deeplinkRpcSignTransactionHandler = DeeplinkRpcRequestHandler(
   route: const DeeplinkRpcRoute('sign_transaction'),
   handle: (request) async {
     const logName = 'DeeplinkRpcHandler';

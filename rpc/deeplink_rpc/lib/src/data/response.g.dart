@@ -9,7 +9,10 @@ part of 'response.dart';
 DeeplinkRpcResponse _$DeeplinkRpcResponseFromJson(Map<String, dynamic> json) =>
     DeeplinkRpcResponse(
       id: json['id'] as String,
-      failure: json['failure'],
+      failure: json['failure'] == null
+          ? null
+          : DeeplinkRpcFailure.fromJson(
+              json['failure'] as Map<String, dynamic>),
       result: json['result'],
     );
 
