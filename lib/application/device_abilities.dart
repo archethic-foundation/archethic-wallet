@@ -32,6 +32,7 @@ class DeviceAbilities {
       if (kIsWeb == false &&
           (Platform.isIOS == true ||
               Platform.isAndroid == true ||
+              Platform.isLinux == true ||
               Platform.isMacOS == true)) {
         return true;
       }
