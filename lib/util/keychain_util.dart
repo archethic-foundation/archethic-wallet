@@ -118,7 +118,8 @@ class KeychainUtil {
           transactionSender,
           TransactionSendEventType.keychain,
           params: <String, Object>{
-            'keychainAddress': keychainTransaction.address!.toUpperCase(),
+            'keychainAddress':
+                keychainTransaction.address!.address!.toUpperCase(),
             'originPrivateKey': originPrivateKey,
             'keychain': keychain
           },

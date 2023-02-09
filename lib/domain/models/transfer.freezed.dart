@@ -138,6 +138,7 @@ abstract class $TransferCopyWith<$Res> {
       Address recipientAddress});
 
   $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
+  $AddressCopyWith<$Res> get recipientAddress;
 }
 
 /// @nodoc
@@ -196,6 +197,14 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
       return _then(_value.copyWith(keychainSecuredInfos: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res> get recipientAddress {
+    return $AddressCopyWith<$Res>(_value.recipientAddress, (value) {
+      return _then(_value.copyWith(recipientAddress: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -216,6 +225,8 @@ abstract class _$$_TransferUcoCopyWith<$Res>
 
   @override
   $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
+  @override
+  $AddressCopyWith<$Res> get recipientAddress;
 }
 
 /// @nodoc
@@ -503,6 +514,8 @@ abstract class _$$_TransferTokenCopyWith<$Res>
 
   @override
   $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos;
+  @override
+  $AddressCopyWith<$Res> get recipientAddress;
 }
 
 /// @nodoc
