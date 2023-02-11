@@ -7,7 +7,7 @@
 The app is mainly a FULLY decentralized and cryptocurrency non-custodial hot wallet that enables you to safely manage assets on Layer 1 Archethic blockchain.</br>
 This wallet includes the features of send and receive coins instantly to and from anyone.</br>
 No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices and Biometrics</br>
-NB: Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))</br>
+NB: Yubikey is a device that makes 2-factor authentication as simple as possible (see [yubico.com](https://www.yubico.com))</br>
 
 Archethic Wallet has implemented the following features:
 
@@ -41,7 +41,7 @@ Archethic Wallet has implemented the following features:
 ## Application Initial Screen
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?v=20221202" width="300"/>
 
-## Informations
+## Information
 All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
 
 ## How to install Archethic Wallet
