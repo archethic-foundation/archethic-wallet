@@ -17,8 +17,8 @@ Please delete options that are not relevant.
 ## Material used:
 
 Please delete options that are not relevant.
-- iOS (Smarthphone/Tablet)
-- Android (Smarthphone/Tablet)
+- iOS (Smartphone/Tablet)
+- Android (Smartphone/Tablet)
 - Browser
 - Linux
 - Windows
