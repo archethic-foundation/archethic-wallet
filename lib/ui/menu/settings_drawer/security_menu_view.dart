@@ -116,13 +116,32 @@ class SecurityMenuView extends ConsumerWidget {
                               localizations.removeWalletReassurance,
                               localizations.yes,
                               () async {
-                                await ref
-                                    .read(SessionProviders.session.notifier)
-                                    .logout();
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/',
-                                  (Route<dynamic> route) => false,
+                                // Authenticate
+                                final authMethod = AuthenticationMethod(
+                                  ref.read(
+                                    AuthenticationProviders.settings.select(
+                                      (settings) =>
+                                          settings.authenticationMethod,
+                                    ),
+                                  ),
                                 );
+                                final auth = await AuthFactory.authenticate(
+                                  context,
+                                  ref,
+                                  authMethod: authMethod,
+                                  activeVibrations: ref
+                                      .read(SettingsProviders.settings)
+                                      .activeVibrations,
+                                );
+                                if (auth) {
+                                  await ref
+                                      .read(SessionProviders.session.notifier)
+                                      .logout();
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/',
+                                    (Route<dynamic> route) => false,
+                                  );
+                                }
                               },
                             );
                           });
