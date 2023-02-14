@@ -13,7 +13,10 @@ class AuthenticateWithPassword
   static int get maxFailedAttempts => AuthenticationWithLock.maxFailedAttempts;
 
   @override
-  Future<AuthenticationResult> run(PasswordCredentials credentials) async {
+  Future<AuthenticationResult> run(
+    PasswordCredentials credentials, {
+    UseCaseProgressListener? onProgress,
+  }) async {
     final rawExpectedPassword = await repository.getPassword();
     if (rawExpectedPassword == null) {
       return const AuthenticationResult.notSetup();

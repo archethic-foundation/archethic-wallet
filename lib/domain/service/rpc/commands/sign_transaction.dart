@@ -9,13 +9,20 @@ typedef SignTransactionResult
     = Result<TransactionConfirmation, TransactionError>;
 
 @freezed
-class SignTransactionCommand with _$SignTransactionCommand {
-  const factory SignTransactionCommand({
-    /// Source application name
-    required String source,
+class RPCCommandSource with _$RPCCommandSource {
+  const factory RPCCommandSource({
+    required String name,
+    String? url,
+    String? logo,
+  }) = _RPCCommandSource;
+  const RPCCommandSource._();
+}
 
-    /// Service
-    required String accountName,
+@freezed
+class RPCSignTransactionCommand with _$RPCSignTransactionCommand {
+  const factory RPCSignTransactionCommand({
+    /// Source application name
+    required RPCCommandSource source,
 
     /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
     required archethic.Data data,
@@ -25,6 +32,6 @@ class SignTransactionCommand with _$SignTransactionCommand {
 
     /// - Version: version of the transaction (used for backward compatiblity)
     required int version,
-  }) = _SignTransactionCommand;
-  const SignTransactionCommand._();
+  }) = _RPCSignTransactionCommand;
+  const RPCSignTransactionCommand._();
 }

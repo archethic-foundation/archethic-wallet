@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_errors.dart';
+import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_command.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_result.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
@@ -19,7 +20,7 @@ class ArchethicRPCServer {
   static const HOST = '127.0.0.1';
   static const PORT = 12345;
 
-  final CommandDispatcher<SignTransactionCommand, SignTransactionResult>
+  final CommandDispatcher<RPCSignTransactionCommand, SignTransactionResult>
       signTransactionCommandDispatcher;
 
   static bool get isPlatformCompatible {
@@ -47,12 +48,11 @@ class ArchethicRPCServer {
                 try {
                   log('Received SendTokenTransaction', name: LOG_NAME);
 
-                  final signTransactionCommandDTO =
-                      RpcSignTransactionCommand.fromJson(
+                  final signTransactionCommandDTO = RpcRequest.fromJson(
                     params.value,
                   );
                   final signTransactionCommand =
-                      signTransactionCommandDTO.toModel();
+                      signTransactionCommandDTO.toSignTransactionModel();
                   final result = await signTransactionCommandDispatcher.add(
                     signTransactionCommand,
                   );

@@ -1998,7 +1998,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionSignatureCommandReceivedNotification": "Application %1 wants to send a transaction with your %2 account.",
+  "transactionSignatureCommandReceivedNotification": "Application %1 wants to send a transaction.",
   "@transactionSignatureCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],

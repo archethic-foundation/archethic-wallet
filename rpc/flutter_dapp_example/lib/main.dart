@@ -37,25 +37,31 @@ class TransactionSendForm extends StatefulWidget {
 class _TransactionSendFormState extends State<TransactionSendForm> {
   final payloadTextController = TextEditingController(text: """
  {
-    "source": "Insomnia",
-    "accountName": "ASF",
-    "type": "token",
-    "version": 1,
-    "data": {
+		"source": {
+			"name": "Insomnia",
+			"url": "https://pouet.com", 
+			"logo": "DFGHJKJHGFDFGHJ"   
+		},
+		"version": 2,
+    "payload": {
+			"type": "token",
+			"version": 1,
+			"data": {
         "content": "{ \\"name\\": \\"NFT 001\\", \\"supply\\": 100000000, \\"type\\": \\"non-fungible\\", \\"symbol\\": \\"NFT1\\", \\"aeip\\": [2], \\"properties\\": {}}",
-        "code": "",
-        "ownerships": [],
-        "ledger": {
-            "uco": {
-                "transfers": []
-            },
-            "token": {
-                "transfers": []
-            }
-        },
-        "recipients": []
+				"code": "",
+				"ownerships":[],
+				"ledger": {
+					"uco": {
+						"transfers": []
+					},
+					"token": {
+						"transfers": []
+					}
+				},
+				"recipients": []
+			}
     }
-}
+  }
 """);
 
   @override

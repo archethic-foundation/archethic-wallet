@@ -19,7 +19,6 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
-import 'package:aewallet/ui/views/command_receiver/sign_transaction/sign_transaction_command_handler.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
@@ -29,6 +28,7 @@ import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/sign_transaction/layouts/sign_transaction_command_handler.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:deeplink_rpc/deeplink_rpc.dart';
@@ -50,7 +50,8 @@ Future<void> main() async {
   if (ArchethicRPCServer.isPlatformCompatible) {
     ArchethicRPCServer(
       signTransactionCommandDispatcher: sl.get<
-          CommandDispatcher<SignTransactionCommand, SignTransactionResult>>(),
+          CommandDispatcher<RPCSignTransactionCommand,
+              SignTransactionResult>>(),
     ).run();
   }
 
@@ -161,7 +162,7 @@ class App extends ConsumerWidget {
               );
             case '/home':
               return NoTransitionRoute<HomePage>(
-                builder: (_) => SignTransactionCommandHandler(
+                builder: (_) => RPCSignTransactionCommandHandler(
                   child: const AutoLockGuard(child: HomePage()),
                 ),
                 settings: settings,

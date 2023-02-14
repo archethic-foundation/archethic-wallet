@@ -15,12 +15,163 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SignTransactionCommand {
-  /// Source application name
-  String get source => throw _privateConstructorUsedError;
+mixin _$RPCCommandSource {
+  String get name => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
+  String? get logo => throw _privateConstructorUsedError;
 
-  /// Service
-  String get accountName => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RPCCommandSourceCopyWith<RPCCommandSource> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RPCCommandSourceCopyWith<$Res> {
+  factory $RPCCommandSourceCopyWith(
+          RPCCommandSource value, $Res Function(RPCCommandSource) then) =
+      _$RPCCommandSourceCopyWithImpl<$Res, RPCCommandSource>;
+  @useResult
+  $Res call({String name, String? url, String? logo});
+}
+
+/// @nodoc
+class _$RPCCommandSourceCopyWithImpl<$Res, $Val extends RPCCommandSource>
+    implements $RPCCommandSourceCopyWith<$Res> {
+  _$RPCCommandSourceCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? url = freezed,
+    Object? logo = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      logo: freezed == logo
+          ? _value.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_RPCCommandSourceCopyWith<$Res>
+    implements $RPCCommandSourceCopyWith<$Res> {
+  factory _$$_RPCCommandSourceCopyWith(
+          _$_RPCCommandSource value, $Res Function(_$_RPCCommandSource) then) =
+      __$$_RPCCommandSourceCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String? url, String? logo});
+}
+
+/// @nodoc
+class __$$_RPCCommandSourceCopyWithImpl<$Res>
+    extends _$RPCCommandSourceCopyWithImpl<$Res, _$_RPCCommandSource>
+    implements _$$_RPCCommandSourceCopyWith<$Res> {
+  __$$_RPCCommandSourceCopyWithImpl(
+      _$_RPCCommandSource _value, $Res Function(_$_RPCCommandSource) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? url = freezed,
+    Object? logo = freezed,
+  }) {
+    return _then(_$_RPCCommandSource(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      logo: freezed == logo
+          ? _value.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RPCCommandSource extends _RPCCommandSource {
+  const _$_RPCCommandSource({required this.name, this.url, this.logo})
+      : super._();
+
+  @override
+  final String name;
+  @override
+  final String? url;
+  @override
+  final String? logo;
+
+  @override
+  String toString() {
+    return 'RPCCommandSource(name: $name, url: $url, logo: $logo)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RPCCommandSource &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.url, url) || other.url == url) &&
+            (identical(other.logo, logo) || other.logo == logo));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, name, url, logo);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_RPCCommandSourceCopyWith<_$_RPCCommandSource> get copyWith =>
+      __$$_RPCCommandSourceCopyWithImpl<_$_RPCCommandSource>(this, _$identity);
+}
+
+abstract class _RPCCommandSource extends RPCCommandSource {
+  const factory _RPCCommandSource(
+      {required final String name,
+      final String? url,
+      final String? logo}) = _$_RPCCommandSource;
+  const _RPCCommandSource._() : super._();
+
+  @override
+  String get name;
+  @override
+  String? get url;
+  @override
+  String? get logo;
+  @override
+  @JsonKey(ignore: true)
+  _$$_RPCCommandSourceCopyWith<_$_RPCCommandSource> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$RPCSignTransactionCommand {
+  /// Source application name
+  RPCCommandSource get source => throw _privateConstructorUsedError;
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
   archethic.Data get data => throw _privateConstructorUsedError;
@@ -32,29 +183,27 @@ mixin _$SignTransactionCommand {
   int get version => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SignTransactionCommandCopyWith<SignTransactionCommand> get copyWith =>
+  $RPCSignTransactionCommandCopyWith<RPCSignTransactionCommand> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SignTransactionCommandCopyWith<$Res> {
-  factory $SignTransactionCommandCopyWith(SignTransactionCommand value,
-          $Res Function(SignTransactionCommand) then) =
-      _$SignTransactionCommandCopyWithImpl<$Res, SignTransactionCommand>;
+abstract class $RPCSignTransactionCommandCopyWith<$Res> {
+  factory $RPCSignTransactionCommandCopyWith(RPCSignTransactionCommand value,
+          $Res Function(RPCSignTransactionCommand) then) =
+      _$RPCSignTransactionCommandCopyWithImpl<$Res, RPCSignTransactionCommand>;
   @useResult
   $Res call(
-      {String source,
-      String accountName,
-      archethic.Data data,
-      String type,
-      int version});
+      {RPCCommandSource source, archethic.Data data, String type, int version});
+
+  $RPCCommandSourceCopyWith<$Res> get source;
 }
 
 /// @nodoc
-class _$SignTransactionCommandCopyWithImpl<$Res,
-        $Val extends SignTransactionCommand>
-    implements $SignTransactionCommandCopyWith<$Res> {
-  _$SignTransactionCommandCopyWithImpl(this._value, this._then);
+class _$RPCSignTransactionCommandCopyWithImpl<$Res,
+        $Val extends RPCSignTransactionCommand>
+    implements $RPCSignTransactionCommandCopyWith<$Res> {
+  _$RPCSignTransactionCommandCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -65,7 +214,6 @@ class _$SignTransactionCommandCopyWithImpl<$Res,
   @override
   $Res call({
     Object? source = null,
-    Object? accountName = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
@@ -74,11 +222,7 @@ class _$SignTransactionCommandCopyWithImpl<$Res,
       source: null == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as RPCCommandSource,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -93,51 +237,55 @@ class _$SignTransactionCommandCopyWithImpl<$Res,
               as int,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RPCCommandSourceCopyWith<$Res> get source {
+    return $RPCCommandSourceCopyWith<$Res>(_value.source, (value) {
+      return _then(_value.copyWith(source: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_SignTransactionCommandCopyWith<$Res>
-    implements $SignTransactionCommandCopyWith<$Res> {
-  factory _$$_SignTransactionCommandCopyWith(_$_SignTransactionCommand value,
-          $Res Function(_$_SignTransactionCommand) then) =
-      __$$_SignTransactionCommandCopyWithImpl<$Res>;
+abstract class _$$_RPCSignTransactionCommandCopyWith<$Res>
+    implements $RPCSignTransactionCommandCopyWith<$Res> {
+  factory _$$_RPCSignTransactionCommandCopyWith(
+          _$_RPCSignTransactionCommand value,
+          $Res Function(_$_RPCSignTransactionCommand) then) =
+      __$$_RPCSignTransactionCommandCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String source,
-      String accountName,
-      archethic.Data data,
-      String type,
-      int version});
+      {RPCCommandSource source, archethic.Data data, String type, int version});
+
+  @override
+  $RPCCommandSourceCopyWith<$Res> get source;
 }
 
 /// @nodoc
-class __$$_SignTransactionCommandCopyWithImpl<$Res>
-    extends _$SignTransactionCommandCopyWithImpl<$Res,
-        _$_SignTransactionCommand>
-    implements _$$_SignTransactionCommandCopyWith<$Res> {
-  __$$_SignTransactionCommandCopyWithImpl(_$_SignTransactionCommand _value,
-      $Res Function(_$_SignTransactionCommand) _then)
+class __$$_RPCSignTransactionCommandCopyWithImpl<$Res>
+    extends _$RPCSignTransactionCommandCopyWithImpl<$Res,
+        _$_RPCSignTransactionCommand>
+    implements _$$_RPCSignTransactionCommandCopyWith<$Res> {
+  __$$_RPCSignTransactionCommandCopyWithImpl(
+      _$_RPCSignTransactionCommand _value,
+      $Res Function(_$_RPCSignTransactionCommand) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? source = null,
-    Object? accountName = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
-    return _then(_$_SignTransactionCommand(
+    return _then(_$_RPCSignTransactionCommand(
       source: null == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as RPCCommandSource,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -156,10 +304,9 @@ class __$$_SignTransactionCommandCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SignTransactionCommand extends _SignTransactionCommand {
-  const _$_SignTransactionCommand(
+class _$_RPCSignTransactionCommand extends _RPCSignTransactionCommand {
+  const _$_RPCSignTransactionCommand(
       {required this.source,
-      required this.accountName,
       required this.data,
       required this.type,
       required this.version})
@@ -167,11 +314,7 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
   /// Source application name
   @override
-  final String source;
-
-  /// Service
-  @override
-  final String accountName;
+  final RPCCommandSource source;
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
   @override
@@ -187,51 +330,43 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
   @override
   String toString() {
-    return 'SignTransactionCommand(source: $source, accountName: $accountName, data: $data, type: $type, version: $version)';
+    return 'RPCSignTransactionCommand(source: $source, data: $data, type: $type, version: $version)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SignTransactionCommand &&
+            other is _$_RPCSignTransactionCommand &&
             (identical(other.source, source) || other.source == source) &&
-            (identical(other.accountName, accountName) ||
-                other.accountName == accountName) &&
             (identical(other.data, data) || other.data == data) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.version, version) || other.version == version));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, source, accountName, data, type, version);
+  int get hashCode => Object.hash(runtimeType, source, data, type, version);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SignTransactionCommandCopyWith<_$_SignTransactionCommand> get copyWith =>
-      __$$_SignTransactionCommandCopyWithImpl<_$_SignTransactionCommand>(
-          this, _$identity);
+  _$$_RPCSignTransactionCommandCopyWith<_$_RPCSignTransactionCommand>
+      get copyWith => __$$_RPCSignTransactionCommandCopyWithImpl<
+          _$_RPCSignTransactionCommand>(this, _$identity);
 }
 
-abstract class _SignTransactionCommand extends SignTransactionCommand {
-  const factory _SignTransactionCommand(
-      {required final String source,
-      required final String accountName,
+abstract class _RPCSignTransactionCommand extends RPCSignTransactionCommand {
+  const factory _RPCSignTransactionCommand(
+      {required final RPCCommandSource source,
       required final archethic.Data data,
       required final String type,
-      required final int version}) = _$_SignTransactionCommand;
-  const _SignTransactionCommand._() : super._();
+      required final int version}) = _$_RPCSignTransactionCommand;
+  const _RPCSignTransactionCommand._() : super._();
 
   @override
 
   /// Source application name
-  String get source;
-  @override
-
-  /// Service
-  String get accountName;
+  RPCCommandSource get source;
   @override
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
@@ -246,6 +381,6 @@ abstract class _SignTransactionCommand extends SignTransactionCommand {
   int get version;
   @override
   @JsonKey(ignore: true)
-  _$$_SignTransactionCommandCopyWith<_$_SignTransactionCommand> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_RPCSignTransactionCommandCopyWith<_$_RPCSignTransactionCommand>
+      get copyWith => throw _privateConstructorUsedError;
 }

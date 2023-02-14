@@ -26,7 +26,10 @@ class UpdateMyPin extends UseCase<PinUpdateCommand, UpdatePinResult> {
   final AuthenticationRepositoryInterface repository;
 
   @override
-  Future<UpdatePinResult> run(PinUpdateCommand command) async {
+  Future<UpdatePinResult> run(
+    PinUpdateCommand command, {
+    UseCaseProgressListener? onProgress,
+  }) async {
     if (command.pin != command.pinConfirmation) {
       return const UpdatePinResult.pinsDoNotMatch();
     }
