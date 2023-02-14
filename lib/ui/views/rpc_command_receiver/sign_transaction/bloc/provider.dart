@@ -26,7 +26,7 @@ class SignTransactionConfirmationFormState
   const SignTransactionConfirmationFormState._();
 }
 
-class _SignTransactionConfirmationFormNotifier
+class SignTransactionConfirmationFormNotifier
     extends AutoDisposeFamilyAsyncNotifier<SignTransactionConfirmationFormState,
         RPCSignTransactionCommand> {
   @override
@@ -39,6 +39,21 @@ class _SignTransactionConfirmationFormNotifier
     return SignTransactionConfirmationFormState(
       signTransactionCommand: command,
       senderAccount: selectedAccount!,
+    );
+  }
+
+  void setAccount(Account account) {
+    state.maybeMap(
+      orElse: () => const Result.failure(
+        TransactionError.other(reason: 'Form is not loaded yet.'),
+      ),
+      data: (data) {
+        state = AsyncValue.data(
+          data.value.copyWith(
+            senderAccount: account,
+          ),
+        );
+      },
     );
   }
 
@@ -80,9 +95,9 @@ UseCase<SignTransactionCommand,
 
 class SignTransactionConfirmationProviders {
   static final form = AsyncNotifierProvider.autoDispose.family<
-      _SignTransactionConfirmationFormNotifier,
+      SignTransactionConfirmationFormNotifier,
       SignTransactionConfirmationFormState,
       RPCSignTransactionCommand>(
-    _SignTransactionConfirmationFormNotifier.new,
+    SignTransactionConfirmationFormNotifier.new,
   );
 }
