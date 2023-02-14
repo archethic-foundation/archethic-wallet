@@ -109,7 +109,10 @@ class _GetFromLocalFirstUseCase<CommandT, ValueT>
   final ReadStrategy<CommandT, ValueT> readStrategy;
 
   @override
-  Future<Result<ValueT, Failure>> run(CommandT command) =>
+  Future<Result<ValueT, Failure>> run(
+    CommandT command, {
+    UseCaseProgressListener? onProgress,
+  }) =>
       readStrategy._getFromLocalFirst(command);
 }
 
@@ -120,6 +123,9 @@ class _GetFromRemoteFirstUseCase<CommandT, ValueT>
   final ReadStrategy<CommandT, ValueT> readStrategy;
 
   @override
-  Future<Result<ValueT, Failure>> run(CommandT command) =>
+  Future<Result<ValueT, Failure>> run(
+    CommandT command, {
+    UseCaseProgressListener? onProgress,
+  }) =>
       readStrategy._getFromRemoteFirst(command);
 }

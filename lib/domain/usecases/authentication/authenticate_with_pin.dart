@@ -13,7 +13,10 @@ class AuthenticateWithPin
   static int get maxFailedAttempts => AuthenticationWithLock.maxFailedAttempts;
 
   @override
-  Future<AuthenticationResult> run(PinCredentials credentials) async {
+  Future<AuthenticationResult> run(
+    PinCredentials credentials, {
+    UseCaseProgressListener? onProgress,
+  }) async {
     final expectedPin = await repository.getPin();
 
     if (expectedPin == credentials.pin) {

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_errors.dart';
+import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_command.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_result.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -13,13 +14,16 @@ final deeplinkRpcSignTransactionHandler = DeeplinkRpcRequestHandler(
   handle: (request) async {
     const logName = 'DeeplinkRpcHandler';
 
-    final signTransactionCommandDTO = RpcSignTransactionCommand.fromJson(
+    final signTransactionCommandDTO = RpcRequest.fromJson(
       request.params,
     );
 
-    final signTransactionCommand = signTransactionCommandDTO.toModel();
+    final signTransactionCommand =
+        signTransactionCommandDTO.toSignTransactionModel();
     final result = await sl
-        .get<CommandDispatcher<SignTransactionCommand, SignTransactionResult>>()
+        .get<
+            CommandDispatcher<RPCSignTransactionCommand,
+                SignTransactionResult>>()
         .add(signTransactionCommand);
 
     return result.map(

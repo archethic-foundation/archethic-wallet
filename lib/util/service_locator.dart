@@ -25,8 +25,8 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
     ..registerLazySingleton<
-        CommandDispatcher<SignTransactionCommand, SignTransactionResult>>(
-      CommandDispatcher<SignTransactionCommand, SignTransactionResult>.new,
+        CommandDispatcher<RPCSignTransactionCommand, SignTransactionResult>>(
+      CommandDispatcher<RPCSignTransactionCommand, SignTransactionResult>.new,
     )
     ..registerLazySingleton<DeeplinkRpcRequestReceiver>(
       () => DeeplinkRpcRequestReceiver()

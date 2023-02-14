@@ -1011,8 +1011,7 @@ class AppLocalization {
   }
 
   String get transactionSignatureCommandReceivedNotification {
-    return Intl.message(
-        'Application %1 wants to send a transaction with your %2 account.',
+    return Intl.message('Application %1 wants to send a transaction.',
         name: 'transactionSignatureCommandReceivedNotification');
   }
 
