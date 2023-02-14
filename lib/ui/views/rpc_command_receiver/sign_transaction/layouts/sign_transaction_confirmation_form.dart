@@ -1,3 +1,4 @@
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
@@ -15,8 +16,11 @@ import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
+import 'package:aewallet/ui/widgets/dialogs/accounts_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+part 'widgets/account_selection_button.dart';
 
 class TransactionConfirmationForm extends ConsumerWidget {
   const TransactionConfirmationForm(this.command, {super.key});
@@ -71,6 +75,10 @@ class TransactionConfirmationForm extends ConsumerWidget {
                                         .name),
                             style: theme.textStyleSize14W600Primary,
                           ),
+                          _AccountSelectionButton(
+                            formNotifier: formNotifier,
+                            formState: formData.value,
+                          ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -79,61 +87,56 @@ class TransactionConfirmationForm extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Column(
+                Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          localizations.cancel,
-                          Dimens.buttonBottomDimens,
-                          onPressed: () {
-                            Navigator.of(context).pop(
-                              const Result.failure(
-                                TransactionError.userRejected(),
-                              ),
-                            );
-                          },
-                        ),
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          localizations.send,
-                          Dimens.buttonBottomDimens,
-                          onPressed: () async {
-                            ShowSendingAnimation.build(
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
+                      localizations.cancel,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () {
+                        Navigator.of(context).pop(
+                          const Result.failure(
+                            TransactionError.userRejected(),
+                          ),
+                        );
+                      },
+                    ),
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
+                      localizations.send,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () async {
+                        ShowSendingAnimation.build(
+                          context,
+                          theme,
+                        );
+
+                        final result = await formNotifier.send(
+                          (progress) {
+                            _showSendProgress(
                               context,
+                              ref,
                               theme,
+                              progress,
                             );
-
-                            final result = await formNotifier.send(
-                              (progress) {
-                                _showSendProgress(
-                                  context,
-                                  ref,
-                                  theme,
-                                  progress,
-                                );
-                              },
-                            );
-
-                            result.map(
-                              success: (success) {},
-                              failure: (failure) {
-                                _showSendFailed(
-                                  context,
-                                  ref,
-                                  theme,
-                                  failure,
-                                );
-                              },
-                            );
-
-                            Navigator.of(context)
-                                .pop(); // Hide SendingAnimation
-                            Navigator.of(context).pop(result);
                           },
-                        ),
-                      ],
+                        );
+
+                        result.map(
+                          success: (success) {},
+                          failure: (failure) {
+                            _showSendFailed(
+                              context,
+                              ref,
+                              theme,
+                              failure,
+                            );
+                          },
+                        );
+
+                        Navigator.of(context).pop(); // Hide SendingAnimation
+                        Navigator.of(context).pop(result);
+                      },
                     ),
                   ],
                 ),
