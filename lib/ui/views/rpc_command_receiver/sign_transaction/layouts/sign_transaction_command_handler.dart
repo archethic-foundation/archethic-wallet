@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transaction/layouts/sign_transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -22,7 +22,7 @@ class RPCSignTransactionCommandHandler extends ConsumerWidget {
   final Widget child;
 
   final commandDispatcher = sl.get<
-      CommandDispatcher<RPCSignTransactionCommand, SignTransactionResult>>();
+      CommandDispatcher<RPCSendTransactionCommand, SendTransactionResult>>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,7 +45,7 @@ class RPCSignTransactionCommandHandler extends ConsumerWidget {
   Future<void> _showNotification({
     required BuildContext context,
     required WidgetRef ref,
-    required RPCSignTransactionCommand command,
+    required RPCSendTransactionCommand command,
   }) async {
     final message = AppLocalization.of(context)!
         .transactionSignatureCommandReceivedNotification;
@@ -54,7 +54,7 @@ class RPCSignTransactionCommandHandler extends ConsumerWidget {
       title: 'Archethic',
       body: message.replaceAll(
         '%1',
-        command.source.name,
+        command.origin.name,
       ),
     );
   }

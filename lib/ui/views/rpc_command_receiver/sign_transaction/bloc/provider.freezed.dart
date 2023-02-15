@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignTransactionConfirmationFormState {
-  RPCSignTransactionCommand get signTransactionCommand =>
+  RPCSendTransactionCommand get signTransactionCommand =>
       throw _privateConstructorUsedError;
   Account get senderAccount => throw _privateConstructorUsedError;
 
@@ -35,10 +35,10 @@ abstract class $SignTransactionConfirmationFormStateCopyWith<$Res> {
           SignTransactionConfirmationFormState>;
   @useResult
   $Res call(
-      {RPCSignTransactionCommand signTransactionCommand,
+      {RPCSendTransactionCommand signTransactionCommand,
       Account senderAccount});
 
-  $RPCSignTransactionCommandCopyWith<$Res> get signTransactionCommand;
+  $RPCSendTransactionCommandCopyWith<$Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCSignTransactionCommand,
+              as RPCSendTransactionCommand,
       senderAccount: null == senderAccount
           ? _value.senderAccount
           : senderAccount // ignore: cast_nullable_to_non_nullable
@@ -72,8 +72,8 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $RPCSignTransactionCommandCopyWith<$Res> get signTransactionCommand {
-    return $RPCSignTransactionCommandCopyWith<$Res>(
+  $RPCSendTransactionCommandCopyWith<$Res> get signTransactionCommand {
+    return $RPCSendTransactionCommandCopyWith<$Res>(
         _value.signTransactionCommand, (value) {
       return _then(_value.copyWith(signTransactionCommand: value) as $Val);
     });
@@ -90,11 +90,11 @@ abstract class _$$_SignTransactionConfirmationFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {RPCSignTransactionCommand signTransactionCommand,
+      {RPCSendTransactionCommand signTransactionCommand,
       Account senderAccount});
 
   @override
-  $RPCSignTransactionCommandCopyWith<$Res> get signTransactionCommand;
+  $RPCSendTransactionCommandCopyWith<$Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCSignTransactionCommand,
+              as RPCSendTransactionCommand,
       senderAccount: null == senderAccount
           ? _value.senderAccount
           : senderAccount // ignore: cast_nullable_to_non_nullable
@@ -135,7 +135,7 @@ class _$_SignTransactionConfirmationFormState
       : super._();
 
   @override
-  final RPCSignTransactionCommand signTransactionCommand;
+  final RPCSendTransactionCommand signTransactionCommand;
   @override
   final Account senderAccount;
 
@@ -171,13 +171,13 @@ class _$_SignTransactionConfirmationFormState
 abstract class _SignTransactionConfirmationFormState
     extends SignTransactionConfirmationFormState {
   const factory _SignTransactionConfirmationFormState(
-          {required final RPCSignTransactionCommand signTransactionCommand,
+          {required final RPCSendTransactionCommand signTransactionCommand,
           required final Account senderAccount}) =
       _$_SignTransactionConfirmationFormState;
   const _SignTransactionConfirmationFormState._() : super._();
 
   @override
-  RPCSignTransactionCommand get signTransactionCommand;
+  RPCSendTransactionCommand get signTransactionCommand;
   @override
   Account get senderAccount;
   @override

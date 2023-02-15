@@ -1,28 +1,19 @@
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:aewallet/domain/service/rpc/commands/command_origin.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'sign_transaction.freezed.dart';
+part 'send_transaction.freezed.dart';
 
-typedef SignTransactionResult
+typedef SendTransactionResult
     = Result<TransactionConfirmation, TransactionError>;
 
 @freezed
-class RPCCommandSource with _$RPCCommandSource {
-  const factory RPCCommandSource({
-    required String name,
-    String? url,
-    String? logo,
-  }) = _RPCCommandSource;
-  const RPCCommandSource._();
-}
-
-@freezed
-class RPCSignTransactionCommand with _$RPCSignTransactionCommand {
-  const factory RPCSignTransactionCommand({
+class RPCSendTransactionCommand with _$RPCSendTransactionCommand {
+  const factory RPCSendTransactionCommand({
     /// Source application name
-    required RPCCommandSource source,
+    required RPCCommandOrigin origin,
 
     /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
     required archethic.Data data,
@@ -32,6 +23,6 @@ class RPCSignTransactionCommand with _$RPCSignTransactionCommand {
 
     /// - Version: version of the transaction (used for backward compatiblity)
     required int version,
-  }) = _RPCSignTransactionCommand;
-  const RPCSignTransactionCommand._();
+  }) = _RPCSendTransactionCommand;
+  const RPCSendTransactionCommand._();
 }

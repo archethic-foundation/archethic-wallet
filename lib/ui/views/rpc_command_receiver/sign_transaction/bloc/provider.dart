@@ -3,7 +3,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -20,7 +20,7 @@ part 'provider.g.dart';
 class SignTransactionConfirmationFormState
     with _$SignTransactionConfirmationFormState {
   const factory SignTransactionConfirmationFormState({
-    required RPCSignTransactionCommand signTransactionCommand,
+    required RPCSendTransactionCommand signTransactionCommand,
     required Account senderAccount,
   }) = _SignTransactionConfirmationFormState;
   const SignTransactionConfirmationFormState._();
@@ -28,10 +28,10 @@ class SignTransactionConfirmationFormState
 
 class SignTransactionConfirmationFormNotifier
     extends AutoDisposeFamilyAsyncNotifier<SignTransactionConfirmationFormState,
-        RPCSignTransactionCommand> {
+        RPCSendTransactionCommand> {
   @override
   Future<SignTransactionConfirmationFormState> build(
-    RPCSignTransactionCommand command,
+    RPCSendTransactionCommand command,
   ) async {
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,
@@ -97,7 +97,7 @@ class SignTransactionConfirmationProviders {
   static final form = AsyncNotifierProvider.autoDispose.family<
       SignTransactionConfirmationFormNotifier,
       SignTransactionConfirmationFormState,
-      RPCSignTransactionCommand>(
+      RPCSendTransactionCommand>(
     SignTransactionConfirmationFormNotifier.new,
   );
 }

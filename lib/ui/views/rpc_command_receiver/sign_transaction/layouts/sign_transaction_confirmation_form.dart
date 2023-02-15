@@ -2,7 +2,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -25,7 +25,7 @@ part 'widgets/account_selection_button.dart';
 class TransactionConfirmationForm extends ConsumerWidget {
   const TransactionConfirmationForm(this.command, {super.key});
 
-  final RPCSignTransactionCommand command;
+  final RPCSendTransactionCommand command;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,7 +71,7 @@ class TransactionConfirmationForm extends ConsumerWidget {
                                 .transactionSignatureCommandReceivedNotification
                                 .replaceAll(
                                     '%1',
-                                    formData.value.signTransactionCommand.source
+                                    formData.value.signTransactionCommand.origin
                                         .name),
                             style: theme.textStyleSize14W600Primary,
                           ),
