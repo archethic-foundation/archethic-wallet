@@ -4,10 +4,8 @@ import 'dart:io';
 
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_errors.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_send_transaction_command.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_send_transaction_result.dart';
+import 'package:aewallet/infrastructure/rpc/websocket_handlers/get_endpoint.dart';
+import 'package:aewallet/infrastructure/rpc/websocket_handlers/send_transaction.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -44,46 +42,13 @@ class ArchethicRPCServer {
           final server = Server(channel.cast<String>())
             ..registerMethod(
               'sendTransaction',
-              (Parameters params) async {
-                try {
-                  log('Received SendTransaction', name: LOG_NAME);
-
-                  final signTransactionCommandDTO = RpcRequest.fromJson(
-                    params.value,
-                  );
-                  final signTransactionCommand =
-                      signTransactionCommandDTO.toSignTransactionModel();
-                  final result = await signTransactionCommandDispatcher.add(
-                    signTransactionCommand,
-                  );
-
-                  return result.map(
-                    success: RpcSendTransactionResult.fromModel,
-                    failure: (failure) {
-                      log(
-                        'SendTransaction failed',
-                        name: LOG_NAME,
-                        error: failure.message,
-                      );
-                      throw RpcException(
-                        ArchethicRPCErrors.fromTransactionError(failure),
-                        failure.message,
-                      );
-                    },
-                  );
-                } on TypeError catch (e, stack) {
-                  log(
-                    'Invalid transaction format',
-                    name: LOG_NAME,
-                    error: e,
-                    stackTrace: stack,
-                  );
-                  throw RpcException(
-                    ArchethicRPCErrors.invalidTransaction,
-                    'Invalid transaction format',
-                  );
-                }
-              },
+              sendTransactionWebsocketHandlerBuilder(
+                signTransactionCommandDispatcher,
+              ),
+            )
+            ..registerMethod(
+              'getEndpoint',
+              getEndpointWebsocketHandlerBuilder(),
             );
           await server.listen();
         });

@@ -70,9 +70,9 @@ class TransactionConfirmationForm extends ConsumerWidget {
                             localizations
                                 .transactionSignatureCommandReceivedNotification
                                 .replaceAll(
-                                    '%1',
-                                    formData.value.signTransactionCommand.origin
-                                        .name),
+                              '%1',
+                              formData.value.signTransactionCommand.origin.name,
+                            ),
                             style: theme.textStyleSize14W600Primary,
                           ),
                           _AccountSelectionButton(

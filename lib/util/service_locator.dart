@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_handler.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -31,6 +33,9 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<DeeplinkRpcRequestReceiver>(
       () => DeeplinkRpcRequestReceiver()
         ..registerHandler(deeplinkRpcSendTransactionHandler),
+    )
+    ..registerLazySingleton<SettingsRepositoryInterface>(
+      SettingsRepository.new,
     );
 
   await _setupServiceLocatorNetworkDependencies();

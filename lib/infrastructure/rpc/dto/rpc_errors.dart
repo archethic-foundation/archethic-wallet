@@ -1,5 +1,6 @@
 import 'package:aewallet/domain/models/transaction_event.dart';
 
+/// A DTO representing an RPC error.
 class ArchethicRPCErrors {
   static int fromTransactionError(TransactionError failure) => failure.map(
         connectivity: (_) => ArchethicRPCErrors.disconnected,
@@ -12,6 +13,8 @@ class ArchethicRPCErrors {
         unknownAccount: (_) => ArchethicRPCErrors.unknownAccount,
         other: (_) => ArchethicRPCErrors.other,
       );
+
+  static const invalidParams = -32602;
 
   static const userRejected = 4001;
   static const unauthorized = 4100;

@@ -4,20 +4,16 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
-import 'package:aewallet/infrastructure/repositories/settings.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class SettingsProviders {
-  static final _repository = Provider<SettingsRepositoryInterface>(
-    (ref) => SettingsRepository(),
-  );
-
   static final settings = StateNotifierProvider<SettingsNotifier, Settings>(
     SettingsNotifier.new,
   );
@@ -30,7 +26,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> initialize() async {
     final locale = ref.read(LanguageProviders.selectedLocale);
-    state = await ref.read(SettingsProviders._repository).getSettings(locale);
+    state = await sl.get<SettingsRepositoryInterface>().getSettings(locale);
   }
 
   Future<void> reset() => _update(
@@ -55,7 +51,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
       );
 
   Future<void> _update(Settings settings) async {
-    await ref.read(SettingsProviders._repository).setSettings(settings);
+    await sl.get<SettingsRepositoryInterface>().setSettings(settings);
     state = settings;
   }
 
