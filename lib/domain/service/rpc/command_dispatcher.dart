@@ -1,6 +1,21 @@
 import 'dart:async';
 import 'dart:collection';
 
+/// [CommandDispatcher] is a [Command] queue.
+/// Queue can be consumed by one handler.
+///
+/// The handler reads and processes [Command]s one by one.
+/// Processing result is returned to the [Command] emitter.
+///
+///
+/// This mechanism is used to make RPC context communicate with the UI :
+///  - RPC receives a DApp request.
+///  - RPC pushes a [Command].
+///  - UI consumes the [Command]
+///     => it might display a confirmation popup.
+///     => eventually command is processed, and result is returned to the [CommandDispatcher]
+///  - RPC receives the [Command] result. It returns it to the DApp.
+///
 class Command<C> {
   Command(
     this.completer,

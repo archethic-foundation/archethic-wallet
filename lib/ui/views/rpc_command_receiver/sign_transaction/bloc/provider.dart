@@ -31,13 +31,13 @@ class SignTransactionConfirmationFormNotifier
         RPCSendTransactionCommand> {
   @override
   Future<SignTransactionConfirmationFormState> build(
-    RPCSendTransactionCommand command,
+    RPCSendTransactionCommand arg,
   ) async {
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,
     );
     return SignTransactionConfirmationFormState(
-      signTransactionCommand: command,
+      signTransactionCommand: arg,
       senderAccount: selectedAccount!,
     );
   }
