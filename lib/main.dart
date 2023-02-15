@@ -9,7 +9,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -50,8 +50,8 @@ Future<void> main() async {
   if (ArchethicRPCServer.isPlatformCompatible) {
     ArchethicRPCServer(
       signTransactionCommandDispatcher: sl.get<
-          CommandDispatcher<RPCSignTransactionCommand,
-              SignTransactionResult>>(),
+          CommandDispatcher<RPCSendTransactionCommand,
+              SendTransactionResult>>(),
     ).run();
   }
 

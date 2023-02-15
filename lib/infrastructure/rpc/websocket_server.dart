@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/service/rpc/commands/sign_transaction.dart';
+import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_errors.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_command.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_sign_transaction_result.dart';
+import 'package:aewallet/infrastructure/rpc/dto/rpc_send_transaction_command.dart';
+import 'package:aewallet/infrastructure/rpc/dto/rpc_send_transaction_result.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -20,7 +20,7 @@ class ArchethicRPCServer {
   static const HOST = '127.0.0.1';
   static const PORT = 12345;
 
-  final CommandDispatcher<RPCSignTransactionCommand, SignTransactionResult>
+  final CommandDispatcher<RPCSendTransactionCommand, SendTransactionResult>
       signTransactionCommandDispatcher;
 
   static bool get isPlatformCompatible {
@@ -43,10 +43,10 @@ class ArchethicRPCServer {
           final channel = IOWebSocketChannel(socket);
           final server = Server(channel.cast<String>())
             ..registerMethod(
-              'signTransaction',
+              'sendTransaction',
               (Parameters params) async {
                 try {
-                  log('Received SendTokenTransaction', name: LOG_NAME);
+                  log('Received SendTransaction', name: LOG_NAME);
 
                   final signTransactionCommandDTO = RpcRequest.fromJson(
                     params.value,
@@ -58,10 +58,10 @@ class ArchethicRPCServer {
                   );
 
                   return result.map(
-                    success: RpcSignTransactionResult.fromModel,
+                    success: RpcSendTransactionResult.fromModel,
                     failure: (failure) {
                       log(
-                        'SendTokenTransaction failed',
+                        'SendTransaction failed',
                         name: LOG_NAME,
                         error: failure.message,
                       );

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'rpc_sign_transaction_result.dart';
+part of 'rpc_send_transaction_result.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,38 +14,38 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-RpcSignTransactionResult _$RpcSignTransactionResultFromJson(
+RpcSendTransactionResult _$RpcSendTransactionResultFromJson(
     Map<String, dynamic> json) {
-  return _RpcSignTransactionResult.fromJson(json);
+  return _RpcSendTransactionResult.fromJson(json);
 }
 
 /// @nodoc
-mixin _$RpcSignTransactionResult {
+mixin _$RpcSendTransactionResult {
   String get transactionAddress => throw _privateConstructorUsedError;
   int get nbConfirmations => throw _privateConstructorUsedError;
   int get maxConfirmations => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RpcSignTransactionResultCopyWith<RpcSignTransactionResult> get copyWith =>
+  $RpcSendTransactionResultCopyWith<RpcSendTransactionResult> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RpcSignTransactionResultCopyWith<$Res> {
-  factory $RpcSignTransactionResultCopyWith(RpcSignTransactionResult value,
-          $Res Function(RpcSignTransactionResult) then) =
-      _$RpcSignTransactionResultCopyWithImpl<$Res, RpcSignTransactionResult>;
+abstract class $RpcSendTransactionResultCopyWith<$Res> {
+  factory $RpcSendTransactionResultCopyWith(RpcSendTransactionResult value,
+          $Res Function(RpcSendTransactionResult) then) =
+      _$RpcSendTransactionResultCopyWithImpl<$Res, RpcSendTransactionResult>;
   @useResult
   $Res call(
       {String transactionAddress, int nbConfirmations, int maxConfirmations});
 }
 
 /// @nodoc
-class _$RpcSignTransactionResultCopyWithImpl<$Res,
-        $Val extends RpcSignTransactionResult>
-    implements $RpcSignTransactionResultCopyWith<$Res> {
-  _$RpcSignTransactionResultCopyWithImpl(this._value, this._then);
+class _$RpcSendTransactionResultCopyWithImpl<$Res,
+        $Val extends RpcSendTransactionResult>
+    implements $RpcSendTransactionResultCopyWith<$Res> {
+  _$RpcSendTransactionResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -77,12 +77,12 @@ class _$RpcSignTransactionResultCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RpcSignTransactionResultCopyWith<$Res>
-    implements $RpcSignTransactionResultCopyWith<$Res> {
-  factory _$$_RpcSignTransactionResultCopyWith(
-          _$_RpcSignTransactionResult value,
-          $Res Function(_$_RpcSignTransactionResult) then) =
-      __$$_RpcSignTransactionResultCopyWithImpl<$Res>;
+abstract class _$$_RpcSendTransactionResultCopyWith<$Res>
+    implements $RpcSendTransactionResultCopyWith<$Res> {
+  factory _$$_RpcSendTransactionResultCopyWith(
+          _$_RpcSendTransactionResult value,
+          $Res Function(_$_RpcSendTransactionResult) then) =
+      __$$_RpcSendTransactionResultCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -90,12 +90,12 @@ abstract class _$$_RpcSignTransactionResultCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RpcSignTransactionResultCopyWithImpl<$Res>
-    extends _$RpcSignTransactionResultCopyWithImpl<$Res,
-        _$_RpcSignTransactionResult>
-    implements _$$_RpcSignTransactionResultCopyWith<$Res> {
-  __$$_RpcSignTransactionResultCopyWithImpl(_$_RpcSignTransactionResult _value,
-      $Res Function(_$_RpcSignTransactionResult) _then)
+class __$$_RpcSendTransactionResultCopyWithImpl<$Res>
+    extends _$RpcSendTransactionResultCopyWithImpl<$Res,
+        _$_RpcSendTransactionResult>
+    implements _$$_RpcSendTransactionResultCopyWith<$Res> {
+  __$$_RpcSendTransactionResultCopyWithImpl(_$_RpcSendTransactionResult _value,
+      $Res Function(_$_RpcSendTransactionResult) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +105,7 @@ class __$$_RpcSignTransactionResultCopyWithImpl<$Res>
     Object? nbConfirmations = null,
     Object? maxConfirmations = null,
   }) {
-    return _then(_$_RpcSignTransactionResult(
+    return _then(_$_RpcSendTransactionResult(
       transactionAddress: null == transactionAddress
           ? _value.transactionAddress
           : transactionAddress // ignore: cast_nullable_to_non_nullable
@@ -124,15 +124,15 @@ class __$$_RpcSignTransactionResultCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RpcSignTransactionResult extends _RpcSignTransactionResult {
-  const _$_RpcSignTransactionResult(
+class _$_RpcSendTransactionResult extends _RpcSendTransactionResult {
+  const _$_RpcSendTransactionResult(
       {required this.transactionAddress,
       required this.nbConfirmations,
       required this.maxConfirmations})
       : super._();
 
-  factory _$_RpcSignTransactionResult.fromJson(Map<String, dynamic> json) =>
-      _$$_RpcSignTransactionResultFromJson(json);
+  factory _$_RpcSendTransactionResult.fromJson(Map<String, dynamic> json) =>
+      _$$_RpcSendTransactionResultFromJson(json);
 
   @override
   final String transactionAddress;
@@ -143,14 +143,14 @@ class _$_RpcSignTransactionResult extends _RpcSignTransactionResult {
 
   @override
   String toString() {
-    return 'RpcSignTransactionResult(transactionAddress: $transactionAddress, nbConfirmations: $nbConfirmations, maxConfirmations: $maxConfirmations)';
+    return 'RpcSendTransactionResult(transactionAddress: $transactionAddress, nbConfirmations: $nbConfirmations, maxConfirmations: $maxConfirmations)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RpcSignTransactionResult &&
+            other is _$_RpcSendTransactionResult &&
             (identical(other.transactionAddress, transactionAddress) ||
                 other.transactionAddress == transactionAddress) &&
             (identical(other.nbConfirmations, nbConfirmations) ||
@@ -167,27 +167,27 @@ class _$_RpcSignTransactionResult extends _RpcSignTransactionResult {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RpcSignTransactionResultCopyWith<_$_RpcSignTransactionResult>
-      get copyWith => __$$_RpcSignTransactionResultCopyWithImpl<
-          _$_RpcSignTransactionResult>(this, _$identity);
+  _$$_RpcSendTransactionResultCopyWith<_$_RpcSendTransactionResult>
+      get copyWith => __$$_RpcSendTransactionResultCopyWithImpl<
+          _$_RpcSendTransactionResult>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RpcSignTransactionResultToJson(
+    return _$$_RpcSendTransactionResultToJson(
       this,
     );
   }
 }
 
-abstract class _RpcSignTransactionResult extends RpcSignTransactionResult {
-  const factory _RpcSignTransactionResult(
+abstract class _RpcSendTransactionResult extends RpcSendTransactionResult {
+  const factory _RpcSendTransactionResult(
       {required final String transactionAddress,
       required final int nbConfirmations,
-      required final int maxConfirmations}) = _$_RpcSignTransactionResult;
-  const _RpcSignTransactionResult._() : super._();
+      required final int maxConfirmations}) = _$_RpcSendTransactionResult;
+  const _RpcSendTransactionResult._() : super._();
 
-  factory _RpcSignTransactionResult.fromJson(Map<String, dynamic> json) =
-      _$_RpcSignTransactionResult.fromJson;
+  factory _RpcSendTransactionResult.fromJson(Map<String, dynamic> json) =
+      _$_RpcSendTransactionResult.fromJson;
 
   @override
   String get transactionAddress;
@@ -197,6 +197,6 @@ abstract class _RpcSignTransactionResult extends RpcSignTransactionResult {
   int get maxConfirmations;
   @override
   @JsonKey(ignore: true)
-  _$$_RpcSignTransactionResultCopyWith<_$_RpcSignTransactionResult>
+  _$$_RpcSendTransactionResultCopyWith<_$_RpcSendTransactionResult>
       get copyWith => throw _privateConstructorUsedError;
 }

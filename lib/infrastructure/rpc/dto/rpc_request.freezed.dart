@@ -14,35 +14,35 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-RpcRequestSource _$RpcRequestSourceFromJson(Map<String, dynamic> json) {
-  return _RpcRequestSource.fromJson(json);
+RpcRequestOrigin _$RpcRequestOriginFromJson(Map<String, dynamic> json) {
+  return _RpcRequestOrigin.fromJson(json);
 }
 
 /// @nodoc
-mixin _$RpcRequestSource {
+mixin _$RpcRequestOrigin {
   String get name => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
   String? get logo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RpcRequestSourceCopyWith<RpcRequestSource> get copyWith =>
+  $RpcRequestOriginCopyWith<RpcRequestOrigin> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RpcRequestSourceCopyWith<$Res> {
-  factory $RpcRequestSourceCopyWith(
-          RpcRequestSource value, $Res Function(RpcRequestSource) then) =
-      _$RpcRequestSourceCopyWithImpl<$Res, RpcRequestSource>;
+abstract class $RpcRequestOriginCopyWith<$Res> {
+  factory $RpcRequestOriginCopyWith(
+          RpcRequestOrigin value, $Res Function(RpcRequestOrigin) then) =
+      _$RpcRequestOriginCopyWithImpl<$Res, RpcRequestOrigin>;
   @useResult
   $Res call({String name, String? url, String? logo});
 }
 
 /// @nodoc
-class _$RpcRequestSourceCopyWithImpl<$Res, $Val extends RpcRequestSource>
-    implements $RpcRequestSourceCopyWith<$Res> {
-  _$RpcRequestSourceCopyWithImpl(this._value, this._then);
+class _$RpcRequestOriginCopyWithImpl<$Res, $Val extends RpcRequestOrigin>
+    implements $RpcRequestOriginCopyWith<$Res> {
+  _$RpcRequestOriginCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -74,22 +74,22 @@ class _$RpcRequestSourceCopyWithImpl<$Res, $Val extends RpcRequestSource>
 }
 
 /// @nodoc
-abstract class _$$_RpcRequestSourceCopyWith<$Res>
-    implements $RpcRequestSourceCopyWith<$Res> {
-  factory _$$_RpcRequestSourceCopyWith(
-          _$_RpcRequestSource value, $Res Function(_$_RpcRequestSource) then) =
-      __$$_RpcRequestSourceCopyWithImpl<$Res>;
+abstract class _$$_RpcRequestOriginCopyWith<$Res>
+    implements $RpcRequestOriginCopyWith<$Res> {
+  factory _$$_RpcRequestOriginCopyWith(
+          _$_RpcRequestOrigin value, $Res Function(_$_RpcRequestOrigin) then) =
+      __$$_RpcRequestOriginCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String? url, String? logo});
 }
 
 /// @nodoc
-class __$$_RpcRequestSourceCopyWithImpl<$Res>
-    extends _$RpcRequestSourceCopyWithImpl<$Res, _$_RpcRequestSource>
-    implements _$$_RpcRequestSourceCopyWith<$Res> {
-  __$$_RpcRequestSourceCopyWithImpl(
-      _$_RpcRequestSource _value, $Res Function(_$_RpcRequestSource) _then)
+class __$$_RpcRequestOriginCopyWithImpl<$Res>
+    extends _$RpcRequestOriginCopyWithImpl<$Res, _$_RpcRequestOrigin>
+    implements _$$_RpcRequestOriginCopyWith<$Res> {
+  __$$_RpcRequestOriginCopyWithImpl(
+      _$_RpcRequestOrigin _value, $Res Function(_$_RpcRequestOrigin) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_RpcRequestSourceCopyWithImpl<$Res>
     Object? url = freezed,
     Object? logo = freezed,
   }) {
-    return _then(_$_RpcRequestSource(
+    return _then(_$_RpcRequestOrigin(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -118,12 +118,12 @@ class __$$_RpcRequestSourceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RpcRequestSource extends _RpcRequestSource {
-  const _$_RpcRequestSource({required this.name, this.url, this.logo})
+class _$_RpcRequestOrigin extends _RpcRequestOrigin {
+  const _$_RpcRequestOrigin({required this.name, this.url, this.logo})
       : super._();
 
-  factory _$_RpcRequestSource.fromJson(Map<String, dynamic> json) =>
-      _$$_RpcRequestSourceFromJson(json);
+  factory _$_RpcRequestOrigin.fromJson(Map<String, dynamic> json) =>
+      _$$_RpcRequestOriginFromJson(json);
 
   @override
   final String name;
@@ -134,14 +134,14 @@ class _$_RpcRequestSource extends _RpcRequestSource {
 
   @override
   String toString() {
-    return 'RpcRequestSource(name: $name, url: $url, logo: $logo)';
+    return 'RpcRequestOrigin(name: $name, url: $url, logo: $logo)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RpcRequestSource &&
+            other is _$_RpcRequestOrigin &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.logo, logo) || other.logo == logo));
@@ -154,26 +154,26 @@ class _$_RpcRequestSource extends _RpcRequestSource {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RpcRequestSourceCopyWith<_$_RpcRequestSource> get copyWith =>
-      __$$_RpcRequestSourceCopyWithImpl<_$_RpcRequestSource>(this, _$identity);
+  _$$_RpcRequestOriginCopyWith<_$_RpcRequestOrigin> get copyWith =>
+      __$$_RpcRequestOriginCopyWithImpl<_$_RpcRequestOrigin>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RpcRequestSourceToJson(
+    return _$$_RpcRequestOriginToJson(
       this,
     );
   }
 }
 
-abstract class _RpcRequestSource extends RpcRequestSource {
-  const factory _RpcRequestSource(
+abstract class _RpcRequestOrigin extends RpcRequestOrigin {
+  const factory _RpcRequestOrigin(
       {required final String name,
       final String? url,
-      final String? logo}) = _$_RpcRequestSource;
-  const _RpcRequestSource._() : super._();
+      final String? logo}) = _$_RpcRequestOrigin;
+  const _RpcRequestOrigin._() : super._();
 
-  factory _RpcRequestSource.fromJson(Map<String, dynamic> json) =
-      _$_RpcRequestSource.fromJson;
+  factory _RpcRequestOrigin.fromJson(Map<String, dynamic> json) =
+      _$_RpcRequestOrigin.fromJson;
 
   @override
   String get name;
@@ -183,7 +183,7 @@ abstract class _RpcRequestSource extends RpcRequestSource {
   String? get logo;
   @override
   @JsonKey(ignore: true)
-  _$$_RpcRequestSourceCopyWith<_$_RpcRequestSource> get copyWith =>
+  _$$_RpcRequestOriginCopyWith<_$_RpcRequestOrigin> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -193,7 +193,7 @@ RpcRequest _$RpcRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RpcRequest {
-  RpcRequestSource get source => throw _privateConstructorUsedError;
+  RpcRequestOrigin get origin => throw _privateConstructorUsedError;
   int get version => throw _privateConstructorUsedError; // Rpc protocol version
   Map<String, dynamic> get payload => throw _privateConstructorUsedError;
 
@@ -210,9 +210,9 @@ abstract class $RpcRequestCopyWith<$Res> {
       _$RpcRequestCopyWithImpl<$Res, RpcRequest>;
   @useResult
   $Res call(
-      {RpcRequestSource source, int version, Map<String, dynamic> payload});
+      {RpcRequestOrigin origin, int version, Map<String, dynamic> payload});
 
-  $RpcRequestSourceCopyWith<$Res> get source;
+  $RpcRequestOriginCopyWith<$Res> get origin;
 }
 
 /// @nodoc
@@ -228,15 +228,15 @@ class _$RpcRequestCopyWithImpl<$Res, $Val extends RpcRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? source = null,
+    Object? origin = null,
     Object? version = null,
     Object? payload = null,
   }) {
     return _then(_value.copyWith(
-      source: null == source
-          ? _value.source
-          : source // ignore: cast_nullable_to_non_nullable
-              as RpcRequestSource,
+      origin: null == origin
+          ? _value.origin
+          : origin // ignore: cast_nullable_to_non_nullable
+              as RpcRequestOrigin,
       version: null == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
@@ -250,9 +250,9 @@ class _$RpcRequestCopyWithImpl<$Res, $Val extends RpcRequest>
 
   @override
   @pragma('vm:prefer-inline')
-  $RpcRequestSourceCopyWith<$Res> get source {
-    return $RpcRequestSourceCopyWith<$Res>(_value.source, (value) {
-      return _then(_value.copyWith(source: value) as $Val);
+  $RpcRequestOriginCopyWith<$Res> get origin {
+    return $RpcRequestOriginCopyWith<$Res>(_value.origin, (value) {
+      return _then(_value.copyWith(origin: value) as $Val);
     });
   }
 }
@@ -266,10 +266,10 @@ abstract class _$$_RpcRequestCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {RpcRequestSource source, int version, Map<String, dynamic> payload});
+      {RpcRequestOrigin origin, int version, Map<String, dynamic> payload});
 
   @override
-  $RpcRequestSourceCopyWith<$Res> get source;
+  $RpcRequestOriginCopyWith<$Res> get origin;
 }
 
 /// @nodoc
@@ -283,15 +283,15 @@ class __$$_RpcRequestCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? source = null,
+    Object? origin = null,
     Object? version = null,
     Object? payload = null,
   }) {
     return _then(_$_RpcRequest(
-      source: null == source
-          ? _value.source
-          : source // ignore: cast_nullable_to_non_nullable
-              as RpcRequestSource,
+      origin: null == origin
+          ? _value.origin
+          : origin // ignore: cast_nullable_to_non_nullable
+              as RpcRequestOrigin,
       version: null == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
@@ -308,7 +308,7 @@ class __$$_RpcRequestCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RpcRequest extends _RpcRequest {
   const _$_RpcRequest(
-      {required this.source,
+      {required this.origin,
       required this.version,
       required final Map<String, dynamic> payload})
       : _payload = payload,
@@ -318,7 +318,7 @@ class _$_RpcRequest extends _RpcRequest {
       _$$_RpcRequestFromJson(json);
 
   @override
-  final RpcRequestSource source;
+  final RpcRequestOrigin origin;
   @override
   final int version;
 // Rpc protocol version
@@ -333,7 +333,7 @@ class _$_RpcRequest extends _RpcRequest {
 
   @override
   String toString() {
-    return 'RpcRequest(source: $source, version: $version, payload: $payload)';
+    return 'RpcRequest(origin: $origin, version: $version, payload: $payload)';
   }
 
   @override
@@ -341,14 +341,14 @@ class _$_RpcRequest extends _RpcRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RpcRequest &&
-            (identical(other.source, source) || other.source == source) &&
+            (identical(other.origin, origin) || other.origin == origin) &&
             (identical(other.version, version) || other.version == version) &&
             const DeepCollectionEquality().equals(other._payload, _payload));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, source, version,
+  int get hashCode => Object.hash(runtimeType, origin, version,
       const DeepCollectionEquality().hash(_payload));
 
   @JsonKey(ignore: true)
@@ -367,7 +367,7 @@ class _$_RpcRequest extends _RpcRequest {
 
 abstract class _RpcRequest extends RpcRequest {
   const factory _RpcRequest(
-      {required final RpcRequestSource source,
+      {required final RpcRequestOrigin origin,
       required final int version,
       required final Map<String, dynamic> payload}) = _$_RpcRequest;
   const _RpcRequest._() : super._();
@@ -376,7 +376,7 @@ abstract class _RpcRequest extends RpcRequest {
       _$_RpcRequest.fromJson;
 
   @override
-  RpcRequestSource get source;
+  RpcRequestOrigin get origin;
   @override
   int get version;
   @override // Rpc protocol version

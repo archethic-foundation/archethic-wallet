@@ -56,7 +56,7 @@ class AEWalletRPCClient {
 
     await launchUrl(
       Uri.parse(
-        'aewallet://wallet.archethic.net/sign_transaction/${rpcRequest.encode()}',
+        'aewallet://wallet.archethic.net/send_transaction/${rpcRequest.encode()}',
       ),
       mode: LaunchMode.externalApplication,
     );

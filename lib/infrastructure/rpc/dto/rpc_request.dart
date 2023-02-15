@@ -5,22 +5,22 @@ part 'rpc_request.g.dart';
 
 /// Identifies a request source.
 @freezed
-class RpcRequestSource with _$RpcRequestSource {
-  const factory RpcRequestSource({
+class RpcRequestOrigin with _$RpcRequestOrigin {
+  const factory RpcRequestOrigin({
     required String name,
     String? url,
     String? logo,
-  }) = _RpcRequestSource;
-  const RpcRequestSource._();
+  }) = _RpcRequestOrigin;
+  const RpcRequestOrigin._();
 
-  factory RpcRequestSource.fromJson(Map<String, dynamic> json) =>
-      _$RpcRequestSourceFromJson(json);
+  factory RpcRequestOrigin.fromJson(Map<String, dynamic> json) =>
+      _$RpcRequestOriginFromJson(json);
 }
 
 @freezed
 class RpcRequest with _$RpcRequest {
   const factory RpcRequest({
-    required RpcRequestSource source,
+    required RpcRequestOrigin origin,
     required int version, // Rpc protocol version
     required Map<String, dynamic> payload,
   }) = _RpcRequest;
