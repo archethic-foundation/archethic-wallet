@@ -28,6 +28,7 @@ extension _ConnectivityResultExt on ConnectivityResult {
       case ConnectivityResult.ethernet:
       case ConnectivityResult.bluetooth:
       case ConnectivityResult.vpn:
+      case ConnectivityResult.other:
         return ConnectivityStatus.isConnected;
       case ConnectivityResult.none:
         return ConnectivityStatus.isDisconnected;

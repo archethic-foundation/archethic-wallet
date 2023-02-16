@@ -7,7 +7,7 @@ import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -96,7 +96,7 @@ class NftCategoryMenu extends ConsumerWidget {
                     if (count > 0)
                       Padding(
                         padding: const EdgeInsets.only(left: 10, top: 5),
-                        child: Badge(
+                        child: badge.Badge(
                           toAnimate: false,
                           badgeContent: Text(count.toString()),
                         ),

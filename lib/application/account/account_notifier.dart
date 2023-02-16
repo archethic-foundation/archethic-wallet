@@ -39,13 +39,13 @@ class _AccountNotifier
 
   Future<void> refreshRecentTransactions() => _refresh(
         (account) async {
-          log('${DateTime.now().toString()} Start method refreshRecentTransactions');
+          log('${DateTime.now()} Start method refreshRecentTransactions');
           await Future.wait([
             _refreshRecentTransactions(account),
             _refreshBalance(account),
             account.updateFungiblesTokens(),
           ]);
-          log('${DateTime.now().toString()} End method refreshRecentTransactions');
+          log('${DateTime.now()} End method refreshRecentTransactions');
         },
       );
 
@@ -68,7 +68,7 @@ class _AccountNotifier
 
   Future<void> refreshAll() => _refresh(
         (account) async {
-          log('${DateTime.now().toString()} Start method refreshAll');
+          log('${DateTime.now()} Start method refreshAll');
           final session = ref.read(SessionProviders.session).loggedIn!;
           await Future.wait([
             _refreshRecentTransactions(account),
@@ -78,7 +78,7 @@ class _AccountNotifier
               session.wallet.keychainSecuredInfos,
             ),
           ]);
-          log('${DateTime.now().toString()} End method refreshAll');
+          log('${DateTime.now()} End method refreshAll');
         },
       );
 }

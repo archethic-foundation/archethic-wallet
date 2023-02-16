@@ -6,7 +6,7 @@ import 'package:aewallet/domain/usecases/usecase.dart';
 
 /// Handles read strategies and persistent cache.
 mixin ReadStrategy<CommandT, ValueT> {
-  final String _logName = 'Read ${ValueT.toString()} Usecase';
+  final String _logName = 'Read $ValueT Usecase';
 
   /// Reads data from local data source.
   Future<ValueT?> getLocal(CommandT command);
@@ -29,7 +29,7 @@ mixin ReadStrategy<CommandT, ValueT> {
       }
     } catch (e, stackTrace) {
       log('Remote read failed',
-          name: _logName, error: e, stackTrace: stackTrace);
+          name: _logName, error: e, stackTrace: stackTrace,);
     }
 
     try {
@@ -40,7 +40,7 @@ mixin ReadStrategy<CommandT, ValueT> {
       }
     } catch (e, stackTrace) {
       log('Local read failed',
-          name: _logName, error: e, stackTrace: stackTrace);
+          name: _logName, error: e, stackTrace: stackTrace,);
     }
 
     log('Unable to fetch local or remote value', name: _logName);
@@ -62,7 +62,7 @@ mixin ReadStrategy<CommandT, ValueT> {
       }
     } catch (e, stackTrace) {
       log('Local read failed',
-          name: _logName, error: e, stackTrace: stackTrace);
+          name: _logName, error: e, stackTrace: stackTrace,);
     }
 
     try {
@@ -75,7 +75,7 @@ mixin ReadStrategy<CommandT, ValueT> {
       }
     } catch (e, stackTrace) {
       log('Remote read failed',
-          name: _logName, error: e, stackTrace: stackTrace);
+          name: _logName, error: e, stackTrace: stackTrace,);
     }
     log('Unable to fetch local or remote value', name: _logName);
 
