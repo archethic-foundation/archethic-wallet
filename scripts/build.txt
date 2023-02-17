@@ -19,3 +19,7 @@ flutter pub run msix:create
 # https://www.advancedinstaller.com/install-test-certificate-from-msix.html
 # chrome extension
 flutter build web --web-renderer html --csp
+# linux
+flutter build linux
+export PATH=$PATH:/home/reddwarf/Documents/archethic/archethic-wallet/linux/appimage/appimagetool
+appimagetool-x86_64.AppImage linux/appimage/AppDir/ build/linux/archethic_wallet.AppImage
