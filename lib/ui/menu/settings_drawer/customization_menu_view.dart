@@ -104,8 +104,10 @@ class CustomizationMenuView extends ConsumerWidget {
                           connectivityStatusProvider ==
                               ConnectivityStatus.isConnected)
                         const _ActiveNotificationsSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      const _ActiveVibrationsSettingsListItem(),
+                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                        const _SettingsListItem.spacer(),
+                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                        const _ActiveVibrationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                     ],
                   ),
