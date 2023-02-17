@@ -234,6 +234,9 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.3.3
+  # Lint rules are a powerful way to improve the maintainability of a project. Custom Lint allows package authors and developers to easily write custom lint rules.
+  custom_lint: ^0.2.5
+  # Recommended lints for Flutter apps, packages, and plugins to encourage good coding practices.
   flutter_lints: ^2.0.1
   # A build system for Dart code generation and modular compilation
   flutter_to_debian: ^1.0.4
@@ -249,6 +252,8 @@ dev_dependencies:
   patrol: ^0.10.8
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
+  # Riverpod_lint is a developper tool for users of Riverpod, designed to help stop common issue and simplify repetetive tasks.
+  riverpod_lint: ^1.0.1
 
 msix_config:
   display_name: Archethic Wallet

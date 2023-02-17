@@ -10,7 +10,7 @@ Future<String?> _selectedAccountName(_SelectedAccountNameRef ref) async {
 }
 
 @riverpod
-class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
+class _SelectedAccountNotifier extends _$SelectedAccountNotifier {
   @override
   FutureOr<Account?> build() async {
     final accounts = await ref.watch(AccountProviders.accounts.future);

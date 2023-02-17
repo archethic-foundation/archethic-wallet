@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_SessionNotifierHash() => r'6d0dd31827f3d39303bdb5881ae53e8df3909bd2';
+String $_SessionNotifierHash() => r'938f223ce8af5fd6ba683f34160f1d8b94569fdf';
 
 /// See also [_SessionNotifier].
 final _sessionNotifierProvider = NotifierProvider<_SessionNotifier, Session>(

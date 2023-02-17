@@ -19,8 +19,7 @@ abstract class CheckTransactionsProvider {
 }
 
 @Riverpod(keepAlive: true)
-class _CheckTransactionNotifier
-    extends AsyncNotifier<List<ReceivedTransaction>> {
+class _CheckTransactionNotifier extends _$CheckTransactionNotifier {
   Timer? _checkTransactionsTimer;
 
   Future<void> _cancelCheck() async {

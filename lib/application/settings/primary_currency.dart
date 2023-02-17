@@ -14,7 +14,7 @@ part 'primary_currency.g.dart';
 
 @riverpod
 double _convertedValue(
-  AutoDisposeRef ref, {
+  _ConvertedValueRef ref, {
   required double amount,
   required double tokenPrice,
 }) {
@@ -39,7 +39,7 @@ double _convertedValue(
 
 @riverpod
 String _convertedValueLabel(
-  AutoDisposeRef ref, {
+  _ConvertedValueLabelRef ref, {
   required double amount,
   required double tokenPrice,
   required BuildContext context,
@@ -69,7 +69,10 @@ String _convertedValueLabel(
 }
 
 @riverpod
-AvailablePrimaryCurrency _selectedPrimaryCurrency(Ref ref) => ref.watch(
+AvailablePrimaryCurrency _selectedPrimaryCurrency(
+  _SelectedPrimaryCurrencyRef ref,
+) =>
+    ref.watch(
       SettingsProviders.settings.select((settings) => settings.primaryCurrency),
     );
 

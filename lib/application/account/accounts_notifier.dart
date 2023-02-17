@@ -1,7 +1,7 @@
 part of 'providers.dart';
 
 @riverpod
-class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
+class _AccountsNotifier extends _$AccountsNotifier {
   @override
   FutureOr<List<Account>> build() async {
     final session = ref.watch(SessionProviders.session);

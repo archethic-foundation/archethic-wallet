@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_selectedThemeHash() => r'a8bbf6b1dc34a9fdc3b2b2c2fe58eee891226b4f';
+String $_selectedThemeHash() => r'9143ee8536a8218d6aa599379ebe987cd6848a5a';
 
 /// See also [_selectedTheme].
 final _selectedThemeProvider = Provider<BaseTheme>(

@@ -1,7 +1,7 @@
 part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
-class _SessionNotifier extends Notifier<Session> with KeychainMixin {
+class _SessionNotifier extends _$SessionNotifier with KeychainMixin {
   final DBHelper _dbHelper = sl.get<DBHelper>();
 
   @override

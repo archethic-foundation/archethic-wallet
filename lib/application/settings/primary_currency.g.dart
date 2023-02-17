@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_convertedValueHash() => r'95ca331144d703ff515b6ec618c8a18d7b18e25e';
+String $_convertedValueHash() => r'cd893e4a91d0ec60cbf774f975974e40d0e3daea';
 
 /// See also [_convertedValue].
 class _ConvertedValueProvider extends AutoDisposeProvider<double> {
@@ -109,7 +109,7 @@ class _ConvertedValueFamily extends Family<double> {
 }
 
 String $_convertedValueLabelHash() =>
-    r'd6786e9e48ba90083afd92be1adac47cb9034f82';
+    r'a1293cbf8865714361f852a8ebb8c15c790f3dc3';
 
 /// See also [_convertedValueLabel].
 class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
@@ -197,7 +197,7 @@ class _ConvertedValueLabelFamily extends Family<String> {
 }
 
 String $_selectedPrimaryCurrencyHash() =>
-    r'461c4d91fad8f2c6e7d605148b016131376e1293';
+    r'76f1344bf25b37b1bf2bb5fbd6a951371e220965';
 
 /// See also [_selectedPrimaryCurrency].
 final _selectedPrimaryCurrencyProvider =

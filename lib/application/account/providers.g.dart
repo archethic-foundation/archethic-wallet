@@ -40,7 +40,7 @@ final _sortedAccountsProvider = AutoDisposeFutureProvider<List<Account>>(
       : $_sortedAccountsHash,
 );
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
-String $_AccountsNotifierHash() => r'325f4d06b122c7eadd0d8dcdf10d4084307ca5f4';
+String $_AccountsNotifierHash() => r'ca8d026ba3e8acdce6a0a037ca3a977816251208';
 
 /// See also [_AccountsNotifier].
 final _accountsNotifierProvider =
@@ -61,7 +61,7 @@ abstract class _$AccountsNotifier
 }
 
 String $_SelectedAccountNotifierHash() =>
-    r'92372abd1516b94f62efe537520f0b03e5ff581f';
+    r'6a7dc7ad9013db929f910bddd0c74910df0360b5';
 
 /// See also [_SelectedAccountNotifier].
 final _selectedAccountNotifierProvider =

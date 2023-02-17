@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String $_repositoryHash() => r'2d0970425bfa60ca8bd216a9118fb6c8502cc577';
+String $_repositoryHash() => r'8108a17b41e83f8464f343ac68c6a7fbe0ccf09a';
 
 /// See also [_repository].
 final _repositoryProvider = Provider<PriceHistoryRepositoryInterface>(
@@ -39,7 +39,7 @@ final _repositoryProvider = Provider<PriceHistoryRepositoryInterface>(
       const bool.fromEnvironment('dart.vm.product') ? null : $_repositoryHash,
 );
 typedef _RepositoryRef = ProviderRef<PriceHistoryRepositoryInterface>;
-String $_intervalOptionHash() => r'1d96ed2fccef7118b031018144165de4749ec1b4';
+String $_intervalOptionHash() => r'4cd978430ce73fb54546b10a2cbc0c09ec602f58';
 
 /// See also [_intervalOption].
 final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>(
@@ -50,7 +50,7 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>(
       : $_intervalOptionHash,
 );
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String $_priceHistoryHash() => r'53a8fb4fa9f1089577cc2150bd23d7ff77972298';
+String $_priceHistoryHash() => r'34533b080c4536d59487a6886c8f0364b7dd5e7e';
 
 /// See also [_priceHistory].
 class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
@@ -120,7 +120,7 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
   String? get name => r'_priceHistoryProvider';
 }
 
-String $_priceEvolutionHash() => r'bcc3b22660c82056f10a536b6f8285b00e202ec6';
+String $_priceEvolutionHash() => r'9a80fcd2803440801dc888c0e4c5bc316d20d0e4';
 
 /// See also [_priceEvolution].
 class _PriceEvolutionProvider extends FutureProvider<double> {

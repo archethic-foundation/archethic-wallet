@@ -7,24 +7,26 @@ import 'package:aewallet/infrastructure/repositories/market/archethic_oracle_uco
 import 'package:aewallet/infrastructure/repositories/market/coingecko_uco_market.dart';
 import 'package:aewallet/infrastructure/repositories/market/local_uco_market.dart';
 import 'package:aewallet/model/available_currency.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'market_price.g.dart';
 
 @Riverpod(keepAlive: true)
-List<MarketRepositoryInterface> _remoteRepositories(Ref ref) => [
+List<MarketRepositoryInterface> _remoteRepositories(
+  _RemoteRepositoriesRef ref,
+) =>
+    [
       ArchethicOracleUCOMarketRepository(),
       CoingeckoUCOMarketRepository(),
     ];
 
 @Riverpod(keepAlive: true)
-MarketLocalRepositoryInterface _localRepository(Ref ref) =>
+MarketLocalRepositoryInterface _localRepository(_LocalRepositoryRef ref) =>
     HiveUcoMarketRepository();
 
 @Riverpod(keepAlive: true)
 Future<MarketPrice> _currencyMarketPrice(
-  Ref ref, {
+  _CurrencyMarketPriceRef ref, {
   required AvailableCurrencyEnum currency,
 }) =>
     GetUCOMarketPriceUsecases(
@@ -33,7 +35,9 @@ Future<MarketPrice> _currencyMarketPrice(
     ).updateFromRemoteUseCase.run(currency).valueOrThrow;
 
 @Riverpod(keepAlive: true)
-Future<MarketPrice> _selectedCurrencyMarketPrice(Ref ref) async {
+Future<MarketPrice> _selectedCurrencyMarketPrice(
+  _SelectedCurrencyMarketPriceRef ref,
+) async {
   final currency = ref.watch(
     SettingsProviders.settings.select(
       (settings) => settings.currency,
@@ -46,7 +50,7 @@ Future<MarketPrice> _selectedCurrencyMarketPrice(Ref ref) async {
 
 @riverpod
 Future<double> _convertedToSelectedCurrency(
-  AutoDisposeRef ref, {
+  _ConvertedToSelectedCurrencyRef ref, {
   required double nativeAmount,
 }) async {
   final selectedCurrencyMarketPrice = await ref.watch(

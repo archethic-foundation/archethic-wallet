@@ -30,7 +30,7 @@ class _SystemHash {
 }
 
 String $StartupAuthentNotifierHash() =>
-    r'd381d95824b0be7ef3c697fc3c6a91ebbd26c467';
+    r'feda94d6dcd29de6770b5922f2bcc591d81d81f7';
 
 /// See also [StartupAuthentNotifier].
 final startupAuthentNotifierProvider =

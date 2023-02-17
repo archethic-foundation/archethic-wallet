@@ -349,7 +349,7 @@ class _GetListByDefaultFamily extends Family<List<NftCategory>> {
 }
 
 String $_listNFTCategoryHiddenHash() =>
-    r'ea0858e984f5a91c285cc1f97941383dd49dd4a7';
+    r'e3d77d9dfa59a31ebb6cf4149c54902406d1449f';
 
 /// See also [_listNFTCategoryHidden].
 class _ListNFTCategoryHiddenProvider

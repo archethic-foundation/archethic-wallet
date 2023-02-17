@@ -30,7 +30,7 @@ class _SystemHash {
 }
 
 String $_remoteRepositoriesHash() =>
-    r'1ba53f6e3f0404d6fb6bb5ab12bebe74865d75bd';
+    r'362a295c805d83fbba9037ae975c2d6fca22130d';
 
 /// See also [_remoteRepositories].
 final _remoteRepositoriesProvider = Provider<List<MarketRepositoryInterface>>(
@@ -41,7 +41,7 @@ final _remoteRepositoriesProvider = Provider<List<MarketRepositoryInterface>>(
       : $_remoteRepositoriesHash,
 );
 typedef _RemoteRepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
-String $_localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
+String $_localRepositoryHash() => r'7efe0044701d7e08d9349e6a071111974c3fcf94';
 
 /// See also [_localRepository].
 final _localRepositoryProvider = Provider<MarketLocalRepositoryInterface>(
@@ -53,7 +53,7 @@ final _localRepositoryProvider = Provider<MarketLocalRepositoryInterface>(
 );
 typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
 String $_currencyMarketPriceHash() =>
-    r'efad345fa611b0debca8ea8a11fb6cf153862c40';
+    r'ca31fb7c63400231dc1b5c0e00398daf3c4d67d3';
 
 /// See also [_currencyMarketPrice].
 class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
@@ -124,7 +124,7 @@ class _CurrencyMarketPriceFamily extends Family<AsyncValue<MarketPrice>> {
 }
 
 String $_selectedCurrencyMarketPriceHash() =>
-    r'c0ae4863d169c53ec8cd68defe5cba06e55ff646';
+    r'9cef0636024c92796b2436dd8af6e1a5dfe5a314';
 
 /// See also [_selectedCurrencyMarketPrice].
 final _selectedCurrencyMarketPriceProvider = FutureProvider<MarketPrice>(
@@ -136,7 +136,7 @@ final _selectedCurrencyMarketPriceProvider = FutureProvider<MarketPrice>(
 );
 typedef _SelectedCurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
 String $_convertedToSelectedCurrencyHash() =>
-    r'14676bcb79ec50eed6b6457e45add978ecccf121';
+    r'0914ae92d570d894e9d964b736d753f3a2bfe8fc';
 
 /// See also [_convertedToSelectedCurrency].
 class _ConvertedToSelectedCurrencyProvider
