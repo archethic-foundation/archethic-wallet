@@ -271,7 +271,7 @@ class AppService with KeychainMixin {
     List<RecentTransaction> localRecentTransactionList,
   ) async {
     dev.log(
-      '>> START getRecentTransactions : ${DateTime.now().toString()}',
+      '>> START getRecentTransactions : ${DateTime.now()}',
     );
 
     // get the most recent movement in cache
@@ -531,7 +531,7 @@ class AppService with KeychainMixin {
     );
 
     dev.log(
-      '>> END getRecentTransactions : ${DateTime.now().toString()}',
+      '>> END getRecentTransactions : ${DateTime.now()}',
     );
 
     return recentTransactions;
@@ -624,7 +624,7 @@ class AppService with KeychainMixin {
 
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
     dev.log(
-      '>> START getFungiblesTokensList : ${DateTime.now().toString()}',
+      '>> START getFungiblesTokensList : ${DateTime.now()}',
     );
 
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
@@ -674,7 +674,7 @@ class AppService with KeychainMixin {
     }
 
     dev.log(
-      '>> END getFungiblesTokensList : ${DateTime.now().toString()}',
+      '>> END getFungiblesTokensList : ${DateTime.now()}',
     );
 
     return fungiblesTokensList;
