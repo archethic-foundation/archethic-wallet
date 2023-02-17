@@ -19,7 +19,7 @@ class AppUpdateButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kIsWeb || Platform.isWindows) {
+    if (kIsWeb || Platform.isWindows || Platform.isLinux) {
       return const SizedBox();
     }
 
