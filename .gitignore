@@ -144,3 +144,5 @@ Appfile
 fastlane/metadata/**/Preview.html
 report.xml
 debian/packages/
+linux/appimage/AppDir/data/
+linux/appimage/AppDir/lib/
