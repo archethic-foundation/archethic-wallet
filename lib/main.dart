@@ -43,9 +43,15 @@ Future<void> main() async {
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
     await windowManager.ensureInitialized();
 
-    const windowOptions = WindowOptions(
-      size: Size(370, 800),
-      maximumSize: Size(370, 800),
+    var sizeWindows = const Size(370, 800);
+    if(Platform.isLinux)
+    {
+      sizeWindows = const Size(430, 850);
+    }
+
+    final windowOptions = WindowOptions(
+      size: sizeWindows,
+      maximumSize: sizeWindows,
       center: true,
       backgroundColor: Colors.transparent,
       fullScreen: false,
