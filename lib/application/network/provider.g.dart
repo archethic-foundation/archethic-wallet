@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$networkLinkHash() => r'a1ad177b35a24e339a2202520047ef4199644dc4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,13 +29,56 @@ class _SystemHash {
   }
 }
 
-String $_networkLinkHash() => r'a1ad177b35a24e339a2202520047ef4199644dc4';
+typedef _NetworkLinkRef = AutoDisposeProviderRef<String>;
+
+/// See also [_networkLink].
+@ProviderFor(_networkLink)
+const _networkLinkProvider = _NetworkLinkFamily();
+
+/// See also [_networkLink].
+class _NetworkLinkFamily extends Family<String> {
+  /// See also [_networkLink].
+  const _NetworkLinkFamily();
+
+  /// See also [_networkLink].
+  _NetworkLinkProvider call({
+    required AvailableNetworks network,
+  }) {
+    return _NetworkLinkProvider(
+      network: network,
+    );
+  }
+
+  @override
+  _NetworkLinkProvider getProviderOverride(
+    covariant _NetworkLinkProvider provider,
+  ) {
+    return call(
+      network: provider.network,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_networkLinkProvider';
+}
 
 /// See also [_networkLink].
 class _NetworkLinkProvider extends AutoDisposeProvider<String> {
+  /// See also [_networkLink].
   _NetworkLinkProvider({
     required this.network,
-  }) : super(
+  }) : super.internal(
           (ref) => _networkLink(
             ref,
             network: network,
@@ -45,7 +88,10 @@ class _NetworkLinkProvider extends AutoDisposeProvider<String> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_networkLinkHash,
+                  : _$networkLinkHash,
+          dependencies: _NetworkLinkFamily._dependencies,
+          allTransitiveDependencies:
+              _NetworkLinkFamily._allTransitiveDependencies,
         );
 
   final AvailableNetworks network;
@@ -64,48 +110,57 @@ class _NetworkLinkProvider extends AutoDisposeProvider<String> {
   }
 }
 
-typedef _NetworkLinkRef = AutoDisposeProviderRef<String>;
+String _$networkNodesHash() => r'9e80abce0e872f3536ca1c81cd6d2710eda2ba87';
+typedef _NetworkNodesRef = AutoDisposeFutureProviderRef<List<Node>>;
 
-/// See also [_networkLink].
-final _networkLinkProvider = _NetworkLinkFamily();
+/// See also [_networkNodes].
+@ProviderFor(_networkNodes)
+const _networkNodesProvider = _NetworkNodesFamily();
 
-class _NetworkLinkFamily extends Family<String> {
-  _NetworkLinkFamily();
+/// See also [_networkNodes].
+class _NetworkNodesFamily extends Family<AsyncValue<List<Node>>> {
+  /// See also [_networkNodes].
+  const _NetworkNodesFamily();
 
-  _NetworkLinkProvider call({
+  /// See also [_networkNodes].
+  _NetworkNodesProvider call({
     required AvailableNetworks network,
   }) {
-    return _NetworkLinkProvider(
+    return _NetworkNodesProvider(
       network: network,
     );
   }
 
   @override
-  AutoDisposeProvider<String> getProviderOverride(
-    covariant _NetworkLinkProvider provider,
+  _NetworkNodesProvider getProviderOverride(
+    covariant _NetworkNodesProvider provider,
   ) {
     return call(
       network: provider.network,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_networkLinkProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_networkNodesProvider';
 }
-
-String $_networkNodesHash() => r'9e80abce0e872f3536ca1c81cd6d2710eda2ba87';
 
 /// See also [_networkNodes].
 class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
+  /// See also [_networkNodes].
   _NetworkNodesProvider({
     required this.network,
-  }) : super(
+  }) : super.internal(
           (ref) => _networkNodes(
             ref,
             network: network,
@@ -115,7 +170,10 @@ class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_networkNodesHash,
+                  : _$networkNodesHash,
+          dependencies: _NetworkNodesFamily._dependencies,
+          allTransitiveDependencies:
+              _NetworkNodesFamily._allTransitiveDependencies,
         );
 
   final AvailableNetworks network;
@@ -134,48 +192,57 @@ class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
   }
 }
 
-typedef _NetworkNodesRef = AutoDisposeFutureProviderRef<List<Node>>;
+String _$isReservedNodeUriHash() => r'60dab84965fa35027911aaa0cabff6c5523183b5';
+typedef _IsReservedNodeUriRef = AutoDisposeFutureProviderRef<bool>;
 
-/// See also [_networkNodes].
-final _networkNodesProvider = _NetworkNodesFamily();
+/// See also [_isReservedNodeUri].
+@ProviderFor(_isReservedNodeUri)
+const _isReservedNodeUriProvider = _IsReservedNodeUriFamily();
 
-class _NetworkNodesFamily extends Family<AsyncValue<List<Node>>> {
-  _NetworkNodesFamily();
+/// See also [_isReservedNodeUri].
+class _IsReservedNodeUriFamily extends Family<AsyncValue<bool>> {
+  /// See also [_isReservedNodeUri].
+  const _IsReservedNodeUriFamily();
 
-  _NetworkNodesProvider call({
-    required AvailableNetworks network,
+  /// See also [_isReservedNodeUri].
+  _IsReservedNodeUriProvider call({
+    required Uri uri,
   }) {
-    return _NetworkNodesProvider(
-      network: network,
+    return _IsReservedNodeUriProvider(
+      uri: uri,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<List<Node>> getProviderOverride(
-    covariant _NetworkNodesProvider provider,
+  _IsReservedNodeUriProvider getProviderOverride(
+    covariant _IsReservedNodeUriProvider provider,
   ) {
     return call(
-      network: provider.network,
+      uri: provider.uri,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_networkNodesProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_isReservedNodeUriProvider';
 }
-
-String $_isReservedNodeUriHash() => r'60dab84965fa35027911aaa0cabff6c5523183b5';
 
 /// See also [_isReservedNodeUri].
 class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [_isReservedNodeUri].
   _IsReservedNodeUriProvider({
     required this.uri,
-  }) : super(
+  }) : super.internal(
           (ref) => _isReservedNodeUri(
             ref,
             uri: uri,
@@ -185,7 +252,10 @@ class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_isReservedNodeUriHash,
+                  : _$isReservedNodeUriHash,
+          dependencies: _IsReservedNodeUriFamily._dependencies,
+          allTransitiveDependencies:
+              _IsReservedNodeUriFamily._allTransitiveDependencies,
         );
 
   final Uri uri;
@@ -203,38 +273,4 @@ class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _IsReservedNodeUriRef = AutoDisposeFutureProviderRef<bool>;
-
-/// See also [_isReservedNodeUri].
-final _isReservedNodeUriProvider = _IsReservedNodeUriFamily();
-
-class _IsReservedNodeUriFamily extends Family<AsyncValue<bool>> {
-  _IsReservedNodeUriFamily();
-
-  _IsReservedNodeUriProvider call({
-    required Uri uri,
-  }) {
-    return _IsReservedNodeUriProvider(
-      uri: uri,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<bool> getProviderOverride(
-    covariant _IsReservedNodeUriProvider provider,
-  ) {
-    return call(
-      uri: provider.uri,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_isReservedNodeUriProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

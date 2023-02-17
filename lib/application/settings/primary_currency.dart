@@ -78,10 +78,10 @@ AvailablePrimaryCurrency _selectedPrimaryCurrency(
 
 abstract class PrimaryCurrencyProviders {
   // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
-  static final convertedValue = _convertedValueProvider;
+  static const convertedValue = _convertedValueProvider;
 
   // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
-  static final convertedValueLabel = _convertedValueLabelProvider;
+  static const convertedValueLabel = _convertedValueLabelProvider;
   static final selectedPrimaryCurrency = _selectedPrimaryCurrencyProvider;
 }
 

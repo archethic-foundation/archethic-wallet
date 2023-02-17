@@ -6,7 +6,23 @@ part of 'contact.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$contactRepositoryHash() => r'cf712b6cccb80060dda6cf8b5e0115332d394211';
+
+/// See also [_contactRepository].
+@ProviderFor(_contactRepository)
+final _contactRepositoryProvider =
+    AutoDisposeProvider<ContactRepository>.internal(
+  _contactRepository,
+  name: r'_contactRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$contactRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _ContactRepositoryRef = AutoDisposeProviderRef<ContactRepository>;
+String _$fetchContactsHash() => r'e577c0c6beecb77d4217b611093c1e6f9e62b8e2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,24 +45,56 @@ class _SystemHash {
   }
 }
 
-String $_contactRepositoryHash() => r'cf712b6cccb80060dda6cf8b5e0115332d394211';
+typedef _FetchContactsRef = AutoDisposeFutureProviderRef<List<Contact>>;
 
-/// See also [_contactRepository].
-final _contactRepositoryProvider = AutoDisposeProvider<ContactRepository>(
-  _contactRepository,
-  name: r'_contactRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_contactRepositoryHash,
-);
-typedef _ContactRepositoryRef = AutoDisposeProviderRef<ContactRepository>;
-String $_fetchContactsHash() => r'e577c0c6beecb77d4217b611093c1e6f9e62b8e2';
+/// See also [_fetchContacts].
+@ProviderFor(_fetchContacts)
+const _fetchContactsProvider = _FetchContactsFamily();
+
+/// See also [_fetchContacts].
+class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
+  /// See also [_fetchContacts].
+  const _FetchContactsFamily();
+
+  /// See also [_fetchContacts].
+  _FetchContactsProvider call({
+    String search = '',
+  }) {
+    return _FetchContactsProvider(
+      search: search,
+    );
+  }
+
+  @override
+  _FetchContactsProvider getProviderOverride(
+    covariant _FetchContactsProvider provider,
+  ) {
+    return call(
+      search: provider.search,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_fetchContactsProvider';
+}
 
 /// See also [_fetchContacts].
 class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
+  /// See also [_fetchContacts].
   _FetchContactsProvider({
     this.search = '',
-  }) : super(
+  }) : super.internal(
           (ref) => _fetchContacts(
             ref,
             search: search,
@@ -56,7 +104,10 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_fetchContactsHash,
+                  : _$fetchContactsHash,
+          dependencies: _FetchContactsFamily._dependencies,
+          allTransitiveDependencies:
+              _FetchContactsFamily._allTransitiveDependencies,
         );
 
   final String search;
@@ -75,61 +126,74 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
   }
 }
 
-typedef _FetchContactsRef = AutoDisposeFutureProviderRef<List<Contact>>;
-
-/// See also [_fetchContacts].
-final _fetchContactsProvider = _FetchContactsFamily();
-
-class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
-  _FetchContactsFamily();
-
-  _FetchContactsProvider call({
-    String search = '',
-  }) {
-    return _FetchContactsProvider(
-      search: search,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<List<Contact>> getProviderOverride(
-    covariant _FetchContactsProvider provider,
-  ) {
-    return call(
-      search: provider.search,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_fetchContactsProvider';
-}
-
-String $_getSelectedContactHash() =>
+String _$getSelectedContactHash() =>
     r'c7007a7b315479cced6245a02482fb73e0ad6b65';
 
 /// See also [_getSelectedContact].
-final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>(
+@ProviderFor(_getSelectedContact)
+final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>.internal(
   _getSelectedContact,
   name: r'_getSelectedContactProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_getSelectedContactHash,
+      : _$getSelectedContactHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
 );
+
 typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact>;
-String $_getContactWithNameHash() =>
+String _$getContactWithNameHash() =>
     r'7272ba74ac24402574cf64136acc86fa939f3ca3';
+typedef _GetContactWithNameRef = AutoDisposeFutureProviderRef<Contact>;
+
+/// See also [_getContactWithName].
+@ProviderFor(_getContactWithName)
+const _getContactWithNameProvider = _GetContactWithNameFamily();
+
+/// See also [_getContactWithName].
+class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
+  /// See also [_getContactWithName].
+  const _GetContactWithNameFamily();
+
+  /// See also [_getContactWithName].
+  _GetContactWithNameProvider call(
+    String name,
+  ) {
+    return _GetContactWithNameProvider(
+      name,
+    );
+  }
+
+  @override
+  _GetContactWithNameProvider getProviderOverride(
+    covariant _GetContactWithNameProvider provider,
+  ) {
+    return call(
+      provider.name,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getContactWithNameProvider';
+}
 
 /// See also [_getContactWithName].
 class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
+  /// See also [_getContactWithName].
   _GetContactWithNameProvider(
     this.name,
-  ) : super(
+  ) : super.internal(
           (ref) => _getContactWithName(
             ref,
             name,
@@ -139,7 +203,10 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getContactWithNameHash,
+                  : _$getContactWithNameHash,
+          dependencies: _GetContactWithNameFamily._dependencies,
+          allTransitiveDependencies:
+              _GetContactWithNameFamily._allTransitiveDependencies,
         );
 
   final String name;
@@ -158,50 +225,59 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
   }
 }
 
-typedef _GetContactWithNameRef = AutoDisposeFutureProviderRef<Contact>;
+String _$getContactWithAddressHash() =>
+    r'5d7e119dd654939aebe4963994fc8b0888a944c4';
+typedef _GetContactWithAddressRef = AutoDisposeFutureProviderRef<Contact?>;
 
-/// See also [_getContactWithName].
-final _getContactWithNameProvider = _GetContactWithNameFamily();
+/// See also [_getContactWithAddress].
+@ProviderFor(_getContactWithAddress)
+const _getContactWithAddressProvider = _GetContactWithAddressFamily();
 
-class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
-  _GetContactWithNameFamily();
+/// See also [_getContactWithAddress].
+class _GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
+  /// See also [_getContactWithAddress].
+  const _GetContactWithAddressFamily();
 
-  _GetContactWithNameProvider call(
-    String name,
+  /// See also [_getContactWithAddress].
+  _GetContactWithAddressProvider call(
+    String address,
   ) {
-    return _GetContactWithNameProvider(
-      name,
+    return _GetContactWithAddressProvider(
+      address,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<Contact> getProviderOverride(
-    covariant _GetContactWithNameProvider provider,
+  _GetContactWithAddressProvider getProviderOverride(
+    covariant _GetContactWithAddressProvider provider,
   ) {
     return call(
-      provider.name,
+      provider.address,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_getContactWithNameProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getContactWithAddressProvider';
 }
-
-String $_getContactWithAddressHash() =>
-    r'5d7e119dd654939aebe4963994fc8b0888a944c4';
 
 /// See also [_getContactWithAddress].
 class _GetContactWithAddressProvider
     extends AutoDisposeFutureProvider<Contact?> {
+  /// See also [_getContactWithAddress].
   _GetContactWithAddressProvider(
     this.address,
-  ) : super(
+  ) : super.internal(
           (ref) => _getContactWithAddress(
             ref,
             address,
@@ -211,7 +287,10 @@ class _GetContactWithAddressProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getContactWithAddressHash,
+                  : _$getContactWithAddressHash,
+          dependencies: _GetContactWithAddressFamily._dependencies,
+          allTransitiveDependencies:
+              _GetContactWithAddressFamily._allTransitiveDependencies,
         );
 
   final String address;
@@ -230,50 +309,59 @@ class _GetContactWithAddressProvider
   }
 }
 
-typedef _GetContactWithAddressRef = AutoDisposeFutureProviderRef<Contact?>;
+String _$getContactWithPublicKeyHash() =>
+    r'62108be30a37c84a8cde033d6705e9aecf8b355f';
+typedef _GetContactWithPublicKeyRef = AutoDisposeFutureProviderRef<Contact>;
 
-/// See also [_getContactWithAddress].
-final _getContactWithAddressProvider = _GetContactWithAddressFamily();
+/// See also [_getContactWithPublicKey].
+@ProviderFor(_getContactWithPublicKey)
+const _getContactWithPublicKeyProvider = _GetContactWithPublicKeyFamily();
 
-class _GetContactWithAddressFamily extends Family<AsyncValue<Contact?>> {
-  _GetContactWithAddressFamily();
+/// See also [_getContactWithPublicKey].
+class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact>> {
+  /// See also [_getContactWithPublicKey].
+  const _GetContactWithPublicKeyFamily();
 
-  _GetContactWithAddressProvider call(
-    String address,
+  /// See also [_getContactWithPublicKey].
+  _GetContactWithPublicKeyProvider call(
+    String publicKey,
   ) {
-    return _GetContactWithAddressProvider(
-      address,
+    return _GetContactWithPublicKeyProvider(
+      publicKey,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<Contact?> getProviderOverride(
-    covariant _GetContactWithAddressProvider provider,
+  _GetContactWithPublicKeyProvider getProviderOverride(
+    covariant _GetContactWithPublicKeyProvider provider,
   ) {
     return call(
-      provider.address,
+      provider.publicKey,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_getContactWithAddressProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getContactWithPublicKeyProvider';
 }
-
-String $_getContactWithPublicKeyHash() =>
-    r'62108be30a37c84a8cde033d6705e9aecf8b355f';
 
 /// See also [_getContactWithPublicKey].
 class _GetContactWithPublicKeyProvider
     extends AutoDisposeFutureProvider<Contact> {
+  /// See also [_getContactWithPublicKey].
   _GetContactWithPublicKeyProvider(
     this.publicKey,
-  ) : super(
+  ) : super.internal(
           (ref) => _getContactWithPublicKey(
             ref,
             publicKey,
@@ -283,7 +371,10 @@ class _GetContactWithPublicKeyProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getContactWithPublicKeyHash,
+                  : _$getContactWithPublicKeyHash,
+          dependencies: _GetContactWithPublicKeyFamily._dependencies,
+          allTransitiveDependencies:
+              _GetContactWithPublicKeyFamily._allTransitiveDependencies,
         );
 
   final String publicKey;
@@ -303,48 +394,57 @@ class _GetContactWithPublicKeyProvider
   }
 }
 
-typedef _GetContactWithPublicKeyRef = AutoDisposeFutureProviderRef<Contact>;
+String _$saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
+typedef _SaveContactRef = AutoDisposeFutureProviderRef<void>;
 
-/// See also [_getContactWithPublicKey].
-final _getContactWithPublicKeyProvider = _GetContactWithPublicKeyFamily();
+/// See also [_saveContact].
+@ProviderFor(_saveContact)
+const _saveContactProvider = _SaveContactFamily();
 
-class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact>> {
-  _GetContactWithPublicKeyFamily();
+/// See also [_saveContact].
+class _SaveContactFamily extends Family<AsyncValue<void>> {
+  /// See also [_saveContact].
+  const _SaveContactFamily();
 
-  _GetContactWithPublicKeyProvider call(
-    String publicKey,
-  ) {
-    return _GetContactWithPublicKeyProvider(
-      publicKey,
+  /// See also [_saveContact].
+  _SaveContactProvider call({
+    Contact? contact,
+  }) {
+    return _SaveContactProvider(
+      contact: contact,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<Contact> getProviderOverride(
-    covariant _GetContactWithPublicKeyProvider provider,
+  _SaveContactProvider getProviderOverride(
+    covariant _SaveContactProvider provider,
   ) {
     return call(
-      provider.publicKey,
+      contact: provider.contact,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_getContactWithPublicKeyProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_saveContactProvider';
 }
-
-String $_saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
 
 /// See also [_saveContact].
 class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
+  /// See also [_saveContact].
   _SaveContactProvider({
     this.contact,
-  }) : super(
+  }) : super.internal(
           (ref) => _saveContact(
             ref,
             contact: contact,
@@ -354,7 +454,10 @@ class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_saveContactHash,
+                  : _$saveContactHash,
+          dependencies: _SaveContactFamily._dependencies,
+          allTransitiveDependencies:
+              _SaveContactFamily._allTransitiveDependencies,
         );
 
   final Contact? contact;
@@ -373,48 +476,57 @@ class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
-typedef _SaveContactRef = AutoDisposeFutureProviderRef<void>;
+String _$deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
+typedef _DeleteContactRef = AutoDisposeFutureProviderRef<void>;
 
-/// See also [_saveContact].
-final _saveContactProvider = _SaveContactFamily();
+/// See also [_deleteContact].
+@ProviderFor(_deleteContact)
+const _deleteContactProvider = _DeleteContactFamily();
 
-class _SaveContactFamily extends Family<AsyncValue<void>> {
-  _SaveContactFamily();
+/// See also [_deleteContact].
+class _DeleteContactFamily extends Family<AsyncValue<void>> {
+  /// See also [_deleteContact].
+  const _DeleteContactFamily();
 
-  _SaveContactProvider call({
+  /// See also [_deleteContact].
+  _DeleteContactProvider call({
     Contact? contact,
   }) {
-    return _SaveContactProvider(
+    return _DeleteContactProvider(
       contact: contact,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<void> getProviderOverride(
-    covariant _SaveContactProvider provider,
+  _DeleteContactProvider getProviderOverride(
+    covariant _DeleteContactProvider provider,
   ) {
     return call(
       contact: provider.contact,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_saveContactProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_deleteContactProvider';
 }
-
-String $_deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
 
 /// See also [_deleteContact].
 class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
+  /// See also [_deleteContact].
   _DeleteContactProvider({
     this.contact,
-  }) : super(
+  }) : super.internal(
           (ref) => _deleteContact(
             ref,
             contact: contact,
@@ -424,7 +536,10 @@ class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_deleteContactHash,
+                  : _$deleteContactHash,
+          dependencies: _DeleteContactFamily._dependencies,
+          allTransitiveDependencies:
+              _DeleteContactFamily._allTransitiveDependencies,
         );
 
   final Contact? contact;
@@ -443,49 +558,58 @@ class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
-typedef _DeleteContactRef = AutoDisposeFutureProviderRef<void>;
+String _$isContactExistsWithNameHash() =>
+    r'af7f5b8a34da3b3530efd34c75a5a930c0576100';
+typedef _IsContactExistsWithNameRef = AutoDisposeFutureProviderRef<bool>;
 
-/// See also [_deleteContact].
-final _deleteContactProvider = _DeleteContactFamily();
+/// See also [_isContactExistsWithName].
+@ProviderFor(_isContactExistsWithName)
+const _isContactExistsWithNameProvider = _IsContactExistsWithNameFamily();
 
-class _DeleteContactFamily extends Family<AsyncValue<void>> {
-  _DeleteContactFamily();
+/// See also [_isContactExistsWithName].
+class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
+  /// See also [_isContactExistsWithName].
+  const _IsContactExistsWithNameFamily();
 
-  _DeleteContactProvider call({
-    Contact? contact,
+  /// See also [_isContactExistsWithName].
+  _IsContactExistsWithNameProvider call({
+    String? name,
   }) {
-    return _DeleteContactProvider(
-      contact: contact,
+    return _IsContactExistsWithNameProvider(
+      name: name,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<void> getProviderOverride(
-    covariant _DeleteContactProvider provider,
+  _IsContactExistsWithNameProvider getProviderOverride(
+    covariant _IsContactExistsWithNameProvider provider,
   ) {
     return call(
-      contact: provider.contact,
+      name: provider.name,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_deleteContactProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_isContactExistsWithNameProvider';
 }
-
-String $_isContactExistsWithNameHash() =>
-    r'af7f5b8a34da3b3530efd34c75a5a930c0576100';
 
 /// See also [_isContactExistsWithName].
 class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [_isContactExistsWithName].
   _IsContactExistsWithNameProvider({
     this.name,
-  }) : super(
+  }) : super.internal(
           (ref) => _isContactExistsWithName(
             ref,
             name: name,
@@ -495,7 +619,10 @@ class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_isContactExistsWithNameHash,
+                  : _$isContactExistsWithNameHash,
+          dependencies: _IsContactExistsWithNameFamily._dependencies,
+          allTransitiveDependencies:
+              _IsContactExistsWithNameFamily._allTransitiveDependencies,
         );
 
   final String? name;
@@ -514,50 +641,59 @@ class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
   }
 }
 
-typedef _IsContactExistsWithNameRef = AutoDisposeFutureProviderRef<bool>;
+String _$isContactExistsWithAddressHash() =>
+    r'4a2281e577a2bfa9fee0005c51763af7ad2b687b';
+typedef _IsContactExistsWithAddressRef = AutoDisposeFutureProviderRef<bool>;
 
-/// See also [_isContactExistsWithName].
-final _isContactExistsWithNameProvider = _IsContactExistsWithNameFamily();
+/// See also [_isContactExistsWithAddress].
+@ProviderFor(_isContactExistsWithAddress)
+const _isContactExistsWithAddressProvider = _IsContactExistsWithAddressFamily();
 
-class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
-  _IsContactExistsWithNameFamily();
+/// See also [_isContactExistsWithAddress].
+class _IsContactExistsWithAddressFamily extends Family<AsyncValue<bool>> {
+  /// See also [_isContactExistsWithAddress].
+  const _IsContactExistsWithAddressFamily();
 
-  _IsContactExistsWithNameProvider call({
-    String? name,
+  /// See also [_isContactExistsWithAddress].
+  _IsContactExistsWithAddressProvider call({
+    String? address,
   }) {
-    return _IsContactExistsWithNameProvider(
-      name: name,
+    return _IsContactExistsWithAddressProvider(
+      address: address,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<bool> getProviderOverride(
-    covariant _IsContactExistsWithNameProvider provider,
+  _IsContactExistsWithAddressProvider getProviderOverride(
+    covariant _IsContactExistsWithAddressProvider provider,
   ) {
     return call(
-      name: provider.name,
+      address: provider.address,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_isContactExistsWithNameProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_isContactExistsWithAddressProvider';
 }
-
-String $_isContactExistsWithAddressHash() =>
-    r'4a2281e577a2bfa9fee0005c51763af7ad2b687b';
 
 /// See also [_isContactExistsWithAddress].
 class _IsContactExistsWithAddressProvider
     extends AutoDisposeFutureProvider<bool> {
+  /// See also [_isContactExistsWithAddress].
   _IsContactExistsWithAddressProvider({
     this.address,
-  }) : super(
+  }) : super.internal(
           (ref) => _isContactExistsWithAddress(
             ref,
             address: address,
@@ -567,7 +703,10 @@ class _IsContactExistsWithAddressProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_isContactExistsWithAddressHash,
+                  : _$isContactExistsWithAddressHash,
+          dependencies: _IsContactExistsWithAddressFamily._dependencies,
+          allTransitiveDependencies:
+              _IsContactExistsWithAddressFamily._allTransitiveDependencies,
         );
 
   final String? address;
@@ -586,38 +725,4 @@ class _IsContactExistsWithAddressProvider
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _IsContactExistsWithAddressRef = AutoDisposeFutureProviderRef<bool>;
-
-/// See also [_isContactExistsWithAddress].
-final _isContactExistsWithAddressProvider = _IsContactExistsWithAddressFamily();
-
-class _IsContactExistsWithAddressFamily extends Family<AsyncValue<bool>> {
-  _IsContactExistsWithAddressFamily();
-
-  _IsContactExistsWithAddressProvider call({
-    String? address,
-  }) {
-    return _IsContactExistsWithAddressProvider(
-      address: address,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<bool> getProviderOverride(
-    covariant _IsContactExistsWithAddressProvider provider,
-  ) {
-    return call(
-      address: provider.address,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_isContactExistsWithAddressProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

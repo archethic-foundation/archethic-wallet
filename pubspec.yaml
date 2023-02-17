@@ -102,7 +102,7 @@ dependencies:
   flutter_native_splash: ^2.2.16
 
   # State management
-  flutter_riverpod: 2.1.1
+  flutter_riverpod: ^2.2.0
 
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
   flutter_secure_storage: ^8.0.0
@@ -203,7 +203,7 @@ dependencies:
   requests: ^4.7.0
 
   # A package exposing annotations for riverpod_generator
-  riverpod_annotation: 1.0.6
+  riverpod_annotation: ^1.2.1
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
   rxdart: ^0.27.7
@@ -251,7 +251,7 @@ dev_dependencies:
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
   patrol: ^0.10.8
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
-  riverpod_generator: 1.0.6
+  riverpod_generator: ^1.2.0
   # Riverpod_lint is a developper tool for users of Riverpod, designed to help stop common issue and simplify repetetive tasks.
   riverpod_lint: ^1.0.1
 

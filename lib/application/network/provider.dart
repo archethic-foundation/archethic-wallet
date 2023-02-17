@@ -65,7 +65,7 @@ Future<bool> _isReservedNodeUri(
 }
 
 abstract class NetworkProvider {
-  static final networkLink = _networkLinkProvider;
-  static final networkNodes = _networkNodesProvider;
-  static final isReservedNodeUri = _isReservedNodeUriProvider;
+  static const networkLink = _networkLinkProvider;
+  static const networkNodes = _networkNodesProvider;
+  static const isReservedNodeUri = _isReservedNodeUriProvider;
 }

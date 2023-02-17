@@ -6,7 +6,22 @@ part of 'nft.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$nftRepositoryHash() => r'c16cc640004fbaf88bbe6c50e643bbe5b8c577ed';
+
+/// See also [_nftRepository].
+@ProviderFor(_nftRepository)
+final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>.internal(
+  _nftRepository,
+  name: r'_nftRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$nftRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
+String _$getNFTHash() => r'bd8af3a8e0ab3eace21cb12d4b5fc266453014a6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,25 +44,60 @@ class _SystemHash {
   }
 }
 
-String $_nftRepositoryHash() => r'c16cc640004fbaf88bbe6c50e643bbe5b8c577ed';
+typedef _GetNFTRef = AutoDisposeFutureProviderRef<TokenInformations?>;
 
-/// See also [_nftRepository].
-final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>(
-  _nftRepository,
-  name: r'_nftRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_nftRepositoryHash,
-);
-typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
-String $_getNFTHash() => r'bd8af3a8e0ab3eace21cb12d4b5fc266453014a6';
+/// See also [_getNFT].
+@ProviderFor(_getNFT)
+const _getNFTProvider = _GetNFTFamily();
+
+/// See also [_getNFT].
+class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
+  /// See also [_getNFT].
+  const _GetNFTFamily();
+
+  /// See also [_getNFT].
+  _GetNFTProvider call(
+    String address,
+    KeychainServiceKeyPair keychainServiceKeyPair,
+  ) {
+    return _GetNFTProvider(
+      address,
+      keychainServiceKeyPair,
+    );
+  }
+
+  @override
+  _GetNFTProvider getProviderOverride(
+    covariant _GetNFTProvider provider,
+  ) {
+    return call(
+      provider.address,
+      provider.keychainServiceKeyPair,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getNFTProvider';
+}
 
 /// See also [_getNFT].
 class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
+  /// See also [_getNFT].
   _GetNFTProvider(
     this.address,
     this.keychainServiceKeyPair,
-  ) : super(
+  ) : super.internal(
           (ref) => _getNFT(
             ref,
             address,
@@ -58,7 +108,9 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getNFTHash,
+                  : _$getNFTHash,
+          dependencies: _GetNFTFamily._dependencies,
+          allTransitiveDependencies: _GetNFTFamily._allTransitiveDependencies,
         );
 
   final String address;
@@ -80,41 +132,4 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _GetNFTRef = AutoDisposeFutureProviderRef<TokenInformations?>;
-
-/// See also [_getNFT].
-final _getNFTProvider = _GetNFTFamily();
-
-class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
-  _GetNFTFamily();
-
-  _GetNFTProvider call(
-    String address,
-    KeychainServiceKeyPair keychainServiceKeyPair,
-  ) {
-    return _GetNFTProvider(
-      address,
-      keychainServiceKeyPair,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<TokenInformations?> getProviderOverride(
-    covariant _GetNFTProvider provider,
-  ) {
-    return call(
-      provider.address,
-      provider.keychainServiceKeyPair,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_getNFTProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

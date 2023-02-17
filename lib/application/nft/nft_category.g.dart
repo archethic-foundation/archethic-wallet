@@ -6,7 +6,26 @@ part of 'nft_category.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$nftCategoryRepositoryHash() =>
+    r'a38f8405031299f092dbef55597261545db4103c';
+
+/// See also [_nftCategoryRepository].
+@ProviderFor(_nftCategoryRepository)
+final _nftCategoryRepositoryProvider =
+    AutoDisposeProvider<NFTCategoryRepository>.internal(
+  _nftCategoryRepository,
+  name: r'_nftCategoryRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$nftCategoryRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _NftCategoryRepositoryRef
+    = AutoDisposeProviderRef<NFTCategoryRepository>;
+String _$selectedAccountNftCategoriesHash() =>
+    r'14c939211bff7bc3c39aedd5aa134a7cac928c4f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,29 +48,60 @@ class _SystemHash {
   }
 }
 
-String $_nftCategoryRepositoryHash() =>
-    r'a38f8405031299f092dbef55597261545db4103c';
+typedef _SelectedAccountNftCategoriesRef
+    = AutoDisposeFutureProviderRef<List<NftCategory>>;
 
-/// See also [_nftCategoryRepository].
-final _nftCategoryRepositoryProvider =
-    AutoDisposeProvider<NFTCategoryRepository>(
-  _nftCategoryRepository,
-  name: r'_nftCategoryRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_nftCategoryRepositoryHash,
-);
-typedef _NftCategoryRepositoryRef
-    = AutoDisposeProviderRef<NFTCategoryRepository>;
-String $_selectedAccountNftCategoriesHash() =>
-    r'14c939211bff7bc3c39aedd5aa134a7cac928c4f';
+/// See also [_selectedAccountNftCategories].
+@ProviderFor(_selectedAccountNftCategories)
+const _selectedAccountNftCategoriesProvider =
+    _SelectedAccountNftCategoriesFamily();
+
+/// See also [_selectedAccountNftCategories].
+class _SelectedAccountNftCategoriesFamily
+    extends Family<AsyncValue<List<NftCategory>>> {
+  /// See also [_selectedAccountNftCategories].
+  const _SelectedAccountNftCategoriesFamily();
+
+  /// See also [_selectedAccountNftCategories].
+  _SelectedAccountNftCategoriesProvider call({
+    required BuildContext context,
+  }) {
+    return _SelectedAccountNftCategoriesProvider(
+      context: context,
+    );
+  }
+
+  @override
+  _SelectedAccountNftCategoriesProvider getProviderOverride(
+    covariant _SelectedAccountNftCategoriesProvider provider,
+  ) {
+    return call(
+      context: provider.context,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_selectedAccountNftCategoriesProvider';
+}
 
 /// See also [_selectedAccountNftCategories].
 class _SelectedAccountNftCategoriesProvider
     extends AutoDisposeFutureProvider<List<NftCategory>> {
+  /// See also [_selectedAccountNftCategories].
   _SelectedAccountNftCategoriesProvider({
     required this.context,
-  }) : super(
+  }) : super.internal(
           (ref) => _selectedAccountNftCategories(
             ref,
             context: context,
@@ -61,7 +111,10 @@ class _SelectedAccountNftCategoriesProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_selectedAccountNftCategoriesHash,
+                  : _$selectedAccountNftCategoriesHash,
+          dependencies: _SelectedAccountNftCategoriesFamily._dependencies,
+          allTransitiveDependencies:
+              _SelectedAccountNftCategoriesFamily._allTransitiveDependencies,
         );
 
   final BuildContext context;
@@ -81,52 +134,61 @@ class _SelectedAccountNftCategoriesProvider
   }
 }
 
-typedef _SelectedAccountNftCategoriesRef
-    = AutoDisposeFutureProviderRef<List<NftCategory>>;
+String _$fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
+typedef _FetchNftCategoryRef = AutoDisposeProviderRef<List<NftCategory>>;
 
-/// See also [_selectedAccountNftCategories].
-final _selectedAccountNftCategoriesProvider =
-    _SelectedAccountNftCategoriesFamily();
+/// See also [_fetchNftCategory].
+@ProviderFor(_fetchNftCategory)
+const _fetchNftCategoryProvider = _FetchNftCategoryFamily();
 
-class _SelectedAccountNftCategoriesFamily
-    extends Family<AsyncValue<List<NftCategory>>> {
-  _SelectedAccountNftCategoriesFamily();
+/// See also [_fetchNftCategory].
+class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
+  /// See also [_fetchNftCategory].
+  const _FetchNftCategoryFamily();
 
-  _SelectedAccountNftCategoriesProvider call({
+  /// See also [_fetchNftCategory].
+  _FetchNftCategoryProvider call({
     required BuildContext context,
+    required Account account,
   }) {
-    return _SelectedAccountNftCategoriesProvider(
+    return _FetchNftCategoryProvider(
       context: context,
+      account: account,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<List<NftCategory>> getProviderOverride(
-    covariant _SelectedAccountNftCategoriesProvider provider,
+  _FetchNftCategoryProvider getProviderOverride(
+    covariant _FetchNftCategoryProvider provider,
   ) {
     return call(
       context: provider.context,
+      account: provider.account,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_selectedAccountNftCategoriesProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_fetchNftCategoryProvider';
 }
-
-String $_fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
 
 /// See also [_fetchNftCategory].
 class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
+  /// See also [_fetchNftCategory].
   _FetchNftCategoryProvider({
     required this.context,
     required this.account,
-  }) : super(
+  }) : super.internal(
           (ref) => _fetchNftCategory(
             ref,
             context: context,
@@ -137,7 +199,10 @@ class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_fetchNftCategoryHash,
+                  : _$fetchNftCategoryHash,
+          dependencies: _FetchNftCategoryFamily._dependencies,
+          allTransitiveDependencies:
+              _FetchNftCategoryFamily._allTransitiveDependencies,
         );
 
   final BuildContext context;
@@ -160,53 +225,62 @@ class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
   }
 }
 
-typedef _FetchNftCategoryRef = AutoDisposeProviderRef<List<NftCategory>>;
+String _$getNbNFTInCategoryHash() =>
+    r'99a8437aa88eaa3ba56d8b6701a7dfca89a6d58f';
+typedef _GetNbNFTInCategoryRef = AutoDisposeProviderRef<int>;
 
-/// See also [_fetchNftCategory].
-final _fetchNftCategoryProvider = _FetchNftCategoryFamily();
+/// See also [_getNbNFTInCategory].
+@ProviderFor(_getNbNFTInCategory)
+const _getNbNFTInCategoryProvider = _GetNbNFTInCategoryFamily();
 
-class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
-  _FetchNftCategoryFamily();
+/// See also [_getNbNFTInCategory].
+class _GetNbNFTInCategoryFamily extends Family<int> {
+  /// See also [_getNbNFTInCategory].
+  const _GetNbNFTInCategoryFamily();
 
-  _FetchNftCategoryProvider call({
-    required BuildContext context,
+  /// See also [_getNbNFTInCategory].
+  _GetNbNFTInCategoryProvider call({
     required Account account,
+    required int categoryNftIndex,
   }) {
-    return _FetchNftCategoryProvider(
-      context: context,
+    return _GetNbNFTInCategoryProvider(
       account: account,
+      categoryNftIndex: categoryNftIndex,
     );
   }
 
   @override
-  AutoDisposeProvider<List<NftCategory>> getProviderOverride(
-    covariant _FetchNftCategoryProvider provider,
+  _GetNbNFTInCategoryProvider getProviderOverride(
+    covariant _GetNbNFTInCategoryProvider provider,
   ) {
     return call(
-      context: provider.context,
       account: provider.account,
+      categoryNftIndex: provider.categoryNftIndex,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_fetchNftCategoryProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getNbNFTInCategoryProvider';
 }
-
-String $_getNbNFTInCategoryHash() =>
-    r'99a8437aa88eaa3ba56d8b6701a7dfca89a6d58f';
 
 /// See also [_getNbNFTInCategory].
 class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
+  /// See also [_getNbNFTInCategory].
   _GetNbNFTInCategoryProvider({
     required this.account,
     required this.categoryNftIndex,
-  }) : super(
+  }) : super.internal(
           (ref) => _getNbNFTInCategory(
             ref,
             account: account,
@@ -217,7 +291,10 @@ class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getNbNFTInCategoryHash,
+                  : _$getNbNFTInCategoryHash,
+          dependencies: _GetNbNFTInCategoryFamily._dependencies,
+          allTransitiveDependencies:
+              _GetNbNFTInCategoryFamily._allTransitiveDependencies,
         );
 
   final Account account;
@@ -240,51 +317,57 @@ class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
   }
 }
 
-typedef _GetNbNFTInCategoryRef = AutoDisposeProviderRef<int>;
+String _$getListByDefaultHash() => r'9512b96c85cc9b4ac7c455dd875784ae2c880d9e';
+typedef _GetListByDefaultRef = AutoDisposeProviderRef<List<NftCategory>>;
 
-/// See also [_getNbNFTInCategory].
-final _getNbNFTInCategoryProvider = _GetNbNFTInCategoryFamily();
+/// See also [_getListByDefault].
+@ProviderFor(_getListByDefault)
+const _getListByDefaultProvider = _GetListByDefaultFamily();
 
-class _GetNbNFTInCategoryFamily extends Family<int> {
-  _GetNbNFTInCategoryFamily();
+/// See also [_getListByDefault].
+class _GetListByDefaultFamily extends Family<List<NftCategory>> {
+  /// See also [_getListByDefault].
+  const _GetListByDefaultFamily();
 
-  _GetNbNFTInCategoryProvider call({
-    required Account account,
-    required int categoryNftIndex,
+  /// See also [_getListByDefault].
+  _GetListByDefaultProvider call({
+    required BuildContext context,
   }) {
-    return _GetNbNFTInCategoryProvider(
-      account: account,
-      categoryNftIndex: categoryNftIndex,
+    return _GetListByDefaultProvider(
+      context: context,
     );
   }
 
   @override
-  AutoDisposeProvider<int> getProviderOverride(
-    covariant _GetNbNFTInCategoryProvider provider,
+  _GetListByDefaultProvider getProviderOverride(
+    covariant _GetListByDefaultProvider provider,
   ) {
     return call(
-      account: provider.account,
-      categoryNftIndex: provider.categoryNftIndex,
+      context: provider.context,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_getNbNFTInCategoryProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getListByDefaultProvider';
 }
-
-String $_getListByDefaultHash() => r'9512b96c85cc9b4ac7c455dd875784ae2c880d9e';
 
 /// See also [_getListByDefault].
 class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
+  /// See also [_getListByDefault].
   _GetListByDefaultProvider({
     required this.context,
-  }) : super(
+  }) : super.internal(
           (ref) => _getListByDefault(
             ref,
             context: context,
@@ -294,7 +377,10 @@ class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getListByDefaultHash,
+                  : _$getListByDefaultHash,
+          dependencies: _GetListByDefaultFamily._dependencies,
+          allTransitiveDependencies:
+              _GetListByDefaultFamily._allTransitiveDependencies,
         );
 
   final BuildContext context;
@@ -313,50 +399,59 @@ class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
   }
 }
 
-typedef _GetListByDefaultRef = AutoDisposeProviderRef<List<NftCategory>>;
+String _$listNFTCategoryHiddenHash() =>
+    r'e3d77d9dfa59a31ebb6cf4149c54902406d1449f';
+typedef _ListNFTCategoryHiddenRef = AutoDisposeProviderRef<List<NftCategory>>;
 
-/// See also [_getListByDefault].
-final _getListByDefaultProvider = _GetListByDefaultFamily();
+/// See also [_listNFTCategoryHidden].
+@ProviderFor(_listNFTCategoryHidden)
+const _listNFTCategoryHiddenProvider = _ListNFTCategoryHiddenFamily();
 
-class _GetListByDefaultFamily extends Family<List<NftCategory>> {
-  _GetListByDefaultFamily();
+/// See also [_listNFTCategoryHidden].
+class _ListNFTCategoryHiddenFamily extends Family<List<NftCategory>> {
+  /// See also [_listNFTCategoryHidden].
+  const _ListNFTCategoryHiddenFamily();
 
-  _GetListByDefaultProvider call({
+  /// See also [_listNFTCategoryHidden].
+  _ListNFTCategoryHiddenProvider call({
     required BuildContext context,
   }) {
-    return _GetListByDefaultProvider(
+    return _ListNFTCategoryHiddenProvider(
       context: context,
     );
   }
 
   @override
-  AutoDisposeProvider<List<NftCategory>> getProviderOverride(
-    covariant _GetListByDefaultProvider provider,
+  _ListNFTCategoryHiddenProvider getProviderOverride(
+    covariant _ListNFTCategoryHiddenProvider provider,
   ) {
     return call(
       context: provider.context,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_getListByDefaultProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_listNFTCategoryHiddenProvider';
 }
-
-String $_listNFTCategoryHiddenHash() =>
-    r'e3d77d9dfa59a31ebb6cf4149c54902406d1449f';
 
 /// See also [_listNFTCategoryHidden].
 class _ListNFTCategoryHiddenProvider
     extends AutoDisposeProvider<List<NftCategory>> {
+  /// See also [_listNFTCategoryHidden].
   _ListNFTCategoryHiddenProvider({
     required this.context,
-  }) : super(
+  }) : super.internal(
           (ref) => _listNFTCategoryHidden(
             ref,
             context: context,
@@ -366,7 +461,10 @@ class _ListNFTCategoryHiddenProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_listNFTCategoryHiddenHash,
+                  : _$listNFTCategoryHiddenHash,
+          dependencies: _ListNFTCategoryHiddenFamily._dependencies,
+          allTransitiveDependencies:
+              _ListNFTCategoryHiddenFamily._allTransitiveDependencies,
         );
 
   final BuildContext context;
@@ -385,50 +483,62 @@ class _ListNFTCategoryHiddenProvider
   }
 }
 
-typedef _ListNFTCategoryHiddenRef = AutoDisposeProviderRef<List<NftCategory>>;
+String _$getDescriptionHeaderHash() =>
+    r'185dffe43711a9f602f89b67628173a12657f14a';
+typedef _GetDescriptionHeaderRef = AutoDisposeProviderRef<String>;
 
-/// See also [_listNFTCategoryHidden].
-final _listNFTCategoryHiddenProvider = _ListNFTCategoryHiddenFamily();
+/// See also [_getDescriptionHeader].
+@ProviderFor(_getDescriptionHeader)
+const _getDescriptionHeaderProvider = _GetDescriptionHeaderFamily();
 
-class _ListNFTCategoryHiddenFamily extends Family<List<NftCategory>> {
-  _ListNFTCategoryHiddenFamily();
+/// See also [_getDescriptionHeader].
+class _GetDescriptionHeaderFamily extends Family<String> {
+  /// See also [_getDescriptionHeader].
+  const _GetDescriptionHeaderFamily();
 
-  _ListNFTCategoryHiddenProvider call({
+  /// See also [_getDescriptionHeader].
+  _GetDescriptionHeaderProvider call({
     required BuildContext context,
+    required int id,
   }) {
-    return _ListNFTCategoryHiddenProvider(
+    return _GetDescriptionHeaderProvider(
       context: context,
+      id: id,
     );
   }
 
   @override
-  AutoDisposeProvider<List<NftCategory>> getProviderOverride(
-    covariant _ListNFTCategoryHiddenProvider provider,
+  _GetDescriptionHeaderProvider getProviderOverride(
+    covariant _GetDescriptionHeaderProvider provider,
   ) {
     return call(
       context: provider.context,
+      id: provider.id,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_listNFTCategoryHiddenProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getDescriptionHeaderProvider';
 }
-
-String $_getDescriptionHeaderHash() =>
-    r'185dffe43711a9f602f89b67628173a12657f14a';
 
 /// See also [_getDescriptionHeader].
 class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
+  /// See also [_getDescriptionHeader].
   _GetDescriptionHeaderProvider({
     required this.context,
     required this.id,
-  }) : super(
+  }) : super.internal(
           (ref) => _getDescriptionHeader(
             ref,
             context: context,
@@ -439,7 +549,10 @@ class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_getDescriptionHeaderHash,
+                  : _$getDescriptionHeaderHash,
+          dependencies: _GetDescriptionHeaderFamily._dependencies,
+          allTransitiveDependencies:
+              _GetDescriptionHeaderFamily._allTransitiveDependencies,
         );
 
   final BuildContext context;
@@ -461,41 +574,4 @@ class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _GetDescriptionHeaderRef = AutoDisposeProviderRef<String>;
-
-/// See also [_getDescriptionHeader].
-final _getDescriptionHeaderProvider = _GetDescriptionHeaderFamily();
-
-class _GetDescriptionHeaderFamily extends Family<String> {
-  _GetDescriptionHeaderFamily();
-
-  _GetDescriptionHeaderProvider call({
-    required BuildContext context,
-    required int id,
-  }) {
-    return _GetDescriptionHeaderProvider(
-      context: context,
-      id: id,
-    );
-  }
-
-  @override
-  AutoDisposeProvider<String> getProviderOverride(
-    covariant _GetDescriptionHeaderProvider provider,
-  ) {
-    return call(
-      context: provider.context,
-      id: provider.id,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_getDescriptionHeaderProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

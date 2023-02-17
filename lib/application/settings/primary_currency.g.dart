@@ -6,7 +6,7 @@ part of 'primary_currency.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$convertedValueHash() => r'cd893e4a91d0ec60cbf774f975974e40d0e3daea';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,14 +29,60 @@ class _SystemHash {
   }
 }
 
-String $_convertedValueHash() => r'cd893e4a91d0ec60cbf774f975974e40d0e3daea';
+typedef _ConvertedValueRef = AutoDisposeProviderRef<double>;
+
+/// See also [_convertedValue].
+@ProviderFor(_convertedValue)
+const _convertedValueProvider = _ConvertedValueFamily();
+
+/// See also [_convertedValue].
+class _ConvertedValueFamily extends Family<double> {
+  /// See also [_convertedValue].
+  const _ConvertedValueFamily();
+
+  /// See also [_convertedValue].
+  _ConvertedValueProvider call({
+    required double amount,
+    required double tokenPrice,
+  }) {
+    return _ConvertedValueProvider(
+      amount: amount,
+      tokenPrice: tokenPrice,
+    );
+  }
+
+  @override
+  _ConvertedValueProvider getProviderOverride(
+    covariant _ConvertedValueProvider provider,
+  ) {
+    return call(
+      amount: provider.amount,
+      tokenPrice: provider.tokenPrice,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_convertedValueProvider';
+}
 
 /// See also [_convertedValue].
 class _ConvertedValueProvider extends AutoDisposeProvider<double> {
+  /// See also [_convertedValue].
   _ConvertedValueProvider({
     required this.amount,
     required this.tokenPrice,
-  }) : super(
+  }) : super.internal(
           (ref) => _convertedValue(
             ref,
             amount: amount,
@@ -47,7 +93,10 @@ class _ConvertedValueProvider extends AutoDisposeProvider<double> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_convertedValueHash,
+                  : _$convertedValueHash,
+          dependencies: _ConvertedValueFamily._dependencies,
+          allTransitiveDependencies:
+              _ConvertedValueFamily._allTransitiveDependencies,
         );
 
   final double amount;
@@ -70,54 +119,66 @@ class _ConvertedValueProvider extends AutoDisposeProvider<double> {
   }
 }
 
-typedef _ConvertedValueRef = AutoDisposeProviderRef<double>;
+String _$convertedValueLabelHash() =>
+    r'a1293cbf8865714361f852a8ebb8c15c790f3dc3';
+typedef _ConvertedValueLabelRef = AutoDisposeProviderRef<String>;
 
-/// See also [_convertedValue].
-final _convertedValueProvider = _ConvertedValueFamily();
+/// See also [_convertedValueLabel].
+@ProviderFor(_convertedValueLabel)
+const _convertedValueLabelProvider = _ConvertedValueLabelFamily();
 
-class _ConvertedValueFamily extends Family<double> {
-  _ConvertedValueFamily();
+/// See also [_convertedValueLabel].
+class _ConvertedValueLabelFamily extends Family<String> {
+  /// See also [_convertedValueLabel].
+  const _ConvertedValueLabelFamily();
 
-  _ConvertedValueProvider call({
+  /// See also [_convertedValueLabel].
+  _ConvertedValueLabelProvider call({
     required double amount,
     required double tokenPrice,
+    required BuildContext context,
   }) {
-    return _ConvertedValueProvider(
+    return _ConvertedValueLabelProvider(
       amount: amount,
       tokenPrice: tokenPrice,
+      context: context,
     );
   }
 
   @override
-  AutoDisposeProvider<double> getProviderOverride(
-    covariant _ConvertedValueProvider provider,
+  _ConvertedValueLabelProvider getProviderOverride(
+    covariant _ConvertedValueLabelProvider provider,
   ) {
     return call(
       amount: provider.amount,
       tokenPrice: provider.tokenPrice,
+      context: provider.context,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_convertedValueProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_convertedValueLabelProvider';
 }
-
-String $_convertedValueLabelHash() =>
-    r'a1293cbf8865714361f852a8ebb8c15c790f3dc3';
 
 /// See also [_convertedValueLabel].
 class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
+  /// See also [_convertedValueLabel].
   _ConvertedValueLabelProvider({
     required this.amount,
     required this.tokenPrice,
     required this.context,
-  }) : super(
+  }) : super.internal(
           (ref) => _convertedValueLabel(
             ref,
             amount: amount,
@@ -129,7 +190,10 @@ class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_convertedValueLabelHash,
+                  : _$convertedValueLabelHash,
+          dependencies: _ConvertedValueLabelFamily._dependencies,
+          allTransitiveDependencies:
+              _ConvertedValueLabelFamily._allTransitiveDependencies,
         );
 
   final double amount;
@@ -155,58 +219,22 @@ class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
   }
 }
 
-typedef _ConvertedValueLabelRef = AutoDisposeProviderRef<String>;
-
-/// See also [_convertedValueLabel].
-final _convertedValueLabelProvider = _ConvertedValueLabelFamily();
-
-class _ConvertedValueLabelFamily extends Family<String> {
-  _ConvertedValueLabelFamily();
-
-  _ConvertedValueLabelProvider call({
-    required double amount,
-    required double tokenPrice,
-    required BuildContext context,
-  }) {
-    return _ConvertedValueLabelProvider(
-      amount: amount,
-      tokenPrice: tokenPrice,
-      context: context,
-    );
-  }
-
-  @override
-  AutoDisposeProvider<String> getProviderOverride(
-    covariant _ConvertedValueLabelProvider provider,
-  ) {
-    return call(
-      amount: provider.amount,
-      tokenPrice: provider.tokenPrice,
-      context: provider.context,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_convertedValueLabelProvider';
-}
-
-String $_selectedPrimaryCurrencyHash() =>
+String _$selectedPrimaryCurrencyHash() =>
     r'76f1344bf25b37b1bf2bb5fbd6a951371e220965';
 
 /// See also [_selectedPrimaryCurrency].
+@ProviderFor(_selectedPrimaryCurrency)
 final _selectedPrimaryCurrencyProvider =
-    AutoDisposeProvider<AvailablePrimaryCurrency>(
+    AutoDisposeProvider<AvailablePrimaryCurrency>.internal(
   _selectedPrimaryCurrency,
   name: r'_selectedPrimaryCurrencyProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_selectedPrimaryCurrencyHash,
+      : _$selectedPrimaryCurrencyHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
 );
+
 typedef _SelectedPrimaryCurrencyRef
     = AutoDisposeProviderRef<AvailablePrimaryCurrency>;
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
