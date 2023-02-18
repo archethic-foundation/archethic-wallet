@@ -23,9 +23,8 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
 
 extension _ConnectivityResultExt on ConnectivityResult {
   ConnectivityStatus get toConnectivityStatus {
-    if(Platform.isLinux)
-    {
-       return ConnectivityStatus.isConnected; 
+    if (Platform.isLinux) {
+      return ConnectivityStatus.isConnected;
     }
     switch (this) {
       case ConnectivityResult.mobile:
@@ -34,7 +33,6 @@ extension _ConnectivityResultExt on ConnectivityResult {
       case ConnectivityResult.bluetooth:
       case ConnectivityResult.other:
       case ConnectivityResult.vpn:
-      case ConnectivityResult.other:
         return ConnectivityStatus.isConnected;
       case ConnectivityResult.none:
         return ConnectivityStatus.isDisconnected;
