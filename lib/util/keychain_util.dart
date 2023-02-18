@@ -157,7 +157,7 @@ class KeychainUtil {
     final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
-    keychain.copyWithService(kServiceName, kDerivationPath);
+    final newKeychain = keychain.copyWithService(kServiceName, kDerivationPath);
 
     final lastTransactionKeychainMap =
         await sl.get<ApiService>().getLastTransaction(
@@ -174,7 +174,7 @@ class KeychainUtil {
 
     final keychainTransaction =
         Transaction(type: 'keychain', data: Transaction.initData())
-            .setContent(jsonEncode(keychain.toDID()));
+            .setContent(jsonEncode(newKeychain.toDID()));
 
     final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
     final authorizedKeysList =
@@ -194,21 +194,21 @@ class KeychainUtil {
 
     keychainTransaction.addOwnership(
       uint8ListToHex(
-        aesEncrypt(keychain.encode(), aesKey),
+        aesEncrypt(newKeychain.encode(), aesKey),
       ),
       authorizedKeys,
     );
 
     keychainTransaction
         .build(
-          uint8ListToHex(keychain.seed!),
+          uint8ListToHex(newKeychain.seed!),
           lastTransactionKeychainMap[genesisAddressKeychain]!.chainLength!,
         )
         .originSign(originPrivateKey);
 
     await sl.get<ApiService>().sendTx(keychainTransaction);
 
-    final genesisAddress = keychain.deriveAddress(kServiceName);
+    final genesisAddress = newKeychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),
@@ -239,8 +239,9 @@ class KeychainUtil {
       name: '@$name',
       address: uint8ListToHex(genesisAddress),
       type: ContactType.keychainService.name,
-      publicKey: uint8ListToHex(keychain.deriveKeypair(kServiceName).publicKey!)
-          .toUpperCase(),
+      publicKey:
+          uint8ListToHex(newKeychain.deriveKeypair(kServiceName).publicKey!)
+              .toUpperCase(),
     );
     await sl.get<DBHelper>().saveContact(newContact);
 
