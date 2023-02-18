@@ -44,8 +44,7 @@ Future<void> main() async {
     await windowManager.ensureInitialized();
 
     var sizeWindows = const Size(370, 800);
-    if(Platform.isLinux)
-    {
+    if (Platform.isLinux) {
       sizeWindows = const Size(430, 850);
     }
 
@@ -62,15 +61,12 @@ Future<void> main() async {
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       // https://github.com/leanflutter/window_manager/issues/238
-      if(Platform.isLinux)
-      {
+      if (Platform.isLinux) {
         await windowManager.setResizable(true);
-      }
-      else
-      {
+      } else {
         await windowManager.setResizable(false);
       }
-  
+
       // ignore: cascade_invocations
       if (Platform.isWindows) {
         windowManager.setMaximizable(false);

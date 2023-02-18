@@ -37,7 +37,10 @@ class IconWidget extends ConsumerWidget {
         child: icon.endsWith('svg')
             ? SvgPicture.asset(
                 icon,
-                color: color ?? theme.iconDrawer,
+                colorFilter: ColorFilter.mode(
+                  color ?? theme.iconDrawer!,
+                  BlendMode.srcIn,
+                ),
                 height: height,
                 width: width,
               )

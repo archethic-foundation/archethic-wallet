@@ -40,7 +40,8 @@ class BuySheet extends ConsumerWidget {
                         },
                         child: SvgPicture.asset(
                           'assets/buy/Rubic.svg',
-                          color: theme.text,
+                          colorFilter:
+                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
                           height: 40,
                         ),
                       ),
@@ -100,7 +101,8 @@ class BuySheet extends ConsumerWidget {
                         },
                         child: SvgPicture.asset(
                           'assets/buy/Uniswap.svg',
-                          color: theme.text,
+                          colorFilter:
+                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
                           height: 40,
                         ),
                       ),
@@ -115,7 +117,8 @@ class BuySheet extends ConsumerWidget {
                         },
                         child: SvgPicture.asset(
                           'assets/buy/Zebitex.svg',
-                          color: theme.text,
+                          colorFilter:
+                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
                           height: 40,
                         ),
                       ),
