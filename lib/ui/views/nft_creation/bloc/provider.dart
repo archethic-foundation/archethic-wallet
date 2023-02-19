@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -23,8 +22,6 @@ import 'package:aewallet/util/mime_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mime_dart/mime_dart.dart';
-import 'package:path/path.dart' as path;
 import 'package:pdfx/pdfx.dart';
 
 final _nftCreationFormProviderArgs = Provider<NftCreationFormNotifierParams>(
@@ -429,14 +426,11 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
 
   Future<void> setContentProperties(
     BuildContext context,
-    File file,
+    Uint8List fileDecoded,
     FileImportType fileImportType,
+    String typeMime,
   ) async {
-    final fileDecoded = File(file.path).readAsBytesSync();
     final file64 = base64Encode(fileDecoded);
-    final typeMime = Mime.getTypesFromExtension(
-      path.extension(file.path).toLowerCase().replaceAll('.', ''),
-    )![0];
 
     Uint8List? fileDecodedForPreview;
 
@@ -456,11 +450,10 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
                     .toLowerCase()
                     .compareTo(b.tokenProperty!.name!.toLowerCase()));
       }*/
-
     } else {
       if (MimeUtil.isPdf(typeMime) == true) {
         final pdfDocument = await PdfDocument.openData(
-          File(file.path).readAsBytesSync(),
+          fileDecoded,
         );
         final pdfPage = await pdfDocument.getPage(1);
         final pdfPageImage =
@@ -486,7 +479,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       fileSize: fileDecoded.length,
       fileTypeMime: typeMime,
       fileDecodedForPreview: fileDecodedForPreview,
-      file: {file: List<String>.empty(growable: true)},
+      file: {fileDecoded: List<String>.empty(growable: true)},
       properties: newPropertiesToSet,
     );
 

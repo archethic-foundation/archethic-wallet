@@ -22,7 +22,7 @@ mixin _$NftCreationFormState {
   int get indexTab => throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   AccountBalance get accountBalance => throw _privateConstructorUsedError;
-  Map<File, List<String>>? get file => throw _privateConstructorUsedError;
+  Map<Uint8List, List<String>>? get file => throw _privateConstructorUsedError;
   FileImportType? get fileImportType => throw _privateConstructorUsedError;
   Uint8List? get fileDecoded => throw _privateConstructorUsedError;
   Uint8List? get fileDecodedForPreview => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       int indexTab,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
-      Map<File, List<String>>? file,
+      Map<Uint8List, List<String>>? file,
       FileImportType? fileImportType,
       Uint8List? fileDecoded,
       Uint8List? fileDecodedForPreview,
@@ -145,7 +145,7 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
       file: freezed == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
-              as Map<File, List<String>>?,
+              as Map<Uint8List, List<String>>?,
       fileImportType: freezed == fileImportType
           ? _value.fileImportType
           : fileImportType // ignore: cast_nullable_to_non_nullable
@@ -253,7 +253,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       int indexTab,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
-      Map<File, List<String>>? file,
+      Map<Uint8List, List<String>>? file,
       FileImportType? fileImportType,
       Uint8List? fileDecoded,
       Uint8List? fileDecodedForPreview,
@@ -337,7 +337,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
       file: freezed == file
           ? _value._file
           : file // ignore: cast_nullable_to_non_nullable
-              as Map<File, List<String>>?,
+              as Map<Uint8List, List<String>>?,
       fileImportType: freezed == fileImportType
           ? _value.fileImportType
           : fileImportType // ignore: cast_nullable_to_non_nullable
@@ -419,7 +419,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       this.indexTab = 0,
       required this.feeEstimation,
       required this.accountBalance,
-      final Map<File, List<String>>? file,
+      final Map<Uint8List, List<String>>? file,
       this.fileImportType,
       this.fileDecoded,
       this.fileDecodedForPreview,
@@ -454,9 +454,9 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   final AsyncValue<double> feeEstimation;
   @override
   final AccountBalance accountBalance;
-  final Map<File, List<String>>? _file;
+  final Map<Uint8List, List<String>>? _file;
   @override
-  Map<File, List<String>>? get file {
+  Map<Uint8List, List<String>>? get file {
     final value = _file;
     if (value == null) return null;
     if (_file is EqualUnmodifiableMapView) return _file;
@@ -618,7 +618,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final int indexTab,
       required final AsyncValue<double> feeEstimation,
       required final AccountBalance accountBalance,
-      final Map<File, List<String>>? file,
+      final Map<Uint8List, List<String>>? file,
       final FileImportType? fileImportType,
       final Uint8List? fileDecoded,
       final Uint8List? fileDecodedForPreview,
@@ -649,7 +649,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   @override
   AccountBalance get accountBalance;
   @override
-  Map<File, List<String>>? get file;
+  Map<Uint8List, List<String>>? get file;
   @override
   FileImportType? get fileImportType;
   @override

@@ -44,11 +44,6 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      name: archethic_lib_dart
-      sha256: d84131f4263b0d278eb83ade513c5e8194b35b598163b1695973b429f7d0f3fc
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
   archive:
     dependency: transitive
     description:
@@ -108,10 +103,11 @@ packages:
   bip39_mnemonic:
     dependency: "direct main"
     description:
-      name: bip39_mnemonic
-      sha256: "43aca70307fab44d7c5548f15b1458e201adbaa05bb7db95ed93e6a017ce813b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: gcm-web
+      resolved-ref: "28dac504a8a1f41905e01f504cef2fdfe1b81318"
+      url: "https://github.com/redDwarf03/dart-bip39-mnemonic.git"
+    source: git
     version: "3.0.5"
   boolean_selector:
     dependency: transitive
@@ -316,10 +312,11 @@ packages:
   crypto_keys:
     dependency: transitive
     description:
-      name: crypto_keys
-      sha256: acc19abf34623d990a0e8aec69463d74a824c31f137128f42e2810befc509ad0
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: gcm-web
+      resolved-ref: c377ba1f72548bf1a07c8332662e5592aa6a86d5
+      url: "https://github.com/redDwarf03/crypto_keys.git"
+    source: git
     version: "0.3.0+1"
   cryptography:
     dependency: transitive
@@ -452,11 +449,12 @@ packages:
   encrypt:
     dependency: "direct main"
     description:
-      name: encrypt
-      sha256: "4fd4e4fdc21b9d7d4141823e1e6515cd94e7b8d84749504c232999fba25d9bbb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
+      path: "."
+      ref: gcm-web
+      resolved-ref: "44a59bbc9b7dcedab9870d69c565f58a7ebb9733"
+      url: "https://github.com/redDwarf03/encrypt.git"
+    source: git
+    version: "5.0.2"
   equatable:
     dependency: transitive
     description:
@@ -1463,10 +1461,11 @@ packages:
   pointycastle:
     dependency: "direct main"
     description:
-      name: pointycastle
-      sha256: db7306cf0249f838d1a24af52b5a5887c5bf7f31d8bb4e827d071dc0939ad346
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: gcm-web
+      resolved-ref: aafaeb9a3d7cacab5c23e25d1a282aeb8ef9038d
+      url: "https://github.com/redDwarf03/pc-dart.git"
+    source: git
     version: "3.6.2"
   pool:
     dependency: transitive
