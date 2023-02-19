@@ -720,7 +720,7 @@ class AppService with KeychainMixin {
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
       if (token != null && token.type == 'non-fungible') {
-        final tokenWithoutFile = token.tokenProperties
+        final tokenWithoutFile = {...token.properties}
           ..removeWhere((key, value) => key == 'content');
 
         if (secretMap[tokenBalance.address] != null &&
@@ -1156,7 +1156,7 @@ class AppService with KeychainMixin {
 
     final token = tokenMap[address]!;
 
-    final tokenWithoutFile = token.tokenProperties
+    final tokenWithoutFile = token.properties
       ..removeWhere((key, value) => key == 'content');
 
     if (secretMap[address] != null &&

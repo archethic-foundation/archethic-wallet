@@ -80,26 +80,25 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
       type: tokenType,
       symbol: tokenSymbol,
       aeip: aeip,
-      tokenProperties: tokenPropertiesNotProtected,
+      properties: tokenPropertiesNotProtected,
     );
 
     final content = token.tokenToJsonForTxDataContent();
-    transaction
-      ..setContent(content)
-      ..setAddress(
-        archethic.Address(
-          address: archethic.uint8ListToHex(
-            keychain.deriveAddress(
-              serviceName,
-              index: index + 1,
-            ),
+    final newTransactionContent = transaction.setContent(content);
+    final newTransactionAddress = newTransactionContent.setAddress(
+      archethic.Address(
+        address: archethic.uint8ListToHex(
+          keychain.deriveAddress(
+            serviceName,
+            index: index + 1,
           ),
         ),
-      );
+      ),
+    );
 
     return keychain
         .buildTransaction(
-          transaction,
+          newTransactionAddress,
           serviceName,
           index,
         )
