@@ -36,8 +36,14 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
               if (pickedFile != null) {
                 nftCreationNotifier.setContentProperties(
                   context,
-                  File(pickedFile.path),
+                  File(pickedFile.path).readAsBytesSync(),
                   FileImportType.image,
+                  Mime.getTypesFromExtension(
+                    path
+                        .extension(pickedFile.path)
+                        .toLowerCase()
+                        .replaceAll('.', ''),
+                  )![0],
                 );
               }
             },

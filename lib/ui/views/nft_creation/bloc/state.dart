@@ -29,7 +29,7 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default(0) int indexTab,
     required AsyncValue<double> feeEstimation,
     required AccountBalance accountBalance,
-    Map<File, List<String>>? file,
+    Map<Uint8List, List<String>>? file,
     FileImportType? fileImportType,
     Uint8List? fileDecoded,
     Uint8List? fileDecodedForPreview,

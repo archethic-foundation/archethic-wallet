@@ -25,11 +25,17 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
             onTap: () async {
               final result = await FilePicker.platform.pickFiles();
 
-              if (result != null) {
+              if (result != null && result.files.isNotEmpty) {
                 nftCreationNotifier.setContentProperties(
                   context,
-                  File(result.files.single.path!),
+                  result.files.single.bytes!,
                   FileImportType.file,
+                  Mime.getTypesFromExtension(
+                    path
+                        .extension(result.files.single.name)
+                        .toLowerCase()
+                        .replaceAll('.', ''),
+                  )![0],
                 );
               } else {
                 // User canceled the picker

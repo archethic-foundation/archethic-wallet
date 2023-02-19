@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum ConnectivityStatus { isConnected, isDisconnected }
 
 class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
-  ConnectivityStatusNotifier() : super(ConnectivityStatus.isDisconnected) {
+  ConnectivityStatusNotifier() : super(ConnectivityStatus.isConnected) {
     Connectivity().onConnectivityChanged.listen(
       (ConnectivityResult result) {
         final newState = result.toConnectivityStatus;
@@ -23,7 +24,7 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
 
 extension _ConnectivityResultExt on ConnectivityResult {
   ConnectivityStatus get toConnectivityStatus {
-    if (Platform.isLinux) {
+    if (kIsWeb || (!kIsWeb && Platform.isLinux)) {
       return ConnectivityStatus.isConnected;
     }
     switch (this) {

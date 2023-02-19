@@ -35,6 +35,8 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart' show RpgAwesome;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime_dart/mime_dart.dart';
+import 'package:path/path.dart' as path;
 
 part 'components/nft_creation_process_import_tab.dart';
 part 'components/nft_creation_process_import_tab_camera.dart';
