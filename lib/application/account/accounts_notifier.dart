@@ -34,23 +34,4 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
     }
     ref.invalidate(AccountProviders.account(account.name));
   }
-
-  Future<void> addAccount({required String name}) async {
-    final loggedInSession = ref.read(SessionProviders.session).loggedIn;
-    if (loggedInSession == null) return;
-
-    final currencyName = ref.read(
-      SettingsProviders.settings.select((settings) => settings.currency.name),
-    );
-
-    await KeychainUtil().addAccountInKeyChain(
-      HiveAppWalletDTO.fromModel(loggedInSession.wallet),
-      loggedInSession.wallet.seed,
-      name,
-      currencyName,
-      AccountBalance.cryptoCurrencyLabel,
-    );
-
-    ref.invalidate(AccountProviders.accounts);
-  }
 }
