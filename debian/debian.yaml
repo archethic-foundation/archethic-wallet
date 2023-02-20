@@ -1,0 +1,14 @@
+flutter_app:
+  command: archethic-wallet
+  arch: x64
+  parent: /usr/local/bin
+
+control:
+  Package: archethic-wallet
+  Version: 2.0.9
+  Architecture: amd64
+  Essential: no
+  Priority: optional
+  Depends: libcap2,libglib2.0-dev,libgtk-3-0,libjpeg-turbo8,libjsoncpp25,liblz4-1,liblzma5,libsecret-1-0,libzstd1
+  Maintainer: Archethic
+  Description: Decentralized & cryptocurrency non-custodial hot wallet on Archethic blockchain
