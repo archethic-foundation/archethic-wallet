@@ -30,7 +30,6 @@ class _NFTCreationProcessImportTabState
       child: Container(
         padding:
             EdgeInsets.only(top: 20, left: 20, right: 20, bottom: bottom + 80),
-        height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
