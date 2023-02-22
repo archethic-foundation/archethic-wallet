@@ -21,7 +21,6 @@ class TransactionTemplate extends ConsumerWidget {
     required this.backgroundColor,
     required this.right,
     required this.information,
-    this.comment,
     this.fees,
   });
 
@@ -31,7 +30,6 @@ class TransactionTemplate extends ConsumerWidget {
   final Color backgroundColor;
   final Widget right;
   final Widget information;
-  final Widget? comment;
   final Widget? fees;
 
   @override
@@ -84,7 +82,6 @@ class TransactionTemplate extends ConsumerWidget {
                       information,
                       TransactionDate(timestamp: transaction.timestamp),
                       if (fees != null) fees!,
-                      if (comment != null) comment!,
                       Row(
                         children: [
                           if (hasWarning)

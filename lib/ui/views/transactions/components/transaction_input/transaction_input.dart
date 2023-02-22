@@ -8,7 +8,7 @@ import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_comment.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfert_balance.dart';
-import 'package:aewallet/ui/views/transactions/components/token_creation/token_creation_information.dart';
+import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_information.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transfert_input.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
@@ -44,24 +44,36 @@ class TransactionInput extends ConsumerWidget {
           );
         }
       },
-      right: TransfertBalance(
-        transaction: transaction,
-        marketPrice: marketPrice,
-        isCurrencyNative: primaryCurrency.primaryCurrency ==
-            AvailablePrimaryCurrencyEnum.native,
-        child: TransfertInput(
-          transaction: transaction,
-          isCurrencyNative: primaryCurrency.primaryCurrency ==
-              AvailablePrimaryCurrencyEnum.native,
-        ),
-      ),
-      information: TokenCreationInformation(
-        transaction: transaction,
-      ),
-      comment: (transaction.decryptedSecret != null &&
+      right: Column(
+        children: [
+          TransfertBalance(
+            transaction: transaction,
+            marketPrice: marketPrice,
+            isCurrencyNative: primaryCurrency.primaryCurrency ==
+                AvailablePrimaryCurrencyEnum.native,
+            child: TransfertInput(
+              transaction: transaction,
+              isCurrencyNative: primaryCurrency.primaryCurrency ==
+                  AvailablePrimaryCurrencyEnum.native,
+            ),
+          ),
+          if (transaction.decryptedSecret != null &&
               transaction.decryptedSecret!.isNotEmpty)
-          ? TransactionComment(transaction: transaction)
-          : null,
+            Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                TransactionComment(transaction: transaction)
+              ],
+            )
+          else
+            const SizedBox()
+        ],
+      ),
+      information: TransactionInputInformation(
+        transaction: transaction,
+      ),
     );
   }
 }

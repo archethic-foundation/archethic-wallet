@@ -45,24 +45,36 @@ class TransactionOuput extends ConsumerWidget {
           );
         }
       },
-      right: TransfertBalance(
-        isCurrencyNative: primaryCurrency.primaryCurrency ==
-            AvailablePrimaryCurrencyEnum.native,
-        transaction: transaction,
-        marketPrice: marketPrice,
-        child: TransfertOutput(
-          isCurrencyNative: primaryCurrency.primaryCurrency ==
-              AvailablePrimaryCurrencyEnum.native,
-          transaction: transaction,
-        ),
+      right: Column(
+        children: [
+          TransfertBalance(
+            isCurrencyNative: primaryCurrency.primaryCurrency ==
+                AvailablePrimaryCurrencyEnum.native,
+            transaction: transaction,
+            marketPrice: marketPrice,
+            child: TransfertOutput(
+              isCurrencyNative: primaryCurrency.primaryCurrency ==
+                  AvailablePrimaryCurrencyEnum.native,
+              transaction: transaction,
+            ),
+          ),
+          if (transaction.decryptedSecret != null &&
+              transaction.decryptedSecret!.isNotEmpty)
+            Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                TransactionComment(transaction: transaction)
+              ],
+            )
+          else
+            const SizedBox(),
+        ],
       ),
       information: TransactionOutputInformation(
         transaction: transaction,
       ),
-      comment: (transaction.decryptedSecret != null &&
-              transaction.decryptedSecret!.isNotEmpty)
-          ? TransactionComment(transaction: transaction)
-          : null,
       fees: TransactionFees(transaction: transaction, marketPrice: marketPrice),
     );
   }
