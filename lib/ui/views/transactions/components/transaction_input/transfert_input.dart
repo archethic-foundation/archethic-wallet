@@ -27,7 +27,7 @@ class TransfertInput extends ConsumerWidget {
 
     return TransfertEntryTemplate(
       hasTransactionInfo: !hasNotTransactionInfo,
-      label: !hasNotTransactionInfo
+      label: hasNotTransactionInfo
           ? '$amountFormatted ${isCurrencyNative ? (transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!) : transaction.tokenInformations!.symbol!}'
           : '$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
       icon: const TransactionInputIcon(),
