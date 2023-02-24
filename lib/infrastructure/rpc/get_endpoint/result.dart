@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'rpc_get_endpoint_result.freezed.dart';
-part 'rpc_get_endpoint_result.g.dart';
+part 'result.freezed.dart';
+part 'result.g.dart';
 
 @freezed
 class RpcGetEndpointResult with _$RpcGetEndpointResult {

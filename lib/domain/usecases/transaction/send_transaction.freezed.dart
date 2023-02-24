@@ -15,11 +15,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SignTransactionCommand {
+mixin _$SendTransactionCommand {
   Account get senderAccount => throw _privateConstructorUsedError;
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
-  archethic.Data get data => throw _privateConstructorUsedError;
+  Data get data => throw _privateConstructorUsedError;
 
   /// - Type: transaction type
   String get type => throw _privateConstructorUsedError;
@@ -28,25 +28,26 @@ mixin _$SignTransactionCommand {
   int get version => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SignTransactionCommandCopyWith<SignTransactionCommand> get copyWith =>
+  $SendTransactionCommandCopyWith<SendTransactionCommand> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SignTransactionCommandCopyWith<$Res> {
-  factory $SignTransactionCommandCopyWith(SignTransactionCommand value,
-          $Res Function(SignTransactionCommand) then) =
-      _$SignTransactionCommandCopyWithImpl<$Res, SignTransactionCommand>;
+abstract class $SendTransactionCommandCopyWith<$Res> {
+  factory $SendTransactionCommandCopyWith(SendTransactionCommand value,
+          $Res Function(SendTransactionCommand) then) =
+      _$SendTransactionCommandCopyWithImpl<$Res, SendTransactionCommand>;
   @useResult
-  $Res call(
-      {Account senderAccount, archethic.Data data, String type, int version});
+  $Res call({Account senderAccount, Data data, String type, int version});
+
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class _$SignTransactionCommandCopyWithImpl<$Res,
-        $Val extends SignTransactionCommand>
-    implements $SignTransactionCommandCopyWith<$Res> {
-  _$SignTransactionCommandCopyWithImpl(this._value, this._then);
+class _$SendTransactionCommandCopyWithImpl<$Res,
+        $Val extends SendTransactionCommand>
+    implements $SendTransactionCommandCopyWith<$Res> {
+  _$SendTransactionCommandCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -69,7 +70,7 @@ class _$SignTransactionCommandCopyWithImpl<$Res,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as archethic.Data,
+              as Data,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -80,27 +81,37 @@ class _$SignTransactionCommandCopyWithImpl<$Res,
               as int,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DataCopyWith<$Res> get data {
+    return $DataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_SignTransactionCommandCopyWith<$Res>
-    implements $SignTransactionCommandCopyWith<$Res> {
-  factory _$$_SignTransactionCommandCopyWith(_$_SignTransactionCommand value,
-          $Res Function(_$_SignTransactionCommand) then) =
-      __$$_SignTransactionCommandCopyWithImpl<$Res>;
+abstract class _$$_SendTransactionCommandCopyWith<$Res>
+    implements $SendTransactionCommandCopyWith<$Res> {
+  factory _$$_SendTransactionCommandCopyWith(_$_SendTransactionCommand value,
+          $Res Function(_$_SendTransactionCommand) then) =
+      __$$_SendTransactionCommandCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Account senderAccount, archethic.Data data, String type, int version});
+  $Res call({Account senderAccount, Data data, String type, int version});
+
+  @override
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class __$$_SignTransactionCommandCopyWithImpl<$Res>
-    extends _$SignTransactionCommandCopyWithImpl<$Res,
-        _$_SignTransactionCommand>
-    implements _$$_SignTransactionCommandCopyWith<$Res> {
-  __$$_SignTransactionCommandCopyWithImpl(_$_SignTransactionCommand _value,
-      $Res Function(_$_SignTransactionCommand) _then)
+class __$$_SendTransactionCommandCopyWithImpl<$Res>
+    extends _$SendTransactionCommandCopyWithImpl<$Res,
+        _$_SendTransactionCommand>
+    implements _$$_SendTransactionCommandCopyWith<$Res> {
+  __$$_SendTransactionCommandCopyWithImpl(_$_SendTransactionCommand _value,
+      $Res Function(_$_SendTransactionCommand) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -111,7 +122,7 @@ class __$$_SignTransactionCommandCopyWithImpl<$Res>
     Object? type = null,
     Object? version = null,
   }) {
-    return _then(_$_SignTransactionCommand(
+    return _then(_$_SendTransactionCommand(
       senderAccount: null == senderAccount
           ? _value.senderAccount
           : senderAccount // ignore: cast_nullable_to_non_nullable
@@ -119,7 +130,7 @@ class __$$_SignTransactionCommandCopyWithImpl<$Res>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as archethic.Data,
+              as Data,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -134,8 +145,8 @@ class __$$_SignTransactionCommandCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SignTransactionCommand extends _SignTransactionCommand {
-  const _$_SignTransactionCommand(
+class _$_SendTransactionCommand extends _SendTransactionCommand {
+  const _$_SendTransactionCommand(
       {required this.senderAccount,
       required this.data,
       required this.type,
@@ -147,7 +158,7 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
   @override
-  final archethic.Data data;
+  final Data data;
 
   /// - Type: transaction type
   @override
@@ -159,14 +170,14 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
 
   @override
   String toString() {
-    return 'SignTransactionCommand(senderAccount: $senderAccount, data: $data, type: $type, version: $version)';
+    return 'SendTransactionCommand(senderAccount: $senderAccount, data: $data, type: $type, version: $version)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SignTransactionCommand &&
+            other is _$_SendTransactionCommand &&
             (identical(other.senderAccount, senderAccount) ||
                 other.senderAccount == senderAccount) &&
             (identical(other.data, data) || other.data == data) &&
@@ -181,25 +192,25 @@ class _$_SignTransactionCommand extends _SignTransactionCommand {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SignTransactionCommandCopyWith<_$_SignTransactionCommand> get copyWith =>
-      __$$_SignTransactionCommandCopyWithImpl<_$_SignTransactionCommand>(
+  _$$_SendTransactionCommandCopyWith<_$_SendTransactionCommand> get copyWith =>
+      __$$_SendTransactionCommandCopyWithImpl<_$_SendTransactionCommand>(
           this, _$identity);
 }
 
-abstract class _SignTransactionCommand extends SignTransactionCommand {
-  const factory _SignTransactionCommand(
+abstract class _SendTransactionCommand extends SendTransactionCommand {
+  const factory _SendTransactionCommand(
       {required final Account senderAccount,
-      required final archethic.Data data,
+      required final Data data,
       required final String type,
-      required final int version}) = _$_SignTransactionCommand;
-  const _SignTransactionCommand._() : super._();
+      required final int version}) = _$_SendTransactionCommand;
+  const _SendTransactionCommand._() : super._();
 
   @override
   Account get senderAccount;
   @override
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
-  archethic.Data get data;
+  Data get data;
   @override
 
   /// - Type: transaction type
@@ -210,6 +221,6 @@ abstract class _SignTransactionCommand extends SignTransactionCommand {
   int get version;
   @override
   @JsonKey(ignore: true)
-  _$$_SignTransactionCommandCopyWith<_$_SignTransactionCommand> get copyWith =>
+  _$$_SendTransactionCommandCopyWith<_$_SendTransactionCommand> get copyWith =>
       throw _privateConstructorUsedError;
 }

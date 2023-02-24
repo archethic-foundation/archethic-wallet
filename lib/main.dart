@@ -8,8 +8,8 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/command_dispatcher.dart';
+import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -28,10 +28,9 @@ import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/sign_transaction/layouts/sign_transaction_command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
-import 'package:deeplink_rpc/deeplink_rpc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,9 +48,7 @@ Future<void> main() async {
 
   if (ArchethicRPCServer.isPlatformCompatible) {
     ArchethicRPCServer(
-      signTransactionCommandDispatcher: sl.get<
-          CommandDispatcher<RPCSendTransactionCommand,
-              SendTransactionResult>>(),
+      commandDispatcher: sl.get<CommandDispatcher>(),
     ).run();
   }
 
@@ -120,7 +117,7 @@ class App extends ConsumerWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deeplinkRpcReceiver = sl.get<DeeplinkRpcRequestReceiver>();
+    final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
@@ -162,7 +159,7 @@ class App extends ConsumerWidget {
               );
             case '/home':
               return NoTransitionRoute<HomePage>(
-                builder: (_) => RPCSignTransactionCommandHandler(
+                builder: (_) => RPCCommandReceiver(
                   child: const AutoLockGuard(child: HomePage()),
                 ),
                 settings: settings,

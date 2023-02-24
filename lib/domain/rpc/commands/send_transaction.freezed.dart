@@ -15,12 +15,9 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$RPCSendTransactionCommand {
-  /// Source application name
-  RPCCommandOrigin get origin => throw _privateConstructorUsedError;
-
+mixin _$RPCSendTransactionCommandData {
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
-  archethic.Data get data => throw _privateConstructorUsedError;
+  Data get data => throw _privateConstructorUsedError;
 
   /// - Type: transaction type
   String get type => throw _privateConstructorUsedError;
@@ -29,27 +26,28 @@ mixin _$RPCSendTransactionCommand {
   int get version => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RPCSendTransactionCommandCopyWith<RPCSendTransactionCommand> get copyWith =>
-      throw _privateConstructorUsedError;
+  $RPCSendTransactionCommandDataCopyWith<RPCSendTransactionCommandData>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RPCSendTransactionCommandCopyWith<$Res> {
-  factory $RPCSendTransactionCommandCopyWith(RPCSendTransactionCommand value,
-          $Res Function(RPCSendTransactionCommand) then) =
-      _$RPCSendTransactionCommandCopyWithImpl<$Res, RPCSendTransactionCommand>;
+abstract class $RPCSendTransactionCommandDataCopyWith<$Res> {
+  factory $RPCSendTransactionCommandDataCopyWith(
+          RPCSendTransactionCommandData value,
+          $Res Function(RPCSendTransactionCommandData) then) =
+      _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
+          RPCSendTransactionCommandData>;
   @useResult
-  $Res call(
-      {RPCCommandOrigin origin, archethic.Data data, String type, int version});
+  $Res call({Data data, String type, int version});
 
-  $RPCCommandOriginCopyWith<$Res> get origin;
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class _$RPCSendTransactionCommandCopyWithImpl<$Res,
-        $Val extends RPCSendTransactionCommand>
-    implements $RPCSendTransactionCommandCopyWith<$Res> {
-  _$RPCSendTransactionCommandCopyWithImpl(this._value, this._then);
+class _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
+        $Val extends RPCSendTransactionCommandData>
+    implements $RPCSendTransactionCommandDataCopyWith<$Res> {
+  _$RPCSendTransactionCommandDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -59,20 +57,15 @@ class _$RPCSendTransactionCommandCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? origin = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
     return _then(_value.copyWith(
-      origin: null == origin
-          ? _value.origin
-          : origin // ignore: cast_nullable_to_non_nullable
-              as RPCCommandOrigin,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as archethic.Data,
+              as Data,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -86,56 +79,50 @@ class _$RPCSendTransactionCommandCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $RPCCommandOriginCopyWith<$Res> get origin {
-    return $RPCCommandOriginCopyWith<$Res>(_value.origin, (value) {
-      return _then(_value.copyWith(origin: value) as $Val);
+  $DataCopyWith<$Res> get data {
+    return $DataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_RPCSendTransactionCommandCopyWith<$Res>
-    implements $RPCSendTransactionCommandCopyWith<$Res> {
-  factory _$$_RPCSendTransactionCommandCopyWith(
-          _$_RPCSendTransactionCommand value,
-          $Res Function(_$_RPCSendTransactionCommand) then) =
-      __$$_RPCSendTransactionCommandCopyWithImpl<$Res>;
+abstract class _$$_RPCSendTransactionCommandDataCopyWith<$Res>
+    implements $RPCSendTransactionCommandDataCopyWith<$Res> {
+  factory _$$_RPCSendTransactionCommandDataCopyWith(
+          _$_RPCSendTransactionCommandData value,
+          $Res Function(_$_RPCSendTransactionCommandData) then) =
+      __$$_RPCSendTransactionCommandDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {RPCCommandOrigin origin, archethic.Data data, String type, int version});
+  $Res call({Data data, String type, int version});
 
   @override
-  $RPCCommandOriginCopyWith<$Res> get origin;
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class __$$_RPCSendTransactionCommandCopyWithImpl<$Res>
-    extends _$RPCSendTransactionCommandCopyWithImpl<$Res,
-        _$_RPCSendTransactionCommand>
-    implements _$$_RPCSendTransactionCommandCopyWith<$Res> {
-  __$$_RPCSendTransactionCommandCopyWithImpl(
-      _$_RPCSendTransactionCommand _value,
-      $Res Function(_$_RPCSendTransactionCommand) _then)
+class __$$_RPCSendTransactionCommandDataCopyWithImpl<$Res>
+    extends _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
+        _$_RPCSendTransactionCommandData>
+    implements _$$_RPCSendTransactionCommandDataCopyWith<$Res> {
+  __$$_RPCSendTransactionCommandDataCopyWithImpl(
+      _$_RPCSendTransactionCommandData _value,
+      $Res Function(_$_RPCSendTransactionCommandData) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? origin = null,
     Object? data = null,
     Object? type = null,
     Object? version = null,
   }) {
-    return _then(_$_RPCSendTransactionCommand(
-      origin: null == origin
-          ? _value.origin
-          : origin // ignore: cast_nullable_to_non_nullable
-              as RPCCommandOrigin,
+    return _then(_$_RPCSendTransactionCommandData(
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as archethic.Data,
+              as Data,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -150,21 +137,14 @@ class __$$_RPCSendTransactionCommandCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSendTransactionCommand extends _RPCSendTransactionCommand {
-  const _$_RPCSendTransactionCommand(
-      {required this.origin,
-      required this.data,
-      required this.type,
-      required this.version})
+class _$_RPCSendTransactionCommandData extends _RPCSendTransactionCommandData {
+  const _$_RPCSendTransactionCommandData(
+      {required this.data, required this.type, required this.version})
       : super._();
-
-  /// Source application name
-  @override
-  final RPCCommandOrigin origin;
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
   @override
-  final archethic.Data data;
+  final Data data;
 
   /// - Type: transaction type
   @override
@@ -176,47 +156,42 @@ class _$_RPCSendTransactionCommand extends _RPCSendTransactionCommand {
 
   @override
   String toString() {
-    return 'RPCSendTransactionCommand(origin: $origin, data: $data, type: $type, version: $version)';
+    return 'RPCSendTransactionCommandData(data: $data, type: $type, version: $version)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSendTransactionCommand &&
-            (identical(other.origin, origin) || other.origin == origin) &&
+            other is _$_RPCSendTransactionCommandData &&
             (identical(other.data, data) || other.data == data) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.version, version) || other.version == version));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, origin, data, type, version);
+  int get hashCode => Object.hash(runtimeType, data, type, version);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSendTransactionCommandCopyWith<_$_RPCSendTransactionCommand>
-      get copyWith => __$$_RPCSendTransactionCommandCopyWithImpl<
-          _$_RPCSendTransactionCommand>(this, _$identity);
+  _$$_RPCSendTransactionCommandDataCopyWith<_$_RPCSendTransactionCommandData>
+      get copyWith => __$$_RPCSendTransactionCommandDataCopyWithImpl<
+          _$_RPCSendTransactionCommandData>(this, _$identity);
 }
 
-abstract class _RPCSendTransactionCommand extends RPCSendTransactionCommand {
-  const factory _RPCSendTransactionCommand(
-      {required final RPCCommandOrigin origin,
-      required final archethic.Data data,
+abstract class _RPCSendTransactionCommandData
+    extends RPCSendTransactionCommandData {
+  const factory _RPCSendTransactionCommandData(
+      {required final Data data,
       required final String type,
-      required final int version}) = _$_RPCSendTransactionCommand;
-  const _RPCSendTransactionCommand._() : super._();
+      required final int version}) = _$_RPCSendTransactionCommandData;
+  const _RPCSendTransactionCommandData._() : super._();
 
-  @override
-
-  /// Source application name
-  RPCCommandOrigin get origin;
   @override
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
-  archethic.Data get data;
+  Data get data;
   @override
 
   /// - Type: transaction type
@@ -227,6 +202,6 @@ abstract class _RPCSendTransactionCommand extends RPCSendTransactionCommand {
   int get version;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSendTransactionCommandCopyWith<_$_RPCSendTransactionCommand>
+  _$$_RPCSendTransactionCommandDataCopyWith<_$_RPCSendTransactionCommandData>
       get copyWith => throw _privateConstructorUsedError;
 }

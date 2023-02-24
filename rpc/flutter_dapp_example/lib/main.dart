@@ -37,7 +37,7 @@ class TransactionSendForm extends StatefulWidget {
 class _TransactionSendFormState extends State<TransactionSendForm> {
   final payloadTextController = TextEditingController(text: """
  {
-		"source": {
+		"origin": {
 			"name": "Insomnia",
 			"url": "https://pouet.com", 
 			"logo": "DFGHJKJHGFDFGHJ"   

@@ -30,11 +30,11 @@ class _SystemHash {
 }
 
 String $_sendTransactionUseCaseHash() =>
-    r'53d8c191f6c685807630bf90000f7da8006beec4';
+    r'c17028112f57e40f7ebf7251518f914ae9c7ecd8';
 
 /// See also [_sendTransactionUseCase].
 final _sendTransactionUseCaseProvider = AutoDisposeProvider<
-    UseCase<SignTransactionCommand,
+    UseCase<SendTransactionCommand,
         Result<TransactionConfirmation, TransactionError>>>(
   _sendTransactionUseCase,
   name: r'_sendTransactionUseCaseProvider',
@@ -43,5 +43,5 @@ final _sendTransactionUseCaseProvider = AutoDisposeProvider<
       : $_sendTransactionUseCaseHash,
 );
 typedef _SendTransactionUseCaseRef = AutoDisposeProviderRef<
-    UseCase<SignTransactionCommand,
+    UseCase<SendTransactionCommand,
         Result<TransactionConfirmation, TransactionError>>>;

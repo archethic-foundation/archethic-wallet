@@ -10,33 +10,33 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/keychain_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'send_transaction.freezed.dart';
 
 @freezed
-class SignTransactionCommand with _$SignTransactionCommand {
-  const factory SignTransactionCommand({
+class SendTransactionCommand with _$SendTransactionCommand {
+  const factory SendTransactionCommand({
     required Account senderAccount,
 
     /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
-    required archethic.Data data,
+    required Data data,
 
     /// - Type: transaction type
     required String type,
 
     /// - Version: version of the transaction (used for backward compatiblity)
     required int version,
-  }) = _SignTransactionCommand;
-  const SignTransactionCommand._();
+  }) = _SendTransactionCommand;
+  const SendTransactionCommand._();
 }
 
-extension SignTransactionCommandConversion on SignTransactionCommand {
-  Future<archethic.Transaction?> toArchethicTransaction({
+extension SendTransactionCommandConversion on SendTransactionCommand {
+  Future<Transaction?> toArchethicTransaction({
     required AppWallet wallet,
     required Account senderAccount,
-    required archethic.ApiService apiService,
+    required ApiService apiService,
   }) async {
     try {
       final keychain = wallet.keychainSecuredInfos.toKeychain();
@@ -48,7 +48,7 @@ extension SignTransactionCommandConversion on SignTransactionCommand {
       );
       final accountIndex = indexMap[senderAccount.genesisAddress] ?? 0;
       final originPrivateKey = apiService.getOriginKey();
-      final transaction = archethic.Transaction(type: type, data: data);
+      final transaction = Transaction(type: type, data: data);
 
       final builtTransaction = keychain.buildTransaction(
         transaction,
@@ -67,7 +67,7 @@ extension SignTransactionCommandConversion on SignTransactionCommand {
 
 class SendTransactionUseCase
     implements
-        UseCase<SignTransactionCommand,
+        UseCase<SendTransactionCommand,
             Result<TransactionConfirmation, TransactionError>> {
   const SendTransactionUseCase({
     required this.wallet,
@@ -76,15 +76,15 @@ class SendTransactionUseCase
   });
 
   final AppWallet wallet;
-  final archethic.ApiService apiService;
+  final ApiService apiService;
   final NetworksSetting networkSettings;
 
   @override
   Future<Result<TransactionConfirmation, TransactionError>> run(
-    SignTransactionCommand command, {
+    SendTransactionCommand command, {
     UseCaseProgressListener? onProgress,
   }) async {
-    const logName = 'SignTransactionHandler';
+    const logName = 'SendTransactionUseCase';
 
     final operationCompleter =
         Completer<Result<TransactionConfirmation, TransactionError>>();
