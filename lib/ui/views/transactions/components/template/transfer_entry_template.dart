@@ -6,8 +6,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransfertEntryTemplate extends ConsumerWidget {
-  const TransfertEntryTemplate({
+class TransferEntryTemplate extends ConsumerWidget {
+  const TransferEntryTemplate({
     super.key,
     required this.hasTransactionInfo,
     required this.label,
