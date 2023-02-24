@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rpc_get_endpoint_result.dart';
+part of 'result.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

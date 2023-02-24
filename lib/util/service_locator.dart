@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/domain/repositories/settings.dart';
-import 'package:aewallet/domain/service/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/repositories/settings.dart';
-import 'package:aewallet/infrastructure/rpc/deeplink_handler.dart';
+import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -14,7 +13,6 @@ import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiService, AddressService, OracleService;
 import 'package:coingecko_api/coingecko_api.dart';
-import 'package:deeplink_rpc/deeplink_rpc.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {
@@ -26,13 +24,11 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
-    ..registerLazySingleton<
-        CommandDispatcher<RPCSendTransactionCommand, SendTransactionResult>>(
-      CommandDispatcher<RPCSendTransactionCommand, SendTransactionResult>.new,
+    ..registerLazySingleton<CommandDispatcher>(
+      CommandDispatcher.new,
     )
-    ..registerLazySingleton<DeeplinkRpcRequestReceiver>(
-      () => DeeplinkRpcRequestReceiver()
-        ..registerHandler(deeplinkRpcSendTransactionHandler),
+    ..registerLazySingleton<ArchethicDeeplinkRPCServer>(
+      ArchethicDeeplinkRPCServer.new,
     )
     ..registerLazySingleton<SettingsRepositoryInterface>(
       SettingsRepository.new,

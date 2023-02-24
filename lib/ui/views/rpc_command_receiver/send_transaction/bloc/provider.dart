@@ -3,7 +3,8 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/commands/command.dart';
+import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -20,7 +21,7 @@ part 'provider.g.dart';
 class SignTransactionConfirmationFormState
     with _$SignTransactionConfirmationFormState {
   const factory SignTransactionConfirmationFormState({
-    required RPCSendTransactionCommand signTransactionCommand,
+    required RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
     required Account senderAccount,
   }) = _SignTransactionConfirmationFormState;
   const SignTransactionConfirmationFormState._();
@@ -28,10 +29,10 @@ class SignTransactionConfirmationFormState
 
 class SignTransactionConfirmationFormNotifier
     extends AutoDisposeFamilyAsyncNotifier<SignTransactionConfirmationFormState,
-        RPCSendTransactionCommand> {
+        RPCCommand<RPCSendTransactionCommandData>> {
   @override
   Future<SignTransactionConfirmationFormState> build(
-    RPCSendTransactionCommand arg,
+    RPCCommand<RPCSendTransactionCommandData> arg,
   ) async {
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,
@@ -61,27 +62,32 @@ class SignTransactionConfirmationFormNotifier
     UseCaseProgressListener onProgress,
   ) async =>
       state.maybeMap(
-        orElse: () => const Result.failure(
-          TransactionError.other(reason: 'Form is not loaded yet.'),
-        ),
+        orElse: () => const Result.failure(TransactionError.other()),
         data: (data) {
           final useCase = ref.read(_sendTransactionUseCaseProvider);
 
-          return useCase.run(
-            SignTransactionCommand(
+          return useCase
+              .run(
+            SendTransactionCommand(
               senderAccount: data.value.senderAccount,
-              data: data.value.signTransactionCommand.data,
-              type: data.value.signTransactionCommand.type,
-              version: data.value.signTransactionCommand.version,
+              data: data.value.signTransactionCommand.data.data,
+              type: data.value.signTransactionCommand.data.type,
+              version: data.value.signTransactionCommand.data.version,
             ),
             onProgress: onProgress,
-          );
+          )
+              .then((result) {
+            return result.map(
+              success: Result.success,
+              failure: Result.failure,
+            );
+          });
         },
       );
 }
 
 @riverpod
-UseCase<SignTransactionCommand,
+UseCase<SendTransactionCommand,
     Result<TransactionConfirmation, TransactionError>> _sendTransactionUseCase(
   AutoDisposeRef ref,
 ) =>
@@ -97,7 +103,7 @@ class SignTransactionConfirmationProviders {
   static final form = AsyncNotifierProvider.autoDispose.family<
       SignTransactionConfirmationFormNotifier,
       SignTransactionConfirmationFormState,
-      RPCSendTransactionCommand>(
+      RPCCommand<RPCSendTransactionCommandData>>(
     SignTransactionConfirmationFormNotifier.new,
   );
 }

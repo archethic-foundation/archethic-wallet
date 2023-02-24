@@ -2,15 +2,17 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/domain/service/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/commands/command.dart';
+import 'package:aewallet/domain/rpc/commands/result.dart';
+import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/sign_transaction/bloc/provider.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -25,7 +27,7 @@ part 'widgets/account_selection_button.dart';
 class TransactionConfirmationForm extends ConsumerWidget {
   const TransactionConfirmationForm(this.command, {super.key});
 
-  final RPCSendTransactionCommand command;
+  final RPCCommand<RPCSendTransactionCommandData> command;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,8 +97,8 @@ class TransactionConfirmationForm extends ConsumerWidget {
                       Dimens.buttonBottomDimens,
                       onPressed: () {
                         Navigator.of(context).pop(
-                          const Result.failure(
-                            TransactionError.userRejected(),
+                          Result.failure(
+                            RPCFailure.userRejected(),
                           ),
                         );
                       },
@@ -187,24 +189,4 @@ class TransactionConfirmationForm extends ConsumerWidget {
       duration: const Duration(seconds: 5),
     );
   }
-}
-
-extension TransactionErrorLocalizedExt on TransactionError {
-  String localizedMessage(AppLocalization localization) => map(
-        timeout: (_) => localization.transactionTimeOut,
-        connectivity: (_) => localization.connectivityWarningDesc,
-        consensusNotReached: (_) => localization.consensusNotReached,
-        invalidTransaction: (_) => localization.invalidTransaction,
-        invalidConfirmation: (_) => localization.notEnoughConfirmations,
-        insufficientFunds: (_) => localization.insufficientBalance.replaceAll(
-          '%1',
-          AccountBalance.cryptoCurrencyLabel,
-        ),
-        userRejected: (_) => localization.userCancelledOperation,
-        unknownAccount: (error) => localization.unknownAccount.replaceAll(
-          '%1',
-          error.accountName,
-        ),
-        other: (_) => localization.genericError,
-      );
 }

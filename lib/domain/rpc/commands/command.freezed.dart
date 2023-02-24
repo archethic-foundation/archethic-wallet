@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'command_origin.dart';
+part of 'command.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -165,5 +165,155 @@ abstract class _RPCCommandOrigin extends RPCCommandOrigin {
   @override
   @JsonKey(ignore: true)
   _$$_RPCCommandOriginCopyWith<_$_RPCCommandOrigin> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$RPCCommand<T> {
+  RPCCommandOrigin get origin => throw _privateConstructorUsedError;
+  T get data => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $RPCCommandCopyWith<T, RPCCommand<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RPCCommandCopyWith<T, $Res> {
+  factory $RPCCommandCopyWith(
+          RPCCommand<T> value, $Res Function(RPCCommand<T>) then) =
+      _$RPCCommandCopyWithImpl<T, $Res, RPCCommand<T>>;
+  @useResult
+  $Res call({RPCCommandOrigin origin, T data});
+
+  $RPCCommandOriginCopyWith<$Res> get origin;
+}
+
+/// @nodoc
+class _$RPCCommandCopyWithImpl<T, $Res, $Val extends RPCCommand<T>>
+    implements $RPCCommandCopyWith<T, $Res> {
+  _$RPCCommandCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? origin = null,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      origin: null == origin
+          ? _value.origin
+          : origin // ignore: cast_nullable_to_non_nullable
+              as RPCCommandOrigin,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RPCCommandOriginCopyWith<$Res> get origin {
+    return $RPCCommandOriginCopyWith<$Res>(_value.origin, (value) {
+      return _then(_value.copyWith(origin: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_RPCCommandCopyWith<T, $Res>
+    implements $RPCCommandCopyWith<T, $Res> {
+  factory _$$_RPCCommandCopyWith(
+          _$_RPCCommand<T> value, $Res Function(_$_RPCCommand<T>) then) =
+      __$$_RPCCommandCopyWithImpl<T, $Res>;
+  @override
+  @useResult
+  $Res call({RPCCommandOrigin origin, T data});
+
+  @override
+  $RPCCommandOriginCopyWith<$Res> get origin;
+}
+
+/// @nodoc
+class __$$_RPCCommandCopyWithImpl<T, $Res>
+    extends _$RPCCommandCopyWithImpl<T, $Res, _$_RPCCommand<T>>
+    implements _$$_RPCCommandCopyWith<T, $Res> {
+  __$$_RPCCommandCopyWithImpl(
+      _$_RPCCommand<T> _value, $Res Function(_$_RPCCommand<T>) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? origin = null,
+    Object? data = freezed,
+  }) {
+    return _then(_$_RPCCommand<T>(
+      origin: null == origin
+          ? _value.origin
+          : origin // ignore: cast_nullable_to_non_nullable
+              as RPCCommandOrigin,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RPCCommand<T> extends _RPCCommand<T> {
+  const _$_RPCCommand({required this.origin, required this.data}) : super._();
+
+  @override
+  final RPCCommandOrigin origin;
+  @override
+  final T data;
+
+  @override
+  String toString() {
+    return 'RPCCommand<$T>(origin: $origin, data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RPCCommand<T> &&
+            (identical(other.origin, origin) || other.origin == origin) &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, origin, const DeepCollectionEquality().hash(data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_RPCCommandCopyWith<T, _$_RPCCommand<T>> get copyWith =>
+      __$$_RPCCommandCopyWithImpl<T, _$_RPCCommand<T>>(this, _$identity);
+}
+
+abstract class _RPCCommand<T> extends RPCCommand<T> {
+  const factory _RPCCommand(
+      {required final RPCCommandOrigin origin,
+      required final T data}) = _$_RPCCommand<T>;
+  const _RPCCommand._() : super._();
+
+  @override
+  RPCCommandOrigin get origin;
+  @override
+  T get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$_RPCCommandCopyWith<T, _$_RPCCommand<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

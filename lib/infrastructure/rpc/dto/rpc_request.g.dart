@@ -22,7 +22,8 @@ Map<String, dynamic> _$$_RpcRequestOriginToJson(_$_RpcRequestOrigin instance) =>
 
 _$_RpcRequest _$$_RpcRequestFromJson(Map<String, dynamic> json) =>
     _$_RpcRequest(
-      origin: RpcRequestOrigin.fromJson(json['origin'] as Map<String, dynamic>),
+      origin:
+          RpcRequestOriginDTO.fromJson(json['origin'] as Map<String, dynamic>),
       version: json['version'] as int,
       payload: json['payload'] as Map<String, dynamic>,
     );
