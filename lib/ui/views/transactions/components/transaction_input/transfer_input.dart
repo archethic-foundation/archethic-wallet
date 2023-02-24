@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/ui/views/transactions/components/template/transfert_entry_template.dart';
+import 'package:aewallet/ui/views/transactions/components/template/transfer_entry_template.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_icon.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class TransferInput extends ConsumerWidget {
 
     final hasNotTransactionInfo = transaction.tokenInformations != null;
 
-    return TransfertEntryTemplate(
+    return TransferEntryTemplate(
       hasTransactionInfo: !hasNotTransactionInfo,
       label: hasNotTransactionInfo
           ? '$amountFormatted ${isCurrencyNative ? (transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!) : transaction.tokenInformations!.symbol!}'
