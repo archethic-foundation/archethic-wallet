@@ -25,23 +25,24 @@ class TransactionDetail extends ConsumerWidget {
       return const SizedBox();
     }
 
-    if (transaction.typeTx == RecentTransaction.tokenCreation) {
-      return TokenCreation(
-        transaction: transaction,
-        marketPrice: selectedCurrencyMarketPrice,
-      );
+    switch (transaction.typeTx) {
+      case RecentTransaction.tokenCreation:
+        return TokenCreation(
+          transaction: transaction,
+          marketPrice: selectedCurrencyMarketPrice,
+        );
+      case RecentTransaction.transferInput:
+        return TransactionInput(
+          transaction: transaction,
+          marketPrice: selectedCurrencyMarketPrice,
+        );
+      case RecentTransaction.transferOutput:
+        return TransactionOuput(
+          transaction: transaction,
+          marketPrice: selectedCurrencyMarketPrice,
+        );
+      default:
+        return const SizedBox();
     }
-
-    if (transaction.typeTx == RecentTransaction.transferInput) {
-      return TransactionInput(
-        transaction: transaction,
-        marketPrice: selectedCurrencyMarketPrice,
-      );
-    }
-
-    return TransactionOuput(
-      transaction: transaction,
-      marketPrice: selectedCurrencyMarketPrice,
-    );
   }
 }

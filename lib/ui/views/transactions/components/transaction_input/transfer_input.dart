@@ -7,8 +7,8 @@ import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransfertInput extends ConsumerWidget {
-  const TransfertInput({
+class TransferInput extends ConsumerWidget {
+  const TransferInput({
     super.key,
     required this.transaction,
     required this.isCurrencyNative,

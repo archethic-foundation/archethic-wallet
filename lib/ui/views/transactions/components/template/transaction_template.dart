@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/token.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_date.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_warning.dart';
@@ -35,6 +36,7 @@ class TransactionTemplate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
+    final localizations = AppLocalization.of(context)!;
 
     final hasWarning = transaction.tokenInformations != null &&
         (kTokenFordiddenName.contains(
@@ -85,7 +87,10 @@ class TransactionTemplate extends ConsumerWidget {
                       Row(
                         children: [
                           if (hasWarning)
-                            TransactionWarning(transaction: transaction),
+                            TransactionWarning(
+                              transaction: transaction,
+                              message: localizations.notOfficialUCOWarning,
+                            ),
                         ],
                       ),
                     ],
