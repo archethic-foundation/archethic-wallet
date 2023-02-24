@@ -88,7 +88,6 @@ class TransactionTemplate extends ConsumerWidget {
                         children: [
                           if (hasWarning)
                             TransactionWarning(
-                              transaction: transaction,
                               message: localizations.notOfficialUCOWarning,
                             ),
                         ],
