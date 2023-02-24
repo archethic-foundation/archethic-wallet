@@ -8,9 +8,9 @@ import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_comment.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_fees.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
-import 'package:aewallet/ui/views/transactions/components/template/transfert_balance.dart';
+import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_information.dart';
-import 'package:aewallet/ui/views/transactions/components/transaction_output/transfert_output.dart';
+import 'package:aewallet/ui/views/transactions/components/transaction_output/transfer_output.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,7 +52,7 @@ class TransactionOuput extends ConsumerWidget {
                 AvailablePrimaryCurrencyEnum.native,
             transaction: transaction,
             marketPrice: marketPrice,
-            child: TransfertOutput(
+            child: TransferOutput(
               isCurrencyNative: primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native,
               transaction: transaction,

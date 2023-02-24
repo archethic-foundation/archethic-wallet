@@ -4,7 +4,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/transactions/components/template/transaction_default_text.dart';
+import 'package:aewallet/ui/views/transactions/components/template/transaction_hidden_value.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,7 +38,7 @@ class TransfertBalance extends ConsumerWidget {
           if (settings.showBalances == true)
             child
           else
-            const TransactionDefaultText(),
+            const TransactionHiddenValue(),
         if (transaction.tokenInformations == null && transaction.amount != null)
           if (settings.showBalances == true)
             Text(
@@ -50,7 +50,7 @@ class TransfertBalance extends ConsumerWidget {
               style: theme.textStyleSize12W400Primary,
             )
           else
-            const TransactionDefaultText(),
+            const TransactionHiddenValue(),
       ],
     );
   }
