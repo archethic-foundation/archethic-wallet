@@ -364,7 +364,7 @@ packages:
   deeplink_rpc:
     dependency: "direct main"
     description:
-      path: "rpc/deeplink_rpc"
+      path: "../lib-deeplink-rpc"
       relative: true
     source: path
     version: "1.0.0-dev.1"

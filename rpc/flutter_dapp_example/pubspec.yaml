@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   deeplink_rpc:
-    path: ../deeplink_rpc
+    path: ../../../lib-deeplink-rpc
 
   url_launcher: ^6.1.9
 
