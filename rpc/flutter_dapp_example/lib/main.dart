@@ -76,8 +76,7 @@ class _TransactionSendFormState extends State<TransactionSendForm> {
           child: const Icon(Icons.send),
           onPressed: () async {
             final response = await _aewalletClient.signTransaction(
-              id: "transaction_sign_request_001",
-              replyUrl: "flutterdappexample://dapp.example/aewallet_response",
+              id: "transaction_sign_request_004",
               params: jsonDecode(payloadTextController.text),
             );
 
