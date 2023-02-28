@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/card_cateogry.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:badges/badges.dart' as badge;
@@ -77,20 +78,8 @@ class NftCategoryMenu extends ConsumerWidget {
                   children: [
                     Hero(
                       tag: 'nftCategory${nftCategories[index].name!}',
-                      child: Card(
-                        elevation: 5,
-                        shadowColor: Colors.black,
-                        color: theme.backgroundDark,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          side: const BorderSide(
-                            color: Colors.white10,
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(nftCategories[index].image),
-                        ),
+                      child: CardCategory(
+                        background: Image.asset(nftCategories[index].image),
                       ),
                     ),
                     if (count > 0)
