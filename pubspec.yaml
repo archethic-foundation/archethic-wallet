@@ -61,7 +61,9 @@ dependencies:
   decimal: ^2.3.2
 
   deeplink_rpc:
-    path: ../lib-deeplink-rpc
+    git:
+      url: https://github.com/archethic-foundation/lib-deeplink-rpc.git
+      ref: main
 
   # GridView with dynamic height. No need to specify aspectRatio to the grid.
   dynamic_height_grid_view: ^0.0.3
@@ -157,6 +159,11 @@ dependencies:
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   json_rpc_2: ^3.0.2
   ledger_dart_lib: ^0.1.2
+
+  libdart_dapp:
+    git:
+      url: https://github.com/archethic-foundation/libdart-dapp.git
+      ref: main
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
   loading_animation_widget: ^1.2.0+4
