@@ -71,10 +71,14 @@ class _NFTCreationProcessImportTabState
                 ],
               ),
             ),
-
-            const NFTCreationProcessImportTabFile(),
-            const NFTCreationProcessImportTabImage(),
-            const NFTCreationProcessImportTabCamera(),
+            const GridCount(
+              children: [
+                NFTCreationProcessImportTabFile(),
+                NFTCreationProcessImportTabImage(),
+                NFTCreationProcessImportTabCamera(),
+                NFTCreationProcessImportTabIPFS(),
+              ],
+            ),
             //const NFTCreationProcessFileAccess(),
             const NFTCreationProcessFilePreview()
           ],
