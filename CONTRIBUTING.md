@@ -146,6 +146,50 @@ Rather than reinventing the wheel, I encourage you to check [this excellent diag
 - **Blockchain interaction** is extracted to the [archethic_lib_dart](https://pub.dev/packages/archethic_lib_dart) package.
 
 
+### DApp | RPC Server structure
+
+In order to allow DApps to interact with Archethic Wallet, an RPC server is running.
+
+RPC server implementation depends on the host platform capabilities :
+  - a `Websocket` server on **Web**, **Windows**, **MacOS** and **GNU/Linux**
+  - a `DeeplinkRPC` "server" on **iOS** and **Android**.
+
+Some RPC commands require user explicit validation. Because of that, we need to handle RPC Commands on the **UI** layer.
+
+```
+                                         │             INFRASTRUCTURE             │            DOMAIN           │          PRESENTATION / UI
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                         │                                        │                             │
+                                                                                                                │
+                            Deeplink request    ┌──────────────────────────────┐   Result                       │
+                       ┌───────────────────────►│                              │◄────┐                          │
+┌──────────┐           │                        │  ArchethicDeeplinkRPCServer  │     │  ┌───────────────────┐   │
+│          ├───────────┘  ┌─────────────────────┤                              ├──┐  └──┤                   │   │
+│          │              │                     └──────────────────────────────┘  │     │                   │        ┌────────────────────┐    ┌───────────┐
+│          │◄─────────────┘                                                       └────►│                   ├───────►│                    ├────┘           ▼
+│   DApp   │                                                                  Command   │ CommandDispatcher │        │ RPCCommandReceiver │           performs action
+│          │◄─────────────┐                                                       ┌────►│                   │◄───────┤                    │◄───┐           │
+│          │              │                                                       │     │                   │        └────────────────────┘    └───────────┘
+│          ├───────────┐  │                     ┌───────────────────────────────┐ │  ┌──┤                   │   │
+└──────────┘           │  └─────────────────────┤                               ├─┘  │  └───────────────────┘   │
+                       │                        │  ArchethicWebsocketRPCServer  │    │                          │
+                       └────────────────────────┤                               │◄───┘                          │
+                           WebSocket request    └───────────────────────────────┘  Result                       │
+                                                                                                                │
+                                          │                                        │                            │
+                                          │                                        │                            │
+```
+
+
+
+
 ## Tools
 
 ### Translations
