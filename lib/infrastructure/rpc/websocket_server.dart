@@ -9,14 +9,14 @@ import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dar
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/io.dart';
 
-class ArchethicRPCServer {
-  ArchethicRPCServer({
+class ArchethicWebsocketRPCServer {
+  ArchethicWebsocketRPCServer({
     required this.commandDispatcher,
   });
 
-  static const LOG_NAME = 'RPC Server';
-  static const HOST = '127.0.0.1';
-  static const PORT = 12345;
+  static const logName = 'RPC Server';
+  static const host = '127.0.0.1';
+  static const port = 12345;
 
   final CommandDispatcher commandDispatcher;
 
@@ -27,15 +27,15 @@ class ArchethicRPCServer {
   Future<void> run() async {
     runZonedGuarded(
       () async {
-        log('Starting at ws://$HOST:$PORT', name: LOG_NAME);
+        log('Starting at ws://$host:$port', name: logName);
         final server = await HttpServer.bind(
-          HOST,
-          PORT,
+          host,
+          port,
           shared: true,
         );
 
         server.listen((HttpRequest request) async {
-          log('Received request', name: LOG_NAME);
+          log('Received request', name: logName);
 
           final socket = await WebSocketTransformer.upgrade(request);
           final channel = IOWebSocketChannel(socket);
@@ -58,7 +58,7 @@ class ArchethicRPCServer {
           'WebSocket server failed',
           error: error,
           stackTrace: stack,
-          name: LOG_NAME,
+          name: logName,
         );
       },
     );
@@ -74,7 +74,7 @@ class ArchethicRPCServer {
       failure: (failure) {
         log(
           'Command failed',
-          name: LOG_NAME,
+          name: logName,
           error: failure,
         );
 
