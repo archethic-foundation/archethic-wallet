@@ -42,7 +42,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="aewallet" android:host="wallet.archethic.net" />
+                <data android:scheme="aewallet" android:host="archethic.tech" />
             </intent-filter>
         </activity>
         <meta-data

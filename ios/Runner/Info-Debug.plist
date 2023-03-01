@@ -32,7 +32,7 @@
 		<key>CFBundleTypeRole</key>
 		<string>Editor</string>
 		<key>CFBundleURLName</key>
-		<string>wallet.archethic.net</string>
+		<string>archethic.tech</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
 		<string>aewallet</string>
