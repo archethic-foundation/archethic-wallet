@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -13,9 +15,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTCreationProcessImportTabIPFSForm extends ConsumerStatefulWidget {
-  const NFTCreationProcessImportTabIPFSForm({
-    super.key,
-  });
+  const NFTCreationProcessImportTabIPFSForm(
+      {super.key, required this.onConfirm});
+
+  final void Function(String uri) onConfirm;
 
   @override
   ConsumerState<NFTCreationProcessImportTabIPFSForm> createState() =>
@@ -103,7 +106,49 @@ class _NFTCreationProcessImportTabFormUrlState
                         ),
                         Dimens.buttonBottomDimens,
                         key: const Key('addAccount'),
-                        onPressed: () {},
+                        onPressed: () {
+                          void setError(String errorText) {
+                            UIUtil.showSnackbar(
+                              errorText,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                            );
+                          }
+
+                          if (urlController.text.isEmpty) {
+                            setError(localizations.enterEndpointBlank);
+                            return;
+                          }
+
+                          final uriInput = ref.watch(
+                            UrlProvider.cleanUri(
+                              uri: urlController.text,
+                            ),
+                          );
+
+                          if (!ref.watch(
+                            UrlProvider.isUrlValid(
+                              uri: uriInput,
+                            ),
+                          )) {
+                            setError(localizations.enterEndpointNotValid);
+                            return;
+                          }
+
+                          if (!ref.watch(
+                            UrlProvider.isUrlIPFS(
+                              uri: uriInput,
+                            ),
+                          )) {
+                            setError(localizations.enterEndpointNotValid);
+                            return;
+                          }
+
+                          widget.onConfirm(uriInput.toString());
+                          Navigator.of(context).pop();
+                        },
                       )
                     else
                       AppButtonTiny(
