@@ -3,7 +3,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/result.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/localization.dart';
@@ -97,8 +96,9 @@ class TransactionConfirmationForm extends ConsumerWidget {
                       Dimens.buttonBottomDimens,
                       onPressed: () {
                         Navigator.of(context).pop(
-                          Result.failure(
-                            RPCFailure.userRejected(),
+                          const Result<TransactionConfirmation,
+                              TransactionError>.failure(
+                            TransactionError.userRejected(),
                           ),
                         );
                       },
