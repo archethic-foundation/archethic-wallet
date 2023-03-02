@@ -427,6 +427,17 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     );
   }
 
+  void resetState() {
+    state = state.copyWith(
+      fileImportType: null,
+      fileSize: 0,
+      fileTypeMime: '',
+      fileDecodedForPreview: null,
+      file: null,
+      properties: [],
+    );
+  }
+
   Future<void> setContentProperties(
     BuildContext context,
     File file,
@@ -456,7 +467,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
                     .toLowerCase()
                     .compareTo(b.tokenProperty!.name!.toLowerCase()));
       }*/
-
     } else {
       if (MimeUtil.isPdf(typeMime) == true) {
         final pdfDocument = await PdfDocument.openData(
@@ -481,6 +491,11 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       ),
     ];
 
+    if (controlFile(context) == false) {
+      resetState();
+      return;
+    }
+
     state = state.copyWith(
       fileImportType: fileImportType,
       fileSize: fileDecoded.length,
@@ -489,17 +504,32 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       file: {file: List<String>.empty(growable: true)},
       properties: newPropertiesToSet,
     );
+  }
+
+  Future<void> setContentIPFSProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'ipfs_url': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
+      );
 
     if (controlFile(context) == false) {
-      state = state.copyWith(
-        fileImportType: null,
-        fileSize: 0,
-        fileTypeMime: '',
-        fileDecodedForPreview: null,
-        file: null,
-        properties: [],
-      );
+      resetState();
+      return;
     }
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+    );
   }
 
   bool controlName(

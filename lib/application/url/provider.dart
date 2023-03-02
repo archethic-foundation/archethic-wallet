@@ -4,8 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'provider.g.dart';
 
 @riverpod
-bool _isUrlValid(
-  _IsUrlValidRef ref, {
+Uri _cleanUri(
+  _CleanUriRef ref, {
   required String uri,
 }) {
   // Uri seem to accept whitespace. So I need to remove bad formated Uri.
@@ -13,9 +13,27 @@ bool _isUrlValid(
 
   final uriInput = Uri.parse(textCleaned);
 
-  return uriInput.isAbsolute;
+  return uriInput;
+}
+
+@riverpod
+bool _isUrlValid(
+  _IsUrlValidRef ref, {
+  required Uri uri,
+}) {
+  return uri.isAbsolute == true;
+}
+
+@riverpod
+bool _isUrlIPFS(
+  _IsUrlIPFSRef ref, {
+  required Uri uri,
+}) {
+  return uri.isScheme('ipfs');
 }
 
 abstract class UrlProvider {
   static final isUrlValid = _isUrlValidProvider;
+  static final isUrlIPFS = _isUrlIPFSProvider;
+  static final cleanUri = _cleanUriProvider;
 }

@@ -2,6 +2,7 @@
 import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -99,13 +100,17 @@ class NetworkDialog {
                               return;
                             }
 
-                            // Uri seem to accept whitespace. So I need to remove bad formated Uri.
-                            final textCleaned =
-                                endpointController.text.replaceAll(' ', '');
+                            final uriInput = ref.watch(
+                              UrlProvider.cleanUri(
+                                uri: endpointController.text,
+                              ),
+                            );
 
-                            final uriInput = Uri.parse(textCleaned);
-
-                            if (uriInput.isAbsolute == false) {
+                            if (!ref.watch(
+                              UrlProvider.isUrlValid(
+                                uri: uriInput,
+                              ),
+                            )) {
                               setError(localizations.enterEndpointNotValid);
                               return;
                             }
@@ -127,7 +132,7 @@ class NetworkDialog {
                                 .setNetwork(
                                   NetworksSetting(
                                     network: AvailableNetworks.archethicDevNet,
-                                    networkDevEndpoint: textCleaned,
+                                    networkDevEndpoint: uriInput.toString(),
                                   ),
                                 );
 

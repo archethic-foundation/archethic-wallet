@@ -8,12 +8,26 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalization.of(context)!;
 
+    final nftCreationArgs = ref.watch(
+      NftCreationFormProvider.nftCreationFormArgs,
+    );
+    final nftCreationNotifier = ref.watch(
+      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+    );
+
     return CardCategoryWithText(
       onTap: () async {
         Sheets.showAppHeightNineSheet(
           context: context,
           ref: ref,
-          widget: const NFTCreationProcessImportTabIPFSForm(),
+          widget: NFTCreationProcessImportTabIPFSForm(
+            onConfirm: (uri) {
+              nftCreationNotifier.setContentIPFSProperties(
+                context,
+                uri,
+              );
+            },
+          ),
         );
       },
       text: localizations.nftAddImportPhoto,
