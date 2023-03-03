@@ -23,11 +23,12 @@ class TransferOutput extends ConsumerWidget {
         ? NumberUtil.formatThousands(transaction.amount!, round: true)
         : NumberUtil.formatThousands(transaction.amount!);
 
+    final hasTransactionInfo = transaction.tokenInformations != null;
+
     return TransferEntryTemplate(
-      hasTransactionInfo: !(transaction.tokenInformations != null),
-      label: transaction.tokenInformations != null
-          ? '-$amountFormatted ${AccountBalance.cryptoCurrencyLabel}'
-          : '-$amountFormatted ${isCurrencyNative ? (transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!) : transaction.tokenInformations!.symbol!}',
+      label: hasTransactionInfo
+          ? '-$amountFormatted ${isCurrencyNative ? (transaction.tokenInformations!.symbol! == '' ? 'NFT' : transaction.tokenInformations!.symbol!) : transaction.tokenInformations!.symbol!}'
+          : '-$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
       icon: const TransactionOutputIcon(),
     );
   }

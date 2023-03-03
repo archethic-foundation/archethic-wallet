@@ -48,11 +48,9 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalization.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final session = ref.watch(SessionProviders.session).loggedIn!;
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (selectedAccount == null) return const SizedBox();
 
@@ -91,87 +89,13 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                           minimum: EdgeInsets.only(
                             bottom: MediaQuery.of(context).size.height * 0.035,
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: Stack(
-                                  children: <Widget>[
-                                    Scrollbar(
-                                      thumbVisibility: true,
-                                      controller: scrollController,
-                                      child: ListView.builder(
-                                        controller: scrollController,
-                                        physics:
-                                            const AlwaysScrollableScrollPhysics(),
-                                        padding: const EdgeInsets.only(
-                                          top: 15,
-                                          bottom: 15,
-                                        ),
-                                        itemCount: list.data == null
-                                            ? 0
-                                            : list.data!.length,
-                                        itemBuilder: (
-                                          BuildContext context,
-                                          int index,
-                                        ) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 10,
-                                            ),
-                                            child: _TransactionBuildInfos(
-                                              transactionInfo:
-                                                  list.data![index],
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  if (connectivityStatusProvider ==
-                                      ConnectivityStatus.isConnected)
-                                    AppButtonTiny(
-                                      AppButtonTinyType.primary,
-                                      localizations.viewExplorer,
-                                      Dimens.buttonBottomDimens,
-                                      icon: Icon(
-                                        Icons.more_horiz,
-                                        color: theme.mainButtonLabel,
-                                        size: 14,
-                                      ),
-                                      key: const Key('viewExplorer'),
-                                      onPressed: () async {
-                                        UIUtil.showWebview(
-                                          context,
-                                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.txAddress}',
-                                          '',
-                                        );
-                                      },
-                                    )
-                                  else
-                                    AppButtonTiny(
-                                      AppButtonTinyType.primaryOutline,
-                                      localizations.viewExplorer,
-                                      Dimens.buttonBottomDimens,
-                                      icon: Icon(
-                                        Icons.more_horiz,
-                                        color: theme.mainButtonLabel!
-                                            .withOpacity(0.3),
-                                        size: 14,
-                                      ),
-                                      key: const Key('viewExplorer'),
-                                      onPressed: () {},
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          child: list.hasData
+                              ? _TransactionInfos(
+                                  list: list,
+                                  scrollController: scrollController,
+                                  txAddress: widget.txAddress,
+                                )
+                              : _TransactionLoading(),
                         ),
                       ),
                     ],
@@ -182,6 +106,114 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
           );
         },
       ),
+    );
+  }
+}
+
+class _TransactionLoading extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Center(
+      child: CircularProgressIndicator(
+        color: theme.text,
+        strokeWidth: 1,
+      ),
+    );
+  }
+}
+
+class _TransactionInfos extends ConsumerWidget {
+  const _TransactionInfos(
+      {required this.list,
+      required this.scrollController,
+      required this.txAddress});
+
+  final AsyncSnapshot<List<TransactionInfos>> list;
+  final ScrollController scrollController;
+  final String txAddress;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalization.of(context)!;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Stack(
+            children: <Widget>[
+              Scrollbar(
+                thumbVisibility: true,
+                controller: scrollController,
+                child: ListView.builder(
+                  controller: scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.only(
+                    top: 15,
+                    bottom: 15,
+                  ),
+                  itemCount: list.data == null ? 0 : list.data!.length,
+                  itemBuilder: (
+                    BuildContext context,
+                    int index,
+                  ) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        right: 10,
+                      ),
+                      child: _TransactionBuildInfos(
+                        transactionInfo: list.data![index],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: <Widget>[
+            if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+              AppButtonTiny(
+                AppButtonTinyType.primary,
+                localizations.viewExplorer,
+                Dimens.buttonBottomDimens,
+                icon: Icon(
+                  Icons.more_horiz,
+                  color: theme.mainButtonLabel,
+                  size: 14,
+                ),
+                key: const Key('viewExplorer'),
+                onPressed: () async {
+                  UIUtil.showWebview(
+                    context,
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$txAddress',
+                    '',
+                  );
+                },
+              )
+            else
+              AppButtonTiny(
+                AppButtonTinyType.primaryOutline,
+                localizations.viewExplorer,
+                Dimens.buttonBottomDimens,
+                icon: Icon(
+                  Icons.more_horiz,
+                  color: theme.mainButtonLabel!.withOpacity(0.3),
+                  size: 14,
+                ),
+                key: const Key('viewExplorer'),
+                onPressed: () {},
+              ),
+          ],
+        ),
+      ],
     );
   }
 }
