@@ -26,6 +26,7 @@ class TransactionComment extends ConsumerWidget {
       },
       child: Container(
         alignment: Alignment.centerRight,
+        width: 60,
         child: FaIcon(
           FontAwesomeIcons.commentDots,
           size: 18,

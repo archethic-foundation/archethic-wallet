@@ -23,9 +23,7 @@ class TxList extends ConsumerWidget {
     return Column(
       key: const Key('recentTransactions'),
       children: [
-        if (recentTransactions == null)
-          const _TransactionsLoading()
-        else
+        if (recentTransactions != null)
           recentTransactions.isEmpty
               ? const _TransactionsEmpty()
               : _TransactionsList(recentTransactions: recentTransactions),
@@ -119,22 +117,6 @@ class _TransactionsEmpty extends ConsumerWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _TransactionsLoading extends ConsumerWidget {
-  const _TransactionsLoading();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return Center(
-      child: CircularProgressIndicator(
-        color: theme.text,
-        strokeWidth: 1,
       ),
     );
   }
