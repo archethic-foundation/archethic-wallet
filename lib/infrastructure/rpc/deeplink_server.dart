@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
 import 'package:deeplink_rpc/deeplink_rpc.dart';
@@ -22,6 +23,15 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
         route: const DeeplinkRpcRoute('get_endpoint'),
         handle: (request) => _handle(
           RPCGetEndpointCommandHandler(),
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('get_accounts'),
+        handle: (request) => _handle(
+          RPCGetAccountsCommandHandler(),
           request,
         ),
       ),

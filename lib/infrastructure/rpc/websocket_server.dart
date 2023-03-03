@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
@@ -48,8 +49,11 @@ class ArchethicWebsocketRPCServer {
             ..registerMethod(
               'getEndpoint',
               (params) => _handle(RPCGetEndpointCommandHandler(), params),
+            )
+            ..registerMethod(
+              'getAccounts',
+              (params) => _handle(RPCGetAccountsCommandHandler(), params),
             );
-
           await server.listen();
         });
       },
