@@ -486,11 +486,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       ),
     ];
 
-    if (controlFile(context) == false) {
-      resetState();
-      return;
-    }
-
     state = state.copyWith(
       fileImportType: fileImportType,
       fileSize: fileDecoded.length,
@@ -499,6 +494,10 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       file: {fileDecoded: List<String>.empty(growable: true)},
       properties: newPropertiesToSet,
     );
+
+    if (controlFile(context) == false) {
+      resetState();
+    }
   }
 
     if (controlFile(context) == false) {
@@ -588,10 +587,15 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       resetState();
       return;
     }
+  }
 
-    state = state.copyWith(
-      properties: newPropertiesToSet,
-    );
+  bool isFileImportFile() {
+    return [FileImportType.file, FileImportType.camera, FileImportType.image]
+        .contains(state.fileImportType);
+  }
+
+  bool isFileImportUrl() {
+    return [FileImportType.ipfs].contains(state.fileImportType);
   }
 
   bool controlName(
