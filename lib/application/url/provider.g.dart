@@ -169,7 +169,7 @@ class _IsUrlValidFamily extends Family<bool> {
   String? get name => r'_isUrlValidProvider';
 }
 
-String $_isUrlIPFSHash() => r'5812380f0fe7db502ca372abeb3d4b75e6540ee4';
+String $_isUrlIPFSHash() => r'4a8721ec5dd26637ca8ed69a41fc21698b9fb98d';
 
 /// See also [_isUrlIPFS].
 class _IsUrlIPFSProvider extends AutoDisposeProvider<bool> {
@@ -237,4 +237,74 @@ class _IsUrlIPFSFamily extends Family<bool> {
 
   @override
   String? get name => r'_isUrlIPFSProvider';
+}
+
+String $_urlIPFSForWebHash() => r'e6b2356bfc2ac81d410ee616291106ba42ce543b';
+
+/// See also [_urlIPFSForWeb].
+class _UrlIPFSForWebProvider extends AutoDisposeProvider<String> {
+  _UrlIPFSForWebProvider({
+    required this.uri,
+  }) : super(
+          (ref) => _urlIPFSForWeb(
+            ref,
+            uri: uri,
+          ),
+          from: _urlIPFSForWebProvider,
+          name: r'_urlIPFSForWebProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_urlIPFSForWebHash,
+        );
+
+  final String uri;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _UrlIPFSForWebProvider && other.uri == uri;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, uri.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _UrlIPFSForWebRef = AutoDisposeProviderRef<String>;
+
+/// See also [_urlIPFSForWeb].
+final _urlIPFSForWebProvider = _UrlIPFSForWebFamily();
+
+class _UrlIPFSForWebFamily extends Family<String> {
+  _UrlIPFSForWebFamily();
+
+  _UrlIPFSForWebProvider call({
+    required String uri,
+  }) {
+    return _UrlIPFSForWebProvider(
+      uri: uri,
+    );
+  }
+
+  @override
+  AutoDisposeProvider<String> getProviderOverride(
+    covariant _UrlIPFSForWebProvider provider,
+  ) {
+    return call(
+      uri: provider.uri,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_urlIPFSForWebProvider';
 }

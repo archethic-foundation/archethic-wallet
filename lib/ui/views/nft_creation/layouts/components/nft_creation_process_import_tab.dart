@@ -71,6 +71,8 @@ class _NFTCreationProcessImportTabState
                 ],
               ),
             ),
+            //const NFTCreationProcessFileAccess(),
+            const NFTCreationProcessFilePreview(),
             const GridCount(
               children: [
                 NFTCreationProcessImportTabFile(),
@@ -79,8 +81,6 @@ class _NFTCreationProcessImportTabState
                 NFTCreationProcessImportTabIPFS(),
               ],
             ),
-            //const NFTCreationProcessFileAccess(),
-            const NFTCreationProcessFilePreview()
           ],
         ),
       ),

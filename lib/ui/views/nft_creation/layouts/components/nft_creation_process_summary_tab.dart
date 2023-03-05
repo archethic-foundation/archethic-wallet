@@ -32,7 +32,7 @@ class _NFTCreationProcessSummaryTabState
 
     if (accountSelected == null) return const SizedBox();
 
-    if (nftCreation.file != null) {
+    if (nftCreation.file != null || nftCreation.fileURL != null) {
       return ArchethicScrollbar(
         child: Padding(
           padding: EdgeInsets.only(bottom: bottom + 80),
@@ -72,8 +72,10 @@ class _NFTCreationProcessSummaryTabState
                                     nftCreationNotifier.controlName(context);
                                 final isFileOk =
                                     nftCreationNotifier.controlFile(context);
+                                final isUrlOk =
+                                    nftCreationNotifier.controlURL(context);
 
-                                if (isNameOk && isFileOk) {
+                                if (isNameOk && (isFileOk || isUrlOk)) {
                                   nftCreationNotifier.setNftCreationProcessStep(
                                     NftCreationProcessStep.confirmation,
                                   );

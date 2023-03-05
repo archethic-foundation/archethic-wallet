@@ -145,8 +145,9 @@ class _NFTCreationProcessImportTabFormUrlState
                             setError(localizations.enterEndpointNotValid);
                             return;
                           }
-
-                          widget.onConfirm(uriInput.toString());
+                          widget.onConfirm(
+                            urlController.text.replaceAll(' ', ''),
+                          );
                           Navigator.of(context).pop();
                         },
                       )

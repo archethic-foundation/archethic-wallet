@@ -32,8 +32,17 @@ bool _isUrlIPFS(
   return uri.isScheme('ipfs');
 }
 
+@riverpod
+String _urlIPFSForWeb(
+  _UrlIPFSForWebRef ref, {
+  required String uri,
+}) {
+  return uri.replaceAll('ipfs://', 'https://ipfs.io/ipfs/');
+}
+
 abstract class UrlProvider {
   static final isUrlValid = _isUrlValidProvider;
   static final isUrlIPFS = _isUrlIPFSProvider;
   static final cleanUri = _cleanUriProvider;
+  static final urlIPFSForWeb = _urlIPFSForWebProvider;
 }

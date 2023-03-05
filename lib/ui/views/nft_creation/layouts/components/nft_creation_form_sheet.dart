@@ -191,13 +191,25 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                             .setIndexTab(index);
                         if (index == NftCreationTab.summary.index) {
                           if (nftCreation.name.isEmpty ||
-                              nftCreation.fileDecodedForPreview == null) {
+                              (nftCreation.fileDecodedForPreview == null &&
+                                  nftCreation.isFileImportFile())) {
                             ref.read(
                               NftCreationFormProvider.nftCreationForm(
                                 nftCreationArgs,
                               ).notifier,
                             )
                               ..controlFile(context)
+                              ..controlName(context);
+                          }
+                          if (nftCreation.name.isEmpty ||
+                              (nftCreation.fileDecodedForPreview == null &&
+                                  nftCreation.isFileImportUrl())) {
+                            ref.read(
+                              NftCreationFormProvider.nftCreationForm(
+                                nftCreationArgs,
+                              ).notifier,
+                            )
+                              ..controlURL(context)
                               ..controlName(context);
                           }
                           ref
