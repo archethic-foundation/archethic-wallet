@@ -435,6 +435,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       fileDecodedForPreview: null,
       file: null,
       properties: [],
+      fileURL: null,
     );
   }
 
@@ -491,11 +492,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       ),
     ];
 
-    if (controlFile(context) == false) {
-      resetState();
-      return;
-    }
-
     state = state.copyWith(
       fileImportType: fileImportType,
       fileSize: fileDecoded.length,
@@ -504,6 +500,10 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       file: {file: List<String>.empty(growable: true)},
       properties: newPropertiesToSet,
     );
+
+    if (controlFile(context) == false) {
+      resetState();
+    }
   }
 
   Future<void> setContentIPFSProperties(
@@ -522,14 +522,24 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
             element.propertyName == 'type_mime',
       );
 
-    if (controlFile(context) == false) {
+    state = state.copyWith(
+        properties: newPropertiesToSet,
+        fileImportType: FileImportType.ipfs,
+        fileURL: uri);
+
+    if (controlURL(context) == false) {
       resetState();
       return;
     }
+  }
 
-    state = state.copyWith(
-      properties: newPropertiesToSet,
-    );
+  bool isFileImportFile() {
+    return [FileImportType.file, FileImportType.camera, FileImportType.image]
+        .contains(state.fileImportType);
+  }
+
+  bool isFileImportUrl() {
+    return [FileImportType.ipfs].contains(state.fileImportType);
   }
 
   bool controlName(
@@ -547,6 +557,13 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   bool controlFile(
     BuildContext context,
   ) {
+    if (!isFileImportFile()) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+      );
+      return false;
+    }
+
     if (state.file == null || state.file!.keys.isEmpty) {
       state = state.copyWith(
         error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
@@ -565,6 +582,26 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     if (state.fileSize > 2500000) {
       state = state.copyWith(
         error: AppLocalization.of(context)!.nftSizeExceed,
+      );
+      return false;
+    }
+
+    state = state.copyWith(error: '');
+    return true;
+  }
+
+  bool controlURL(
+    BuildContext context,
+  ) {
+    if (!isFileImportUrl()) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+      );
+      return false;
+    }
+    if (state.fileURL == null) {
+      state = state.copyWith(
+        error: 'Error url',
       );
       return false;
     }

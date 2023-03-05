@@ -14,7 +14,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
 
-enum FileImportType { file, image, camera }
+enum FileImportType { file, image, camera, ipfs }
 
 enum NftCreationProcessStep { form, confirmation }
 
@@ -40,6 +40,7 @@ class NftCreationFormState with _$NftCreationFormState {
     @Default('') String propertyName,
     @Default('') String propertyValue,
     @Default('') String propertySearch,
+    String? fileURL,
     required PropertyAccessRecipient propertyAccessRecipient,
     @Default([]) List<NftCreationFormStateProperty> properties,
     @Default('') String error,
@@ -53,6 +54,15 @@ class NftCreationFormState with _$NftCreationFormState {
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
   bool get isControlsOk => error == '';
+
+  bool isFileImportFile() {
+    return [FileImportType.file, FileImportType.camera, FileImportType.image]
+        .contains(fileImportType);
+  }
+
+  bool isFileImportUrl() {
+    return [FileImportType.ipfs].contains(fileImportType);
+  }
 
   bool get canCreateNFT =>
       feeEstimation.value != null && feeEstimation.value! > 0;

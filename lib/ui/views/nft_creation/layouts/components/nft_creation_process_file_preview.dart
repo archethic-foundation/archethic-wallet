@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_file.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_ipfs.dart';
 import 'package:aewallet/util/mime_util.dart';
-import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,13 +21,26 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
         ),
       ),
     );
-    if (nftCreation.file == null ||
+    final isTypeImportFile = [
+      FileImportType.file,
+      FileImportType.camera,
+      FileImportType.image
+    ].contains(nftCreation.fileImportType);
+
+    final isTypeImportURL =
+        [FileImportType.ipfs].contains(nftCreation.fileImportType);
+
+    final isInvalidFile = nftCreation.file == null ||
         nftCreation.file!.keys.isEmpty ||
         (MimeUtil.isImage(nftCreation.fileTypeMime) == false &&
-            MimeUtil.isPdf(nftCreation.fileTypeMime) == false)) {
+                MimeUtil.isPdf(nftCreation.fileTypeMime) == false) &&
+            !isTypeImportFile;
+
+    final isInvalidUrl = nftCreation.fileURL == null && !isTypeImportURL;
+
+    if (isInvalidFile && isInvalidUrl) {
       return const SizedBox();
     }
-    final localizations = AppLocalization.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
@@ -61,35 +75,17 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
               ),
             ),
           ),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: theme.text,
-            border: Border.all(),
+        if (isTypeImportFile)
+          NFTCreationProcessFilePreviewFile(
+            nftCreation: nftCreation,
           ),
-          child: Image.memory(
-            nftCreation.fileDecodedForPreview!,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.fitWidth,
+        if (isTypeImportURL)
+          NFTCreationProcessFilePreviewIPFS(
+            nftCreation: nftCreation,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Align(
-            child: Text(
-              '${localizations.formatLabel} ${nftCreation.fileTypeMime!}',
-              style: theme.textStyleSize12W400Primary,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Align(
-            child: Text(
-              '${localizations.nftAddFileSize} ${filesize(nftCreation.fileSize)}',
-              style: theme.textStyleSize12W400Primary,
-            ),
-          ),
-        ),
+        const SizedBox(
+          height: 10,
+        )
       ],
     );
   }
