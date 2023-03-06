@@ -81,16 +81,10 @@ abstract class _RPCGetAccountsCommandData extends RPCGetAccountsCommandData {
   const _RPCGetAccountsCommandData._() : super._();
 }
 
-RPCGetAccountsResultData _$RPCGetAccountsResultDataFromJson(
-    Map<String, dynamic> json) {
-  return _RPCGetAccountsResultData.fromJson(json);
-}
-
 /// @nodoc
 mixin _$RPCGetAccountsResultData {
   List<AppAccount> get accounts => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $RPCGetAccountsResultDataCopyWith<RPCGetAccountsResultData> get copyWith =>
       throw _privateConstructorUsedError;
@@ -166,14 +160,11 @@ class __$$_RPCGetAccountsResultDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_RPCGetAccountsResultData extends _RPCGetAccountsResultData {
   const _$_RPCGetAccountsResultData({required final List<AppAccount> accounts})
       : _accounts = accounts,
         super._();
-
-  factory _$_RPCGetAccountsResultData.fromJson(Map<String, dynamic> json) =>
-      _$$_RPCGetAccountsResultDataFromJson(json);
 
   final List<AppAccount> _accounts;
   @override
@@ -196,7 +187,6 @@ class _$_RPCGetAccountsResultData extends _RPCGetAccountsResultData {
             const DeepCollectionEquality().equals(other._accounts, _accounts));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_accounts));
@@ -207,22 +197,12 @@ class _$_RPCGetAccountsResultData extends _RPCGetAccountsResultData {
   _$$_RPCGetAccountsResultDataCopyWith<_$_RPCGetAccountsResultData>
       get copyWith => __$$_RPCGetAccountsResultDataCopyWithImpl<
           _$_RPCGetAccountsResultData>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_RPCGetAccountsResultDataToJson(
-      this,
-    );
-  }
 }
 
 abstract class _RPCGetAccountsResultData extends RPCGetAccountsResultData {
   const factory _RPCGetAccountsResultData(
       {required final List<AppAccount> accounts}) = _$_RPCGetAccountsResultData;
   const _RPCGetAccountsResultData._() : super._();
-
-  factory _RPCGetAccountsResultData.fromJson(Map<String, dynamic> json) =
-      _$_RPCGetAccountsResultData.fromJson;
 
   @override
   List<AppAccount> get accounts;

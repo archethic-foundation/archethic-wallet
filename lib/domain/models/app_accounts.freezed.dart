@@ -14,16 +14,11 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-AppAccount _$AppAccountFromJson(Map<String, dynamic> json) {
-  return _AppAccount.fromJson(json);
-}
-
 /// @nodoc
 mixin _$AppAccount {
   String get name => throw _privateConstructorUsedError;
   String get genesisAddress => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $AppAccountCopyWith<AppAccount> get copyWith =>
       throw _privateConstructorUsedError;
@@ -106,13 +101,10 @@ class __$$_AppAccountCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_AppAccount extends _AppAccount {
   const _$_AppAccount({required this.name, required this.genesisAddress})
       : super._();
-
-  factory _$_AppAccount.fromJson(Map<String, dynamic> json) =>
-      _$$_AppAccountFromJson(json);
 
   @override
   final String name;
@@ -134,7 +126,6 @@ class _$_AppAccount extends _AppAccount {
                 other.genesisAddress == genesisAddress));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, genesisAddress);
 
@@ -143,13 +134,6 @@ class _$_AppAccount extends _AppAccount {
   @pragma('vm:prefer-inline')
   _$$_AppAccountCopyWith<_$_AppAccount> get copyWith =>
       __$$_AppAccountCopyWithImpl<_$_AppAccount>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_AppAccountToJson(
-      this,
-    );
-  }
 }
 
 abstract class _AppAccount extends AppAccount {
@@ -157,9 +141,6 @@ abstract class _AppAccount extends AppAccount {
       {required final String name,
       required final String genesisAddress}) = _$_AppAccount;
   const _AppAccount._() : super._();
-
-  factory _AppAccount.fromJson(Map<String, dynamic> json) =
-      _$_AppAccount.fromJson;
 
   @override
   String get name;

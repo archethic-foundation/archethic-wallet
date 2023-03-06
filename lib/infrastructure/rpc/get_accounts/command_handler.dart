@@ -15,7 +15,12 @@ class RPCGetAccountsCommandHandler extends RPCCommandHandler<
       );
 
   @override
-  Map<String, dynamic> resultFromModel(RPCGetAccountsResultData model) {
-    return model.toJson();
-  }
+  Map<String, dynamic> resultFromModel(RPCGetAccountsResultData model) => {
+        'accounts': model.accounts.map(
+          (account) => {
+            'name': account.name,
+            'genesisAddress': account.genesisAddress,
+          },
+        )
+      };
 }
