@@ -304,7 +304,7 @@
 	"showBlog": "Afficher le blog",
 	"enterEndpointBlank": "Le point d'accès est obligatoire.",
 	"enterEndpointNotValid": "Le point d'accès n'est pas valide.",
-  "enterEndpointUseByNetwork": "Le point d'accès est déjà utilisé par un réseau.",
+	"enterEndpointUseByNetwork": "Le point d'accès est déjà utilisé par un réseau.",
 	"enterEndpointHeader": "Veuillez préciser votre point d'accès.",
 	"introNewWalletGetFirstInfosWelcome": "Bienvenue dans le Wallet Archethic.",
 	"introNewWalletGetFirstInfosNameRequest": "Quel nom souhaitez-vous donner à ce compte, compte qui sera stocké dans votre porte-clés décentralisé ?",
@@ -469,5 +469,6 @@
 	"nftAddFileSize": "Taille: ",
 	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?",
 	"connectivityWarningHeader": "Vérifiez votre connexion internet.",
-	"connectivityWarningDesc": "Vous pouvez utiliser l'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités sont désactivées."
+	"connectivityWarningDesc": "Vous pouvez utiliser l'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités sont désactivées.",
+	"aewebHosting": "Hébergement AEWeb"
 }

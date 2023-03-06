@@ -2208,6 +2208,10 @@ class AppLocalization {
         'You can use the application when your connection is interrupted, but the information may be outdated and some features are disabled.',
         name: 'connectivityWarningDesc');
   }
+
+  String get aewebHosting {
+    return Intl.message('AEWeb hosting', name: 'aewebHosting');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

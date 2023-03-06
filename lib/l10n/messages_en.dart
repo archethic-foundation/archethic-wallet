@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addressMissing" : MessageLookupByLibrary.simpleMessage("Please Enter an Address"),
     "aeWebsiteLinkDesc" : MessageLookupByLibrary.simpleMessage("Visit the Archethic website"),
     "aeWebsiteLinkHeader" : MessageLookupByLibrary.simpleMessage("Archethic Website"),
+    "aewebHosting" : MessageLookupByLibrary.simpleMessage("AEWeb hosting"),
     "amountCopied" : MessageLookupByLibrary.simpleMessage("Amount copied"),
     "amountMissing" : MessageLookupByLibrary.simpleMessage("Please Enter an Amount"),
     "amountZero" : MessageLookupByLibrary.simpleMessage("Your amount should be > 0"),

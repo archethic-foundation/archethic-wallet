@@ -42,6 +42,7 @@ class RecentTransaction extends HiveObject {
   static const int transferInput = 1;
   static const int transferOutput = 2;
   static const int tokenCreation = 3;
+  static const int hosting = 4;
 
   /// Address of transaction
   @HiveField(0)
