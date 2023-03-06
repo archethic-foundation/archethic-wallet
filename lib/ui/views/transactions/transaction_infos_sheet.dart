@@ -125,10 +125,11 @@ class _TransactionLoading extends ConsumerWidget {
 }
 
 class _TransactionInfos extends ConsumerWidget {
-  const _TransactionInfos(
-      {required this.list,
-      required this.scrollController,
-      required this.txAddress});
+  const _TransactionInfos({
+    required this.list,
+    required this.scrollController,
+    required this.txAddress,
+  });
 
   final AsyncSnapshot<List<TransactionInfos>> list;
   final ScrollController scrollController;
