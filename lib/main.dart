@@ -120,7 +120,6 @@ class App extends ConsumerWidget {
         theme: ThemeData(
           dialogBackgroundColor: theme.backgroundDark,
           primaryColor: theme.text,
-          backgroundColor: theme.background,
           fontFamily: theme.secondaryFont,
           brightness: theme.brightness,
         ),
