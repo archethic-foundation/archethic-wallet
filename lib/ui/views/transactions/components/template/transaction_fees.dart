@@ -32,7 +32,11 @@ class TransactionFees extends ConsumerWidget {
 
     final amountConverted =
         CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
-            settings.currency.name, marketPrice.amount, transaction.fee!, 8);
+      settings.currency.name,
+      marketPrice.amount,
+      transaction.fee!,
+      8,
+    );
 
     return Row(
       children: <Widget>[

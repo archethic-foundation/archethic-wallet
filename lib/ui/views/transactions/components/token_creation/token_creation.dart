@@ -10,8 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TokenCreation extends ConsumerWidget {
-  const TokenCreation(
-      {required this.transaction, required this.marketPrice, super.key});
+  const TokenCreation({
+    required this.transaction,
+    required this.marketPrice,
+    super.key,
+  });
 
   final RecentTransaction transaction;
   final MarketPrice marketPrice;
