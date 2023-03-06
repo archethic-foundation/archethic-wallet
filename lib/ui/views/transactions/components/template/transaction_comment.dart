@@ -25,6 +25,7 @@ class TransactionComment extends ConsumerWidget {
         );
       },
       child: Container(
+        padding: const EdgeInsets.only(top: 5),
         alignment: Alignment.centerRight,
         width: 60,
         child: FaIcon(

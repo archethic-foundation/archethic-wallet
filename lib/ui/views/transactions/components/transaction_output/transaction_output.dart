@@ -46,6 +46,7 @@ class TransactionOuput extends ConsumerWidget {
         }
       },
       right: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TransfertBalance(
             isCurrencyNative: primaryCurrency.primaryCurrency ==
@@ -60,14 +61,7 @@ class TransactionOuput extends ConsumerWidget {
           ),
           if (transaction.decryptedSecret != null &&
               transaction.decryptedSecret!.isNotEmpty)
-            Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                TransactionComment(transaction: transaction)
-              ],
-            )
+            TransactionComment(transaction: transaction)
           else
             const SizedBox(),
         ],
