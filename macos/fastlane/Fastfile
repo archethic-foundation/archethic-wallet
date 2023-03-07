@@ -45,6 +45,21 @@ platform :mac do
     installer_cert_name: "3rd Party Mac Developer Installer: Archethic Technologies SARL (2QGGN9QQKR)")
     upload_to_testflight
     end
+
+  desc "Build a new release"
+  lane :build do
+    version_code = getVersionCode(getVersionInfo())
+    version_name = getVersionName(getVersionInfo())
+    flutter_build(version_name,version_code, "macos")
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner",  
+    export_options: {
+      provisioningProfiles: { 
+        "tech.archethic.wallet" => "Archethic Wallet Mac",
+      }
+    },
+    installer_cert_name: "3rd Party Mac Developer Installer: Archethic Technologies SARL (2QGGN9QQKR)")
+      
+    end
 end
 
 def getVersionInfo()
