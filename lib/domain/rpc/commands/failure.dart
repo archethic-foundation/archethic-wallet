@@ -1,7 +1,7 @@
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'result.freezed.dart';
+part 'failure.freezed.dart';
 
 // @freezed
 // class RPCSuccess<T> with _$RPCSuccess<T> {

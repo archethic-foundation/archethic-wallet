@@ -2,7 +2,7 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/result.dart';
+import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/sign_transaction_confirmation_form.dart';
