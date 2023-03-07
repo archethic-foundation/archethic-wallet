@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/domain/rpc/commands/result.dart';
+import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:collection/collection.dart';
 
 /// [CommandDispatcher] is a [Command] queue.
@@ -31,13 +31,13 @@ class Command<C> {
   final C command;
 }
 
-class CommandHandler {
+class CommandHandler<C, S> {
   const CommandHandler({
     required this.handle,
     required this.canHandle,
   });
 
-  final Future<Result<dynamic, RPCFailure>> Function(dynamic command) handle;
+  final Future<Result<S, RPCFailure>> Function(C command) handle;
 
   final bool Function(dynamic commandData) canHandle;
 }
