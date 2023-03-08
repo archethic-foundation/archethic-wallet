@@ -24,6 +24,11 @@ dependencies:
   #   url: https://github.com/archethic-foundation/libdart.git
   #   ref: dev
 
+  archethic_wallet_client:
+    git:
+      url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
+      ref: main
+
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 
@@ -159,11 +164,6 @@ dependencies:
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   json_rpc_2: ^3.0.2
   ledger_dart_lib: ^0.1.2
-
-  libdart_dapp:
-    git:
-      url: https://github.com/archethic-foundation/libdart-dapp.git
-      ref: main
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
   loading_animation_widget: ^1.2.0+4
