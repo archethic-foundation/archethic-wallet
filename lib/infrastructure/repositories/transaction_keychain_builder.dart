@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 extension KeychainTransactionBuilder on archethic.Transaction {
   /// Builds a creation of keychain Transaction
   static Future<archethic.Transaction> build({
-    required String nameAccount,
     required archethic.Keychain keychain,
     required String originPrivateKey,
   }) async {

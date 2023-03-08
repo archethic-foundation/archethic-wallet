@@ -24,10 +24,11 @@ dependencies:
   #   url: https://github.com/archethic-foundation/libdart.git
   #   ref: dev
 
+  # A client dart library to interact with Archethic Wallet RPC API.
   archethic_wallet_client:
     git:
       url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
-      ref: main
+      ref: Add-add_service_command
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
@@ -65,6 +66,7 @@ dependencies:
   # The decimal package allows you to deal with decimal numbers without losing precision
   decimal: ^2.3.2
 
+  # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
   deeplink_rpc: ^1.0.2
 
   # GridView with dynamic height. No need to specify aspectRatio to the grid.
