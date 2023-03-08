@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2023-03-08T09:28:40.872350",
+  "@@last_modified": "2023-03-08T15:37:17.399502",
   "noConnectionBanner": "No connection",
   "@noConnectionBanner": {
     "type": "text",
@@ -1268,6 +1268,12 @@
   },
   "transactionSignatureCommandReceivedNotification": "Application %1 wants to send a transaction.",
   "@transactionSignatureCommandReceivedNotification": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addServiceCommandReceivedNotification": "Application %1 wants to add a service.",
+  "@addServiceCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

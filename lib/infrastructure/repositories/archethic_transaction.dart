@@ -221,7 +221,6 @@ class ArchethicTransactionRepository
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
     return KeychainTransactionBuilder.build(
-      nameAccount: nameAccount,
       keychain: keychain.copyWithService(kServiceName, kDerivationPath),
       originPrivateKey: originPrivateKey,
     );

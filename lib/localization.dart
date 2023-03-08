@@ -1015,6 +1015,11 @@ class AppLocalization {
         name: 'transactionSignatureCommandReceivedNotification');
   }
 
+  String get addServiceCommandReceivedNotification {
+    return Intl.message('Application %1 wants to add a service.',
+        name: 'addServiceCommandReceivedNotification');
+  }
+
   String get transactionInputNotification {
     return Intl.message('You have received %1 %2 on your %3 account',
         name: 'transactionInputNotification');

@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addNFTProperty" : MessageLookupByLibrary.simpleMessage("Add property"),
     "addNftNewCategory" : MessageLookupByLibrary.simpleMessage("Add new category (Soon...)"),
     "addPublicKeyHeader" : MessageLookupByLibrary.simpleMessage("Add access"),
+    "addServiceCommandReceivedNotification" : MessageLookupByLibrary.simpleMessage("Application %1 wants to add a service."),
     "addTokenConfirmationMessage" : MessageLookupByLibrary.simpleMessage("Do you confirm the creation of the following Token?"),
     "addTokenConfirmed" : MessageLookupByLibrary.simpleMessage("The token was created with %1 confirmations on %2"),
     "addTokenConfirmed1" : MessageLookupByLibrary.simpleMessage("The token was created with %1 confirmation on %2"),
