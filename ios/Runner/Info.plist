@@ -24,6 +24,21 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLName</key>
+		<string>archethic.tech</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>aewallet</string>
+		</array>
+		</dict>
+	</array>
 	<key>NFCReaderUsageDescription</key>
 	<string>This app uses the NFC to read the tags.</string>
 	<key>NSAppTransportSecurity</key>
@@ -351,5 +366,7 @@
 		<string>E828BD080F</string>
 		<string>F0000000030001</string>
 	</array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

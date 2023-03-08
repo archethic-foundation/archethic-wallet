@@ -1,0 +1,30 @@
+{
+  "name": "archethic_wallet_extension",
+  "type": "module",
+  "source": "src/contentscript.js",
+  "exports": {
+    "default": "./dist/contentscript.js"
+  },
+  "main": "./dist/contentscript.js",
+  "module": "./dist/contentscript.module.js",
+  "unpkg": "./dist/contentscript.umd.js",
+  "files": [
+    "src/archethic_wallet_extension.js",
+    "manifest.json",
+    "icon-128.png"
+  ],
+  "scripts": {
+    "build": "webpack --mode production --config webpack.config.cjs",
+    "build-dev": "webpack --mode development --config webpack.config.cjs",
+    "watch": "webpack --mode development --watch --progress --config webpack.config.cjs",
+    "clean": "rm -R build dist",
+    "package": "npm run build && mkdir -p dist && cp -R src/manifest.json static/* build/content dist/ && cd dist && zip -r archethic_wallet_extension.zip *"
+  },
+  "dependencies": {
+    "archethic_wallet_rpc_client": "file:../client_lib"
+  },
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}

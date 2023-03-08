@@ -1,7 +1,7 @@
 part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
-class _SessionNotifier extends Notifier<Session> with KeychainMixin {
+class _SessionNotifier extends Notifier<Session> {
   final DBHelper _dbHelper = sl.get<DBHelper>();
 
   @override
@@ -17,7 +17,7 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
     if (keychainSecuredInfos == null && seed != null) {
       // Create manually Keychain
       final keychain = await sl.get<ApiService>().getKeychain(seed);
-      keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+      keychainSecuredInfos = keychain.toKeychainSecuredInfos();
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
     }
     final appWalletDTO = await _dbHelper.getAppWallet();
@@ -51,7 +51,7 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
       final keychain =
           await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
 
-      final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+      final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
       final vault = await HiveVaultDatasource.getInstance();
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
@@ -96,7 +96,7 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
       name,
     );
 
-    final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+    final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
     final vault = await HiveVaultDatasource.getInstance();
     await vault.setKeychainSecuredInfos(keychainSecuredInfos);
@@ -139,7 +139,7 @@ class _SessionNotifier extends Notifier<Session> with KeychainMixin {
         return null;
       }
 
-      final keychainSecuredInfos = keychainToKeychainSecuredInfos(keychain);
+      final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 

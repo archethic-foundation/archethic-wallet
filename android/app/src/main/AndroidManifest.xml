@@ -16,7 +16,8 @@
         android:allowBackup="false">
         <activity
             android:name=".MainActivityArchethicWallet"
-            android:launchMode="singleTop"
+            android:allowEmbedded="false"
+            android:launchMode="singleInstance"
             android:exported="true"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -33,6 +34,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="true" />
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="aewallet" android:host="archethic.tech" />
             </intent-filter>
         </activity>
         <meta-data

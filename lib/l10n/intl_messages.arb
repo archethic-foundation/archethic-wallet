@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2023-03-06T23:46:56.138803",
+  "@@last_modified": "2023-03-08T09:28:40.872350",
   "noConnectionBanner": "No connection",
   "@noConnectionBanner": {
     "type": "text",
@@ -702,6 +702,30 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "userCancelledOperation": "User cancelled operation",
+  "@userCancelledOperation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionConfirmationFormHeader": "Transaction send confirmation",
+  "@transactionConfirmationFormHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "unknownAccount": "Account %1 does not exist.",
+  "@unknownAccount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "invalidTransaction": "Transaction is invalid",
+  "@invalidTransaction": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "invalidAddress": "Address entered is invalid",
   "@invalidAddress": {
     "type": "text",
@@ -1238,6 +1262,12 @@
   },
   "activateNotifications": "Activate notifications",
   "@activateNotifications": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionSignatureCommandReceivedNotification": "Application %1 wants to send a transaction.",
+  "@transactionSignatureCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -2,6 +2,7 @@
 import 'package:aewallet/domain/models/token_property.dart';
 import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'token.freezed.dart';
 
 const kTokenFordiddenName = ['UCO', 'MUCO'];

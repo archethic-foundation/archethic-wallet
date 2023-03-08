@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class PickerItem {
+class PickerItem<T extends Object> {
   PickerItem(
     this.label,
     this.description,
@@ -27,7 +27,7 @@ class PickerItem {
   String? description;
   String? icon;
   Color? iconColor;
-  Object value;
+  T value;
   DecorationImage? decorationImageItem;
   bool enabled;
   bool displayed;
@@ -35,15 +35,15 @@ class PickerItem {
 }
 
 // TODO(reddwarf03): specify [PickerItem.value] types (thanks to Generics) (3)
-class PickerWidget extends ConsumerStatefulWidget {
+class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
   const PickerWidget({
     super.key,
     this.pickerItems,
     this.onSelected,
     this.selectedIndex = -1,
   });
-  final ValueChanged<PickerItem>? onSelected;
-  final List<PickerItem>? pickerItems;
+  final ValueChanged<PickerItem<T>>? onSelected;
+  final List<PickerItem<T>>? pickerItems;
   final int selectedIndex;
 
   @override

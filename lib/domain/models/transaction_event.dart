@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'transaction_event.freezed.dart';
 
 @freezed
-class TransactionError with _$TransactionError {
+class TransactionError with _$TransactionError implements Exception {
   const TransactionError._();
   const factory TransactionError.timeout() = _TransactionTimeout;
   const factory TransactionError.connectivity() = _TransactionConnectionError;
@@ -15,6 +16,10 @@ class TransactionError with _$TransactionError {
       _TransactionInvalidConfirmation;
   const factory TransactionError.insufficientFunds() =
       _TransactionInsufficientFunds;
+  const factory TransactionError.userRejected() = _TransactionUserRejected;
+  const factory TransactionError.unknownAccount({
+    required String accountName,
+  }) = _TransactionUnknownAccount;
   const factory TransactionError.other({
     String? reason,
   }) = _TransactionOtherError;
@@ -26,6 +31,8 @@ class TransactionError with _$TransactionError {
         invalidTransaction: (_) => 'invalid transaction',
         invalidConfirmation: (_) => 'invalid confirmation',
         insufficientFunds: (_) => 'insufficient funds',
+        userRejected: (_) => 'user rejected',
+        unknownAccount: (_) => 'unknown account',
         other: (other) => other.reason ?? 'other reason',
       );
 }
@@ -41,14 +48,16 @@ class TransactionConfirmation with _$TransactionConfirmation {
   const TransactionConfirmation._();
 
   bool get isFullyConfirmed => nbConfirmations >= maxConfirmations;
+  bool get isEnoughConfirmed => isEnoughConfirmations(
+        nbConfirmations,
+        maxConfirmations,
+      );
 
   double get confirmationRatio => max(1, maxConfirmations / nbConfirmations);
 
-  static bool isEnoughConfirmations(int nbConfirmations, int maxConfirmations) {
-    if (nbConfirmations > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  static bool isEnoughConfirmations(
+    int nbConfirmations,
+    int maxConfirmations,
+  ) =>
+      nbConfirmations > 0;
 }

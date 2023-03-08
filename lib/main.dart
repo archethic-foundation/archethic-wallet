@@ -8,6 +8,10 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/domain/repositories/feature_flags.dart';
+import 'package:aewallet/domain/rpc/command_dispatcher.dart';
+import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
+import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -25,6 +29,8 @@ import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +46,14 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
   await setupServiceLocator();
+
+  if (FeatureFlags.rpcEnabled &&
+      ArchethicWebsocketRPCServer.isPlatformCompatible) {
+    ArchethicWebsocketRPCServer(
+      commandDispatcher: sl.get<CommandDispatcher>(),
+    ).run();
+  }
+
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
     await windowManager.ensureInitialized();
 
@@ -105,6 +119,7 @@ class App extends ConsumerWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
@@ -133,6 +148,12 @@ class App extends ConsumerWidget {
         supportedLocales: ref.read(LanguageProviders.availableLocales),
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
+          if (FeatureFlags.rpcEnabled &&
+              deeplinkRpcReceiver.canHandle(settings.name)) {
+            deeplinkRpcReceiver.handle(settings.name);
+            return null;
+          }
+
           switch (settings.name) {
             case '/':
               return NoTransitionRoute<Splash>(
@@ -141,7 +162,9 @@ class App extends ConsumerWidget {
               );
             case '/home':
               return NoTransitionRoute<HomePage>(
-                builder: (_) => const AutoLockGuard(child: HomePage()),
+                builder: (_) => RPCCommandReceiver(
+                  child: const AutoLockGuard(child: HomePage()),
+                ),
                 settings: settings,
               );
             case '/home_transition':
@@ -201,7 +224,7 @@ class App extends ConsumerWidget {
               );
             case '/nft_creation':
               final args = settings.arguments as Map<String, dynamic>? ?? {};
-              return MaterialPageRoute<NftCreationProcessSheet>(
+              return MaterialPageRoute(
                 builder: (_) => NftCreationProcessSheet(
                   currentNftCategoryIndex:
                       args['currentNftCategoryIndex'] as int,

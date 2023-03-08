@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'faucet.dart';
+part of 'provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,17 +29,19 @@ class _SystemHash {
   }
 }
 
-String _$_isFaucetRequestButtonActiveHash() =>
-    r'95430dc2f8679f214ea8cfeedfac8d3af9e6fb80';
+String $_sendTransactionUseCaseHash() =>
+    r'c17028112f57e40f7ebf7251518f914ae9c7ecd8';
 
-/// True if the Faucet claim button should be active
-///
-/// Copied from [_isFaucetRequestButtonActive].
-final _isFaucetRequestButtonActiveProvider = Provider<bool>(
-  _isFaucetRequestButtonActive,
-  name: r'_isFaucetRequestButtonActiveProvider',
+/// See also [_sendTransactionUseCase].
+final _sendTransactionUseCaseProvider = AutoDisposeProvider<
+    UseCase<SendTransactionCommand,
+        Result<TransactionConfirmation, TransactionError>>>(
+  _sendTransactionUseCase,
+  name: r'_sendTransactionUseCaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$_isFaucetRequestButtonActiveHash,
+      : $_sendTransactionUseCaseHash,
 );
-typedef _IsFaucetRequestButtonActiveRef = ProviderRef<bool>;
+typedef _SendTransactionUseCaseRef = AutoDisposeProviderRef<
+    UseCase<SendTransactionCommand,
+        Result<TransactionConfirmation, TransactionError>>>;

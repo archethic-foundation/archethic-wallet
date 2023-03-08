@@ -14,7 +14,10 @@ class CalculateFeesUsecase
   final TransactionRemoteRepositoryInterface repository;
 
   @override
-  Future<Result<double, Failure>> run(Transaction transaction) async {
+  Future<Result<double, Failure>> run(
+    Transaction transaction, {
+    UseCaseProgressListener? onProgress,
+  }) async {
     transaction.map(
       transfer: (transaction) {
         if (transaction.transfer.amount <= 0) {

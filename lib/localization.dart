@@ -589,6 +589,24 @@ class AppLocalization {
     return Intl.message('Enter Public Key', name: 'enterPublicKey');
   }
 
+  String get userCancelledOperation {
+    return Intl.message('User cancelled operation',
+        name: 'userCancelledOperation');
+  }
+
+  String get transactionConfirmationFormHeader {
+    return Intl.message('Transaction send confirmation',
+        name: 'transactionConfirmationFormHeader');
+  }
+
+  String get unknownAccount {
+    return Intl.message('Account %1 does not exist.', name: 'unknownAccount');
+  }
+
+  String get invalidTransaction {
+    return Intl.message('Transaction is invalid', name: 'invalidTransaction');
+  }
+
   String get invalidAddress {
     return Intl.message('Address entered is invalid', name: 'invalidAddress');
   }
@@ -990,6 +1008,11 @@ class AppLocalization {
   String get activateNotifications {
     return Intl.message('Activate notifications',
         name: 'activateNotifications');
+  }
+
+  String get transactionSignatureCommandReceivedNotification {
+    return Intl.message('Application %1 wants to send a transaction.',
+        name: 'transactionSignatureCommandReceivedNotification');
   }
 
   String get transactionInputNotification {
