@@ -2240,6 +2240,19 @@ class AppLocalization {
   String get aewebHosting {
     return Intl.message('AEWeb hosting', name: 'aewebHosting');
   }
+
+  String get serviceTypeLabelArchethicWallet {
+    return Intl.message('Wallet', name: 'serviceTypeLabelArchethicWallet');
+  }
+
+  String get serviceTypeLabelAeweb {
+    return Intl.message('Website hosted on AEWeb',
+        name: 'serviceTypeLabelAeweb');
+  }
+
+  String get serviceTypeLabelOther {
+    return Intl.message('Other', name: 'serviceTypeLabelOther');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

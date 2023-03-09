@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -8,11 +10,11 @@ import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/result.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
-import 'package:aewallet/infrastructure/repositories/transaction_keychain_builder.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/sign_transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,9 +40,8 @@ class AddServicenHandler extends CommandHandler {
               phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
               websocketEndpoint: networkSettings.getWebsocketUri(),
             );
+
             final session = ref.watch(SessionProviders.session).loggedIn!;
-            final originPrivateKey =
-                archethicTransactionRepository.apiService.getOriginKey();
             final keychain = await archethicTransactionRepository.apiService
                 .getKeychain(session.wallet.seed);
 
@@ -51,16 +52,21 @@ class AddServicenHandler extends CommandHandler {
             const index = 0;
             final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-            final transaction = await KeychainTransactionBuilder.build(
-              keychain: keychain.copyWithService(nameEncoded, kDerivationPath),
-              originPrivateKey: originPrivateKey,
+            final keychainTransaction = archethic.Transaction(
+              type: 'keychain',
+              data: archethic.Transaction.initData(),
+            ).setContent(
+              jsonEncode(
+                keychain.copyWithService(nameEncoded, kDerivationPath).toDID(),
+              ),
             );
+
             final newCommand = RPCCommand<RPCSendTransactionCommandData>(
               origin: command.origin,
               data: RPCSendTransactionCommandData(
-                data: transaction.data!,
-                version: 1,
-                type: 'keychain',
+                data: keychainTransaction.data!,
+                version: keychainTransaction.version,
+                type: keychainTransaction.type!,
               ),
             );
 

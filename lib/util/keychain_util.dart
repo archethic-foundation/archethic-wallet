@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
@@ -22,7 +21,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 
-class KeychainUtil {
+class KeychainUtil with KeychainServiceMixin {
   Future<void> createKeyChainAccess(
     NetworksSetting networkSettings,
     String? seed,
@@ -163,24 +162,17 @@ class KeychainUtil {
 
       final selectedAccount = currentAppWallet.appKeychain.getAccountSelected();
 
-      const kDerivationPathWithoutService = "m/650'/archethic-wallet-";
-
       final genesisAddressAccountList = <String>[];
       final lastAddressAccountList = <String>[];
 
       /// Get all services for archethic blockchain
       keychain.services.forEach((serviceName, service) async {
-        if (service.derivationPath.startsWith(kDerivationPathWithoutService)) {
+        var serviceType = ServiceType.other;
+        serviceType = getServiceTypeFromPath(service.derivationPath);
+
+        if (serviceType != ServiceType.other) {
           final genesisAddress = keychain.deriveAddress(serviceName);
-
-          final path = service.derivationPath
-              .replaceAll(kDerivationPathWithoutService, '')
-              .split('/')
-            ..last = '';
-          var name = path.join('/');
-          name = name.substring(0, name.length - 1);
-
-          final nameDecoded = Uri.decodeFull(name);
+          final nameDecoded = getNameFromPath(service.derivationPath);
 
           genesisAddressAccountList.add(
             uint8ListToHex(genesisAddress),
@@ -197,6 +189,7 @@ class KeychainUtil {
               nativeTokenValue: 0,
             ),
             recentTransactions: [],
+            serviceType: serviceType,
           );
           if (selectedAccount != null && selectedAccount.name == nameDecoded) {
             account.selected = true;
@@ -217,18 +210,20 @@ class KeychainUtil {
 
           accounts.add(account);
 
-          try {
-            await sl.get<DBHelper>().getContactWithName(account.name);
-          } catch (e) {
-            final newContact = Contact(
-              name: '@$nameDecoded',
-              address: uint8ListToHex(genesisAddress),
-              type: ContactType.keychainService.name,
-              publicKey:
-                  uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)
-                      .toUpperCase(),
-            );
-            await sl.get<DBHelper>().saveContact(newContact);
+          if (serviceType == ServiceType.archethicWallet) {
+            try {
+              await sl.get<DBHelper>().getContactWithName(account.name);
+            } catch (e) {
+              final newContact = Contact(
+                name: '@$nameDecoded',
+                address: uint8ListToHex(genesisAddress),
+                type: ContactType.keychainService.name,
+                publicKey: uint8ListToHex(
+                        keychain.deriveKeypair(serviceName).publicKey!)
+                    .toUpperCase(),
+              );
+              await sl.get<DBHelper>().saveContact(newContact);
+            }
           }
         }
       });
@@ -353,6 +348,7 @@ extension KeychainConversionsExt on Keychain {
         curve: value.curve,
         derivationPath: value.derivationPath,
         hashAlgo: value.hashAlgo,
+        // TODO(reddwarf03): Adapt to aeweb
         name: key.replaceAll('archethic-wallet-', ''),
         keyPair: KeychainServiceKeyPair(
           privateKey: keyPair.privateKey!,
