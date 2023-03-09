@@ -8,6 +8,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/routes.dart';
+import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -125,9 +126,31 @@ class AccountListItem extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
-                      child: AutoSizeText(
-                        account.name,
-                        style: theme.textStyleSize12W400Primary,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AutoSizeText(
+                            account.name,
+                            style: theme.textStyleSize12W400Primary,
+                          ),
+                          const SizedBox(height: 2),
+                          if (account.serviceType != null)
+                            Row(
+                              children: [
+                                Icon(
+                                  ServiceTypeFormatters(account.serviceType!)
+                                      .getIcon(),
+                                  size: 5,
+                                ),
+                                const SizedBox(width: 3),
+                                AutoSizeText(
+                                  ServiceTypeFormatters(account.serviceType!)
+                                      .getLabel(context),
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                              ],
+                            ),
+                        ],
                       ),
                     ),
                     if (settings.showBalances)

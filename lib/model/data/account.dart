@@ -13,7 +13,9 @@ import 'package:hive/hive.dart';
 
 part 'account.g.dart';
 
-/// Next field available : 12
+enum ServiceType { archethicWallet, aeweb, other }
+
+/// Next field available : 13
 @HiveType(typeId: 1)
 class Account extends HiveObject {
   Account({
@@ -28,6 +30,7 @@ class Account extends HiveObject {
     this.accountNFT,
     this.nftInfosOffChainList,
     this.nftCategoryList,
+    this.serviceType,
   });
 
   Account copyWith({
@@ -101,6 +104,10 @@ class Account extends HiveObject {
   /// List of NFT category
   @HiveField(11)
   List<int>? nftCategoryList;
+
+  /// Service Type
+  @HiveField(12)
+  ServiceType? serviceType;
 
   Future<void> updateLastAddress() async {
     final lastAddressFromAddressMap =
@@ -330,5 +337,49 @@ class Account extends HiveObject {
   Future<void> clearRecentTransactionsFromCache() async {
     recentTransactions = [];
     await updateAccount();
+  }
+}
+
+mixin KeychainServiceMixin {
+  final kDerivationPathArchethicWalletWithoutService =
+      "m/650'/archethic-wallet-";
+  final kDerivationPathAEWebWithoutService = "m/650'/aeweb-";
+
+  ServiceType getServiceTypeFromPath(String derivationPath) {
+    var serviceType = ServiceType.other;
+    if (derivationPath
+        .startsWith(kDerivationPathArchethicWalletWithoutService)) {
+      serviceType = ServiceType.archethicWallet;
+    } else {
+      if (derivationPath.startsWith(kDerivationPathAEWebWithoutService)) {
+        serviceType = ServiceType.aeweb;
+      }
+    }
+    return serviceType;
+  }
+
+  String getNameFromPath(String derivationPath) {
+    final serviceType = getServiceTypeFromPath(derivationPath);
+    late List<String> path;
+    if (serviceType == ServiceType.archethicWallet) {
+      path = derivationPath
+          .replaceAll(kDerivationPathArchethicWalletWithoutService, '')
+          .split('/')
+        ..last = '';
+    } else {
+      if (serviceType == ServiceType.aeweb) {
+        path = derivationPath
+            .replaceAll(kDerivationPathAEWebWithoutService, '')
+            .split('/')
+          ..last = '';
+      } else {
+        path = [];
+      }
+    }
+
+    var name = path.join('/');
+    name = name.substring(0, name.length - 1);
+
+    return Uri.decodeFull(name);
   }
 }

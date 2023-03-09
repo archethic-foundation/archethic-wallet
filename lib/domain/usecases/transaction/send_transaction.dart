@@ -6,6 +6,7 @@ import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
+import 'package:aewallet/infrastructure/repositories/transaction_keychain_builder.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/util/confirmations/transaction_sender.dart';
@@ -39,24 +40,57 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
     required ApiService apiService,
   }) async {
     try {
+      final originPrivateKey = apiService.getOriginKey();
       final keychain = wallet.keychainSecuredInfos.toKeychain();
+
       final serviceName =
           'archethic-wallet-${Uri.encodeFull(senderAccount.name)}';
 
+      var indexSearchRef = '';
+      switch (type) {
+        case 'keychain':
+          indexSearchRef = wallet.appKeychain.address;
+          break;
+        case 'transfer':
+        case 'token':
+          indexSearchRef = senderAccount.genesisAddress;
+          break;
+        default:
+          throw UnimplementedError();
+      }
+
       final indexMap = await apiService.getTransactionIndex(
-        [senderAccount.genesisAddress],
+        [indexSearchRef],
       );
-      final accountIndex = indexMap[senderAccount.genesisAddress] ?? 0;
-      final originPrivateKey = apiService.getOriginKey();
+
+      final accountIndex = indexMap[indexSearchRef] ?? 0;
+
       final transaction = Transaction(type: type, data: data);
 
-      final builtTransaction = keychain.buildTransaction(
-        transaction,
-        serviceName,
-        accountIndex,
-      );
+      late final Transaction signedTransaction;
+      switch (type) {
+        case 'keychain':
+          signedTransaction = transaction
+              .build(
+                uint8ListToHex(keychain.seed!),
+                accountIndex,
+              )
+              .originSign(originPrivateKey);
+          break;
+        case 'transfer':
+        case 'token':
+          signedTransaction = keychain
+              .buildTransaction(
+                transaction,
+                serviceName,
+                accountIndex,
+              )
+              .originSign(originPrivateKey);
+          break;
+        default:
+          throw UnimplementedError();
+      }
 
-      final signedTransaction = builtTransaction.originSign(originPrivateKey);
       return signedTransaction;
     } catch (e, stack) {
       log('Transaction creation failed', error: e, stackTrace: stack);
