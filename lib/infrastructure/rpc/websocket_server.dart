@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/subscription.dart';
+import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_subscription.dart';
@@ -140,6 +141,10 @@ class ArchethicWebsocketRPCServer {
             )
             ..registerUnsubscriptionMethod(
               'unsubscribeAccount',
+            )
+            ..registerMethod(
+              'addService',
+              (params) => _handle(RPCAddServiceCommandHandler(), params),
             );
 
           await server.listen();
