@@ -49,6 +49,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  archethic_wallet_client:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "2ca7334d495a951035229d9b4de421d9456d600e"
+      url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
+    source: git
+    version: "1.0.3"
   archive:
     dependency: transitive
     description:
@@ -364,12 +373,11 @@ packages:
   deeplink_rpc:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: fa2d555c1648cdddf04c68d150e73b28844fc178
-      url: "https://github.com/archethic-foundation/lib-deeplink-rpc.git"
-    source: git
-    version: "1.0.0-dev.1"
+      name: deeplink_rpc
+      sha256: "2b581db436bd4c7aa6db5145af53a9a1b3f8730d47aa5f7802b1f2e8651a38f3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   device_info_plus:
     dependency: transitive
     description:
@@ -1109,15 +1117,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.2"
-  libdart_dapp:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: "783ab2f9678fc4806e02c3b7d1f99dd2573a34c8"
-      url: "https://github.com/archethic-foundation/libdart-dapp.git"
-    source: git
-    version: "1.0.0"
   linkify:
     dependency: transitive
     description:
@@ -1823,10 +1822,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: e8f2efc804810c0f2f5b485f49e7942179f56eabcfe81dce3387fec4bb55876b
+      sha256: "75f2846facd11168d007529d6cd8fcb2b750186bea046af9711f10b907e1587e"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.9"
+    version: "6.1.10"
   url_launcher_android:
     dependency: transitive
     description:
