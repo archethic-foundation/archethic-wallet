@@ -53,8 +53,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: Add-add_service_command
-      resolved-ref: "5545a904c27423be6ad47ce42882dca003593d51"
+      ref: dev
+      resolved-ref: f9cce488fe9b0e236b639e462adca3afbc067f88
       url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
     source: git
     version: "1.0.4"
