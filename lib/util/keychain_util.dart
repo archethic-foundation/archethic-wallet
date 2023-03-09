@@ -167,63 +167,59 @@ class KeychainUtil with KeychainServiceMixin {
 
       /// Get all services for archethic blockchain
       keychain.services.forEach((serviceName, service) async {
-        var serviceType = ServiceType.other;
-        serviceType = getServiceTypeFromPath(service.derivationPath);
+        final serviceType = getServiceTypeFromPath(service.derivationPath);
 
-        if (serviceType != ServiceType.other) {
-          final genesisAddress = keychain.deriveAddress(serviceName);
-          final nameDecoded = getNameFromPath(service.derivationPath);
+        final genesisAddress = keychain.deriveAddress(serviceName);
+        final nameDecoded = getNameFromPath(service.derivationPath);
 
-          genesisAddressAccountList.add(
-            uint8ListToHex(genesisAddress),
-          );
-          final account = Account(
-            lastLoadingTransactionInputs:
-                DateTime.now().millisecondsSinceEpoch ~/
-                    Duration.millisecondsPerSecond,
-            lastAddress: uint8ListToHex(genesisAddress),
-            genesisAddress: uint8ListToHex(genesisAddress),
-            name: nameDecoded,
-            balance: AccountBalance(
-              nativeTokenName: '',
-              nativeTokenValue: 0,
-            ),
-            recentTransactions: [],
-            serviceType: serviceType,
-          );
-          if (selectedAccount != null && selectedAccount.name == nameDecoded) {
-            account.selected = true;
-          } else {
-            account.selected = false;
-          }
+        genesisAddressAccountList.add(
+          uint8ListToHex(genesisAddress),
+        );
+        final account = Account(
+          lastLoadingTransactionInputs: DateTime.now().millisecondsSinceEpoch ~/
+              Duration.millisecondsPerSecond,
+          lastAddress: uint8ListToHex(genesisAddress),
+          genesisAddress: uint8ListToHex(genesisAddress),
+          name: nameDecoded,
+          balance: AccountBalance(
+            nativeTokenName: '',
+            nativeTokenValue: 0,
+          ),
+          recentTransactions: [],
+          serviceType: serviceType,
+        );
+        if (selectedAccount != null && selectedAccount.name == nameDecoded) {
+          account.selected = true;
+        } else {
+          account.selected = false;
+        }
 
-          // Get offchain infos if exists locally
-          if (appWallet != null) {
-            for (final element in appWallet.appKeychain.accounts) {
-              if (element.name == account.name) {
-                if (element.nftInfosOffChainList != null) {
-                  account.nftInfosOffChainList = element.nftInfosOffChainList;
-                }
+        // Get offchain infos if exists locally
+        if (appWallet != null) {
+          for (final element in appWallet.appKeychain.accounts) {
+            if (element.name == account.name) {
+              if (element.nftInfosOffChainList != null) {
+                account.nftInfosOffChainList = element.nftInfosOffChainList;
               }
             }
           }
+        }
 
-          accounts.add(account);
+        accounts.add(account);
 
-          if (serviceType == ServiceType.archethicWallet) {
-            try {
-              await sl.get<DBHelper>().getContactWithName(account.name);
-            } catch (e) {
-              final newContact = Contact(
-                name: '@$nameDecoded',
-                address: uint8ListToHex(genesisAddress),
-                type: ContactType.keychainService.name,
-                publicKey: uint8ListToHex(
-                        keychain.deriveKeypair(serviceName).publicKey!)
-                    .toUpperCase(),
-              );
-              await sl.get<DBHelper>().saveContact(newContact);
-            }
+        if (serviceType == ServiceType.archethicWallet) {
+          try {
+            await sl.get<DBHelper>().getContactWithName(account.name);
+          } catch (e) {
+            final newContact = Contact(
+              name: '@$nameDecoded',
+              address: uint8ListToHex(genesisAddress),
+              type: ContactType.keychainService.name,
+              publicKey:
+                  uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)
+                      .toUpperCase(),
+            );
+            await sl.get<DBHelper>().saveContact(newContact);
           }
         }
       });

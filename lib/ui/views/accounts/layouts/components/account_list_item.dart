@@ -6,6 +6,7 @@ import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/service_type_formatters.dart';
@@ -35,11 +36,15 @@ class AccountListItem extends ConsumerWidget {
     final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final contact = ref.watch(
-      ContactProviders.getContactWithName(
-        account.name,
-      ),
-    );
+
+    AsyncValue<Contact>? contact;
+    if (account.serviceType != ServiceType.other) {
+      contact = ref.watch(
+        ContactProviders.getContactWithName(
+          account.name,
+        ),
+      );
+    }
 
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -57,169 +62,170 @@ class AccountListItem extends ConsumerWidget {
       orElse: () => '--',
     );
 
-    return contact.map(
-      data: (data) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: GestureDetector(
-            onTap: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    ref.read(
-                      SettingsProviders.settings.select(
-                        (value) => value.activeVibrations,
-                      ),
-                    ),
-                  );
-
-              if (selectedAccount == null ||
-                  selectedAccount.name != account.name) {
-                ShowSendingAnimation.build(context, theme);
-                await ref
-                    .read(AccountProviders.accounts.notifier)
-                    .selectAccount(account);
-                await ref
-                    .read(AccountProviders.account(account.name).notifier)
-                    .refreshRecentTransactions();
-              }
-
-              ref
-                  .read(SettingsProviders.settings.notifier)
-                  .resetMainScreenCurrentPage();
-              Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-            },
-            onLongPress: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    settings.activeVibrations,
-                  );
-
-              Sheets.showAppHeightNineSheet(
-                context: context,
-                ref: ref,
-                widget: ContactDetail(
-                  contact: data.value,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: GestureDetector(
+        onTap: () async {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                ref.read(
+                  SettingsProviders.settings.select(
+                    (value) => value.activeVibrations,
+                  ),
                 ),
               );
-            },
-            child: Card(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 0,
-              color: theme.backgroundAccountsListCardSelected,
-              child: Container(
-                height: 85,
-                color: account.selected!
-                    ? theme.backgroundAccountsListCardSelected
-                    : theme.backgroundAccountsListCard,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AutoSizeText(
-                            account.name,
-                            style: theme.textStyleSize12W400Primary,
-                          ),
-                          const SizedBox(height: 2),
-                          if (account.serviceType != null)
-                            Row(
-                              children: [
-                                Icon(
-                                  ServiceTypeFormatters(account.serviceType!)
-                                      .getIcon(),
-                                  size: 5,
-                                ),
-                                const SizedBox(width: 3),
-                                AutoSizeText(
-                                  ServiceTypeFormatters(account.serviceType!)
-                                      .getLabel(context),
-                                  style: theme.textStyleSize12W400Primary,
-                                ),
-                              ],
+
+          if (selectedAccount == null || selectedAccount.name != account.name) {
+            ShowSendingAnimation.build(context, theme);
+            await ref
+                .read(AccountProviders.accounts.notifier)
+                .selectAccount(account);
+            await ref
+                .read(AccountProviders.account(account.name).notifier)
+                .refreshRecentTransactions();
+          }
+
+          ref
+              .read(SettingsProviders.settings.notifier)
+              .resetMainScreenCurrentPage();
+          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        },
+        onLongPress: () {
+          if (account.serviceType != ServiceType.other) {
+            return contact!.map(
+              data: (data) {
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      settings.activeVibrations,
+                    );
+
+                Sheets.showAppHeightNineSheet(
+                  context: context,
+                  ref: ref,
+                  widget: ContactDetail(
+                    contact: data.value,
+                  ),
+                );
+              },
+              error: (_) {},
+              loading: (_) {},
+            );
+          }
+        },
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: theme.backgroundAccountsListCardSelected!,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          elevation: 0,
+          color: theme.backgroundAccountsListCardSelected,
+          child: Container(
+            height: 85,
+            color: account.selected!
+                ? theme.backgroundAccountsListCardSelected
+                : theme.backgroundAccountsListCard,
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 20,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AutoSizeText(
+                        account.name,
+                        style: theme.textStyleSize12W400Primary,
+                      ),
+                      const SizedBox(height: 2),
+                      if (account.serviceType != null)
+                        Row(
+                          children: [
+                            Icon(
+                              ServiceTypeFormatters(account.serviceType!)
+                                  .getIcon(),
+                              size: 5,
                             ),
-                        ],
-                      ),
-                    ),
-                    if (settings.showBalances)
-                      primaryCurrency.primaryCurrency ==
-                              AvailablePrimaryCurrencyEnum.native
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                AutoSizeText(
-                                  '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
-                                  style: theme.textStyleSize12W400Primary,
-                                  textAlign: TextAlign.end,
-                                ),
-                                AutoSizeText(
-                                  fiatAmountString,
-                                  textAlign: TextAlign.end,
-                                  style: theme.textStyleSize12W400Primary,
-                                ),
-                                AccountListItemTokenInfo(account: account),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                AutoSizeText(
-                                  fiatAmountString,
-                                  textAlign: TextAlign.end,
-                                  style: theme.textStyleSize12W400Primary,
-                                ),
-                                AutoSizeText(
-                                  '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
-                                  style: theme.textStyleSize12W400Primary,
-                                  textAlign: TextAlign.end,
-                                ),
-                                AccountListItemTokenInfo(account: account),
-                              ],
-                            )
-                    else
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          AutoSizeText(
-                            '···········',
-                            style: theme.textStyleSize12W600Primary60,
-                          ),
-                          AutoSizeText(
-                            '···········',
-                            style: theme.textStyleSize12W600Primary60,
-                          ),
-                          AutoSizeText(
-                            '···········',
-                            style: theme.textStyleSize12W600Primary60,
-                          ),
-                          AutoSizeText(
-                            '···········',
-                            style: theme.textStyleSize12W600Primary60,
-                          )
-                        ],
-                      ),
-                  ],
+                            const SizedBox(width: 3),
+                            AutoSizeText(
+                              ServiceTypeFormatters(account.serviceType!)
+                                  .getLabel(context),
+                              style: theme.textStyleSize12W400Primary,
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
-              ),
+                if (settings.showBalances)
+                  primaryCurrency.primaryCurrency ==
+                          AvailablePrimaryCurrencyEnum.native
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
+                              style: theme.textStyleSize12W400Primary,
+                              textAlign: TextAlign.end,
+                            ),
+                            AutoSizeText(
+                              fiatAmountString,
+                              textAlign: TextAlign.end,
+                              style: theme.textStyleSize12W400Primary,
+                            ),
+                            AccountListItemTokenInfo(account: account),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              fiatAmountString,
+                              textAlign: TextAlign.end,
+                              style: theme.textStyleSize12W400Primary,
+                            ),
+                            AutoSizeText(
+                              '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
+                              style: theme.textStyleSize12W400Primary,
+                              textAlign: TextAlign.end,
+                            ),
+                            AccountListItemTokenInfo(account: account),
+                          ],
+                        )
+                else
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      AutoSizeText(
+                        '···········',
+                        style: theme.textStyleSize12W600Primary60,
+                      ),
+                      AutoSizeText(
+                        '···········',
+                        style: theme.textStyleSize12W600Primary60,
+                      ),
+                      AutoSizeText(
+                        '···········',
+                        style: theme.textStyleSize12W600Primary60,
+                      ),
+                      AutoSizeText(
+                        '···········',
+                        style: theme.textStyleSize12W600Primary60,
+                      )
+                    ],
+                  ),
+              ],
             ),
           ),
-        );
-      },
-      error: (error) => const SizedBox(),
-      loading: (loading) => const SizedBox(),
+        ),
+      ),
     );
   }
 }
