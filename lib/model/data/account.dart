@@ -344,6 +344,7 @@ mixin KeychainServiceMixin {
   final kDerivationPathArchethicWalletWithoutService =
       "m/650'/archethic-wallet-";
   final kDerivationPathAEWebWithoutService = "m/650'/aeweb-";
+  final kDerivationPathOtherWithoutService = "m/650'/";
 
   ServiceType getServiceTypeFromPath(String derivationPath) {
     var serviceType = ServiceType.other;
@@ -361,6 +362,7 @@ mixin KeychainServiceMixin {
   String getNameFromPath(String derivationPath) {
     final serviceType = getServiceTypeFromPath(derivationPath);
     late List<String> path;
+
     if (serviceType == ServiceType.archethicWallet) {
       path = derivationPath
           .replaceAll(kDerivationPathArchethicWalletWithoutService, '')
@@ -373,13 +375,14 @@ mixin KeychainServiceMixin {
             .split('/')
           ..last = '';
       } else {
-        path = [];
+        path = derivationPath
+            .replaceAll(kDerivationPathOtherWithoutService, '')
+            .split('/')
+          ..last = '';
       }
     }
-
     var name = path.join('/');
     name = name.substring(0, name.length - 1);
-
     return Uri.decodeFull(name);
   }
 }
