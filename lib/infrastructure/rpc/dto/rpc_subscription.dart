@@ -5,10 +5,10 @@ part 'rpc_subscription.g.dart';
 
 @freezed
 class RPCUnsubscribeCommandDTO with _$RPCUnsubscribeCommandDTO {
-  const RPCUnsubscribeCommandDTO._();
   const factory RPCUnsubscribeCommandDTO({
     required String subscriptionId,
   }) = _RPCUnsubscribeCommandDTO;
+  const RPCUnsubscribeCommandDTO._();
 
   factory RPCUnsubscribeCommandDTO.fromJson(Map<String, dynamic> json) =>
       _$RPCUnsubscribeCommandDTOFromJson(json);

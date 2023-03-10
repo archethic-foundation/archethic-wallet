@@ -24,12 +24,6 @@ dependencies:
   #   url: https://github.com/archethic-foundation/libdart.git
   #   ref: dev
 
-  # A client dart library to interact with Archethic Wallet RPC API.
-  archethic_wallet_client:
-    git:
-      url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
-      ref: dev
-
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 
