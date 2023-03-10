@@ -10,6 +10,7 @@ import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_subscription.dart';
 import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_account/command_handler.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
@@ -145,6 +146,11 @@ class ArchethicWebsocketRPCServer {
             ..registerMethod(
               'addService',
               (params) => _handle(RPCAddServiceCommandHandler(), params),
+            )
+            ..registerMethod(
+              'getServicesFromKeychain',
+              (params) =>
+                  _handle(RPCGetServicesFromKeychainCommandHandler(), params),
             );
 
           await server.listen();

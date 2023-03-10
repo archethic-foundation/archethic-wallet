@@ -31,6 +31,14 @@ Push a new release build to the App Store
 
 Push a new release build to TestFlight
 
+### mac build
+
+```sh
+[bundle exec] fastlane mac build
+```
+
+Build a new release
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

@@ -49,15 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  archethic_wallet_client:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: dev
-      resolved-ref: f9cce488fe9b0e236b639e462adca3afbc067f88
-      url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
-    source: git
-    version: "1.0.4"
   archive:
     dependency: transitive
     description:
@@ -709,10 +700,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: "97c5b291b4fd34ae4f55d6a4c05841d4d0ed94952e033c5a6529e1b47b4d2a29"
+      sha256: "017cb37b3e9bee44cc800e35469f295d537484602f02ce6ceb5876236cc7e1fe"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -1241,10 +1232,10 @@ packages:
     dependency: "direct dev"
     description:
       name: msix
-      sha256: "765e6b4d9f571956014d85062614468993d9e4b998bb57f2b727845b6d99c6f1"
+      sha256: "66599e96d2d2edd89f062ad9a613f4db5b6ad63301b8e524e5ba3ddeca5e177f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.8.2"
+    version: "3.8.4"
   nfc_manager:
     dependency: "direct main"
     description:
@@ -2027,5 +2018,5 @@ packages:
     source: hosted
     version: "1.0.4"
 sdks:
-  dart: ">=2.19.2 <3.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.7.3"
