@@ -168,7 +168,7 @@ class AccountListItem extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (account.serviceType != ServiceType.aeweb)
+                if (account.serviceType != ServiceType.aeweb.toString())
                   if (settings.showBalances)
                     primaryCurrency.primaryCurrency ==
                             AvailablePrimaryCurrencyEnum.native

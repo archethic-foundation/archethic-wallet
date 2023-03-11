@@ -28,7 +28,7 @@ class AccountAdapter extends TypeAdapter<Account> {
       accountNFT: (fields[8] as List?)?.cast<AccountToken>(),
       nftInfosOffChainList: (fields[10] as List?)?.cast<NftInfosOffChain>(),
       nftCategoryList: (fields[11] as List?)?.cast<int>(),
-      serviceType: fields[12] as ServiceType?,
+      serviceType: fields[13] as String?,
     );
   }
 
@@ -58,7 +58,7 @@ class AccountAdapter extends TypeAdapter<Account> {
       ..write(obj.nftInfosOffChainList)
       ..writeByte(11)
       ..write(obj.nftCategoryList)
-      ..writeByte(12)
+      ..writeByte(13)
       ..write(obj.serviceType);
   }
 

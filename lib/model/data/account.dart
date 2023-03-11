@@ -15,7 +15,7 @@ part 'account.g.dart';
 
 enum ServiceType { archethicWallet, aeweb, other }
 
-/// Next field available : 13
+/// Next field available : 14
 @HiveType(typeId: 1)
 class Account extends HiveObject {
   Account({
@@ -106,8 +106,8 @@ class Account extends HiveObject {
   List<int>? nftCategoryList;
 
   /// Service Type
-  @HiveField(12)
-  ServiceType? serviceType;
+  @HiveField(13)
+  String? serviceType;
 
   Future<void> updateLastAddress() async {
     final lastAddressFromAddressMap =

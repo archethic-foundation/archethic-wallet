@@ -186,7 +186,7 @@ class KeychainUtil with KeychainServiceMixin {
             nativeTokenValue: 0,
           ),
           recentTransactions: [],
-          serviceType: serviceType,
+          serviceType: serviceType.toString(),
         );
         if (selectedAccount != null && selectedAccount.name == nameDecoded) {
           account.selected = true;
