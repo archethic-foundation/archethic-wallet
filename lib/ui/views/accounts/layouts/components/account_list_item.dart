@@ -38,7 +38,7 @@ class AccountListItem extends ConsumerWidget {
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     AsyncValue<Contact>? contact;
-    if (account.serviceType != ServiceType.other) {
+    if (account.serviceType != 'other') {
       contact = ref.watch(
         ContactProviders.getContactWithName(
           account.name,
@@ -66,7 +66,7 @@ class AccountListItem extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
         onTap: () async {
-          if (account.serviceType == ServiceType.archethicWallet) {
+          if (account.serviceType == 'archethicWallet') {
             sl.get<HapticUtil>().feedback(
                   FeedbackType.light,
                   ref.read(
@@ -94,7 +94,7 @@ class AccountListItem extends ConsumerWidget {
           }
         },
         onLongPress: () {
-          if (account.serviceType != ServiceType.other) {
+          if (account.serviceType != 'other') {
             return contact!.map(
               data: (data) {
                 sl.get<HapticUtil>().feedback(
@@ -124,11 +124,11 @@ class AccountListItem extends ConsumerWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: account.serviceType == ServiceType.archethicWallet
+          color: account.serviceType == 'archethicWallet'
               ? theme.backgroundAccountsListCardSelected
               : Colors.transparent,
           child: Container(
-            height: account.serviceType != ServiceType.aeweb ? 85 : 55,
+            height: account.serviceType != 'aeweb' ? 85 : 55,
             color: account.selected!
                 ? theme.backgroundAccountsListCardSelected
                 : theme.backgroundAccountsListCard,
@@ -168,7 +168,7 @@ class AccountListItem extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (account.serviceType != ServiceType.aeweb.toString())
+                if (account.serviceType != 'aeweb')
                   if (settings.showBalances)
                     primaryCurrency.primaryCurrency ==
                             AvailablePrimaryCurrencyEnum.native
@@ -217,12 +217,12 @@ class AccountListItem extends ConsumerWidget {
                           '···········',
                           style: theme.textStyleSize12W600Primary60,
                         ),
-                        if (account.serviceType != ServiceType.aeweb)
+                        if (account.serviceType != 'aeweb')
                           AutoSizeText(
                             '···········',
                             style: theme.textStyleSize12W600Primary60,
                           ),
-                        if (account.serviceType != ServiceType.aeweb)
+                        if (account.serviceType != 'aeweb')
                           AutoSizeText(
                             '···········',
                             style: theme.textStyleSize12W600Primary60,

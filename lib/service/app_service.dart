@@ -1168,7 +1168,7 @@ class AppService {
 
     final token = tokenMap[address]!;
 
-    final tokenWithoutFile = token.properties
+    final tokenWithoutFile = {...token.properties}
       ..removeWhere((key, value) => key == 'content');
 
     if (secretMap[address] != null &&
