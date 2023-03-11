@@ -26,15 +26,6 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
       data: archethic.Transaction.initData(),
     );
 
-    var aesKey = '';
-    if (tokenProperties.isNotEmpty) {
-      aesKey = archethic.uint8ListToHex(
-        Uint8List.fromList(
-          List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
-        ),
-      );
-    }
-
     final tokenPropertiesNotProtected = <String, dynamic>{};
     for (final tokenProperty in tokenProperties) {
       if (tokenProperty.publicKeys.isEmpty) {
@@ -49,6 +40,12 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
             publicKey.publicKey,
           );
         }
+
+        final aesKey = archethic.uint8ListToHex(
+          Uint8List.fromList(
+            List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+          ),
+        );
 
         final authorizedKeys =
             List<archethic.AuthorizedKey>.empty(growable: true);
@@ -67,7 +64,11 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
             tokenProperty.propertyValue;
         transaction.addOwnership(
           archethic.uint8ListToHex(
-            archethic.aesEncrypt(json.encode(tokenPropertiesProtected), aesKey),
+            archethic.aesEncrypt(
+              json.encode(tokenPropertiesProtected),
+              aesKey,
+              isDataHexa: false,
+            ),
           ),
           authorizedKeys,
         );
