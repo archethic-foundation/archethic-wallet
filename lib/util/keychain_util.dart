@@ -186,7 +186,7 @@ class KeychainUtil with KeychainServiceMixin {
             nativeTokenValue: 0,
           ),
           recentTransactions: [],
-          serviceType: serviceType.toString(),
+          serviceType: serviceType,
         );
         if (selectedAccount != null && selectedAccount.name == nameDecoded) {
           account.selected = true;
@@ -207,7 +207,7 @@ class KeychainUtil with KeychainServiceMixin {
 
         accounts.add(account);
 
-        if (serviceType == ServiceType.archethicWallet) {
+        if (serviceType == 'archethicWallet') {
           try {
             await sl.get<DBHelper>().getContactWithName(account.name);
           } catch (e) {

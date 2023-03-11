@@ -13,8 +13,6 @@ import 'package:hive/hive.dart';
 
 part 'account.g.dart';
 
-enum ServiceType { archethicWallet, aeweb, other }
-
 /// Next field available : 14
 @HiveType(typeId: 1)
 class Account extends HiveObject {
@@ -346,14 +344,14 @@ mixin KeychainServiceMixin {
   final kDerivationPathAEWebWithoutService = "m/650'/aeweb-";
   final kDerivationPathOtherWithoutService = "m/650'/";
 
-  ServiceType getServiceTypeFromPath(String derivationPath) {
-    var serviceType = ServiceType.other;
+  String getServiceTypeFromPath(String derivationPath) {
+    var serviceType = 'other';
     if (derivationPath
         .startsWith(kDerivationPathArchethicWalletWithoutService)) {
-      serviceType = ServiceType.archethicWallet;
+      serviceType = 'archethicWallet';
     } else {
       if (derivationPath.startsWith(kDerivationPathAEWebWithoutService)) {
-        serviceType = ServiceType.aeweb;
+        serviceType = 'aeweb';
       }
     }
     return serviceType;
@@ -363,13 +361,13 @@ mixin KeychainServiceMixin {
     final serviceType = getServiceTypeFromPath(derivationPath);
     late List<String> path;
 
-    if (serviceType == ServiceType.archethicWallet) {
+    if (serviceType == 'archethicWallet') {
       path = derivationPath
           .replaceAll(kDerivationPathArchethicWalletWithoutService, '')
           .split('/')
         ..last = '';
     } else {
-      if (serviceType == ServiceType.aeweb) {
+      if (serviceType == 'aeweb') {
         path = derivationPath
             .replaceAll(kDerivationPathAEWebWithoutService, '')
             .split('/')
