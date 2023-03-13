@@ -16,6 +16,8 @@ class TransactionError with _$TransactionError implements Exception {
       _TransactionInvalidConfirmation;
   const factory TransactionError.insufficientFunds() =
       _TransactionInsufficientFunds;
+  const factory TransactionError.serviceNotFound() =
+      _TransactionServiceNotFound;
   const factory TransactionError.userRejected() = _TransactionUserRejected;
   const factory TransactionError.unknownAccount({
     required String accountName,
@@ -31,6 +33,7 @@ class TransactionError with _$TransactionError implements Exception {
         invalidTransaction: (_) => 'invalid transaction',
         invalidConfirmation: (_) => 'invalid confirmation',
         insufficientFunds: (_) => 'insufficient funds',
+        serviceNotFound: (_) => 'service not found',
         userRejected: (_) => 'user rejected',
         unknownAccount: (_) => 'unknown account',
         other: (other) => other.reason ?? 'other reason',

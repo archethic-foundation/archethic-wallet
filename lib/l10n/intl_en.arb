@@ -2262,6 +2262,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "serviceNotFound": "The service does'nt exist in the keychain.",
+  "@serviceNotFound": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "addTokenConfirmed1": "Tokens were created with %1 confirmation on %2",
   "@addTokenConfirmed1": {
     "type": "text",
@@ -2846,6 +2852,24 @@
   },
   "aewebHosting": "AEWeb hosting",
   "@aewebHosting": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "serviceTypeLabelArchethicWallet": "Wallet",
+  "@serviceTypeLabelArchethicWallet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "serviceTypeLabelAeweb": "Website hosted on AEWeb",
+  "@serviceTypeLabelAeweb": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "serviceTypeLabelOther": "Other",
+  "@serviceTypeLabelOther": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

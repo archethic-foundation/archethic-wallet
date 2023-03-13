@@ -6,6 +6,8 @@ import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
 import 'package:deeplink_rpc/deeplink_rpc.dart';
 
@@ -60,7 +62,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('keychain_derive_keypair'),
         handle: (request) => _handle(
-          RPCGetServicesFromKeychainCommandHandler(),
+          RPCKeychainDeriveKeypairCommandHandler(),
           request,
         ),
       ),
@@ -69,7 +71,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('keychain_derive_address'),
         handle: (request) => _handle(
-          RPCGetServicesFromKeychainCommandHandler(),
+          RPCKeychainDeriveAddressCommandHandler(),
           request,
         ),
       ),

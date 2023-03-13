@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2023-03-08T15:37:17.399502",
+  "@@last_modified": "2023-03-13T08:35:25.775847",
   "noConnectionBanner": "No connection",
   "@noConnectionBanner": {
     "type": "text",
@@ -2808,6 +2808,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "serviceNotFound": "The service does'nt exist in the keychain.",
+  "@serviceNotFound": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "keychainNotExistWarning": "Keychain doesn't exist.",
   "@keychainNotExistWarning": {
     "type": "text",
@@ -2852,6 +2858,24 @@
   },
   "aewebHosting": "AEWeb hosting",
   "@aewebHosting": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "serviceTypeLabelArchethicWallet": "Wallet",
+  "@serviceTypeLabelArchethicWallet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "serviceTypeLabelAeweb": "Website hosted on AEWeb",
+  "@serviceTypeLabelAeweb": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "serviceTypeLabelOther": "Other",
+  "@serviceTypeLabelOther": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

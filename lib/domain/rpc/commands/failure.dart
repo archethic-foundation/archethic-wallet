@@ -56,7 +56,7 @@ class RPCFailure with _$RPCFailure implements Exception {
       );
   factory RPCFailure.serviceNotFound() => const RPCFailure(
         code: 5007,
-        message: 'Service not found',
+        message: 'Service not found.',
       );
   factory RPCFailure.userRejected() => const RPCFailure(
         code: 4001,
@@ -78,6 +78,7 @@ class RPCFailure with _$RPCFailure implements Exception {
       consensusNotReached: (_) => RPCFailure.consensusNotReached(),
       invalidTransaction: (_) => RPCFailure.invalidTransaction(),
       invalidConfirmation: (_) => RPCFailure.invalidConfirmation(),
+      serviceNotFound: (_) => RPCFailure.serviceNotFound(),
       insufficientFunds: (_) => RPCFailure.insufficientFunds(),
       userRejected: (_) => RPCFailure.userRejected(),
       unknownAccount: (_) => RPCFailure.unknownAccount(),

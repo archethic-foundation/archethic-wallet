@@ -24,11 +24,11 @@ class AddServicenHandler extends CommandHandler {
           canHandle: (command) =>
               command is RPCCommand<RPCAddServiceCommandData>,
           handle: (command) async {
-            /*  _showNotification(
+            _showNotification(
               context: context,
               ref: ref,
               command: command,
-            );*/
+            );
 
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
