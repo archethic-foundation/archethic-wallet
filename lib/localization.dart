@@ -2197,6 +2197,11 @@ class AppLocalization {
         name: 'notEnoughConfirmations');
   }
 
+  String get serviceNotFound {
+    return Intl.message('The service does\'nt exist in the keychain.',
+        name: 'serviceNotFound');
+  }
+
   String get keychainNotExistWarning {
     return Intl.message('Keychain doesn\'t exist.',
         name: 'keychainNotExistWarning');

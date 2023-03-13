@@ -24,6 +24,7 @@ mixin _$TransactionError {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -37,6 +38,7 @@ mixin _$TransactionError {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -50,6 +52,7 @@ mixin _$TransactionError {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -67,6 +70,8 @@ mixin _$TransactionError {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -82,6 +87,7 @@ mixin _$TransactionError {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -97,6 +103,7 @@ mixin _$TransactionError {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -167,6 +174,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -183,6 +191,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -199,6 +208,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -222,6 +232,8 @@ class _$_TransactionTimeout extends _TransactionTimeout {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -240,6 +252,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -258,6 +271,7 @@ class _$_TransactionTimeout extends _TransactionTimeout {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -322,6 +336,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -338,6 +353,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -354,6 +370,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -377,6 +394,8 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -395,6 +414,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -413,6 +433,7 @@ class _$_TransactionConnectionError extends _TransactionConnectionError {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -479,6 +500,7 @@ class _$_TransactionConsensusNotReachedError
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -495,6 +517,7 @@ class _$_TransactionConsensusNotReachedError
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -511,6 +534,7 @@ class _$_TransactionConsensusNotReachedError
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -534,6 +558,8 @@ class _$_TransactionConsensusNotReachedError
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -552,6 +578,7 @@ class _$_TransactionConsensusNotReachedError
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -570,6 +597,7 @@ class _$_TransactionConsensusNotReachedError
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -632,6 +660,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -648,6 +677,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -664,6 +694,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -687,6 +718,8 @@ class _$_TransactionInvalid extends _TransactionInvalid {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -705,6 +738,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -723,6 +757,7 @@ class _$_TransactionInvalid extends _TransactionInvalid {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -789,6 +824,7 @@ class _$_TransactionInvalidConfirmation
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -805,6 +841,7 @@ class _$_TransactionInvalidConfirmation
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -821,6 +858,7 @@ class _$_TransactionInvalidConfirmation
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -844,6 +882,8 @@ class _$_TransactionInvalidConfirmation
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -862,6 +902,7 @@ class _$_TransactionInvalidConfirmation
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -880,6 +921,7 @@ class _$_TransactionInvalidConfirmation
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -946,6 +988,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -962,6 +1005,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -978,6 +1022,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -1001,6 +1046,8 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -1019,6 +1066,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -1037,6 +1085,7 @@ class _$_TransactionInsufficientFunds extends _TransactionInsufficientFunds {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -1053,6 +1102,168 @@ abstract class _TransactionInsufficientFunds extends TransactionError {
   const factory _TransactionInsufficientFunds() =
       _$_TransactionInsufficientFunds;
   const _TransactionInsufficientFunds._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_TransactionServiceNotFoundCopyWith<$Res> {
+  factory _$$_TransactionServiceNotFoundCopyWith(
+          _$_TransactionServiceNotFound value,
+          $Res Function(_$_TransactionServiceNotFound) then) =
+      __$$_TransactionServiceNotFoundCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_TransactionServiceNotFoundCopyWithImpl<$Res>
+    extends _$TransactionErrorCopyWithImpl<$Res, _$_TransactionServiceNotFound>
+    implements _$$_TransactionServiceNotFoundCopyWith<$Res> {
+  __$$_TransactionServiceNotFoundCopyWithImpl(
+      _$_TransactionServiceNotFound _value,
+      $Res Function(_$_TransactionServiceNotFound) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_TransactionServiceNotFound extends _TransactionServiceNotFound {
+  const _$_TransactionServiceNotFound() : super._();
+
+  @override
+  String toString() {
+    return 'TransactionError.serviceNotFound()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionServiceNotFound);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() timeout,
+    required TResult Function() connectivity,
+    required TResult Function() consensusNotReached,
+    required TResult Function() invalidTransaction,
+    required TResult Function() invalidConfirmation,
+    required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
+    required TResult Function() userRejected,
+    required TResult Function(String accountName) unknownAccount,
+    required TResult Function(String? reason) other,
+  }) {
+    return serviceNotFound();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? timeout,
+    TResult? Function()? connectivity,
+    TResult? Function()? consensusNotReached,
+    TResult? Function()? invalidTransaction,
+    TResult? Function()? invalidConfirmation,
+    TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? userRejected,
+    TResult? Function(String accountName)? unknownAccount,
+    TResult? Function(String? reason)? other,
+  }) {
+    return serviceNotFound?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? timeout,
+    TResult Function()? connectivity,
+    TResult Function()? consensusNotReached,
+    TResult Function()? invalidTransaction,
+    TResult Function()? invalidConfirmation,
+    TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
+    TResult Function()? userRejected,
+    TResult Function(String accountName)? unknownAccount,
+    TResult Function(String? reason)? other,
+    required TResult orElse(),
+  }) {
+    if (serviceNotFound != null) {
+      return serviceNotFound();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransactionTimeout value) timeout,
+    required TResult Function(_TransactionConnectionError value) connectivity,
+    required TResult Function(_TransactionConsensusNotReachedError value)
+        consensusNotReached,
+    required TResult Function(_TransactionInvalid value) invalidTransaction,
+    required TResult Function(_TransactionInvalidConfirmation value)
+        invalidConfirmation,
+    required TResult Function(_TransactionInsufficientFunds value)
+        insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
+    required TResult Function(_TransactionUserRejected value) userRejected,
+    required TResult Function(_TransactionUnknownAccount value) unknownAccount,
+    required TResult Function(_TransactionOtherError value) other,
+  }) {
+    return serviceNotFound(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_TransactionTimeout value)? timeout,
+    TResult? Function(_TransactionConnectionError value)? connectivity,
+    TResult? Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
+    TResult? Function(_TransactionInvalid value)? invalidTransaction,
+    TResult? Function(_TransactionInvalidConfirmation value)?
+        invalidConfirmation,
+    TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
+    TResult? Function(_TransactionUserRejected value)? userRejected,
+    TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
+    TResult? Function(_TransactionOtherError value)? other,
+  }) {
+    return serviceNotFound?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransactionTimeout value)? timeout,
+    TResult Function(_TransactionConnectionError value)? connectivity,
+    TResult Function(_TransactionConsensusNotReachedError value)?
+        consensusNotReached,
+    TResult Function(_TransactionInvalid value)? invalidTransaction,
+    TResult Function(_TransactionInvalidConfirmation value)?
+        invalidConfirmation,
+    TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
+    TResult Function(_TransactionUserRejected value)? userRejected,
+    TResult Function(_TransactionUnknownAccount value)? unknownAccount,
+    TResult Function(_TransactionOtherError value)? other,
+    required TResult orElse(),
+  }) {
+    if (serviceNotFound != null) {
+      return serviceNotFound(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TransactionServiceNotFound extends TransactionError {
+  const factory _TransactionServiceNotFound() = _$_TransactionServiceNotFound;
+  const _TransactionServiceNotFound._() : super._();
 }
 
 /// @nodoc
@@ -1100,6 +1311,7 @@ class _$_TransactionUserRejected extends _TransactionUserRejected {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -1116,6 +1328,7 @@ class _$_TransactionUserRejected extends _TransactionUserRejected {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -1132,6 +1345,7 @@ class _$_TransactionUserRejected extends _TransactionUserRejected {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -1155,6 +1369,8 @@ class _$_TransactionUserRejected extends _TransactionUserRejected {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -1173,6 +1389,7 @@ class _$_TransactionUserRejected extends _TransactionUserRejected {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -1191,6 +1408,7 @@ class _$_TransactionUserRejected extends _TransactionUserRejected {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -1282,6 +1500,7 @@ class _$_TransactionUnknownAccount extends _TransactionUnknownAccount {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -1298,6 +1517,7 @@ class _$_TransactionUnknownAccount extends _TransactionUnknownAccount {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -1314,6 +1534,7 @@ class _$_TransactionUnknownAccount extends _TransactionUnknownAccount {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -1337,6 +1558,8 @@ class _$_TransactionUnknownAccount extends _TransactionUnknownAccount {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -1355,6 +1578,7 @@ class _$_TransactionUnknownAccount extends _TransactionUnknownAccount {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -1373,6 +1597,7 @@ class _$_TransactionUnknownAccount extends _TransactionUnknownAccount {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,
@@ -1467,6 +1692,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     required TResult Function() invalidTransaction,
     required TResult Function() invalidConfirmation,
     required TResult Function() insufficientFunds,
+    required TResult Function() serviceNotFound,
     required TResult Function() userRejected,
     required TResult Function(String accountName) unknownAccount,
     required TResult Function(String? reason) other,
@@ -1483,6 +1709,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult? Function()? invalidTransaction,
     TResult? Function()? invalidConfirmation,
     TResult? Function()? insufficientFunds,
+    TResult? Function()? serviceNotFound,
     TResult? Function()? userRejected,
     TResult? Function(String accountName)? unknownAccount,
     TResult? Function(String? reason)? other,
@@ -1499,6 +1726,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult Function()? invalidTransaction,
     TResult Function()? invalidConfirmation,
     TResult Function()? insufficientFunds,
+    TResult Function()? serviceNotFound,
     TResult Function()? userRejected,
     TResult Function(String accountName)? unknownAccount,
     TResult Function(String? reason)? other,
@@ -1522,6 +1750,8 @@ class _$_TransactionOtherError extends _TransactionOtherError {
         invalidConfirmation,
     required TResult Function(_TransactionInsufficientFunds value)
         insufficientFunds,
+    required TResult Function(_TransactionServiceNotFound value)
+        serviceNotFound,
     required TResult Function(_TransactionUserRejected value) userRejected,
     required TResult Function(_TransactionUnknownAccount value) unknownAccount,
     required TResult Function(_TransactionOtherError value) other,
@@ -1540,6 +1770,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult? Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult? Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult? Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult? Function(_TransactionUserRejected value)? userRejected,
     TResult? Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult? Function(_TransactionOtherError value)? other,
@@ -1558,6 +1789,7 @@ class _$_TransactionOtherError extends _TransactionOtherError {
     TResult Function(_TransactionInvalidConfirmation value)?
         invalidConfirmation,
     TResult Function(_TransactionInsufficientFunds value)? insufficientFunds,
+    TResult Function(_TransactionServiceNotFound value)? serviceNotFound,
     TResult Function(_TransactionUserRejected value)? userRejected,
     TResult Function(_TransactionUnknownAccount value)? unknownAccount,
     TResult Function(_TransactionOtherError value)? other,

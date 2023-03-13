@@ -378,6 +378,7 @@
 	"previousButton": "< Préc.",
 	"nftTabDescriptionHeader": "Cet espace vous permet d'accéder à vos NFT ou de les créer directement à partir d'images, de photos ou de documents pdf. Vous pouvez également les transférer à n'importe quelle adresse.",
 	"notEnoughConfirmations": "La demande n'a pas pu être complétée en raison d'un manque de consensus",
+	"serviceNotFound": "Le service n'existe pas dans le porte-clés",
 	"addTokenConfirmed1": "Les jetons ont été créés avec %1 confirmation sur %2",
 	"addTokenConfirmed": "Les jetons ont été créés avec %1 confirmations sur %2",
 	"addAccountConfirmed1": "Le compte a été créé avec %1 confirmation sur %2",
@@ -475,5 +476,8 @@
 	"createNFTConfirmation": "Etes-vous sûr(e) de vouloir créer ce NFT ?",
 	"connectivityWarningHeader": "Vérifiez votre connexion internet.",
 	"connectivityWarningDesc": "Vous pouvez utiliser l'application lorsque votre connexion est interrompue, mais les informations peuvent être obsolètes et certaines fonctionnalités sont désactivées.",
-	"aewebHosting": "Hébergement AEWeb"
+	"aewebHosting": "Hébergement AEWeb",
+	"serviceTypeLabelArchethicWallet": "Wallet",
+	"serviceTypeLabelAeweb": "Site web hébergé sur AEWeb",
+	"serviceTypeLabelOther": "Autre"
 }
