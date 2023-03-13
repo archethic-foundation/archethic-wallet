@@ -2262,7 +2262,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "serviceNotFound": "The service does'nt exist in the keychain.",
+  "serviceNotFound": "The service doesn't exist in the keychain.",
   "@serviceNotFound": {
     "type": "text",
     "placeholders_order": [],
