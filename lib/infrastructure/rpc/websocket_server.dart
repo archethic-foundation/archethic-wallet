@@ -151,6 +151,16 @@ class ArchethicWebsocketRPCServer {
               'getServicesFromKeychain',
               (params) =>
                   _handle(RPCGetServicesFromKeychainCommandHandler(), params),
+            )
+            ..registerMethod(
+              'keychainDeriveKeypair',
+              (params) =>
+                  _handle(RPCGetServicesFromKeychainCommandHandler(), params),
+            )
+            ..registerMethod(
+              'keychainDeriveAddress',
+              (params) =>
+                  _handle(RPCGetServicesFromKeychainCommandHandler(), params),
             );
 
           await server.listen();

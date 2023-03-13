@@ -54,6 +54,10 @@ class RPCFailure with _$RPCFailure implements Exception {
         code: 5004,
         message: 'Insufficient funds.',
       );
+  factory RPCFailure.serviceNotFound() => const RPCFailure(
+        code: 5007,
+        message: 'Service not found',
+      );
   factory RPCFailure.userRejected() => const RPCFailure(
         code: 4001,
         message: 'User rejected operation',

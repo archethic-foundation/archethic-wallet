@@ -56,6 +56,24 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
         ),
       ),
     );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('keychain_derive_keypair'),
+        handle: (request) => _handle(
+          RPCGetServicesFromKeychainCommandHandler(),
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('keychain_derive_address'),
+        handle: (request) => _handle(
+          RPCGetServicesFromKeychainCommandHandler(),
+          request,
+        ),
+      ),
+    );
   }
 
   static Future<Map<String, dynamic>> _handle(
