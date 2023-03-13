@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_loading.dart';
+import 'package:aewallet/ui/widgets/components/image_network_safe_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +44,14 @@ class NFTItemIPFS extends ConsumerWidget {
               return roundBorder == true
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: Image.network(
-                        ipfsFormattedUrl,
+                      child: ImageNetworkSageWidgeted(
+                        url: ipfsFormattedUrl,
+                        errorMessage: 'Oops! The IPFS URL is not available.',
                       ),
                     )
-                  : Image.network(
-                      ipfsFormattedUrl,
+                  : ImageNetworkSageWidgeted(
+                      url: ipfsFormattedUrl,
+                      errorMessage: 'Oops! The IPFS URL is not available.',
                     );
             } else {
               return const NFTItemLoading();
