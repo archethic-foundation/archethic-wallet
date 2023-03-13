@@ -1,7 +1,7 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
+/// SPDX-License-Identifier: AGPL-3.0-or-later';
 import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
+import 'package:aewallet/ui/widgets/components/image_network_safe_widgeted.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,8 +15,6 @@ class NFTCreationProcessFilePreviewIPFS extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     final fileUrl = nftCreation.fileURL;
 
     if (fileUrl == null || fileUrl.isEmpty) {
@@ -31,16 +29,9 @@ class NFTCreationProcessFilePreviewIPFS extends ConsumerWidget {
 
     return Column(
       children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: theme.text,
-            border: Border.all(),
-          ),
-          child: Image.network(
-            ipfsFormattedUrl,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.fitWidth,
-          ),
+        ImageNetworkSageWidgeted(
+          url: ipfsFormattedUrl,
+          errorMessage: 'Oops! The IPFS URL is not available.',
         ),
       ],
     );
