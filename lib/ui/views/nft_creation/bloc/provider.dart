@@ -697,7 +697,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         keychainSecuredInfos: keychainSecuredInfos,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
-        aeip: [2],
+        aeip: [2, 9],
         properties: state.propertiesConverted,
       ),
     );

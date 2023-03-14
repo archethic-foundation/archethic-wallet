@@ -11,6 +11,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
@@ -350,25 +351,14 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                     ],
                     keyboardType: TextInputType.text,
                     style: theme.textStyleSize16W600Primary,
-                    suffixButton: TextFieldButton(
-                      icon: FontAwesomeIcons.paste,
-                      onPressed: () {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        Clipboard.getData('text/plain')
-                            .then((ClipboardData? data) async {
-                          if (data == null || data.text == null) {
-                            return;
-                          }
-                          enterOTPController!.text = data.text!;
-                          EventTaxiImpl.singleton().fire(
-                            OTPReceiveEvent(
-                              otp: enterOTPController!.text,
-                            ),
-                          );
-                        });
+                    suffixButton: PasteIcon(
+                      onPaste: (String value) {
+                        enterOTPController!.text = value;
+                        EventTaxiImpl.singleton().fire(
+                          OTPReceiveEvent(
+                            otp: enterOTPController!.text,
+                          ),
+                        );
                       },
                     ),
                   )

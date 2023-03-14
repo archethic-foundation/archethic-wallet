@@ -1914,8 +1914,47 @@ class AppLocalization {
     return Intl.message('Take a photo', name: 'nftAddImportCamera');
   }
 
+  String get nftAddImportIPFS {
+    return Intl.message('Use IPFS', name: 'nftAddImportIPFS');
+  }
+
+  String get nftAddImportIPFSTitle {
+    return Intl.message('Enter an IPFS url', name: 'nftAddImportIPFSTitle');
+  }
+
+  String get nftAddImportIPFSPlaceholder {
+    return Intl.message('Please enter an IPFS url',
+        name: 'nftAddImportIPFSPlaceholder');
+  }
+
+  String get nftAddImportIPFSButton {
+    return Intl.message('Add IPFS', name: 'nftAddImportIPFSButton');
+  }
+
+  String get nftIPFSEmpty {
+    return Intl.message('Oops! The IPFS URL is not available.',
+        name: 'nftIPFSEmpty');
+  }
+
   String get nftAddImportUrl {
     return Intl.message('Url', name: 'nftAddImportUrl');
+  }
+
+  String get nftAddImportURLTitle {
+    return Intl.message('Enter an url', name: 'nftAddImportURLTitle');
+  }
+
+  String get nftAddImportURLPlaceholder {
+    return Intl.message('Please enter an url',
+        name: 'nftAddImportURLPlaceholder');
+  }
+
+  String get nftAddImportURLButton {
+    return Intl.message('Add URL', name: 'nftAddImportURLButton');
+  }
+
+  String get nftURLEmpty {
+    return Intl.message('Oops! The URL is not available.', name: 'nftURLEmpty');
   }
 
   String get nftAddPreview {
