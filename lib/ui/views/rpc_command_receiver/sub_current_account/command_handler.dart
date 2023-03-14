@@ -8,6 +8,10 @@ import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+final accountUpdateProvider = StreamProvider.autoDispose((ref) async* {
+  yield await ref.watch(AccountProviders.selectedAccount.future);
+});
+
 class SubscribeCurrentAccountHandler extends CommandHandler {
   SubscribeCurrentAccountHandler({
     required WidgetRef ref,
@@ -21,7 +25,7 @@ class SubscribeCurrentAccountHandler extends CommandHandler {
               RPCSubscription(
                 id: const Uuid().v4(),
                 updates: ref.streamWithCurrentValue(
-                  AccountProviders.selectedAccount.future,
+                  accountUpdateProvider,
                 ),
               ),
             );
