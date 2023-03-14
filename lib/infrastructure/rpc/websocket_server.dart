@@ -216,12 +216,15 @@ class ArchethicWebsocketRPCServer {
         success as RPCSubscription;
         return RPCSubscriptionDTO(
           id: success.id,
-          updates: success.updates.map(
-            (update) => RPCSubscriptionUpdateDTO(
-              subscriptionId: success.id,
-              data: commandHandler.notificationFromModel(update),
-            ).toJson(),
-          ),
+          updates: success.updates
+              .map(
+                (update) => RPCSubscriptionUpdateDTO(
+                  subscriptionId: success.id,
+                  data: commandHandler.notificationFromModel(update),
+                ),
+              )
+              .distinct()
+              .map((dto) => dto.toJson()),
         );
       },
       failure: (failure) {
