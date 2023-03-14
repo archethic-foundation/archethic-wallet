@@ -589,13 +589,60 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     }
   }
 
-  bool isFileImportFile() {
-    return [FileImportType.file, FileImportType.camera, FileImportType.image]
-        .contains(state.fileImportType);
+  Future<void> setContentHTTPProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'http_url': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
+      );
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+      fileImportType: FileImportType.http,
+      fileURL: uri,
+    );
+
+    if (controlURL(context) == false) {
+      resetState();
+      return;
+    }
   }
 
-  bool isFileImportUrl() {
-    return [FileImportType.ipfs].contains(state.fileImportType);
+  Future<void> setContentAEWEBProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'aeweb': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
+      );
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+      fileImportType: FileImportType.aeweb,
+      fileURL: uri,
+    );
+
+    if (controlURL(context) == false) {
+      resetState();
+      return;
+    }
   }
 
   bool controlName(
