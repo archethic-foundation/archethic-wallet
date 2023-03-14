@@ -1,16 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_loading.dart';
-import 'package:aewallet/ui/widgets/components/image_network_safe_widgeted.dart';
+import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTItemIPFS extends ConsumerWidget {
-  const NFTItemIPFS({
+class NFTItemAEWEB extends ConsumerWidget {
+  const NFTItemAEWEB({
     super.key,
     required this.token,
     this.roundBorder = false,
@@ -27,7 +26,7 @@ class NFTItemIPFS extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         FutureBuilder<String?>(
-          future: TokenUtil.getIPFSUrlFromToken(
+          future: TokenUtil.getAEWEBUrlFromToken(
             token,
           ),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -35,23 +34,17 @@ class NFTItemIPFS extends ConsumerWidget {
               return NFTItemError(message: localizations.previewNotAvailable);
             }
             if (snapshot.hasData) {
-              final ipfsFormattedUrl = ref.watch(
-                UrlProvider.urlIPFSForWeb(
-                  uri: snapshot.data,
-                ),
-              );
-
               return roundBorder == true
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: ImageNetworkSafeWidgeted(
-                        url: ipfsFormattedUrl,
-                        errorMessage: 'Oops! The IPFS URL is not available.',
+                      child: ImageNetworkWidgeted(
+                        url: snapshot.data,
+                        errorMessage: 'Oops! The AEWEB URL is not available.',
                       ),
                     )
-                  : ImageNetworkSafeWidgeted(
-                      url: ipfsFormattedUrl,
-                      errorMessage: 'Oops! The IPFS URL is not available.',
+                  : ImageNetworkWidgeted(
+                      url: snapshot.data,
+                      errorMessage: 'Oops! The AEWEB URL is not available.',
                     );
             } else {
               return const NFTItemLoading();

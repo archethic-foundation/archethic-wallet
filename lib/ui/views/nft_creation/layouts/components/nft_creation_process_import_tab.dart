@@ -79,6 +79,7 @@ class _NFTCreationProcessImportTabState
                 NFTCreationProcessImportTabImage(),
                 NFTCreationProcessImportTabCamera(),
                 NFTCreationProcessImportTabIPFS(),
+                NFTCreationProcessImportTabHTTP(),
               ],
             ),
           ],
