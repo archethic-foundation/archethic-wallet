@@ -21,6 +21,9 @@ class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return NFTCreationProcessImportTabTemplateForm(
+      title: localizations.nftAddImportIPFSTitle,
+      placeholder: localizations.nftAddImportIPFSPlaceholder,
+      buttonLabel: localizations.nftAddImportIPFSButton,
       onConfirm: (String value, BuildContext contextForm) {
         void setError(String errorText) {
           UIUtil.showSnackbar(

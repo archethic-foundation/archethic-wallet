@@ -39,12 +39,12 @@ class NFTItemHTTP extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(15),
                       child: ImageNetworkWidgeted(
                         url: snapshot.data,
-                        errorMessage: 'Oops! The HTTP URL is not available.',
+                        errorMessage: localizations.nftURLEmpty,
                       ),
                     )
                   : ImageNetworkWidgeted(
                       url: snapshot.data,
-                      errorMessage: 'Oops! The HTTP URL is not available.',
+                      errorMessage: localizations.nftURLEmpty,
                     );
             } else {
               return const NFTItemLoading();

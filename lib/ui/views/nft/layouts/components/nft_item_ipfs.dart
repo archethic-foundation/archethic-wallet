@@ -46,12 +46,12 @@ class NFTItemIPFS extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(15),
                       child: ImageNetworkSafeWidgeted(
                         url: ipfsFormattedUrl,
-                        errorMessage: 'Oops! The IPFS URL is not available.',
+                        errorMessage: localizations.nftIPFSEmpty,
                       ),
                     )
                   : ImageNetworkSafeWidgeted(
                       url: ipfsFormattedUrl,
-                      errorMessage: 'Oops! The IPFS URL is not available.',
+                      errorMessage: localizations.nftIPFSEmpty,
                     );
             } else {
               return const NFTItemLoading();

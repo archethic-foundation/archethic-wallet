@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class NFTCreationProcessFilePreviewHTTP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fileUrl = nftCreation.fileURL;
+    final localizations = AppLocalization.of(context)!;
 
     if (fileUrl == null || fileUrl.isEmpty) {
       return const SizedBox();
@@ -24,7 +26,7 @@ class NFTCreationProcessFilePreviewHTTP extends ConsumerWidget {
       children: [
         ImageNetworkWidgeted(
           url: fileUrl,
-          errorMessage: 'Oops! The HTTP URL is not available.',
+          errorMessage: localizations.nftURLEmpty,
         ),
       ],
     );

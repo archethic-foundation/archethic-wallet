@@ -101,31 +101,22 @@ class _AddContactTextFieldAddressState
           : null,
       fadePrefixOnCondition: true,
       prefixShowFirstCondition: true,
-      suffixButton: TextFieldButton(
-        icon: FontAwesomeIcons.paste,
-        onPressed: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-          final data = await UserDataUtil.getClipboardText(
-            DataType.address,
-          );
-          if (data == null) {
-            UIUtil.showSnackbar(
-              localizations.invalidPasteAddress,
-              context,
-              ref,
-              theme.text!,
-              theme.snackBarShadow!,
-            );
-            return;
-          }
+      suffixButton: PasteIcon(
+        onPaste: (String value) async {
           await contactCreationNotifier.setAddress(
-            data,
+            value,
             context,
           );
-          addressController.text = data;
+          addressController.text = value;
+        },
+        onDataNull: () {
+          UIUtil.showSnackbar(
+            localizations.invalidPasteAddress,
+            context,
+            ref,
+            theme.text!,
+            theme.snackBarShadow!,
+          );
         },
       ),
       fadeSuffixOnCondition: true,

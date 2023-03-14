@@ -137,23 +137,13 @@ class _TransferTextFieldAddressState
               : null,
           fadePrefixOnCondition: true,
           prefixShowFirstCondition: true,
-          suffixButton: TextFieldButton(
-            icon: FontAwesomeIcons.paste,
-            onPressed: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              Clipboard.getData('text/plain').then((ClipboardData? data) async {
-                if (data == null || data.text == null) {
-                  return;
-                }
-                sendAddressController.text = data.text!;
-                transferNotifier.setRecipientNameOrAddress(
-                  context: context,
-                  text: data.text!,
-                );
-              });
+          suffixButton: PasteIcon(
+            onPaste: (String value) {
+              sendAddressController.text = value;
+              transferNotifier.setRecipientNameOrAddress(
+                context: context,
+                text: value,
+              );
             },
           ),
           suffixShowFirstCondition: true,

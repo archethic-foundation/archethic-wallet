@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
@@ -16,9 +16,15 @@ class NFTCreationProcessImportTabTemplateForm extends ConsumerStatefulWidget {
   const NFTCreationProcessImportTabTemplateForm({
     super.key,
     required this.onConfirm,
+    required this.title,
+    required this.placeholder,
+    required this.buttonLabel,
   });
 
   final void Function(String uri, BuildContext context) onConfirm;
+  final String title;
+  final String placeholder;
+  final String buttonLabel;
 
   @override
   ConsumerState<NFTCreationProcessImportTabTemplateForm> createState() =>
@@ -47,7 +53,6 @@ class _NFTCreationProcessImportTabFormUrlState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
@@ -58,7 +63,7 @@ class _NFTCreationProcessImportTabFormUrlState
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: localizations.addAccount,
+              title: widget.title,
             ),
             Expanded(
               child: ArchethicScrollbar(
@@ -76,11 +81,15 @@ class _NFTCreationProcessImportTabFormUrlState
                         controller: urlController,
                         cursorColor: theme.text,
                         textInputAction: TextInputAction.next,
-                        labelText:
-                            localizations.introNewWalletGetFirstInfosNameBlank,
+                        labelText: widget.placeholder,
                         autocorrect: false,
                         keyboardType: TextInputType.text,
                         style: theme.textStyleSize16W600Primary,
+                        suffixButton: PasteIcon(
+                          onPaste: (String value) {
+                            urlController.text = value;
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 30,
@@ -98,7 +107,7 @@ class _NFTCreationProcessImportTabFormUrlState
                         ConnectivityStatus.isConnected)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
-                        localizations.addAccount,
+                        widget.buttonLabel,
                         icon: Icon(
                           Icons.add,
                           color: theme.mainButtonLabel,
@@ -113,7 +122,7 @@ class _NFTCreationProcessImportTabFormUrlState
                     else
                       AppButtonTiny(
                         AppButtonTinyType.primaryOutline,
-                        localizations.addAccount,
+                        widget.buttonLabel,
                         Dimens.buttonBottomDimens,
                         key: const Key('addAccount'),
                         icon: Icon(
