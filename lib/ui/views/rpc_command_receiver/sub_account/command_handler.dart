@@ -5,8 +5,14 @@ import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/subscribe_account.dart';
 import 'package:aewallet/domain/rpc/subscription.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+
+final accountUpdateProvider = StreamProvider.autoDispose
+    .family<Account?, String>((ref, accountName) async* {
+  yield await ref.watch(AccountProviders.account(accountName).future);
+});
 
 class SubscribeAccountHandler extends CommandHandler {
   SubscribeAccountHandler({
@@ -20,8 +26,8 @@ class SubscribeAccountHandler extends CommandHandler {
             return Result.success(
               RPCSubscription(
                 id: const Uuid().v4(),
-                updates: ref.stream(
-                  AccountProviders.account(command.data.accountName).future,
+                updates: ref.streamWithCurrentValue(
+                  accountUpdateProvider(command.data.accountName),
                 ),
               ),
             );
