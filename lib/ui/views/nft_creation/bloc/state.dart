@@ -14,7 +14,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
 
-enum FileImportType { file, image, camera, ipfs }
+enum FileImportType { file, image, camera, ipfs, http, aeweb }
 
 enum NftCreationProcessStep { form, confirmation }
 
@@ -61,7 +61,8 @@ class NftCreationFormState with _$NftCreationFormState {
   }
 
   bool isFileImportUrl() {
-    return [FileImportType.ipfs].contains(fileImportType);
+    return [FileImportType.ipfs, FileImportType.http, FileImportType.aeweb]
+        .contains(fileImportType);
   }
 
   bool get canCreateNFT =>

@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/image_network_safe.dart';
+import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ImageNetworkSafeWidgeted extends ConsumerWidget {
-  const ImageNetworkSafeWidgeted({
+class ImageNetworkWidgeted extends ConsumerWidget {
+  const ImageNetworkWidgeted({
     required this.url,
     required this.errorMessage,
     super.key,
@@ -19,7 +19,7 @@ class ImageNetworkSafeWidgeted extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return ImageNetworkSafe(
+    return ImageNetwork(
       url: url,
       error: Center(
         child: Text(

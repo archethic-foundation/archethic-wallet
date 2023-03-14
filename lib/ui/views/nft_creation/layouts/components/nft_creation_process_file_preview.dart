@@ -3,7 +3,9 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_aeweb.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_file.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_http.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_ipfs.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +29,11 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
       FileImportType.image
     ].contains(nftCreation.fileImportType);
 
-    final isTypeImportURL =
-        [FileImportType.ipfs].contains(nftCreation.fileImportType);
+    final isTypeImportURL = [
+      FileImportType.ipfs,
+      FileImportType.aeweb,
+      FileImportType.http
+    ].contains(nftCreation.fileImportType);
 
     final isInvalidFile = nftCreation.file == null ||
         nftCreation.file!.keys.isEmpty ||
@@ -79,8 +84,16 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
           NFTCreationProcessFilePreviewFile(
             nftCreation: nftCreation,
           ),
-        if (isTypeImportURL)
+        if (nftCreation.fileImportType == FileImportType.ipfs)
           NFTCreationProcessFilePreviewIPFS(
+            nftCreation: nftCreation,
+          ),
+        if (nftCreation.fileImportType == FileImportType.http)
+          NFTCreationProcessFilePreviewHTTP(
+            nftCreation: nftCreation,
+          ),
+        if (nftCreation.fileImportType == FileImportType.aeweb)
+          NFTCreationProcessFilePreviewAEWEB(
             nftCreation: nftCreation,
           ),
         const SizedBox(

@@ -61,7 +61,39 @@ class TokenUtil {
     token.properties.forEach((key, value) {
       if (key == 'content') {
         value.forEach((key, value) {
-          if (key == 'ipfs_url') {
+          if (key == 'ipfs') {
+            flag = true;
+          }
+        });
+      }
+    });
+
+    return flag;
+  }
+
+  static bool isTokenHTTP(Token token) {
+    var flag = false;
+
+    token.properties.forEach((key, value) {
+      if (key == 'content') {
+        value.forEach((key, value) {
+          if (key == 'http_url') {
+            flag = true;
+          }
+        });
+      }
+    });
+
+    return flag;
+  }
+
+  static bool isTokenAEWEB(Token token) {
+    var flag = false;
+
+    token.properties.forEach((key, value) {
+      if (key == 'content') {
+        value.forEach((key, value) {
+          if (key == 'aeweb') {
             flag = true;
           }
         });
@@ -147,7 +179,7 @@ class TokenUtil {
     String? imageDecoded;
 
     if (token.properties.isNotEmpty) {
-      imageDecoded = getValueFromKeyInTokenContent(token, 'ipfs_url');
+      imageDecoded = getValueFromKeyInTokenContent(token, 'ipfs');
     }
     return imageDecoded;
   }
@@ -160,5 +192,43 @@ class TokenUtil {
       return null;
     }
     return getIPFSUrlFromToken(token);
+  }
+
+  static Future<String?>? getHTTPUrlFromToken(Token token) async {
+    String? imageDecoded;
+
+    if (token.properties.isNotEmpty) {
+      imageDecoded = getValueFromKeyInTokenContent(token, 'http_url');
+    }
+    return imageDecoded;
+  }
+
+  static Future<String?> getHTTPUrlFromTokenAddress(
+    String address,
+  ) async {
+    final token = await getTokenByAddress(address);
+    if (token == null) {
+      return null;
+    }
+    return getHTTPUrlFromToken(token);
+  }
+
+  static Future<String?>? getAEWEBUrlFromToken(Token token) async {
+    String? imageDecoded;
+
+    if (token.properties.isNotEmpty) {
+      imageDecoded = getValueFromKeyInTokenContent(token, 'aeweb_url');
+    }
+    return imageDecoded;
+  }
+
+  static Future<String?> getAEWEBUrlFromTokenAddress(
+    String address,
+  ) async {
+    final token = await getTokenByAddress(address);
+    if (token == null) {
+      return null;
+    }
+    return getAEWEBUrlFromToken(token);
   }
 }

@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -56,26 +57,12 @@ class _ImageNetworkSafeState extends ConsumerState<ImageNetworkSafe> {
       return widget.loading;
     } else if (_isError) {
       return widget.error;
-      ;
     } else {
-      return Image.network(widget.url,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fitWidth, errorBuilder: (
-        BuildContext context,
-        Object exception,
-        StackTrace? stackTrace,
-      ) {
-        return widget.error;
-      }, loadingBuilder: (
-        BuildContext context,
-        Widget child,
-        ImageChunkEvent? loadingProgress,
-      ) {
-        if (loadingProgress == null) {
-          return child;
-        }
-        return widget.loading;
-      });
+      return ImageNetwork(
+        url: widget.url,
+        error: widget.error,
+        loading: widget.loading,
+      );
     }
   }
 }
