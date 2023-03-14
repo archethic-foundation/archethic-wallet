@@ -66,9 +66,12 @@ class RPCFailure with _$RPCFailure implements Exception {
         code: 5005,
         message: 'Unknown account.',
       );
-  factory RPCFailure.other() => const RPCFailure(
+  factory RPCFailure.other({
+    String? message,
+  }) =>
+      RPCFailure(
         code: 5000,
-        message: 'Technical error',
+        message: message ?? 'Technical error',
       );
 
   factory RPCFailure.fromTransactionError(TransactionError transactionError) {
@@ -82,7 +85,7 @@ class RPCFailure with _$RPCFailure implements Exception {
       insufficientFunds: (_) => RPCFailure.insufficientFunds(),
       userRejected: (_) => RPCFailure.userRejected(),
       unknownAccount: (_) => RPCFailure.unknownAccount(),
-      other: (_) => RPCFailure.other(),
+      other: (e) => RPCFailure.other(message: e.message),
     );
   }
 }
