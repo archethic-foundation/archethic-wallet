@@ -8,6 +8,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_address/c
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_keypair/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sub_account/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/sub_current_account/command_handler.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +41,9 @@ class RPCCommandReceiver extends ConsumerWidget {
       )
       ..addHandler(
         SubscribeAccountHandler(ref: ref),
+      )
+      ..addHandler(
+        SubscribeCurrentAccountHandler(ref: ref),
       )
       ..addHandler(
         AddServicenHandler(context: context, ref: ref),
