@@ -1,6 +1,7 @@
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_accounts/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/get_current_account/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_endpoint/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_services_from_keychain/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_address/command_handler.dart';
@@ -30,6 +31,9 @@ class RPCCommandReceiver extends ConsumerWidget {
       )
       ..addHandler(
         GetEndpointHandler(),
+      )
+      ..addHandler(
+        GetCurrentAccountCommandHandler(ref: ref),
       )
       ..addHandler(
         GetAccountsCommandHandler(),

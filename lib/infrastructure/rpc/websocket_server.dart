@@ -9,6 +9,7 @@ import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_subscription.dart';
 import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_handler.dart';
@@ -130,6 +131,10 @@ class ArchethicWebsocketRPCServer {
             ..registerMethod(
               'getEndpoint',
               (params) => _handle(RPCGetEndpointCommandHandler(), params),
+            )
+            ..registerMethod(
+              'getCurrentAccount',
+              (params) => _handle(RPCGetCurrentAccountCommandHandler(), params),
             )
             ..registerMethod(
               'getAccounts',
