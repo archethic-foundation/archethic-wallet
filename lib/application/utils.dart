@@ -38,9 +38,10 @@ extension WidgetRefExt on WidgetRef {
   /// Creates a Stream containing the Provider values.
   /// Stream is initialized with the last Provider value.
   /// Then, every Provider update is added to the stream.
-  Stream<T> stream<T>(
-    ProviderListenable<FutureOr<T>> providerListenable,
+  Stream<T> streamWithCurrentValue<T>(
+    AutoDisposeStreamProvider<T> provider,
   ) async* {
-    yield await watch(providerListenable);
+    yield await read(provider.future);
+    yield* watch(provider.stream);
   }
 }
