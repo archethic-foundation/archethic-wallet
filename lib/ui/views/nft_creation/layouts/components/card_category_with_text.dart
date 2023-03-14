@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/card_cateogry.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/card_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

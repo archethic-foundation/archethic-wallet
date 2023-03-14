@@ -5,7 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/card_cateogry.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/card_category.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:badges/badges.dart' as badge;
