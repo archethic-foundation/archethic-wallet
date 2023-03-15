@@ -19,11 +19,5 @@ class RPCSubscribeCurrentAccountCommandHandler extends RPCSubscriptionHandler<
   Map<String, dynamic> notificationFromModel(covariant Account model) => {
         'name': model.name,
         'genesisAddress': model.genesisAddress,
-        'lastAddress': model.lastAddress,
-        if (model.balance != null)
-          'balance': {
-            'nativeTokenName': model.balance!.nativeTokenName,
-            'nativeTokenValue': model.balance!.nativeTokenValue,
-          }
       };
 }
