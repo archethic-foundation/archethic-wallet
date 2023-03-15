@@ -41,7 +41,7 @@ class _SubscribablePeer {
         final result = await subscriptionCallback(params);
 
         final streamSubscription = result.updates.listen((value) {
-          _peer.sendNotification('${name}Value', value);
+          _peer.sendNotification('addSubscriptionNotification', value);
         });
         _registerSubscription(result.id, streamSubscription);
 
