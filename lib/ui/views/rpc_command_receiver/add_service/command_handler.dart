@@ -16,8 +16,8 @@ import 'package:aewallet/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddServicenHandler extends CommandHandler {
-  AddServicenHandler({
+class AddServiceHandler extends CommandHandler {
+  AddServiceHandler({
     required BuildContext context,
     required WidgetRef ref,
   }) : super(

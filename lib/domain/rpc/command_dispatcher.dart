@@ -42,16 +42,33 @@ class CommandHandler<C, S> {
   final bool Function(dynamic commandData) canHandle;
 }
 
+// Executed before Handlers.
+// If an [RPCFailure] is returned, processing stops here.
+typedef CommandGuard<C> = FutureOr<RPCFailure?> Function(C command);
+
 class CommandDispatcher {
   final _waitingCommands = Queue<Command>();
 
   // ignore: prefer_collection_literals
+  final _guards = <CommandGuard>[];
+
+  // ignore: prefer_collection_literals
   final _handlers = <CommandHandler>[];
 
-  void clearHandlers() {
+  /// Clears all Handlers and Guards.
+  void clear() {
     _handlers.clear();
+    _guards.clear();
   }
 
+  /// Add a guard.
+  /// [CommandGuard]s are executed before processing any command. If the guard's
+  /// result is an [RPCFailure], then processing stops returning that failure.
+  void addGuard(CommandGuard guard) {
+    _guards.add(guard);
+  }
+
+  /// Add a [CommandHandler].
   void addHandler(
     CommandHandler commandHandler,
   ) {
@@ -87,11 +104,20 @@ class CommandDispatcher {
     );
   }
 
+  Future<RPCFailure?> _guard<C>(C command) async {
+    for (final guard in _guards) {
+      final failure = await guard(command);
+      if (failure != null) return failure;
+    }
+    return null;
+  }
+
   Future<void> _process() async {
     if (_handlers.isEmpty) return;
     if (_waitingCommands.isEmpty) return;
 
     final command = _waitingCommands.first;
+    _waitingCommands.removeFirst();
     final handler = _findHandler(command.command);
 
     if (handler == null) {
@@ -101,7 +127,12 @@ class CommandDispatcher {
       return;
     }
 
-    _waitingCommands.removeFirst();
+    final guardFailure = await _guard(command.command);
+    if (guardFailure != null) {
+      command.completer.completeError(guardFailure);
+      return;
+    }
+
     handler
         .handle(command.command)
         .then(
