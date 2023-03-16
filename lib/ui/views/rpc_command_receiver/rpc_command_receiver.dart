@@ -13,20 +13,24 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RPCCommandReceiver extends ConsumerWidget {
-  RPCCommandReceiver({
+class RPCCommandReceiver extends ConsumerStatefulWidget {
+  const RPCCommandReceiver({
     super.key,
     required this.child,
   });
 
-  static const logName = 'CommandHandler';
   final Widget child;
 
-  final commandDispatcher = sl.get<CommandDispatcher>();
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    commandDispatcher
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _RPCCommandReceiverState();
+}
+
+class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
+  @override
+  void initState() {
+    sl.get<CommandDispatcher>()
+      ..clearHandlers()
       ..addHandler(
         SendTransactionHandler(context: context, ref: ref),
       )
@@ -57,6 +61,12 @@ class RPCCommandReceiver extends ConsumerWidget {
       ..addHandler(
         KeychainDeriveAddressCommandHandler(ref: ref),
       );
-    return child;
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }

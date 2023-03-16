@@ -31,6 +31,7 @@ import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/navigation.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -154,86 +155,86 @@ class App extends ConsumerWidget {
             return null;
           }
 
-          switch (settings.name) {
-            case '/':
-              return NoTransitionRoute<Splash>(
-                builder: (_) => const Splash(),
-                settings: settings,
-              );
-            case '/home':
-              return NoTransitionRoute<HomePage>(
-                builder: (_) => RPCCommandReceiver(
-                  child: const AutoLockGuard(child: HomePage()),
-                ),
-                settings: settings,
-              );
-            case '/home_transition':
-              return NoPopTransitionRoute<HomePage>(
-                builder: (_) => const AutoLockGuard(child: HomePage()),
-                settings: settings,
-              );
-            case '/intro_welcome':
-              return NoTransitionRoute<IntroWelcome>(
-                builder: (_) => const IntroWelcome(),
-                settings: settings,
-              );
-            case '/intro_welcome_get_first_infos':
-              return MaterialPageRoute<IntroNewWalletGetFirstInfos>(
-                builder: (_) => const IntroNewWalletGetFirstInfos(),
-                settings: settings,
-              );
-            case '/intro_backup':
-              return MaterialPageRoute<IntroBackupSeedPage>(
-                builder: (_) => IntroBackupSeedPage(
-                  name: settings.arguments as String?,
-                ),
-                settings: settings,
-              );
-            case '/intro_backup_safety':
-              return MaterialPageRoute<IntroNewWalletDisclaimer>(
-                builder: (_) => IntroNewWalletDisclaimer(
-                  name: settings.arguments as String?,
-                ),
-                settings: settings,
-              );
-            case '/intro_import':
-              return MaterialPageRoute<IntroImportSeedPage>(
-                builder: (_) => const IntroImportSeedPage(),
-                settings: settings,
-              );
-            case '/intro_backup_confirm':
-              final args = settings.arguments as Map<String, dynamic>? ?? {};
-              return MaterialPageRoute<IntroBackupConfirm>(
-                builder: (_) => IntroBackupConfirm(
+          final routes = <String, MaterialPageRoute>{
+            '/': NoTransitionRoute<Splash>(
+              builder: (_) => const Splash(),
+              settings: settings,
+            ),
+            '/home': NoTransitionRoute<HomePage>(
+              builder: (_) => const AutoLockGuard(child: HomePage()),
+              settings: settings,
+            ),
+            '/home_transition': // TODO(reddwarf03): that route seems unused
+                NoPopTransitionRoute<HomePage>(
+              builder: (_) => const AutoLockGuard(child: HomePage()),
+              settings: settings,
+            ),
+            '/intro_welcome': // TODO(reddwarf03): that route seems unused
+                NoTransitionRoute<IntroWelcome>(
+              builder: (_) => const IntroWelcome(),
+              settings: settings,
+            ),
+            '/intro_welcome_get_first_infos':
+                MaterialPageRoute<IntroNewWalletGetFirstInfos>(
+              builder: (_) => const IntroNewWalletGetFirstInfos(),
+              settings: settings,
+            ),
+            '/intro_backup': MaterialPageRoute<IntroBackupSeedPage>(
+              builder: (_) => IntroBackupSeedPage(
+                name: settings.arguments as String?,
+              ),
+              settings: settings,
+            ),
+            '/intro_backup_safety': MaterialPageRoute<IntroNewWalletDisclaimer>(
+              builder: (_) => IntroNewWalletDisclaimer(
+                name: settings.arguments as String?,
+              ),
+              settings: settings,
+            ),
+            '/intro_import': MaterialPageRoute<IntroImportSeedPage>(
+              builder: (_) => const IntroImportSeedPage(),
+              settings: settings,
+            ),
+            '/intro_backup_confirm': MaterialPageRoute<IntroBackupConfirm>(
+              builder: (_) {
+                final args = settings.arguments as Map<String, dynamic>? ?? {};
+                return IntroBackupConfirm(
                   name: args['name'] == null ? null : args['name'] as String,
                   seed: args['seed'] == null ? null : args['seed'] as String,
-                ),
-                settings: settings,
-              );
-            case '/lock_screen_transition':
-              return MaterialPageRoute<AppLockScreen>(
-                builder: (_) => const AppLockScreen(),
-                settings: settings,
-              );
-            case '/nft_list_per_category':
-              return MaterialPageRoute<NFTListPerCategory>(
-                builder: (_) => NFTListPerCategory(
-                  currentNftCategoryIndex: settings.arguments as int?,
-                ),
-                settings: settings,
-              );
-            case '/nft_creation':
-              final args = settings.arguments as Map<String, dynamic>? ?? {};
-              return MaterialPageRoute(
-                builder: (_) => NftCreationProcessSheet(
+                );
+              },
+              settings: settings,
+            ),
+            '/lock_screen_transition': MaterialPageRoute<AppLockScreen>(
+              builder: (_) => const AppLockScreen(),
+              settings: settings,
+            ),
+            '/nft_list_per_category': MaterialPageRoute<NFTListPerCategory>(
+              builder: (_) => NFTListPerCategory(
+                currentNftCategoryIndex: settings.arguments as int?,
+              ),
+              settings: settings,
+            ),
+            '/nft_creation': MaterialPageRoute(
+              builder: (_) {
+                final args = settings.arguments as Map<String, dynamic>? ?? {};
+                return NftCreationProcessSheet(
                   currentNftCategoryIndex:
                       args['currentNftCategoryIndex'] as int,
-                ),
-                settings: settings,
-              );
-            default:
-              return null;
-          }
+                );
+              },
+              settings: settings,
+            ),
+          };
+
+          /// Wraps all routes with [RPCCommandReceiver]
+          /// That way, RPCCommandReceiver should never been disposed.
+          final route = routes[settings.name];
+          return route?.copyWith(
+            builder: (context) => RPCCommandReceiver(
+              child: route.builder(context),
+            ),
+          );
         },
       ),
     );

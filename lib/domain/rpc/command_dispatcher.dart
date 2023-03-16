@@ -48,6 +48,10 @@ class CommandDispatcher {
   // ignore: prefer_collection_literals
   final _handlers = <CommandHandler>[];
 
+  void clearHandlers() {
+    _handlers.clear();
+  }
+
   void addHandler(
     CommandHandler commandHandler,
   ) {
