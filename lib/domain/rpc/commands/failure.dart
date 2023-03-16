@@ -30,9 +30,9 @@ class RPCFailure with _$RPCFailure implements Exception {
         code: 5001,
         message: 'Operation timeout.',
       );
-  factory RPCFailure.connectivity() => const RPCFailure(
+  factory RPCFailure.disconnected() => const RPCFailure(
         code: 4901,
-        message: 'Connectivity issue.',
+        message: 'The Provider is disconnected from all chains.',
       );
   factory RPCFailure.consensusNotReached() => const RPCFailure(
         code: 5002,
@@ -77,7 +77,7 @@ class RPCFailure with _$RPCFailure implements Exception {
   factory RPCFailure.fromTransactionError(TransactionError transactionError) {
     return transactionError.map(
       timeout: (_) => RPCFailure.timeout(),
-      connectivity: (_) => RPCFailure.connectivity(),
+      connectivity: (_) => RPCFailure.disconnected(),
       consensusNotReached: (_) => RPCFailure.consensusNotReached(),
       invalidTransaction: (_) => RPCFailure.invalidTransaction(),
       invalidConfirmation: (_) => RPCFailure.invalidConfirmation(),

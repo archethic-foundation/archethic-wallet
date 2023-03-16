@@ -1,4 +1,6 @@
+import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
+import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_accounts/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_current_account/command_handler.dart';
@@ -30,7 +32,12 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   @override
   void initState() {
     sl.get<CommandDispatcher>()
-      ..clearHandlers()
+      ..clear()
+      ..addGuard((command) async {
+        if (ref.read(SessionProviders.session).isLoggedOut) {
+          return RPCFailure.disconnected();
+        }
+      })
       ..addHandler(
         SendTransactionHandler(context: context, ref: ref),
       )
@@ -50,7 +57,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
         SubscribeCurrentAccountHandler(ref: ref),
       )
       ..addHandler(
-        AddServicenHandler(context: context, ref: ref),
+        AddServiceHandler(context: context, ref: ref),
       )
       ..addHandler(
         GetServicesFromKeychainCommandHandler(ref: ref),
