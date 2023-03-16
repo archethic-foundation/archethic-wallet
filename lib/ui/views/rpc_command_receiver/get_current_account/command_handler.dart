@@ -1,5 +1,4 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/app_accounts.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -18,7 +17,7 @@ class GetCurrentAccountCommandHandler extends CommandHandler {
             command as RPCCommand<RPCGetCurrentAccountCommandData>;
 
             final selectedAccount =
-                ref.watch(AccountProviders.selectedAccount).valueOrNull;
+                ref.read(AccountProviders.selectedAccount).valueOrNull;
 
             if (selectedAccount == null) {
               return Result.failure(
