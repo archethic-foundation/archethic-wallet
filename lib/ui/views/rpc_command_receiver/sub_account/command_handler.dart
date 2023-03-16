@@ -3,6 +3,7 @@ import 'package:aewallet/application/utils.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
+import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/subscribe_account.dart';
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -22,6 +23,13 @@ class SubscribeAccountHandler extends CommandHandler {
               command is RPCCommand<RPCSubscribeAccountCommandData>,
           handle: (command) async {
             command as RPCCommand<RPCSubscribeAccountCommandData>;
+
+            final accountExists = await ref.read(
+              AccountProviders.accountExists(command.data.accountName).future,
+            );
+            if (!accountExists) {
+              return Result.failure(RPCFailure.unknownAccount());
+            }
 
             return Result.success(
               RPCSubscription(

@@ -31,6 +31,9 @@ abstract class AccountProviders {
     (ref) => AccountLocalRepository(),
   );
   static final accounts = _accountsNotifierProvider;
+  static final accountExists = FutureProvider.autoDispose.family<bool, String>(
+    (ref, arg) async => (await ref.watch(account(arg).future)) != null,
+  );
   static final account = AsyncNotifierProvider.autoDispose
       .family<_AccountNotifier, Account?, String>(
     _AccountNotifier.new,
