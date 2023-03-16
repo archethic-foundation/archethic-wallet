@@ -7,7 +7,7 @@ class _AccountNotifier
     final repository = ref.read(AccountProviders.accountsRepository);
     final account = await repository.getAccount(name);
 
-    return account!;
+    return account;
   }
 
   Future<void> _refresh(
