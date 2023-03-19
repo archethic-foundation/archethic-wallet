@@ -6,11 +6,6 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kIsWeb == true ||
-        (Platform.isAndroid == false && Platform.isIOS == false)) {
-      return const SizedBox();
-    }
-
     final localizations = AppLocalization.of(context)!;
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
@@ -35,7 +30,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
         }
       },
       text: localizations.nftAddImportPhoto,
-      background: Image.asset('assets/images/category_nft_art.jpg'),
+      background: Image.asset('assets/images/NFT_upload_photo.png'),
     );
   }
 }

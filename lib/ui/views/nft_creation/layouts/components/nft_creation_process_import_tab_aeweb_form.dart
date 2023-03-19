@@ -7,8 +7,8 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_p
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
-  const NFTCreationProcessImportTabIPFSForm({
+class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget {
+  const NFTCreationProcessImportTabAEWebForm({
     super.key,
     required this.onConfirm,
   });
@@ -21,10 +21,10 @@ class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return NFTCreationProcessImportTabTemplateForm(
-      title: localizations.nftAddImportIPFSTitle,
-      placeholder: localizations.nftAddImportIPFSPlaceholder,
-      buttonLabel: localizations.nftAddImportIPFSButton,
-      warningLabel: localizations.nftAddImportIPFSWarning,
+      title: localizations.nftAddImportAEWebTitle,
+      placeholder: localizations.nftAddImportAEWebPlaceholder,
+      buttonLabel: localizations.nftAddImportAEWebButton,
+      warningLabel: localizations.nftAddImportAEWebWarning,
       onConfirm: (String value, BuildContext contextForm) {
         void setError(String errorText) {
           UIUtil.showSnackbar(
@@ -41,31 +41,18 @@ class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
           return;
         }
 
-        final uriInput = ref.watch(
-          UrlProvider.cleanUri(
-            uri: value,
-          ),
-        );
+        final valueCleaned = value.replaceAll(' ', '');
 
         if (!ref.watch(
-          UrlProvider.isUrlValid(
-            uri: uriInput,
-          ),
-        )) {
-          setError(localizations.enterEndpointNotValid);
-          return;
-        }
-
-        if (!ref.watch(
-          UrlProvider.isUrlIPFS(
-            uri: uriInput,
+          UrlProvider.isUrlAEWeb(
+            uri: valueCleaned,
           ),
         )) {
           setError(localizations.enterEndpointNotValid);
           return;
         }
         onConfirm(
-          value.replaceAll(' ', ''),
+          valueCleaned,
         );
         Navigator.of(contextForm).pop();
       },

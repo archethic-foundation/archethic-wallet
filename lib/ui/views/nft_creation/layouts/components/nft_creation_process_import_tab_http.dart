@@ -31,7 +31,7 @@ class NFTCreationProcessImportTabHTTP extends ConsumerWidget {
         );
       },
       text: localizations.nftAddImportUrl,
-      background: Image.asset('assets/images/category_nft_art.jpg'),
+      background: Image.asset('assets/images/NFT_upload_http.png'),
     );
   }
 }

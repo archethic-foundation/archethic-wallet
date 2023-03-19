@@ -18,8 +18,9 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/grid_count.dar
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_confirm_sheet.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_form_sheet.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_ipfs_form.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_aeweb_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_http_form.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_ipfs_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_property_access.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -41,11 +42,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'components/nft_creation_process_import_tab.dart';
+part 'components/nft_creation_process_import_tab_aeweb.dart';
 part 'components/nft_creation_process_import_tab_camera.dart';
 part 'components/nft_creation_process_import_tab_file.dart';
+part 'components/nft_creation_process_import_tab_http.dart';
 part 'components/nft_creation_process_import_tab_image.dart';
 part 'components/nft_creation_process_import_tab_ipfs.dart';
-part 'components/nft_creation_process_import_tab_http.dart';
 part 'components/nft_creation_process_infos_tab.dart';
 part 'components/nft_creation_process_infos_tab_textfield_description.dart';
 part 'components/nft_creation_process_infos_tab_textfield_name.dart';
