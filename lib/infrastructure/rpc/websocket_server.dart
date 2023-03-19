@@ -17,6 +17,7 @@ import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_hand
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_current_account/command_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -105,7 +106,8 @@ class ArchethicWebsocketRPCServer {
   final CommandDispatcher commandDispatcher;
 
   static bool get isPlatformCompatible {
-    return Platform.isLinux || Platform.isMacOS || Platform.isWindows;
+    return !kIsWeb &&
+        (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
   }
 
   Future<void> run() async {
