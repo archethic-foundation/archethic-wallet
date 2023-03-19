@@ -308,3 +308,73 @@ class _UrlIPFSForWebFamily extends Family<String> {
   @override
   String? get name => r'_urlIPFSForWebProvider';
 }
+
+String $_isUrlAEWebHash() => r'6e711d388d62cf27079c34aec3ce00b450f18c09';
+
+/// See also [_isUrlAEWeb].
+class _IsUrlAEWebProvider extends AutoDisposeProvider<bool> {
+  _IsUrlAEWebProvider({
+    required this.uri,
+  }) : super(
+          (ref) => _isUrlAEWeb(
+            ref,
+            uri: uri,
+          ),
+          from: _isUrlAEWebProvider,
+          name: r'_isUrlAEWebProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_isUrlAEWebHash,
+        );
+
+  final String uri;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _IsUrlAEWebProvider && other.uri == uri;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, uri.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _IsUrlAEWebRef = AutoDisposeProviderRef<bool>;
+
+/// See also [_isUrlAEWeb].
+final _isUrlAEWebProvider = _IsUrlAEWebFamily();
+
+class _IsUrlAEWebFamily extends Family<bool> {
+  _IsUrlAEWebFamily();
+
+  _IsUrlAEWebProvider call({
+    required String uri,
+  }) {
+    return _IsUrlAEWebProvider(
+      uri: uri,
+    );
+  }
+
+  @override
+  AutoDisposeProvider<bool> getProviderOverride(
+    covariant _IsUrlAEWebProvider provider,
+  ) {
+    return call(
+      uri: provider.uri,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_isUrlAEWebProvider';
+}

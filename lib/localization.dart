@@ -1914,6 +1914,35 @@ class AppLocalization {
     return Intl.message('Take a photo', name: 'nftAddImportCamera');
   }
 
+  String get nftAddImportAEWeb {
+    return Intl.message('Use AEWeb', name: 'nftAddImportAEWeb');
+  }
+
+  String get nftAddImportAEWebTitle {
+    return Intl.message('Enter an AEWeb address',
+        name: 'nftAddImportAEWebTitle');
+  }
+
+  String get nftAddImportAEWebPlaceholder {
+    return Intl.message('Please enter an AEWeb address',
+        name: 'nftAddImportAEWebPlaceholder');
+  }
+
+  String get nftAddImportAEWebButton {
+    return Intl.message('Add AEWeb', name: 'nftAddImportAEWebButton');
+  }
+
+  String get nftAEWebEmpty {
+    return Intl.message('The AEWeb is not available yet.',
+        name: 'nftAEWebEmpty');
+  }
+
+  String get nftAddImportAEWebWarning {
+    return Intl.message(
+        'Please enter the full AEWeb Address of the file you wish to enter, to ensure successful retrieval of the file later on. Example: 0000address/image.png',
+        name: 'nftAddImportAEWebWarning');
+  }
+
   String get nftAddImportIPFS {
     return Intl.message('Use IPFS', name: 'nftAddImportIPFS');
   }
@@ -1936,6 +1965,12 @@ class AppLocalization {
         name: 'nftIPFSEmpty');
   }
 
+  String get nftAddImportIPFSWarning {
+    return Intl.message(
+        'Please enter the full IPFS URL of the file you wish to enter, including the \'ipfs://\' prefix, to ensure successful retrieval of the file later on. Example: ipfs://abcde/photo.png',
+        name: 'nftAddImportIPFSWarning');
+  }
+
   String get nftAddImportUrl {
     return Intl.message('Url', name: 'nftAddImportUrl');
   }
@@ -1947,6 +1982,12 @@ class AppLocalization {
   String get nftAddImportURLPlaceholder {
     return Intl.message('Please enter an url',
         name: 'nftAddImportURLPlaceholder');
+  }
+
+  String get nftAddImportURLWarning {
+    return Intl.message(
+        'Please enter the full URL of the file you wish to enter, including the \'https://\' or \'http://\' prefix, to ensure successful retrieval of the file later on. Example: https://abcde/photo.png',
+        name: 'nftAddImportURLWarning');
   }
 
   String get nftAddImportURLButton {

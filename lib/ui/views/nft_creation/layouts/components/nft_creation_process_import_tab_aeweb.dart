@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of '../nft_creation_process_sheet.dart';
 
-class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
-  const NFTCreationProcessImportTabIPFS({super.key});
+class NFTCreationProcessImportTabAEWeb extends ConsumerWidget {
+  const NFTCreationProcessImportTabAEWeb({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,9 +20,9 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
         Sheets.showAppHeightNineSheet(
           context: context,
           ref: ref,
-          widget: NFTCreationProcessImportTabIPFSForm(
+          widget: NFTCreationProcessImportTabAEWebForm(
             onConfirm: (uri) {
-              nftCreationNotifier.setContentIPFSProperties(
+              nftCreationNotifier.setContentAEWebProperties(
                 context,
                 uri,
               );
@@ -30,8 +30,8 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
           ),
         );
       },
-      text: localizations.nftAddImportIPFS,
-      background: Image.asset('assets/images/NFT_upload_photo.png'),
+      text: localizations.nftAddImportAEWeb,
+      background: Image.asset('assets/images/NFT_upload_aeweb.png'),
     );
   }
 }

@@ -19,12 +19,14 @@ class NFTCreationProcessImportTabTemplateForm extends ConsumerStatefulWidget {
     required this.title,
     required this.placeholder,
     required this.buttonLabel,
+    required this.warningLabel,
   });
 
   final void Function(String uri, BuildContext context) onConfirm;
   final String title;
   final String placeholder;
   final String buttonLabel;
+  final String warningLabel;
 
   @override
   ConsumerState<NFTCreationProcessImportTabTemplateForm> createState() =>
@@ -76,6 +78,14 @@ class _NFTCreationProcessImportTabFormUrlState
                   ),
                   child: Column(
                     children: <Widget>[
+                      Text(
+                        widget.warningLabel,
+                        style: theme.textStyleSize12W100PrimaryWarning,
+                        textAlign: TextAlign.justify,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       AppTextField(
                         focusNode: urlFocusNode,
                         controller: urlController,

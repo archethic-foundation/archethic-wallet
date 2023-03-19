@@ -556,7 +556,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     }
   }
 
-  Future<void> setContentAEWEBProperties(
+  Future<void> setContentAEWebProperties(
     BuildContext context,
     String uri,
   ) async {

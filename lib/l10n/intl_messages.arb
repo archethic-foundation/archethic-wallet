@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2023-03-14T18:24:12.352329",
+  "@@last_modified": "2023-03-19T12:28:26.981108",
   "noConnectionBanner": "No connection",
   "@noConnectionBanner": {
     "type": "text",
@@ -2460,6 +2460,42 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftAddImportAEWeb": "Use AEWeb",
+  "@nftAddImportAEWeb": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportAEWebTitle": "Enter an AEWeb address",
+  "@nftAddImportAEWebTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportAEWebPlaceholder": "Please enter an AEWeb address",
+  "@nftAddImportAEWebPlaceholder": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportAEWebButton": "Add AEWeb",
+  "@nftAddImportAEWebButton": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAEWebEmpty": "The AEWeb is not available yet.",
+  "@nftAEWebEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportAEWebWarning": "Please enter the full AEWeb Address of the file you wish to enter, to ensure successful retrieval of the file later on. Example: 0000address/image.png",
+  "@nftAddImportAEWebWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftAddImportIPFS": "Use IPFS",
   "@nftAddImportIPFS": {
     "type": "text",
@@ -2490,6 +2526,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftAddImportIPFSWarning": "Please enter the full IPFS URL of the file you wish to enter, including the 'ipfs://' prefix, to ensure successful retrieval of the file later on. Example: ipfs://abcde/photo.png",
+  "@nftAddImportIPFSWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftAddImportUrl": "Url",
   "@nftAddImportUrl": {
     "type": "text",
@@ -2504,6 +2546,12 @@
   },
   "nftAddImportURLPlaceholder": "Please enter an url",
   "@nftAddImportURLPlaceholder": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportURLWarning": "Please enter the full URL of the file you wish to enter, including the 'https://' or 'http://' prefix, to ensure successful retrieval of the file later on. Example: https://abcde/photo.png",
+  "@nftAddImportURLWarning": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
