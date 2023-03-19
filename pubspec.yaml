@@ -66,7 +66,7 @@ dependencies:
   decimal: ^2.3.2
 
   # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
-  deeplink_rpc: ^1.0.2
+  deeplink_rpc: ^1.0.3
 
   # GridView with dynamic height. No need to specify aspectRatio to the grid.
   dynamic_height_grid_view: ^0.0.3
@@ -150,9 +150,6 @@ dependencies:
 
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
   image_picker: ^0.8.6+1
-
-  # Localization
-  intl: ^0.17.0
 
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.8.0
@@ -264,7 +261,7 @@ dev_dependencies:
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.8.0
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
-  patrol: ^0.10.11
+  patrol: ^1.0.8
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
   # test: ^1.20.2
