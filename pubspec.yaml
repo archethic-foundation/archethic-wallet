@@ -23,8 +23,14 @@ dependencies:
       url: https://github.com/archethic-foundation/libdart.git
       ref: dev
 
+  # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
+  asn1lib: ^1.4.0
+
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
+
+  # A fakeable wrapper for dart:core clock APIs
+  clock: ^1.1.1
 
   # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
   badges: ^3.0.2
@@ -33,11 +39,7 @@ dependencies:
   barcode_scan2: ^4.2.3
 
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
-  #bip39_mnemonic: ^3.0.5
-  bip39_mnemonic:
-    git:
-      url: https://github.com/redDwarf03/dart-bip39-mnemonic.git
-      ref: gcm-web
+  bip39_mnemonic: ^3.0.6
 
   # Bottom bar helps create an optimized bottom navigation bar with beautiful animations
   bottom_bar: ^2.0.3
@@ -68,13 +70,6 @@ dependencies:
 
   # GridView with dynamic height. No need to specify aspectRatio to the grid.
   dynamic_height_grid_view: ^0.0.3
-
-  # A set of high-level APIs over PointyCastle for two-way cryptography.
-  #encrypt: ^5.0.1
-  encrypt:
-    git:
-      url: https://github.com/redDwarf03/encrypt.git
-      ref: gcm-web
 
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
@@ -108,6 +103,7 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
   flutter_native_splash: ^2.2.17
 
@@ -202,11 +198,7 @@ dependencies:
   phoenix_socket: ^0.6.2
 
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
-  #pointycastle: ^3.6.2
-  pointycastle:
-    git:
-      url: https://github.com/redDwarf03/pc-dart.git
-      ref: gcm-web
+  pointycastle: ^3.7.0
 
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0

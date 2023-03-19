@@ -1,13 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Dart imports:
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-
-// Package imports:
+import 'package:aewallet/util/encrypt/encrypt.dart';
 import 'package:crypto/crypto.dart';
-import 'package:encrypt/encrypt.dart';
 import 'package:tuple/tuple.dart';
 
 Uint8List _genRandomWithNonZero(int seedLength) {
