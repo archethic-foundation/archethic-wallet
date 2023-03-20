@@ -30,8 +30,6 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
                   .replaceAll('.', ''),
             )![0],
           );
-        } else {
-          // User canceled the picker
         }
       },
       text: localizations.nftAddImportFile,
