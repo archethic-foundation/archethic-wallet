@@ -500,11 +500,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     }
   }
 
-    if (controlFile(context) == false) {
-      resetState();
-    }
-  }
-
   Future<void> setContentIPFSProperties(
     BuildContext context,
     String uri,
@@ -580,34 +575,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     state = state.copyWith(
       properties: newPropertiesToSet,
       fileImportType: FileImportType.aeweb,
-      fileURL: uri,
-    );
-
-    if (controlURL(context) == false) {
-      resetState();
-      return;
-    }
-  }
-
-  Future<void> setContentHTTPProperties(
-    BuildContext context,
-    String uri,
-  ) async {
-    // Set content property and remove type_mine
-    final newPropertiesToSet = [
-      ...state.properties,
-      NftCreationFormStateProperty(
-        propertyName: 'content',
-        propertyValue: {'http_url': uri},
-      ),
-    ]..removeWhere(
-        (NftCreationFormStateProperty element) =>
-            element.propertyName == 'type_mime',
-      );
-
-    state = state.copyWith(
-      properties: newPropertiesToSet,
-      fileImportType: FileImportType.http,
       fileURL: uri,
     );
 
