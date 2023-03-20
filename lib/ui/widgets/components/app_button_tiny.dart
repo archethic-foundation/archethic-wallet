@@ -41,6 +41,18 @@ class AppButtonTiny extends ConsumerWidget {
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+
+    void handlePressed() {
+      if (!disabled) {
+        sl.get<HapticUtil>().feedback(
+              FeedbackType.light,
+              preferences.activeVibrations,
+            );
+        onPressed();
+      }
+      return;
+    }
+
     switch (type) {
       case AppButtonTinyType.primary:
         return Expanded(
@@ -66,100 +78,16 @@ class AppButtonTiny extends ConsumerWidget {
               dimens[3],
             ),
             child: icon == null
-                ? TextButton(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (showProgressIndicator) const Spacer(),
-                        AutoSizeText(
-                          buttonText,
-                          textAlign: TextAlign.center,
-                          style:
-                              theme.textStyleSize12W400EquinoxMainButtonLabel,
-                          maxLines: 1,
-                          stepGranularity: 0.5,
-                        ),
-                        if (showProgressIndicator) const Spacer(),
-                        if (showProgressIndicator)
-                          SizedBox.square(
-                            dimension: 10,
-                            child: CircularProgressIndicator(
-                              color: theme
-                                  .textStyleSize12W400EquinoxMainButtonLabel
-                                  .color,
-                              strokeWidth: 2,
-                            ),
-                          ),
-                      ],
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
+                ? _NoIconButton(
+                    buttonText: buttonText,
+                    onPressed: handlePressed,
+                    showProgressIndicator: showProgressIndicator,
                   )
-                : TextButton(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      foregroundColor: theme.text,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (showProgressIndicator)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: SizedBox.square(
-                              dimension: 8,
-                              child: CircularProgressIndicator(
-                                color: theme
-                                    .textStyleSize12W400EquinoxMainButtonLabel
-                                    .color,
-                                strokeWidth: 1,
-                              ),
-                            ),
-                          )
-                        else
-                          icon!,
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        AutoSizeText(
-                          buttonText,
-                          textAlign: TextAlign.center,
-                          style:
-                              theme.textStyleSize12W400EquinoxMainButtonLabel,
-                          maxLines: 1,
-                          stepGranularity: 0.5,
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
+                : _IconButton(
+                    buttonText: buttonText,
+                    onPressed: handlePressed,
+                    showProgressIndicator: showProgressIndicator,
+                    icon: icon,
                   ),
           ),
         );
@@ -179,81 +107,167 @@ class AppButtonTiny extends ConsumerWidget {
               dimens[3],
             ),
             child: icon == null
-                ? TextButton(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (showProgressIndicator) const Spacer(),
-                        AutoSizeText(
-                          buttonText,
-                          textAlign: TextAlign.center,
-                          style: theme
-                              .textStyleSize12W400EquinoxMainButtonLabelDisabled,
-                          maxLines: 1,
-                          stepGranularity: 0.5,
-                        ),
-                        if (showProgressIndicator) const Spacer(),
-                        if (showProgressIndicator)
-                          SizedBox.square(
-                            dimension: 10,
-                            child: CircularProgressIndicator(
-                              color: theme
-                                  .textStyleSize12W400EquinoxMainButtonLabel
-                                  .color,
-                              strokeWidth: 2,
-                            ),
-                          ),
-                      ],
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
+                ? _NoIconButton(
+                    buttonText: buttonText,
+                    onPressed: handlePressed,
+                    showProgressIndicator: showProgressIndicator,
                   )
-                : TextButton.icon(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    icon: icon!,
-                    label: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: theme
-                          .textStyleSize12W400EquinoxMainButtonLabelDisabled,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
+                : _IconButtonOutline(
+                    buttonText: buttonText,
+                    onPressed: handlePressed,
+                    showProgressIndicator: showProgressIndicator,
+                    icon: icon,
                   ),
           ),
         );
     }
   } //
+}
+
+class _NoIconButton extends ConsumerWidget {
+  const _NoIconButton({
+    required this.showProgressIndicator,
+    required this.buttonText,
+    required this.onPressed,
+  });
+
+  final bool showProgressIndicator;
+  final String buttonText;
+  final Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return TextButton(
+      key: key,
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      onPressed: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (showProgressIndicator) const Spacer(),
+          AutoSizeText(
+            buttonText,
+            textAlign: TextAlign.center,
+            style: theme.textStyleSize12W400EquinoxMainButtonLabel,
+            maxLines: 1,
+            stepGranularity: 0.5,
+          ),
+          if (showProgressIndicator) const Spacer(),
+          if (showProgressIndicator)
+            SizedBox.square(
+              dimension: 10,
+              child: CircularProgressIndicator(
+                color: theme.textStyleSize12W400EquinoxMainButtonLabel.color,
+                strokeWidth: 2,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _IconButton extends ConsumerWidget {
+  const _IconButton({
+    required this.showProgressIndicator,
+    required this.buttonText,
+    required this.onPressed,
+    required this.icon,
+  });
+
+  final bool showProgressIndicator;
+  final String buttonText;
+  final Function()? onPressed;
+  final Widget? icon;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return TextButton(
+      key: key,
+      style: TextButton.styleFrom(
+        foregroundColor: theme.text,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      onPressed: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (showProgressIndicator)
+            Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: SizedBox.square(
+                dimension: 8,
+                child: CircularProgressIndicator(
+                  color: theme.textStyleSize12W400EquinoxMainButtonLabel.color,
+                  strokeWidth: 1,
+                ),
+              ),
+            )
+          else
+            icon!,
+          const SizedBox(
+            width: 5,
+          ),
+          AutoSizeText(
+            buttonText,
+            textAlign: TextAlign.center,
+            style: theme.textStyleSize12W400EquinoxMainButtonLabel,
+            maxLines: 1,
+            stepGranularity: 0.5,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _IconButtonOutline extends ConsumerWidget {
+  const _IconButtonOutline({
+    required this.showProgressIndicator,
+    required this.buttonText,
+    required this.onPressed,
+    required this.icon,
+  });
+
+  final bool showProgressIndicator;
+  final String buttonText;
+  final Function()? onPressed;
+  final Widget? icon;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return TextButton.icon(
+      key: key,
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      icon: icon!,
+      label: AutoSizeText(
+        buttonText,
+        textAlign: TextAlign.center,
+        style: theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
+        maxLines: 1,
+        stepGranularity: 0.5,
+      ),
+      onPressed: onPressed,
+    );
+  }
 }
 
 class AppButtonTinyWithoutExpanded extends ConsumerWidget {
