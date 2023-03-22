@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_loading.dart';
 import 'package:aewallet/util/mime_util.dart';
