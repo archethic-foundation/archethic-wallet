@@ -33,6 +33,7 @@ mixin _$NftCreationFormState {
   String get propertyName => throw _privateConstructorUsedError;
   String get propertyValue => throw _privateConstructorUsedError;
   String get propertySearch => throw _privateConstructorUsedError;
+  String? get fileURL => throw _privateConstructorUsedError;
   PropertyAccessRecipient get propertyAccessRecipient =>
       throw _privateConstructorUsedError;
   List<NftCreationFormStateProperty> get properties =>
@@ -71,6 +72,7 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
       String propertyName,
       String propertyValue,
       String propertySearch,
+      String? fileURL,
       PropertyAccessRecipient propertyAccessRecipient,
       List<NftCreationFormStateProperty> properties,
       String error,
@@ -113,6 +115,7 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     Object? propertyName = null,
     Object? propertyValue = null,
     Object? propertySearch = null,
+    Object? fileURL = freezed,
     Object? propertyAccessRecipient = null,
     Object? properties = null,
     Object? error = null,
@@ -186,6 +189,10 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.propertySearch
           : propertySearch // ignore: cast_nullable_to_non_nullable
               as String,
+      fileURL: freezed == fileURL
+          ? _value.fileURL
+          : fileURL // ignore: cast_nullable_to_non_nullable
+              as String?,
       propertyAccessRecipient: null == propertyAccessRecipient
           ? _value.propertyAccessRecipient
           : propertyAccessRecipient // ignore: cast_nullable_to_non_nullable
@@ -264,6 +271,7 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
       String propertyName,
       String propertyValue,
       String propertySearch,
+      String? fileURL,
       PropertyAccessRecipient propertyAccessRecipient,
       List<NftCreationFormStateProperty> properties,
       String error,
@@ -305,6 +313,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? propertyName = null,
     Object? propertyValue = null,
     Object? propertySearch = null,
+    Object? fileURL = freezed,
     Object? propertyAccessRecipient = null,
     Object? properties = null,
     Object? error = null,
@@ -378,6 +387,10 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
           ? _value.propertySearch
           : propertySearch // ignore: cast_nullable_to_non_nullable
               as String,
+      fileURL: freezed == fileURL
+          ? _value.fileURL
+          : fileURL // ignore: cast_nullable_to_non_nullable
+              as String?,
       propertyAccessRecipient: null == propertyAccessRecipient
           ? _value.propertyAccessRecipient
           : propertyAccessRecipient // ignore: cast_nullable_to_non_nullable
@@ -430,6 +443,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
       this.propertyName = '',
       this.propertyValue = '',
       this.propertySearch = '',
+      this.fileURL,
       required this.propertyAccessRecipient,
       final List<NftCreationFormStateProperty> properties = const [],
       this.error = '',
@@ -492,6 +506,8 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @JsonKey()
   final String propertySearch;
   @override
+  final String? fileURL;
+  @override
   final PropertyAccessRecipient propertyAccessRecipient;
   final List<NftCreationFormStateProperty> _properties;
   @override
@@ -519,7 +535,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
 
   @override
   String toString() {
-    return 'NftCreationFormState(nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
+    return 'NftCreationFormState(nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, fileURL: $fileURL, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
   }
 
   @override
@@ -558,6 +574,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
                 other.propertyValue == propertyValue) &&
             (identical(other.propertySearch, propertySearch) ||
                 other.propertySearch == propertySearch) &&
+            (identical(other.fileURL, fileURL) || other.fileURL == fileURL) &&
             (identical(
                     other.propertyAccessRecipient, propertyAccessRecipient) ||
                 other.propertyAccessRecipient == propertyAccessRecipient) &&
@@ -594,6 +611,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
         propertyName,
         propertyValue,
         propertySearch,
+        fileURL,
         propertyAccessRecipient,
         const DeepCollectionEquality().hash(_properties),
         error,
@@ -629,6 +647,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final String propertyName,
       final String propertyValue,
       final String propertySearch,
+      final String? fileURL,
       required final PropertyAccessRecipient propertyAccessRecipient,
       final List<NftCreationFormStateProperty> properties,
       final String error,
@@ -670,6 +689,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   String get propertyValue;
   @override
   String get propertySearch;
+  @override
+  String? get fileURL;
   @override
   PropertyAccessRecipient get propertyAccessRecipient;
   @override
