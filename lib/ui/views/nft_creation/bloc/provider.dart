@@ -424,6 +424,18 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     );
   }
 
+  void resetState() {
+    state = state.copyWith(
+      fileImportType: null,
+      fileSize: 0,
+      fileTypeMime: '',
+      fileDecodedForPreview: null,
+      file: null,
+      properties: [],
+      fileURL: null,
+    );
+  }
+
   Future<void> setContentProperties(
     BuildContext context,
     Uint8List fileDecoded,
@@ -484,14 +496,119 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     );
 
     if (controlFile(context) == false) {
-      state = state.copyWith(
-        fileImportType: null,
-        fileSize: 0,
-        fileTypeMime: '',
-        fileDecodedForPreview: null,
-        file: null,
-        properties: [],
+      resetState();
+    }
+  }
+
+  Future<void> setContentIPFSProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'ipfs': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
       );
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+      fileImportType: FileImportType.ipfs,
+      fileURL: uri,
+    );
+
+    if (controlURL(context) == false) {
+      resetState();
+      return;
+    }
+  }
+
+  Future<void> setContentHTTPProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'http_url': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
+      );
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+      fileImportType: FileImportType.http,
+      fileURL: uri,
+    );
+
+    if (controlURL(context) == false) {
+      resetState();
+      return;
+    }
+  }
+
+  Future<void> setContentAEWebProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'aeweb': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
+      );
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+      fileImportType: FileImportType.aeweb,
+      fileURL: uri,
+    );
+
+    if (controlURL(context) == false) {
+      resetState();
+      return;
+    }
+  }
+
+  Future<void> setContentAEWEBProperties(
+    BuildContext context,
+    String uri,
+  ) async {
+    // Set content property and remove type_mine
+    final newPropertiesToSet = [
+      ...state.properties,
+      NftCreationFormStateProperty(
+        propertyName: 'content',
+        propertyValue: {'aeweb': uri},
+      ),
+    ]..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'type_mime',
+      );
+
+    state = state.copyWith(
+      properties: newPropertiesToSet,
+      fileImportType: FileImportType.aeweb,
+      fileURL: uri,
+    );
+
+    if (controlURL(context) == false) {
+      resetState();
+      return;
     }
   }
 
@@ -510,6 +627,13 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   bool controlFile(
     BuildContext context,
   ) {
+    if (!state.isFileImportFile()) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+      );
+      return false;
+    }
+
     if (state.file == null || state.file!.keys.isEmpty) {
       state = state.copyWith(
         error: AppLocalizations.of(context)!.nftAddConfirmationFileEmpty,
@@ -528,6 +652,26 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     if (state.fileSize > 2500000) {
       state = state.copyWith(
         error: AppLocalizations.of(context)!.nftSizeExceed,
+      );
+      return false;
+    }
+
+    state = state.copyWith(error: '');
+    return true;
+  }
+
+  bool controlURL(
+    BuildContext context,
+  ) {
+    if (!state.isFileImportUrl()) {
+      state = state.copyWith(
+        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+      );
+      return false;
+    }
+    if (state.fileURL == null) {
+      state = state.copyWith(
+        error: 'Error url',
       );
       return false;
     }
@@ -581,7 +725,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         keychainSecuredInfos: keychainSecuredInfos,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
-        aeip: [2],
+        aeip: [2, 9],
         properties: state.propertiesConverted,
       ),
     );
