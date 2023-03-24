@@ -33,6 +33,7 @@ abstract class RPCCommandHandler<C, R> {
       );
 
       return sl.get<CommandDispatcher>().add(commandModel);
+      // ignore: avoid_catching_errors
     } on TypeError catch (e, stack) {
       log(
         'Invalid data',
