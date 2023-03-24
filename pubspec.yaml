@@ -29,9 +29,6 @@ dependencies:
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 
-  # A fakeable wrapper for dart:core clock APIs
-  clock: ^1.1.1
-
   # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
   badges: ^3.0.2
 
@@ -43,6 +40,9 @@ dependencies:
 
   # Bottom bar helps create an optimized bottom navigation bar with beautiful animations
   bottom_bar: ^2.0.3
+
+  # A fakeable wrapper for dart:core clock APIs
+  clock: ^1.1.1
 
   # Dart package that provides simple access to the CoinGecko API (Version 3)
   coingecko_api: ^1.1.0+2

@@ -9,6 +9,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/get_services_from_keychai
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_address/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_keypair/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sub_account/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sub_current_account/command_handler.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -67,6 +68,9 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
       )
       ..addHandler(
         KeychainDeriveAddressCommandHandler(ref: ref),
+      )
+      ..addHandler(
+        SignTransactionsCommandHandler(ref: ref),
       );
 
     super.initState();
