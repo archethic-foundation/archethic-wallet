@@ -6,11 +6,11 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -71,7 +71,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     if (state.name.trim().isEmpty) {
       state = state.copyWith(
         errorText:
-            AppLocalization.of(context)!.introNewWalletGetFirstInfosNameBlank,
+            AppLocalizations.of(context)!.introNewWalletGetFirstInfosNameBlank,
       );
       return false;
     }
@@ -82,7 +82,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
         .where((Account element) => element.name == state.name)
         .isNotEmpty) {
       state = state.copyWith(
-        errorText: AppLocalization.of(context)!.addAccountExists,
+        errorText: AppLocalizations.of(context)!.addAccountExists,
       );
       return false;
     }
@@ -93,7 +93,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
   Future<void> send(BuildContext context) async {
     final transactionRepository = ref.read(AddAccountFormProvider._repository);
 
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     late Transaction transaction;
 

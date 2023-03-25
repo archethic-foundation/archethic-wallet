@@ -70,6 +70,7 @@ class _SessionNotifier extends Notifier<Session> {
           appKeychain: newWalletDTO.appKeychain,
         ),
       );
+      // ignore: empty_catches
     } catch (e) {}
   }
 

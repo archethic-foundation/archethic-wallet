@@ -151,6 +151,9 @@ dependencies:
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
   image_picker: ^0.8.6+1
 
+  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
+  intl: any
+
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.8.0
 
@@ -254,8 +257,6 @@ dev_dependencies:
   # Integration Tests
   integration_test:
     sdk: flutter
-  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl_generator: ^0.4.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.6.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
@@ -281,6 +282,8 @@ msix_config:
 
 # The following section is specific to Flutter.
 flutter:
+  generate: true
+
   assets:
     - assets/ssl/isrg-root-x1.pem
     - assets/icons/

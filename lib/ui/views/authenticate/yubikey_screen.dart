@@ -7,7 +7,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -20,6 +19,7 @@ import 'package:event_taxi/event_taxi.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -85,7 +85,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.read(ThemeProviders.selectedTheme);
     // TODO(chralu): utilisation provider ? (1)
     final preferences = await HivePreferencesDatasource.getInstance();
@@ -222,7 +222,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 

@@ -9,11 +9,11 @@ import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction_keychain_builder.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/sign_transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddServiceHandler extends CommandHandler {
@@ -91,7 +91,7 @@ class AddServiceHandler extends CommandHandler {
     required RPCCommand<RPCAddServiceCommandData> command,
   }) async {
     final message =
-        AppLocalization.of(context)!.addServiceCommandReceivedNotification;
+        AppLocalizations.of(context)!.addServiceCommandReceivedNotification;
 
     NotificationsUtil.showNotification(
       title: 'Archethic',

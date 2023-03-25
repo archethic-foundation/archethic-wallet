@@ -16,7 +16,7 @@ class _NFTCreationProcessSummaryTabState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -59,7 +59,7 @@ class _NFTCreationProcessSummaryTabState
                                   ConnectivityStatus.isConnected)
                             AppButtonTiny(
                               AppButtonTinyType.primary,
-                              AppLocalization.of(context)!.createTheNFT,
+                              AppLocalizations.of(context)!.createTheNFT,
                               Dimens.buttonTopDimens,
                               key: const Key('createTheNFT'),
                               icon: Icon(
@@ -83,7 +83,7 @@ class _NFTCreationProcessSummaryTabState
                           else
                             AppButtonTiny(
                               AppButtonTinyType.primaryOutline,
-                              AppLocalization.of(context)!.createTheNFT,
+                              AppLocalizations.of(context)!.createTheNFT,
                               Dimens.buttonTopDimens,
                               key: const Key('createTheNFT'),
                               icon: Icon(

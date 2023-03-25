@@ -112,7 +112,7 @@ class _AddPublicKeyTextFieldPkState
       textInputAction: TextInputAction.done,
       maxLines: null,
       autocorrect: false,
-      labelText: AppLocalization.of(context)!.enterPublicKey,
+      labelText: AppLocalizations.of(context)!.enterPublicKey,
       prefixButton: TextFieldButton(
         icon: UiIcons.address_book,
         onPressed: () async {
@@ -148,7 +148,7 @@ class _AddPublicKeyTextFieldPkState
                 );
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.qrInvalidAddress,
+                    AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
                     theme.text!,

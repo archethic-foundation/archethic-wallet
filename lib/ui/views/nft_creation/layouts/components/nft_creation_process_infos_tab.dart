@@ -8,7 +8,7 @@ class NFTCreationProcessInfosTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 

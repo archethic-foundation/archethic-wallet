@@ -2,13 +2,13 @@
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BalanceInfosPopup {
@@ -127,7 +127,7 @@ class BalanceInfosPopup {
 
   static void _copyAmount(BuildContext context, WidgetRef ref, String amount) {
     Clipboard.setData(ClipboardData(text: amount));
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.read(ThemeProviders.selectedTheme);
     UIUtil.showSnackbar(
       localizations.amountCopied,

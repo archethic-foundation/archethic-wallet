@@ -8,12 +8,12 @@ import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -84,7 +84,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         state.accountBalance.nativeTokenValue - fees) {
       state = state.copyWith(
         errorNameText:
-            AppLocalization.of(context)!.insufficientBalance.replaceAll(
+            AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                   '%1',
                   state.symbolFees(context),
                 ),
@@ -198,14 +198,14 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
   ) {
     if (state.name.isEmpty) {
       state = state.copyWith(
-        errorNameText: AppLocalization.of(context)!.tokenNameMissing,
+        errorNameText: AppLocalizations.of(context)!.tokenNameMissing,
       );
       return false;
     }
 
     if (kTokenFordiddenName.contains(state.name.toUpperCase())) {
       state = state.copyWith(
-        errorNameText: AppLocalization.of(context)!.tokenNameUCO,
+        errorNameText: AppLocalizations.of(context)!.tokenNameUCO,
       );
       return false;
     }
@@ -218,14 +218,14 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
   ) {
     if (state.symbol.isEmpty) {
       state = state.copyWith(
-        errorSymbolText: AppLocalization.of(context)!.tokenSymbolMissing,
+        errorSymbolText: AppLocalizations.of(context)!.tokenSymbolMissing,
       );
       return false;
     }
 
     if (kTokenFordiddenName.contains(state.symbol.toUpperCase())) {
       state = state.copyWith(
-        errorSymbolText: AppLocalization.of(context)!.tokenSymbolUCO,
+        errorSymbolText: AppLocalizations.of(context)!.tokenSymbolUCO,
       );
       return false;
     }
@@ -238,7 +238,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     if (state.initialSupply <= 0) {
       state = state.copyWith(
         errorInitialSupplyText:
-            AppLocalization.of(context)!.tokenInitialSupplyPositive,
+            AppLocalizations.of(context)!.tokenInitialSupplyPositive,
       );
       return false;
     }
@@ -247,7 +247,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     if (state.initialSupply > 9999999999) {
       state = state.copyWith(
         errorInitialSupplyText:
-            AppLocalization.of(context)!.tokenInitialSupplyTooHigh,
+            AppLocalizations.of(context)!.tokenInitialSupplyTooHigh,
       );
       return false;
     }
@@ -264,7 +264,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
       state = state.copyWith(
         errorAmountText:
-            AppLocalization.of(context)!.insufficientBalance.replaceAll(
+            AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                   '%1',
                   state.symbolFees(context),
                 ),
@@ -281,7 +281,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
   Future<void> send(BuildContext context) async {
     final transactionRepository = ref.read(AddTokenFormProvider._repository);
 
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,

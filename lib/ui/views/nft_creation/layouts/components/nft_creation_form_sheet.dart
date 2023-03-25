@@ -1,6 +1,5 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
@@ -13,6 +12,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -31,7 +31,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final activeVibrations = ref.watch(
       SettingsProviders.settings.select((value) => value.activeVibrations),
@@ -153,7 +153,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                           ),
                         ),
                         Tab(
-                          text: AppLocalization.of(context)!
+                          text: AppLocalizations.of(context)!
                               .nftCreationProcessTabImportHeader,
                           icon: const Icon(UiIcons.nft_creation_process_import),
                         ),

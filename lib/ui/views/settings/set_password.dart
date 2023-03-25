@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math';
+
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -12,6 +12,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:password_strength/password_strength.dart';
 
@@ -57,7 +58,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -383,13 +384,13 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
         confirmPasswordController!.text.isEmpty) {
       if (mounted) {
         setState(() {
-          passwordError = AppLocalization.of(context)!.passwordBlank;
+          passwordError = AppLocalizations.of(context)!.passwordBlank;
         });
       }
     } else if (setPasswordController!.text != confirmPasswordController!.text) {
       if (mounted) {
         setState(() {
-          passwordError = AppLocalization.of(context)!.passwordsDontMatch;
+          passwordError = AppLocalizations.of(context)!.passwordsDontMatch;
         });
       }
     } else {

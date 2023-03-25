@@ -38,6 +38,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
         if (ref.read(SessionProviders.session).isLoggedOut) {
           return RPCFailure.disconnected();
         }
+        return null;
       })
       ..addHandler(
         SendTransactionHandler(context: context, ref: ref),

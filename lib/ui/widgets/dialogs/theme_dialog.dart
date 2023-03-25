@@ -3,12 +3,12 @@ import 'dart:math';
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeDialog {
@@ -32,7 +32,7 @@ class ThemeDialog {
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              AppLocalization.of(context)!.themeHeader,
+              AppLocalizations.of(context)!.themeHeader,
               style: theme.textStyleSize24W700EquinoxPrimary,
             ),
           ),

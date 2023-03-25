@@ -6,7 +6,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "welcomeText": "Welcome to the empowered\n{Humans; Nature; Apps}\nera of Web3",
+  "welcomeText": "Welcome to the empowered era of Web3",
   "@welcomeText": {
     "type": "text",
     "placeholders_order": [],
@@ -948,32 +948,32 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenHeader": "Token",
-  "@TokenHeader": {
+  "tokenHeader": "Token",
+  "@tokenHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenHeaderDesc": "Manage your tokens",
-  "@TokenHeaderDesc": {
+  "tokenHeaderDesc": "Manage your tokens",
+  "@tokenHeaderDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenNameHint": "Enter a name",
-  "@TokenNameHint": {
+  "tokenNameHint": "Enter a name",
+  "@tokenNameHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenName": "Name :",
-  "@TokenName": {
+  "tokenName": "Name :",
+  "@tokenName": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenInitialSupplyHint": "Enter an initial supply",
-  "@TokenInitialSupplyHint": {
+  "tokenInitialSupplyHint": "Enter an initial supply",
+  "@tokenInitialSupplyHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -984,8 +984,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenNameMissing": "Choose a Name for the Token",
-  "@TokenNameMissing": {
+  "tokenNameMissing": "Choose a Name for the Token",
+  "@tokenNameMissing": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1008,20 +1008,20 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenInitialSupply": "Initial supply :",
-  "@TokenInitialSupply": {
+  "tokenInitialSupply": "Initial supply :",
+  "@tokenInitialSupply": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenInitialSupplyMissing": "Choose an initial supply for the Token",
-  "@TokenInitialSupplyMissing": {
+  "tokenInitialSupplyMissing": "Choose an initial supply for the Token",
+  "@tokenInitialSupplyMissing": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenInitialSupplyPositive": "The initial supply should be > 0",
-  "@TokenInitialSupplyPositive": {
+  "tokenInitialSupplyPositive": "The initial supply should be > 0",
+  "@tokenInitialSupplyPositive": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1188,8 +1188,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "TokenCreated": "Token created :",
-  "@TokenCreated": {
+  "tokenCreated": "Token created :",
+  "@tokenCreated": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2124,12 +2124,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tokenInitialSupply": "Initial supply :",
-  "@tokenInitialSupply": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "tokenSymbolMissing": "Choose a Symbol for the Token",
   "@tokenSymbolMissing": {
     "type": "text",
@@ -2870,6 +2864,18 @@
   },
   "serviceTypeLabelOther": "Other",
   "@serviceTypeLabelOther": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "ledgerMethod": "Ledger Nano S",
+  "@ledgerMethod": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addServiceCommandReceivedNotification": "Application %1 wants to add a service.",
+  "@addServiceCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

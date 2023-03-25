@@ -1021,21 +1021,13 @@ packages:
     source: sdk
     version: "0.0.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
       url: "https://pub.dev"
     source: hosted
     version: "0.18.0"
-  intl_generator:
-    dependency: "direct dev"
-    description:
-      name: intl_generator
-      sha256: "120e03ccefe0c215801e44a8ccbaeabe6c895c5792f44298133745ab0a0e0bf5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.1"
   io:
     dependency: transitive
     description:

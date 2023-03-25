@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -155,7 +155,7 @@ class NFTCategoryRepository {
   }
 
   List<NftCategory> getListByDefault(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     return [
       NftCategory(
         id: 0,
@@ -196,7 +196,7 @@ class NFTCategoryRepository {
   }
 
   String getDescriptionHeader(BuildContext context, int id) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     switch (id) {
       case 0:
         return localizations.nftCategoryDescriptionHeader0;

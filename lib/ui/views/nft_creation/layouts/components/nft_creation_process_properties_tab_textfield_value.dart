@@ -71,7 +71,7 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
       controller: nftPropertyValueController,
       cursorColor: theme.text,
       textInputAction: TextInputAction.next,
-      labelText: AppLocalization.of(context)!.nftPropertyValueHint,
+      labelText: AppLocalizations.of(context)!.nftPropertyValueHint,
       autocorrect: false,
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
@@ -98,7 +98,7 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
                 );
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.qrInvalidAddress,
+                    AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
                     theme.text!,

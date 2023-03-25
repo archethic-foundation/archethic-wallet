@@ -1,7 +1,7 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
 	"noConnectionBanner": "Pas de connexion",
-	"welcomeText": "Bienvenue dans l'ère de l'autonomie des\n{Humains; Nature; Applications}\ndu Web3.",
+	"welcomeText": "Bienvenue dans l'ère de l'autonomie du Web3.",
 	"welcomeText2": "Archethic redonne à l'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité.",
 	"cancel": "Annuler",
 	"noData": "Pas de données",
@@ -479,5 +479,7 @@
 	"aewebHosting": "Hébergement AEWeb",
 	"serviceTypeLabelArchethicWallet": "Wallet",
 	"serviceTypeLabelAeweb": "Site web hébergé sur AEWeb",
-	"serviceTypeLabelOther": "Autre"
+	"serviceTypeLabelOther": "Autre",
+	"ledgerMethod": "Ledger Nano S",
+	"addServiceCommandReceivedNotification": "L'application %1 souhaite ajouter un service."
 }

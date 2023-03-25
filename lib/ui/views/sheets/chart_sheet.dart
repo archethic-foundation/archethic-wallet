@@ -3,7 +3,6 @@ import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
@@ -14,6 +13,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -53,7 +53,7 @@ class ChartSheet extends ConsumerWidget {
     return Column(
       children: <Widget>[
         SheetHeader(
-          title: AppLocalization.of(context)!.chart,
+          title: AppLocalizations.of(context)!.chart,
         ),
         FadeIn(
           duration: const Duration(milliseconds: 1000),

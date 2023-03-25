@@ -3,13 +3,13 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/util/seeds.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiver/strings.dart';
 import 'package:validators/validators.dart';
@@ -76,7 +76,7 @@ class UserDataUtil {
       final theme = ref.read(ThemeProviders.selectedTheme);
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.qrInvalidPermissions,
+          AppLocalizations.of(context)!.qrInvalidPermissions,
           context,
           ref,
           theme.text!,
@@ -85,7 +85,7 @@ class UserDataUtil {
         return QRScanErrs.permissionDenied;
       } else {
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.qrUnknownError,
+          AppLocalizations.of(context)!.qrUnknownError,
           context,
           ref,
           theme.text!,

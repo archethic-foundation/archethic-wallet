@@ -10,7 +10,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -28,6 +27,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransferConfirmSheet extends ConsumerStatefulWidget {
@@ -87,7 +87,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
   void _showNotEnoughConfirmation(BaseTheme theme) {
     UIUtil.showSnackbar(
-      AppLocalization.of(context)!.notEnoughConfirmations,
+      AppLocalizations.of(context)!.notEnoughConfirmations,
       context,
       ref,
       theme.text!,
@@ -102,11 +102,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   ) async {
     UIUtil.showSnackbar(
       event.nbConfirmations == 1
-          ? AppLocalization.of(context)!
+          ? AppLocalizations.of(context)!
               .transferConfirmed1
               .replaceAll('%1', event.nbConfirmations.toString())
               .replaceAll('%2', event.maxConfirmations.toString())
-          : AppLocalization.of(context)!
+          : AppLocalizations.of(context)!
               .transferConfirmed
               .replaceAll('%1', event.nbConfirmations.toString())
               .replaceAll('%2', event.maxConfirmations.toString()),
@@ -187,7 +187,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);

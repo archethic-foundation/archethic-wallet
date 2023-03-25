@@ -1,4 +1,3 @@
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/views/authenticate/password_screen.dart';
@@ -8,6 +7,7 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -186,7 +186,7 @@ class AuthFactory {
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {
     final auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
           context,
-          AppLocalization.of(context)!.unlockBiometrics,
+          AppLocalizations.of(context)!.unlockBiometrics,
         );
     return auth;
   }

@@ -2,7 +2,6 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
@@ -12,6 +11,7 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthentificationMethodDialog {
@@ -49,7 +49,7 @@ class AuthentificationMethodDialog {
     await showDialog<AuthMethod>(
       context: context,
       builder: (BuildContext context) {
-        final localizations = AppLocalization.of(context)!;
+        final localizations = AppLocalizations.of(context)!;
         return AlertDialog(
           title: Text(
             localizations.authMethod,
@@ -126,7 +126,7 @@ class AuthentificationMethodDialog {
                         builder: (BuildContext context) {
                           return SetPassword(
                             header: localizations.setPasswordHeader,
-                            description: AppLocalization.of(
+                            description: AppLocalizations.of(
                               context,
                             )!
                                 .configureSecurityExplanationPassword,

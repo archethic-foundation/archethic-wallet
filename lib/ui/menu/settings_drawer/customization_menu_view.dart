@@ -10,7 +10,7 @@ class CustomizationMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
@@ -144,7 +144,7 @@ class _CurrencySettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
@@ -165,7 +165,7 @@ class _LanguageSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final language = ref.watch(LanguageProviders.selectedLanguage);
 
     return _SettingsListItem.withDefaultValue(
@@ -182,7 +182,7 @@ class _ThemeSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final themeOption = ref.watch(
       SettingsProviders.settings.select((settings) => settings.theme),
@@ -212,7 +212,7 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final showBalancesSetting = ref.watch(
       SettingsProviders.settings.select((settings) => settings.showBalances),
     );
@@ -233,7 +233,7 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final showBlogSetting = ref.watch(
       SettingsProviders.settings.select((settings) => settings.showBlog),
@@ -256,7 +256,7 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final showPriceChart = ref.watch(
       SettingsProviders.settings.select((settings) => settings.showPriceChart),
@@ -279,7 +279,7 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final activeNotifications = ref.watch(
       SettingsProviders.settings
@@ -303,7 +303,7 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final activeVibrations = ref.watch(
       SettingsProviders.settings

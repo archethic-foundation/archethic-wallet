@@ -64,7 +64,7 @@ class _TransferTextFieldAddressState
   Widget build(
     BuildContext context,
   ) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferFormProvider.transferForm);
@@ -92,7 +92,7 @@ class _TransferTextFieldAddressState
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: AppLocalization.of(context)!.enterAddress,
+          labelText: AppLocalizations.of(context)!.enterAddress,
           prefixButton: hasQRCode
               ? TextFieldButton(
                   icon: FontAwesomeIcons.qrcode,
@@ -108,7 +108,7 @@ class _TransferTextFieldAddressState
                     );
                     if (scanResult == null) {
                       UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.qrInvalidAddress,
+                        AppLocalizations.of(context)!.qrInvalidAddress,
                         context,
                         ref,
                         theme.text!,

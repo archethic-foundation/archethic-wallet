@@ -1,9 +1,9 @@
 import 'package:aewallet/domain/models/transaction_event.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 extension TransactionErrorLocalizedExt on TransactionError {
-  String localizedMessage(AppLocalization localization) => map(
+  String localizedMessage(AppLocalizations localization) => map(
         timeout: (_) => localization.transactionTimeOut,
         connectivity: (_) => localization.connectivityWarningDesc,
         consensusNotReached: (_) => localization.consensusNotReached,

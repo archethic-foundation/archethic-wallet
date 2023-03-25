@@ -9,7 +9,6 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -32,6 +31,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IntroBackupConfirm extends ConsumerStatefulWidget {
@@ -64,7 +64,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      final localizations = AppLocalization.of(context)!;
+      final localizations = AppLocalizations.of(context)!;
       final theme = ref.read(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         UIUtil.showSnackbar(
@@ -217,7 +217,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
@@ -622,7 +622,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   }
 
   Future<void> createKeychain() async {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.read(ThemeProviders.selectedTheme);
     ShowSendingAnimation.build(
       context,
@@ -647,7 +647,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
       );
     } catch (e) {
       error = true;
-      final localizations = AppLocalization.of(context)!;
+      final localizations = AppLocalizations.of(context)!;
       final theme = ref.read(ThemeProviders.selectedTheme);
       UIUtil.showSnackbar(
         '${localizations.sendError} ($e)',

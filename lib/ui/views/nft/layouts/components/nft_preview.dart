@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/mime_util.dart';
@@ -10,6 +9,7 @@ import 'package:aewallet/util/token_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTPreviewWidget extends ConsumerWidget {
@@ -30,7 +30,7 @@ class NFTPreviewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final description = tokenInformations.tokenProperties!['description'] ?? '';
     final typeMime = tokenInformations.tokenProperties!['type_mime'] ?? '';
 
@@ -86,7 +86,7 @@ class NFTPreviewWidget extends ConsumerWidget {
                               top: 10,
                             ),
                             child: Text(
-                              '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(snapshot.data!.length)}',
+                              '${AppLocalizations.of(context)!.nftAddFileSize} ${filesize(snapshot.data!.length)}',
                               style: theme.textStyleSize12W400Primary,
                             ),
                           ),

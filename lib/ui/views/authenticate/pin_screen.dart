@@ -7,13 +7,13 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/settings.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -186,7 +186,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                     // Switch to confirm pin
                     setState(() {
                       _awaitingConfirmation = true;
-                      _header = AppLocalization.of(context)!.pinConfirmTitle;
+                      _header = AppLocalizations.of(context)!.pinConfirmTitle;
                     });
                   } else {
                     // First and second pins match
@@ -242,7 +242,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
             _awaitingConfirmation = false;
             _pin = '';
             _pinConfirmed = '';
-            _header = AppLocalization.of(context)!.pinConfirmError;
+            _header = AppLocalizations.of(context)!.pinConfirmError;
             _controller.value = 0;
           });
         });
@@ -287,7 +287,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
           } else {
             setState(() {
               _pin = '';
-              _header = AppLocalization.of(context)!.pinInvalid;
+              _header = AppLocalizations.of(context)!.pinInvalid;
               _controller.value = 0;
             });
           }
@@ -298,7 +298,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 

@@ -1,9 +1,9 @@
 import 'package:aewallet/application/nft/nft.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _initialNftSearchBarProvider = Provider<NftSearchBarState>(
@@ -61,7 +61,7 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
     BuildContext context,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
-    final localizations = AppLocalization.of(context);
+    final localizations = AppLocalizations.of(context);
     if (searchCriteria.isEmpty) {
       state = state.copyWith(error: localizations!.addressMissing);
       return;
