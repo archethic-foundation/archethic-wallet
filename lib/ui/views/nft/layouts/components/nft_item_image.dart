@@ -1,12 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-import 'package:aewallet/localization.dart';
+
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_item_loading.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTItemImage extends ConsumerWidget {
@@ -23,7 +24,7 @@ class NFTItemImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

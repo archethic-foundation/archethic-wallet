@@ -30,7 +30,6 @@ class NFTListDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalizations.of(context)!;
 
     final preferences = ref.watch(SettingsProviders.settings);
 
@@ -185,7 +184,6 @@ class NFTCardBottom extends ConsumerWidget {
 
 class _NFTLabelProperties extends ConsumerWidget {
   const _NFTLabelProperties({
-    super.key,
     required this.propertiesToCount,
   });
 
@@ -194,7 +192,7 @@ class _NFTLabelProperties extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     return propertiesToCount == 0
         ? Text(

@@ -27,6 +27,5 @@ class CardCategory extends ConsumerWidget {
         child: background,
       ),
     );
-    ;
   }
 }

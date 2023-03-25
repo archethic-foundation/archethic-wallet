@@ -629,7 +629,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   ) {
     if (!state.isFileImportFile()) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+        error: AppLocalizations.of(context)!.nftAddConfirmationFileEmpty,
       );
       return false;
     }
@@ -665,7 +665,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   ) {
     if (!state.isFileImportUrl()) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+        error: AppLocalizations.of(context)!.nftAddConfirmationFileEmpty,
       );
       return false;
     }

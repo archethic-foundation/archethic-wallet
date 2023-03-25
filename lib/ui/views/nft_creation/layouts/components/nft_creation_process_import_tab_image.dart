@@ -12,8 +12,6 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
     }
 
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final preferences = ref.watch(SettingsProviders.settings);
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
     );

@@ -6,7 +6,7 @@ class NFTCreationProcessImportTabAEWeb extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
