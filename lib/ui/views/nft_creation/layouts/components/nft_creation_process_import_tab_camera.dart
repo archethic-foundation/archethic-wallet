@@ -12,7 +12,6 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
     }
 
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,
     );

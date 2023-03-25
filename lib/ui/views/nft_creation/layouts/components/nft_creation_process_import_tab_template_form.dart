@@ -43,7 +43,7 @@ class _NFTCreationProcessImportTabFormUrlState
     super.initState();
     urlFocusNode = FocusNode();
     urlController = TextEditingController(
-        text: 'ipfs://Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu');
+        text: 'ipfs://Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu',);
   }
 
   @override

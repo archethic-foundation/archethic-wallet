@@ -9,7 +9,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_p
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_file_preview_ipfs.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTCreationProcessFilePreview extends ConsumerWidget {
@@ -48,7 +47,6 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
       return const SizedBox();
     }
 
-    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
