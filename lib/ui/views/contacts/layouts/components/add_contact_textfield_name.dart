@@ -33,7 +33,7 @@ class _AddContactTextFieldNameState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final contactCreationNotifier =
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);

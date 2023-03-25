@@ -63,7 +63,7 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
       textInputAction: TextInputAction.newline,
       textAlign: TextAlign.start,
       cursorColor: theme.text,
-      labelText: AppLocalization.of(context)!.nftDescriptionHint,
+      labelText: AppLocalizations.of(context)!.nftDescriptionHint,
       autocorrect: false,
       keyboardType: TextInputType.multiline,
       maxLines: 4,
@@ -86,7 +86,7 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
                 );
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.qrInvalidAddress,
+                    AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
                     theme.text!,

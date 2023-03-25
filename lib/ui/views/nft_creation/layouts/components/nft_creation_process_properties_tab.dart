@@ -8,7 +8,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final nftCreationArgs = ref.read(
@@ -50,7 +50,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                 if (nftCreation.canAddProperty)
                   AppButtonTiny(
                     AppButtonTinyType.primary,
-                    AppLocalization.of(context)!.addNFTProperty,
+                    AppLocalizations.of(context)!.addNFTProperty,
                     Dimens.buttonBottomDimens,
                     key: const Key('addNFTProperty'),
                     icon: Icon(
@@ -70,7 +70,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                 else
                   AppButtonTiny(
                     AppButtonTinyType.primaryOutline,
-                    AppLocalization.of(context)!.addNFTProperty,
+                    AppLocalizations.of(context)!.addNFTProperty,
                     Dimens.buttonBottomDimens,
                     key: const Key('addNFTProperty'),
                     icon: Icon(

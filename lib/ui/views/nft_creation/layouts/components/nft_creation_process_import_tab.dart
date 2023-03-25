@@ -16,7 +16,7 @@ class _NFTCreationProcessImportTabState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(

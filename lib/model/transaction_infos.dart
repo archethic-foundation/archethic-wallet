@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/localization.dart';
 import 'package:flutter/material.dart';
+// Project imports:
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 class TransactionInfos {
   TransactionInfos({
@@ -15,7 +15,7 @@ class TransactionInfos {
   String valueInfo = '';
 
   static String getDisplayName(BuildContext context, String label) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     switch (label) {
       case 'Address':
         return localizations.transactionInfosKeyAddress;

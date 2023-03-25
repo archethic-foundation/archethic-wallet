@@ -1,9 +1,9 @@
 import 'package:aewallet/application/check_transaction_worker/provider.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IncomingTransactionsNotifier extends ConsumerWidget {
@@ -23,7 +23,7 @@ class IncomingTransactionsNotifier extends ConsumerWidget {
     if (receivedTransactionList == null || receivedTransactionList.isEmpty) {
       return;
     }
-    final message = AppLocalization.of(context)!.transactionInputNotification;
+    final message = AppLocalizations.of(context)!.transactionInputNotification;
 
     for (final receivedTransaction in receivedTransactionList) {
       NotificationsUtil.showNotification(

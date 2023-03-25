@@ -39,7 +39,7 @@ class _AddContactTextFieldPublicKeyState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final contactCreationNotifier =
@@ -72,7 +72,7 @@ class _AddContactTextFieldPublicKeyState
                 );
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.qrInvalidAddress,
+                    AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
                     theme.text!,

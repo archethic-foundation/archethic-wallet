@@ -11,7 +11,6 @@ import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/public_key.dart';
@@ -21,6 +20,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdfx/pdfx.dart';
 
@@ -112,7 +112,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     if (state.feeEstimationOrZero >
         state.accountBalance.nativeTokenValue - fees) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.insufficientBalance.replaceAll(
+        error: AppLocalizations.of(context)!.insufficientBalance.replaceAll(
               '%1',
               state.symbolFees(context),
             ),
@@ -197,7 +197,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   ) {
     if (publicKey.isPublicKeyValid == false) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.publicKeyInvalid,
+        error: AppLocalizations.of(context)!.publicKeyInvalid,
       );
       return;
     }
@@ -222,7 +222,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
 
     if (exist) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.publicKeyAccessExists,
+        error: AppLocalizations.of(context)!.publicKeyAccessExists,
       );
       return;
     }
@@ -500,7 +500,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   ) {
     if (state.name.isEmpty) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.nftNameEmpty,
+        error: AppLocalizations.of(context)!.nftNameEmpty,
       );
       return false;
     }
@@ -512,7 +512,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   ) {
     if (state.file == null || state.file!.keys.isEmpty) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.nftAddConfirmationFileEmpty,
+        error: AppLocalizations.of(context)!.nftAddConfirmationFileEmpty,
       );
       return false;
     }
@@ -520,14 +520,14 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     if (MimeUtil.isImage(state.fileTypeMime) == false &&
         MimeUtil.isPdf(state.fileTypeMime) == false) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.nftFormatNotSupportedEmpty,
+        error: AppLocalizations.of(context)!.nftFormatNotSupportedEmpty,
       );
       return false;
     }
 
     if (state.fileSize > 2500000) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.nftSizeExceed,
+        error: AppLocalizations.of(context)!.nftSizeExceed,
       );
       return false;
     }
@@ -539,7 +539,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   bool controlAddNFTProperty(
     BuildContext context,
   ) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     if (state.properties
         .where((element) => element.propertyName == state.propertyName)
         .isNotEmpty) {
@@ -558,7 +558,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   Future<void> send(BuildContext context) async {
     final transactionRepository = ref.read(NftCreationFormProvider._repository);
 
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,

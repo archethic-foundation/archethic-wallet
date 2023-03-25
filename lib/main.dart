@@ -12,7 +12,6 @@ import 'package:aewallet/domain/repositories/feature_flags.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
@@ -36,6 +35,7 @@ import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -139,8 +139,8 @@ class App extends ConsumerWidget {
           fontFamily: theme.secondaryFont,
           brightness: theme.brightness,
         ),
-        localizationsDelegates: [
-          AppLocalizationsDelegate(language),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
@@ -270,15 +270,15 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           (jailbroken || developerMode)) {
         AppDialogs.showConfirmDialog(
             context,
-            CaseChange.toUpperCase(AppLocalization.of(context)!.warning,
+            CaseChange.toUpperCase(AppLocalizations.of(context)!.warning,
                 StateContainer.of(context).curLanguage.getLocaleString()),
-            AppLocalization.of(context)!.rootWarning,
-            AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
+            AppLocalizations.of(context)!.rootWarning,
+            AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
             () async {
               preferences.setHasSeenRootWarning();
               checkLoggedIn();
             },
-            cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
+            cancelText: AppLocalizations.of(context)!.exit.toUpperCase(),
             cancelAction: () {
               if (!kIsWeb && Platform.isIOS) {
                 exit(0);

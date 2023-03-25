@@ -9,7 +9,6 @@ import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -20,6 +19,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -96,13 +96,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
-          errorAmountText:
-              amountInUCO > state.accountBalance.nativeTokenValue - fees
-                  ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
-                        '%1',
-                        state.symbol(context),
-                      )
-                  : '',
+          errorAmountText: amountInUCO >
+                  state.accountBalance.nativeTokenValue - fees
+              ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol(context),
+                  )
+              : '',
         );
         break;
       case TransferType.token:
@@ -132,12 +132,14 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
           errorAmountText: state.amount > state.accountToken!.amount!
-              ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+              ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                     '%1',
                     state.symbol(context),
                   )
               : fees > state.accountBalance.nativeTokenValue
-                  ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                  ? AppLocalizations.of(context)!
+                      .insufficientBalance
+                      .replaceAll(
                         '%1',
                         state.symbolFees(context),
                       )
@@ -172,7 +174,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
           errorAmountText: fees > state.accountBalance.nativeTokenValue
-              ? AppLocalization.of(context)!.insufficientBalance.replaceAll(
+              ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                     '%1',
                     state.symbolFees(context),
                   )
@@ -227,7 +229,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         ) ==
         false) {
       state = state.copyWith(
-        errorAddressText: AppLocalization.of(context)!.invalidAddress,
+        errorAddressText: AppLocalizations.of(context)!.invalidAddress,
       );
 
       return false;
@@ -259,7 +261,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       } else {
         _setRecipient(
           recipient: TransferRecipient.address(
-              address: archethic.Address(address: text),),
+            address: archethic.Address(address: text),
+          ),
         );
       }
 
@@ -534,7 +537,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             state.recipient.address!.address == null ||
             state.recipient.address!.address!.isEmpty)) {
       state = state.copyWith(
-        errorAmountText: AppLocalization.of(context)!.maxSendRecipientMissing,
+        errorAmountText: AppLocalizations.of(context)!.maxSendRecipientMissing,
       );
       return false;
     }
@@ -547,7 +550,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   ) {
     if (state.amount <= 0) {
       state = state.copyWith(
-        errorAmountText: AppLocalization.of(context)!.amountZero,
+        errorAmountText: AppLocalizations.of(context)!.amountZero,
       );
       return false;
     }
@@ -568,7 +571,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             accountSelected.balance!.nativeTokenValue) {
           state = state.copyWith(
             errorAmountText:
-                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                       '%1',
                       state.symbol(context),
                     ),
@@ -580,7 +583,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
           state = state.copyWith(
             errorAmountText:
-                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                       '%1',
                       state.symbol(context),
                     ),
@@ -591,7 +594,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         if (state.amount > state.accountToken!.amount!) {
           state = state.copyWith(
             errorAmountText:
-                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                       '%1',
                       state.symbol(context),
                     ),
@@ -603,7 +606,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
           state = state.copyWith(
             errorAmountText:
-                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                       '%1',
                       state.symbolFees(context),
                     ),
@@ -614,7 +617,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         if (state.amount > state.accountToken!.amount!) {
           state = state.copyWith(
             errorAmountText:
-                AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                       '%1',
                       'NFT',
                     ),
@@ -637,13 +640,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final error = state.recipient.when(
       address: (address) {
         if (address.address == null || address.address!.isEmpty) {
-          return AppLocalization.of(context)!.addressMissing;
+          return AppLocalizations.of(context)!.addressMissing;
         }
         if (!address.isValid()) {
-          return AppLocalization.of(context)!.invalidAddress;
+          return AppLocalizations.of(context)!.invalidAddress;
         }
         if (accountSelected.lastAddress == address.address) {
-          return AppLocalization.of(context)!.sendToMeError.replaceAll(
+          return AppLocalizations.of(context)!.sendToMeError.replaceAll(
                 '%1',
                 state.symbol(context),
               );
@@ -651,22 +654,22 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       },
       contact: (contact) {
         if (contact.address.isEmpty) {
-          return AppLocalization.of(context)!.addressMissing;
+          return AppLocalizations.of(context)!.addressMissing;
         }
 
         if (!archethic.Address(address: contact.address).isValid()) {
-          return AppLocalization.of(context)!.invalidAddress;
+          return AppLocalizations.of(context)!.invalidAddress;
         }
 
         if (accountSelected.lastAddress == contact.address) {
-          return AppLocalization.of(context)!.sendToMeError.replaceAll(
+          return AppLocalizations.of(context)!.sendToMeError.replaceAll(
                 '%1',
                 state.symbol(context),
               );
         }
       },
       unknownContact: (_) {
-        return AppLocalization.of(context)!.contactInvalid;
+        return AppLocalizations.of(context)!.contactInvalid;
       },
     );
 
@@ -681,7 +684,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   Future<void> send(BuildContext context) async {
     final transferRepository = ref.read(TransferFormProvider._repository);
 
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,

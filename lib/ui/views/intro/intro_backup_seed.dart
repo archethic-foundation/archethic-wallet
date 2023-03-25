@@ -2,7 +2,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
@@ -15,6 +14,7 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/seeds.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -42,7 +42,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final language = ref.watch(

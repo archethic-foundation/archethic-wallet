@@ -4,13 +4,13 @@ import 'dart:math' as math;
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-// Project imports:
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+// Project imports:
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -61,7 +61,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  AppLocalization.of(context)!.blogHeader,
+                  AppLocalizations.of(context)!.blogHeader,
                   style: theme.textStyleSize14W600EquinoxPrimary,
                 ),
                 InkWell(

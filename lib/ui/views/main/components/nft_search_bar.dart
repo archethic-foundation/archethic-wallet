@@ -3,7 +3,6 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -21,6 +20,7 @@ import 'package:aewallet/util/user_data_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -63,7 +63,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final session = ref.watch(SessionProviders.session).loggedIn!;
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final nftSearchBar = ref.watch(
       NftSearchBarProvider.nftSearchBar,
     );
@@ -133,7 +133,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       );
                       if (scanResult == null) {
                         UIUtil.showSnackbar(
-                          AppLocalization.of(
+                          AppLocalizations.of(
                             context,
                           )!
                               .qrInvalidAddress,

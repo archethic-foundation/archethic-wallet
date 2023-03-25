@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TokenTransferDetail extends ConsumerWidget {
@@ -20,7 +20,7 @@ class TokenTransferDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final accountSelected = ref

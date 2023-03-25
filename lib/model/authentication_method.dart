@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
+// Project imports:
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum AuthMethod {
   pin,
@@ -22,7 +22,7 @@ class AuthenticationMethod extends SettingSelectionItem {
 
   @override
   String getDisplayName(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     switch (method) {
       case AuthMethod.biometrics:
         return localizations.biometricsMethod;
@@ -40,7 +40,7 @@ class AuthenticationMethod extends SettingSelectionItem {
   }
 
   String getDescription(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     switch (method) {
       case AuthMethod.biometrics:
         return localizations.configureSecurityExplanationBiometrics;

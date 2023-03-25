@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_detail.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TxList extends ConsumerWidget {
@@ -109,7 +109,7 @@ class _TransactionsEmpty extends ConsumerWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  AppLocalization.of(context)!
+                  AppLocalizations.of(context)!
                       .recentTransactionsNoTransactionYet,
                   style: theme.textStyleSize12W100Primary,
                 ),

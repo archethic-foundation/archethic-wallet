@@ -2,11 +2,11 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CurrencyDialog {
@@ -26,7 +26,7 @@ class CurrencyDialog {
           value,
           true,
           subLabel: value.name == 'usd' || value.name == 'eur'
-              ? AppLocalization.of(context)!.conversionOraclePromotion
+              ? AppLocalizations.of(context)!.conversionOraclePromotion
               : null,
         ),
       );
@@ -49,7 +49,7 @@ class CurrencyDialog {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalization.of(context)!.currency,
+                  AppLocalizations.of(context)!.currency,
                   style: theme.textStyleSize24W700EquinoxPrimary,
                 ),
               ],

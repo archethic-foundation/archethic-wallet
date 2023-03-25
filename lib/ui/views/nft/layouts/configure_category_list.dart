@@ -1,8 +1,6 @@
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -11,6 +9,7 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ConfigureCategoryList extends ConsumerStatefulWidget {
@@ -24,7 +23,7 @@ class ConfigureCategoryList extends ConsumerStatefulWidget {
 class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final accountSelected = ref
         .watch(
           AccountProviders.selectedAccount,
@@ -91,7 +90,7 @@ class ReorderableWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCategoryToSort = nftCategory;
     return SizedBox(

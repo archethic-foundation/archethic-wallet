@@ -2,12 +2,12 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NftCategoryDialog {
@@ -44,7 +44,7 @@ class NftCategoryDialog {
     return showDialog<NftCategory>(
       context: context,
       builder: (BuildContext context) {
-        final localizations = AppLocalization.of(context)!;
+        final localizations = AppLocalizations.of(context)!;
         final theme = ref.watch(ThemeProviders.selectedTheme);
         return StatefulBuilder(
           builder: (context, setState) {

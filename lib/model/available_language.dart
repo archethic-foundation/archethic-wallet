@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum AvailableLanguage { systemDefault, english, french }
 
@@ -48,7 +48,7 @@ class LanguageSetting extends SettingSelectionItem {
       //case AvailableLanguage.ARABIC:
       //  return 'Arabic (ar)';
       case AvailableLanguage.systemDefault:
-        return AppLocalization.of(context)!.systemDefault;
+        return AppLocalizations.of(context)!.systemDefault;
     }
   }
 

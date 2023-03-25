@@ -2,7 +2,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactsDialog {
@@ -45,7 +45,7 @@ class ContactsDialog {
     return showDialog<Contact>(
       context: context,
       builder: (BuildContext context) {
-        final localizations = AppLocalization.of(context)!;
+        final localizations = AppLocalizations.of(context)!;
         final theme = ref.read(ThemeProviders.selectedTheme);
         return StatefulBuilder(
           builder: (context, setState) {

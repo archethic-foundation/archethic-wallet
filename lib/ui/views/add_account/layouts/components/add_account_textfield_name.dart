@@ -36,7 +36,7 @@ class _AddAccountTextFieldNameState
     BuildContext context,
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final addAccountNotifier =
         ref.watch(AddAccountFormProvider.addAccountForm.notifier);
 

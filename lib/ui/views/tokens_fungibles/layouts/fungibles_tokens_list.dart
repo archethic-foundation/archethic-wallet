@@ -3,7 +3,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/token.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -14,6 +13,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -22,7 +22,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final fungibleTokensAsyncValue = ref.watch(
           AccountProviders.selectedAccount
               .select((value) => value.valueOrNull?.accountTokens),
@@ -113,7 +113,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     return Column(
       children: [
         Card(

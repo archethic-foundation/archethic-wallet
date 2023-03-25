@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ServiceTypeFormatters {
@@ -11,7 +11,7 @@ class ServiceTypeFormatters {
   String get serviceType => _serviceType;
 
   String getLabel(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     switch (serviceType) {
       case 'aeweb':

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/token.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_date.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_warning.dart';
@@ -10,6 +9,7 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -36,7 +36,7 @@ class TransactionTemplate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final hasWarning = transaction.tokenInformations != null &&
         (kTokenFordiddenName.contains(

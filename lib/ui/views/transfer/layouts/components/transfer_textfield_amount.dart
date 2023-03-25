@@ -45,7 +45,7 @@ class _TransferTextFieldAmountState
   Widget build(
     BuildContext context,
   ) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferFormProvider.transferForm);
@@ -109,7 +109,7 @@ class _TransferTextFieldAmountState
               ? primaryCurrency.primaryCurrency ==
                       AvailablePrimaryCurrencyEnum.native
                   ? '${localizations.enterAmount} (${transfer.symbol(context)})'
-                  : '${AppLocalization.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
+                  : '${AppLocalizations.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
               : '${localizations.enterAmount} (${transfer.symbol(context)})',
           prefixButton: TextFieldButton(
             icon: UiIcons.max,

@@ -5,7 +5,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
@@ -16,6 +15,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -97,7 +97,7 @@ class NFTTabBody extends ConsumerWidget {
                       child: Column(
                         children: [
                           Text(
-                            AppLocalization.of(context)!
+                            AppLocalizations.of(context)!
                                 .nftTabDescriptionHeader,
                             style: theme.textStyleSize12W400Primary,
                             textAlign: TextAlign.justify,

@@ -62,7 +62,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
       controller: nftNameController,
       cursorColor: theme.text,
       textInputAction: TextInputAction.done,
-      labelText: AppLocalization.of(context)!.nftNameHint,
+      labelText: AppLocalizations.of(context)!.nftNameHint,
       autocorrect: false,
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
@@ -87,7 +87,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                 );
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.qrInvalidAddress,
+                    AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
                     theme.text!,

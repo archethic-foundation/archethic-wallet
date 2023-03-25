@@ -2,11 +2,11 @@
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PrimaryCurrencyDialog {
@@ -40,7 +40,7 @@ class PrimaryCurrencyDialog {
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              AppLocalization.of(context)!.primaryCurrency,
+              AppLocalizations.of(context)!.primaryCurrency,
               style: theme.textStyleSize24W700EquinoxPrimary,
             ),
           ),

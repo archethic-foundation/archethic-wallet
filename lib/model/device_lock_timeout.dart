@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum LockTimeoutOption { zero, one, five, fifteen, thirty, sixty }
 
@@ -33,7 +33,7 @@ class LockTimeoutSetting extends SettingSelectionItem {
 
   @override
   String getDisplayName(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     switch (setting) {
       case LockTimeoutOption.zero:
         return localizations.instantly;

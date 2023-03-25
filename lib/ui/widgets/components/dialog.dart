@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -26,7 +26,7 @@ class AppDialogs {
   }) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    cancelText ??= AppLocalization.of(context)!.cancel;
+    cancelText ??= AppLocalizations.of(context)!.cancel;
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -123,7 +123,7 @@ class AppDialogs {
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
-                  AppLocalization.of(context)!.ok,
+                  AppLocalizations.of(context)!.ok,
                   style: theme.textStyleSize12W400Primary,
                 ),
               ),
@@ -320,7 +320,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
         Text(
           widget.title != null
               ? widget.title!
-              : AppLocalization.of(context)!.pleaseWait,
+              : AppLocalizations.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
           style: theme.textStyleSize16W600EquinoxPrimary,
         ),

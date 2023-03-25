@@ -9,7 +9,7 @@ class AboutMenuView extends ConsumerWidget {
   final VoidCallback onClose;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return DecoratedBox(
@@ -69,7 +69,7 @@ class AboutMenuView extends ConsumerWidget {
                               builder: (context, ref, child) {
                                 final asyncVersionString = ref.watch(
                                   versionStringProvider(
-                                    AppLocalization.of(context)!,
+                                    AppLocalizations.of(context)!,
                                   ),
                                 );
 

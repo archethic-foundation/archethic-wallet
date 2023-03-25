@@ -3,7 +3,6 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -15,6 +14,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -63,7 +63,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -237,7 +237,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: AppLocalization.of(context)!.enterYubikeyClientID,
+          labelText: AppLocalizations.of(context)!.enterYubikeyClientID,
           keyboardType: TextInputType.number,
           textAlign: TextAlign.left,
           onSubmitted: (String text) {
@@ -269,7 +269,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: AppLocalization.of(context)!.enterYubikeyClientAPIKey,
+          labelText: AppLocalizations.of(context)!.enterYubikeyClientAPIKey,
           keyboardType: TextInputType.text,
           textAlign: TextAlign.left,
           onSubmitted: (String text) {
@@ -286,7 +286,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
       if (mounted) {
         setState(() {
           _clientIDValidationText =
-              AppLocalization.of(context)!.enterYubikeyClientIDEmpty;
+              AppLocalizations.of(context)!.enterYubikeyClientIDEmpty;
         });
       }
     } else {
@@ -294,7 +294,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
         if (mounted) {
           setState(() {
             _clientAPIKeyValidationText =
-                AppLocalization.of(context)!.enterYubikeyAPIKeyEmpty;
+                AppLocalizations.of(context)!.enterYubikeyAPIKeyEmpty;
           });
         }
       } else {

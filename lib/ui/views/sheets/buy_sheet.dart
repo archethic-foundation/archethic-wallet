@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -16,7 +16,7 @@ class BuySheet extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
-        SheetHeader(title: AppLocalization.of(context)!.transactionBuyHeader),
+        SheetHeader(title: AppLocalizations.of(context)!.transactionBuyHeader),
         Expanded(
           child: Center(
             child: SizedBox(

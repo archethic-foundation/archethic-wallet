@@ -7,7 +7,6 @@ import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -23,6 +22,7 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/dialogs/accounts_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 part 'widgets/account_selection_button.dart';
@@ -35,7 +35,7 @@ class TransactionConfirmationForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     final formState = ref.watch(
@@ -47,7 +47,7 @@ class TransactionConfirmationForm extends ConsumerWidget {
 
     return formState.map(
       error: (error) =>
-          const SizedBox(), //TODO(reddwarf): should we display an error/loading screen ?
+          const SizedBox(), // TODO(reddwarf): should we display an error/loading screen ?
       loading: (loading) => const SizedBox(),
       data: (formData) {
         return TapOutsideUnfocus(
@@ -180,11 +180,11 @@ class TransactionConfirmationForm extends ConsumerWidget {
   ) {
     UIUtil.showSnackbar(
       event.progress == 1
-          ? AppLocalization.of(context)!
+          ? AppLocalizations.of(context)!
               .transactionConfirmed1
               .replaceAll('%1', event.progress.toString())
               .replaceAll('%2', event.total.toString())
-          : AppLocalization.of(context)!
+          : AppLocalizations.of(context)!
               .transactionConfirmed
               .replaceAll('%1', event.progress.toString())
               .replaceAll('%2', event.total.toString()),
@@ -203,7 +203,7 @@ class TransactionConfirmationForm extends ConsumerWidget {
     TransactionError error,
   ) {
     UIUtil.showSnackbar(
-      error.localizedMessage(AppLocalization.of(context)!),
+      error.localizedMessage(AppLocalizations.of(context)!),
       context,
       ref,
       theme.text!,

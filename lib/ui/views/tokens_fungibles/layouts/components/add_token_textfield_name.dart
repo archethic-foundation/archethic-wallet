@@ -35,7 +35,7 @@ class _AddTokenTextFieldNameState extends ConsumerState<AddTokenTextFieldName> {
     BuildContext context,
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 

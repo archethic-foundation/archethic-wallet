@@ -3,7 +3,6 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
@@ -17,6 +16,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IntroConfigureSecurity extends ConsumerStatefulWidget {
@@ -48,7 +48,7 @@ class _IntroConfigureSecurityState
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
@@ -167,7 +167,8 @@ class _IntroConfigureSecurityState
                                               return SetPassword(
                                                 header: localizations
                                                     .setPasswordHeader,
-                                                description: AppLocalization.of(
+                                                description: AppLocalizations
+                                                        .of(
                                                   context,
                                                 )!
                                                     .configureSecurityExplanationPassword,

@@ -8,7 +8,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -28,6 +27,7 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
@@ -78,7 +78,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final languageSeed = ref.watch(
@@ -637,7 +637,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        final localizations = AppLocalization.of(context)!;
+        final localizations = AppLocalizations.of(context)!;
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),

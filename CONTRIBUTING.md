@@ -196,13 +196,9 @@ Some RPC commands require user explicit validation. Because of that, we need to 
 
 - By default, the application is in **English**.
 
-- All texts (labels, messages, ...) must be written in the file ``lib/localization.dart``.
-  - Once written, in the terminal, run the command ``flutter pub pub run intl_generator:extract_to_arb --output-dir=lib/l10n lib/localization.dart`` which allows to transfer the key in ``lib/i10n/intl_message.arb``.
-  - From this file, duplicate the added or updated content in the file ``lib/i10n/intl_en.dart`` and declare the French translation in ``lib/i10n/intl_en.dart``. 
-  - Once the files per language are updated, in the terminal, run the command ``flutter pub pub run intl_generator:generate_from_arb --output-dir=lib/l10n --no-use-deferred-loading lib/localization.dart lib/l10n/intl_*.arb`` to update the arb files.
+- All texts (labels, messages, ...) must be written in files ``lib/intl_en.arb`` and ``lib/intl_fr.arb``.
 
-
-- To get the labels in the widgets, you have to use ```final localizations = AppLocalization.of(context)!;``` then retrieve the value of the label with its key.
+- To get the labels in the widgets, you have to use ```final localizations = AppLocalizations.of(context)!;``` then retrieve the value of the label with its key.
 
 All information about internationalization with Flutter is available in the [official documentation](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
  

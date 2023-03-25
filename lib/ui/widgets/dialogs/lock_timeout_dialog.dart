@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LockTimeoutDialog {
@@ -51,7 +51,7 @@ class LockTimeoutDialog {
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              AppLocalization.of(context)!.autoLockHeader,
+              AppLocalizations.of(context)!.autoLockHeader,
               style: theme.textStyleSize24W700EquinoxPrimary,
             ),
           ),

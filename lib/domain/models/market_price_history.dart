@@ -1,5 +1,5 @@
-import 'package:aewallet/localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum MarketPriceHistoryInterval {
   hour,
@@ -14,7 +14,7 @@ enum MarketPriceHistoryInterval {
 
 extension PriceHistoryIntervalToString on MarketPriceHistoryInterval {
   String getChartOptionLabel(BuildContext context) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     switch (this) {
       case MarketPriceHistoryInterval.hour:
         return localizations.chartOptionLabel1h;

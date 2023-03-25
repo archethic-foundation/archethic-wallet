@@ -12,7 +12,7 @@ class SecurityMenuView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -165,7 +165,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final authenticationMethod = ref.watch(
       AuthenticationProviders.settings.select(
@@ -196,7 +196,7 @@ class _LockSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final lock = ref.watch(
       AuthenticationProviders.settings.select(
@@ -228,7 +228,7 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final lock = ref.watch(
       AuthenticationProviders.settings.select(
@@ -267,7 +267,7 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     final pinPadShuffle = ref.watch(
       AuthenticationProviders.settings.select(
@@ -306,7 +306,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return _SettingsListItem.singleLine(
@@ -352,7 +352,7 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     return _SettingsListItem.singleLineWithInfos(
       heading: localizations.resyncWallet,

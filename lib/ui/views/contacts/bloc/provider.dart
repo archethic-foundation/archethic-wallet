@@ -1,10 +1,10 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -47,7 +47,7 @@ class ContactCreationFormNotifier
       } else {
         state = state.copyWith(
           publicKeyRecovered: '',
-          error: AppLocalization.of(context)!.contactPublicKeyNotFound,
+          error: AppLocalizations.of(context)!.contactPublicKeyNotFound,
         );
       }
     }
@@ -63,7 +63,7 @@ class ContactCreationFormNotifier
       } else {
         state = state.copyWith(
           publicKeyRecovered: '',
-          error: AppLocalization.of(context)!.contactPublicKeyNotFound,
+          error: AppLocalizations.of(context)!.contactPublicKeyNotFound,
         );
       }
     } else {
@@ -110,7 +110,7 @@ class ContactCreationFormNotifier
   ) async {
     if (state.name.isEmpty) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.contactNameMissing,
+        error: AppLocalizations.of(context)!.contactNameMissing,
       );
       return false;
     }
@@ -119,7 +119,7 @@ class ContactCreationFormNotifier
     );
     if (nameExists) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.contactExistsName,
+        error: AppLocalizations.of(context)!.contactExistsName,
       );
       return false;
     }
@@ -132,14 +132,14 @@ class ContactCreationFormNotifier
   ) async {
     if (state.address.isEmpty) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.addressMissing,
+        error: AppLocalizations.of(context)!.addressMissing,
       );
       return false;
     }
 
     if (!Address(address: state.address).isValid()) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.invalidAddress,
+        error: AppLocalizations.of(context)!.invalidAddress,
       );
       return false;
     }
@@ -151,7 +151,7 @@ class ContactCreationFormNotifier
 
     if (addressExists) {
       state = state.copyWith(
-        error: AppLocalization.of(context)!.contactExistsAddress,
+        error: AppLocalizations.of(context)!.contactExistsAddress,
       );
       return false;
     }

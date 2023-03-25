@@ -2,7 +2,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
@@ -13,6 +12,7 @@ import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 // Package imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UCOTransferDetail extends ConsumerWidget {
@@ -22,7 +22,7 @@ class UCOTransferDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalization.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final primaryCurrency =
