@@ -77,7 +77,13 @@ class AddServiceHandler extends CommandHandler {
                   failure: (failure) => Result.failure(
                     RPCFailure.fromTransactionError(failure),
                   ),
-                  success: Result.success,
+                  success: (success) async {
+                    // Refresh screen and add new service in session
+                    await ref.read(SessionProviders.session.notifier).refresh();
+                    return Result.success(
+                      success,
+                    );
+                  },
                 ) ??
                 Result.failure(
                   RPCFailure.userRejected(),
