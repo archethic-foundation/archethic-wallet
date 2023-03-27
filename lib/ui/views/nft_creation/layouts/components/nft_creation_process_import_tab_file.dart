@@ -24,21 +24,34 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
           child: InkWell(
             onTap: () async {
               final result = await FilePicker.platform.pickFiles();
-
               if (result != null && result.files.isNotEmpty) {
-                nftCreationNotifier.setContentProperties(
-                  context,
-                  result.files.single.bytes!,
-                  FileImportType.file,
-                  Mime.getTypesFromExtension(
-                    path
-                        .extension(result.files.single.name)
-                        .toLowerCase()
-                        .replaceAll('.', ''),
-                  )![0],
-                );
-              } else {
-                // User canceled the picker
+                if (kIsWeb) {
+                  // TODO(reddwarf03): Fix Web uploading
+                  final uploadfile = result.files.single.bytes;
+                  nftCreationNotifier.setContentProperties(
+                    context,
+                    File.fromRawPath(uploadfile!).readAsBytesSync(),
+                    FileImportType.file,
+                    Mime.getTypesFromExtension(
+                      path
+                          .extension(result.files.single.name)
+                          .toLowerCase()
+                          .replaceAll('.', ''),
+                    )![0],
+                  );
+                } else {
+                  nftCreationNotifier.setContentProperties(
+                    context,
+                    File(result.files.single.path!).readAsBytesSync(),
+                    FileImportType.file,
+                    Mime.getTypesFromExtension(
+                      path
+                          .extension(result.files.single.name)
+                          .toLowerCase()
+                          .replaceAll('.', ''),
+                    )![0],
+                  );
+                }
               }
             },
             child: Row(
