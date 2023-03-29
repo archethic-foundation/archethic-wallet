@@ -29,6 +29,7 @@ class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
       data: RPCSignTransactionsCommandData(
         serviceName: dto.payload['serviceName'],
         pathSuffix: dto.payload['pathSuffix'],
+        index: dto.payload['index'],
         rpcSignTransactionCommandData: rpcSignTransactionCommandDataList,
       ),
     );

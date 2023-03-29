@@ -22,6 +22,9 @@ mixin _$RPCSignTransactionsCommandData {
   /// Additional information to add to a service derivation path (optional - default to empty)
   String? get pathSuffix => throw _privateConstructorUsedError;
 
+  /// Last index of the transaction in the chain
+  int? get index => throw _privateConstructorUsedError;
+
   /// - List of transaction's infos
   List<RPCSignTransactionCommandData> get rpcSignTransactionCommandData =>
       throw _privateConstructorUsedError;
@@ -42,6 +45,7 @@ abstract class $RPCSignTransactionsCommandDataCopyWith<$Res> {
   $Res call(
       {String serviceName,
       String? pathSuffix,
+      int? index,
       List<RPCSignTransactionCommandData> rpcSignTransactionCommandData});
 }
 
@@ -61,6 +65,7 @@ class _$RPCSignTransactionsCommandDataCopyWithImpl<$Res,
   $Res call({
     Object? serviceName = null,
     Object? pathSuffix = freezed,
+    Object? index = freezed,
     Object? rpcSignTransactionCommandData = null,
   }) {
     return _then(_value.copyWith(
@@ -72,6 +77,10 @@ class _$RPCSignTransactionsCommandDataCopyWithImpl<$Res,
           ? _value.pathSuffix
           : pathSuffix // ignore: cast_nullable_to_non_nullable
               as String?,
+      index: freezed == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int?,
       rpcSignTransactionCommandData: null == rpcSignTransactionCommandData
           ? _value.rpcSignTransactionCommandData
           : rpcSignTransactionCommandData // ignore: cast_nullable_to_non_nullable
@@ -92,6 +101,7 @@ abstract class _$$_RPCSignTransactionsCommandDataCopyWith<$Res>
   $Res call(
       {String serviceName,
       String? pathSuffix,
+      int? index,
       List<RPCSignTransactionCommandData> rpcSignTransactionCommandData});
 }
 
@@ -110,6 +120,7 @@ class __$$_RPCSignTransactionsCommandDataCopyWithImpl<$Res>
   $Res call({
     Object? serviceName = null,
     Object? pathSuffix = freezed,
+    Object? index = freezed,
     Object? rpcSignTransactionCommandData = null,
   }) {
     return _then(_$_RPCSignTransactionsCommandData(
@@ -121,6 +132,10 @@ class __$$_RPCSignTransactionsCommandDataCopyWithImpl<$Res>
           ? _value.pathSuffix
           : pathSuffix // ignore: cast_nullable_to_non_nullable
               as String?,
+      index: freezed == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int?,
       rpcSignTransactionCommandData: null == rpcSignTransactionCommandData
           ? _value._rpcSignTransactionCommandData
           : rpcSignTransactionCommandData // ignore: cast_nullable_to_non_nullable
@@ -136,6 +151,7 @@ class _$_RPCSignTransactionsCommandData
   const _$_RPCSignTransactionsCommandData(
       {required this.serviceName,
       this.pathSuffix,
+      this.index,
       required final List<RPCSignTransactionCommandData>
           rpcSignTransactionCommandData})
       : _rpcSignTransactionCommandData = rpcSignTransactionCommandData,
@@ -148,6 +164,10 @@ class _$_RPCSignTransactionsCommandData
   /// Additional information to add to a service derivation path (optional - default to empty)
   @override
   final String? pathSuffix;
+
+  /// Last index of the transaction in the chain
+  @override
+  final int? index;
 
   /// - List of transaction's infos
   final List<RPCSignTransactionCommandData> _rpcSignTransactionCommandData;
@@ -163,7 +183,7 @@ class _$_RPCSignTransactionsCommandData
 
   @override
   String toString() {
-    return 'RPCSignTransactionsCommandData(serviceName: $serviceName, pathSuffix: $pathSuffix, rpcSignTransactionCommandData: $rpcSignTransactionCommandData)';
+    return 'RPCSignTransactionsCommandData(serviceName: $serviceName, pathSuffix: $pathSuffix, index: $index, rpcSignTransactionCommandData: $rpcSignTransactionCommandData)';
   }
 
   @override
@@ -175,13 +195,14 @@ class _$_RPCSignTransactionsCommandData
                 other.serviceName == serviceName) &&
             (identical(other.pathSuffix, pathSuffix) ||
                 other.pathSuffix == pathSuffix) &&
+            (identical(other.index, index) || other.index == index) &&
             const DeepCollectionEquality().equals(
                 other._rpcSignTransactionCommandData,
                 _rpcSignTransactionCommandData));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, serviceName, pathSuffix,
+  int get hashCode => Object.hash(runtimeType, serviceName, pathSuffix, index,
       const DeepCollectionEquality().hash(_rpcSignTransactionCommandData));
 
   @JsonKey(ignore: true)
@@ -197,6 +218,7 @@ abstract class _RPCSignTransactionsCommandData
   const factory _RPCSignTransactionsCommandData(
       {required final String serviceName,
       final String? pathSuffix,
+      final int? index,
       required final List<RPCSignTransactionCommandData>
           rpcSignTransactionCommandData}) = _$_RPCSignTransactionsCommandData;
   const _RPCSignTransactionsCommandData._() : super._();
@@ -209,6 +231,10 @@ abstract class _RPCSignTransactionsCommandData
 
   /// Additional information to add to a service derivation path (optional - default to empty)
   String? get pathSuffix;
+  @override
+
+  /// Last index of the transaction in the chain
+  int? get index;
   @override
 
   /// - List of transaction's infos

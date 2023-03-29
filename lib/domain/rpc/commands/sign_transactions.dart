@@ -12,6 +12,9 @@ class RPCSignTransactionsCommandData with _$RPCSignTransactionsCommandData {
     /// Additional information to add to a service derivation path (optional - default to empty)
     String? pathSuffix,
 
+    /// Last index of the transaction in the chain
+    int? index,
+
     /// - List of transaction's infos
     required List<RPCSignTransactionCommandData> rpcSignTransactionCommandData,
   }) = _RPCSignTransactionsCommandData;

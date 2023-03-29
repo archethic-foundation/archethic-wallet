@@ -20,6 +20,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
                 <RPCSignTransactionResultDetailData>[];
             final serviceName = command.data.serviceName;
             final pathSuffix = command.data.pathSuffix ?? '';
+            final index = command.data.index ?? 0;
 
             final seed =
                 ref.read(SessionProviders.session).loggedIn!.wallet.seed;
@@ -27,22 +28,8 @@ class SignTransactionsCommandHandler extends CommandHandler {
             final keychain =
                 await sl.get<archethic.ApiService>().getKeychain(seed);
 
-            final addressGenesis = archethic.uint8ListToHex(
-              keychain.deriveAddress(
-                serviceName,
-                pathSuffix: pathSuffix,
-              ),
-            );
-
             final originPrivateKey =
                 sl.get<archethic.ApiService>().getOriginKey();
-
-            final indexMap =
-                await sl.get<archethic.ApiService>().getTransactionIndex(
-              [addressGenesis],
-            );
-
-            var index = indexMap[addressGenesis] ?? 0;
 
             for (final rpcSignTransactionCommandData
                 in command.data.rpcSignTransactionCommandData) {
@@ -69,7 +56,6 @@ class SignTransactionsCommandHandler extends CommandHandler {
               );
 
               signedTransactionList.add(rpcSignTransactionResultDetailData);
-              index++;
             }
 
             return Result.success(
