@@ -357,10 +357,10 @@ packages:
     dependency: "direct main"
     description:
       name: deeplink_rpc
-      sha256: "274c401ea3a1df45a99210385761b5c7aa6f7e775d07024c0699c369f4515e4b"
+      sha256: f5a76db5d20ac4a7c0816da2c8c97a174327ecadf2987b6aa3facf9f5d0e4ac4
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   device_info_plus:
     dependency: transitive
     description:
