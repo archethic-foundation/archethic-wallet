@@ -616,21 +616,23 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     final theme = ref.read(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (var i = 0; i < accounts.length; i++) {
-      final account = accounts[i];
-      pickerItemsList.add(
-        PickerItem(
-          account.name,
-          null,
-          null,
-          null,
-          account,
-          true,
-          key: Key('accountName${account.name}'),
-        ),
-      );
-      log(
-        '<<accountName${account.name}>>',
-      );
+      if (accounts[i].serviceType == 'archethicWallet') {
+        final account = accounts[i];
+        pickerItemsList.add(
+          PickerItem(
+            account.name,
+            null,
+            null,
+            null,
+            account,
+            true,
+            key: Key('accountName${account.name}'),
+          ),
+        );
+        log(
+          '<<accountName${account.name}>>',
+        );
+      }
     }
 
     final selection = await showDialog<Account>(
