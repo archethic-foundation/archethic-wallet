@@ -73,8 +73,8 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
               ],
             ),
             if (displayChevron != null && displayChevron == true)
-              FaIcon(
-                FontAwesomeIcons.chevronRight,
+              Icon(
+                Iconsax.arrow_right_3,
                 color: theme.iconDrawer,
                 size: 15,
               ),
@@ -132,8 +132,8 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
                 style: headingStyle,
               ),
             ),
-            FaIcon(
-              FontAwesomeIcons.chevronRight,
+            Icon(
+              Iconsax.arrow_right_3,
               color: theme.iconDrawer,
               size: 15,
             ),

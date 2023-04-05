@@ -22,7 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 
 class NFTDetail extends ConsumerStatefulWidget {
   const NFTDetail({
@@ -77,7 +77,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 padding: const EdgeInsets.only(top: 20, right: 20),
                 child: InkWell(
                   child: const Icon(
-                    FontAwesomeIcons.qrcode,
+                    Iconsax.scan_barcode,
                     size: 30,
                   ),
                   onTap: () {
