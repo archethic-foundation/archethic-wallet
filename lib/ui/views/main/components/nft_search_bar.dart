@@ -12,7 +12,7 @@ import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -160,21 +160,10 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                     },
                   )
                 : null,
-            suffixIcon: TextFieldButton(
-              icon: FontAwesomeIcons.paste,
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                Clipboard.getData('text/plain')
-                    .then((ClipboardData? data) async {
-                  if (data == null || data.text == null) {
-                    return;
-                  }
-                  nftSearchBarNotifier.setSearchCriteria(data.text!);
-                  _updateAdressTextController();
-                });
+            suffixIcon: PasteIcon(
+              onPaste: (String value) {
+                nftSearchBarNotifier.setSearchCriteria(value);
+                _updateAdressTextController();
               },
             ),
             border: const OutlineInputBorder(

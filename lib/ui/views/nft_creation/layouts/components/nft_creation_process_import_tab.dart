@@ -26,6 +26,9 @@ class _NFTCreationProcessImportTabState
     );
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
+    final isDesktop = kIsWeb == true ||
+        (Platform.isAndroid == false && Platform.isIOS == false);
+
     return ArchethicScrollbar(
       child: Container(
         padding:
@@ -71,12 +74,18 @@ class _NFTCreationProcessImportTabState
                 ],
               ),
             ),
-
-            const NFTCreationProcessImportTabFile(),
-            const NFTCreationProcessImportTabImage(),
-            const NFTCreationProcessImportTabCamera(),
             //const NFTCreationProcessFileAccess(),
-            const NFTCreationProcessFilePreview()
+            const NFTCreationProcessFilePreview(),
+            GridCount(
+              children: [
+                const NFTCreationProcessImportTabFile(),
+                if (!isDesktop) const NFTCreationProcessImportTabImage(),
+                if (!isDesktop) const NFTCreationProcessImportTabCamera(),
+                const NFTCreationProcessImportTabIPFS(),
+                const NFTCreationProcessImportTabHTTP(),
+                const NFTCreationProcessImportTabAEWeb(),
+              ],
+            ),
           ],
         ),
       ),

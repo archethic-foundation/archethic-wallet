@@ -2,6 +2,7 @@
 import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -9,6 +10,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,7 +56,7 @@ class NetworkDialog {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return _NetworkAlertDialog(
+        return PopupDialog(
           title: const _NetworkTitle(),
           content: PickerWidget(
             pickerItems: pickerItemsList,
@@ -98,13 +100,17 @@ class NetworkDialog {
                               return;
                             }
 
-                            // Uri seem to accept whitespace. So I need to remove bad formated Uri.
-                            final textCleaned =
-                                endpointController.text.replaceAll(' ', '');
+                            final uriInput = ref.watch(
+                              UrlProvider.cleanUri(
+                                uri: endpointController.text,
+                              ),
+                            );
 
-                            final uriInput = Uri.parse(textCleaned);
-
-                            if (uriInput.isAbsolute == false) {
+                            if (!ref.watch(
+                              UrlProvider.isUrlValid(
+                                uri: uriInput,
+                              ),
+                            )) {
                               setError(localizations.enterEndpointNotValid);
                               return;
                             }
@@ -126,7 +132,7 @@ class NetworkDialog {
                                 .setNetwork(
                                   NetworksSetting(
                                     network: AvailableNetworks.archethicDevNet,
-                                    networkDevEndpoint: textCleaned,
+                                    networkDevEndpoint: uriInput.toString(),
                                   ),
                                 );
 
@@ -165,7 +171,7 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return _NetworkAlertDialog(
+    return PopupDialog(
       title: const Padding(
         padding: EdgeInsets.only(bottom: 10),
         child: _NetworkDevnetHeader(),
@@ -212,29 +218,6 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _NetworkAlertDialog extends ConsumerWidget {
-  const _NetworkAlertDialog({required this.content, required this.title});
-
-  final Widget content;
-  final Widget title;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return AlertDialog(
-      title: title,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
-        side: BorderSide(
-          color: theme.text45!,
-        ),
-      ),
-      content: content,
     );
   }
 }
