@@ -98,20 +98,9 @@ class _AddContactTextFieldPublicKeyState
           : null,
       fadePrefixOnCondition: true,
       prefixShowFirstCondition: true,
-      suffixButton: TextFieldButton(
-        icon: FontAwesomeIcons.paste,
-        onPressed: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-          final data = await UserDataUtil.getClipboardText(
-            DataType.raw,
-          );
-          contactCreationNotifier.setPublicKey(
-            data!,
-          );
-          publicKeyController.text = data;
+      suffixButton: PasteIcon(
+        onPaste: (String value) {
+          publicKeyController.text = value;
         },
       ),
       fadeSuffixOnCondition: true,
