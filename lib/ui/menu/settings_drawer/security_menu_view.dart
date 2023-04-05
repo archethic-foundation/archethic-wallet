@@ -179,12 +179,30 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
       defaultMethod: AuthenticationMethod(authenticationMethod),
       icon: UiIcons.authent,
       onPressed: asyncHasBiometrics.maybeWhen(
-        data: (hasBiometrics) => () => AuthentificationMethodDialog.getDialog(
+        data: (hasBiometrics) => () async {
+          final authMethod = AuthenticationMethod(
+            ref.read(
+              AuthenticationProviders.settings.select(
+                (settings) => settings.authenticationMethod,
+              ),
+            ),
+          );
+          final auth = await AuthFactory.authenticate(
+            context,
+            ref,
+            authMethod: authMethod,
+            activeVibrations:
+                ref.read(SettingsProviders.settings).activeVibrations,
+          );
+          if (auth) {
+            return AuthentificationMethodDialog.getDialog(
               context,
               ref,
               hasBiometrics,
               AuthenticationMethod(authenticationMethod),
-            ),
+            );
+          }
+        },
         orElse: () => () {},
       ),
     );
