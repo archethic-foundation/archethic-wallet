@@ -4,8 +4,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// TextField button
 class TextFieldButton extends ConsumerWidget {
@@ -24,7 +22,7 @@ class TextFieldButton extends ConsumerWidget {
         onPressed: () {
           onPressed?.call();
         },
-        child: FaIcon(
+        child: Icon(
           icon,
           size: 20,
           color: theme.textFieldIcon,

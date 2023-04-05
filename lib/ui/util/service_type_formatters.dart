@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 
 class ServiceTypeFormatters {
   const ServiceTypeFormatters(this._serviceType);
@@ -27,12 +27,12 @@ class ServiceTypeFormatters {
   IconData getIcon() {
     switch (_serviceType) {
       case 'aeweb':
-        return FontAwesomeIcons.globe;
+        return Iconsax.global;
       case 'archethicWallet':
-        return Icons.account_balance_wallet_outlined;
+        return Iconsax.empty_wallet;
       case 'other':
       default:
-        return Icons.help_center_outlined;
+        return Iconsax.search_normal;
     }
   }
 }

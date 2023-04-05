@@ -131,13 +131,13 @@ class _PriceEvolutionIndicator extends ConsumerWidget {
               ),
               const SizedBox(width: 5),
               if (priceEvolution >= 0)
-                FaIcon(
-                  FontAwesomeIcons.caretUp,
+                Icon(
+                  Iconsax.arrow_up,
                   color: theme.positiveValue,
                 )
               else
-                FaIcon(
-                  FontAwesomeIcons.caretDown,
+                Icon(
+                  Iconsax.arrow_down,
                   color: theme.negativeValue,
                 ),
             ],

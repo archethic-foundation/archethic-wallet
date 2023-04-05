@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:fluttericon/rpg_awesome_icons.dart' show RpgAwesome;
+import 'package:iconsax/iconsax.dart';
 
 class NFTListPerCategory extends ConsumerWidget {
   const NFTListPerCategory({super.key, this.currentNftCategoryIndex});
@@ -77,7 +77,7 @@ class NFTListPerCategory extends ConsumerWidget {
                         Dimens.buttonBottomDimens,
                         key: const Key('createNFT'),
                         icon: Icon(
-                          RpgAwesome.mining_diamonds,
+                          Iconsax.diamonds,
                           color: theme.mainButtonLabel,
                           size: 14,
                         ),
@@ -107,7 +107,7 @@ class NFTListPerCategory extends ConsumerWidget {
                         Dimens.buttonBottomDimens,
                         key: const Key('createNFT'),
                         icon: Icon(
-                          RpgAwesome.mining_diamonds,
+                          Iconsax.diamonds,
                           color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),
