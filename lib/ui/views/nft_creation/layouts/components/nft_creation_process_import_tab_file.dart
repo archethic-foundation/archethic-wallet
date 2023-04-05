@@ -33,6 +33,7 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
               )![0],
             );
           } else {
+            // use for phone
             nftCreationNotifier.setContentProperties(
               context,
               File(result.files.single.path!).readAsBytesSync(),
