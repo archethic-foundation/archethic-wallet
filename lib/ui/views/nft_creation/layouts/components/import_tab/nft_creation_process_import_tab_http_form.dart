@@ -2,13 +2,13 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_template_form.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_template_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
-  const NFTCreationProcessImportTabIPFSForm({
+class NFTCreationProcessImportTabHTTPForm extends ConsumerWidget {
+  const NFTCreationProcessImportTabHTTPForm({
     super.key,
     required this.onConfirm,
   });
@@ -21,10 +21,10 @@ class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return NFTCreationProcessImportTabTemplateForm(
-      title: localizations.nftAddImportIPFSTitle,
-      placeholder: localizations.nftAddImportIPFSPlaceholder,
-      buttonLabel: localizations.nftAddImportIPFSButton,
-      warningLabel: localizations.nftAddImportIPFSWarning,
+      title: localizations.nftAddImportURLTitle,
+      placeholder: localizations.nftAddImportURLPlaceholder,
+      buttonLabel: localizations.nftAddImportURLButton,
+      warningLabel: localizations.nftAddImportURLWarning,
       onConfirm: (String value, BuildContext contextForm) {
         void setError(String errorText) {
           UIUtil.showSnackbar(
@@ -49,15 +49,6 @@ class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
 
         if (!ref.watch(
           UrlProvider.isUrlValid(
-            uri: uriInput,
-          ),
-        )) {
-          setError(localizations.enterEndpointNotValid);
-          return;
-        }
-
-        if (!ref.watch(
-          UrlProvider.isUrlIPFS(
             uri: uriInput,
           ),
         )) {

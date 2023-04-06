@@ -2,13 +2,13 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_process_import_tab_template_form.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_template_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget {
-  const NFTCreationProcessImportTabAEWebForm({
+class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
+  const NFTCreationProcessImportTabIPFSForm({
     super.key,
     required this.onConfirm,
   });
@@ -21,10 +21,10 @@ class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return NFTCreationProcessImportTabTemplateForm(
-      title: localizations.nftAddImportAEWebTitle,
-      placeholder: localizations.nftAddImportAEWebPlaceholder,
-      buttonLabel: localizations.nftAddImportAEWebButton,
-      warningLabel: localizations.nftAddImportAEWebWarning,
+      title: localizations.nftAddImportIPFSTitle,
+      placeholder: localizations.nftAddImportIPFSPlaceholder,
+      buttonLabel: localizations.nftAddImportIPFSButton,
+      warningLabel: localizations.nftAddImportIPFSWarning,
       onConfirm: (String value, BuildContext contextForm) {
         void setError(String errorText) {
           UIUtil.showSnackbar(
@@ -41,18 +41,31 @@ class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget {
           return;
         }
 
-        final valueCleaned = value.replaceAll(' ', '');
+        final uriInput = ref.watch(
+          UrlProvider.cleanUri(
+            uri: value,
+          ),
+        );
 
         if (!ref.watch(
-          UrlProvider.isUrlAEWeb(
-            uri: valueCleaned,
+          UrlProvider.isUrlValid(
+            uri: uriInput,
+          ),
+        )) {
+          setError(localizations.enterEndpointNotValid);
+          return;
+        }
+
+        if (!ref.watch(
+          UrlProvider.isUrlIPFS(
+            uri: uriInput,
           ),
         )) {
           setError(localizations.enterEndpointNotValid);
           return;
         }
         onConfirm(
-          valueCleaned,
+          value.replaceAll(' ', ''),
         );
         Navigator.of(contextForm).pop();
       },
