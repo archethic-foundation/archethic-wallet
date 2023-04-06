@@ -402,7 +402,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionConfirmationFormHeader": "Transaction send confirmation",
+  "transactionConfirmationFormHeader": "Request for confirmation",
   "@transactionConfirmationFormHeader": {
     "type": "text",
     "placeholders_order": [],
@@ -1998,7 +1998,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionSignatureCommandReceivedNotification": "Application %1 wants to send a transaction.",
+  "transactionSignatureCommandReceivedNotification": "The %1 application wants to perform an action that requires your confirmation.",
   "@transactionSignatureCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],

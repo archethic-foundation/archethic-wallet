@@ -9,7 +9,7 @@ import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction_keychain_builder.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/sign_transaction_confirmation_form.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/send_transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +70,7 @@ class AddServiceHandler extends CommandHandler {
                 Result<TransactionConfirmation, TransactionError>>(
               context: context,
               ref: ref,
-              widget: TransactionConfirmationForm(newCommand),
+              widget: SendTransactionConfirmationForm(newCommand),
             );
 
             return result?.map(
