@@ -32,7 +32,7 @@ class PasteIcon extends TextFieldButton {
             );
         Clipboard.getData('text/plain').then((ClipboardData? data) async {
           if (data == null || data.text == null) {
-            onDataNull!();
+            onDataNull?.call();
             return;
           }
           onPaste(data.text!);
