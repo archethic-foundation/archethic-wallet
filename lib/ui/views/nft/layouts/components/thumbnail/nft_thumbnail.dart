@@ -1,18 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_aeweb.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_error.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_http.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_image.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_ipfs.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_loading.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_aeweb.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_http.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_image.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_ipfs.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_loading.dart';
 import 'package:aewallet/util/token_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTItem extends ConsumerWidget {
-  const NFTItem({
+class NFTThumbnail extends ConsumerWidget {
+  const NFTThumbnail({
     super.key,
     required this.tokenInformations,
     this.roundBorder = false,
@@ -31,35 +31,35 @@ class NFTItem extends ConsumerWidget {
       ),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
-          return NFTItemError(message: localizations.previewNotAvailable);
+          return NFTThumbnailError(message: localizations.previewNotAvailable);
         }
         if (snapshot.hasData) {
           if (TokenUtil.isTokenFile(snapshot.data)) {
             final typeMime = tokenInformations.tokenProperties!['type_mime'];
-            return NFTItemImage(
+            return NFTThumbnailImage(
               token: snapshot.data,
               roundBorder: roundBorder,
               typeMime: typeMime,
             );
           } else if (TokenUtil.isTokenIPFS(snapshot.data)) {
-            return NFTItemIPFS(
+            return NFTThumbnailIPFS(
               token: snapshot.data,
               roundBorder: roundBorder,
             );
           } else if (TokenUtil.isTokenHTTP(snapshot.data)) {
-            return NFTItemHTTP(
+            return NFTThumbnailHTTP(
               token: snapshot.data,
               roundBorder: roundBorder,
             );
           } else if (TokenUtil.isTokenAEWEB(snapshot.data)) {
-            return NFTItemAEWEB(
+            return NFTThumbnailAEWEB(
               token: snapshot.data,
               roundBorder: roundBorder,
             );
           }
           return const SizedBox();
         } else {
-          return const NFTItemLoading();
+          return const NFTThumbnailLoading();
         }
       },
     );

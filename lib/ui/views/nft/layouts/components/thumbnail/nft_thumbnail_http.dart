@@ -1,16 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/url/provider.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_error.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item_loading.dart';
-import 'package:aewallet/ui/widgets/components/image_network_safe_widgeted.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_loading.dart';
+import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTItemIPFS extends ConsumerWidget {
-  const NFTItemIPFS({
+class NFTThumbnailHTTP extends ConsumerWidget {
+  const NFTThumbnailHTTP({
     super.key,
     required this.token,
     this.roundBorder = false,
@@ -27,34 +26,29 @@ class NFTItemIPFS extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         FutureBuilder<String?>(
-          future: TokenUtil.getIPFSUrlFromToken(
+          future: TokenUtil.getHTTPUrlFromToken(
             token,
           ),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
-              return NFTItemError(message: localizations.previewNotAvailable);
+              return NFTThumbnailError(
+                  message: localizations.previewNotAvailable);
             }
             if (snapshot.hasData) {
-              final ipfsFormattedUrl = ref.watch(
-                UrlProvider.urlIPFSForWeb(
-                  uri: snapshot.data,
-                ),
-              );
-
               return roundBorder == true
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: ImageNetworkSafeWidgeted(
-                        url: ipfsFormattedUrl,
-                        errorMessage: localizations.nftIPFSEmpty,
+                      child: ImageNetworkWidgeted(
+                        url: snapshot.data,
+                        errorMessage: localizations.nftURLEmpty,
                       ),
                     )
-                  : ImageNetworkSafeWidgeted(
-                      url: ipfsFormattedUrl,
-                      errorMessage: localizations.nftIPFSEmpty,
+                  : ImageNetworkWidgeted(
+                      url: snapshot.data,
+                      errorMessage: localizations.nftURLEmpty,
                     );
             } else {
-              return const NFTItemLoading();
+              return const NFTThumbnailLoading();
             }
           },
         )

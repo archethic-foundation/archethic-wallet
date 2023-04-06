@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTItemAEWEB extends ConsumerWidget {
-  const NFTItemAEWEB({
+class NFTThumbnailAEWEB extends ConsumerWidget {
+  const NFTThumbnailAEWEB({
     super.key,
     required this.token,
     this.roundBorder = false,

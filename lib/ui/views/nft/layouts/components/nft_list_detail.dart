@@ -5,8 +5,8 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_item.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -88,7 +88,7 @@ class NFTListDetail extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(25),
                 side: const BorderSide(color: Colors.white10),
               ),
-              child: NFTItem(
+              child: NFTThumbnail(
                 tokenInformations: tokenInformations,
                 roundBorder: roundBorder,
               ),
