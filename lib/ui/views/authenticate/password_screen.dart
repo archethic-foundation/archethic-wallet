@@ -10,11 +10,11 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 
 class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({
@@ -165,8 +165,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                         style: theme.textStyleSize16W700Primary,
                         suffixButton: TextFieldButton(
                           icon: enterPasswordVisible!
-                              ? UiIcons.eye
-                              : UiIcons.eye_hidden,
+                              ? Iconsax.eye
+                              : Iconsax.eye_slash,
                           onPressed: () {
                             setState(() {
                               enterPasswordVisible = !enterPasswordVisible!;

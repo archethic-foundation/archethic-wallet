@@ -22,6 +22,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:iconsax/iconsax.dart';
 
 class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
@@ -163,7 +164,7 @@ class MainAppBarIconBalanceShowed extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return IconButton(
-      icon: const Icon(UiIcons.eye),
+      icon: const Icon(Iconsax.eye),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -185,7 +186,7 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return IconButton(
-      icon: const Icon(UiIcons.eye_hidden),
+      icon: const Icon(Iconsax.eye_slash),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,

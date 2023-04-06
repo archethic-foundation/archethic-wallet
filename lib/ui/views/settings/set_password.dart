@@ -14,6 +14,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:password_strength/password_strength.dart';
 
 class SetPassword extends ConsumerStatefulWidget {
@@ -193,8 +194,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   ),
                                   suffixButton: TextFieldButton(
                                     icon: setPasswordVisible!
-                                        ? UiIcons.eye
-                                        : UiIcons.eye_hidden,
+                                        ? Iconsax.eye
+                                        : Iconsax.eye_slash,
                                     onPressed: () {
                                       setState(() {
                                         setPasswordVisible =
@@ -286,8 +287,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   style: theme.textStyleSize16W700Primary,
                                   suffixButton: TextFieldButton(
                                     icon: confirmPasswordVisible!
-                                        ? UiIcons.eye
-                                        : UiIcons.eye_hidden,
+                                        ? Iconsax.eye
+                                        : Iconsax.eye_slash,
                                     onPressed: () {
                                       setState(() {
                                         confirmPasswordVisible =
