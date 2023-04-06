@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: implementation_imports
 
 import 'dart:async';
 import 'dart:convert';
@@ -7,7 +6,7 @@ import 'dart:typed_data';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
-import 'package:archethic_lib_dart/src/model/token.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Token;
 import 'package:pdfx/pdfx.dart';
 
 class TokenUtil {
@@ -33,7 +32,7 @@ class TokenUtil {
     final tokenMap =
         await sl.get<AppService>().getToken([address], request: 'properties');
 
-    if (tokenMap.isEmpty) {
+    if (tokenMap[address] == null || tokenMap.isEmpty) {
       return null;
     }
     return getTokenByAddressFromTokenMap(tokenMap, address);
@@ -56,70 +55,15 @@ class TokenUtil {
   }
 
   static bool isTokenIPFS(Token token) {
-    var flag = false;
-
-    token.properties.forEach((key, value) {
-      if (key == 'content') {
-        value.forEach((key, value) {
-          if (key == 'ipfs') {
-            flag = true;
-          }
-        });
-      }
-    });
-
-    return flag;
+    return token.properties['content']['ipfs'] != null;
   }
 
   static bool isTokenHTTP(Token token) {
-    var flag = false;
-
-    token.properties.forEach((key, value) {
-      if (key == 'content') {
-        value.forEach((key, value) {
-          if (key == 'http_url') {
-            flag = true;
-          }
-        });
-      }
-    });
-
-    return flag;
+    return token.properties['content']['http'] != null;
   }
 
   static bool isTokenAEWEB(Token token) {
-    var flag = false;
-
-    token.properties.forEach((key, value) {
-      if (key == 'content') {
-        value.forEach((key, value) {
-          if (key == 'aeweb') {
-            flag = true;
-          }
-        });
-      }
-    });
-
-    return flag;
-  }
-
-  static T? getValueFromKeyInTokenContent<T>(
-    Token token,
-    String keyToSearch,
-  ) {
-    T? valueToReturn;
-
-    token.properties.forEach((key, value) {
-      if (key == 'content') {
-        value.forEach((key, value) {
-          if (key == keyToSearch) {
-            valueToReturn = value;
-          }
-        });
-      }
-    });
-
-    return valueToReturn;
+    return token.properties['content']['aeweb'] != null;
   }
 
   static Future<Uint8List?> getImageDecodedForPdf(
@@ -152,8 +96,7 @@ class TokenUtil {
     Uint8List? valueFileDecoded;
     Uint8List? imageDecoded;
     if (token.properties.isNotEmpty) {
-      valueFileDecoded =
-          base64Decode(getValueFromKeyInTokenContent(token, 'raw'));
+      valueFileDecoded = base64Decode(token.properties['content']['raw']);
     }
 
     if (valueFileDecoded == null) {
@@ -179,56 +122,17 @@ class TokenUtil {
     String? imageDecoded;
 
     if (token.properties.isNotEmpty) {
-      imageDecoded = getValueFromKeyInTokenContent(token, 'ipfs');
+      imageDecoded = token.properties['content']['ipfs'];
     }
     return imageDecoded;
-  }
-
-  static Future<String?> getIPFSUrlFromTokenAddress(
-    String address,
-  ) async {
-    final token = await getTokenByAddress(address);
-    if (token == null) {
-      return null;
-    }
-    return getIPFSUrlFromToken(token);
   }
 
   static Future<String?>? getHTTPUrlFromToken(Token token) async {
     String? imageDecoded;
 
     if (token.properties.isNotEmpty) {
-      imageDecoded = getValueFromKeyInTokenContent(token, 'http_url');
+      imageDecoded = token.properties['content']['http'];
     }
     return imageDecoded;
-  }
-
-  static Future<String?> getHTTPUrlFromTokenAddress(
-    String address,
-  ) async {
-    final token = await getTokenByAddress(address);
-    if (token == null) {
-      return null;
-    }
-    return getHTTPUrlFromToken(token);
-  }
-
-  static Future<String?>? getAEWEBUrlFromToken(Token token) async {
-    String? imageDecoded;
-
-    if (token.properties.isNotEmpty) {
-      imageDecoded = getValueFromKeyInTokenContent(token, 'aeweb_url');
-    }
-    return imageDecoded;
-  }
-
-  static Future<String?> getAEWEBUrlFromTokenAddress(
-    String address,
-  ) async {
-    final token = await getTokenByAddress(address);
-    if (token == null) {
-      return null;
-    }
-    return getAEWEBUrlFromToken(token);
   }
 }
