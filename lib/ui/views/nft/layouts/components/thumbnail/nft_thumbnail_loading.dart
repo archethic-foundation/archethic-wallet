@@ -1,16 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTItemError extends ConsumerWidget {
-  const NFTItemError({
+class NFTThumbnailLoading extends ConsumerWidget {
+  const NFTThumbnailLoading({
     super.key,
-    required this.message,
   });
-
-  final String message;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,9 +18,9 @@ class NFTItemError extends ConsumerWidget {
       child: SizedBox(
         height: 78,
         child: Center(
-          child: Text(
-            message,
-            style: theme.textStyleSize12W100Primary,
+          child: CircularProgressIndicator(
+            color: theme.text,
+            strokeWidth: 1,
           ),
         ),
       ),
