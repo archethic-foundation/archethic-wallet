@@ -30,14 +30,23 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
           ),
         );
       },
-      child: SheetDetailCard(
-        children: [
-          const Icon(Iconsax.link, size: 18),
-          Text(
-            localizations.nftAddImportIPFS,
-            style: theme.textStyleSize12W400Primary,
-          ),
-        ],
+      child: SizedBox(
+        height: 50,
+        child: SheetDetailCard(
+          children: [
+            const Icon(UiIcons.ipfs_icon, size: 20),
+            const SizedBox(width: 3),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  localizations.nftAddImportIPFS,
+                  style: theme.textStyleSize12W100Primary,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

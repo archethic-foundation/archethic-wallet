@@ -30,14 +30,23 @@ class NFTCreationProcessImportTabHTTP extends ConsumerWidget {
           ),
         );
       },
-      child: SheetDetailCard(
-        children: [
-          const Icon(Iconsax.code_circle, size: 18),
-          Text(
-            localizations.nftAddImportUrl,
-            style: theme.textStyleSize12W400Primary,
-          ),
-        ],
+      child: SizedBox(
+        height: 50,
+        child: SheetDetailCard(
+          children: [
+            const Icon(Iconsax.code_circle, size: 18),
+            const SizedBox(width: 5),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  localizations.nftAddImportUrl,
+                  style: theme.textStyleSize12W100Primary,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

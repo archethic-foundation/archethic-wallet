@@ -122,7 +122,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         keychainSecuredInfos: keychainSecuredInfos,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'fungible',
-        aeip: [2],
+        aeip: [2, 9],
         properties: [],
       ),
     );
@@ -304,7 +304,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
         keychainSecuredInfos: keychainSecuredInfos,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'fungible',
-        aeip: [2],
+        aeip: [2, 9],
         properties: [],
       ),
     );
