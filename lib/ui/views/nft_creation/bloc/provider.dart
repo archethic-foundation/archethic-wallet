@@ -554,7 +554,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       ..add(
         NftCreationFormStateProperty(
           propertyName: 'content',
-          propertyValue: {'http_url': uri},
+          propertyValue: {'http': uri},
         ),
       );
 
