@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 
 class PasteIcon extends TextFieldButton {
   const PasteIcon({
@@ -24,7 +24,7 @@ class PasteIcon extends TextFieldButton {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return TextFieldButton(
-      icon: FontAwesomeIcons.paste,
+      icon: Iconsax.note,
       onPressed: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
