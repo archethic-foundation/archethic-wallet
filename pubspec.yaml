@@ -14,7 +14,7 @@ dependencies:
   animate_do: ^3.0.2
 
   # Retrieve version and url for local app update against store app Android and iOS
-  app_version_update: ^2.0.3
+  app_version_update: ^3.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^3.0.3
@@ -30,7 +30,7 @@ dependencies:
   auto_size_text: ^3.0.0
 
   # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
-  badges: ^3.0.2
+  badges: ^3.0.3
 
   # A flutter plugin for scanning 2D barcodes and QRCodes via camera
   barcode_scan2: ^4.2.3
@@ -75,19 +75,19 @@ dependencies:
   event_taxi: ^1.0.0
 
   # Dart package to decode Exif data from tiff, jpeg and heic files.
-  exif: ^3.1.2
+  exif: ^3.1.4
 
   # A Flutter widget that can be expanded or collapsed by clicking on a header or an icon.
   expandable: ^5.0.1
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.2.5
+  file_picker: ^5.2.7
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
-  fl_chart: ^0.60.0
+  fl_chart: ^0.61.0
 
   flutter:
     sdk: flutter
@@ -165,7 +165,7 @@ dependencies:
   local_auth: ^2.1.3
 
   # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
-  mime_dart: ^2.0.1
+  mime_dart: ^3.0.0
 
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.2.0
@@ -186,7 +186,7 @@ dependencies:
   path: ^1.8.2
 
   # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
-  path_provider: ^2.0.12
+  path_provider: ^2.0.14
 
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
   pdfx: 2.2.0
