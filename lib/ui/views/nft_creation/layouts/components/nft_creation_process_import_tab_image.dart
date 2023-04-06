@@ -12,6 +12,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
     }
 
     final localizations = AppLocalizations.of(context)!;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
     );
@@ -19,7 +20,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
       NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
     );
 
-    return CardCategoryWithText(
+    return InkWell(
       onTap: () async {
         final pickedFile = await ImagePicker().pickImage(
           source: ImageSource.gallery,
@@ -37,8 +38,24 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
           );
         }
       },
-      text: localizations.nftAddImportPhoto,
-      background: Image.asset('assets/images/NFT_upload_photo.png'),
+      child: SizedBox(
+        height: 50,
+        child: SheetDetailCard(
+          children: [
+            const Icon(Iconsax.gallery, size: 18),
+            const SizedBox(width: 5),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  localizations.nftAddImportPhoto,
+                  style: theme.textStyleSize12W100Primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

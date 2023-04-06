@@ -2790,13 +2790,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportFile": "File",
+  "nftAddImportFile": "Import a file",
   "@nftAddImportFile": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportPhoto": "Photo",
+  "nftAddImportPhoto": "Import a photo",
   "@nftAddImportPhoto": {
     "type": "text",
     "placeholders_order": [],
@@ -2808,7 +2808,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportAEWeb": "Use AEWeb",
+  "nftAddImportAEWeb": "Link to a file hosted on AEWeb",
   "@nftAddImportAEWeb": {
     "type": "text",
     "placeholders_order": [],
@@ -2844,7 +2844,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportIPFS": "Use IPFS",
+  "nftAddImportIPFS": "Link to a file hosted on IPFS",
   "@nftAddImportIPFS": {
     "type": "text",
     "placeholders_order": [],
@@ -2868,7 +2868,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftIPFSEmpty": "Oops! The IPFS URL is not available.",
+  "nftIPFSEmpty": "The IPFS URL is not available.",
   "@nftIPFSEmpty": {
     "type": "text",
     "placeholders_order": [],
@@ -2880,7 +2880,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportUrl": "Url",
+  "nftAddImportUrl": "Link to a file hosted on a web server",
   "@nftAddImportUrl": {
     "type": "text",
     "placeholders_order": [],
@@ -2910,7 +2910,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftURLEmpty": "Oops! The URL is not available.",
+  "nftURLEmpty": "The URL is not available.",
   "@nftURLEmpty": {
     "type": "text",
     "placeholders_order": [],

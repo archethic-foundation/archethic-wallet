@@ -95,8 +95,9 @@ class _NFTCreationProcessImportTabFormUrlState
                         textInputAction: TextInputAction.next,
                         labelText: widget.placeholder,
                         autocorrect: false,
+                        maxLines: 10,
                         keyboardType: TextInputType.text,
-                        style: theme.textStyleSize16W600Primary,
+                        style: theme.textStyleSize14W100Primary,
                         suffixButton: PasteIcon(
                           onPaste: (String value) {
                             urlController.text = value;
@@ -126,7 +127,7 @@ class _NFTCreationProcessImportTabFormUrlState
                           size: 14,
                         ),
                         Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
+                        key: const Key('add'),
                         onPressed: () {
                           widget.onConfirm(urlController.text, context);
                         },
@@ -136,7 +137,7 @@ class _NFTCreationProcessImportTabFormUrlState
                         AppButtonTinyType.primaryOutline,
                         widget.buttonLabel,
                         Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
+                        key: const Key('add'),
                         icon: Icon(
                           Icons.add,
                           color: theme.mainButtonLabel!.withOpacity(0.3),
