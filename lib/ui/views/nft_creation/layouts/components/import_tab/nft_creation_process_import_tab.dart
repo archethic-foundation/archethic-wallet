@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../nft_creation_process_sheet.dart';
+part of '../../nft_creation_process_sheet.dart';
 
 class NFTCreationProcessImportTab extends ConsumerStatefulWidget {
   const NFTCreationProcessImportTab({

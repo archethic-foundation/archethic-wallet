@@ -1,32 +1,41 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../nft_creation_process_sheet.dart';
+part of '../../nft_creation_process_sheet.dart';
 
-class NFTCreationProcessInfosTabTextFieldName extends ConsumerStatefulWidget {
-  const NFTCreationProcessInfosTabTextFieldName({
+class NFTCreationProcessPropertiesTabTextfieldValue
+    extends ConsumerStatefulWidget {
+  const NFTCreationProcessPropertiesTabTextfieldValue({
     super.key,
   });
 
   @override
-  ConsumerState<NFTCreationProcessInfosTabTextFieldName> createState() =>
-      _NFTCreationProcessInfosTabTextFieldNameState();
+  ConsumerState<NFTCreationProcessPropertiesTabTextfieldValue> createState() =>
+      _NFTCreationProcessPropertiesTabTextfieldValueState();
 }
 
-class _NFTCreationProcessInfosTabTextFieldNameState
-    extends ConsumerState<NFTCreationProcessInfosTabTextFieldName> {
-  late FocusNode nftNameFocusNode;
-  late TextEditingController nftNameController;
+class _NFTCreationProcessPropertiesTabTextfieldValueState
+    extends ConsumerState<NFTCreationProcessPropertiesTabTextfieldValue> {
+  late FocusNode nftPropertyValueFocusNode;
+  late TextEditingController nftPropertyValueController;
 
   @override
   void initState() {
+    final nftCreation = ref.read(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
+    nftPropertyValueFocusNode = FocusNode();
+    nftPropertyValueController =
+        TextEditingController(text: nftCreation.propertyValue);
     super.initState();
-    nftNameFocusNode = FocusNode();
-    nftNameController = TextEditingController();
   }
 
   @override
   void dispose() {
-    nftNameFocusNode.dispose();
-    nftNameController.dispose();
+    nftPropertyValueFocusNode.dispose();
+    nftPropertyValueController.dispose();
     super.dispose();
   }
 
@@ -34,6 +43,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -41,7 +51,6 @@ class _NFTCreationProcessInfosTabTextFieldNameState
         ),
       ).notifier,
     );
-    final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     ref.listen<NftCreationFormState>(
       NftCreationFormProvider.nftCreationForm(
@@ -50,27 +59,29 @@ class _NFTCreationProcessInfosTabTextFieldNameState
         ),
       ),
       (_, nftCreation) {
-        if (nftCreation.name != nftNameController.text) {
-          nftNameController.text = nftCreation.name;
+        if (nftCreation.propertyValue != nftPropertyValueController.text) {
+          nftPropertyValueController.text = nftCreation.propertyValue;
         }
       },
     );
 
     return AppTextField(
-      key: const Key('nftCreationField'),
-      focusNode: nftNameFocusNode,
-      controller: nftNameController,
+      key: const Key('nftValue'),
+      focusNode: nftPropertyValueFocusNode,
+      controller: nftPropertyValueController,
       cursorColor: theme.text,
-      textInputAction: TextInputAction.done,
-      labelText: AppLocalizations.of(context)!.nftNameHint,
+      textInputAction: TextInputAction.next,
+      labelText: AppLocalizations.of(context)!.nftPropertyValueHint,
       autocorrect: false,
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
-        LengthLimitingTextInputFormatter(40),
+        LengthLimitingTextInputFormatter(20),
       ],
       onChanged: (text) {
-        nftCreationNotifier.setName(text);
+        nftCreationNotifier.setPropertyValue(
+          text,
+        );
       },
       suffixButton: hasQRCode
           ? TextFieldButton(
@@ -103,7 +114,9 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                   );
                   return;
                 } else {
-                  nftNameController.text = scanResult;
+                  nftCreationNotifier.setPropertyValue(
+                    scanResult,
+                  );
                 }
               },
             )
