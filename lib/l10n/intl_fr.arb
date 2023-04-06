@@ -474,7 +474,7 @@
 	"nftAddImportAEWebTitle": "Entrer une adresse AEWeb",
 	"nftAddImportAEWebPlaceholder": "Entrer une adresse AEWeb",
 	"nftAddImportAEWebButton": "Ajouter AEWeb",
-	"nftAEWebEmpty": "L'addresse AEWeb n'est pas encore disponible",
+	"nftAEWebEmpty": "L'adresse AEWeb n'est pas encore disponible",
 	"nftAddImportAEWebWarning": "Veuillez entrer l'adresse AEWeb complète du fichier que vous souhaitez étiqueter, pour assurer une récupération réussie du fichier ultérieurement. Exemple: 0000address/image.png",
 	"nftAddImportIPFS": "Lier à un fichier hébergé sur IPFS",
 	"nftAddImportIPFSTitle": "Entrer une url IPFS",
