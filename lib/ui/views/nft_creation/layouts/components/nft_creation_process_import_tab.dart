@@ -74,9 +74,8 @@ class _NFTCreationProcessImportTabState
                 ],
               ),
             ),
-            //const NFTCreationProcessFileAccess(),
             const NFTCreationProcessFilePreview(),
-            GridCount(
+            Column(
               children: [
                 const NFTCreationProcessImportTabFile(),
                 if (!isDesktop) const NFTCreationProcessImportTabImage(),

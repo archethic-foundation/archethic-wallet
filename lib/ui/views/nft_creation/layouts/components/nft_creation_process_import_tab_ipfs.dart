@@ -7,7 +7,7 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
     );
@@ -15,7 +15,7 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
       NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
     );
 
-    return CardCategoryWithText(
+    return InkWell(
       onTap: () async {
         Sheets.showAppHeightNineSheet(
           context: context,
@@ -30,8 +30,15 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
           ),
         );
       },
-      text: localizations.nftAddImportIPFS,
-      background: Image.asset('assets/images/NFT_upload_photo.png'),
+      child: SheetDetailCard(
+        children: [
+          const Icon(Iconsax.link, size: 18),
+          Text(
+            localizations.nftAddImportIPFS,
+            style: theme.textStyleSize12W400Primary,
+          ),
+        ],
+      ),
     );
   }
 }
