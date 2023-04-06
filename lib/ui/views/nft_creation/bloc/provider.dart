@@ -145,7 +145,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         keychainSecuredInfos: keychainSecuredInfos,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
-        aeip: [2],
+        aeip: [2, 9],
         properties: formState.propertiesConverted,
       ),
     );
@@ -507,13 +507,20 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     // Set content property and remove type_mine
     final newPropertiesToSet = [
       ...state.properties,
-      NftCreationFormStateProperty(
-        propertyName: 'content',
-        propertyValue: {'ipfs': uri},
-      ),
-    ]..removeWhere(
+    ]
+      ..removeWhere(
         (NftCreationFormStateProperty element) =>
             element.propertyName == 'type_mime',
+      )
+      ..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'content',
+      )
+      ..add(
+        NftCreationFormStateProperty(
+          propertyName: 'content',
+          propertyValue: {'ipfs': uri},
+        ),
       );
 
     state = state.copyWith(
@@ -535,13 +542,20 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     // Set content property and remove type_mine
     final newPropertiesToSet = [
       ...state.properties,
-      NftCreationFormStateProperty(
-        propertyName: 'content',
-        propertyValue: {'http_url': uri},
-      ),
-    ]..removeWhere(
+    ]
+      ..removeWhere(
         (NftCreationFormStateProperty element) =>
             element.propertyName == 'type_mime',
+      )
+      ..removeWhere(
+        (NftCreationFormStateProperty element) =>
+            element.propertyName == 'content',
+      )
+      ..add(
+        NftCreationFormStateProperty(
+          propertyName: 'content',
+          propertyValue: {'http_url': uri},
+        ),
       );
 
     state = state.copyWith(
@@ -563,41 +577,20 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     // Set content property and remove type_mine
     final newPropertiesToSet = [
       ...state.properties,
-      NftCreationFormStateProperty(
-        propertyName: 'content',
-        propertyValue: {'aeweb': uri},
-      ),
-    ]..removeWhere(
+    ]
+      ..removeWhere(
         (NftCreationFormStateProperty element) =>
             element.propertyName == 'type_mime',
-      );
-
-    state = state.copyWith(
-      properties: newPropertiesToSet,
-      fileImportType: FileImportType.aeweb,
-      fileURL: uri,
-    );
-
-    if (controlURL(context) == false) {
-      resetState();
-      return;
-    }
-  }
-
-  Future<void> setContentAEWEBProperties(
-    BuildContext context,
-    String uri,
-  ) async {
-    // Set content property and remove type_mine
-    final newPropertiesToSet = [
-      ...state.properties,
-      NftCreationFormStateProperty(
-        propertyName: 'content',
-        propertyValue: {'aeweb': uri},
-      ),
-    ]..removeWhere(
+      )
+      ..removeWhere(
         (NftCreationFormStateProperty element) =>
-            element.propertyName == 'type_mime',
+            element.propertyName == 'content',
+      )
+      ..add(
+        NftCreationFormStateProperty(
+          propertyName: 'content',
+          propertyValue: {'aeweb': uri},
+        ),
       );
 
     state = state.copyWith(
@@ -628,10 +621,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     BuildContext context,
   ) {
     if (!state.isFileImportFile()) {
-      state = state.copyWith(
-        error: AppLocalizations.of(context)!.nftAddConfirmationFileEmpty,
-      );
-      return false;
+      return true;
     }
 
     if (state.file == null || state.file!.keys.isEmpty) {
@@ -664,10 +654,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     BuildContext context,
   ) {
     if (!state.isFileImportUrl()) {
-      state = state.copyWith(
-        error: AppLocalizations.of(context)!.nftAddConfirmationFileEmpty,
-      );
-      return false;
+      return true;
     }
     if (state.fileURL == null) {
       state = state.copyWith(
