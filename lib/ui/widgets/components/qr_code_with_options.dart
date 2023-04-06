@@ -155,7 +155,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                           width: 20,
                           height: 20,
                           child: Icon(
-                            Iconsax.note,
+                            Iconsax.document_normal,
                             color: theme.background,
                             size: 14,
                           ),
