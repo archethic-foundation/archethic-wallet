@@ -20,11 +20,11 @@ To run all the tests :
 
 Connect your device or launch your compatible Emulator
 
-> patrol drive
+> patrol test
 
 To run a single specification :
 
-> patrol drive --target integration_test/<spec_file>_test.dart
+> patrol test --target integration_test/<spec_file>_test.dart
 
 To run Patrol on a specific device :
 
