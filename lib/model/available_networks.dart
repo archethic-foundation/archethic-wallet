@@ -68,6 +68,17 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
+  String getAEWebUri() {
+    switch (network) {
+      case AvailableNetworks.archethicMainNet:
+        return 'https://${DefaultNetworksHost.archethicMainNetHost.value}/api/web_hosting/';
+      case AvailableNetworks.archethicTestNet:
+        return 'https://${DefaultNetworksHost.archethicTestNetHost.value}/api/web_hosting/';
+      case AvailableNetworks.archethicDevNet:
+        return '$networkDevEndpoint/api/web_hosting/';
+    }
+  }
+
   // For saving to shared prefs
   int getIndex() {
     return network.index;

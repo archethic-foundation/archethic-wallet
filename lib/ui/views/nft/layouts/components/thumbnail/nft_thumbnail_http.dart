@@ -21,37 +21,29 @@ class NFTThumbnailHTTP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
+    final raw = TokenUtil.getHTTPUrlFromToken(
+      token,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        FutureBuilder<String?>(
-          future: TokenUtil.getHTTPUrlFromToken(
-            token,
-          ),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasError) {
-              return NFTThumbnailError(
-                  message: localizations.previewNotAvailable);
-            }
-            if (snapshot.hasData) {
-              return roundBorder == true
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: ImageNetworkWidgeted(
-                        url: snapshot.data,
-                        errorMessage: localizations.nftURLEmpty,
-                      ),
-                    )
-                  : ImageNetworkWidgeted(
-                      url: snapshot.data,
-                      errorMessage: localizations.nftURLEmpty,
-                    );
-            } else {
-              return const NFTThumbnailLoading();
-            }
-          },
-        )
+        if (raw == null)
+          NFTThumbnailError(
+            message: localizations.previewNotAvailable,
+          )
+        else
+          roundBorder == true
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: ImageNetworkWidgeted(
+                    url: raw,
+                    errorMessage: localizations.nftURLEmpty,
+                  ),
+                )
+              : ImageNetworkWidgeted(
+                  url: raw,
+                  errorMessage: localizations.nftURLEmpty,
+                ),
       ],
     );
   }

@@ -2,7 +2,6 @@
 import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -12,13 +11,14 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:aewallet/util/url_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class NetworkDialog {
+class NetworkDialog with UrlUtil {
   static Future<NetworksSetting?> getDialog(
     BuildContext context,
     WidgetRef ref,
@@ -100,24 +100,18 @@ class NetworkDialog {
                               return;
                             }
 
-                            final uriInput = ref.watch(
-                              UrlProvider.cleanUri(
-                                uri: endpointController.text,
-                              ),
-                            );
-
-                            if (!ref.watch(
-                              UrlProvider.isUrlValid(
-                                uri: uriInput,
-                              ),
-                            )) {
+                            if (!UrlUtil.isUrlValid(endpointController.text)) {
                               setError(localizations.enterEndpointNotValid);
                               return;
                             }
 
+                            final uriInput =
+                                UrlUtil.convertUri(endpointController.text);
+
                             if (await ref.watch(
-                              NetworkProvider.isReservedNodeUri(uri: uriInput)
-                                  .future,
+                              NetworkProvider.isReservedNodeUri(
+                                uri: uriInput,
+                              ).future,
                             )) {
                               setError(
                                 localizations.enterEndpointUseByNetwork,

@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/url/provider.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_template_form.dart';
+import 'package:aewallet/util/url_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
+class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget with UrlUtil {
   const NFTCreationProcessImportTabIPFSForm({
     super.key,
     required this.onConfirm,
@@ -41,26 +41,7 @@ class NFTCreationProcessImportTabIPFSForm extends ConsumerWidget {
           return;
         }
 
-        final uriInput = ref.watch(
-          UrlProvider.cleanUri(
-            uri: value,
-          ),
-        );
-
-        if (!ref.watch(
-          UrlProvider.isUrlValid(
-            uri: uriInput,
-          ),
-        )) {
-          setError(localizations.enterEndpointNotValid);
-          return;
-        }
-
-        if (!ref.watch(
-          UrlProvider.isUrlIPFS(
-            uri: uriInput,
-          ),
-        )) {
+        if (!UrlUtil.isUrlIPFS(value)) {
           setError(localizations.enterEndpointNotValid);
           return;
         }
