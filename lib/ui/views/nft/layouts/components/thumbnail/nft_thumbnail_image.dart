@@ -44,7 +44,7 @@ class NFTThumbnailImage extends ConsumerWidget {
               if (snapshot.hasData) {
                 return roundBorder == true
                     ? ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(20),
                         child: Image.memory(
                           snapshot.data!,
                         ),

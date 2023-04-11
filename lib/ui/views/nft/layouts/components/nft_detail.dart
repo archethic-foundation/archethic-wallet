@@ -7,6 +7,7 @@ import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_properties.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
@@ -139,6 +140,9 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                         const SizedBox(
                           height: 10,
                         ),
+                        NFTDetailProperties(
+                          tokenInformations: widget.tokenInformations,
+                        )
                       ],
                     ),
                   ),

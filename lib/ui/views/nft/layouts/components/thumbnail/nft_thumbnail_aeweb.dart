@@ -37,7 +37,7 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
         else
           roundBorder == true
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(20),
                   child: ImageNetworkWidgeted(
                     url: networkSettings.getAEWebUri() + raw,
                     errorMessage: localizations.nftURLEmpty,
