@@ -34,13 +34,19 @@ class ImageNetworkWidgeted extends ConsumerWidget {
         return ImageNetwork(
           url: url,
           error: Center(
-            child: Text(
-              errorMessage,
-              style: theme.textStyleSize16W600Primary,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2, left: 10),
+              child: Text(
+                errorMessage,
+                style: theme.textStyleSize12W100Primary,
+              ),
             ),
           ),
-          loading: const Center(
-            child: CircularProgressIndicator(),
+          loading: Center(
+            child: CircularProgressIndicator(
+              color: theme.text,
+              strokeWidth: 1,
+            ),
           ),
         );
       } else {

@@ -38,7 +38,8 @@ class NFTThumbnailImage extends ConsumerWidget {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
                 return NFTThumbnailError(
-                    message: localizations.previewNotAvailable);
+                  message: localizations.previewNotAvailable,
+                );
               }
               if (snapshot.hasData) {
                 return roundBorder == true

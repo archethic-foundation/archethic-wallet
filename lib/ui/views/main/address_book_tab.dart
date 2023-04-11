@@ -123,9 +123,12 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                         return ContactList(contactsList: data.value);
                       },
                       error: (error) => const SizedBox(),
-                      loading: (loading) => const SizedBox(
+                      loading: (loading) => SizedBox(
                         height: 50,
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: theme.text,
+                          strokeWidth: 1,
+                        ),
                       ),
                     ),
                   ],

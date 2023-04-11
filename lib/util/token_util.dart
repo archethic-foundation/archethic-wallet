@@ -19,39 +19,15 @@ class TokenUtil {
     return tokenMap;
   }
 
-  static Token getTokenByAddressFromTokenMap(
-    Map<String, Token> tokenMap,
-    String address,
-  ) {
-    return tokenMap[address]!;
-  }
-
   static Future<Token?> getTokenByAddress(
     String address,
   ) async {
-    final tokenMap =
-        await sl.get<AppService>().getToken([address], request: 'properties');
-
-    if (tokenMap[address] == null || tokenMap.isEmpty) {
-      return null;
-    }
-    return getTokenByAddressFromTokenMap(tokenMap, address);
+    final tokenMap = await getTokensFromAddress(address);
+    return tokenMap[address];
   }
 
   static bool isTokenFile(Token token) {
-    var flag = false;
-
-    token.properties.forEach((key, value) {
-      if (key == 'content') {
-        value.forEach((key, value) {
-          if (key == 'raw') {
-            flag = true;
-          }
-        });
-      }
-    });
-
-    return flag;
+    return token.properties['content']['raw'] != null;
   }
 
   static bool isTokenIPFS(Token token) {
@@ -118,7 +94,7 @@ class TokenUtil {
     return getImageFromToken(token, typeMime);
   }
 
-  static Future<String?>? getIPFSUrlFromToken(Token token) async {
+  static String? getIPFSUrlFromToken(Token token) {
     String? imageDecoded;
 
     if (token.properties.isNotEmpty) {
@@ -127,11 +103,20 @@ class TokenUtil {
     return imageDecoded;
   }
 
-  static Future<String?>? getHTTPUrlFromToken(Token token) async {
+  static String? getHTTPUrlFromToken(Token token) {
     String? imageDecoded;
 
     if (token.properties.isNotEmpty) {
       imageDecoded = token.properties['content']['http'];
+    }
+    return imageDecoded;
+  }
+
+  static String? getAEWebUrlFromToken(Token token) {
+    String? imageDecoded;
+
+    if (token.properties.isNotEmpty) {
+      imageDecoded = token.properties['content']['aeweb'];
     }
     return imageDecoded;
   }

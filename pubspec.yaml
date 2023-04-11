@@ -41,6 +41,9 @@ dependencies:
   # Bottom bar helps create an optimized bottom navigation bar with beautiful animations
   bottom_bar: ^2.0.3
 
+  # A flutter library to show images from the internet and keep them in the cache directory.
+  cached_network_image: ^3.2.3
+
   # A fakeable wrapper for dart:core clock APIs
   clock: ^1.1.1
 
