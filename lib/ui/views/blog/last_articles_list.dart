@@ -1,15 +1,13 @@
-// Dart imports:
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math' as math;
-
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
-// Flutter imports:
+import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:flutter/material.dart';
-// Project imports:
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -200,12 +198,25 @@ class SlidingCard extends ConsumerWidget {
                       width: MediaQuery.of(context).size.width,
                       height: 150,
                     )
-                  : Image.network(
-                      '$assetName',
+                  : ImageNetwork(
+                      url: '$assetName',
                       width: MediaQuery.of(context).size.width,
                       height: 150,
                       alignment: Alignment(-offset!.abs(), 0),
-                      fit: BoxFit.fitWidth,
+                      error: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                      ),
+                      loading: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: theme.text,
+                            strokeWidth: 1,
+                          ),
+                        ),
+                      ),
                     ),
             ),
             Expanded(

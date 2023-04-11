@@ -11,20 +11,29 @@ class ImageNetwork extends ConsumerWidget {
     required this.url,
     required this.error,
     required this.loading,
+    this.width,
+    this.height,
+    this.alignment = Alignment.center,
+    this.fit = BoxFit.fitWidth,
     super.key,
   });
 
   final String url;
   final Widget error;
   final Widget loading;
+  final double? width;
+  final double? height;
+  final Alignment alignment;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
       return CachedNetworkImage(
         imageUrl: url,
-        width: MediaQuery.of(context).size.width,
-        fit: BoxFit.fitWidth,
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height,
+        fit: fit,
         errorWidget: (context, url, error) => Text(error),
         progressIndicatorBuilder: (context, url, progress) {
           return loading;
@@ -33,8 +42,9 @@ class ImageNetwork extends ConsumerWidget {
     } else {
       return Image.network(
         url,
-        width: MediaQuery.of(context).size.width,
-        fit: BoxFit.fitWidth,
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height,
+        fit: fit,
         errorBuilder: (
           BuildContext context,
           Object exception,
