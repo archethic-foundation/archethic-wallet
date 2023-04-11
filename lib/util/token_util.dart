@@ -27,19 +27,23 @@ class TokenUtil {
   }
 
   static bool isTokenFile(Token token) {
-    return token.properties['content']['raw'] != null;
+    return token.properties['content'] != null &&
+        token.properties['content']['raw'] != null;
   }
 
   static bool isTokenIPFS(Token token) {
-    return token.properties['content']['ipfs'] != null;
+    return token.properties['content'] != null &&
+        token.properties['content']['ipfs'] != null;
   }
 
   static bool isTokenHTTP(Token token) {
-    return token.properties['content']['http'] != null;
+    return token.properties['content'] != null &&
+        token.properties['content']['http'] != null;
   }
 
   static bool isTokenAEWEB(Token token) {
-    return token.properties['content']['aeweb'] != null;
+    return token.properties['content'] != null &&
+        token.properties['content']['aeweb'] != null;
   }
 
   static Future<Uint8List?> getImageDecodedForPdf(

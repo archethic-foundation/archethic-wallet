@@ -7,7 +7,7 @@ import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_preview.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -133,9 +133,8 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
-                        NFTPreviewWidget(
+                        NFTThumbnail(
                           tokenInformations: widget.tokenInformations,
-                          nftPropertiesDeleteAction: false,
                         ),
                         const SizedBox(
                           height: 10,
