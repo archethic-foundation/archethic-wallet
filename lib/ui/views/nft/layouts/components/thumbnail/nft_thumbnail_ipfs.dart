@@ -1,12 +1,13 @@
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
+import 'package:aewallet/util/url_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTThumbnailIPFS extends ConsumerWidget {
+class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
   const NFTThumbnailIPFS({
     super.key,
     required this.token,
@@ -32,14 +33,14 @@ class NFTThumbnailIPFS extends ConsumerWidget {
         else
           roundBorder == true
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(20),
                   child: ImageNetworkWidgeted(
-                    url: raw,
+                    url: UrlUtil.convertUrlIPFSForWeb(raw),
                     errorMessage: localizations.nftAEWebEmpty,
                   ),
                 )
               : ImageNetworkWidgeted(
-                  url: raw,
+                  url: UrlUtil.convertUrlIPFSForWeb(raw),
                   errorMessage: localizations.nftAEWebEmpty,
                 ),
       ],

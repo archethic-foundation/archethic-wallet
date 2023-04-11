@@ -34,7 +34,7 @@ class NFTThumbnailHTTP extends ConsumerWidget {
         else
           roundBorder == true
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(20),
                   child: ImageNetworkWidgeted(
                     url: raw,
                     errorMessage: localizations.nftURLEmpty,
