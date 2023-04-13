@@ -16,10 +16,12 @@ class NFTThumbnail extends ConsumerWidget {
     super.key,
     required this.tokenInformations,
     this.roundBorder = false,
+    this.withContentInfo = false,
   });
 
   final TokenInformations tokenInformations;
   final bool roundBorder;
+  final bool withContentInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,16 +47,19 @@ class NFTThumbnail extends ConsumerWidget {
             return NFTThumbnailIPFS(
               token: snapshot.data,
               roundBorder: roundBorder,
+              withContentInfo: withContentInfo,
             );
           } else if (TokenUtil.isTokenHTTP(snapshot.data)) {
             return NFTThumbnailHTTP(
               token: snapshot.data,
               roundBorder: roundBorder,
+              withContentInfo: withContentInfo,
             );
           } else if (TokenUtil.isTokenAEWEB(snapshot.data)) {
             return NFTThumbnailAEWEB(
               token: snapshot.data,
               roundBorder: roundBorder,
+              withContentInfo: withContentInfo,
             );
           }
           return const SizedBox();

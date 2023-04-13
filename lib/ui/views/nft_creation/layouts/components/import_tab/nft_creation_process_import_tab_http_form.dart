@@ -23,8 +23,8 @@ class NFTCreationProcessImportTabHTTPForm extends ConsumerWidget with UrlUtil {
     return NFTCreationProcessImportTabTemplateForm(
       title: localizations.nftAddImportURLTitle,
       placeholder: localizations.nftAddImportURLPlaceholder,
-      buttonLabel: localizations.nftAddImportURLButton,
-      warningLabel: localizations.nftAddImportURLWarning,
+      warningLabel: localizations.nftAddImportURLDescription,
+      disclaimer: localizations.nftHTTPLinkDisclaimer,
       onConfirm: (String value, BuildContext contextForm) {
         void setError(String errorText) {
           UIUtil.showSnackbar(
@@ -37,14 +37,14 @@ class NFTCreationProcessImportTabHTTPForm extends ConsumerWidget with UrlUtil {
         }
 
         if (value.isEmpty) {
-          setError(localizations.enterEndpointBlank);
+          setError(localizations.nftHTTPUrlEmpty);
           return;
         }
 
         if (!UrlUtil.isUrlValid(
           value,
         )) {
-          setError(localizations.enterEndpointNotValid);
+          setError(localizations.nftHTTPUrlNotValid);
           return;
         }
 

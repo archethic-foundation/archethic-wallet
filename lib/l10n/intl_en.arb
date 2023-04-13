@@ -2826,20 +2826,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportAEWebButton": "Add AEWeb",
-  "@nftAddImportAEWebButton": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "nftAEWebEmpty": "The AEWeb is not available yet.",
   "@nftAEWebEmpty": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportAEWebWarning": "Please enter the full AEWeb Address of the file you wish to enter, to ensure successful retrieval of the file later on. Example: 0000address/image.png",
-  "@nftAddImportAEWebWarning": {
+  "nftAddImportAEWebDescription": "Please fill the AEWeb reference address and path to the file for the NFT content (e.g., 0000f2c75f55fb398e99b6a5e674c3422731fb167f79b9b08131dcfa3bb830d50b9a/image.png)",
+  "@nftAddImportAEWebDescription": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2850,20 +2844,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportIPFSTitle": "Enter an IPFS url",
+  "nftAddImportIPFSTitle": "Fill an IPFS address",
   "@nftAddImportIPFSTitle": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportIPFSPlaceholder": "Please enter an IPFS url",
+  "nftAddImportIPFSPlaceholder": "Please fill an IPFS address",
   "@nftAddImportIPFSPlaceholder": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "nftAddImportIPFSButton": "Add IPFS",
-  "@nftAddImportIPFSButton": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2874,8 +2862,80 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportIPFSWarning": "Please enter the full IPFS URL of the file you wish to enter, including the 'ipfs://' prefix, to ensure successful retrieval of the file later on. Example: ipfs://abcde/photo.png",
-  "@nftAddImportIPFSWarning": {
+  "imageNotAvailable": "The image is not available.",
+  "@imageNotAvailable": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAEWebUrlNotValid": "The AEWeb address is valid.",
+  "@nftAEWebUrlNotValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftIPFSUrlNotValid": "The IPFS address is not valid.",
+  "@nftIPFSUrlNotValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftHTTPUrlNotValid": "The url is not valid.",
+  "@nftHTTPUrlNotValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAEWebUrlEmpty": "The AEWeb address is required.",
+  "@nftAEWebUrlEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftIPFSUrlEmpty": "The IPFS address is required.",
+  "@nftIPFSUrlEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftHTTPUrlEmpty": "The url is required.",
+  "@nftHTTPUrlEmpty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftIPFSFrom": "From IPFS url: ",
+  "@nftIPFSFrom": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAEWebFrom": "From AEWeb url: ",
+  "@nftAEWebFrom": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftHTTPFrom": "From HTTP url: ",
+  "@nftHTTPFrom": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAEWebLinkDisclaimer": "Note that the content returned by AEweb may not be fixed and could return different values over time.",
+  "@nftAEWebLinkDisclaimer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftHTTPLinkDisclaimer": "Note that the content returned by HTTP link may not be fixed and could return different values over time.",
+  "@nftHTTPLinkDisclaimer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportIPFSDescription": "Please fill the IPFS address to the NFT content (e.g., ipfs://bafybeihkoviema7g3gxyt6la7vd5io32ictqbilu3wnlo3rs7ewhnp7lly/).",
+  "@nftAddImportIPFSDescription": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -2898,14 +2958,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAddImportURLWarning": "Please enter the full URL of the file you wish to enter, including the 'https://' or 'http://' prefix, to ensure successful retrieval of the file later on. Example: https://abcde/photo.png",
-  "@nftAddImportURLWarning": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "nftAddImportURLButton": "Add URL",
-  "@nftAddImportURLButton": {
+  "nftAddImportURLDescription": "Please, fill the HTTPS url to the NFT content (e.g., https://my-website.com/image.png).",
+  "@nftAddImportURLDescription": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
