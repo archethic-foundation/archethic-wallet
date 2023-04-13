@@ -5,11 +5,13 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTCreationProcessImportTabTemplateForm extends ConsumerStatefulWidget {
@@ -18,15 +20,15 @@ class NFTCreationProcessImportTabTemplateForm extends ConsumerStatefulWidget {
     required this.onConfirm,
     required this.title,
     required this.placeholder,
-    required this.buttonLabel,
     required this.warningLabel,
+    this.disclaimer = '',
   });
 
   final void Function(String uri, BuildContext context) onConfirm;
   final String title;
   final String placeholder;
-  final String buttonLabel;
   final String warningLabel;
+  final String disclaimer;
 
   @override
   ConsumerState<NFTCreationProcessImportTabTemplateForm> createState() =>
@@ -57,6 +59,7 @@ class _NFTCreationProcessImportTabFormUrlState
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
@@ -82,7 +85,7 @@ class _NFTCreationProcessImportTabFormUrlState
                     children: <Widget>[
                       Text(
                         widget.warningLabel,
-                        style: theme.textStyleSize12W100PrimaryWarning,
+                        style: theme.textStyleSize12W100Primary,
                         textAlign: TextAlign.justify,
                       ),
                       const SizedBox(
@@ -107,6 +110,36 @@ class _NFTCreationProcessImportTabFormUrlState
                       const SizedBox(
                         height: 30,
                       ),
+                      if (widget.disclaimer.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 30,
+                            left: 10,
+                            right: 20,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 2),
+                                child: Icon(
+                                  UiIcons.warning,
+                                  color: theme.warning,
+                                  size: 12,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  widget.disclaimer,
+                                  style:
+                                      theme.textStyleSize12W100PrimaryWarning,
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -120,14 +153,14 @@ class _NFTCreationProcessImportTabFormUrlState
                         ConnectivityStatus.isConnected)
                       AppButtonTiny(
                         AppButtonTinyType.primary,
-                        widget.buttonLabel,
+                        localizations.confirm,
                         icon: Icon(
-                          Icons.add,
+                          Icons.check,
                           color: theme.mainButtonLabel,
                           size: 14,
                         ),
                         Dimens.buttonBottomDimens,
-                        key: const Key('add'),
+                        key: const Key('confirm'),
                         onPressed: () {
                           widget.onConfirm(urlController.text, context);
                         },
@@ -135,11 +168,11 @@ class _NFTCreationProcessImportTabFormUrlState
                     else
                       AppButtonTiny(
                         AppButtonTinyType.primaryOutline,
-                        widget.buttonLabel,
+                        localizations.confirm,
                         Dimens.buttonBottomDimens,
-                        key: const Key('add'),
+                        key: const Key('confirm'),
                         icon: Icon(
-                          Icons.add,
+                          Icons.check,
                           color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),

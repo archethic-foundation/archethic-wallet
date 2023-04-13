@@ -1,9 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
+import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ImageNetwork extends ConsumerWidget {
@@ -28,13 +31,26 @@ class ImageNetwork extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalizations.of(context)!;
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
       return CachedNetworkImage(
         imageUrl: url,
         width: width ?? MediaQuery.of(context).size.width,
         height: height,
         fit: fit,
-        errorWidget: (context, url, error) => Text(error),
+        errorWidget: (context, url, error) {
+          if (error.statusCode == 404) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Text(
+                localizations.imageNotAvailable,
+                style: theme.textStyleSize12W400Primary,
+              ),
+            );
+          }
+          return const SizedBox();
+        },
         progressIndicatorBuilder: (context, url, progress) {
           return loading;
         },

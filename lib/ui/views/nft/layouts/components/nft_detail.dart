@@ -136,6 +136,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                       children: <Widget>[
                         NFTThumbnail(
                           tokenInformations: widget.tokenInformations,
+                          withContentInfo: true,
                         ),
                         const SizedBox(
                           height: 10,

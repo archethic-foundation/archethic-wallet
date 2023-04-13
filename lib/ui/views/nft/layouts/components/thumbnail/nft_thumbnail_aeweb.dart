@@ -1,6 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -13,14 +16,18 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
     super.key,
     required this.token,
     this.roundBorder = false,
+    this.withContentInfo = false,
   });
 
   final Token token;
   final bool roundBorder;
+  final bool withContentInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final raw = TokenUtil.getAEWebUrlFromToken(
       token,
     );
@@ -47,6 +54,39 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
                   url: networkSettings.getAEWebUri() + raw,
                   errorMessage: localizations.nftURLEmpty,
                 ),
+        if (withContentInfo)
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: SelectableText(
+              localizations.nftAEWebFrom + networkSettings.getAEWebUri() + raw!,
+              style: theme.textStyleSize12W100Primary,
+            ),
+          ),
+        if (withContentInfo)
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Icon(
+                    UiIcons.warning,
+                    color: theme.warning,
+                    size: 12,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    localizations.nftAEWebLinkDisclaimer,
+                    style: theme.textStyleSize12W100PrimaryWarning,
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }
