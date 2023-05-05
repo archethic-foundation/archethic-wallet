@@ -58,7 +58,7 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: SelectableText(
-              localizations.nftAEWebFrom + networkSettings.getAEWebUri() + raw!,
+              '${localizations.nftAEWebFrom}\n${networkSettings.getAEWebUri()}${raw!}',
               style: theme.textStyleSize12W100Primary,
             ),
           ),

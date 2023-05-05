@@ -73,7 +73,7 @@ class _NFTCreationProcessImportTabState
             ),
             const NFTCreationProcessFilePreview(),
             Text(
-              'Veuillez indiquer la source:',
+              localizations.nftChooseSource,
               style: theme.textStyleSize12W100Primary,
             ),
             Column(

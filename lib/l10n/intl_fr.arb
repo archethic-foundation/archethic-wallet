@@ -471,7 +471,7 @@
 	"nftAddImportAEWeb": "Lier à un fichier hébergé sur AEWeb",
 	"nftAddImportAEWebTitle": "Entrer une adresse AEWeb",
 	"nftAddImportAEWebPlaceholder": "Entrer une adresse AEWeb",
-	"nftAEWebEmpty": "L'adresse AEWeb n'est pas encore disponible",
+	"nftAEWebEmpty": "Le fichier n'est pas encore disponible sur AEWeb.",
 	"nftAddImportAEWebDescription": "Veuillez indiquer l'adresse de référence AEWeb et le chemin d'accès au fichier du contenu du NFT (par exemple, 0000f2c75f55fb398e99b6a5e674c3422731fb167f79b9b08131dcfa3bb830d50b9a/image.png).",
 	"nftAddImportIPFS": "Lier à un fichier hébergé sur IPFS",
 	"nftAddImportIPFSTitle": "Entrer une adresse IPFS",
@@ -484,9 +484,9 @@
 	"nftAEWebUrlNotValid": "L'adresse AEWeb n'est pas valide.",
 	"nftIPFSUrlNotValid": "L'adresse IPFS n'est pas valide.",
 	"nftHTTPUrlNotValid": "L'url n'est pas valide.",
-	"nftIPFSFrom": "Provenant de l'url IPFS: ",
-	"nftAEWebFrom": "Provenant de l'url AEWeb: ",
-	"nftHTTPFrom": "Provenant de l'url HTTP: ",
+	"nftIPFSFrom": "Provenant de l'url IPFS : ",
+	"nftAEWebFrom": "Provenant de l'url AEWeb : ",
+	"nftHTTPFrom": "Provenant de l'url : ",
 	"nftAEWebLinkDisclaimer": "Notez que le contenu renvoyé par AEweb peut ne pas être fixe et peut renvoyer des valeurs différentes au fil du temps.",
 	"nftHTTPLinkDisclaimer": "Notez que le contenu renvoyé par le lien HTTP peut ne pas être fixe et peut renvoyer des valeurs différentes au fil du temps.",
 	"nftAddImportIPFSDescription": "Veuillez indiquer l'adresse IPFS du contenu du NFT (par exemple, ipfs://bafybeihkoviema7g3gxyt6la7vd5io32ictqbilu3wnlo3rs7ewhnp7lly/).",
@@ -505,5 +505,6 @@
 	"serviceTypeLabelAeweb": "Site web hébergé sur AEWeb",
 	"serviceTypeLabelOther": "Autre",
 	"ledgerMethod": "Ledger Nano S",
-	"addServiceCommandReceivedNotification": "L'application %1 souhaite ajouter un service."
+	"addServiceCommandReceivedNotification": "L'application %1 souhaite ajouter un service.",
+	"nftChooseSource": "Veuillez indiquer la source :"
 }

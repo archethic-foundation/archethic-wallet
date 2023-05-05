@@ -51,6 +51,14 @@ class NFTThumbnailHTTP extends ConsumerWidget {
                 ),
         if (withContentInfo)
           Padding(
+            padding: const EdgeInsets.all(10),
+            child: SelectableText(
+              '${localizations.nftHTTPFrom}\n${raw!}',
+              style: theme.textStyleSize12W100Primary,
+            ),
+          ),
+        if (withContentInfo)
+          Padding(
             padding: const EdgeInsets.only(top: 30, left: 10, right: 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

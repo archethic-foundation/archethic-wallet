@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
+import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,14 +26,20 @@ class NFTCreationProcessFilePreviewAEWEB extends ConsumerWidget {
       return const SizedBox();
     }
 
+    final networkSettings = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.network),
+    );
+
     return Column(
       children: [
-        Center(
-          child: Text(
-            localizations.nftAEWebEmpty,
-            style: theme.textStyleSize16W600Primary,
-          ),
-        )
+        ImageNetworkWidgeted(
+          url: networkSettings.getAEWebUri() + fileUrl,
+          errorMessage: localizations.nftURLEmpty,
+        ),
+        SelectableText(
+          '${localizations.nftAEWebFrom}\n$fileUrl',
+          style: theme.textStyleSize12W100Primary,
+        ),
       ],
     );
   }
