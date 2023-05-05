@@ -31,7 +31,7 @@ class AddAccountDetail extends ConsumerWidget {
           SheetDetailCard(
             children: [
               Text(
-                localizations.tokenName,
+                localizations.serviceName,
                 style: theme.textStyleSize12W400Primary,
               ),
               Expanded(

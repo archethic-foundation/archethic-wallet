@@ -188,12 +188,27 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
               SheetDetailCard(
                 children: [
                   Text(
+                    'Action',
+                    style: theme.textStyleSize12W400Primary,
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Ajout d\'un service',
+                      style: theme.textStyleSize12W400Primary,
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ],
+              ),
+              SheetDetailCard(
+                children: [
+                  Text(
                     localizations.tokenName,
                     style: theme.textStyleSize12W400Primary,
                   ),
                   Expanded(
                     child: Text(
-                      'addAccount.name',
+                      command.data.data.toString(),
                       style: theme.textStyleSize12W400Primary,
                       textAlign: TextAlign.end,
                     ),

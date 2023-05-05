@@ -1992,6 +1992,24 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "addServiceCommandReceivedNotification": "The %1 application wants to create a new service in your keychain.\nWould you like to confirm this action with the %2 account?",
+  "@addServiceCommandReceivedNotification": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sign1TransactionCommandReceivedNotification": "The %1 application wants you to sign 1 transaction.\nWould you like to confirm this action with the %2 account?",
+  "@sign1TransactionCommandReceivedNotification": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signXTransactionsCommandReceivedNotification": "The %1 application wants you to sign %2 transactions.\nWould you like to confirm this action with the %3 account?",
+  "@signXTransactionsCommandReceivedNotification": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "transactionInputNotification": "You have received %1 %2 on your %3 account",
   "@transactionInputNotification": {
     "type": "text",
@@ -3018,14 +3036,20 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addServiceCommandReceivedNotification": "Application %1 wants to add a service.",
-  "@addServiceCommandReceivedNotification": {
+  "nftChooseSource": "Please indicate the source:",
+  "@nftChooseSource": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftChooseSource": "Please indicate the source:",
-  "@nftChooseSource": {
+  "serviceName": "Name :",
+  "@serviceName": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "signTransactionListTransactionsHeader": "Transaction %1",
+  "@signTransactionListTransactionsHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

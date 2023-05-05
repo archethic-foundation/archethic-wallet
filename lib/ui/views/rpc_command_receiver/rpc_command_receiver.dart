@@ -71,7 +71,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
         KeychainDeriveAddressCommandHandler(ref: ref),
       )
       ..addHandler(
-        SignTransactionsCommandHandler(ref: ref),
+        SignTransactionsCommandHandler(context: context, ref: ref),
       );
 
     super.initState();
