@@ -2,13 +2,18 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
+import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignTransactionsCommandHandler extends CommandHandler {
   SignTransactionsCommandHandler({
+    required BuildContext context,
     required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
@@ -43,6 +48,19 @@ class SignTransactionsCommandHandler extends CommandHandler {
             );
 
             var index = indexMap[addressGenesis] ?? 0;
+
+            final confirmation = await Sheets.showAppHeightNineSheet<bool>(
+              context: context,
+              ref: ref,
+              widget: SignTransactionsConfirmationForm(
+                command,
+              ),
+            );
+            if (confirmation == null || confirmation == false) {
+              return Result.failure(
+                RPCFailure.userRejected(),
+              );
+            }
 
             for (final rpcSignTransactionCommandData
                 in command.data.rpcSignTransactionCommandData) {

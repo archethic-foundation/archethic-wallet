@@ -335,6 +335,9 @@
 	"activateVibrations": "Activer les vibrations",
 	"activateNotifications": "Activer les notifications",
 	"transactionSignatureCommandReceivedNotification": "L'application %1 souhaite effectuer une action nécessitant votre confirmation.",
+	"addServiceCommandReceivedNotification": "L'application %1 souhaite créer un nouveau service dans votre porte-clés.\nSouhaitez-vous confirmer cette action avec le compte %2 ?",
+	"sign1TransactionCommandReceivedNotification": "L'application %1 vous demande de signer 1 transaction.\nSouhaitez-vous confirmer cette action avec le compte %2 ?",
+	"signXTransactionsCommandReceivedNotification": "L'application %1 vous demande de signer %2 transactions.\nSouhaitez-vous confirmer cette action avec le compte %3 ?",
 	"transactionInputNotification": "Vous avez reçu %1 %2 sur votre compte %3",
 	"searchField": "Recherche...",
 	"search": "Rechercher",
@@ -505,6 +508,7 @@
 	"serviceTypeLabelAeweb": "Site web hébergé sur AEWeb",
 	"serviceTypeLabelOther": "Autre",
 	"ledgerMethod": "Ledger Nano S",
-	"addServiceCommandReceivedNotification": "L'application %1 souhaite ajouter un service.",
-	"nftChooseSource": "Veuillez indiquer la source :"
+	"nftChooseSource": "Veuillez indiquer la source :",
+	"serviceName": "Name :",
+	"signTransactionListTransactionsHeader": "Transaction %1"
 }

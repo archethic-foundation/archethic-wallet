@@ -1,3 +1,4 @@
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -9,7 +10,7 @@ import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction_keychain_builder.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/send_transaction_confirmation_form.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,11 @@ class AddServiceHandler extends CommandHandler {
               command: command,
             );
 
+            if (command.data.name.isEmpty) {
+              return Result.failure(
+                RPCFailure.invalidParams(),
+              );
+            }
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
             );
@@ -70,7 +76,7 @@ class AddServiceHandler extends CommandHandler {
                 Result<TransactionConfirmation, TransactionError>>(
               context: context,
               ref: ref,
-              widget: SendTransactionConfirmationForm(newCommand),
+              widget: AddServiceConfirmationForm(nameEncoded, newCommand),
             );
 
             return result?.map(
@@ -96,15 +102,20 @@ class AddServiceHandler extends CommandHandler {
     required WidgetRef ref,
     required RPCCommand<RPCAddServiceCommandData> command,
   }) async {
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+
     final message =
         AppLocalizations.of(context)!.addServiceCommandReceivedNotification;
 
     NotificationsUtil.showNotification(
       title: 'Archethic',
-      body: message.replaceAll(
-        '%1',
-        command.origin.name,
-      ),
+      body: message
+          .replaceAll(
+            '%1',
+            command.origin.name,
+          )
+          .replaceAll('%2', accountSelected!.name),
     );
   }
 }
