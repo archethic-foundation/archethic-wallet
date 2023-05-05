@@ -2814,7 +2814,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftAEWebEmpty": "The AEWeb is not available yet.",
+  "nftAEWebEmpty": "The asset is not available on AEWeb yet.",
   "@nftAEWebEmpty": {
     "type": "text",
     "placeholders_order": [],
@@ -2904,7 +2904,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftHTTPFrom": "From HTTP url: ",
+  "nftHTTPFrom": "From url: ",
   "@nftHTTPFrom": {
     "type": "text",
     "placeholders_order": [],
@@ -3020,6 +3020,12 @@
   },
   "addServiceCommandReceivedNotification": "Application %1 wants to add a service.",
   "@addServiceCommandReceivedNotification": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftChooseSource": "Please indicate the source:",
+  "@nftChooseSource": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

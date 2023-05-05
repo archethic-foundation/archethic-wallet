@@ -52,7 +52,7 @@ class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
           Padding(
             padding: const EdgeInsets.all(10),
             child: SelectableText(
-              localizations.nftIPFSFrom + raw!,
+              '${localizations.nftIPFSFrom}\n${raw!}',
               style: theme.textStyleSize12W100Primary,
             ),
           ),
