@@ -96,23 +96,6 @@ class MainMenuView extends ConsumerWidget {
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected)
                         const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        _SettingsListItem.singleLineWithInfos(
-                          heading: localizations.labLinkHeader,
-                          info: localizations.labLinkDesc,
-                          icon: UiIcons.link_archethic_lab,
-                          onPressed: () async {
-                            UIUtil.showWebview(
-                              context,
-                              'https://www.archethic.net/lab.html',
-                              localizations.labLinkHeader,
-                            );
-                          },
-                        ),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
