@@ -1986,25 +1986,25 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionSignatureCommandReceivedNotification": "The %1 application wants to perform an action that requires your confirmation.",
+  "transactionSignatureCommandReceivedNotification": "The %1 application wants to send to the blockchain a transaction\nWould you like to confirm this action with the %2 account?",
   "@transactionSignatureCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addServiceCommandReceivedNotification": "The %1 application wants to create a new service in your keychain.\nWould you like to confirm this action with the %2 account?",
+  "addServiceCommandReceivedNotification": "The %1 application wants to create a new service in your keychain.\nWould you like to confirm this action with the %2 account?\nThis action doesn't require any fees.",
   "@addServiceCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "sign1TransactionCommandReceivedNotification": "The %1 application wants you to sign 1 transaction.\nWould you like to confirm this action with the %2 account?",
+  "sign1TransactionCommandReceivedNotification": "The %1 application wants you to sign 1 transaction.\nWould you like to confirm this action with the %2 account?\nThis action doesn't require any fees.",
   "@sign1TransactionCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "signXTransactionsCommandReceivedNotification": "The %1 application wants you to sign %2 transactions.\nWould you like to confirm this action with the %3 account?",
+  "signXTransactionsCommandReceivedNotification": "The %1 application wants you to sign %2 transactions.\nWould you like to confirm this action with the %3 account?\nThis action doesn't require any fees.",
   "@signXTransactionsCommandReceivedNotification": {
     "type": "text",
     "placeholders_order": [],
