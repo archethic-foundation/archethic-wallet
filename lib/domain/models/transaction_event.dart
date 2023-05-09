@@ -58,6 +58,7 @@ class TransactionConfirmation with _$TransactionConfirmation {
 
   double get confirmationRatio => max(1, maxConfirmations / nbConfirmations);
 
+  // TODO(reddwarf03): See new rules about calculation
   static bool isEnoughConfirmations(
     int nbConfirmations,
     int maxConfirmations,

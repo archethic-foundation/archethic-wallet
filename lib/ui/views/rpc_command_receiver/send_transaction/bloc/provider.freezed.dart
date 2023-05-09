@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SignTransactionConfirmationFormState {
   RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand =>
       throw _privateConstructorUsedError;
-  Account get senderAccount => throw _privateConstructorUsedError;
+  double get feesEstimation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignTransactionConfirmationFormStateCopyWith<
@@ -36,7 +36,7 @@ abstract class $SignTransactionConfirmationFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
-      Account senderAccount});
+      double feesEstimation});
 
   $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
       get signTransactionCommand;
@@ -57,17 +57,17 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? signTransactionCommand = null,
-    Object? senderAccount = null,
+    Object? feesEstimation = null,
   }) {
     return _then(_value.copyWith(
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
               as RPCCommand<RPCSendTransactionCommandData>,
-      senderAccount: null == senderAccount
-          ? _value.senderAccount
-          : senderAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
+      feesEstimation: null == feesEstimation
+          ? _value.feesEstimation
+          : feesEstimation // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 
@@ -93,7 +93,7 @@ abstract class _$$_SignTransactionConfirmationFormStateCopyWith<$Res>
   @useResult
   $Res call(
       {RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
-      Account senderAccount});
+      double feesEstimation});
 
   @override
   $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
@@ -114,17 +114,17 @@ class __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? signTransactionCommand = null,
-    Object? senderAccount = null,
+    Object? feesEstimation = null,
   }) {
     return _then(_$_SignTransactionConfirmationFormState(
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
               as RPCCommand<RPCSendTransactionCommandData>,
-      senderAccount: null == senderAccount
-          ? _value.senderAccount
-          : senderAccount // ignore: cast_nullable_to_non_nullable
-              as Account,
+      feesEstimation: null == feesEstimation
+          ? _value.feesEstimation
+          : feesEstimation // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -134,17 +134,17 @@ class __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>
 class _$_SignTransactionConfirmationFormState
     extends _SignTransactionConfirmationFormState {
   const _$_SignTransactionConfirmationFormState(
-      {required this.signTransactionCommand, required this.senderAccount})
+      {required this.signTransactionCommand, required this.feesEstimation})
       : super._();
 
   @override
   final RPCCommand<RPCSendTransactionCommandData> signTransactionCommand;
   @override
-  final Account senderAccount;
+  final double feesEstimation;
 
   @override
   String toString() {
-    return 'SignTransactionConfirmationFormState(signTransactionCommand: $signTransactionCommand, senderAccount: $senderAccount)';
+    return 'SignTransactionConfirmationFormState(signTransactionCommand: $signTransactionCommand, feesEstimation: $feesEstimation)';
   }
 
   @override
@@ -154,13 +154,13 @@ class _$_SignTransactionConfirmationFormState
             other is _$_SignTransactionConfirmationFormState &&
             (identical(other.signTransactionCommand, signTransactionCommand) ||
                 other.signTransactionCommand == signTransactionCommand) &&
-            (identical(other.senderAccount, senderAccount) ||
-                other.senderAccount == senderAccount));
+            (identical(other.feesEstimation, feesEstimation) ||
+                other.feesEstimation == feesEstimation));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, signTransactionCommand, senderAccount);
+      Object.hash(runtimeType, signTransactionCommand, feesEstimation);
 
   @JsonKey(ignore: true)
   @override
@@ -176,14 +176,14 @@ abstract class _SignTransactionConfirmationFormState
   const factory _SignTransactionConfirmationFormState(
           {required final RPCCommand<RPCSendTransactionCommandData>
               signTransactionCommand,
-          required final Account senderAccount}) =
+          required final double feesEstimation}) =
       _$_SignTransactionConfirmationFormState;
   const _SignTransactionConfirmationFormState._() : super._();
 
   @override
   RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand;
   @override
-  Account get senderAccount;
+  double get feesEstimation;
   @override
   @JsonKey(ignore: true)
   _$$_SignTransactionConfirmationFormStateCopyWith<

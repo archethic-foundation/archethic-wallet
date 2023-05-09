@@ -125,7 +125,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                       color: theme.backgroundTransferListCard,
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
-                                        child: Text(
+                                        child: SelectableText(
                                           const JsonEncoder.withIndent('  ')
                                               .convert(
                                             rpcSignTransactionCommandData
