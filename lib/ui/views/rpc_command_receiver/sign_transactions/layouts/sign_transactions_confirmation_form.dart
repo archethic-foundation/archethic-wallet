@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -11,6 +9,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/provider.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/transaction_raw.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -97,47 +96,9 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                 .asMap()
                                 .entries
                                 .map((rpcSignTransactionCommandData) {
-                              return Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    localizations
-                                        .signTransactionListTransactionsHeader
-                                        .replaceAll(
-                                      '%1',
-                                      (rpcSignTransactionCommandData.key + 1)
-                                          .toString(),
-                                    ),
-                                    style: theme.textStyleSize12W400Primary,
-                                  ),
-                                  SizedBox.fromSize(
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          color: theme
-                                              .backgroundTransferListOutline!,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      elevation: 0,
-                                      color: theme.backgroundTransferListCard,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: SelectableText(
-                                          const JsonEncoder.withIndent('  ')
-                                              .convert(
-                                            rpcSignTransactionCommandData
-                                                .value.data,
-                                          ),
-                                          style:
-                                              theme.textStyleSize12W400Primary,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              return TransactionRaw(
+                                rpcSignTransactionCommandData,
+                                theme,
                               );
                             }).toList(),
                           ),

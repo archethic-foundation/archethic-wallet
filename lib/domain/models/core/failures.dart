@@ -10,7 +10,8 @@ class Failure with _$Failure implements Exception {
   const factory Failure.quotaExceeded({
     DateTime? cooldownEndDate,
   }) = _QuotaExceededFailure;
-  const factory Failure.servciceNotFound() = _ServiceNotFound;
+  const factory Failure.serviceNotFound() = _ServiceNotFound;
+  const factory Failure.serviceAlreadyExists() = _ServiceAlreadyExists;
   const factory Failure.insufficientFunds() = _InsuffientFunds;
   const factory Failure.unauthorized() = _Inauthorized;
   const factory Failure.invalidValue() = _InvalidValue;

@@ -2268,6 +2268,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "serviceAlreadyExists": "The service already exists in the keychain.",
+  "@serviceAlreadyExists": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "addTokenConfirmed1": "Tokens were created with %1 confirmation on %2",
   "@addTokenConfirmed1": {
     "type": "text",

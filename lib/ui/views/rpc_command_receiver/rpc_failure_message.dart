@@ -14,6 +14,7 @@ extension TransactionErrorLocalizedExt on TransactionError {
           AccountBalance.cryptoCurrencyLabel,
         ),
         serviceNotFound: (_) => localization.serviceNotFound,
+        serviceAlreadyExists: (_) => localization.serviceAlreadyExists,
         userRejected: (_) => localization.userCancelledOperation,
         unknownAccount: (error) => localization.unknownAccount.replaceAll(
           '%1',

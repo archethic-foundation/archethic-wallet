@@ -155,7 +155,7 @@ class SendTransactionUseCase
               progress: confirmation.nbConfirmations,
             ),
           );
-          if (confirmation.isFullyConfirmed) {
+          if (confirmation.isEnoughConfirmed) {
             log('Final confirmation received : $confirmation', name: logName);
             operationCompleter.complete(
               Result.success(confirmation),

@@ -58,6 +58,10 @@ class RPCFailure with _$RPCFailure implements Exception {
         code: 5007,
         message: 'Service not found.',
       );
+  factory RPCFailure.serviceAlreadyExists() => const RPCFailure(
+        code: 5008,
+        message: 'Service already exists in the keychain.',
+      );
   factory RPCFailure.userRejected() => const RPCFailure(
         code: 4001,
         message: 'User rejected operation',
@@ -82,6 +86,7 @@ class RPCFailure with _$RPCFailure implements Exception {
       invalidTransaction: (_) => RPCFailure.invalidTransaction(),
       invalidConfirmation: (_) => RPCFailure.invalidConfirmation(),
       serviceNotFound: (_) => RPCFailure.serviceNotFound(),
+      serviceAlreadyExists: (_) => RPCFailure.serviceAlreadyExists(),
       insufficientFunds: (_) => RPCFailure.insufficientFunds(),
       userRejected: (_) => RPCFailure.userRejected(),
       unknownAccount: (_) => RPCFailure.unknownAccount(),
