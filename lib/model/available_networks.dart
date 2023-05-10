@@ -64,7 +64,7 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicTestNet:
         return 'wss://${DefaultNetworksHost.archethicTestNetHost.value}/socket/websocket';
       case AvailableNetworks.archethicDevNet:
-        return '${networkDevEndpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket';
+        return '${networkDevEndpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket';
     }
   }
 
