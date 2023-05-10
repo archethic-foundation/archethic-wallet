@@ -56,6 +56,12 @@ class AddServiceHandler extends CommandHandler {
             final kDerivationPathWithoutIndex = "m/650'/$nameEncoded/";
             const index = 0;
             final kDerivationPath = '$kDerivationPathWithoutIndex$index';
+
+            if (keychain.services.containsKey(nameEncoded)) {
+              return Result.failure(
+                RPCFailure.serviceAlreadyExists(),
+              );
+            }
             keychain = keychain.copyWithService(nameEncoded, kDerivationPath);
 
             final keychainTransaction = await KeychainTransactionBuilder.build(

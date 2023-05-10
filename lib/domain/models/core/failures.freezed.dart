@@ -21,7 +21,8 @@ mixin _$Failure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -33,7 +34,8 @@ mixin _$Failure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -45,7 +47,8 @@ mixin _$Failure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -58,7 +61,8 @@ mixin _$Failure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -70,7 +74,8 @@ mixin _$Failure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -82,7 +87,8 @@ mixin _$Failure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -150,7 +156,8 @@ class _$_LoggedOut extends _LoggedOut {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -165,7 +172,8 @@ class _$_LoggedOut extends _LoggedOut {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -180,7 +188,8 @@ class _$_LoggedOut extends _LoggedOut {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -199,7 +208,8 @@ class _$_LoggedOut extends _LoggedOut {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -214,7 +224,8 @@ class _$_LoggedOut extends _LoggedOut {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -229,7 +240,8 @@ class _$_LoggedOut extends _LoggedOut {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -289,7 +301,8 @@ class _$_NetworkFailure extends _NetworkFailure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -304,7 +317,8 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -319,7 +333,8 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -338,7 +353,8 @@ class _$_NetworkFailure extends _NetworkFailure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -353,7 +369,8 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -368,7 +385,8 @@ class _$_NetworkFailure extends _NetworkFailure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -456,7 +474,8 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -471,7 +490,8 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -486,7 +506,8 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -505,7 +526,8 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -520,7 +542,8 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -535,7 +558,8 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -583,7 +607,7 @@ class _$_ServiceNotFound extends _ServiceNotFound {
 
   @override
   String toString() {
-    return 'Failure.servciceNotFound()';
+    return 'Failure.serviceNotFound()';
   }
 
   @override
@@ -601,13 +625,14 @@ class _$_ServiceNotFound extends _ServiceNotFound {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
-    return servciceNotFound();
+    return serviceNotFound();
   }
 
   @override
@@ -616,13 +641,14 @@ class _$_ServiceNotFound extends _ServiceNotFound {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
-    return servciceNotFound?.call();
+    return serviceNotFound?.call();
   }
 
   @override
@@ -631,15 +657,16 @@ class _$_ServiceNotFound extends _ServiceNotFound {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
-    if (servciceNotFound != null) {
-      return servciceNotFound();
+    if (serviceNotFound != null) {
+      return serviceNotFound();
     }
     return orElse();
   }
@@ -650,13 +677,14 @@ class _$_ServiceNotFound extends _ServiceNotFound {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
     required TResult Function(_OtherFailure value) other,
   }) {
-    return servciceNotFound(this);
+    return serviceNotFound(this);
   }
 
   @override
@@ -665,13 +693,14 @@ class _$_ServiceNotFound extends _ServiceNotFound {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
     TResult? Function(_OtherFailure value)? other,
   }) {
-    return servciceNotFound?.call(this);
+    return serviceNotFound?.call(this);
   }
 
   @override
@@ -680,15 +709,16 @@ class _$_ServiceNotFound extends _ServiceNotFound {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
-    if (servciceNotFound != null) {
-      return servciceNotFound(this);
+    if (serviceNotFound != null) {
+      return serviceNotFound(this);
     }
     return orElse();
   }
@@ -697,6 +727,151 @@ class _$_ServiceNotFound extends _ServiceNotFound {
 abstract class _ServiceNotFound extends Failure {
   const factory _ServiceNotFound() = _$_ServiceNotFound;
   const _ServiceNotFound._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_ServiceAlreadyExistsCopyWith<$Res> {
+  factory _$$_ServiceAlreadyExistsCopyWith(_$_ServiceAlreadyExists value,
+          $Res Function(_$_ServiceAlreadyExists) then) =
+      __$$_ServiceAlreadyExistsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ServiceAlreadyExistsCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$_ServiceAlreadyExists>
+    implements _$$_ServiceAlreadyExistsCopyWith<$Res> {
+  __$$_ServiceAlreadyExistsCopyWithImpl(_$_ServiceAlreadyExists _value,
+      $Res Function(_$_ServiceAlreadyExists) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_ServiceAlreadyExists extends _ServiceAlreadyExists {
+  const _$_ServiceAlreadyExists() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.serviceAlreadyExists()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_ServiceAlreadyExists);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
+    required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
+    required TResult Function() invalidValue,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return serviceAlreadyExists();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
+    TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
+    TResult? Function()? invalidValue,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return serviceAlreadyExists?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
+    TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
+    TResult Function()? invalidValue,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (serviceAlreadyExists != null) {
+      return serviceAlreadyExists();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return serviceAlreadyExists(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return serviceAlreadyExists?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (serviceAlreadyExists != null) {
+      return serviceAlreadyExists(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ServiceAlreadyExists extends Failure {
+  const factory _ServiceAlreadyExists() = _$_ServiceAlreadyExists;
+  const _ServiceAlreadyExists._() : super._();
 }
 
 /// @nodoc
@@ -740,7 +915,8 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -755,7 +931,8 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -770,7 +947,8 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -789,7 +967,8 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -804,7 +983,8 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -819,7 +999,8 @@ class _$_InsuffientFunds extends _InsuffientFunds {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -879,7 +1060,8 @@ class _$_Inauthorized extends _Inauthorized {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -894,7 +1076,8 @@ class _$_Inauthorized extends _Inauthorized {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -909,7 +1092,8 @@ class _$_Inauthorized extends _Inauthorized {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -928,7 +1112,8 @@ class _$_Inauthorized extends _Inauthorized {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -943,7 +1128,8 @@ class _$_Inauthorized extends _Inauthorized {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -958,7 +1144,8 @@ class _$_Inauthorized extends _Inauthorized {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -1018,7 +1205,8 @@ class _$_InvalidValue extends _InvalidValue {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -1033,7 +1221,8 @@ class _$_InvalidValue extends _InvalidValue {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -1048,7 +1237,8 @@ class _$_InvalidValue extends _InvalidValue {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -1067,7 +1257,8 @@ class _$_InvalidValue extends _InvalidValue {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -1082,7 +1273,8 @@ class _$_InvalidValue extends _InvalidValue {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -1097,7 +1289,8 @@ class _$_InvalidValue extends _InvalidValue {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
@@ -1189,7 +1382,8 @@ class _$_OtherFailure extends _OtherFailure {
     required TResult Function() loggedOut,
     required TResult Function() network,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() servciceNotFound,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
@@ -1204,7 +1398,8 @@ class _$_OtherFailure extends _OtherFailure {
     TResult? Function()? loggedOut,
     TResult? Function()? network,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? servciceNotFound,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
@@ -1219,7 +1414,8 @@ class _$_OtherFailure extends _OtherFailure {
     TResult Function()? loggedOut,
     TResult Function()? network,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? servciceNotFound,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
@@ -1238,7 +1434,8 @@ class _$_OtherFailure extends _OtherFailure {
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
-    required TResult Function(_ServiceNotFound value) servciceNotFound,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
@@ -1253,7 +1450,8 @@ class _$_OtherFailure extends _OtherFailure {
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult? Function(_ServiceNotFound value)? servciceNotFound,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
@@ -1268,7 +1466,8 @@ class _$_OtherFailure extends _OtherFailure {
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
-    TResult Function(_ServiceNotFound value)? servciceNotFound,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
