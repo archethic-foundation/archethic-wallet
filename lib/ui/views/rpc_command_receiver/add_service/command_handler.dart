@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -89,9 +90,19 @@ class AddServiceHandler extends CommandHandler {
                   failure: (failure) => Result.failure(
                     RPCFailure.fromTransactionError(failure),
                   ),
-                  success: (success) async {
-                    // Refresh screen and add new service in session
-                    await ref.read(SessionProviders.session.notifier).refresh();
+                  success: (success) {
+                    Future<void>.sync(() async {
+                      final connectivityStatusProvider =
+                          ref.read(connectivityStatusProviders);
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected) {
+                        ref.read(SessionProviders.session.notifier).refresh();
+                        ref
+                            .read(AccountProviders.selectedAccount.notifier)
+                            .refreshRecentTransactions();
+                      }
+                    });
+
                     return Result.success(
                       success,
                     );
