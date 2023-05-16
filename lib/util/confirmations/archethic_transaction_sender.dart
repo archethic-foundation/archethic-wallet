@@ -181,7 +181,7 @@ class ArchethicTransactionSender
           '>>> Transaction confirmed $address <<< ${transactionEvent.nbConfirmations} / ${transactionEvent.maxConfirmations}',
         );
 
-        if (transactionEvent.isEnoughConfirmed) close();
+        if (transactionEvent.isFullyConfirmed) close();
 
         await onConfirmation(
           transactionEvent,

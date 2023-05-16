@@ -312,7 +312,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
-        if (confirmation.isEnoughConfirmed) {
+        if (confirmation.isFullyConfirmed) {
           ref
               .read(AccountProviders.selectedAccount.notifier)
               .refreshFungibleTokens();
