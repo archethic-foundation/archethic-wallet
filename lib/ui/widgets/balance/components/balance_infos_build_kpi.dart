@@ -137,7 +137,7 @@ class _PriceEvolutionIndicator extends ConsumerWidget {
                 )
               else
                 Icon(
-                  Iconsax.arrow_down,
+                  Iconsax.arrow_bottom,
                   color: theme.negativeValue,
                 ),
             ],

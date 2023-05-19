@@ -51,53 +51,50 @@ class BalanceInfos extends ConsumerWidget {
         height: 60,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Card(
-            color: Colors.transparent,
-            child: DecoratedBox(
-              decoration: theme.getDecorationBalance(),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.95,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: primaryCurrency.primaryCurrency ==
-                          AvailablePrimaryCurrencyEnum.native
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: AutoSizeText(
-                                AccountBalance.cryptoCurrencyLabel,
-                                style: theme.textStyleSize35W900EquinoxPrimary,
-                              ),
+          child: DecoratedBox(
+            decoration: theme.getDecorationBalance(),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.95,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: primaryCurrency.primaryCurrency ==
+                        AvailablePrimaryCurrencyEnum.native
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: AutoSizeText(
+                              AccountBalance.cryptoCurrencyLabel,
+                              style: theme.textStyleSize35W900EquinoxPrimary,
                             ),
-                            if (settings.showBalances)
-                              _BalanceInfosNativeShowed(
-                                accountSelectedBalance: accountSelectedBalance,
-                              )
-                            else
-                              const _BalanceInfosNotShowed()
-                          ],
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: AutoSizeText(
-                                settings.currency.name,
-                                style: theme.textStyleSize35W900EquinoxPrimary,
-                              ),
+                          ),
+                          if (settings.showBalances)
+                            _BalanceInfosNativeShowed(
+                              accountSelectedBalance: accountSelectedBalance,
+                            )
+                          else
+                            const _BalanceInfosNotShowed()
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: AutoSizeText(
+                              settings.currency.name,
+                              style: theme.textStyleSize35W900EquinoxPrimary,
                             ),
-                            if (settings.showBalances)
-                              _BalanceInfosFiatShowed(
-                                accountSelectedBalance: accountSelectedBalance,
-                              )
-                            else
-                              const _BalanceInfosNotShowed()
-                          ],
-                        ),
-                ),
+                          ),
+                          if (settings.showBalances)
+                            _BalanceInfosFiatShowed(
+                              accountSelectedBalance: accountSelectedBalance,
+                            )
+                          else
+                            const _BalanceInfosNotShowed()
+                        ],
+                      ),
               ),
             ),
           ),

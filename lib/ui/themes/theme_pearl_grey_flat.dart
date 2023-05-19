@@ -3,7 +3,7 @@ import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/ui/themes/themes.dart';
-import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -204,19 +204,17 @@ class PearlGreyFlatTheme implements BaseTheme {
 
   @override
   Decoration getDecorationBalance() {
-    return GradientShadowBoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(background2Small!),
-        fit: BoxFit.cover,
+    return BoxDecoration(
+      border: const GradientBoxBorder(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFFC7D1DA),
+            Color(0xFFFFFFFF),
+          ],
+          stops: [0, 1],
+        ),
       ),
-      backgroundBlendMode: BlendMode.dstIn,
-      gradient: const LinearGradient(
-        colors: <Color>[
-          Color(0xFFC7D1DA),
-          Color(0xFFFFFFFF),
-        ],
-        transform: GradientRotation(pi / 9),
-      ),
+      borderRadius: BorderRadius.circular(16),
     );
   }
 

@@ -48,9 +48,9 @@ class BalanceInfosChart extends ConsumerWidget {
                       style: theme.textStyleSize14W600EquinoxPrimary,
                     ),
                     const IconDataWidget(
-                      icon: Icons.arrow_circle_right_outlined,
-                      width: 20,
-                      height: 20,
+                      icon: Iconsax.diagram,
+                      width: 15,
+                      height: 15,
                     ),
                   ],
                 ),

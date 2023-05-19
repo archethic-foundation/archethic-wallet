@@ -10,6 +10,7 @@ import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 class LastArticles extends ConsumerStatefulWidget {
@@ -67,9 +68,9 @@ class LastArticlesState extends ConsumerState<LastArticles> {
                     UIUtil.showWebview(context, blogUrl, '');
                   },
                   child: const IconDataWidget(
-                    icon: Icons.arrow_circle_right_outlined,
-                    width: 20,
-                    height: 20,
+                    icon: Iconsax.export_3,
+                    width: 15,
+                    height: 15,
                   ),
                 ),
               ],

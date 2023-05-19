@@ -1,10 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math';
 
-// Project imports:
 import 'package:aewallet/ui/themes/themes.dart';
-import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
-// Flutter imports:
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -206,19 +204,17 @@ class FlatTheme implements BaseTheme {
 
   @override
   Decoration getDecorationBalance() {
-    return GradientShadowBoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(background2Small!),
-        fit: BoxFit.cover,
+    return BoxDecoration(
+      border: const GradientBoxBorder(
+        gradient: LinearGradient(
+          colors: [
+            Colors.transparent,
+            Colors.transparent,
+          ],
+          stops: [0, 1],
+        ),
       ),
-      backgroundBlendMode: BlendMode.dstIn,
-      gradient: const LinearGradient(
-        colors: <Color>[
-          Colors.transparent,
-          Colors.transparent,
-        ],
-        transform: GradientRotation(pi / 9),
-      ),
+      borderRadius: BorderRadius.circular(16),
     );
   }
 

@@ -3,10 +3,9 @@ import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/ui/themes/themes.dart';
-import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 
 class ByzantineVioletFlatTheme implements BaseTheme {
   @override
@@ -204,19 +203,17 @@ class ByzantineVioletFlatTheme implements BaseTheme {
 
   @override
   Decoration getDecorationBalance() {
-    return GradientShadowBoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(background2Small!),
-        fit: BoxFit.cover,
+    return BoxDecoration(
+      border: const GradientBoxBorder(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF571150),
+            Color(0xFFCD195B),
+          ],
+          stops: [0, 1],
+        ),
       ),
-      backgroundBlendMode: BlendMode.dstIn,
-      gradient: const LinearGradient(
-        colors: <Color>[
-          Color(0xFF571150),
-          Color(0xFFCD195B),
-        ],
-        transform: GradientRotation(pi / 9),
-      ),
+      borderRadius: BorderRadius.circular(16),
     );
   }
 
