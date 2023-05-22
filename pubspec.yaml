@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.10+431
+version: 2.0.10+432
 
 environment:
   sdk: ">=2.19.0 <3.0.0"
@@ -133,6 +133,10 @@ dependencies:
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
   gql: ^0.14.0
+
+  # Gradient borders for inputs and containers. Borders package integrated with a basic flutter widgets as a container and input decorations. Easy in use, platform independent.
+  gradient_borders: ^1.0.0
+
   graphql_flutter: ^5.1.2
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
