@@ -17,7 +17,7 @@ dependencies:
   app_version_update: ^3.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.1.0
+  archethic_lib_dart: ^3.1.1
   #archethic_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
@@ -205,7 +205,7 @@ dependencies:
   pointycastle: ^3.7.0
 
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
-  qr_flutter: ^4.0.0
+  qr_flutter: 4.0.0
 
   # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
   quiver: ^3.2.1
