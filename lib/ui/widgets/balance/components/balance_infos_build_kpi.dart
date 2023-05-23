@@ -132,13 +132,15 @@ class _PriceEvolutionIndicator extends ConsumerWidget {
               const SizedBox(width: 5),
               if (priceEvolution >= 0)
                 Icon(
-                  Iconsax.arrow_up,
+                  Iconsax.arrow_up_3,
                   color: theme.positiveValue,
+                  size: 14,
                 )
               else
                 Icon(
-                  Iconsax.arrow_bottom,
+                  Iconsax.arrow_down,
                   color: theme.negativeValue,
+                  size: 14,
                 ),
             ],
           );

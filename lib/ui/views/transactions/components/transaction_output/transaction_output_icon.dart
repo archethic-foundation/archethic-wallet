@@ -8,10 +8,17 @@ class TransactionOutputIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Icon(
-      Iconsax.export,
-      size: 12,
-      color: Colors.red,
+    return Transform(
+      transform: Matrix4.identity()..scale(1.0, -1, 1),
+      alignment: Alignment.center,
+      child: const RotatedBox(
+        quarterTurns: 2,
+        child: Icon(
+          Iconsax.send,
+          size: 12,
+          color: Colors.red,
+        ),
+      ),
     );
   }
 }

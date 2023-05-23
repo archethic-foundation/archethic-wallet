@@ -9,7 +9,7 @@ class TransactionInputIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Icon(
-      Iconsax.import,
+      Iconsax.received,
       size: 12,
       color: Colors.green,
     );
