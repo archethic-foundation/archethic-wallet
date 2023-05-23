@@ -210,11 +210,15 @@ class FlatTheme implements BaseTheme {
           colors: [
             Colors.transparent,
             Colors.transparent,
+            Colors.transparent,
           ],
-          stops: [0, 1],
+          stops: [0.6, 0.8, 1],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomCenter,
+          transform: GradientRotation(4),
         ),
       ),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(10),
     );
   }
 
