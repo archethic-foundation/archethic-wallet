@@ -204,16 +204,20 @@ class DarkFlatTheme implements BaseTheme {
   @override
   Decoration getDecorationBalance() {
     return BoxDecoration(
-      border: const GradientBoxBorder(
+      border: GradientBoxBorder(
         gradient: LinearGradient(
           colors: [
-            Color(0xFF00A4DB),
-            Color(0xFFCC00FF),
+            const Color(0xFFCC00FF),
+            const Color(0xFFCC00FF).withOpacity(0.3),
+            const Color(0xFF00A4DB).withOpacity(0.5),
           ],
-          stops: [0, 1],
+          stops: const [0.6, 0.8, 1],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomCenter,
+          transform: const GradientRotation(4),
         ),
       ),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(10),
     );
   }
 
