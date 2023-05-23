@@ -1980,6 +1980,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "activeRPCServer": "Activate RPC Server",
+  "@activeRPCServer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "activateNotifications": "Activate notifications",
   "@activateNotifications": {
     "type": "text",
@@ -2234,18 +2240,6 @@
   },
   "nftCreated": "NFT created :",
   "@nftCreated": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "nextButton": "Next >",
-  "@nextButton": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "previousButton": "< Previous",
-  "@previousButton": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
