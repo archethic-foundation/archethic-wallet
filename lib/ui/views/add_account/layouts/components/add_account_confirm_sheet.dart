@@ -110,8 +110,9 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       duration: const Duration(milliseconds: 5000),
     );
     await ref.read(SessionProviders.session.notifier).refresh();
-
-    Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+    if (mounted) {
+      Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+    }
   }
 
   void _showSendFailed(
