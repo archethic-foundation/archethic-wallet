@@ -19,6 +19,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -120,7 +121,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         localizations.keychainHeader,
                         style: theme.textStyleSize24W700EquinoxPrimary,
                       ),
-                    ),
+                    )
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 300)),
                   )
                 : preferences.mainScreenCurrentPage == 2
                     ? FittedBox(
@@ -130,6 +133,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 300))
                     : preferences.mainScreenCurrentPage == 3
                         ? FittedBox(
                             fit: BoxFit.fitWidth,
@@ -138,13 +143,17 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                               style: theme.textStyleSize24W700EquinoxPrimary,
                             ),
                           )
+                            .animate()
+                            .fade(duration: const Duration(milliseconds: 300))
                         : FittedBox(
                             fit: BoxFit.fitWidth,
                             child: AutoSizeText(
                               localizations.addressBookHeader,
                               style: theme.textStyleSize24W700EquinoxPrimary,
                             ),
-                          ),
+                          )
+                            .animate()
+                            .fade(duration: const Duration(milliseconds: 300)),
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,

@@ -6,6 +6,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_detail.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,15 +42,21 @@ class _TransactionsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var index = 0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: recentTransactions
-          .map(
-            (recentTransaction) => TxListLine(
-              recentTransaction: recentTransaction,
-            ),
-          )
-          .toList(),
+      children: recentTransactions.map((recentTransaction) {
+        index++;
+        return TxListLine(
+          recentTransaction: recentTransaction,
+        )
+            .animate(delay: (100 * index).ms)
+            .fadeIn(duration: 400.ms, delay: 200.ms)
+            .move(
+              begin: const Offset(-16, 0),
+              curve: Curves.easeOutQuad,
+            );
+      }).toList(),
     );
   }
 }

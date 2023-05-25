@@ -10,6 +10,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -101,7 +102,10 @@ class NftCategoryMenu extends ConsumerWidget {
                 ),
               ],
             ),
-          );
+          )
+              .animate()
+              .fade(duration: Duration(milliseconds: 300 + (index * 50)))
+              .scale(duration: Duration(milliseconds: 300 + (index * 50)));
         },
       ),
     );
