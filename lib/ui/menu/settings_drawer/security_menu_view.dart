@@ -81,6 +81,13 @@ class SecurityMenuView extends ConsumerWidget {
                       const _AutoLockSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _BackupSecretPhraseListItem(),
+                      const _SettingsListItem.spacer(),
+                      if (FeatureFlags.rpcEnabled &&
+                          ArchethicWebsocketRPCServer.isPlatformCompatible)
+                        const _ActiveServerRPCSettingsListItem(),
+                      if (FeatureFlags.rpcEnabled &&
+                          ArchethicWebsocketRPCServer.isPlatformCompatible)
+                        const _SettingsListItem.spacer(),
                       const _PinPadShuffleSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       if (connectivityStatusProvider ==
@@ -299,22 +306,17 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
     );
 
     if (authenticationMethod != AuthMethod.pin) return const SizedBox();
-    return Column(
-      children: [
-        const _SettingsListItem.spacer(),
-        _SettingsListItem.withSwitch(
-          heading: localizations.pinPadShuffle,
-          icon: UiIcons.swap,
-          isSwitched: pinPadShuffle,
-          onChanged: (bool isSwitched) {
-            ref
-                .read(
-                  AuthenticationProviders.settings.notifier,
-                )
-                .setPinPadShuffle(isSwitched);
-          },
-        ),
-      ],
+    return _SettingsListItem.withSwitch(
+      heading: localizations.pinPadShuffle,
+      icon: UiIcons.swap,
+      isSwitched: pinPadShuffle,
+      onChanged: (bool isSwitched) {
+        ref
+            .read(
+              AuthenticationProviders.settings.notifier,
+            )
+            .setPinPadShuffle(isSwitched);
+      },
     );
   }
 }
@@ -389,6 +391,38 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
         });
       },
       displayChevron: false,
+    );
+  }
+}
+
+class _ActiveServerRPCSettingsListItem extends ConsumerWidget {
+  const _ActiveServerRPCSettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final activeRPCServer = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.activeRPCServer),
+    );
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
+
+    return _SettingsListItem.withSwitch(
+      heading: localizations.activeRPCServer,
+      icon: Iconsax.airdrop,
+      isSwitched: activeRPCServer,
+      onChanged: (bool isSwitched) async {
+        await preferencesNotifier.setActiveRPCServer(isSwitched);
+        if (isSwitched) {
+          await ArchethicWebsocketRPCServer(
+            commandDispatcher: sl.get<CommandDispatcher>(),
+          ).run();
+        } else {
+          await ArchethicWebsocketRPCServer(
+            commandDispatcher: sl.get<CommandDispatcher>(),
+          ).stop();
+        }
+      },
     );
   }
 }

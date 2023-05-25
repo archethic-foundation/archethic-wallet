@@ -37,6 +37,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
                   Platform.isLinux == true ||
                   Platform.isMacOS == true),
           activeVibrations: true,
+          activeRPCServer: true,
           currency: AvailableCurrencyEnum.usd,
           language: AvailableLanguage.systemDefault,
           mainScreenCurrentPage: 2,
@@ -73,6 +74,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setActiveVibrations(bool activeVibrations) => _update(
         state.copyWith(activeVibrations: activeVibrations),
+      );
+
+  Future<void> setActiveRPCServer(bool activeRPCServer) => _update(
+        state.copyWith(activeRPCServer: activeRPCServer),
       );
 
   Future<void> setNetwork(NetworksSetting selectedNetworkSettings) => _update(

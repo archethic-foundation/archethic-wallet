@@ -1980,7 +1980,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "activeRPCServer": "Activate RPC Server",
+  "activeRPCServer": "Allow DApp Connections",
   "@activeRPCServer": {
     "type": "text",
     "placeholders_order": [],

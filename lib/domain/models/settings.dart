@@ -20,6 +20,7 @@ class Settings with _$Settings {
     required bool showBalances,
     required bool showBlog,
     required bool activeVibrations,
+    required bool activeRPCServer,
     required bool activeNotifications,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
@@ -30,6 +31,7 @@ class Settings with _$Settings {
   factory Settings.empty() => const Settings(
         activeNotifications: true,
         activeVibrations: true,
+        activeRPCServer: true,
         firstLaunch: true,
         currency: AvailableCurrencyEnum.usd,
         language: AvailableLanguage.english,

@@ -19,6 +19,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
     return Settings(
       activeNotifications: loadedPreferences.getActiveNotifications(),
       activeVibrations: loadedPreferences.getActiveVibrations(),
+      activeRPCServer: loadedPreferences.getActiveRPCServer(),
       currency: loadedPreferences.getCurrency(currentLocale).currency,
       firstLaunch: loadedPreferences.getFirstLaunch(),
       language: loadedPreferences.getLanguage().language,
@@ -40,6 +41,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences
         .setActiveNotifications(settings.activeNotifications);
     await loadedPreferences.setActiveVibrations(settings.activeVibrations);
+    await loadedPreferences.setActiveRPCServer(settings.activeRPCServer);
     await loadedPreferences.setCurrency(AvailableCurrency(settings.currency));
     await loadedPreferences.setFirstLaunch(settings.firstLaunch);
     await loadedPreferences.setLanguage(LanguageSetting(settings.language));
