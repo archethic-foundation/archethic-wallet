@@ -15,6 +15,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -73,12 +74,18 @@ class MenuWidgetWallet extends ConsumerWidget {
                       );
                     },
                   )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200))
                 else
                   _ActionButton(
                     text: localizations.send,
                     icon: UiIcons.send,
                     enabled: false,
-                  ),
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200)),
                 if (contact != null)
                   _ActionButton(
                     key: const Key('receiveUCObutton'),
@@ -99,12 +106,18 @@ class MenuWidgetWallet extends ConsumerWidget {
                       );
                     },
                   )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 250))
+                      .scale(duration: const Duration(milliseconds: 250))
                 else
                   _ActionButton(
                     text: localizations.receive,
                     icon: UiIcons.receive,
                     enabled: false,
-                  ),
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 250))
+                      .scale(duration: const Duration(milliseconds: 250)),
                 if (connectivityStatusProvider ==
                     ConnectivityStatus.isConnected)
                   _ActionButton(
@@ -122,30 +135,18 @@ class MenuWidgetWallet extends ConsumerWidget {
                       );
                     },
                   )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 300))
+                      .scale(duration: const Duration(milliseconds: 300))
                 else
                   _ActionButton(
                     text: localizations.buy,
                     icon: UiIcons.buy,
                     enabled: false,
-                  ),
-                /*if (kIsWeb || Platform.isMacOS)
-              Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: InkWell(
-                      onTap: () {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
-                        Sheets.showAppHeightNineSheet(
-                            context: context, widget: const LedgerSheet());
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          buildIconDataWidget(
-                              context, Icons.vpn_key_outlined, 40, 40),
-                          const SizedBox(height: 5),
-                          Text('Ledger',
-                              style: theme.textStyleSize14W600Primary),
-                        ],
-                      )))*/
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 300))
+                      .scale(duration: const Duration(milliseconds: 300)),
               ],
             ),
           ),

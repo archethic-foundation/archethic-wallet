@@ -11,6 +11,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -68,7 +69,11 @@ class AccountsListWidget extends ConsumerWidget {
               // Build contact
               return AccountListItem(
                 account: accountsList[index],
-              );
+              )
+                  .animate(delay: (100 * index).ms)
+                  .fadeIn(duration: 900.ms, delay: 200.ms)
+                  .shimmer(blendMode: BlendMode.srcOver, color: Colors.white12)
+                  .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad);
             },
           ),
         ),

@@ -95,6 +95,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Add beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
+  flutter_animate: ^4.1.1+1
+
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
   flutter_jailbreak_detection: ^1.10.0
 
