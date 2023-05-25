@@ -3,10 +3,10 @@ import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/ui/themes/themes.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 
 class HoneyOrangeFlatTheme implements BaseTheme {
   @override

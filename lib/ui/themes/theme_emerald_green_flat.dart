@@ -2,9 +2,9 @@
 import 'dart:math';
 
 import 'package:aewallet/ui/themes/themes.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 
 class EmeraldGreenFlatTheme implements BaseTheme {
   @override
