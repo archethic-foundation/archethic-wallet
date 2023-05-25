@@ -108,7 +108,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                               text: AppLocalizations.of(context)!
                                   .nftCreationProcessTabImportHeader,
                               icon: const Icon(
-                                  UiIcons.nft_creation_process_import),
+                                  UiIcons.nft_creation_process_import,),
                             ),
                             Tab(
                               text: localizations

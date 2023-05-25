@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math';
-import 'package:gradient_borders/gradient_borders.dart';
+
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 
 class EmeraldGreenTheme implements BaseTheme {
   @override

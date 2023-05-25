@@ -17,7 +17,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/bloc/provider.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
@@ -225,7 +224,7 @@ class AddServiceConfirmationForm extends ConsumerWidget {
               Text(
                 AmountFormatters.standard(
                     accountSelected!.balance!.nativeTokenValue,
-                    AccountBalance.cryptoCurrencyLabel),
+                    AccountBalance.cryptoCurrencyLabel,),
                 style: theme.textStyleSize12W400Primary,
               ),
             ],
