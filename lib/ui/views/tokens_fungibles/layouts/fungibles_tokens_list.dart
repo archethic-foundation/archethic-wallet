@@ -13,6 +13,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -29,6 +30,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
         ) ??
         [];
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    var index = 0;
     if (fungibleTokensAsyncValue.isEmpty == true) {
       return Container(
         alignment: Alignment.center,
@@ -70,12 +72,18 @@ class FungiblesTokensListWidget extends ConsumerWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        for (final accountToken in fungibleTokensAsyncValue)
-          _FungiblesTokensLine(
-            accountToken: accountToken,
-          )
-      ],
+      children: fungibleTokensAsyncValue.map((accountToken) {
+        index++;
+        return _FungiblesTokensLine(
+          accountToken: accountToken,
+        )
+            .animate(delay: (100 * index).ms)
+            .fadeIn(duration: 400.ms, delay: 200.ms)
+            .move(
+              begin: const Offset(-16, 0),
+              curve: Curves.easeOutQuad,
+            );
+      }).toList(),
     );
   }
 }
