@@ -26,6 +26,7 @@ mixin _$Settings {
   bool get showBalances => throw _privateConstructorUsedError;
   bool get showBlog => throw _privateConstructorUsedError;
   bool get activeVibrations => throw _privateConstructorUsedError;
+  bool get activeRPCServer => throw _privateConstructorUsedError;
   bool get activeNotifications => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
@@ -53,6 +54,7 @@ abstract class $SettingsCopyWith<$Res> {
       bool showBalances,
       bool showBlog,
       bool activeVibrations,
+      bool activeRPCServer,
       bool activeNotifications,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -82,6 +84,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? showBalances = null,
     Object? showBlog = null,
     Object? activeVibrations = null,
+    Object? activeRPCServer = null,
     Object? activeNotifications = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -125,6 +128,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.activeVibrations
           : activeVibrations // ignore: cast_nullable_to_non_nullable
               as bool,
+      activeRPCServer: null == activeRPCServer
+          ? _value.activeRPCServer
+          : activeRPCServer // ignore: cast_nullable_to_non_nullable
+              as bool,
       activeNotifications: null == activeNotifications
           ? _value.activeNotifications
           : activeNotifications // ignore: cast_nullable_to_non_nullable
@@ -166,6 +173,7 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
       bool showBalances,
       bool showBlog,
       bool activeVibrations,
+      bool activeRPCServer,
       bool activeNotifications,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -193,6 +201,7 @@ class __$$_SettingsCopyWithImpl<$Res>
     Object? showBalances = null,
     Object? showBlog = null,
     Object? activeVibrations = null,
+    Object? activeRPCServer = null,
     Object? activeNotifications = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -236,6 +245,10 @@ class __$$_SettingsCopyWithImpl<$Res>
           ? _value.activeVibrations
           : activeVibrations // ignore: cast_nullable_to_non_nullable
               as bool,
+      activeRPCServer: null == activeRPCServer
+          ? _value.activeRPCServer
+          : activeRPCServer // ignore: cast_nullable_to_non_nullable
+              as bool,
       activeNotifications: null == activeNotifications
           ? _value.activeNotifications
           : activeNotifications // ignore: cast_nullable_to_non_nullable
@@ -273,6 +286,7 @@ class _$_Settings extends _Settings {
       required this.showBalances,
       required this.showBlog,
       required this.activeVibrations,
+      required this.activeRPCServer,
       required this.activeNotifications,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
@@ -299,6 +313,8 @@ class _$_Settings extends _Settings {
   @override
   final bool activeVibrations;
   @override
+  final bool activeRPCServer;
+  @override
   final bool activeNotifications;
   @override
   final int mainScreenCurrentPage;
@@ -311,7 +327,7 @@ class _$_Settings extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption, theme: $theme)';
+    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, showBlog: $showBlog, activeVibrations: $activeVibrations, activeRPCServer: $activeRPCServer, activeNotifications: $activeNotifications, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption, theme: $theme)';
   }
 
   @override
@@ -336,6 +352,8 @@ class _$_Settings extends _Settings {
                 other.showBlog == showBlog) &&
             (identical(other.activeVibrations, activeVibrations) ||
                 other.activeVibrations == activeVibrations) &&
+            (identical(other.activeRPCServer, activeRPCServer) ||
+                other.activeRPCServer == activeRPCServer) &&
             (identical(other.activeNotifications, activeNotifications) ||
                 other.activeNotifications == activeNotifications) &&
             (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
@@ -360,6 +378,7 @@ class _$_Settings extends _Settings {
       showBalances,
       showBlog,
       activeVibrations,
+      activeRPCServer,
       activeNotifications,
       mainScreenCurrentPage,
       showPriceChart,
@@ -384,6 +403,7 @@ abstract class _Settings extends Settings {
       required final bool showBalances,
       required final bool showBlog,
       required final bool activeVibrations,
+      required final bool activeRPCServer,
       required final bool activeNotifications,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
@@ -409,6 +429,8 @@ abstract class _Settings extends Settings {
   bool get showBlog;
   @override
   bool get activeVibrations;
+  @override
+  bool get activeRPCServer;
   @override
   bool get activeNotifications;
   @override

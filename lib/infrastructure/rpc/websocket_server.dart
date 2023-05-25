@@ -202,6 +202,38 @@ class ArchethicWebsocketRPCServer {
     );
   }
 
+  Future<void> stop() async {
+    runZonedGuarded(
+      () async {
+        // TODO(@Chralu): Check if it's ok
+        final server = await HttpServer.bind(
+          ArchethicWebsocketRPCServer.host,
+          ArchethicWebsocketRPCServer.port,
+          shared: true,
+        );
+
+        server.listen((HttpRequest request) async {
+          final socket = await WebSocketTransformer.upgrade(request);
+          final channel = IOWebSocketChannel(socket);
+          _SubscribablePeer(Peer(channel.cast<String>()))
+              ._cleanupSubscriptions();
+        });
+
+        log('Stopping at ws://$host:$port', name: logName);
+        await server.close(force: true);
+        log('Server stopped at ws://$host:$port', name: logName);
+      },
+      (error, stack) {
+        log(
+          'WebSocket server failed to stop',
+          error: error,
+          stackTrace: stack,
+          name: logName,
+        );
+      },
+    );
+  }
+
   Future<Map<String, dynamic>> _handle(
     RPCCommandHandler commandHandler,
     Parameters params,
