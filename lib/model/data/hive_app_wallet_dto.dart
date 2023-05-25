@@ -61,6 +61,7 @@ class HiveAppWalletDTO extends HiveObject {
         nativeTokenValue: 0,
       ),
       selected: true,
+      serviceType: 'archethicWallet',
       recentTransactions: [],
     );
     appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
