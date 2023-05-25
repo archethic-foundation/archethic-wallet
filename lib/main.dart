@@ -164,13 +164,7 @@ class App extends ConsumerWidget {
               builder: (_) => const AutoLockGuard(child: HomePage()),
               settings: settings,
             ),
-            '/home_transition': // TODO(reddwarf03): that route seems unused
-                NoPopTransitionRoute<HomePage>(
-              builder: (_) => const AutoLockGuard(child: HomePage()),
-              settings: settings,
-            ),
-            '/intro_welcome': // TODO(reddwarf03): that route seems unused
-                NoTransitionRoute<IntroWelcome>(
+            '/intro_welcome': NoTransitionRoute<IntroWelcome>(
               builder: (_) => const IntroWelcome(),
               settings: settings,
             ),

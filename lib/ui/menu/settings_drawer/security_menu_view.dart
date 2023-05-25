@@ -144,10 +144,8 @@ class SecurityMenuView extends ConsumerWidget {
                                   await ref
                                       .read(SessionProviders.session.notifier)
                                       .logout();
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/',
-                                    (Route<dynamic> route) => false,
-                                  );
+                                  await Navigator.of(context)
+                                      .pushReplacementNamed('/');
                                 }
                               },
                             );
