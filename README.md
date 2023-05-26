@@ -86,8 +86,8 @@ Full patrol using on this project can be found [here](integration_test/README.md
 
 ### Pre-requisites
 
-- Flutter 3.7+
-- Dart 2.19+
+- Flutter 3.10+
+- Dart 3.0+
 
 ### Instructions
 
