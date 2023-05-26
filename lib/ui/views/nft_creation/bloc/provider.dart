@@ -63,7 +63,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   NftCreationFormState build(NftCreationFormNotifierParams arg) {
     return NftCreationFormState(
       feeEstimation: const AsyncValue.data(0),
-      initialSupply: 1,
       propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
         publicKey: PublicKey(''),
       ),

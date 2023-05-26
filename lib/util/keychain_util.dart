@@ -91,7 +91,7 @@ class KeychainUtil with KeychainServiceMixin {
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final keychain = Keychain(seed: hexToUint8List(keychainSeed), version: 1)
+    final keychain = Keychain(seed: hexToUint8List(keychainSeed))
         .copyWithService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret

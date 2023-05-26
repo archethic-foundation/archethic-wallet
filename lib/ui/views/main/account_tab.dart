@@ -98,8 +98,8 @@ class AccountTab extends ConsumerWidget {
                                 if (preferences.showPriceChart &&
                                     connectivityStatusProvider ==
                                         ConnectivityStatus.isConnected)
-                                  Stack(
-                                    children: const <Widget>[
+                                  const Stack(
+                                    children: <Widget>[
                                       BalanceInfosChart(),
                                     ],
                                   )

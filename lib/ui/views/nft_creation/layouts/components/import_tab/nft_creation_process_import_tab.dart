@@ -76,8 +76,8 @@ class _NFTCreationProcessImportTabState
               localizations.nftChooseSource,
               style: theme.textStyleSize12W100Primary,
             ),
-            Column(
-              children: const [
+            const Column(
+              children: [
                 NFTCreationProcessImportTabFile(),
                 NFTCreationProcessImportTabImage(),
                 NFTCreationProcessImportTabCamera(),

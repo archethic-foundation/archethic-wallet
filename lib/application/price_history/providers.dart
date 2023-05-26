@@ -55,6 +55,6 @@ Future<double> _priceEvolution(
 
 abstract class PriceHistoryProviders {
   static final scaleOption = _intervalOptionProvider;
-  static final chartData = _priceHistoryProvider;
-  static final priceEvolution = _priceEvolutionProvider;
+  static const chartData = _priceHistoryProvider;
+  static const priceEvolution = _priceEvolutionProvider;
 }

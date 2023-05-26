@@ -32,5 +32,5 @@ class NFTRepository {
 }
 
 abstract class NFTProviders {
-  static final getNFT = _getNFTProvider;
+  static const getNFT = _getNFTProvider;
 }

@@ -35,8 +35,8 @@ class BalanceIndicatorWidget extends ConsumerWidget {
             children: [
               if (primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native)
-                Column(
-                  children: const [
+                const Column(
+                  children: [
                     _BalanceIndicatorNative(
                       primary: true,
                     ),
@@ -46,8 +46,8 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                   ],
                 )
               else
-                Column(
-                  children: const [
+                const Column(
+                  children: [
                     _BalanceIndicatorFiat(
                       primary: true,
                     ),

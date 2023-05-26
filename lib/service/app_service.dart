@@ -814,7 +814,7 @@ class AppService {
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
       var balance = balanceMap[address] ??
-          Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
+          Balance(token: List<TokenBalance>.empty(growable: true));
       final balanceTokenList = List<TokenBalance>.empty(growable: true);
 
       for (var i = 0; i < balance.token.length; i++) {

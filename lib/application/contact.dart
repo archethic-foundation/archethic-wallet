@@ -167,14 +167,14 @@ class ContactRepository {
 }
 
 abstract class ContactProviders {
-  static final fetchContacts = _fetchContactsProvider;
-  static final isContactExistsWithName = _isContactExistsWithNameProvider;
-  static final isContactExistsWithAddress = _isContactExistsWithAddressProvider;
-  static final saveContact = _saveContactProvider;
-  static final deleteContact = _deleteContactProvider;
-  static final getContactWithName = _getContactWithNameProvider;
-  static final getContactWithAddress = _getContactWithAddressProvider;
-  static final getContactWithPublicKey = _getContactWithPublicKeyProvider;
+  static const fetchContacts = _fetchContactsProvider;
+  static const isContactExistsWithName = _isContactExistsWithNameProvider;
+  static const isContactExistsWithAddress = _isContactExistsWithAddressProvider;
+  static const saveContact = _saveContactProvider;
+  static const deleteContact = _deleteContactProvider;
+  static const getContactWithName = _getContactWithNameProvider;
+  static const getContactWithAddress = _getContactWithAddressProvider;
+  static const getContactWithPublicKey = _getContactWithPublicKeyProvider;
   static final getSelectedContact = _getSelectedContactProvider;
 
   static Future<void> reset(Ref ref) async {

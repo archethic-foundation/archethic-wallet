@@ -158,7 +158,6 @@ class NFTCategoryRepository {
     final localizations = AppLocalizations.of(context)!;
     return [
       NftCategory(
-        id: 0,
         name: localizations.nftWithoutCategory,
         image: 'assets/images/category_nft_without.jpg',
       ),
@@ -222,13 +221,13 @@ abstract class NftCategoryProviders {
   // TODO(reddwarf03): Distinct actions and infos' provider: change the name for example getNbNFTInCategory -> nbNFTInCategory; fetchNftCategories -> nftCategories
   // and let for example updateNftCategoryList because it's not a provider; it's an action
   static final nftCategoryRepository = _nftCategoryRepositoryProvider;
-  static final fetchNftCategories = _fetchNftCategoryProvider;
-  static final listNFTCategoryHidden = _listNFTCategoryHiddenProvider;
-  static final selectedAccountNftCategories =
+  static const fetchNftCategories = _fetchNftCategoryProvider;
+  static const listNFTCategoryHidden = _listNFTCategoryHiddenProvider;
+  static const selectedAccountNftCategories =
       _selectedAccountNftCategoriesProvider;
-  static final getNbNFTInCategory = _getNbNFTInCategoryProvider;
-  static final getListByDefault = _getListByDefaultProvider;
-  static final getDescriptionHeader = _getDescriptionHeaderProvider;
+  static const getNbNFTInCategory = _getNbNFTInCategoryProvider;
+  static const getListByDefault = _getListByDefaultProvider;
+  static const getDescriptionHeader = _getDescriptionHeaderProvider;
 }
 
 abstract class NftCategoryProvidersActions {

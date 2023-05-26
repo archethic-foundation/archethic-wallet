@@ -55,8 +55,9 @@ class QRCodeWithOptions extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          QrImage(
-            foregroundColor: theme.text,
+          QrImageView(
+            eyeStyle: QrEyeStyle(color: theme.text),
+            dataModuleStyle: QrDataModuleStyle(color: theme.text),
             data: infoQRCode,
             size: size,
             gapless: false,

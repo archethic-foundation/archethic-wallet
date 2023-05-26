@@ -57,8 +57,8 @@ class KeychainTab extends ConsumerWidget {
                 ),
               ),
             ),
-            Row(
-              children: const [
+            const Row(
+              children: [
                 AddAccountButton(),
               ],
             ),

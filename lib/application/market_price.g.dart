@@ -6,7 +6,41 @@ part of 'market_price.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$remoteRepositoriesHash() =>
+    r'1ba53f6e3f0404d6fb6bb5ab12bebe74865d75bd';
+
+/// See also [_remoteRepositories].
+@ProviderFor(_remoteRepositories)
+final _remoteRepositoriesProvider =
+    Provider<List<MarketRepositoryInterface>>.internal(
+  _remoteRepositories,
+  name: r'_remoteRepositoriesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$remoteRepositoriesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _RemoteRepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
+String _$localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
+
+/// See also [_localRepository].
+@ProviderFor(_localRepository)
+final _localRepositoryProvider =
+    Provider<MarketLocalRepositoryInterface>.internal(
+  _localRepository,
+  name: r'_localRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$localRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
+String _$currencyMarketPriceHash() =>
+    r'efad345fa611b0debca8ea8a11fb6cf153862c40';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,37 +63,56 @@ class _SystemHash {
   }
 }
 
-String $_remoteRepositoriesHash() =>
-    r'1ba53f6e3f0404d6fb6bb5ab12bebe74865d75bd';
+typedef _CurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
 
-/// See also [_remoteRepositories].
-final _remoteRepositoriesProvider = Provider<List<MarketRepositoryInterface>>(
-  _remoteRepositories,
-  name: r'_remoteRepositoriesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_remoteRepositoriesHash,
-);
-typedef _RemoteRepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
-String $_localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
+/// See also [_currencyMarketPrice].
+@ProviderFor(_currencyMarketPrice)
+const _currencyMarketPriceProvider = _CurrencyMarketPriceFamily();
 
-/// See also [_localRepository].
-final _localRepositoryProvider = Provider<MarketLocalRepositoryInterface>(
-  _localRepository,
-  name: r'_localRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_localRepositoryHash,
-);
-typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
-String $_currencyMarketPriceHash() =>
-    r'efad345fa611b0debca8ea8a11fb6cf153862c40';
+/// See also [_currencyMarketPrice].
+class _CurrencyMarketPriceFamily extends Family<AsyncValue<MarketPrice>> {
+  /// See also [_currencyMarketPrice].
+  const _CurrencyMarketPriceFamily();
+
+  /// See also [_currencyMarketPrice].
+  _CurrencyMarketPriceProvider call({
+    required AvailableCurrencyEnum currency,
+  }) {
+    return _CurrencyMarketPriceProvider(
+      currency: currency,
+    );
+  }
+
+  @override
+  _CurrencyMarketPriceProvider getProviderOverride(
+    covariant _CurrencyMarketPriceProvider provider,
+  ) {
+    return call(
+      currency: provider.currency,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_currencyMarketPriceProvider';
+}
 
 /// See also [_currencyMarketPrice].
 class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
+  /// See also [_currencyMarketPrice].
   _CurrencyMarketPriceProvider({
     required this.currency,
-  }) : super(
+  }) : super.internal(
           (ref) => _currencyMarketPrice(
             ref,
             currency: currency,
@@ -69,7 +122,10 @@ class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_currencyMarketPriceHash,
+                  : _$currencyMarketPriceHash,
+          dependencies: _CurrencyMarketPriceFamily._dependencies,
+          allTransitiveDependencies:
+              _CurrencyMarketPriceFamily._allTransitiveDependencies,
         );
 
   final AvailableCurrencyEnum currency;
@@ -88,62 +144,77 @@ class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
   }
 }
 
-typedef _CurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
-
-/// See also [_currencyMarketPrice].
-final _currencyMarketPriceProvider = _CurrencyMarketPriceFamily();
-
-class _CurrencyMarketPriceFamily extends Family<AsyncValue<MarketPrice>> {
-  _CurrencyMarketPriceFamily();
-
-  _CurrencyMarketPriceProvider call({
-    required AvailableCurrencyEnum currency,
-  }) {
-    return _CurrencyMarketPriceProvider(
-      currency: currency,
-    );
-  }
-
-  @override
-  FutureProvider<MarketPrice> getProviderOverride(
-    covariant _CurrencyMarketPriceProvider provider,
-  ) {
-    return call(
-      currency: provider.currency,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_currencyMarketPriceProvider';
-}
-
-String $_selectedCurrencyMarketPriceHash() =>
+String _$selectedCurrencyMarketPriceHash() =>
     r'c0ae4863d169c53ec8cd68defe5cba06e55ff646';
 
 /// See also [_selectedCurrencyMarketPrice].
-final _selectedCurrencyMarketPriceProvider = FutureProvider<MarketPrice>(
+@ProviderFor(_selectedCurrencyMarketPrice)
+final _selectedCurrencyMarketPriceProvider =
+    FutureProvider<MarketPrice>.internal(
   _selectedCurrencyMarketPrice,
   name: r'_selectedCurrencyMarketPriceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : $_selectedCurrencyMarketPriceHash,
+      : _$selectedCurrencyMarketPriceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
 );
+
 typedef _SelectedCurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
-String $_convertedToSelectedCurrencyHash() =>
+String _$convertedToSelectedCurrencyHash() =>
     r'14676bcb79ec50eed6b6457e45add978ecccf121';
+typedef _ConvertedToSelectedCurrencyRef = AutoDisposeFutureProviderRef<double>;
+
+/// See also [_convertedToSelectedCurrency].
+@ProviderFor(_convertedToSelectedCurrency)
+const _convertedToSelectedCurrencyProvider =
+    _ConvertedToSelectedCurrencyFamily();
+
+/// See also [_convertedToSelectedCurrency].
+class _ConvertedToSelectedCurrencyFamily extends Family<AsyncValue<double>> {
+  /// See also [_convertedToSelectedCurrency].
+  const _ConvertedToSelectedCurrencyFamily();
+
+  /// See also [_convertedToSelectedCurrency].
+  _ConvertedToSelectedCurrencyProvider call({
+    required double nativeAmount,
+  }) {
+    return _ConvertedToSelectedCurrencyProvider(
+      nativeAmount: nativeAmount,
+    );
+  }
+
+  @override
+  _ConvertedToSelectedCurrencyProvider getProviderOverride(
+    covariant _ConvertedToSelectedCurrencyProvider provider,
+  ) {
+    return call(
+      nativeAmount: provider.nativeAmount,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_convertedToSelectedCurrencyProvider';
+}
 
 /// See also [_convertedToSelectedCurrency].
 class _ConvertedToSelectedCurrencyProvider
     extends AutoDisposeFutureProvider<double> {
+  /// See also [_convertedToSelectedCurrency].
   _ConvertedToSelectedCurrencyProvider({
     required this.nativeAmount,
-  }) : super(
+  }) : super.internal(
           (ref) => _convertedToSelectedCurrency(
             ref,
             nativeAmount: nativeAmount,
@@ -153,7 +224,10 @@ class _ConvertedToSelectedCurrencyProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_convertedToSelectedCurrencyHash,
+                  : _$convertedToSelectedCurrencyHash,
+          dependencies: _ConvertedToSelectedCurrencyFamily._dependencies,
+          allTransitiveDependencies:
+              _ConvertedToSelectedCurrencyFamily._allTransitiveDependencies,
         );
 
   final double nativeAmount;
@@ -172,39 +246,4 @@ class _ConvertedToSelectedCurrencyProvider
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _ConvertedToSelectedCurrencyRef = AutoDisposeFutureProviderRef<double>;
-
-/// See also [_convertedToSelectedCurrency].
-final _convertedToSelectedCurrencyProvider =
-    _ConvertedToSelectedCurrencyFamily();
-
-class _ConvertedToSelectedCurrencyFamily extends Family<AsyncValue<double>> {
-  _ConvertedToSelectedCurrencyFamily();
-
-  _ConvertedToSelectedCurrencyProvider call({
-    required double nativeAmount,
-  }) {
-    return _ConvertedToSelectedCurrencyProvider(
-      nativeAmount: nativeAmount,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<double> getProviderOverride(
-    covariant _ConvertedToSelectedCurrencyProvider provider,
-  ) {
-    return call(
-      nativeAmount: provider.nativeAmount,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_convertedToSelectedCurrencyProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

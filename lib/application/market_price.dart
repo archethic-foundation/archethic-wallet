@@ -56,9 +56,9 @@ Future<double> _convertedToSelectedCurrency(
 }
 
 abstract class MarketPriceProviders {
-  static final currencyMarketPrice = _currencyMarketPriceProvider;
+  static const currencyMarketPrice = _currencyMarketPriceProvider;
   static final selectedCurrencyMarketPrice =
       _selectedCurrencyMarketPriceProvider;
-  static final convertedToSelectedCurrency =
+  static const convertedToSelectedCurrency =
       _convertedToSelectedCurrencyProvider;
 }

@@ -205,7 +205,7 @@ class ArchethicWebsocketRPCServer {
   Future<void> stop() async {
     runZonedGuarded(
       () async {
-        // TODO(@Chralu): Check if it's ok
+        // TODO(Chralu): Check if it's ok
         final server = await HttpServer.bind(
           ArchethicWebsocketRPCServer.host,
           ArchethicWebsocketRPCServer.port,

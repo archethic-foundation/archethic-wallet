@@ -111,9 +111,9 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               ),
             );
           },
-          error: (error) => Column(
+          error: (error) => const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox(
                 height: 50,
               ),
@@ -122,9 +122,9 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               )
             ],
           ),
-          loading: (loading) => Column(
+          loading: (loading) => const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox(
                 height: 50,
               ),
@@ -144,9 +144,9 @@ class _LastArticlesNotShowed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         SizedBox(
           height: 50,
         ),

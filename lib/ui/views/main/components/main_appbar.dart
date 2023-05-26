@@ -104,7 +104,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           );
                       Clipboard.setData(
                         ClipboardData(
-                          text: keychain?.address.toUpperCase(),
+                          text: keychain?.address.toUpperCase() ?? '',
                         ),
                       );
                       UIUtil.showSnackbar(

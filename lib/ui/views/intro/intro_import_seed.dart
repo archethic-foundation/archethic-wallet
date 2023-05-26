@@ -482,30 +482,27 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                 return;
                               }
 
-                              await _accountsDialog(
+                              final accountSelected = await _accountsDialog(
                                 newSession.wallet.appKeychain.accounts,
                               );
 
-                              final selectedAccount = await ref.read(
-                                AccountProviders.selectedAccount.future,
-                              );
                               ref
                                   .read(
                                     AccountProviders.account(
-                                      selectedAccount!.name,
+                                      accountSelected!.name,
                                     ).notifier,
                                   )
                                   .refreshRecentTransactions();
                               ref
                                   .read(
                                     AccountProviders.account(
-                                      selectedAccount.name,
+                                      accountSelected.name,
                                     ).notifier,
                                   )
                                   .refreshNFTs();
                               final securityConfigOk =
                                   await _launchSecurityConfiguration(
-                                selectedAccount.name,
+                                accountSelected.name,
                                 newSession.wallet.seed,
                               );
                               setState(() {
@@ -612,7 +609,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
     return securityConfiguration;
   }
 
-  Future<void> _accountsDialog(List<Account> accounts) async {
+  Future<Account?> _accountsDialog(List<Account> accounts) async {
     final theme = ref.read(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (var i = 0; i < accounts.length; i++) {
@@ -689,5 +686,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
           .read(AccountProviders.accounts.notifier)
           .selectAccount(selection);
     }
+    return selection;
   }
 }

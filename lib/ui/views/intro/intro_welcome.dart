@@ -140,12 +140,12 @@ class _Main extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
+    return const Expanded(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
+          children: <Widget>[
             _LogoArchethic(),
             _WelcomeTextFirst(),
             _WelcomeTextSecond(),

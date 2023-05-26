@@ -6,7 +6,36 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$repositoryHash() => r'2d0970425bfa60ca8bd216a9118fb6c8502cc577';
+
+/// See also [_repository].
+@ProviderFor(_repository)
+final _repositoryProvider = Provider<PriceHistoryRepositoryInterface>.internal(
+  _repository,
+  name: r'_repositoryProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$repositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _RepositoryRef = ProviderRef<PriceHistoryRepositoryInterface>;
+String _$intervalOptionHash() => r'1d96ed2fccef7118b031018144165de4749ec1b4';
+
+/// See also [_intervalOption].
+@ProviderFor(_intervalOption)
+final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
+  _intervalOption,
+  name: r'_intervalOptionProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$intervalOptionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
+String _$priceHistoryHash() => r'53a8fb4fa9f1089577cc2150bd23d7ff77972298';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,34 +58,56 @@ class _SystemHash {
   }
 }
 
-String $_repositoryHash() => r'2d0970425bfa60ca8bd216a9118fb6c8502cc577';
+typedef _PriceHistoryRef = FutureProviderRef<List<PriceHistoryValue>>;
 
-/// See also [_repository].
-final _repositoryProvider = Provider<PriceHistoryRepositoryInterface>(
-  _repository,
-  name: r'_repositoryProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : $_repositoryHash,
-);
-typedef _RepositoryRef = ProviderRef<PriceHistoryRepositoryInterface>;
-String $_intervalOptionHash() => r'1d96ed2fccef7118b031018144165de4749ec1b4';
+/// See also [_priceHistory].
+@ProviderFor(_priceHistory)
+const _priceHistoryProvider = _PriceHistoryFamily();
 
-/// See also [_intervalOption].
-final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>(
-  _intervalOption,
-  name: r'_intervalOptionProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_intervalOptionHash,
-);
-typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String $_priceHistoryHash() => r'53a8fb4fa9f1089577cc2150bd23d7ff77972298';
+/// See also [_priceHistory].
+class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
+  /// See also [_priceHistory].
+  const _PriceHistoryFamily();
+
+  /// See also [_priceHistory].
+  _PriceHistoryProvider call({
+    required MarketPriceHistoryInterval scaleOption,
+  }) {
+    return _PriceHistoryProvider(
+      scaleOption: scaleOption,
+    );
+  }
+
+  @override
+  _PriceHistoryProvider getProviderOverride(
+    covariant _PriceHistoryProvider provider,
+  ) {
+    return call(
+      scaleOption: provider.scaleOption,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_priceHistoryProvider';
+}
 
 /// See also [_priceHistory].
 class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
+  /// See also [_priceHistory].
   _PriceHistoryProvider({
     required this.scaleOption,
-  }) : super(
+  }) : super.internal(
           (ref) => _priceHistory(
             ref,
             scaleOption: scaleOption,
@@ -66,7 +117,10 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_priceHistoryHash,
+                  : _$priceHistoryHash,
+          dependencies: _PriceHistoryFamily._dependencies,
+          allTransitiveDependencies:
+              _PriceHistoryFamily._allTransitiveDependencies,
         );
 
   final MarketPriceHistoryInterval scaleOption;
@@ -85,48 +139,57 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
   }
 }
 
-typedef _PriceHistoryRef = FutureProviderRef<List<PriceHistoryValue>>;
+String _$priceEvolutionHash() => r'bcc3b22660c82056f10a536b6f8285b00e202ec6';
+typedef _PriceEvolutionRef = FutureProviderRef<double>;
 
-/// See also [_priceHistory].
-final _priceHistoryProvider = _PriceHistoryFamily();
+/// See also [_priceEvolution].
+@ProviderFor(_priceEvolution)
+const _priceEvolutionProvider = _PriceEvolutionFamily();
 
-class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
-  _PriceHistoryFamily();
+/// See also [_priceEvolution].
+class _PriceEvolutionFamily extends Family<AsyncValue<double>> {
+  /// See also [_priceEvolution].
+  const _PriceEvolutionFamily();
 
-  _PriceHistoryProvider call({
+  /// See also [_priceEvolution].
+  _PriceEvolutionProvider call({
     required MarketPriceHistoryInterval scaleOption,
   }) {
-    return _PriceHistoryProvider(
+    return _PriceEvolutionProvider(
       scaleOption: scaleOption,
     );
   }
 
   @override
-  FutureProvider<List<PriceHistoryValue>> getProviderOverride(
-    covariant _PriceHistoryProvider provider,
+  _PriceEvolutionProvider getProviderOverride(
+    covariant _PriceEvolutionProvider provider,
   ) {
     return call(
       scaleOption: provider.scaleOption,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'_priceHistoryProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_priceEvolutionProvider';
 }
-
-String $_priceEvolutionHash() => r'bcc3b22660c82056f10a536b6f8285b00e202ec6';
 
 /// See also [_priceEvolution].
 class _PriceEvolutionProvider extends FutureProvider<double> {
+  /// See also [_priceEvolution].
   _PriceEvolutionProvider({
     required this.scaleOption,
-  }) : super(
+  }) : super.internal(
           (ref) => _priceEvolution(
             ref,
             scaleOption: scaleOption,
@@ -136,7 +199,10 @@ class _PriceEvolutionProvider extends FutureProvider<double> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_priceEvolutionHash,
+                  : _$priceEvolutionHash,
+          dependencies: _PriceEvolutionFamily._dependencies,
+          allTransitiveDependencies:
+              _PriceEvolutionFamily._allTransitiveDependencies,
         );
 
   final MarketPriceHistoryInterval scaleOption;
@@ -154,38 +220,4 @@ class _PriceEvolutionProvider extends FutureProvider<double> {
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _PriceEvolutionRef = FutureProviderRef<double>;
-
-/// See also [_priceEvolution].
-final _priceEvolutionProvider = _PriceEvolutionFamily();
-
-class _PriceEvolutionFamily extends Family<AsyncValue<double>> {
-  _PriceEvolutionFamily();
-
-  _PriceEvolutionProvider call({
-    required MarketPriceHistoryInterval scaleOption,
-  }) {
-    return _PriceEvolutionProvider(
-      scaleOption: scaleOption,
-    );
-  }
-
-  @override
-  FutureProvider<double> getProviderOverride(
-    covariant _PriceEvolutionProvider provider,
-  ) {
-    return call(
-      scaleOption: provider.scaleOption,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_priceEvolutionProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
