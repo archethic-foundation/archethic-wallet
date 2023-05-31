@@ -24,7 +24,3 @@ flutter build linux
 ## appimage
 export PATH=$PATH:/home/xxx/archethic-wallet/linux/appimage/appimagetool
 appimagetool-x86_64.AppImage linux/appimage/AppDir/ build/linux/archethic_wallet.AppImage
-## debian
-dart pub global activate 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-flutter_to_debian

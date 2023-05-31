@@ -257,8 +257,6 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  # A build system for Dart code generation and modular compilation
-  flutter_to_debian: ^1.0.4
   freezed: ^2.3.2
   hive_generator: ^2.0.0
   # Integration Tests
