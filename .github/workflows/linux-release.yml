@@ -32,11 +32,11 @@ jobs:
       - name: Install appimage-builder
         run: |
           wget https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
-          chmod +x appimage-builder-continuous-x86_64.AppImage
+          chmod +x appimage-builder-1.1.0-x86_64.AppImage
 
       - name: Generate AppImage
         run: |
-          ./appimage-builder-continuous-x86_64.AppImage --recipe AppImageBuilder.yml
+          ./appimage-builder-1.1.0-x86_64.AppImage --recipe AppImageBuilder.yml
 
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v2
