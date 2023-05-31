@@ -31,7 +31,7 @@ jobs:
 
       - name: Install appimage-builder
         run: |
-          wget https://github.com/AppImageCrafters/appimage-builder/releases/download/continuous/appimage-builder-continuous-x86_64.AppImage
+          wget https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
           chmod +x appimage-builder-continuous-x86_64.AppImage
 
       - name: Generate AppImage
