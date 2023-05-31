@@ -47,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: archethic-wallet-appimage
-          path: archethic-wallet-latest-x86_64.AppImage
+          path: Archethic Wallet-latest-x86_64.AppImage
