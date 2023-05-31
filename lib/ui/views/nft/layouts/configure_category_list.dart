@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -157,7 +159,8 @@ class ReorderableWidget extends ConsumerWidget {
                                       Colors.redAccent[400]!.withOpacity(0.5),
                                 )
                               : const SizedBox(),
-                          trailing: !kIsWeb
+                          trailing: (!kIsWeb &&
+                                  (Platform.isAndroid || Platform.isIOS))
                               ? ReorderableDragStartListener(
                                   index: nftCategoryToSort.indexOf(nftCategory),
                                   child: const Icon(Icons.drag_handle),
