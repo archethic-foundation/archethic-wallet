@@ -40,7 +40,7 @@ jobs:
           appimage-builder --recipe AppImageBuilder.yml --skip-test
 
       - name: Upload AppImage Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
-          name: appimage
-          path: /*.AppImage
+          name: archethic-wallet-appimage
+          path: archethic-wallet-latest-x86_64.AppImage
