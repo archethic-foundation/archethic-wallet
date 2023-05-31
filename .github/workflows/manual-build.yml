@@ -32,16 +32,14 @@ jobs:
           sudo apt-get install libsdl2-dev
           sudo apt-get install webkit2gtk-4.1
           sudo apt-get install libopus-dev libogg-dev pkg-config
+          sudo apt-get install clang cmake pkg-config liblzma-dev libsecret-1-dev libjsoncpp-dev fuse libgtk-3-0 python3-pip libgtkmm-3.0-1v5 libnotify4 gstreamer1.0-tools
+
           flutter doctor
 
       - run: flutter --version
 
-      - run: flutter config --enable-linux-desktop
-      - name: Run tests
-        run: flutter test
-
       - name: Build APP
-        run: flutter build linux
+        run: flutter build linux --release
 
       - name: Compress Flutter build
         run: tar -C build/linux/x64/release/bundle -cvf mixin-desktop-linux-portable.tar.gz .
