@@ -1,0 +1,40 @@
+name: Build and Package Linux AppImage
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+
+      - name: Build Flutter Application
+        run: flutter build linux --release
+
+      - name: Install appimage-builder
+        run: |
+          wget https://github.com/AppImageCrafters/appimage-builder/releases/download/continuous/appimage-builder-continuous-x86_64.AppImage
+          chmod +x appimage-builder-continuous-x86_64.AppImage
+
+      - name: Generate AppImage
+        run: |
+          ./appimage-builder-continuous-x86_64.AppImage --recipe AppImageBuilder.yml
+
+      - name: Upload AppImage Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: appimage
+          path: ./out/*.AppImage
