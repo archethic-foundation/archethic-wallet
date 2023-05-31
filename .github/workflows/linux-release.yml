@@ -22,6 +22,10 @@ jobs:
           channel: "stable"
       - run: flutter --version
 
+      - name: Setup Dependencies
+        run: |
+          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+
       - name: Build Flutter Application
         run: flutter build linux --release
 
