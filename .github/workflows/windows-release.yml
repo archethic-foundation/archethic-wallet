@@ -32,14 +32,18 @@ jobs:
       - name: Build Flutter Application
         run: flutter build windows --release
 
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: echo "::set-output name=version::$(awk '/^version:/{print $2}' pubspec.yaml)"
+
       - name: Archive Artifact
         run: |
           mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
-          Compress-Archive -Path archethic-wallet -DestinationPath artifacts/archethic-wallet.zip
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.version }}.zip"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: archethic-wallet-windows
-          path: artifacts/archethic-wallet.zip
+          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.version }}.zip
