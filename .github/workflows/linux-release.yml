@@ -1,7 +1,13 @@
 name: Build and Package Linux AppImage
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - dev
+      - packaging-github-actions
+  pull_request:
+    branches:
+      - dev
 
 jobs:
   build:
