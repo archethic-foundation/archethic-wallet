@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -56,31 +57,30 @@ class TransactionRawState extends State<TransactionRaw> {
             ],
           ),
         ),
-        AnimatedCrossFade(
+        AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          crossFadeState:
-              isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-          firstChild: const SizedBox.shrink(),
-          secondChild: SizedBox.fromSize(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: widget.theme.backgroundTransferListOutline!,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 0,
-              color: widget.theme.backgroundTransferListCard,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: SelectableText(
-                  const JsonEncoder.withIndent('  ')
-                      .convert(widget.command.value.data),
-                  style: widget.theme.textStyleSize12W400Primary,
-                ),
-              ),
-            ),
-          ),
+          child: isExpanded
+              ? SizedBox.fromSize(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: widget.theme.backgroundTransferListOutline!,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 0,
+                    color: widget.theme.backgroundTransferListCard,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SelectableText(
+                        const JsonEncoder.withIndent('  ')
+                            .convert(widget.command.value.data),
+                        style: widget.theme.textStyleSize12W400Primary,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );
