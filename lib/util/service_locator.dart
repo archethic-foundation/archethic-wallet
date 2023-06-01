@@ -4,6 +4,7 @@ import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
+import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -26,6 +27,9 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
     ..registerLazySingleton<CommandDispatcher>(
       CommandDispatcher.new,
+    )
+    ..registerLazySingleton<ArchethicWebsocketRPCServer>(
+      ArchethicWebsocketRPCServer.new,
     )
     ..registerLazySingleton<ArchethicDeeplinkRPCServer>(
       ArchethicDeeplinkRPCServer.new,

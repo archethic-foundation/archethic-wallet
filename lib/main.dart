@@ -8,8 +8,7 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/domain/repositories/feature_flags.dart';
-import 'package:aewallet/domain/rpc/command_dispatcher.dart';
+import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -48,11 +47,13 @@ Future<void> main() async {
   await DBHelper.setupDatabase();
   await setupServiceLocator();
 
-  if (FeatureFlags.rpcEnabled &&
-      ArchethicWebsocketRPCServer.isPlatformCompatible) {
-    ArchethicWebsocketRPCServer(
-      commandDispatcher: sl.get<CommandDispatcher>(),
-    ).run();
+  final isRpcEnabled = (await sl
+          .get<SettingsRepositoryInterface>()
+          .getSettings(const Locale('fr')))
+      .activeRPCServer;
+  final rpcWebsocketServer = sl.get<ArchethicWebsocketRPCServer>();
+  if (isRpcEnabled && ArchethicWebsocketRPCServer.isPlatformCompatible) {
+    rpcWebsocketServer.run();
   }
 
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
@@ -149,8 +150,7 @@ class App extends ConsumerWidget {
         supportedLocales: ref.read(LanguageProviders.availableLocales),
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
-          if (FeatureFlags.rpcEnabled &&
-              deeplinkRpcReceiver.canHandle(settings.name)) {
+          if (deeplinkRpcReceiver.canHandle(settings.name)) {
             deeplinkRpcReceiver.handle(settings.name);
             return null;
           }

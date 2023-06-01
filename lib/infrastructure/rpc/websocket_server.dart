@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
@@ -29,6 +28,8 @@ class _SubscribablePeer {
   final Peer _peer;
 
   final Map<String, StreamSubscription> _subscriptions = {};
+
+  Future<void> close() => _peer.close();
 
   void registerMethod(String name, Function callback) =>
       _peer.registerMethod(name, callback);
@@ -96,38 +97,44 @@ class _SubscribablePeer {
 }
 
 class ArchethicWebsocketRPCServer {
-  ArchethicWebsocketRPCServer({
-    required this.commandDispatcher,
-  });
+  ArchethicWebsocketRPCServer();
 
   static const logName = 'RPC Server';
   static const host = '127.0.0.1';
   static const port = 12345;
-
-  final CommandDispatcher commandDispatcher;
 
   static bool get isPlatformCompatible {
     return !kIsWeb &&
         (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
   }
 
+  HttpServer? _runningHttpServer;
+  final Set<_SubscribablePeer> _openedSockets = {};
+
+  bool get isRunning => _openedSockets.isNotEmpty || _runningHttpServer != null;
+
   Future<void> run() async {
     runZonedGuarded(
       () async {
+        if (isRunning) {
+          log('Already running. Cancel `start`', name: logName);
+          return;
+        }
+
         log('Starting at ws://$host:$port', name: logName);
-        final server = await HttpServer.bind(
+        final httpServer = await HttpServer.bind(
           host,
           port,
           shared: true,
         );
 
-        server.listen((HttpRequest request) async {
+        httpServer.listen((HttpRequest request) async {
           log('Received request', name: logName);
 
           final socket = await WebSocketTransformer.upgrade(request);
           final channel = IOWebSocketChannel(socket);
 
-          final server = _SubscribablePeer(Peer(channel.cast<String>()))
+          final peerServer = _SubscribablePeer(Peer(channel.cast<String>()))
             ..registerMethod(
               'sendTransaction',
               (params) => _handle(RPCSendTransactionCommandHandler(), params),
@@ -188,8 +195,10 @@ class ArchethicWebsocketRPCServer {
               (params) => _handle(RPCSignTransactionsCommandHandler(), params),
             );
 
-          await server.listen();
+          _openedSockets.add(peerServer);
+          await peerServer.listen();
         });
+        _runningHttpServer = httpServer;
       },
       (error, stack) {
         log(
@@ -205,22 +214,20 @@ class ArchethicWebsocketRPCServer {
   Future<void> stop() async {
     runZonedGuarded(
       () async {
-        // TODO(Chralu): Check if it's ok
-        final server = await HttpServer.bind(
-          ArchethicWebsocketRPCServer.host,
-          ArchethicWebsocketRPCServer.port,
-          shared: true,
-        );
+        if (!isRunning) {
+          log('Already stopped. Cancel `stop`', name: logName);
+          return;
+        }
 
-        server.listen((HttpRequest request) async {
-          final socket = await WebSocketTransformer.upgrade(request);
-          final channel = IOWebSocketChannel(socket);
-          _SubscribablePeer(Peer(channel.cast<String>()))
-              ._cleanupSubscriptions();
-        });
+        log('Closing all websocket connections', name: logName);
+        for (final socket in _openedSockets) {
+          await socket.close();
+        }
+        _openedSockets.clear();
 
         log('Stopping at ws://$host:$port', name: logName);
-        await server.close(force: true);
+        await _runningHttpServer?.close();
+        _runningHttpServer = null;
         log('Server stopped at ws://$host:$port', name: logName);
       },
       (error, stack) {
