@@ -34,16 +34,21 @@ jobs:
 
       - name: Get Version from pubspec.yaml
         id: get_version
-        run: echo "version=$(awk '/^version:/{print $2}' pubspec.yaml)" >> $GITHUB_ENV
+        run: |
+          $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
+          $version=$version_str.Split("+")[0]
+          $build_number=$version_str.Split("+")[1]
+          flutter build windows --dart-define="APP_VERSION=$version" --dart-define="APP_BUILD_NUMBER=$build_number"
+          echo "MSIX_PACKAGE_VERSION=$version.$build_number" >> $Env:GITHUB_OUTPUT
 
       - name: Archive Artifact
         run: |
           mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
-          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ env.version }}.zip"
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.build-app.outputs.MSIX_PACKAGE_VERSION }}.zip"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-windows-${{ env.version }}
-          path: artifacts/archethic-wallet-${{ env.version }}.zip
+          name: archethic-wallet-windows-${{ steps.build-app.outputs.MSIX_PACKAGE_VERSION }}
+          path: artifacts/archethic-wallet-${{ steps.build-app.outputs.MSIX_PACKAGE_VERSION }}.zip
