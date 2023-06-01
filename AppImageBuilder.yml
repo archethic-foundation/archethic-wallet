@@ -10,6 +10,7 @@ AppDir:
     - cp -r build/linux/x64/release/bundle/lib/. AppDir/lib
     - cp -r build/linux/x64/release/bundle/data AppDir
     - cp linux/archethic_wallet_appimage_icon.png AppDir/usr/share/icons/
+    - ls -R
   path: "{{WORKSPACE}}/AppDir/{{version_app}}"
   app_info:
     id: tech.archethic.wallet

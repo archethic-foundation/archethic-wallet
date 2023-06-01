@@ -44,9 +44,6 @@ jobs:
           chmod +x /usr/local/bin/appimagetool
           sudo pip3 install appimage-builder
 
-      - name: List files in AppDir
-        run: ls -R AppDir
-
       - name: Generate AppImage
         run: |
           appimage-builder --recipe AppImageBuilder.yml --skip-test
