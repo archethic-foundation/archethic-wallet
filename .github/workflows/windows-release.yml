@@ -40,10 +40,10 @@ jobs:
         run: |
           mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
-          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ env.VERSION }}.zip"
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ $GITHUB_ENV }}.zip"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-windows-${{ env.VERSION }}
-          path: artifacts/archethic-wallet-${{ env.VERSION }}.zip
+          name: archethic-wallet-windows-${{ $GITHUB_ENV }}
+          path: artifacts/archethic-wallet-${{ $GITHUB_ENV }}.zip
