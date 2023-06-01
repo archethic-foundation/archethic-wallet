@@ -45,10 +45,12 @@ jobs:
         run: |
           mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
-          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.build-app.outputs.MSIX_PACKAGE_VERSION }}.zip"
+          package_version="${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}"
+          package_name="archethic-wallet-windows-${package_version}.zip"
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/${package_name}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-windows-${{ steps.build-app.outputs.MSIX_PACKAGE_VERSION }}
-          path: artifacts/archethic-wallet-${{ steps.build-app.outputs.MSIX_PACKAGE_VERSION }}.zip
+          name: archethic-wallet-windows-${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}
+          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}.zip
