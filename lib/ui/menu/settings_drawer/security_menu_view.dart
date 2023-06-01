@@ -82,11 +82,9 @@ class SecurityMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       const _BackupSecretPhraseListItem(),
                       const _SettingsListItem.spacer(),
-                      if (FeatureFlags.rpcEnabled &&
-                          ArchethicWebsocketRPCServer.isPlatformCompatible)
+                      if (ArchethicWebsocketRPCServer.isPlatformCompatible)
                         const _ActiveServerRPCSettingsListItem(),
-                      if (FeatureFlags.rpcEnabled &&
-                          ArchethicWebsocketRPCServer.isPlatformCompatible)
+                      if (ArchethicWebsocketRPCServer.isPlatformCompatible)
                         const _SettingsListItem.spacer(),
                       const _PinPadShuffleSettingsListItem(),
                       const _SettingsListItem.spacer(),
