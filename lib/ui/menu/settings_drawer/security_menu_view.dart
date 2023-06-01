@@ -412,13 +412,9 @@ class _ActiveServerRPCSettingsListItem extends ConsumerWidget {
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveRPCServer(isSwitched);
         if (isSwitched) {
-          await ArchethicWebsocketRPCServer(
-            commandDispatcher: sl.get<CommandDispatcher>(),
-          ).run();
+          await sl.get<ArchethicWebsocketRPCServer>().run();
         } else {
-          await ArchethicWebsocketRPCServer(
-            commandDispatcher: sl.get<CommandDispatcher>(),
-          ).stop();
+          await sl.get<ArchethicWebsocketRPCServer>().stop();
         }
       },
     );
