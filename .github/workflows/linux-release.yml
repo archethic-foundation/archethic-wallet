@@ -32,6 +32,12 @@ jobs:
       - name: Build Flutter Application
         run: flutter build linux --release
 
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          version_str=$(grep -oP '(?<=^version:\s).*' pubspec.yaml)
+          echo "version_app=$version_str" >> $GITHUB_ENV
+
       - name: Install appimage-builder
         run: |
           sudo pip3 install appimage-builder
@@ -47,5 +53,5 @@ jobs:
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-appimage
+          name: archethic-wallet-linux-$version_app
           path: archethic-wallet-latest-x86_64.AppImage

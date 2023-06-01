@@ -1,13 +1,7 @@
 name: Build and Package Windows app
 
 on:
-  push:
-    branches:
-      - dev
-      - packaging-github-actions
-  pull_request:
-    branches:
-      - dev
+  workflow_dispatch:
 
 jobs:
   build:
@@ -36,16 +30,16 @@ jobs:
         id: get_version
         run: |
           $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
-          echo "MSIX_PACKAGE_VERSION=$version_str" >> $Env:GITHUB_OUTPUT
+          echo "version_app=$version_str" >> $Env:GITHUB_OUTPUT
 
       - name: Archive Artifact
         run: |
           mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
-          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}.zip"
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-windows-${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}
-          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}.zip
+          name: archethic-wallet-windows-${{ steps.get_version.outputs.version_app }}
+          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
