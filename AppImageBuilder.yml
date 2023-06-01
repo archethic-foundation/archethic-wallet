@@ -13,10 +13,10 @@ AppDir:
   path: "{{WORKSPACE}}/AppDir"
   app_info:
     id: tech.archethic.wallet
-    name: Archethic Wallet
+    name: archethic-wallet
     icon: archethic_wallet_appimage_icon
     version: latest
-    exec: archethic_wallet
+    exec: archethic-wallet
     exec_args: $@
   apt:
     arch: amd64

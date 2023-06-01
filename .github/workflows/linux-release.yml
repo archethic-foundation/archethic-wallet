@@ -24,27 +24,25 @@ jobs:
 
       - name: Setup Dependencies
         run: |
+          flutter doctor
+          sudo apt-get update -y
           sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libjsoncpp-dev fuse libgtk-3-0 python3-pip libgtkmm-3.0-1v5 libnotify4 gstreamer1.0-tools
+
+      - run: flutter --version
 
       - name: Build Flutter Application
         run: flutter build linux --release
 
       - name: Install appimage-builder
         run: |
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
-          chmod +x /usr/local/bin/appimagetool
           sudo pip3 install appimage-builder
 
       - name: Generate AppImage
         run: |
           appimage-builder --recipe AppImageBuilder.yml --skip-test
 
-      - name: Check files
-        run: |
-          ls -R
-
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v1
         with:
           name: archethic-wallet-appimage
-          path: Archethic Wallet-latest-x86_64.AppImage
+          path: archethic-wallet-latest-x86_64.AppImage
