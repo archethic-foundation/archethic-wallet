@@ -36,18 +36,13 @@ jobs:
         id: get_version
         run: |
           $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
-          $version=$version_str.Split("+")[0]
-          $build_number=$version_str.Split("+")[1]
-          flutter build windows --dart-define="APP_VERSION=$version" --dart-define="APP_BUILD_NUMBER=$build_number"
-          echo "MSIX_PACKAGE_VERSION=$version.$build_number" >> $Env:GITHUB_OUTPUT
+          echo "MSIX_PACKAGE_VERSION=$version_str" >> $Env:GITHUB_OUTPUT
 
       - name: Archive Artifact
         run: |
           mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
-          package_version="${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}"
-          package_name="archethic-wallet-windows-${package_version}.zip"
-          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/${package_name}"
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.MSIX_PACKAGE_VERSION }}.zip"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
