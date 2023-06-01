@@ -1,12 +1,7 @@
 name: Build and Package Windows app
 
 on:
-  push:
-    branches:
-      - dev
-  pull_request:
-    branches:
-      - dev
+  workflow_dispatch:
 
 jobs:
   build:
