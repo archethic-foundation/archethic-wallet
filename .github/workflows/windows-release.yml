@@ -37,6 +37,10 @@ jobs:
           mv build/windows/runner/Release/ archethic-wallet
           Compress-Archive -Path archethic-wallet -DestinationPath artifacts/archethic-wallet.zip
 
+      - name: Check files
+        run: |
+          ls -R
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:

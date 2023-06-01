@@ -39,6 +39,10 @@ jobs:
         run: |
           appimage-builder --recipe AppImageBuilder.yml --skip-test
 
+      - name: Check files
+        run: |
+          ls -R
+
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v1
         with:
