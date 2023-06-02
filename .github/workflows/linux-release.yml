@@ -36,7 +36,7 @@ jobs:
         id: get_version
         run: |
           version_str=$(grep -oP '(?<=^version:\s).*' pubspec.yaml)
-          echo "version_app=$version_str" >> $GITHUB_ENV
+          echo "version_app=$version_str" >> $Env:GITHUB_OUTPUT
 
       - name: Install appimage-builder
         run: |
@@ -55,5 +55,5 @@ jobs:
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-linux-${{version_app}}_app
-          path: archethic-wallet-${{version_app}}-x86_64.AppImage
+          name: archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}_app
+          path: archethic-wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
