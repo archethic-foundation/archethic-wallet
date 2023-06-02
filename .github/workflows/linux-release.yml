@@ -38,6 +38,9 @@ jobs:
           version_str=$(grep -oP '(?<=^version:\s).*' pubspec.yaml)
           echo "version_app=$version_str" >> $Env:GITHUB_OUTPUT
 
+      - name: Set VERSION_APP
+        run: echo "VERSION_APP=${{ steps.get_version.outputs.version_app }}" >> $GITHUB_ENV
+
       - name: Install appimage-builder
         run: |
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool

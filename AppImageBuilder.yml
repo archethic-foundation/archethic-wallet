@@ -11,12 +11,12 @@ AppDir:
     - cp -r build/linux/x64/release/bundle/data AppDir
     - cp linux/archethic_wallet_appimage_icon.png AppDir/usr/share/icons/
     - ls -R
-  path: "{{WORKSPACE}}/AppDir/{{version_app}}"
+  path: "{{WORKSPACE}}/AppDir/$VERSION_APP"
   app_info:
     id: tech.archethic.wallet
     name: archethic_wallet
     icon: archethic_wallet_appimage_icon
-    version: "{{version_app}}"
+    version: "$VERSION_APP"
     exec: archethic_wallet
     exec_args: $@
   apt:
