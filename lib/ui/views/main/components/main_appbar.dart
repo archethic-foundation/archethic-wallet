@@ -145,15 +145,27 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           )
                             .animate()
                             .fade(duration: const Duration(milliseconds: 300))
-                        : FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: AutoSizeText(
-                              localizations.addressBookHeader,
-                              style: theme.textStyleSize24W700EquinoxPrimary,
-                            ),
-                          )
-                            .animate()
-                            .fade(duration: const Duration(milliseconds: 300)),
+                        : preferences.mainScreenCurrentPage == 4
+                            ? FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: AutoSizeText(
+                                  localizations.messengerHeader,
+                                  style:
+                                      theme.textStyleSize24W700EquinoxPrimary,
+                                ),
+                              ).animate().fade(
+                                  duration: const Duration(milliseconds: 300),
+                                )
+                            : FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: AutoSizeText(
+                                  localizations.addressBookHeader,
+                                  style:
+                                      theme.textStyleSize24W700EquinoxPrimary,
+                                ),
+                              ).animate().fade(
+                                  duration: const Duration(milliseconds: 300),
+                                ),
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
