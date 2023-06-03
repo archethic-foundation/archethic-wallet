@@ -3077,5 +3077,11 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "messengerHeader": "Messenger",
+  "@messengerHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

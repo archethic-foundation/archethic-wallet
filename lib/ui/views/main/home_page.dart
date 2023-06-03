@@ -13,6 +13,7 @@ import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/main_bottombar.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
+import 'package:aewallet/ui/views/main/messenger_tab.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
@@ -97,6 +98,7 @@ class _HomePageState extends ConsumerState<HomePage>
             NFTTab(
               key: Key('bottomBarAddressNFTlink'),
             ),
+            MessengerTab(),
           ],
         ),
       ),

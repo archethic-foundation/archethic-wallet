@@ -1,15 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
-// Project imports:
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
-// Package imports:
 import 'package:bottom_bar/bottom_bar.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 
 class MainBottomBar extends ConsumerWidget {
   const MainBottomBar({
@@ -73,9 +71,21 @@ class MainBottomBar extends ConsumerWidget {
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
-                key: const Key('bottomBarAddressNFTlink'),
+                key: const Key('bottomBarNFT'),
                 icon: const Icon(
                   UiIcons.nft,
+                  size: 30,
+                ),
+                backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
+                activeIconColor: theme.bottomBarActiveIconColor,
+                activeTitleColor: theme.bottomBarActiveTitleColor,
+                activeColor: theme.bottomBarActiveColor!,
+                inactiveColor: theme.bottomBarInactiveIcon,
+              ),
+              BottomBarItem(
+                key: const Key('bottomBarMessenger'),
+                icon: const Icon(
+                  Iconsax.messages_2,
                   size: 30,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
