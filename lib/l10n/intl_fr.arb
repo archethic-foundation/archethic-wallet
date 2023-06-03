@@ -510,5 +510,6 @@
 	"ledgerMethod": "Ledger Nano S",
 	"nftChooseSource": "Veuillez indiquer la source :",
 	"serviceName": "Name :",
-	"signTransactionListTransactionsHeader": "Transaction %1"
+	"signTransactionListTransactionsHeader": "Transaction %1",
+	"messengerHeader": "Messages"
 }
