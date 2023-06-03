@@ -4,11 +4,9 @@ import 'dart:developer';
 
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -128,6 +126,7 @@ class SendTransactionUseCase
     final transactionSender = ArchethicTransactionSender(
       phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
       websocketEndpoint: networkSettings.getWebsocketUri(),
+      apiService: apiService,
     );
 
     final transaction = await command.toArchethicTransaction(

@@ -1,8 +1,8 @@
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/rpc/commands/add_service.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class RPCAddServiceCommandHandler extends RPCCommandHandler<
     RPCAddServiceCommandData, TransactionConfirmation> {

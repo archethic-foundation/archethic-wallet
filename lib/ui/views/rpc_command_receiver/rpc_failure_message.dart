@@ -1,5 +1,5 @@
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 extension TransactionErrorLocalizedExt on TransactionError {

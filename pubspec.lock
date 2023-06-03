@@ -53,11 +53,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: dev
-      resolved-ref: a901a825a189e6533162d3b56850918363cf7738
+      ref: sc_test_mi
+      resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
-    version: "3.1.1"
+    version: "3.2.0"
   archive:
     dependency: transitive
     description:
