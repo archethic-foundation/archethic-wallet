@@ -14,7 +14,6 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/util/confirmations/transaction_sender.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -240,10 +239,11 @@ class ArchethicTransactionRepository
     required TransactionConfirmationHandler onConfirmation,
     required TransactionErrorHandler onError,
   }) async {
-    final TransactionSenderInterface transactionSender =
-        ArchethicTransactionSender(
+    final archethic.TransactionSenderInterface transactionSender =
+        archethic.ArchethicTransactionSender(
       phoenixHttpEndpoint: phoenixHttpEndpoint,
       websocketEndpoint: websocketEndpoint,
+      apiService: apiService,
     );
     // ignore: cascade_invocations
     transactionSender.send(

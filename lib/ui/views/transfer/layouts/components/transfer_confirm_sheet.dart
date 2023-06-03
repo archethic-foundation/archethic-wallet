@@ -8,7 +8,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';

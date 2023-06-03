@@ -1,4 +1,3 @@
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
@@ -6,7 +5,7 @@ import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 class RPCSendTransactionCommandHandler extends RPCCommandHandler<
-    RPCSendTransactionCommandData, TransactionConfirmation> {
+    RPCSendTransactionCommandData, archethic.TransactionConfirmation> {
   RPCSendTransactionCommandHandler() : super();
 
   @override
@@ -21,7 +20,8 @@ class RPCSendTransactionCommandHandler extends RPCCommandHandler<
       );
 
   @override
-  Map<String, dynamic> resultFromModel(TransactionConfirmation model) {
+  Map<String, dynamic> resultFromModel(
+      archethic.TransactionConfirmation model) {
     return {
       'maxConfirmations': model.maxConfirmations,
       'nbConfirmations': model.nbConfirmations,

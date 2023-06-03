@@ -2,15 +2,17 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/keychain_secured_infos.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 typedef TransactionConfirmationHandler = Future<void> Function(
-  TransactionConfirmation confirmation,
+  archethic.TransactionConfirmation confirmation,
 );
-typedef TransactionErrorHandler = Future<void> Function(TransactionError error);
+typedef TransactionErrorHandler = Future<void> Function(
+  archethic.TransactionError error,
+);
 
 abstract class TransactionRemoteRepositoryInterface {
   const TransactionRemoteRepositoryInterface();
