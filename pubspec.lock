@@ -53,11 +53,19 @@ packages:
     dependency: "direct main"
     description:
       path: "."
+<<<<<<< HEAD
       ref: dev
       resolved-ref: a901a825a189e6533162d3b56850918363cf7738
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.1.1"
+=======
+      ref: sc_test_mi
+      resolved-ref: "5fb5c3e1ba6e49d6f5d2e98fccdfb695fac3c0e9"
+      url: "https://github.com/archethic-foundation/libdart.git"
+    source: git
+    version: "3.2.0"
+>>>>>>> b5bee642 (Adapt dependencies with the new version of Dart SDK)
   archive:
     dependency: transitive
     description:
@@ -1273,10 +1281,17 @@ packages:
     dependency: "direct dev"
     description:
       name: msix
+<<<<<<< HEAD
       sha256: c4ac0055da46764d9dca51f2f53b488294080fc8dc2de5730866558a37c6c07a
       url: "https://pub.dev"
     source: hosted
     version: "3.14.1"
+=======
+      sha256: "26fabf10f65464f5198e9a9e3d242627efef56e418d52d6be466e2e126095647"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.14.0"
+>>>>>>> b5bee642 (Adapt dependencies with the new version of Dart SDK)
   nfc_manager:
     dependency: "direct main"
     description:

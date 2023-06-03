@@ -1,4 +1,4 @@
-import 'package:aewallet/domain/models/transaction_event.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'failure.freezed.dart';

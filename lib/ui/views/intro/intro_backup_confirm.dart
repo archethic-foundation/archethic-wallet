@@ -7,7 +7,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/domain/models/transaction_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_networks.dart';
