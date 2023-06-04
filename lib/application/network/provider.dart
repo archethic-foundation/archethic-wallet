@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/model/available_networks.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -25,15 +26,7 @@ Future<List<Node>> _networkNodes(
   _NetworkNodesRef ref, {
   required AvailableNetworks network,
 }) async {
-  final link = ref.read(
-    _networkLinkProvider(
-      network: network,
-    ),
-  );
-
-  final nodeListMain = await ApiService(
-    link,
-  ).getNodeList();
+  final nodeListMain = await sl.get<ApiService>().getNodeList();
 
   return nodeListMain;
 }

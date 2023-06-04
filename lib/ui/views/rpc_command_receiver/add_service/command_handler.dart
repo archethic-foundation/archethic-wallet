@@ -96,10 +96,9 @@ class AddServiceHandler extends CommandHandler {
                           ref.read(connectivityStatusProviders);
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected) {
-                        ref.read(SessionProviders.session.notifier).refresh();
-                        ref
-                            .read(AccountProviders.selectedAccount.notifier)
-                            .refreshRecentTransactions();
+                        await ref
+                            .read(SessionProviders.session.notifier)
+                            .refresh();
                       }
                     });
 

@@ -45,9 +45,24 @@ Future<void> _setupServiceLocatorNetworkDependencies() async {
   final preferences = await HivePreferencesDatasource.getInstance();
   final network = preferences.getNetwork().getLink();
   sl
-    ..registerLazySingleton<ApiService>(() => ApiService(network))
-    ..registerLazySingleton<AddressService>(() => AddressService(network))
-    ..registerLazySingleton<OracleService>(() => OracleService(network));
+    ..registerLazySingleton<ApiService>(
+      () => ApiService(
+        network,
+        logsActivation: false,
+      ),
+    )
+    ..registerLazySingleton<AddressService>(
+      () => AddressService(
+        network,
+        logsActivation: false,
+      ),
+    )
+    ..registerLazySingleton<OracleService>(
+      () => OracleService(
+        network,
+        logsActivation: false,
+      ),
+    );
 }
 
 Future<void> updateServiceLocatorNetworkDependencies() async {
