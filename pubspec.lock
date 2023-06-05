@@ -54,7 +54,11 @@ packages:
     description:
       path: "."
       ref: sc_test_mi
+<<<<<<< HEAD
       resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
+=======
+      resolved-ref: "99af677ee31677d05f35c35450c2242c1c3d38ec"
+>>>>>>> 6bae349d (update pubspec)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.2.0"
@@ -1329,10 +1333,17 @@ packages:
     dependency: "direct dev"
     description:
       name: msix
+<<<<<<< HEAD
       sha256: bf151b9a1648985e7604672ade54c8df693566099d0731e318548c47d54676e6
       url: "https://pub.dev"
     source: hosted
     version: "3.14.2"
+=======
+      sha256: c4ac0055da46764d9dca51f2f53b488294080fc8dc2de5730866558a37c6c07a
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.14.1"
+>>>>>>> 6bae349d (update pubspec)
   nfc_manager:
     dependency: "direct main"
     description:
