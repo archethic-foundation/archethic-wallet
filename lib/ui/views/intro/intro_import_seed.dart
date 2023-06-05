@@ -27,6 +27,7 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -43,7 +44,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
-  List<String> phrase = List<String>.filled(24, '');
+  final wordEditingControllers = List<TextEditingController?>.filled(
+    24,
+    null,
+  );
+
+  Iterable<String> get phrase => wordEditingControllers.map(
+        (textController) => textController?.text ?? '',
+      );
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
 
@@ -87,6 +95,26 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       ),
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
+    void _validateWord(String word) {
+      if (!AppMnemomics.isValidWord(
+        word,
+        languageCode: languageSeed,
+      )) {
+        setState(() {
+          _mnemonicIsValid = false;
+          _mnemonicError = localizations.mnemonicInvalidWord.replaceAll(
+            '%1',
+            word,
+          );
+        });
+      } else {
+        setState(() {
+          _mnemonicError = '';
+          _mnemonicIsValid = true;
+        });
+      }
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -217,14 +245,71 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                             Container(
                               margin: const EdgeInsets.only(
                                 left: 30,
-                                right: 30,
+                                right: 10,
                                 top: 15,
                               ),
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                localizations.importSecretPhraseHint,
-                                style: theme.textStyleSize16W600Primary,
-                                textAlign: TextAlign.start,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      localizations.importSecretPhraseHint,
+                                      style: theme.textStyleSize16W600Primary,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 48,
+                                    child: TextButton.icon(
+                                      label: const Text(''),
+                                      icon: Icon(
+                                        Icons.paste,
+                                        color: theme
+                                            .textStyleSize16W600Primary.color,
+                                      ),
+                                      onPressed: () async {
+                                        final data = await Clipboard.getData(
+                                          'text/plain',
+                                        );
+                                        final pastedWords = data?.text
+                                            ?.split(RegExp('[^a-z]'))
+                                            .where((element) =>
+                                                element.isNotEmpty);
+
+                                        if (pastedWords == null ||
+                                            pastedWords.length !=
+                                                wordEditingControllers.length ||
+                                            pastedWords.any(
+                                              (element) =>
+                                                  !AppMnemomics.isValidWord(
+                                                element,
+                                                languageCode: languageSeed,
+                                              ),
+                                            )) {
+                                          UIUtil.showSnackbar(
+                                            localizations.invalidSeedPaste,
+                                            context,
+                                            ref,
+                                            theme.text!,
+                                            theme.snackBarShadow!,
+                                          );
+
+                                          return;
+                                        }
+                                        setState(() {
+                                          for (var i = 0;
+                                              i < wordEditingControllers.length;
+                                              i++) {
+                                            wordEditingControllers[i]?.text =
+                                                pastedWords.elementAt(i);
+                                          }
+                                          _mnemonicError = '';
+                                          _mnemonicIsValid = true;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             const SizedBox(
@@ -281,27 +366,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                 });
                                               },
                                               onSelected: (String selection) {
-                                                phrase[index] = selection;
-                                                if (!AppMnemomics.isValidWord(
-                                                  selection,
-                                                  languageCode: languageSeed,
-                                                )) {
-                                                  setState(() {
-                                                    _mnemonicIsValid = false;
-                                                    _mnemonicError =
-                                                        localizations
-                                                            .mnemonicInvalidWord
-                                                            .replaceAll(
-                                                      '%1',
-                                                      selection,
-                                                    );
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    _mnemonicError = '';
-                                                    _mnemonicIsValid = true;
-                                                  });
-                                                }
+                                                wordEditingControllers[index]
+                                                    ?.text = selection;
+                                                _validateWord(selection);
                                                 FocusScope.of(context)
                                                     .nextFocus();
                                               },
@@ -311,6 +378,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                 focusNode,
                                                 onFieldSubmitted,
                                               ) {
+                                                wordEditingControllers[index] =
+                                                    textEditingController;
                                                 return Stack(
                                                   alignment:
                                                       AlignmentDirectional
@@ -341,31 +410,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                                         if (_value.isEmpty) {
                                                           return;
                                                         }
-                                                        phrase[index] = _value;
-                                                        if (!AppMnemomics
-                                                            .isValidWord(
-                                                          _value,
-                                                          languageCode:
-                                                              languageSeed,
-                                                        )) {
-                                                          setState(() {
-                                                            _mnemonicIsValid =
-                                                                false;
-                                                            _mnemonicError =
-                                                                localizations
-                                                                    .mnemonicInvalidWord
-                                                                    .replaceAll(
-                                                              '%1',
-                                                              value,
-                                                            );
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            _mnemonicError = '';
-                                                            _mnemonicIsValid =
-                                                                true;
-                                                          });
-                                                        }
+                                                        _validateWord(_value);
                                                       },
                                                     ),
                                                     Positioned(
@@ -462,7 +507,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               final newSession = await ref
                                   .read(SessionProviders.session.notifier)
                                   .restoreFromMnemonics(
-                                    mnemonics: phrase,
+                                    mnemonics: phrase.toList(),
                                     languageCode: languageSeed,
                                   );
 
