@@ -1,15 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
-import 'dart:developer' as dev;
-import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
 import 'package:aewallet/model/data/secured_settings.dart';
 import 'package:aewallet/model/keychain_secured_infos.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
-class HiveVaultDatasource {
+class HiveVaultDatasource with SecuredHiveMixin {
   HiveVaultDatasource._(this._box);
 
   static const String _vaultBox = '_vaultBox';
@@ -25,48 +23,11 @@ class HiveVaultDatasource {
   static const String _keychainSecuredInfos =
       'archethic_keychain_secured_infos';
 
-  final List<int> secureKey = Hive.generateSecureKey();
-
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
   static Future<HiveVaultDatasource> getInstance() async {
-    try {
-      const secureStorage = FlutterSecureStorage();
-      final encryptionKey = await _readEncryptionKey(secureStorage) ??
-          await _generateEncryptionKey(secureStorage);
-      final encryptedBox = await Hive.openBox<dynamic>(
-        _vaultBox,
-        encryptionCipher: HiveAesCipher(encryptionKey),
-      );
-      return HiveVaultDatasource._(encryptedBox);
-    } catch (e, stack) {
-      dev.log('Failed to get HiveVault instance.', error: e, stackTrace: stack);
-      rethrow;
-    }
-  }
-
-  static Future<Uint8List> _generateEncryptionKey(
-    FlutterSecureStorage secureStorage,
-  ) async {
-    final key = Hive.generateSecureKey();
-    final secureKey = base64UrlEncode(key);
-    await secureStorage.write(
-      key: 'archethic_wallet_secure_key',
-      value: secureKey,
-    );
-    return Uint8List.fromList(key);
-  }
-
-  static Future<Uint8List?> _readEncryptionKey(
-    FlutterSecureStorage secureStorage,
-  ) async {
-    final secureKey = await secureStorage.read(
-      key: 'archethic_wallet_secure_key',
-    );
-    if (secureKey == null || secureKey.isEmpty) {
-      return null;
-    }
-    return base64Url.decode(secureKey);
+    final encryptedBox = await SecuredHiveMixin.openSecuredBox(_vaultBox);
+    return HiveVaultDatasource._(encryptedBox);
   }
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>

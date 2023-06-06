@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 
 part 'app_keychain.g.dart';
 
-@HiveType(typeId: 3)
+@HiveType(typeId: HiveTypeIds.appKeychain)
 
 /// Next field available : 3
 class AppKeychain extends HiveObject {

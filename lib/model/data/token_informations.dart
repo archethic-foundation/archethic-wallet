@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // Project imports:
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 
 part 'token_informations.g.dart';
 
 /// Next field available : 14
-@HiveType(typeId: 9)
+@HiveType(typeId: HiveTypeIds.tokenInformations)
 class TokenInformations extends HiveObject {
   TokenInformations({
     this.address,

@@ -13,8 +13,9 @@ import 'package:hive/hive.dart';
 
 part 'account.g.dart';
 
+@HiveType(typeId: HiveTypeIds.account)
+
 /// Next field available : 14
-@HiveType(typeId: 1)
 class Account extends HiveObject with KeychainServiceMixin {
   Account({
     required this.name,

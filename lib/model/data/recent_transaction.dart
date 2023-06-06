@@ -1,3 +1,4 @@
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -8,7 +9,7 @@ part 'recent_transaction.g.dart';
 /// [TransactionInput] represents the inputs from the transaction.
 
 /// Next field available : 15
-@HiveType(typeId: 6)
+@HiveType(typeId: HiveTypeIds.recentTransactions)
 class RecentTransaction extends HiveObject {
   RecentTransaction({
     this.address,

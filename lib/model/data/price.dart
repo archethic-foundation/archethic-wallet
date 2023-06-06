@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 
 part 'price.g.dart';
 
 /// Next field available : 3
-@HiveType(typeId: 7)
+@HiveType(typeId: HiveTypeIds.price)
 class Price extends HiveObject {
   Price({
     required this.amount,

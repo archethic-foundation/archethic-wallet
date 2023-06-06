@@ -110,7 +110,7 @@ class _NetworkLinkProvider extends AutoDisposeProvider<String> {
   }
 }
 
-String _$networkNodesHash() => r'9e80abce0e872f3536ca1c81cd6d2710eda2ba87';
+String _$networkNodesHash() => r'1c30d01d831bd994e333c9940cf99aaa2addfa7a';
 typedef _NetworkNodesRef = AutoDisposeFutureProviderRef<List<Node>>;
 
 /// See also [_networkNodes].
