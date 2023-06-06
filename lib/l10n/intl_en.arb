@@ -618,6 +618,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "invalidSeedPaste": "Pasted seed is not valid.",
+  "@invalidSeedPaste": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "fingerprintSeedBackup": "Authenticate to backup seed.",
   "@fingerprintSeedBackup": {
     "type": "text",

@@ -103,6 +103,7 @@
 	"removeWalletReassurance": "Tant que vous avez sauvegardé votre phrase secrète, vous n'avez rien à craindre.",
 	"preferences": "Préférences",
 	"manage": "Gérer",
+	"invalidSeedPaste": "La phrase secrète que vous souhaitez coller n'est pas valide.",
 	"fingerprintSeedBackup": "S'authentifier pour sauvegarder la phrase secrète.",
 	"pinSecretPhraseBackup": "Entrer le code PIN pour sauvegarder la phrase secrète",
 	"systemDefault": "Système par défaut",
