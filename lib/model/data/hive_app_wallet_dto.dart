@@ -12,7 +12,7 @@ import 'package:hive/hive.dart';
 part 'hive_app_wallet_dto.g.dart';
 
 /// Next field available : 2
-@HiveType(typeId: 4)
+@HiveType(typeId: HiveTypeIds.appWallet)
 class HiveAppWalletDTO extends HiveObject {
   HiveAppWalletDTO({
     required this.appKeychain,

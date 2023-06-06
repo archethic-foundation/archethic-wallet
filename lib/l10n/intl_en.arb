@@ -333,6 +333,7 @@
   "keychainHeader": "Keychain",
   "newAccount": "New account",
   "addAccount": "Add account",
+  "addMessengerGroup": "Add a messaging group",
   "newAccountConfirmation": "Are you sure you want to create in your keychain \"%1\"?",
   "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1\"?",
   "primaryCurrency": "Primary currency",
