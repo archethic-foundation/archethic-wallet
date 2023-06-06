@@ -116,14 +116,11 @@ class PearlGreyTheme implements BaseTheme {
   @override
   Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
   @override
-  Color? backgroundRecentTxListCardTransferOutput =
-      Colors.redAccent[200]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTransferOutput = Colors.redAccent[200]!.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTokenCreation = Colors.blueAccent[100]!.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTransferInput =
-      Colors.green.withOpacity(0.3);
+  Color? backgroundRecentTxListCardTransferInput = Colors.green.withOpacity(0.3);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
   @override
@@ -146,15 +143,15 @@ class PearlGreyTheme implements BaseTheme {
   Color? bottomBarInactiveIcon = const Color(0xff000000);
 
   @override
-  String? background1Small = 'assets/themes/pearl_grey/v01-waves-1100.jpg';
+  String? background1Small = 'assets/themes/pearl_grey/v01-waves.jpg';
   @override
-  String? background2Small = 'assets/themes/pearl_grey/v02-waves-1100.jpg';
+  String? background2Small = 'assets/themes/pearl_grey/v02-waves.jpg';
   @override
-  String? background3Small = 'assets/themes/pearl_grey/v03-waves-1100.jpg';
+  String? background3Small = 'assets/themes/pearl_grey/v03-waves.jpg';
   @override
-  String? background4Small = 'assets/themes/pearl_grey/v04-waves-1100.jpg';
+  String? background4Small = 'assets/themes/pearl_grey/v04-waves.jpg';
   @override
-  String? background5Small = 'assets/themes/pearl_grey/v05-waves-1100.jpg';
+  String? background5Small = 'assets/themes/pearl_grey/v05-waves.jpg';
 
   // Animation Overlay
   @override
@@ -178,8 +175,7 @@ class PearlGreyTheme implements BaseTheme {
   @override
   Brightness? brightness = Brightness.light;
   @override
-  SystemUiOverlayStyle? statusBar =
-      SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle? statusBar = SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
 
   @override
   BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);

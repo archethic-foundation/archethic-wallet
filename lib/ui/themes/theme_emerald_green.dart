@@ -114,14 +114,11 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
-  Color? backgroundRecentTxListCardTransferOutput =
-      Colors.redAccent[400]!.withOpacity(0.3);
+  Color? backgroundRecentTxListCardTransferOutput = Colors.redAccent[400]!.withOpacity(0.3);
   @override
-  Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.3);
+  Color? backgroundRecentTxListCardTokenCreation = Colors.blueAccent[100]!.withOpacity(0.3);
   @override
-  Color? backgroundRecentTxListCardTransferInput =
-      Colors.greenAccent[100]!.withOpacity(0.3);
+  Color? backgroundRecentTxListCardTransferInput = Colors.greenAccent[100]!.withOpacity(0.3);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
   @override
@@ -144,15 +141,15 @@ class EmeraldGreenTheme implements BaseTheme {
   Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
 
   @override
-  String? background1Small = 'assets/themes/emerald_green/v01-waves-1100.jpg';
+  String? background1Small = 'assets/themes/emerald_green/v01-waves.jpg';
   @override
-  String? background2Small = 'assets/themes/emerald_green/v02-waves-1100.jpg';
+  String? background2Small = 'assets/themes/emerald_green/v02-waves.jpg';
   @override
-  String? background3Small = 'assets/themes/emerald_green/v03-waves-1100.jpg';
+  String? background3Small = 'assets/themes/emerald_green/v03-waves.jpg';
   @override
-  String? background4Small = 'assets/themes/emerald_green/v04-waves-1100.jpg';
+  String? background4Small = 'assets/themes/emerald_green/v04-waves.jpg';
   @override
-  String? background5Small = 'assets/themes/emerald_green/v05-waves-1100.jpg';
+  String? background5Small = 'assets/themes/emerald_green/v05-waves.jpg';
 
   // Animation Overlay
   @override
@@ -176,8 +173,7 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   Brightness? brightness = Brightness.dark;
   @override
-  SystemUiOverlayStyle? statusBar =
-      SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle? statusBar = SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
 
   @override
   BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);
