@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:hive/hive.dart';
 
 part 'account_balance.g.dart';
 
 /// Next field available : 7
-@HiveType(typeId: 5)
+@HiveType(typeId: HiveTypeIds.accountBalance)
 class AccountBalance extends HiveObject {
   AccountBalance({
     required this.nativeTokenValue,

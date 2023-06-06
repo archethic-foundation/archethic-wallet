@@ -324,6 +324,7 @@
 	"keychainHeader": "Porte-clés",
 	"newAccount": "Nouveau compte",
 	"addAccount": "Ajouter un compte",
+	"addMessengerGroup": "Créer une discussion",
 	"newAccountConfirmation": "Etes-vous sûr(e) de vouloir créer dans votre porte-clés \"%1\"?",
 	"addAccountConfirmation": "Etes-vous sûr(e) de vouloir ajouter dans votre porte-clés \"%1\"?",
 	"primaryCurrency": "Monnaie prioritaire",

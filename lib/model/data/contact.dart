@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 
 part 'contact.g.dart';
@@ -8,7 +9,7 @@ part 'contact.g.dart';
 enum ContactType { keychainService, externalContact }
 
 /// Next field available : 7
-@HiveType(typeId: 0)
+@HiveType(typeId: HiveTypeIds.contact)
 class Contact extends HiveObject {
   Contact({
     required this.name,

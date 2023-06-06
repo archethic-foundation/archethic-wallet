@@ -12,11 +12,26 @@ import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/messenger/talk.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+
+class HiveTypeIds {
+  static const contact = 0;
+  static const account = 1;
+  static const appKeychain = 3;
+  static const appWallet = 4;
+  static const accountBalance = 5;
+  static const recentTransactions = 6;
+  static const price = 7;
+  static const accountToken = 8;
+  static const tokenInformations = 9;
+  static const nftInfosOffChain = 11;
+  static const talk = 12;
+}
 
 class DBHelper {
   static const String contactsTable = 'contacts';
@@ -41,7 +56,8 @@ class DBHelper {
       ..registerAdapter(PriceAdapter())
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationsAdapter())
-      ..registerAdapter(NftInfosOffChainAdapter());
+      ..registerAdapter(NftInfosOffChainAdapter())
+      ..registerAdapter(TalkAdapter());
   }
 
   // Contacts
