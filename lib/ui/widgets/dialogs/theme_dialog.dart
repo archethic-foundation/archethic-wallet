@@ -67,8 +67,7 @@ extension ThemePickerItemExt on PickerItem {
     ThemeOptions themeOption,
   ) {
     final themeSetting = ThemeSetting(themeOption);
-    // Flat theme
-    if (themeOption.toString().toLowerCase().endsWith('flat')) {
+    if (themeOption.isFlat) {
       return PickerItem(
         themeSetting.getDisplayName(context),
         null,

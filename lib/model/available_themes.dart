@@ -24,25 +24,28 @@ import 'package:aewallet/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 enum ThemeOptions {
-  byzantineViolet,
-  byzantineVioletFlat,
-  dark,
-  darkFlat,
-  emeraldGreen,
-  emeraldGreenFlat,
-  fireRed,
-  fireRedFlat,
-  flat,
-  honeyOrange,
-  honeyOrangeFlat,
-  navyBlue,
-  navyBlueFlat,
-  pearlGrey,
-  pearlGreyFlat,
-  sapphireBlue,
-  sapphireBlueFlat,
-  seaGreen,
-  seaGreenFlat,
+  byzantineViolet(false),
+  byzantineVioletFlat(true),
+  dark(false),
+  darkFlat(true),
+  emeraldGreen(false),
+  emeraldGreenFlat(true),
+  fireRed(false),
+  fireRedFlat(true),
+  flat(true),
+  honeyOrange(false),
+  honeyOrangeFlat(true),
+  navyBlue(false),
+  navyBlueFlat(true),
+  pearlGrey(false),
+  pearlGreyFlat(true),
+  sapphireBlue(false),
+  sapphireBlueFlat(true),
+  seaGreen(false),
+  seaGreenFlat(true);
+
+  const ThemeOptions(this.isFlat);
+  final bool isFlat;
 }
 
 /// Represent notification on/off setting
