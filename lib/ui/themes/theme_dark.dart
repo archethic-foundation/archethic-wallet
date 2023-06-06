@@ -32,8 +32,7 @@ class DarkTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetIconBackground =
-      const Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDataWidgetIconBackground = const Color(0xFFFFFFFF).withOpacity(0.1);
 
   // Menu
   @override
@@ -115,14 +114,11 @@ class DarkTheme implements BaseTheme {
   @override
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
-  Color? backgroundRecentTxListCardTransferOutput =
-      Colors.white.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTransferOutput = Colors.white.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTokenCreation = Colors.blueAccent[100]!.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTransferInput =
-      Colors.greenAccent[100]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTransferInput = Colors.greenAccent[100]!.withOpacity(0.2);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
   @override
@@ -145,15 +141,15 @@ class DarkTheme implements BaseTheme {
   Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
 
   @override
-  String? background1Small = 'assets/themes/dark/v01-waves-1100.jpg';
+  String? background1Small = 'assets/themes/dark/v01-waves.jpg';
   @override
-  String? background2Small = 'assets/themes/dark/v02-waves-1100.jpg';
+  String? background2Small = 'assets/themes/dark/v02-waves.jpg';
   @override
-  String? background3Small = 'assets/themes/dark/v03-waves-1100.jpg';
+  String? background3Small = 'assets/themes/dark/v03-waves.jpg';
   @override
-  String? background4Small = 'assets/themes/dark/v04-waves-1100.jpg';
+  String? background4Small = 'assets/themes/dark/v04-waves.jpg';
   @override
-  String? background5Small = 'assets/themes/dark/v05-waves-1100.jpg';
+  String? background5Small = 'assets/themes/dark/v05-waves.jpg';
 
   // Animation Overlay
   @override
@@ -177,8 +173,7 @@ class DarkTheme implements BaseTheme {
   @override
   Brightness? brightness = Brightness.dark;
   @override
-  SystemUiOverlayStyle? statusBar =
-      SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle? statusBar = SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
 
   @override
   BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);

@@ -23,17 +23,13 @@ class FlatTheme implements BaseTheme {
   Color? middleButtonLabel = const Color(0xFFFFFFFF);
   @override
   Gradient? gradientMainButton = const LinearGradient(
-    colors: <Color>[
-      Color.fromARGB(255, 43, 43, 43),
-      Color.fromARGB(255, 43, 43, 43)
-    ],
+    colors: <Color>[Color.fromARGB(255, 43, 43, 43), Color.fromARGB(255, 43, 43, 43)],
     transform: GradientRotation(pi / 9),
   );
 
   // IconData Widget
   @override
-  Color? iconDataWidgetIconBackground =
-      const Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDataWidgetIconBackground = const Color(0xFFFFFFFF).withOpacity(0.1);
 
   // Menu
   @override
@@ -47,8 +43,7 @@ class FlatTheme implements BaseTheme {
   @override
   Color? pickerItemIconEnabled = const Color.fromARGB(255, 88, 88, 88);
   @override
-  Color? pickerItemIconDisabled =
-      const Color.fromARGB(255, 88, 88, 88).withOpacity(0.6);
+  Color? pickerItemIconDisabled = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.6);
 
   // Icons TextField
   @override
@@ -116,14 +111,11 @@ class FlatTheme implements BaseTheme {
   @override
   Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
   @override
-  Color? backgroundRecentTxListCardTransferOutput =
-      Colors.redAccent[200]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTransferOutput = Colors.redAccent[200]!.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTokenCreation =
-      Colors.blueAccent[100]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTokenCreation = Colors.blueAccent[100]!.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTransferInput =
-      Colors.green.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTransferInput = Colors.green.withOpacity(0.2);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
   @override
@@ -146,15 +138,15 @@ class FlatTheme implements BaseTheme {
   Color? bottomBarInactiveIcon = const Color(0xFF000000);
 
   @override
-  String? background1Small = 'assets/themes/flat/bk-white.jpg';
+  String? background1Small = 'assets/themes/flat/bk-flat.jpg';
   @override
-  String? background2Small = 'assets/themes/flat/bk-white.jpg';
+  String? background2Small = 'assets/themes/flat/bk-flat.jpg';
   @override
-  String? background3Small = 'assets/themes/flat/bk-white.jpg';
+  String? background3Small = 'assets/themes/flat/bk-flat.jpg';
   @override
-  String? background4Small = 'assets/themes/flat/bk-white.jpg';
+  String? background4Small = 'assets/themes/flat/bk-flat.jpg';
   @override
-  String? background5Small = 'assets/themes/flat/bk-white.jpg';
+  String? background5Small = 'assets/themes/flat/bk-flat.jpg';
 
   // Animation Overlay
   @override
@@ -178,8 +170,7 @@ class FlatTheme implements BaseTheme {
   @override
   Brightness? brightness = Brightness.light;
   @override
-  SystemUiOverlayStyle? statusBar =
-      SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle? statusBar = SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
 
   @override
   BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);
@@ -195,10 +186,7 @@ class FlatTheme implements BaseTheme {
 
   @override
   Gradient? gradient = const LinearGradient(
-    colors: <Color>[
-      Color.fromARGB(255, 88, 88, 88),
-      Color.fromARGB(255, 88, 88, 88)
-    ],
+    colors: <Color>[Color.fromARGB(255, 88, 88, 88), Color.fromARGB(255, 88, 88, 88)],
     transform: GradientRotation(pi / 9),
   );
 

@@ -47,12 +47,9 @@ class ThemeDialog {
               pickerItems: pickerItemsList,
               selectedIndex: curThemeSetting.getIndex(),
               onSelected: (value) async {
-                final selectedThemeSettings =
-                    ThemeSetting(value.value as ThemeOptions);
+                final selectedThemeSettings = ThemeSetting(value.value as ThemeOptions);
                 if (curThemeSetting != selectedThemeSettings) {
-                  ref
-                      .read(SettingsProviders.settings.notifier)
-                      .selectTheme(selectedThemeSettings.theme);
+                  ref.read(SettingsProviders.settings.notifier).selectTheme(selectedThemeSettings.theme);
                 }
                 Navigator.pop(context, selectedThemeSettings);
               },
@@ -70,16 +67,8 @@ extension ThemePickerItemExt on PickerItem {
     ThemeOptions themeOption,
   ) {
     final themeSetting = ThemeSetting(themeOption);
-    if (themeOption == ThemeOptions.flat ||
-        themeOption == ThemeOptions.byzantineVioletFlat ||
-        themeOption == ThemeOptions.darkFlat ||
-        themeOption == ThemeOptions.emeraldGreenFlat ||
-        themeOption == ThemeOptions.honeyOrangeFlat ||
-        themeOption == ThemeOptions.navyBlueFlat ||
-        themeOption == ThemeOptions.pearlGreyFlat ||
-        themeOption == ThemeOptions.fireRedFlat ||
-        themeOption == ThemeOptions.sapphireBlueFlat ||
-        themeOption == ThemeOptions.seaGreenFlat) {
+    // Flat theme
+    if (themeOption.toString().toLowerCase().endsWith('flat')) {
       return PickerItem(
         themeSetting.getDisplayName(context),
         null,
@@ -106,7 +95,7 @@ extension ThemePickerItemExt on PickerItem {
       true,
       decorationImageItem: DecorationImage(
         image: AssetImage(
-          '${themeSetting.getTheme().assetsFolder}v0${Random().nextInt(4) + 1}-waves-1100.jpg',
+          '${themeSetting.getTheme().assetsFolder}v0${Random().nextInt(4) + 1}-waves.jpg',
         ),
         opacity: 0.5,
         fit: BoxFit.fitWidth,
