@@ -321,7 +321,6 @@
   "keychainHeader": "Keychain",
   "newAccount": "New account",
   "addAccount": "Add account",
-  "addMessengerGroup": "Add a messaging group",
   "newAccountConfirmation": "Are you sure you want to create in your keychain \"%1\"?",
   "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1\"?",
   "primaryCurrency": "Primary currency",
@@ -510,5 +509,12 @@
   "nftChooseSource": "Please indicate the source:",
   "serviceName": "Name :",
   "signTransactionListTransactionsHeader": "Transaction %1",
-  "messengerHeader": "Messenger"
+  "messengerHeader": "Messenger",
+  "addMessengerGroup": "Create a messaging group",
+  "addMessengerTalk": "Create a talk group",
+  "addMessengerGroupNameLabel": "Group name ...",
+  "introNewMessengerTalk": "Choose a group name, and select people to invite",
+  "messengerTalkAccessDescription": "Add or remove public keys that can access this talk group.",
+  "messengerTalkAddAccess": "Add access",
+  "addMessengerTalkFailure": "Creation failed"
 }
