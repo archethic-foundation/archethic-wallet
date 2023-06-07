@@ -6,8 +6,8 @@ import 'package:aewallet/infrastructure/datasources/talk_local_datasource.dart';
 import 'package:aewallet/infrastructure/datasources/talk_remote_datasource.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/messenger/talk.dart';
+import 'package:aewallet/model/public_key.dart';
 
 class MessengerRepository implements MessengerRepositoryInterface {
   final _localDatasource = HiveTalkDatasource.getInstance();
@@ -28,8 +28,8 @@ class MessengerRepository implements MessengerRepositoryInterface {
 
   @override
   Future<Result<Talk, Failure>> createTalk({
-    required List<Contact> members,
-    required List<Contact> admins,
+    required List<PublicKey> members,
+    required List<PublicKey> admins,
     required Account creator,
     required LoggedInSession session,
     required NetworksSetting networkSettings,

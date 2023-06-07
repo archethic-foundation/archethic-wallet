@@ -1,11 +1,10 @@
-import 'dart:developer';
-
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
+import 'package:aewallet/ui/views/main/messenger_tab/components/create_talk_sheet.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/components/talk_list_item.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,29 +65,11 @@ class MessengerBody extends ConsumerWidget {
                     size: 14,
                   ),
                   onPressed: () async {
-                    final contacts =
-                        await ref.read(ContactProviders.fetchContacts().future);
-
-                    final creationResult = await MessengerProviders.createTalk(
+                    Sheets.showAppHeightNineSheet(
+                      context: context,
                       ref: ref,
-                      groupName: 'Discussion 001',
-                      admins: contacts,
-                      members: contacts,
+                      widget: const CreateTalkSheet(),
                     );
-
-                    log(
-                      creationResult.map(
-                        success: (success) =>
-                            'MessengerTalk created ${success.address}',
-                        failure: (failure) =>
-                            'MessengerTalk creation failed $failure',
-                      ),
-                    );
-                    // Sheets.showAppHeightNineSheet(
-                    //   context: context,
-                    //   ref: ref,
-                    //   widget: CreateTalkSheet(),
-                    // );
                   },
                 ),
               ],
