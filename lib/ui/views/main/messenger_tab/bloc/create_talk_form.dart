@@ -3,15 +3,14 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/model/messenger/talk.dart';
-import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
+import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/components/add_public_key_textfield_pk.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'create_talk.freezed.dart';
+part 'create_talk_form.freezed.dart';
 
 final createTalkFormProvider =
     NotifierProvider.autoDispose<CreateTalkFormNotifier, CreateTalkFormState>(
@@ -19,24 +18,6 @@ final createTalkFormProvider =
     return CreateTalkFormNotifier();
   },
 );
-
-@freezed
-class AccessRecipient with _$AccessRecipient {
-  const AccessRecipient._();
-  const factory AccessRecipient.publicKey({
-    required PublicKey publicKey,
-  }) = _PropertyAccessPublicKey;
-  const factory AccessRecipient.contact({
-    required Contact contact,
-  }) = _PropertyAccessContact;
-
-  PublicKey? get publicKey => when(
-        publicKey: (publicKey) => publicKey,
-        contact: (contact) => PublicKey(contact.publicKey),
-      );
-
-  bool get isPublicKeyValid => (publicKey ?? const PublicKey('')).isValid;
-}
 
 @freezed
 class CreateTalkFormState with _$CreateTalkFormState {
@@ -117,14 +98,8 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
             .watch(MessengerProviders.messengerRepository)
             .createTalk(
               networkSettings: ref.watch(SettingsProviders.settings).network,
-              admins: state.admins
-                  .map((e) => e.publicKey)
-                  .whereType<PublicKey>()
-                  .toList(),
-              members: state.members
-                  .map((e) => e.publicKey)
-                  .whereType<PublicKey>()
-                  .toList(),
+              admins: state.admins,
+              members: state.members,
               creator: selectedAccount,
               session: session,
               groupName: state.name,

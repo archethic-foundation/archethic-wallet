@@ -1,4 +1,4 @@
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/create_talk.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 extension AccessRecipientFormatters on AccessRecipient {
