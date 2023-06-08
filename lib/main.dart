@@ -25,6 +25,7 @@ import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/messenger_talk/messenger_talk_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
@@ -218,6 +219,10 @@ class App extends ConsumerWidget {
                 );
               },
               settings: settings,
+            ),
+            '/messenger_talk': MaterialPageRoute(
+              builder: (_) =>
+                  MessengerTalkPage(talkId: settings.arguments as String),
             ),
           };
 

@@ -38,7 +38,8 @@ class MessengerRepository implements MessengerRepositoryInterface {
     return Result.guard(() async {
       final localDatasource = await _localDatasource;
 
-      final seed = session.wallet.seed;
+      final seed = session
+          .wallet.seed; // TODO(reddwarf03): verifier que c'est la bonne seed.
       final newTalk = await _remoteDatasource.createTalk(
         adminAddress: creator.lastAddress!,
         admins: admins,
