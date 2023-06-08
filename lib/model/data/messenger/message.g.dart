@@ -17,10 +17,10 @@ class TalkMessageAdapter extends TypeAdapter<_$_TalkMessage> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_TalkMessage(
-      sender: fields[0] as AccessRecipient,
-      message: fields[1] as String,
+      senderPublicKey: fields[0] as String,
+      content: fields[1] as String,
       date: fields[2] as DateTime,
-      id: fields[3] as String,
+      address: fields[3] as String,
     );
   }
 
@@ -29,13 +29,13 @@ class TalkMessageAdapter extends TypeAdapter<_$_TalkMessage> {
     writer
       ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.sender)
+      ..write(obj.senderPublicKey)
       ..writeByte(1)
-      ..write(obj.message)
+      ..write(obj.content)
       ..writeByte(2)
       ..write(obj.date)
       ..writeByte(3)
-      ..write(obj.id);
+      ..write(obj.address);
   }
 
   @override
