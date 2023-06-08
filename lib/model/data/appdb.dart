@@ -34,6 +34,7 @@ class HiveTypeIds {
   static const talk = 12;
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
+  static const talkMessage = 15;
 }
 
 class DBHelper {

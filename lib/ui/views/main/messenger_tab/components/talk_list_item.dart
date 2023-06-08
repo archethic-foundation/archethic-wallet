@@ -13,11 +13,13 @@ abstract class TalkListItem extends ConsumerWidget {
   const factory TalkListItem.autoLoad({
     Key? key,
     required String talkId,
+    required VoidCallback onTap,
   }) = _AutoloadTalkListItem;
 
   const factory TalkListItem.loaded({
     Key? key,
     required Talk talk,
+    required VoidCallback onTap,
   }) = _LoadedTalkListItem;
 
   const factory TalkListItem.loading({
@@ -30,9 +32,11 @@ class _AutoloadTalkListItem extends TalkListItem {
   const _AutoloadTalkListItem({
     super.key,
     required this.talkId,
+    required this.onTap,
   });
 
   final String talkId;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +44,7 @@ class _AutoloadTalkListItem extends TalkListItem {
     return asyncTalk.map(
       error: (_) => const TalkListItem.loading(),
       loading: (_) => const TalkListItem.loading(),
-      data: (talk) => TalkListItem.loaded(talk: talk.value),
+      data: (talk) => TalkListItem.loaded(onTap: onTap, talk: talk.value),
     );
   }
 }
@@ -84,9 +88,11 @@ class _LoadedTalkListItem extends TalkListItem {
   const _LoadedTalkListItem({
     super.key,
     required this.talk,
+    required this.onTap,
   });
 
   final Talk talk;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -100,27 +106,30 @@ class _LoadedTalkListItem extends TalkListItem {
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0,
+      clipBehavior: Clip.antiAlias,
       color: theme.backgroundAccountsListCardSelected,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        color: theme.backgroundAccountsListCard,
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: AutoSizeText(
-                talk.name,
-                style: theme.textStyleSize12W600Primary,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: AutoSizeText(
+                  talk.name,
+                  style: theme.textStyleSize12W600Primary,
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(
-                '${talk.members.length} members',
-                style: theme.textStyleSize10W100Primary,
+              Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(
+                  '${talk.members.length} members',
+                  style: theme.textStyleSize10W100Primary,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
