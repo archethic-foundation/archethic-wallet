@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$talkHash() => r'c5b0ad8814991119f1bf41a9f869f2e1499eb956';
+String _$talkHash() => r'5fb0711dfe5996d7be9a5d302210739e54b1ff85';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -107,18 +107,119 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   }
 }
 
-String _$talkIdsHash() => r'4a2770368de09c801af1334e382bfcf2c5f8a801';
+String _$talkAddressesHash() => r'dce9ddf2e6806d6fd73d37af16e01ebc064a4453';
 
-/// See also [_talkIds].
-@ProviderFor(_talkIds)
-final _talkIdsProvider = AutoDisposeFutureProvider<List<String>>.internal(
-  _talkIds,
-  name: r'_talkIdsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$talkIdsHash,
+/// See also [_talkAddresses].
+@ProviderFor(_talkAddresses)
+final _talkAddressesProvider = AutoDisposeFutureProvider<List<String>>.internal(
+  _talkAddresses,
+  name: r'_talkAddressesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$talkAddressesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _TalkIdsRef = AutoDisposeFutureProviderRef<List<String>>;
+typedef _TalkAddressesRef = AutoDisposeFutureProviderRef<List<String>>;
+String _$talkMessagesNotifierHash() =>
+    r'c427fe696efada77681db27d97f1a7868cdaeaf5';
+
+abstract class _$TalkMessagesNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<List<TalkMessage>> {
+  late final String talkAddress;
+
+  FutureOr<List<TalkMessage>> build(
+    String talkAddress,
+  );
+}
+
+/// See also [_TalkMessagesNotifier].
+@ProviderFor(_TalkMessagesNotifier)
+const _talkMessagesNotifierProvider = _TalkMessagesNotifierFamily();
+
+/// See also [_TalkMessagesNotifier].
+class _TalkMessagesNotifierFamily
+    extends Family<AsyncValue<List<TalkMessage>>> {
+  /// See also [_TalkMessagesNotifier].
+  const _TalkMessagesNotifierFamily();
+
+  /// See also [_TalkMessagesNotifier].
+  _TalkMessagesNotifierProvider call(
+    String talkAddress,
+  ) {
+    return _TalkMessagesNotifierProvider(
+      talkAddress,
+    );
+  }
+
+  @override
+  _TalkMessagesNotifierProvider getProviderOverride(
+    covariant _TalkMessagesNotifierProvider provider,
+  ) {
+    return call(
+      provider.talkAddress,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_talkMessagesNotifierProvider';
+}
+
+/// See also [_TalkMessagesNotifier].
+class _TalkMessagesNotifierProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<_TalkMessagesNotifier,
+        List<TalkMessage>> {
+  /// See also [_TalkMessagesNotifier].
+  _TalkMessagesNotifierProvider(
+    this.talkAddress,
+  ) : super.internal(
+          () => _TalkMessagesNotifier()..talkAddress = talkAddress,
+          from: _talkMessagesNotifierProvider,
+          name: r'_talkMessagesNotifierProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$talkMessagesNotifierHash,
+          dependencies: _TalkMessagesNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              _TalkMessagesNotifierFamily._allTransitiveDependencies,
+        );
+
+  final String talkAddress;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _TalkMessagesNotifierProvider &&
+        other.talkAddress == talkAddress;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, talkAddress.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  FutureOr<List<TalkMessage>> runNotifierBuild(
+    covariant _TalkMessagesNotifier notifier,
+  ) {
+    return notifier.build(
+      talkAddress,
+    );
+  }
+}
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -8,11 +8,12 @@ class TalkRemoteDatasource with MessengerMixin {
     required List<AccessRecipient> members,
     required String groupName,
     required List<AccessRecipient> admins,
-    required String keychainSeed,
     required String adminAddress,
     required String serviceName,
+    required Keychain keychain,
   }) async {
     final transaction = await createNewSC(
+      keychain: keychain,
       endpoint: endpoint,
       usersPubKey: members
           .map((e) => e.publicKey?.publicKey)
@@ -23,7 +24,6 @@ class TalkRemoteDatasource with MessengerMixin {
           .map((e) => e.publicKey?.publicKey)
           .whereType<String>()
           .toList(),
-      keychainSeed: keychainSeed,
       adminAddress: adminAddress,
       serviceName: serviceName,
     );

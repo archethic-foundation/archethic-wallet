@@ -17,13 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TalkMessage {
   @HiveField(0)
-  AccessRecipient get sender => throw _privateConstructorUsedError;
+  String get senderPublicKey => throw _privateConstructorUsedError;
   @HiveField(1)
-  String get message => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
   @HiveField(2)
   DateTime get date => throw _privateConstructorUsedError;
   @HiveField(3)
-  String get id => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TalkMessageCopyWith<TalkMessage> get copyWith =>
@@ -37,12 +37,10 @@ abstract class $TalkMessageCopyWith<$Res> {
       _$TalkMessageCopyWithImpl<$Res, TalkMessage>;
   @useResult
   $Res call(
-      {@HiveField(0) AccessRecipient sender,
-      @HiveField(1) String message,
+      {@HiveField(0) String senderPublicKey,
+      @HiveField(1) String content,
       @HiveField(2) DateTime date,
-      @HiveField(3) String id});
-
-  $AccessRecipientCopyWith<$Res> get sender;
+      @HiveField(3) String address});
 }
 
 /// @nodoc
@@ -58,37 +56,29 @@ class _$TalkMessageCopyWithImpl<$Res, $Val extends TalkMessage>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sender = null,
-    Object? message = null,
+    Object? senderPublicKey = null,
+    Object? content = null,
     Object? date = null,
-    Object? id = null,
+    Object? address = null,
   }) {
     return _then(_value.copyWith(
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as AccessRecipient,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      senderPublicKey: null == senderPublicKey
+          ? _value.senderPublicKey
+          : senderPublicKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
               as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccessRecipientCopyWith<$Res> get sender {
-    return $AccessRecipientCopyWith<$Res>(_value.sender, (value) {
-      return _then(_value.copyWith(sender: value) as $Val);
-    });
   }
 }
 
@@ -101,13 +91,10 @@ abstract class _$$_TalkMessageCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@HiveField(0) AccessRecipient sender,
-      @HiveField(1) String message,
+      {@HiveField(0) String senderPublicKey,
+      @HiveField(1) String content,
       @HiveField(2) DateTime date,
-      @HiveField(3) String id});
-
-  @override
-  $AccessRecipientCopyWith<$Res> get sender;
+      @HiveField(3) String address});
 }
 
 /// @nodoc
@@ -121,27 +108,27 @@ class __$$_TalkMessageCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sender = null,
-    Object? message = null,
+    Object? senderPublicKey = null,
+    Object? content = null,
     Object? date = null,
-    Object? id = null,
+    Object? address = null,
   }) {
     return _then(_$_TalkMessage(
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as AccessRecipient,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      senderPublicKey: null == senderPublicKey
+          ? _value.senderPublicKey
+          : senderPublicKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
               as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -152,28 +139,28 @@ class __$$_TalkMessageCopyWithImpl<$Res>
 @HiveType(typeId: HiveTypeIds.talkMessage)
 class _$_TalkMessage extends _TalkMessage {
   const _$_TalkMessage(
-      {@HiveField(0) required this.sender,
-      @HiveField(1) required this.message,
+      {@HiveField(0) required this.senderPublicKey,
+      @HiveField(1) required this.content,
       @HiveField(2) required this.date,
-      @HiveField(3) required this.id})
+      @HiveField(3) required this.address})
       : super._();
 
   @override
   @HiveField(0)
-  final AccessRecipient sender;
+  final String senderPublicKey;
   @override
   @HiveField(1)
-  final String message;
+  final String content;
   @override
   @HiveField(2)
   final DateTime date;
   @override
   @HiveField(3)
-  final String id;
+  final String address;
 
   @override
   String toString() {
-    return 'TalkMessage(sender: $sender, message: $message, date: $date, id: $id)';
+    return 'TalkMessage(senderPublicKey: $senderPublicKey, content: $content, date: $date, address: $address)';
   }
 
   @override
@@ -181,14 +168,16 @@ class _$_TalkMessage extends _TalkMessage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TalkMessage &&
-            (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.message, message) || other.message == message) &&
+            (identical(other.senderPublicKey, senderPublicKey) ||
+                other.senderPublicKey == senderPublicKey) &&
+            (identical(other.content, content) || other.content == content) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.address, address) || other.address == address));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sender, message, date, id);
+  int get hashCode =>
+      Object.hash(runtimeType, senderPublicKey, content, date, address);
 
   @JsonKey(ignore: true)
   @override
@@ -199,24 +188,24 @@ class _$_TalkMessage extends _TalkMessage {
 
 abstract class _TalkMessage extends TalkMessage {
   const factory _TalkMessage(
-      {@HiveField(0) required final AccessRecipient sender,
-      @HiveField(1) required final String message,
+      {@HiveField(0) required final String senderPublicKey,
+      @HiveField(1) required final String content,
       @HiveField(2) required final DateTime date,
-      @HiveField(3) required final String id}) = _$_TalkMessage;
+      @HiveField(3) required final String address}) = _$_TalkMessage;
   const _TalkMessage._() : super._();
 
   @override
   @HiveField(0)
-  AccessRecipient get sender;
+  String get senderPublicKey;
   @override
   @HiveField(1)
-  String get message;
+  String get content;
   @override
   @HiveField(2)
   DateTime get date;
   @override
   @HiveField(3)
-  String get id;
+  String get address;
   @override
   @JsonKey(ignore: true)
   _$$_TalkMessageCopyWith<_$_TalkMessage> get copyWith =>
