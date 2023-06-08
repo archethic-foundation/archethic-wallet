@@ -2,17 +2,18 @@
 import 'dart:developer';
 
 import 'package:aewallet/model/available_currency.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
+import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/model/messenger/talk.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
@@ -31,6 +32,8 @@ class HiveTypeIds {
   static const tokenInformations = 9;
   static const nftInfosOffChain = 11;
   static const talk = 12;
+  static const pubKeyAccessRecipient = 13;
+  static const contactAccessRecipient = 14;
 }
 
 class DBHelper {
@@ -57,7 +60,9 @@ class DBHelper {
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationsAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
-      ..registerAdapter(TalkAdapter());
+      ..registerAdapter(TalkAdapter())
+      ..registerAdapter(PubKeyAccessRecipientAdapter())
+      ..registerAdapter(ContactAccessRecipientAdapter());
   }
 
   // Contacts

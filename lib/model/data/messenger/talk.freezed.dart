@@ -20,6 +20,10 @@ mixin _$Talk {
   String get address => throw _privateConstructorUsedError;
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
+  List<AccessRecipient> get members => throw _privateConstructorUsedError;
+  @HiveField(3)
+  List<AccessRecipient> get admins => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TalkCopyWith<Talk> get copyWith => throw _privateConstructorUsedError;
@@ -30,7 +34,11 @@ abstract class $TalkCopyWith<$Res> {
   factory $TalkCopyWith(Talk value, $Res Function(Talk) then) =
       _$TalkCopyWithImpl<$Res, Talk>;
   @useResult
-  $Res call({@HiveField(0) String address, @HiveField(1) String name});
+  $Res call(
+      {@HiveField(0) String address,
+      @HiveField(1) String name,
+      @HiveField(2) List<AccessRecipient> members,
+      @HiveField(3) List<AccessRecipient> admins});
 }
 
 /// @nodoc
@@ -48,6 +56,8 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
   $Res call({
     Object? address = null,
     Object? name = null,
+    Object? members = null,
+    Object? admins = null,
   }) {
     return _then(_value.copyWith(
       address: null == address
@@ -58,6 +68,14 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      members: null == members
+          ? _value.members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<AccessRecipient>,
+      admins: null == admins
+          ? _value.admins
+          : admins // ignore: cast_nullable_to_non_nullable
+              as List<AccessRecipient>,
     ) as $Val);
   }
 }
@@ -68,7 +86,11 @@ abstract class _$$_TalkCopyWith<$Res> implements $TalkCopyWith<$Res> {
       __$$_TalkCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) String address, @HiveField(1) String name});
+  $Res call(
+      {@HiveField(0) String address,
+      @HiveField(1) String name,
+      @HiveField(2) List<AccessRecipient> members,
+      @HiveField(3) List<AccessRecipient> admins});
 }
 
 /// @nodoc
@@ -82,6 +104,8 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
   $Res call({
     Object? address = null,
     Object? name = null,
+    Object? members = null,
+    Object? admins = null,
   }) {
     return _then(_$_Talk(
       address: null == address
@@ -92,6 +116,14 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      members: null == members
+          ? _value._members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<AccessRecipient>,
+      admins: null == admins
+          ? _value._admins
+          : admins // ignore: cast_nullable_to_non_nullable
+              as List<AccessRecipient>,
     ));
   }
 }
@@ -101,8 +133,13 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
 @HiveType(typeId: HiveTypeIds.talk)
 class _$_Talk extends _Talk {
   const _$_Talk(
-      {@HiveField(0) required this.address, @HiveField(1) required this.name})
-      : super._();
+      {@HiveField(0) required this.address,
+      @HiveField(1) required this.name,
+      @HiveField(2) required final List<AccessRecipient> members,
+      @HiveField(3) required final List<AccessRecipient> admins})
+      : _members = members,
+        _admins = admins,
+        super._();
 
   @override
   @HiveField(0)
@@ -110,10 +147,27 @@ class _$_Talk extends _Talk {
   @override
   @HiveField(1)
   final String name;
+  final List<AccessRecipient> _members;
+  @override
+  @HiveField(2)
+  List<AccessRecipient> get members {
+    if (_members is EqualUnmodifiableListView) return _members;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_members);
+  }
+
+  final List<AccessRecipient> _admins;
+  @override
+  @HiveField(3)
+  List<AccessRecipient> get admins {
+    if (_admins is EqualUnmodifiableListView) return _admins;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_admins);
+  }
 
   @override
   String toString() {
-    return 'Talk(address: $address, name: $name)';
+    return 'Talk(address: $address, name: $name, members: $members, admins: $admins)';
   }
 
   @override
@@ -122,11 +176,18 @@ class _$_Talk extends _Talk {
         (other.runtimeType == runtimeType &&
             other is _$_Talk &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._members, _members) &&
+            const DeepCollectionEquality().equals(other._admins, _admins));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, address, name);
+  int get hashCode => Object.hash(
+      runtimeType,
+      address,
+      name,
+      const DeepCollectionEquality().hash(_members),
+      const DeepCollectionEquality().hash(_admins));
 
   @JsonKey(ignore: true)
   @override
@@ -138,7 +199,9 @@ class _$_Talk extends _Talk {
 abstract class _Talk extends Talk {
   const factory _Talk(
       {@HiveField(0) required final String address,
-      @HiveField(1) required final String name}) = _$_Talk;
+      @HiveField(1) required final String name,
+      @HiveField(2) required final List<AccessRecipient> members,
+      @HiveField(3) required final List<AccessRecipient> admins}) = _$_Talk;
   const _Talk._() : super._();
 
   @override
@@ -147,6 +210,12 @@ abstract class _Talk extends Talk {
   @override
   @HiveField(1)
   String get name;
+  @override
+  @HiveField(2)
+  List<AccessRecipient> get members;
+  @override
+  @HiveField(3)
+  List<AccessRecipient> get admins;
   @override
   @JsonKey(ignore: true)
   _$$_TalkCopyWith<_$_Talk> get copyWith => throw _privateConstructorUsedError;

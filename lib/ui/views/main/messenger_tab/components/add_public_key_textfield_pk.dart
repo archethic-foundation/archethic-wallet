@@ -3,13 +3,13 @@
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/create_talk.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
@@ -18,10 +18,10 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:iconsax/iconsax.dart';
 
 part 'add_public_key_textfield_pk.freezed.dart';
@@ -118,9 +118,11 @@ class _AddPublicKeyTextFieldPkState
 
       _setAccessRecipient(AddPublicKeyTextFieldValue.contact(contact: contact));
     } catch (_) {
-      _setAccessRecipient(AddPublicKeyTextFieldValue.publicKey(
-        publicKey: publicKey,
-      ));
+      _setAccessRecipient(
+        AddPublicKeyTextFieldValue.publicKey(
+          publicKey: publicKey,
+        ),
+      );
     }
   }
 
