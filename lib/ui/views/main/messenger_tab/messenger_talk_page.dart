@@ -1,14 +1,19 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
+import 'package:aewallet/util/date_util.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class MessengerTalkPage extends ConsumerWidget {
   const MessengerTalkPage({
@@ -23,7 +28,8 @@ class MessengerTalkPage extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final talk = ref.watch(MessengerProviders.talk(talkAddress));
-
+    final localizations = AppLocalizations.of(context)!;
+    final preferences = ref.watch(SettingsProviders.settings);
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -45,7 +51,29 @@ class MessengerTalkPage extends ConsumerWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: talk.maybeMap(
-            data: (data) => Text(data.value.name),
+            data: (data) {
+              return InkWell(
+                onTap: () {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: data.value.address.toUpperCase(),
+                    ),
+                  );
+                  UIUtil.showSnackbar(
+                    localizations.addressCopied,
+                    context,
+                    ref,
+                    theme.text!,
+                    theme.snackBarShadow!,
+                  );
+                },
+                child: Text(data.value.name),
+              );
+            },
             orElse: () => const Text('           ')
                 .animate(
                   onComplete: (controller) =>
@@ -227,8 +255,6 @@ class _MessageItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = ref.watch(SettingsProviders.settings).language.getLocale();
-    final dateFormatter = DateFormat.Hm(locale);
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Card(
@@ -251,7 +277,7 @@ class _MessageItem extends ConsumerWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                dateFormatter.format(message.date),
+                message.date.format(context),
                 style: theme.textStyleSize10W100Primary,
               ),
             ),
