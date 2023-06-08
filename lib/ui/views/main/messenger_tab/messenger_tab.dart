@@ -45,10 +45,17 @@ class MessengerBody extends ConsumerWidget {
                 error: (_) => Container(),
                 data: (talkIds) => ListView.builder(
                   itemCount: talkIds.value.length,
-                  itemBuilder: (context, index) => TalkListItem.autoLoad(
-                    key: Key(talkIds.value[index]),
-                    talkId: talkIds.value[index],
-                  ),
+                  itemBuilder: (context, index) {
+                    final talkId = talkIds.value[index];
+                    return TalkListItem.autoLoad(
+                      key: Key(talkId),
+                      onTap: () => Navigator.of(context).pushNamed(
+                        '/messenger_talk',
+                        arguments: talkId,
+                      ),
+                      talkId: talkId,
+                    );
+                  },
                 ),
               ),
             ),
