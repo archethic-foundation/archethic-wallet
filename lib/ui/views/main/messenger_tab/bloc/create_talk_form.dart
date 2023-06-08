@@ -1,18 +1,6 @@
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/domain/models/core/failures.dart';
-import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/model/data/access_recipient.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/components/add_public_key_textfield_pk.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'providers.dart';
 
-part 'create_talk_form.freezed.dart';
-
-final createTalkFormProvider =
+final _createTalkFormProvider =
     NotifierProvider.autoDispose<CreateTalkFormNotifier, CreateTalkFormState>(
   () {
     return CreateTalkFormNotifier();
@@ -87,25 +75,35 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
   }
 
   Future<Result<Talk, Failure>> createTalk() => Result.guard(() async {
-        final session = ref.watch(SessionProviders.session).loggedIn;
+        final session = ref.read(SessionProviders.session).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
         final selectedAccount =
-            await ref.watch(AccountProviders.selectedAccount.future);
+            await ref.read(AccountProviders.selectedAccount.future);
         if (selectedAccount == null) throw const Failure.loggedOut();
 
+        final creator = AccessRecipient.contact(
+          contact: await ref.read(ContactProviders.getSelectedContact.future),
+        );
+
         final talk = await ref
-            .watch(MessengerProviders.messengerRepository)
+            .watch(MessengerProviders._messengerRepository)
             .createTalk(
               networkSettings: ref.watch(SettingsProviders.settings).network,
-              admins: state.admins,
-              members: state.members,
+              admins: [
+                ...state.admins,
+                creator,
+              ],
+              members: [
+                ...state.members,
+                creator,
+              ],
               creator: selectedAccount,
               session: session,
               groupName: state.name,
             )
             .valueOrThrow;
-        ref.invalidate(MessengerProviders.talkIds);
+        ref.invalidate(MessengerProviders.talkAddresses);
 
         return talk;
       });

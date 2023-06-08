@@ -55,10 +55,14 @@ packages:
       path: "."
       ref: sc_test_mi
 <<<<<<< HEAD
+<<<<<<< HEAD
       resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
 =======
       resolved-ref: "99af677ee31677d05f35c35450c2242c1c3d38ec"
 >>>>>>> 6bae349d (update pubspec)
+=======
+      resolved-ref: f03affadd27452079b7891662a064865e72600e9
+>>>>>>> f3308389 (:sparkles: Messenger read/send messages.)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.2.0"

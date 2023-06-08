@@ -1,4 +1,3 @@
-import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
@@ -12,9 +11,9 @@ class TalkMessage with _$TalkMessage {
 
   @HiveType(typeId: HiveTypeIds.talkMessage)
   const factory TalkMessage({
-    @HiveField(0) required AccessRecipient sender,
-    @HiveField(1) required String message,
+    @HiveField(0) required String senderPublicKey,
+    @HiveField(1) required String content,
     @HiveField(2) required DateTime date,
-    @HiveField(3) required String id,
+    @HiveField(3) required String address,
   }) = _TalkMessage;
 }

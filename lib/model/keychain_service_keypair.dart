@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// Holds a key pair (private and public key) for each service
@@ -14,4 +17,13 @@ class KeychainServiceKeyPair with _$KeychainServiceKeyPair {
 
   factory KeychainServiceKeyPair.fromJson(Map<String, dynamic> json) =>
       _$KeychainServiceKeyPairFromJson(json);
+
+  KeyPair get toKeyPair => KeyPair(
+        privateKey: Uint8List.fromList(
+          privateKey,
+        ),
+        publicKey: Uint8List.fromList(
+          publicKey,
+        ),
+      );
 }
