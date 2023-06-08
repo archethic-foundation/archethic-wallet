@@ -1,8 +1,8 @@
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
-import 'package:aewallet/model/messenger/talk.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/create_talk.dart';
+import 'package:aewallet/model/data/messenger/talk.dart';
+import 'package:aewallet/ui/views/main/messenger_tab/bloc/create_talk_form.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'providers.g.dart';

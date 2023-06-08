@@ -19,17 +19,23 @@ class TalkAdapter extends TypeAdapter<_$_Talk> {
     return _$_Talk(
       address: fields[0] as String,
       name: fields[1] as String,
+      members: (fields[2] as List).cast<AccessRecipient>(),
+      admins: (fields[3] as List).cast<AccessRecipient>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_Talk obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.members)
+      ..writeByte(3)
+      ..write(obj.admins);
   }
 
   @override

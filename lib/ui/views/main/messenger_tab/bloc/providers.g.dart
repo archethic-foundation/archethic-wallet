@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$talkHash() => r'5fb0711dfe5996d7be9a5d302210739e54b1ff85';
+String _$talkHash() => r'c5b0ad8814991119f1bf41a9f869f2e1499eb956';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -107,7 +107,7 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   }
 }
 
-String _$talkIdsHash() => r'2814015584cd77f954c1810541f350d657eec4f3';
+String _$talkIdsHash() => r'4a2770368de09c801af1334e382bfcf2c5f8a801';
 
 /// See also [_talkIds].
 @ProviderFor(_talkIds)

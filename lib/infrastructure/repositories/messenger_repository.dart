@@ -5,9 +5,9 @@ import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/datasources/talk_local_datasource.dart';
 import 'package:aewallet/infrastructure/datasources/talk_remote_datasource.dart';
 import 'package:aewallet/model/available_networks.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/messenger/talk.dart';
-import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/model/data/messenger/talk.dart';
 
 class MessengerRepository implements MessengerRepositoryInterface {
   final _localDatasource = HiveTalkDatasource.getInstance();
@@ -28,8 +28,8 @@ class MessengerRepository implements MessengerRepositoryInterface {
 
   @override
   Future<Result<Talk, Failure>> createTalk({
-    required List<PublicKey> members,
-    required List<PublicKey> admins,
+    required List<AccessRecipient> members,
+    required List<AccessRecipient> admins,
     required Account creator,
     required LoggedInSession session,
     required NetworksSetting networkSettings,
@@ -38,18 +38,15 @@ class MessengerRepository implements MessengerRepositoryInterface {
     return Result.guard(() async {
       final localDatasource = await _localDatasource;
 
-      // final seed = uint8ListToHex(
-      //     Uint8List.fromList(session.wallet.keychainSecuredInfos.seed),
-      //   );
       final seed = session.wallet.seed;
       final newTalk = await _remoteDatasource.createTalk(
         adminAddress: creator.lastAddress!,
-        adminsPubKey: admins.map((e) => e.publicKey).toList(),
+        admins: admins,
         endpoint: networkSettings.getLink(),
         groupName: groupName,
         keychainSeed: seed,
         serviceName: 'archethic-wallet-${Uri.encodeFull(creator.name)}',
-        usersPubKey: members.map((e) => e.publicKey).toList(),
+        members: members,
       );
       await localDatasource.addTalk(newTalk);
 

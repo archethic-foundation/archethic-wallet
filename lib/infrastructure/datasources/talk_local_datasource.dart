@@ -1,5 +1,5 @@
 import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
-import 'package:aewallet/model/messenger/talk.dart';
+import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveTalkDatasource with SecuredHiveMixin {
@@ -19,6 +19,7 @@ class HiveTalkDatasource with SecuredHiveMixin {
   }
 
   Future<void> addTalk(Talk newTalk) async {
+    // await _talkBox.clear();
     await _talkBox.put(newTalk.address, newTalk);
   }
 
