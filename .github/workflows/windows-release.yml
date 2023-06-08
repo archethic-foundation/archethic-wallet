@@ -6,7 +6,7 @@ on:
       - packaging-github-actions
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
@@ -45,3 +45,54 @@ jobs:
         with:
           name: archethic-wallet-windows-${{ env.version_app }}
           path: artifacts/archethic-wallet-${{ env.version_app }}.zip
+
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - run: flutter --version
+
+      - name: Setup Dependencies
+        run: |
+          flutter doctor
+          sudo apt-get update -y
+          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libjsoncpp-dev fuse libgtk-3-0 python3-pip libgtkmm-3.0-1v5 libnotify4 gstreamer1.0-tools
+
+      - name: Build Flutter Application
+        run: flutter build linux --release
+
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          version_str=$(grep -oP '(?<=^version:\s).*' pubspec.yaml)
+          echo "version_app=$version_str" >> $Env:GITHUB_OUTPUT
+
+      - name: Set VERSION_APP
+        run: echo "VERSION_APP=${{ steps.get_version.outputs.version_app }}" >> $GITHUB_ENV
+
+      - name: Install appimage-builder
+        run: |
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
+          chmod +x /usr/local/bin/appimagetool
+          sudo pip3 install appimage-builder
+
+      - name: Generate AppImage
+        run: |
+          appimage-builder --recipe AppImageBuilder.yml --skip-test
+
+      - name: Check files
+        run: |
+          ls -R
+
+      - name: Upload AppImage Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}_app
+          path: archethic-wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
