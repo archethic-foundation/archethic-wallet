@@ -4,7 +4,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class TalkRemoteDatasource with MessengerMixin {
   Future<Talk> createTalk({
-    required String endpoint,
+    required ApiService apiService,
     required List<AccessRecipient> members,
     required String groupName,
     required List<AccessRecipient> admins,
@@ -14,7 +14,7 @@ class TalkRemoteDatasource with MessengerMixin {
   }) async {
     final transaction = await createNewSC(
       keychain: keychain,
-      endpoint: endpoint,
+      apiService: apiService,
       usersPubKey: members
           .map((e) => e.publicKey?.publicKey)
           .whereType<String>()

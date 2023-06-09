@@ -147,6 +147,25 @@ class DBHelper {
     }
   }
 
+  Future<Contact> getContactWithGenesisPublicKey(
+    String genesisPublicKey,
+  ) async {
+    Contact? contactSelected;
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
+
+    for (final contact in contactsList) {
+      if (contact.publicKey.toLowerCase() == genesisPublicKey.toLowerCase()) {
+        contactSelected = contact;
+      }
+    }
+    if (contactSelected == null) {
+      throw Exception();
+    } else {
+      return contactSelected;
+    }
+  }
+
   Future<Contact> getContactWithName(String name) async {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();

@@ -56,6 +56,7 @@ packages:
       ref: sc_test_mi
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
 =======
       resolved-ref: "99af677ee31677d05f35c35450c2242c1c3d38ec"
@@ -63,6 +64,9 @@ packages:
 =======
       resolved-ref: f03affadd27452079b7891662a064865e72600e9
 >>>>>>> f3308389 (:sparkles: Messenger read/send messages.)
+=======
+      resolved-ref: e842a549dd50353707cff1cc6fc0301e686773e5
+>>>>>>> 4c1ed68b (GenesisPubKey management to display contact's name)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.2.0"

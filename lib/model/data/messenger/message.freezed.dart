@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TalkMessage {
   @HiveField(0)
-  String get senderPublicKey => throw _privateConstructorUsedError;
+  String get senderGenesisPublicKey => throw _privateConstructorUsedError;
   @HiveField(1)
   String get content => throw _privateConstructorUsedError;
   @HiveField(2)
@@ -37,7 +37,7 @@ abstract class $TalkMessageCopyWith<$Res> {
       _$TalkMessageCopyWithImpl<$Res, TalkMessage>;
   @useResult
   $Res call(
-      {@HiveField(0) String senderPublicKey,
+      {@HiveField(0) String senderGenesisPublicKey,
       @HiveField(1) String content,
       @HiveField(2) DateTime date,
       @HiveField(3) String address});
@@ -56,15 +56,15 @@ class _$TalkMessageCopyWithImpl<$Res, $Val extends TalkMessage>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderPublicKey = null,
+    Object? senderGenesisPublicKey = null,
     Object? content = null,
     Object? date = null,
     Object? address = null,
   }) {
     return _then(_value.copyWith(
-      senderPublicKey: null == senderPublicKey
-          ? _value.senderPublicKey
-          : senderPublicKey // ignore: cast_nullable_to_non_nullable
+      senderGenesisPublicKey: null == senderGenesisPublicKey
+          ? _value.senderGenesisPublicKey
+          : senderGenesisPublicKey // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
           ? _value.content
@@ -91,7 +91,7 @@ abstract class _$$_TalkMessageCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@HiveField(0) String senderPublicKey,
+      {@HiveField(0) String senderGenesisPublicKey,
       @HiveField(1) String content,
       @HiveField(2) DateTime date,
       @HiveField(3) String address});
@@ -108,15 +108,15 @@ class __$$_TalkMessageCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderPublicKey = null,
+    Object? senderGenesisPublicKey = null,
     Object? content = null,
     Object? date = null,
     Object? address = null,
   }) {
     return _then(_$_TalkMessage(
-      senderPublicKey: null == senderPublicKey
-          ? _value.senderPublicKey
-          : senderPublicKey // ignore: cast_nullable_to_non_nullable
+      senderGenesisPublicKey: null == senderGenesisPublicKey
+          ? _value.senderGenesisPublicKey
+          : senderGenesisPublicKey // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
           ? _value.content
@@ -139,7 +139,7 @@ class __$$_TalkMessageCopyWithImpl<$Res>
 @HiveType(typeId: HiveTypeIds.talkMessage)
 class _$_TalkMessage extends _TalkMessage {
   const _$_TalkMessage(
-      {@HiveField(0) required this.senderPublicKey,
+      {@HiveField(0) required this.senderGenesisPublicKey,
       @HiveField(1) required this.content,
       @HiveField(2) required this.date,
       @HiveField(3) required this.address})
@@ -147,7 +147,7 @@ class _$_TalkMessage extends _TalkMessage {
 
   @override
   @HiveField(0)
-  final String senderPublicKey;
+  final String senderGenesisPublicKey;
   @override
   @HiveField(1)
   final String content;
@@ -160,7 +160,7 @@ class _$_TalkMessage extends _TalkMessage {
 
   @override
   String toString() {
-    return 'TalkMessage(senderPublicKey: $senderPublicKey, content: $content, date: $date, address: $address)';
+    return 'TalkMessage(senderGenesisPublicKey: $senderGenesisPublicKey, content: $content, date: $date, address: $address)';
   }
 
   @override
@@ -168,8 +168,8 @@ class _$_TalkMessage extends _TalkMessage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TalkMessage &&
-            (identical(other.senderPublicKey, senderPublicKey) ||
-                other.senderPublicKey == senderPublicKey) &&
+            (identical(other.senderGenesisPublicKey, senderGenesisPublicKey) ||
+                other.senderGenesisPublicKey == senderGenesisPublicKey) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.address, address) || other.address == address));
@@ -177,7 +177,7 @@ class _$_TalkMessage extends _TalkMessage {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, senderPublicKey, content, date, address);
+      Object.hash(runtimeType, senderGenesisPublicKey, content, date, address);
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +188,7 @@ class _$_TalkMessage extends _TalkMessage {
 
 abstract class _TalkMessage extends TalkMessage {
   const factory _TalkMessage(
-      {@HiveField(0) required final String senderPublicKey,
+      {@HiveField(0) required final String senderGenesisPublicKey,
       @HiveField(1) required final String content,
       @HiveField(2) required final DateTime date,
       @HiveField(3) required final String address}) = _$_TalkMessage;
@@ -196,7 +196,7 @@ abstract class _TalkMessage extends TalkMessage {
 
   @override
   @HiveField(0)
-  String get senderPublicKey;
+  String get senderGenesisPublicKey;
   @override
   @HiveField(1)
   String get content;

@@ -11,6 +11,7 @@ import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
@@ -50,7 +51,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
         keychain: session.wallet.keychainSecuredInfos.toKeychain(),
         adminAddress: creator.lastAddress!,
         admins: admins,
-        endpoint: networkSettings.getLink(),
+        apiService: sl.get<ApiService>(),
         groupName: groupName,
         serviceName: _serviceName(creator),
         members: members,
@@ -86,7 +87,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
               .services[_serviceName(reader)]!.keyPair!;
 
           final newTalk = await _remoteDatasource.readMessages(
-            endpoint: networkSettings.getLink(),
+            apiService: sl.get<ApiService>(),
             scAddress: talkAddress,
             readerKeyPair: keyPair.toKeyPair,
           );
@@ -98,8 +99,8 @@ class MessengerRepository implements MessengerRepositoryInterface {
                 (e) => TalkMessage(
                   address: e.address,
                   content: e.content,
-                  senderPublicKey: e.sender,
-                  date: DateTime.fromMillisecondsSinceEpoch(e.timestamp),
+                  senderGenesisPublicKey: e.genesisPublicKey,
+                  date: DateTime.fromMillisecondsSinceEpoch(e.timestamp * 1000),
                 ),
               )
               .toList();
@@ -119,7 +120,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
             .services[_serviceName(creator)]!.keyPair!;
 
         final txAddress = await _remoteDatasource.sendMessage(
-          endpoint: networkSettings.getLink(),
+          apiService: sl.get<ApiService>(),
           scAddress: talkAddress,
           messageContent: content,
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
@@ -132,8 +133,9 @@ class MessengerRepository implements MessengerRepositoryInterface {
           address: txAddress.address!,
           content: content,
           date: DateTime.now(),
-          senderPublicKey: uint8ListToHex(Uint8List.fromList(keyPair.publicKey))
-              .toUpperCase(),
+          senderGenesisPublicKey:
+              uint8ListToHex(Uint8List.fromList(keyPair.publicKey))
+                  .toUpperCase(),
         );
       });
 }
