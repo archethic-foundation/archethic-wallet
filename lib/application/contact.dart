@@ -72,6 +72,17 @@ Future<Contact> _getContactWithPublicKey(
 }
 
 @riverpod
+Future<Contact> _getContactWithGenesisPublicKey(
+  _GetContactWithGenesisPublicKeyRef ref,
+  String genesisPublicKey,
+) async {
+  final searchedContact = await ref
+      .watch(_contactRepositoryProvider)
+      .getContactWithGenesisPublicKey(genesisPublicKey);
+  return searchedContact;
+}
+
+@riverpod
 Future<void> _saveContact(
   _SaveContactRef ref, {
   Contact? contact,
@@ -162,6 +173,11 @@ class ContactRepository {
     return sl.get<DBHelper>().getContactWithPublicKey(publicKey);
   }
 
+  Future<Contact> getContactWithGenesisPublicKey(
+      String genesisPublicKey) async {
+    return sl.get<DBHelper>().getContactWithGenesisPublicKey(genesisPublicKey);
+  }
+
   Future<void> clear() async {
     await sl.get<DBHelper>().clearContacts();
   }
@@ -176,6 +192,8 @@ abstract class ContactProviders {
   static const getContactWithName = _getContactWithNameProvider;
   static const getContactWithAddress = _getContactWithAddressProvider;
   static const getContactWithPublicKey = _getContactWithPublicKeyProvider;
+  static const getContactWithGenesisPublicKey =
+      _getContactWithGenesisPublicKeyProvider;
   static final getSelectedContact = _getSelectedContactProvider;
 
   static Future<void> reset(Ref ref) async {
@@ -187,6 +205,7 @@ abstract class ContactProviders {
       ..invalidate(getContactWithName)
       ..invalidate(getContactWithAddress)
       ..invalidate(getContactWithPublicKey)
+      ..invalidate(getContactWithGenesisPublicKey)
       ..invalidate(getSelectedContact);
   }
 }

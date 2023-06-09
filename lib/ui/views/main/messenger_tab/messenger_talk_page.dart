@@ -143,8 +143,10 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
               TextButton.icon(
                 onPressed: () {
                   ref
-                      .read(MessengerProviders.messages(widget.talkAddress)
-                          .notifier)
+                      .read(
+                        MessengerProviders.messages(widget.talkAddress)
+                            .notifier,
+                      )
                       .createMessage(textEditingController.value.text);
                 },
                 icon: Icon(
@@ -156,10 +158,10 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
             ],
           ),
           const SizedBox(height: 6),
-          Text(
+          /*Text(
             'Price : 12UCO',
             style: theme.textStyleSize10W100Primary,
-          ),
+          ),*/
         ],
       ),
     );
@@ -200,7 +202,9 @@ class __MessagesListState extends ConsumerState<_MessagesList> {
         .valueOrNull;
 
     if (talkMessages == null) return Container();
-
+    talkMessages.sort(
+      (a, b) => a.date.compareTo(b.date),
+    );
     return ListView.builder(
       shrinkWrap: true,
       controller: _scrollController,
@@ -208,7 +212,7 @@ class __MessagesListState extends ConsumerState<_MessagesList> {
       reverse: true,
       itemBuilder: (context, index) {
         final message = talkMessages.reversed.elementAt(index);
-        final isSentByMe = message.senderPublicKey == me.publicKey;
+        final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
 
         if (isSentByMe) {
           return Align(
@@ -257,6 +261,12 @@ class _MessageItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
+    final _contact = ref.watch(
+      ContactProviders.getContactWithGenesisPublicKey(
+        message.senderGenesisPublicKey,
+      ),
+    );
+
     return Card(
       color: color,
       child: Padding(
@@ -265,12 +275,18 @@ class _MessageItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (showSender)
-              Text(
-                message.senderPublicKey,
-                style: theme.textStyleSize12W600Primary,
+              _contact.maybeWhen(
+                data: (data) {
+                  return Text(
+                    data.name.substring(1),
+                    style: theme.textStyleSize12W600Primary,
+                  );
+                },
+                loading: () => const SizedBox(),
+                orElse: () => const SizedBox(),
               ),
             const SizedBox(height: 3),
-            Text(
+            SelectableText(
               message.content,
               style: theme.textStyleSize12W400Primary,
             ),
