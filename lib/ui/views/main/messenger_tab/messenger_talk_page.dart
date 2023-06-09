@@ -268,6 +268,21 @@ class _MessageItem extends ConsumerWidget {
     );
 
     return Card(
+      shape: showSender
+          ? const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            )
+          : const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
       color: color,
       child: Padding(
         padding: const EdgeInsets.all(16),
