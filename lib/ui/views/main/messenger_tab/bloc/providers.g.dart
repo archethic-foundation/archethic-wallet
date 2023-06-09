@@ -123,7 +123,7 @@ final _talkAddressesProvider = AutoDisposeFutureProvider<List<String>>.internal(
 
 typedef _TalkAddressesRef = AutoDisposeFutureProviderRef<List<String>>;
 String _$talkMessagesNotifierHash() =>
-    r'c427fe696efada77681db27d97f1a7868cdaeaf5';
+    r'37be84c2fa827577dd14ddd4a9c4180f43c5d281';
 
 abstract class _$TalkMessagesNotifier
     extends BuildlessAutoDisposeAsyncNotifier<List<TalkMessage>> {

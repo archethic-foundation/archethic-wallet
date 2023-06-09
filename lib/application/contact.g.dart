@@ -394,6 +394,94 @@ class _GetContactWithPublicKeyProvider
   }
 }
 
+String _$getContactWithGenesisPublicKeyHash() =>
+    r'93092b68ce03278c300323d0e7ddde4030c88d22';
+typedef _GetContactWithGenesisPublicKeyRef
+    = AutoDisposeFutureProviderRef<Contact>;
+
+/// See also [_getContactWithGenesisPublicKey].
+@ProviderFor(_getContactWithGenesisPublicKey)
+const _getContactWithGenesisPublicKeyProvider =
+    _GetContactWithGenesisPublicKeyFamily();
+
+/// See also [_getContactWithGenesisPublicKey].
+class _GetContactWithGenesisPublicKeyFamily
+    extends Family<AsyncValue<Contact>> {
+  /// See also [_getContactWithGenesisPublicKey].
+  const _GetContactWithGenesisPublicKeyFamily();
+
+  /// See also [_getContactWithGenesisPublicKey].
+  _GetContactWithGenesisPublicKeyProvider call(
+    String genesisPublicKey,
+  ) {
+    return _GetContactWithGenesisPublicKeyProvider(
+      genesisPublicKey,
+    );
+  }
+
+  @override
+  _GetContactWithGenesisPublicKeyProvider getProviderOverride(
+    covariant _GetContactWithGenesisPublicKeyProvider provider,
+  ) {
+    return call(
+      provider.genesisPublicKey,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getContactWithGenesisPublicKeyProvider';
+}
+
+/// See also [_getContactWithGenesisPublicKey].
+class _GetContactWithGenesisPublicKeyProvider
+    extends AutoDisposeFutureProvider<Contact> {
+  /// See also [_getContactWithGenesisPublicKey].
+  _GetContactWithGenesisPublicKeyProvider(
+    this.genesisPublicKey,
+  ) : super.internal(
+          (ref) => _getContactWithGenesisPublicKey(
+            ref,
+            genesisPublicKey,
+          ),
+          from: _getContactWithGenesisPublicKeyProvider,
+          name: r'_getContactWithGenesisPublicKeyProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getContactWithGenesisPublicKeyHash,
+          dependencies: _GetContactWithGenesisPublicKeyFamily._dependencies,
+          allTransitiveDependencies:
+              _GetContactWithGenesisPublicKeyFamily._allTransitiveDependencies,
+        );
+
+  final String genesisPublicKey;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetContactWithGenesisPublicKeyProvider &&
+        other.genesisPublicKey == genesisPublicKey;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, genesisPublicKey.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
 typedef _SaveContactRef = AutoDisposeFutureProviderRef<void>;
 

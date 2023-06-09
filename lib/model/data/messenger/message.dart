@@ -7,13 +7,12 @@ part 'message.g.dart';
 
 @freezed
 class TalkMessage with _$TalkMessage {
-  const TalkMessage._();
-
   @HiveType(typeId: HiveTypeIds.talkMessage)
   const factory TalkMessage({
-    @HiveField(0) required String senderPublicKey,
+    @HiveField(0) required String senderGenesisPublicKey,
     @HiveField(1) required String content,
     @HiveField(2) required DateTime date,
     @HiveField(3) required String address,
   }) = _TalkMessage;
+  const TalkMessage._();
 }
