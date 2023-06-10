@@ -274,8 +274,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                         );
                                         final pastedWords = data?.text
                                             ?.split(RegExp('[^a-z]'))
-                                            .where((element) =>
-                                                element.isNotEmpty);
+                                            .where(
+                                              (element) => element.isNotEmpty,
+                                            );
 
                                         if (pastedWords == null ||
                                             pastedWords.length !=
