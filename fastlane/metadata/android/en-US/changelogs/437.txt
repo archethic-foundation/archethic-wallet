@@ -1,0 +1,7 @@
+Archethic Wallet - Version 2.1.0 Build 437
+
+Main Improvements
+- DApps interoperability
+- NFT - Can create NFT from different sources : IPFS, HTTP, AEWeb 
+- Add animations on UI
+- Add a paste function in the import seed process
