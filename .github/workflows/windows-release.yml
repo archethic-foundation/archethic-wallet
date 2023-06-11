@@ -46,8 +46,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-windows-${{ env.version_app }}
-          path: artifacts/archethic-wallet-${{ env.version_app }}.zip
+          name: archethic-wallet-windows-${{ steps.get_version.outputs.version_app }}
+          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
 
   build-linux:
     runs-on: ubuntu-latest
