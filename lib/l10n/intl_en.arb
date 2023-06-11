@@ -3000,6 +3000,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "exitNFTCreationProcessTitle": "Exit NFT Creation Process - Confirmation",
+  "@exitNFTCreationProcessTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exitNFTCreationProcessSubtitle": "Are you sure you want to exit the NFT creation process? All the information you have entered so far will be lost.",
+  "@exitNFTCreationProcessSubtitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "connectivityWarningHeader": "Check your internet connection.",
   "@connectivityWarningHeader": {
     "type": "text",
