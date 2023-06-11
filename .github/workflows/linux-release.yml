@@ -35,8 +35,8 @@ jobs:
       - name: Get Version from pubspec.yaml
         id: get_version
         run: |
-          $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
-          echo "version_app=${version_str}" >> $Env:GITHUB_ENV
+          version_str=$(grep -oP '(?<=^version: ).*' pubspec.yaml | awk '{$1=$1};1')
+          echo "version_app=${version_str}" >> $GITHUB_ENV
 
       - name: Set VERSION_APP
         run: echo "VERSION_APP=${{ steps.get_version.outputs.version_app }}" >> $GITHUB_ENV
