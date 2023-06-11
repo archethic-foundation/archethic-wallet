@@ -36,7 +36,8 @@ jobs:
         id: get_version
         run: |
           version_str=$(grep -oP '(?<=^version: ).*' pubspec.yaml | awk '{$1=$1};1')
-          echo "version_app=${version_str}" >> $GITHUB_ENV
+          echo "version_app=${version_str}" >> $GITHUB_OUTPUT
+          echo "env_version_app=${version_str}" >> $GITHUB_ENV
 
       - name: Install appimage-builder
         run: |
