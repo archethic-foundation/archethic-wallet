@@ -1,7 +1,7 @@
 # appimage-builder recipe see https://appimage-builder.readthedocs.io for details
 version: 1
 env:
-  VERSION_APP: ${{ steps.get_version.outputs.version_app }}
+  VERSION_APP: "{{ subst_file }}"
 script:
   - rm -rf AppDir | true
   - mkdir AppDir
