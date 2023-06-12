@@ -53,9 +53,12 @@ class NFTList extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Opacity(
                   opacity: 0.5,
-                  child: Image.asset(
-                    'assets/images/nft-empty.png',
-                    fit: BoxFit.fill,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
+                      'assets/images/nft-empty.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),

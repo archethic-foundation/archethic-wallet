@@ -78,11 +78,15 @@ class NftCategoryMenu extends ConsumerWidget {
                 Stack(
                   children: [
                     Hero(
-                      tag: 'nftCategory${nftCategories[index].name!}',
-                      child: CardCategory(
-                        background: Image.asset(nftCategories[index].image),
-                      ),
-                    ),
+                        tag: 'nftCategory${nftCategories[index].name!}',
+                        child: CardCategory(
+                            background: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.asset(
+                            nftCategories[index].image,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ))),
                     if (count > 0)
                       Padding(
                         padding: const EdgeInsets.only(left: 10, top: 5),
