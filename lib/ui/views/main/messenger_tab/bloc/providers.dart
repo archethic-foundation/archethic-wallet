@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/components/add_public_key_textfield_pk.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -41,4 +42,13 @@ abstract class MessengerProviders {
 
   static final creationForm = _createTalkFormProvider;
   static const messages = _talkMessagesNotifierProvider;
+
+  static Future<void> reset(Ref ref) async {
+    await ref.read(_messengerRepository).clear();
+    ref
+      ..invalidate(talkAddresses)
+      ..invalidate(talk)
+      ..invalidate(creationForm)
+      ..invalidate(messages);
+  }
 }

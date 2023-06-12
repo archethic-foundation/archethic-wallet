@@ -26,4 +26,8 @@ class HiveTalkDatasource with SecuredHiveMixin {
   Future<Talk?> getTalk(String talkId) async {
     return _talkBox.get(talkId);
   }
+
+  Future<void> clear() async {
+    await _talkBox.clear();
+  }
 }

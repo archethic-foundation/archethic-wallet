@@ -78,6 +78,7 @@ class _SessionNotifier extends Notifier<Session> {
     await ref.read(SettingsProviders.settings.notifier).reset();
     await AuthenticationProviders.reset(ref);
     await ContactProviders.reset(ref);
+    await MessengerProviders.reset(ref);
 
     await (await HiveVaultDatasource.getInstance()).clearAll();
     await _dbHelper.clearAppWallet();
