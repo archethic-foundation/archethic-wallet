@@ -6,7 +6,6 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/datasources/talk_local_datasource.dart';
 import 'package:aewallet/infrastructure/datasources/talk_remote_datasource.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
@@ -41,7 +40,6 @@ class MessengerRepository implements MessengerRepositoryInterface {
     required List<AccessRecipient> admins,
     required Account creator,
     required LoggedInSession session,
-    required NetworksSetting networkSettings,
     required String groupName,
   }) {
     return Result.guard(() async {
@@ -78,7 +76,6 @@ class MessengerRepository implements MessengerRepositoryInterface {
   Future<Result<List<TalkMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required NetworksSetting networkSettings,
     required String talkAddress,
   }) async =>
       Result.guard(
@@ -108,9 +105,32 @@ class MessengerRepository implements MessengerRepositoryInterface {
       );
 
   @override
+  Future<Result<double, Failure>> calculateFees({
+    required LoggedInSession session,
+    required String talkAddress,
+    required Account creator,
+    required String content,
+  }) async =>
+      Result.guard(
+        () {
+          final keyPair = session.wallet.keychainSecuredInfos
+              .services[_serviceName(creator)]!.keyPair!;
+
+          return _remoteDatasource.calculateMessageSendFees(
+            apiService: sl.get<ApiService>(),
+            scAddress: talkAddress,
+            messageContent: content,
+            keychain: session.wallet.keychainSecuredInfos.toKeychain(),
+            senderAddress: creator.lastAddress!,
+            senderServiceName: _serviceName(creator),
+            senderKeyPair: keyPair.toKeyPair,
+          );
+        },
+      );
+
+  @override
   Future<Result<TalkMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required NetworksSetting networkSettings,
     required String talkAddress,
     required Account creator,
     required String content,

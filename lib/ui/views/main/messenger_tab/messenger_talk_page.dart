@@ -5,6 +5,7 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
+import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -130,6 +131,10 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final isCreating = ref.watch(
+      MessengerProviders.messageCreationForm(widget.talkAddress)
+          .select((value) => value.isCreating),
+    );
 
     return Padding(
       padding: const EdgeInsets.only(left: 16, bottom: 16),
@@ -139,36 +144,93 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
         children: [
           Row(
             children: [
-              Expanded(child: TextField(controller: textEditingController)),
-              TextButton.icon(
-                onPressed: () {
-                  ref
+              Expanded(
+                child: TextField(
+                  controller: textEditingController,
+                  onChanged: (value) => ref
                       .read(
-                        MessengerProviders.messages(widget.talkAddress)
-                            .notifier,
+                        MessengerProviders.messageCreationForm(
+                          widget.talkAddress,
+                        ).notifier,
                       )
-                      .createMessage(textEditingController.value.text);
-                },
-                icon: Icon(
-                  Icons.send,
-                  color: theme.text,
+                      .setText(value),
                 ),
-                label: Container(),
               ),
+              if (isCreating)
+                SizedBox(
+                  width: 55,
+                  height: 20,
+                  child: Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: theme.text,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                TextButton.icon(
+                  onPressed: () async {
+                    await ref
+                        .read(
+                          MessengerProviders.messageCreationForm(
+                            widget.talkAddress,
+                          ).notifier,
+                        )
+                        .createMessage();
+
+                    textEditingController.text = ref
+                        .read(
+                          MessengerProviders.messageCreationForm(
+                            widget.talkAddress,
+                          ),
+                        )
+                        .text;
+                  },
+                  icon: Icon(
+                    Icons.send,
+                    color: theme.text,
+                  ),
+                  label: Container(),
+                ),
             ],
           ),
           const SizedBox(height: 6),
-          /*Text(
-            'Price : 12UCO',
-            style: theme.textStyleSize10W100Primary,
-          ),*/
+          _MessageCreationFormFees(talkAddress: widget.talkAddress),
         ],
       ),
     );
   }
 }
 
-class _MessagesList extends ConsumerStatefulWidget {
+class _MessageCreationFormFees extends ConsumerWidget {
+  const _MessageCreationFormFees({
+    required this.talkAddress,
+    super.key,
+  });
+
+  final String talkAddress;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final text =
+        ref.watch(MessengerProviders.messageCreationForm(talkAddress)).text;
+    return FeeInfos(
+      asyncFeeEstimation: ref.watch(
+        MessengerProviders.messageCreationFees(
+          talkAddress,
+          text,
+        ),
+      ),
+      estimatedFeesNote: localizations.estimatedFeesNote,
+    );
+  }
+}
+
+class _MessagesList extends ConsumerWidget {
   const _MessagesList({
     required this.talkAddress,
     super.key,
@@ -177,19 +239,7 @@ class _MessagesList extends ConsumerStatefulWidget {
   final String talkAddress;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => __MessagesListState();
-}
-
-class __MessagesListState extends ConsumerState<_MessagesList> {
-  final _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
 
@@ -197,7 +247,7 @@ class __MessagesListState extends ConsumerState<_MessagesList> {
 
     final talkMessages = ref
         .watch(
-          MessengerProviders.messages(widget.talkAddress),
+          MessengerProviders.messages(talkAddress),
         )
         .valueOrNull;
 
@@ -207,7 +257,6 @@ class __MessagesListState extends ConsumerState<_MessagesList> {
     );
     return ListView.builder(
       shrinkWrap: true,
-      controller: _scrollController,
       itemCount: talkMessages.length,
       reverse: true,
       itemBuilder: (context, index) {

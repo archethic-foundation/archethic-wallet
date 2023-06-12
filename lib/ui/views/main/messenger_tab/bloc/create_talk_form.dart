@@ -86,23 +86,20 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
           contact: await ref.read(ContactProviders.getSelectedContact.future),
         );
 
-        final talk = await ref
-            .watch(MessengerProviders._messengerRepository)
-            .createTalk(
-              networkSettings: ref.watch(SettingsProviders.settings).network,
-              admins: [
-                ...state.admins,
-                creator,
-              ],
-              members: [
-                ...state.members,
-                creator,
-              ],
-              creator: selectedAccount,
-              session: session,
-              groupName: state.name,
-            )
-            .valueOrThrow;
+        final talk =
+            await ref.watch(MessengerProviders._messengerRepository).createTalk(
+          admins: [
+            ...state.admins,
+            creator,
+          ],
+          members: [
+            ...state.members,
+            creator,
+          ],
+          creator: selectedAccount,
+          session: session,
+          groupName: state.name,
+        ).valueOrThrow;
         ref.invalidate(MessengerProviders.talkAddresses);
 
         return talk;

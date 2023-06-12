@@ -1,3 +1,4 @@
+import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -34,5 +35,29 @@ class TalkRemoteDatasource with MessengerMixin {
       members: members,
       admins: admins,
     );
+  }
+
+  Future<double> calculateMessageSendFees({
+    required Keychain keychain,
+    required ApiService apiService,
+    required String scAddress,
+    required String messageContent,
+    required String senderAddress,
+    required String senderServiceName,
+    required KeyPair senderKeyPair,
+  }) async {
+    final transaction = await buildMessageSendTransaction(
+      keychain: keychain,
+      apiService: apiService,
+      scAddress: scAddress,
+      messageContent: messageContent,
+      senderAddress: senderAddress,
+      senderServiceName: senderServiceName,
+      senderKeyPair: senderKeyPair,
+    );
+
+    final fee = await apiService.getTransactionFee(transaction);
+    if (fee.fee == null) throw const Failure.invalidValue();
+    return fromBigInt(fee.fee).toDouble();
   }
 }

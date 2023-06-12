@@ -1,7 +1,6 @@
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
@@ -17,20 +16,24 @@ abstract class MessengerRepositoryInterface {
     required List<AccessRecipient> admins,
     required Account creator,
     required LoggedInSession session,
-    required NetworksSetting networkSettings,
     required String groupName,
   });
 
   Future<Result<List<TalkMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required NetworksSetting networkSettings,
     required String talkAddress,
   });
 
   Future<Result<TalkMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required NetworksSetting networkSettings,
+    required String talkAddress,
+    required Account creator,
+    required String content,
+  });
+
+  Future<Result<double, Failure>> calculateFees({
+    required LoggedInSession session,
     required String talkAddress,
     required Account creator,
     required String content,
