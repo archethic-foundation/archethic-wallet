@@ -271,3 +271,164 @@ abstract class _CreateTalkFormState extends CreateTalkFormState {
   _$$_CreateTalkFormStateCopyWith<_$_CreateTalkFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$MessageCreationFormState {
+  String get talkAddress => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
+  bool get isCreating => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $MessageCreationFormStateCopyWith<MessageCreationFormState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MessageCreationFormStateCopyWith<$Res> {
+  factory $MessageCreationFormStateCopyWith(MessageCreationFormState value,
+          $Res Function(MessageCreationFormState) then) =
+      _$MessageCreationFormStateCopyWithImpl<$Res, MessageCreationFormState>;
+  @useResult
+  $Res call({String talkAddress, String text, bool isCreating});
+}
+
+/// @nodoc
+class _$MessageCreationFormStateCopyWithImpl<$Res,
+        $Val extends MessageCreationFormState>
+    implements $MessageCreationFormStateCopyWith<$Res> {
+  _$MessageCreationFormStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? talkAddress = null,
+    Object? text = null,
+    Object? isCreating = null,
+  }) {
+    return _then(_value.copyWith(
+      talkAddress: null == talkAddress
+          ? _value.talkAddress
+          : talkAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      isCreating: null == isCreating
+          ? _value.isCreating
+          : isCreating // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_MessageCreationFormStateCopyWith<$Res>
+    implements $MessageCreationFormStateCopyWith<$Res> {
+  factory _$$_MessageCreationFormStateCopyWith(
+          _$_MessageCreationFormState value,
+          $Res Function(_$_MessageCreationFormState) then) =
+      __$$_MessageCreationFormStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String talkAddress, String text, bool isCreating});
+}
+
+/// @nodoc
+class __$$_MessageCreationFormStateCopyWithImpl<$Res>
+    extends _$MessageCreationFormStateCopyWithImpl<$Res,
+        _$_MessageCreationFormState>
+    implements _$$_MessageCreationFormStateCopyWith<$Res> {
+  __$$_MessageCreationFormStateCopyWithImpl(_$_MessageCreationFormState _value,
+      $Res Function(_$_MessageCreationFormState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? talkAddress = null,
+    Object? text = null,
+    Object? isCreating = null,
+  }) {
+    return _then(_$_MessageCreationFormState(
+      talkAddress: null == talkAddress
+          ? _value.talkAddress
+          : talkAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      isCreating: null == isCreating
+          ? _value.isCreating
+          : isCreating // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_MessageCreationFormState extends _MessageCreationFormState {
+  const _$_MessageCreationFormState(
+      {required this.talkAddress, required this.text, required this.isCreating})
+      : super._();
+
+  @override
+  final String talkAddress;
+  @override
+  final String text;
+  @override
+  final bool isCreating;
+
+  @override
+  String toString() {
+    return 'MessageCreationFormState(talkAddress: $talkAddress, text: $text, isCreating: $isCreating)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_MessageCreationFormState &&
+            (identical(other.talkAddress, talkAddress) ||
+                other.talkAddress == talkAddress) &&
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.isCreating, isCreating) ||
+                other.isCreating == isCreating));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, talkAddress, text, isCreating);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MessageCreationFormStateCopyWith<_$_MessageCreationFormState>
+      get copyWith => __$$_MessageCreationFormStateCopyWithImpl<
+          _$_MessageCreationFormState>(this, _$identity);
+}
+
+abstract class _MessageCreationFormState extends MessageCreationFormState {
+  const factory _MessageCreationFormState(
+      {required final String talkAddress,
+      required final String text,
+      required final bool isCreating}) = _$_MessageCreationFormState;
+  const _MessageCreationFormState._() : super._();
+
+  @override
+  String get talkAddress;
+  @override
+  String get text;
+  @override
+  bool get isCreating;
+  @override
+  @JsonKey(ignore: true)
+  _$$_MessageCreationFormStateCopyWith<_$_MessageCreationFormState>
+      get copyWith => throw _privateConstructorUsedError;
+}

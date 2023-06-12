@@ -26,8 +26,9 @@ class CreateTalkSheet extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
-    final formNotifier = ref.watch(MessengerProviders.creationForm.notifier);
-    final formState = ref.watch(MessengerProviders.creationForm);
+    final formNotifier =
+        ref.watch(MessengerProviders.talkCreationForm.notifier);
+    final formState = ref.watch(MessengerProviders.talkCreationForm);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -216,7 +217,7 @@ class _AddMessengerTalkNameTextFieldState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final createTalkFormNotifier =
-        ref.watch(MessengerProviders.creationForm.notifier);
+        ref.watch(MessengerProviders.talkCreationForm.notifier);
 
     return AppTextField(
       focusNode: nameFocusNode,
