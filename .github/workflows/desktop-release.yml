@@ -1,6 +1,9 @@
 name: Build and Package Desktop apps
 
 on:
+  push:
+    branches:
+      - packaging-github-actions
   workflow_dispatch:
     inputs:
       branch:
