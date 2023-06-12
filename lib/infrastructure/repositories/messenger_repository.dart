@@ -138,4 +138,9 @@ class MessengerRepository implements MessengerRepositoryInterface {
                   .toUpperCase(),
         );
       });
+
+  @override
+  Future<void> clear() async {
+    await (await _localDatasource).clear();
+  }
 }

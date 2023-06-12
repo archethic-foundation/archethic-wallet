@@ -35,4 +35,6 @@ abstract class MessengerRepositoryInterface {
     required Account creator,
     required String content,
   });
+
+  Future<void> clear();
 }
