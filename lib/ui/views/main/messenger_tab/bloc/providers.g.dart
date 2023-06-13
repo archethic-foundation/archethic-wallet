@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$talkHash() => r'5fb0711dfe5996d7be9a5d302210739e54b1ff85';
+String _$talkHash() => r'055408df08658e6379db2d57c4ee624510dd9be1';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,10 +42,10 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
 
   /// See also [_talk].
   _TalkProvider call(
-    String talkId,
+    String talkAddress,
   ) {
     return _TalkProvider(
-      talkId,
+      talkAddress,
     );
   }
 
@@ -54,7 +54,7 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
     covariant _TalkProvider provider,
   ) {
     return call(
-      provider.talkId,
+      provider.talkAddress,
     );
   }
 
@@ -77,11 +77,11 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
 class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   /// See also [_talk].
   _TalkProvider(
-    this.talkId,
+    this.talkAddress,
   ) : super.internal(
           (ref) => _talk(
             ref,
-            talkId,
+            talkAddress,
           ),
           from: _talkProvider,
           name: r'_talkProvider',
@@ -91,23 +91,23 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
           allTransitiveDependencies: _TalkFamily._allTransitiveDependencies,
         );
 
-  final String talkId;
+  final String talkAddress;
 
   @override
   bool operator ==(Object other) {
-    return other is _TalkProvider && other.talkId == talkId;
+    return other is _TalkProvider && other.talkAddress == talkAddress;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, talkId.hashCode);
+    hash = _SystemHash.combine(hash, talkAddress.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-String _$talkAddressesHash() => r'dce9ddf2e6806d6fd73d37af16e01ebc064a4453';
+String _$talkAddressesHash() => r'b7bf1e58753441455f419df8fae831aa57cb447d';
 
 /// See also [_talkAddresses].
 @ProviderFor(_talkAddresses)
@@ -123,7 +123,7 @@ final _talkAddressesProvider = AutoDisposeFutureProvider<List<String>>.internal(
 
 typedef _TalkAddressesRef = AutoDisposeFutureProviderRef<List<String>>;
 String _$messageCreationFeesHash() =>
-    r'd60e948a172897e6cba5d2e46ab2460801b21601';
+    r'd73daff392d278e20cddfd6d6fe9e3e1d46f71e9';
 typedef _MessageCreationFeesRef = AutoDisposeFutureProviderRef<double>;
 
 /// See also [_messageCreationFees].
@@ -215,7 +215,7 @@ class _MessageCreationFeesProvider extends AutoDisposeFutureProvider<double> {
 }
 
 String _$messageCreationFormNotifierHash() =>
-    r'9c592e950c5b80ad547916ddd0d8497b14002ff6';
+    r'8bac9f9f00575dd77a9136de17516c4744f0f154';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {
