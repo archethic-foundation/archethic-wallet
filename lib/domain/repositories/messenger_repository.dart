@@ -7,9 +7,14 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 
 abstract class MessengerRepositoryInterface {
-  Future<Result<List<String>, Failure>> getTalkAddresses();
+  Future<Result<List<String>, Failure>> getTalkAddresses({
+    required Account owner,
+  });
 
-  Future<Result<Talk, Failure>> getTalk(String talkAddress);
+  Future<Result<Talk, Failure>> getTalk({
+    required Account owner,
+    required String talkAddress,
+  });
 
   Future<Result<Talk, Failure>> createTalk({
     required List<AccessRecipient> members,

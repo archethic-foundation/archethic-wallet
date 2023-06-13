@@ -20,16 +20,31 @@ part 'providers.g.dart';
 part 'talk_messages.dart';
 
 @riverpod
-Future<Talk> _talk(_TalkRef ref, String talkId) async => ref
-    .watch(MessengerProviders._messengerRepository)
-    .getTalk(talkId)
-    .valueOrThrow;
+Future<Talk> _talk(_TalkRef ref, String talkAddress) async {
+  final selectedAccount =
+      await ref.watch(AccountProviders.selectedAccount.future);
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  return ref
+      .watch(MessengerProviders._messengerRepository)
+      .getTalk(
+        owner: selectedAccount,
+        talkAddress: talkAddress,
+      )
+      .valueOrThrow;
+}
 
 @riverpod
-Future<List<String>> _talkAddresses(_TalkAddressesRef ref) async => ref
-    .watch(MessengerProviders._messengerRepository)
-    .getTalkAddresses()
-    .valueOrThrow;
+Future<List<String>> _talkAddresses(_TalkAddressesRef ref) async {
+  final selectedAccount =
+      await ref.watch(AccountProviders.selectedAccount.future);
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  return ref
+      .watch(MessengerProviders._messengerRepository)
+      .getTalkAddresses(owner: selectedAccount)
+      .valueOrThrow;
+}
 
 abstract class MessengerProviders {
   static final _messengerRepository = Provider<MessengerRepositoryInterface>(

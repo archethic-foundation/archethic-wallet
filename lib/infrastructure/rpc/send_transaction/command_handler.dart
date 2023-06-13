@@ -21,7 +21,8 @@ class RPCSendTransactionCommandHandler extends RPCCommandHandler<
 
   @override
   Map<String, dynamic> resultFromModel(
-      archethic.TransactionConfirmation model) {
+    archethic.TransactionConfirmation model,
+  ) {
     return {
       'maxConfirmations': model.maxConfirmations,
       'nbConfirmations': model.nbConfirmations,
