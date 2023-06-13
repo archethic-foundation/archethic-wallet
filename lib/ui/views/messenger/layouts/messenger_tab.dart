@@ -29,59 +29,70 @@ class MessengerBody extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 10,
-          top: 20,
-          left: 15,
-          right: 15,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            theme.background1Small!,
+          ),
+          fit: BoxFit.fitHeight,
+          opacity: 0.7,
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: asyncTalkAddresses.map(
-                loading: (_) => Container(),
-                error: (_) => Container(),
-                data: (talkAddress) => ListView.builder(
-                  itemCount: talkAddress.value.length,
-                  itemBuilder: (context, index) {
-                    final talkId = talkAddress.value[index];
-                    return TalkListItem.autoLoad(
-                      key: Key(talkId),
-                      onTap: () => Navigator.of(context).pushNamed(
-                        '/messenger_talk',
-                        arguments: talkId,
-                      ),
-                      talkId: talkId,
-                    );
-                  },
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            bottom: 10,
+            top: 20,
+            left: 15,
+            right: 15,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: asyncTalkAddresses.map(
+                  loading: (_) => Container(),
+                  error: (_) => Container(),
+                  data: (talkAddress) => ListView.builder(
+                    itemCount: talkAddress.value.length,
+                    itemBuilder: (context, index) {
+                      final talkId = talkAddress.value[index];
+                      return TalkListItem.autoLoad(
+                        key: Key(talkId),
+                        onTap: () => Navigator.of(context).pushNamed(
+                          '/messenger_talk',
+                          arguments: talkId,
+                        ),
+                        talkId: talkId,
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Row(
-              children: [
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addMessengerGroup,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addMessengerGroup'),
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.mainButtonLabel,
-                    size: 14,
+              Row(
+                children: [
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.addMessengerGroup,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('addMessengerGroup'),
+                    icon: Icon(
+                      Icons.add,
+                      color: theme.mainButtonLabel,
+                      size: 14,
+                    ),
+                    onPressed: () async {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: const CreateTalkSheet(),
+                      );
+                    },
                   ),
-                  onPressed: () async {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const CreateTalkSheet(),
-                    );
-                  },
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
