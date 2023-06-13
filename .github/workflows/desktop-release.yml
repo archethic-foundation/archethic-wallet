@@ -87,7 +87,7 @@ jobs:
         id: get_version
         run: |
           $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
-          echo "version_app=${version_str}" >> $Env:GITHUB_ENV
+          echo "version_app=${version_str}" >> $Env:GITHUB_OUTPUT
 
       - name: Archive Artifact
         run: |
