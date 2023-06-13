@@ -301,7 +301,7 @@ class _MessageCreationFormFees extends ConsumerWidget {
         )} (${CurrencyUtil.formatWithNumberOfDigits(
           currencyName,
           fiatFeeEstimation,
-          8,
+          2,
         )})',
         style: theme.textStyleSize12W100Primary,
         textAlign: TextAlign.center,
