@@ -5,6 +5,7 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class TalkListItem extends ConsumerWidget {
@@ -97,6 +98,7 @@ class _LoadedTalkListItem extends TalkListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalizations.of(context)!;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -124,7 +126,7 @@ class _LoadedTalkListItem extends TalkListItem {
               Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(
-                  '${talk.members.length} members',
+                  localizations.messengerTalkMembersCount(talk.members.length),
                   style: theme.textStyleSize10W100Primary,
                 ),
               ),

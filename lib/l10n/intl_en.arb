@@ -545,5 +545,14 @@
   "introNewMessengerTalk": "Choose a group name, and select people to invite",
   "messengerTalkAccessDescription": "Add or remove public keys that can access this talk group.",
   "messengerTalkAddAccess": "Add access",
-  "addMessengerTalkFailure": "Creation failed"
+  "addMessengerTalkFailure": "Creation failed",
+  "messengerTalkMembersCount": "{membersCount} members",
+	"@messengerTalkMembersCount": {
+	  "placeholders": {
+      "membersCount": {
+        "type": "int",
+        "format": "compact"
+      }
+	  }
+	}
 }

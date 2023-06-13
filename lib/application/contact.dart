@@ -174,7 +174,8 @@ class ContactRepository {
   }
 
   Future<Contact> getContactWithGenesisPublicKey(
-      String genesisPublicKey) async {
+    String genesisPublicKey,
+  ) async {
     return sl.get<DBHelper>().getContactWithGenesisPublicKey(genesisPublicKey);
   }
 

@@ -522,5 +522,14 @@
 	"introNewMessengerTalk": "Choisissez le nom à donner à ce groupe, ainsi que les personnes à y inviter",
 	"messengerTalkAccessDescription": "Ajoutez ou supprimez des clés publiques pouvant accéder à cette conversation.",
 	"messengerTalkAddAccess": "Ajouter un accès",
-	"addMessengerTalkFailure": "La création à échouée"
+	"addMessengerTalkFailure": "La création à échouée",
+	"messengerTalkMembersCount": "{membersCount} membres",
+	"@messengerTalkMembersCount": {
+	  "placeholders": {
+		"membersCount": {
+		  "type": "int",
+		  "format": "compact"
+		}
+	  }
+	}
 }
