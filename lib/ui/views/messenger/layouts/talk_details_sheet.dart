@@ -16,6 +16,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -36,7 +37,7 @@ class TalkDetailsSheet extends ConsumerWidget {
     final settings = ref.watch(SettingsProviders.settings);
 
     final asyncTalk = ref.watch(MessengerProviders.talk(talkAddress));
-
+    var index = 0;
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum: EdgeInsets.only(
@@ -83,31 +84,38 @@ class TalkDetailsSheet extends ConsumerWidget {
                         bottom: bottom + 80,
                       ),
                       child: Column(
-                        children: talk.value.members
-                            .map(
-                              (accessRecipient) => PublicKeyLine(
-                                talk: talk.value,
-                                accessRecipient: accessRecipient,
-                                onTap: accessRecipient.map(
-                                  contact: (contact) => () {
-                                    sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          settings.activeVibrations,
-                                        );
-
-                                    Sheets.showAppHeightNineSheet(
-                                      context: context,
-                                      ref: ref,
-                                      widget: ContactDetail(
-                                        contact: contact.contact,
-                                      ),
+                        children: talk.value.members.map((accessRecipient) {
+                          index++;
+                          return PublicKeyLine(
+                            talk: talk.value,
+                            accessRecipient: accessRecipient,
+                            onTap: accessRecipient.map(
+                              contact: (contact) => () {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      settings.activeVibrations,
                                     );
-                                  },
-                                  publicKey: (_) => null,
-                                ),
-                              ),
-                            )
-                            .toList(),
+
+                                Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  ref: ref,
+                                  widget: ContactDetail(
+                                    contact: contact.contact,
+                                  ),
+                                );
+                              },
+                              publicKey: (_) => null,
+                            ),
+                          )
+                              .animate(delay: (100 * index).ms)
+                              .fadeIn(duration: 900.ms, delay: 200.ms)
+                              .shimmer(
+                                  blendMode: BlendMode.srcOver,
+                                  color: Colors.white12)
+                              .move(
+                                  begin: const Offset(-16, 0),
+                                  curve: Curves.easeOutQuad);
+                        }).toList(),
                       ),
                     ),
                   ),
