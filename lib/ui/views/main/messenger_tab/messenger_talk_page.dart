@@ -51,7 +51,6 @@ class MessengerTalkPage extends ConsumerWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -230,6 +229,7 @@ class _MessageTextField extends ConsumerWidget {
     return Stack(
       children: [
         TextField(
+          autofocus: true,
           maxLines: null,
           controller: textEditingController,
           onChanged: (value) => ref
