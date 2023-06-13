@@ -1,8 +1,8 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/components/create_talk_sheet.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/components/talk_list_item.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/create_talk_sheet.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/talk_list_item.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';

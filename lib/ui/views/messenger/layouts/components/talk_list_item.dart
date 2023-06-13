@@ -1,7 +1,7 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

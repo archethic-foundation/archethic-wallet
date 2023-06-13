@@ -7,7 +7,7 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';

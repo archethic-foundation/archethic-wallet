@@ -1,4 +1,4 @@
-import 'package:aewallet/ui/views/main/messenger_tab/components/talk_list_item.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/talk_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 

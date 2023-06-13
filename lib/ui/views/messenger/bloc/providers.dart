@@ -9,7 +9,7 @@ import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/components/add_public_key_textfield_pk.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/add_public_key_textfield_pk.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
