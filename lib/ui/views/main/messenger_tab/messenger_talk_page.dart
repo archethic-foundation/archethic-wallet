@@ -148,15 +148,12 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
           Row(
             children: [
               Expanded(
-                child: TextField(
-                  controller: textEditingController,
-                  onChanged: (value) => ref
-                      .read(
-                        MessengerProviders.messageCreationForm(
-                          widget.talkAddress,
-                        ).notifier,
-                      )
-                      .setText(value),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 120),
+                  child: _MessageTextField(
+                    talkAddress: widget.talkAddress,
+                    textEditingController: textEditingController,
+                  ),
                 ),
               ),
               if (isCreating)
@@ -213,6 +210,47 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
           _MessageCreationFormFees(talkAddress: widget.talkAddress),
         ],
       ),
+    );
+  }
+}
+
+class _MessageTextField extends ConsumerWidget {
+  const _MessageTextField({
+    required this.talkAddress,
+    required this.textEditingController,
+  });
+
+  final TextEditingController textEditingController;
+  final String talkAddress;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Stack(
+      children: [
+        TextField(
+          maxLines: null,
+          controller: textEditingController,
+          onChanged: (value) => ref
+              .read(
+                MessengerProviders.messageCreationForm(
+                  talkAddress,
+                ).notifier,
+              )
+              .setText(value),
+        ),
+        Positioned(
+          bottom: 1,
+          child: Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              gradient: theme.gradient,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
