@@ -24,11 +24,13 @@ class MessengerRepository implements MessengerRepositoryInterface {
   final _remoteDatasource = TalkRemoteDatasource();
 
   @override
-  Future<Result<List<String>, Failure>> getTalkAddresses() async =>
+  Future<Result<List<String>, Failure>> getTalkAddresses({
+    required Account owner,
+  }) async =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        return localDatasource.getTalkIds();
+        return localDatasource.getTalkAddresses(owner.genesisAddress);
       });
 
   String _serviceName(Account account) =>
@@ -41,31 +43,39 @@ class MessengerRepository implements MessengerRepositoryInterface {
     required Account creator,
     required LoggedInSession session,
     required String groupName,
-  }) {
-    return Result.guard(() async {
-      final localDatasource = await _localDatasource;
-
-      final newTalk = await _remoteDatasource.createTalk(
-        keychain: session.wallet.keychainSecuredInfos.toKeychain(),
-        adminAddress: creator.lastAddress!,
-        admins: admins,
-        apiService: sl.get<ApiService>(),
-        groupName: groupName,
-        serviceName: _serviceName(creator),
-        members: members,
-      );
-      await localDatasource.addTalk(newTalk);
-
-      return newTalk;
-    });
-  }
-
-  @override
-  Future<Result<Talk, Failure>> getTalk(String talkAddress) =>
+  }) =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        final talk = await localDatasource.getTalk(talkAddress);
+        final newTalk = await _remoteDatasource.createTalk(
+          keychain: session.wallet.keychainSecuredInfos.toKeychain(),
+          adminAddress: creator.lastAddress!,
+          admins: admins,
+          apiService: sl.get<ApiService>(),
+          groupName: groupName,
+          serviceName: _serviceName(creator),
+          members: members,
+        );
+        await localDatasource.addTalk(
+          ownerAddress: creator.genesisAddress,
+          talk: newTalk,
+        );
+
+        return newTalk;
+      });
+
+  @override
+  Future<Result<Talk, Failure>> getTalk({
+    required Account owner,
+    required String talkAddress,
+  }) =>
+      Result.guard(() async {
+        final localDatasource = await _localDatasource;
+
+        final talk = await localDatasource.getTalk(
+          ownerAddress: owner.genesisAddress,
+          talkAddress: talkAddress,
+        );
         if (talk == null) {
           throw const Failure.serviceNotFound();
         }
@@ -88,8 +98,6 @@ class MessengerRepository implements MessengerRepositoryInterface {
             scAddress: talkAddress,
             readerKeyPair: keyPair.toKeyPair,
           );
-
-          // TODO(Chralu): save locally
 
           return newTalk
               .map(

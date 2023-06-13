@@ -14,18 +14,45 @@ class HiveTalkDatasource with SecuredHiveMixin {
     return HiveTalkDatasource._(encryptedBox);
   }
 
-  List<String> getTalkIds() {
-    return _talkBox.keys.whereType<String>().toList();
+  String _talkKey({
+    required String ownerAddress,
+    required String talkAddress,
+  }) =>
+      '$ownerAddress-$talkAddress';
+
+  List<String> getTalkAddresses(String ownerAddress) {
+    final ownerPrefix = '$ownerAddress-';
+    return _talkBox.keys
+        .whereType<String>()
+        .where((element) {
+          return element.startsWith(ownerPrefix);
+        })
+        .map(
+          (e) => e.substring(ownerPrefix.length),
+        )
+        .toList();
   }
 
-  Future<void> addTalk(Talk newTalk) async {
-    // await _talkBox.clear();
-    await _talkBox.put(newTalk.address, newTalk);
+  Future<void> addTalk({
+    required String ownerAddress,
+    required Talk talk,
+  }) async {
+    await _talkBox.put(
+      _talkKey(ownerAddress: ownerAddress, talkAddress: talk.address),
+      talk,
+    );
   }
 
-  Future<Talk?> getTalk(String talkId) async {
-    return _talkBox.get(talkId);
-  }
+  Future<Talk?> getTalk({
+    required String ownerAddress,
+    required String talkAddress,
+  }) async =>
+      _talkBox.get(
+        _talkKey(
+          ownerAddress: ownerAddress,
+          talkAddress: talkAddress,
+        ),
+      );
 
   Future<void> clear() async {
     await _talkBox.clear();

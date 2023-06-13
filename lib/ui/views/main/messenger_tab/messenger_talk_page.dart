@@ -104,7 +104,6 @@ class MessengerTalkPage extends ConsumerWidget {
 class _MessageSendForm extends ConsumerStatefulWidget {
   const _MessageSendForm({
     required this.talkAddress,
-    super.key,
   });
 
   final String talkAddress;
@@ -208,7 +207,6 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
 class _MessageCreationFormFees extends ConsumerWidget {
   const _MessageCreationFormFees({
     required this.talkAddress,
-    super.key,
   });
 
   final String talkAddress;
@@ -233,7 +231,6 @@ class _MessageCreationFormFees extends ConsumerWidget {
 class _MessagesList extends ConsumerWidget {
   const _MessagesList({
     required this.talkAddress,
-    super.key,
   });
 
   final String talkAddress;
