@@ -9,7 +9,7 @@ import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
-import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
