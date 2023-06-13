@@ -1,11 +1,14 @@
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/messenger_tab/bloc/providers.dart';
-import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
+import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -15,6 +18,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MessengerTalkPage extends ConsumerWidget {
   const MessengerTalkPage({
@@ -171,23 +175,32 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                 )
               else
                 TextButton.icon(
-                  onPressed: () async {
-                    await ref
-                        .read(
-                          MessengerProviders.messageCreationForm(
-                            widget.talkAddress,
-                          ).notifier,
-                        )
-                        .createMessage();
+                  onPressed: ref
+                          .watch(
+                            MessengerProviders.messageCreationForm(
+                              widget.talkAddress,
+                            ),
+                          )
+                          .text
+                          .isEmpty
+                      ? null
+                      : () async {
+                          await ref
+                              .read(
+                                MessengerProviders.messageCreationForm(
+                                  widget.talkAddress,
+                                ).notifier,
+                              )
+                              .createMessage();
 
-                    textEditingController.text = ref
-                        .read(
-                          MessengerProviders.messageCreationForm(
-                            widget.talkAddress,
-                          ),
-                        )
-                        .text;
-                  },
+                          textEditingController.text = ref
+                              .read(
+                                MessengerProviders.messageCreationForm(
+                                  widget.talkAddress,
+                                ),
+                              )
+                              .text;
+                        },
                   icon: Icon(
                     Icons.send,
                     color: theme.text,
@@ -213,17 +226,63 @@ class _MessageCreationFormFees extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
     final text =
         ref.watch(MessengerProviders.messageCreationForm(talkAddress)).text;
-    return FeeInfos(
-      asyncFeeEstimation: ref.watch(
-        MessengerProviders.messageCreationFees(
-          talkAddress,
-          text,
-        ),
+
+    if (text.isEmpty) return const SizedBox(height: 12);
+
+    final nativeFeeEstimation = ref
+        .watch(
+          MessengerProviders.messageCreationFees(
+            talkAddress,
+            text,
+          ),
+        )
+        .valueOrNull;
+
+    if (nativeFeeEstimation == null) {
+      return LoadingAnimationWidget.prograssiveDots(
+        color: theme.text!,
+        size: 12,
+      );
+    }
+
+    final fiatFeeEstimation = ref
+        .watch(
+          MarketPriceProviders.convertedToSelectedCurrency(
+            nativeAmount: nativeFeeEstimation,
+          ),
+        )
+        .valueOrNull;
+
+    if (fiatFeeEstimation == null) {
+      return LoadingAnimationWidget.prograssiveDots(
+        color: theme.text!,
+        size: 12,
+      );
+    }
+
+    final currencyName = ref
+        .watch(
+          SettingsProviders.settings.select((settings) => settings.currency),
+        )
+        .name;
+
+    return SizedBox(
+      height: 12,
+      child: Text(
+        '+ ${AmountFormatters.standardSmallValue(
+          nativeFeeEstimation,
+          AccountBalance.cryptoCurrencyLabel,
+        )} (${CurrencyUtil.formatWithNumberOfDigits(
+          currencyName,
+          fiatFeeEstimation,
+          8,
+        )})',
+        style: theme.textStyleSize12W100Primary,
+        textAlign: TextAlign.center,
       ),
-      estimatedFeesNote: localizations.estimatedFeesNote,
     );
   }
 }
