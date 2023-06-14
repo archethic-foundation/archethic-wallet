@@ -144,19 +144,21 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     });
   }
 
+  set _pagingController(PagingController<int, TalkMessage> controller) {
+    state.dispose();
+
+    _addPageRequestListener(controller);
+    state = controller;
+  }
+
   void addMessage(TalkMessage messageCreated) {
-    final previousPaginationController = state;
-    state = PagingController.fromValue(
+    _pagingController = PagingController<int, TalkMessage>.fromValue(
       PagingState(
         itemList: [messageCreated, ...state.itemList ?? []],
-        nextPageKey: (state.nextPageKey ?? 0) + 1,
+        nextPageKey: state.nextPageKey == null ? null : state.nextPageKey! + 1,
       ),
       firstPageKey: 0,
     );
-
-    _addPageRequestListener(state);
-
-    previousPaginationController.dispose();
   }
 }
 
