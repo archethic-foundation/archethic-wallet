@@ -18,7 +18,7 @@ class TalkAdapter extends TypeAdapter<_$_Talk> {
     };
     return _$_Talk(
       address: fields[0] as String,
-      name: fields[1] as String,
+      name: fields[1] as String?,
       members: (fields[2] as List).cast<AccessRecipient>(),
       admins: (fields[3] as List).cast<AccessRecipient>(),
       creationDate: fields[4] as DateTime,

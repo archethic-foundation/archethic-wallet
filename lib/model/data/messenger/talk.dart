@@ -12,7 +12,7 @@ class Talk with _$Talk {
   @HiveType(typeId: HiveTypeIds.talk)
   const factory Talk({
     @HiveField(0) required String address,
-    @HiveField(1) required String name,
+    @HiveField(1) String? name,
     @HiveField(2) required List<AccessRecipient> members,
     @HiveField(3) required List<AccessRecipient> admins,
     @HiveField(4) required DateTime creationDate,
@@ -20,6 +20,11 @@ class Talk with _$Talk {
   }) = _Talk;
 
   DateTime get updateDate => lastMessage?.date ?? creationDate;
+
+  String get displayName {
+    if (name != null && name!.isNotEmpty) return name!;
+    return members.first.name;
+  }
 
   const Talk._();
 }

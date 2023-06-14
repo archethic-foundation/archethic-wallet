@@ -19,7 +19,7 @@ mixin _$Talk {
   @HiveField(0)
   String get address => throw _privateConstructorUsedError;
   @HiveField(1)
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @HiveField(2)
   List<AccessRecipient> get members => throw _privateConstructorUsedError;
   @HiveField(3)
@@ -40,7 +40,7 @@ abstract class $TalkCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) String address,
-      @HiveField(1) String name,
+      @HiveField(1) String? name,
       @HiveField(2) List<AccessRecipient> members,
       @HiveField(3) List<AccessRecipient> admins,
       @HiveField(4) DateTime creationDate,
@@ -63,7 +63,7 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
   @override
   $Res call({
     Object? address = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? members = null,
     Object? admins = null,
     Object? creationDate = null,
@@ -74,10 +74,10 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       members: null == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
@@ -118,7 +118,7 @@ abstract class _$$_TalkCopyWith<$Res> implements $TalkCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) String address,
-      @HiveField(1) String name,
+      @HiveField(1) String? name,
       @HiveField(2) List<AccessRecipient> members,
       @HiveField(3) List<AccessRecipient> admins,
       @HiveField(4) DateTime creationDate,
@@ -138,7 +138,7 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
   @override
   $Res call({
     Object? address = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? members = null,
     Object? admins = null,
     Object? creationDate = null,
@@ -149,10 +149,10 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       members: null == members
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
@@ -179,7 +179,7 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
 class _$_Talk extends _Talk {
   const _$_Talk(
       {@HiveField(0) required this.address,
-      @HiveField(1) required this.name,
+      @HiveField(1) this.name,
       @HiveField(2) required final List<AccessRecipient> members,
       @HiveField(3) required final List<AccessRecipient> admins,
       @HiveField(4) required this.creationDate,
@@ -193,7 +193,7 @@ class _$_Talk extends _Talk {
   final String address;
   @override
   @HiveField(1)
-  final String name;
+  final String? name;
   final List<AccessRecipient> _members;
   @override
   @HiveField(2)
@@ -259,7 +259,7 @@ class _$_Talk extends _Talk {
 abstract class _Talk extends Talk {
   const factory _Talk(
       {@HiveField(0) required final String address,
-      @HiveField(1) required final String name,
+      @HiveField(1) final String? name,
       @HiveField(2) required final List<AccessRecipient> members,
       @HiveField(3) required final List<AccessRecipient> admins,
       @HiveField(4) required final DateTime creationDate,
@@ -271,7 +271,7 @@ abstract class _Talk extends Talk {
   String get address;
   @override
   @HiveField(1)
-  String get name;
+  String? get name;
   @override
   @HiveField(2)
   List<AccessRecipient> get members;

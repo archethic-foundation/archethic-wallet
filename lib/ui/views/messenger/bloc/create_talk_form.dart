@@ -18,7 +18,7 @@ class CreateTalkFormState with _$CreateTalkFormState {
   }) = _CreateTalkFormState;
   const CreateTalkFormState._();
 
-  bool get canSubmit => name.isNotEmpty && members.isNotEmpty;
+  bool get canSubmit => members.isNotEmpty;
 }
 
 class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
