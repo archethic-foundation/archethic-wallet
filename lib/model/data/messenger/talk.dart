@@ -18,6 +18,7 @@ class Talk with _$Talk {
     @HiveField(4) required DateTime creationDate,
     @HiveField(5) TalkMessage? lastMessage,
   }) = _Talk;
+  const Talk._();
 
   DateTime get updateDate => lastMessage?.date ?? creationDate;
 
@@ -25,6 +26,4 @@ class Talk with _$Talk {
     if (name != null && name!.isNotEmpty) return name!;
     return members.first.name;
   }
-
-  const Talk._();
 }
