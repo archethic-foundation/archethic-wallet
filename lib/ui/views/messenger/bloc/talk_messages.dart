@@ -51,6 +51,14 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
       ref
           .read(_paginatedTalkMessagesNotifierProvider(talkAddress).notifier)
           .addMessage(messageCreated);
+
+      await repository.saveMessage(
+        talkAddress: talkAddress,
+        creator: selectedAccount,
+        message: messageCreated,
+      );
+      ref.invalidate(_talkProvider(talkAddress));
+
       state = state.copyWith(
         text: '',
         isCreating: false,
@@ -101,8 +109,9 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
 
   @override
   PagingController<int, TalkMessage> build(String talkAddress) {
-    final pagingController =
-        PagingController<int, TalkMessage>(firstPageKey: 0);
+    final pagingController = PagingController<int, TalkMessage>(
+      firstPageKey: 0,
+    );
     _addPageRequestListener(pagingController);
 
     ref.onDispose(() {

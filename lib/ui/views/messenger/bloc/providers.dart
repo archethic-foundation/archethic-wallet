@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/add_public_key_textfield_pk.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -21,30 +22,46 @@ part 'providers.g.dart';
 part 'talk_messages.dart';
 
 @riverpod
-Future<Talk> _talk(_TalkRef ref, String talkAddress) async {
+Future<Iterable<Talk>> _talks(_TalksRef ref) async {
   final selectedAccount =
       await ref.watch(AccountProviders.selectedAccount.future);
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  final repository = ref.watch(MessengerProviders._messengerRepository);
+
+  final talkAddresses = await repository
+      .getTalkAddresses(
+        owner: selectedAccount,
+      )
+      .valueOrThrow;
+
+  return Future.wait(
+    talkAddresses.map(
+      (talkAddress) => ref.watch(_talkProvider(talkAddress).future),
+    ),
+  );
+}
+
+@riverpod
+Future<Talk> _talk(_TalkRef ref, String address) async {
+  final selectedAccount = await ref.watch(
+    AccountProviders.selectedAccount.future,
+  );
   if (selectedAccount == null) throw const Failure.loggedOut();
 
   return ref
       .watch(MessengerProviders._messengerRepository)
       .getTalk(
         owner: selectedAccount,
-        talkAddress: talkAddress,
+        talkAddress: address,
       )
       .valueOrThrow;
 }
 
 @riverpod
-Future<List<String>> _talkAddresses(_TalkAddressesRef ref) async {
-  final selectedAccount =
-      await ref.watch(AccountProviders.selectedAccount.future);
-  if (selectedAccount == null) throw const Failure.loggedOut();
-
-  return ref
-      .watch(MessengerProviders._messengerRepository)
-      .getTalkAddresses(owner: selectedAccount)
-      .valueOrThrow;
+Future<List<Talk>> _sortedTalks(_SortedTalksRef ref) async {
+  final talks = await ref.watch(_talksProvider.future);
+  return talks.sorted((a, b) => b.updateDate.compareTo(a.updateDate));
 }
 
 abstract class MessengerProviders {
@@ -52,8 +69,8 @@ abstract class MessengerProviders {
     (ref) => MessengerRepository(),
   );
 
-  static final talkAddresses = _talkAddressesProvider;
-
+  static final talks = _talksProvider;
+  static final sortedTalks = _sortedTalksProvider;
   static const talk = _talkProvider;
   static const messages = _talkMessagesProvider;
   static const paginatedMessages = _paginatedTalkMessagesNotifierProvider;
@@ -65,8 +82,7 @@ abstract class MessengerProviders {
   static Future<void> reset(Ref ref) async {
     await ref.read(_messengerRepository).clear();
     ref
-      ..invalidate(talkAddresses)
-      ..invalidate(talk)
+      ..invalidate(talks)
       ..invalidate(talkCreationForm)
       ..invalidate(messages);
   }

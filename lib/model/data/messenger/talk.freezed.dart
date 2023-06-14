@@ -24,6 +24,10 @@ mixin _$Talk {
   List<AccessRecipient> get members => throw _privateConstructorUsedError;
   @HiveField(3)
   List<AccessRecipient> get admins => throw _privateConstructorUsedError;
+  @HiveField(4)
+  DateTime get creationDate => throw _privateConstructorUsedError;
+  @HiveField(5)
+  TalkMessage? get lastMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TalkCopyWith<Talk> get copyWith => throw _privateConstructorUsedError;
@@ -38,7 +42,11 @@ abstract class $TalkCopyWith<$Res> {
       {@HiveField(0) String address,
       @HiveField(1) String name,
       @HiveField(2) List<AccessRecipient> members,
-      @HiveField(3) List<AccessRecipient> admins});
+      @HiveField(3) List<AccessRecipient> admins,
+      @HiveField(4) DateTime creationDate,
+      @HiveField(5) TalkMessage? lastMessage});
+
+  $TalkMessageCopyWith<$Res>? get lastMessage;
 }
 
 /// @nodoc
@@ -58,6 +66,8 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
     Object? name = null,
     Object? members = null,
     Object? admins = null,
+    Object? creationDate = null,
+    Object? lastMessage = freezed,
   }) {
     return _then(_value.copyWith(
       address: null == address
@@ -76,7 +86,27 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
           ? _value.admins
           : admins // ignore: cast_nullable_to_non_nullable
               as List<AccessRecipient>,
+      creationDate: null == creationDate
+          ? _value.creationDate
+          : creationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      lastMessage: freezed == lastMessage
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as TalkMessage?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TalkMessageCopyWith<$Res>? get lastMessage {
+    if (_value.lastMessage == null) {
+      return null;
+    }
+
+    return $TalkMessageCopyWith<$Res>(_value.lastMessage!, (value) {
+      return _then(_value.copyWith(lastMessage: value) as $Val);
+    });
   }
 }
 
@@ -90,7 +120,12 @@ abstract class _$$_TalkCopyWith<$Res> implements $TalkCopyWith<$Res> {
       {@HiveField(0) String address,
       @HiveField(1) String name,
       @HiveField(2) List<AccessRecipient> members,
-      @HiveField(3) List<AccessRecipient> admins});
+      @HiveField(3) List<AccessRecipient> admins,
+      @HiveField(4) DateTime creationDate,
+      @HiveField(5) TalkMessage? lastMessage});
+
+  @override
+  $TalkMessageCopyWith<$Res>? get lastMessage;
 }
 
 /// @nodoc
@@ -106,6 +141,8 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
     Object? name = null,
     Object? members = null,
     Object? admins = null,
+    Object? creationDate = null,
+    Object? lastMessage = freezed,
   }) {
     return _then(_$_Talk(
       address: null == address
@@ -124,6 +161,14 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
           ? _value._admins
           : admins // ignore: cast_nullable_to_non_nullable
               as List<AccessRecipient>,
+      creationDate: null == creationDate
+          ? _value.creationDate
+          : creationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      lastMessage: freezed == lastMessage
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as TalkMessage?,
     ));
   }
 }
@@ -136,7 +181,9 @@ class _$_Talk extends _Talk {
       {@HiveField(0) required this.address,
       @HiveField(1) required this.name,
       @HiveField(2) required final List<AccessRecipient> members,
-      @HiveField(3) required final List<AccessRecipient> admins})
+      @HiveField(3) required final List<AccessRecipient> admins,
+      @HiveField(4) required this.creationDate,
+      @HiveField(5) this.lastMessage})
       : _members = members,
         _admins = admins,
         super._();
@@ -166,8 +213,15 @@ class _$_Talk extends _Talk {
   }
 
   @override
+  @HiveField(4)
+  final DateTime creationDate;
+  @override
+  @HiveField(5)
+  final TalkMessage? lastMessage;
+
+  @override
   String toString() {
-    return 'Talk(address: $address, name: $name, members: $members, admins: $admins)';
+    return 'Talk(address: $address, name: $name, members: $members, admins: $admins, creationDate: $creationDate, lastMessage: $lastMessage)';
   }
 
   @override
@@ -178,7 +232,11 @@ class _$_Talk extends _Talk {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
-            const DeepCollectionEquality().equals(other._admins, _admins));
+            const DeepCollectionEquality().equals(other._admins, _admins) &&
+            (identical(other.creationDate, creationDate) ||
+                other.creationDate == creationDate) &&
+            (identical(other.lastMessage, lastMessage) ||
+                other.lastMessage == lastMessage));
   }
 
   @override
@@ -187,7 +245,9 @@ class _$_Talk extends _Talk {
       address,
       name,
       const DeepCollectionEquality().hash(_members),
-      const DeepCollectionEquality().hash(_admins));
+      const DeepCollectionEquality().hash(_admins),
+      creationDate,
+      lastMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -201,7 +261,9 @@ abstract class _Talk extends Talk {
       {@HiveField(0) required final String address,
       @HiveField(1) required final String name,
       @HiveField(2) required final List<AccessRecipient> members,
-      @HiveField(3) required final List<AccessRecipient> admins}) = _$_Talk;
+      @HiveField(3) required final List<AccessRecipient> admins,
+      @HiveField(4) required final DateTime creationDate,
+      @HiveField(5) final TalkMessage? lastMessage}) = _$_Talk;
   const _Talk._() : super._();
 
   @override
@@ -216,6 +278,12 @@ abstract class _Talk extends Talk {
   @override
   @HiveField(3)
   List<AccessRecipient> get admins;
+  @override
+  @HiveField(4)
+  DateTime get creationDate;
+  @override
+  @HiveField(5)
+  TalkMessage? get lastMessage;
   @override
   @JsonKey(ignore: true)
   _$$_TalkCopyWith<_$_Talk> get copyWith => throw _privateConstructorUsedError;

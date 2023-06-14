@@ -1,11 +1,12 @@
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class TalkListItem extends ConsumerWidget {
@@ -98,7 +99,6 @@ class _LoadedTalkListItem extends TalkListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalizations.of(context)!;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -115,24 +115,70 @@ class _LoadedTalkListItem extends TalkListItem {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: AutoSizeText(
-                  talk.name,
-                  style: theme.textStyleSize12W600Primary,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    talk.name,
+                    style: theme.textStyleSize12W600Primary,
+                  ),
+                  Text(
+                    talk.updateDate.format(context),
+                    style: theme.textStyleSize10W100Primary,
+                  ),
+                ],
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(
-                  localizations.messengerTalkMembersCount(talk.members.length),
-                  style: theme.textStyleSize10W100Primary,
+              if (talk.lastMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: _LastMessagePreview(message: talk.lastMessage!),
                 ),
-              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _LastMessagePreview extends ConsumerWidget {
+  const _LastMessagePreview({
+    required this.message,
+  });
+
+  final TalkMessage message;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    final contactName = ref
+        .watch(
+          ContactProviders.getContactWithGenesisPublicKey(
+            message.senderGenesisPublicKey,
+          ),
+        )
+        .maybeMap(
+          orElse: () => message.senderGenesisPublicKey,
+          data: (contact) => contact.value.name,
+        );
+
+    return RichText(
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      text: TextSpan(
+        children: <TextSpan>[
+          TextSpan(
+            text: '$contactName : ',
+            style: theme.textStyleSize10W600Primary,
+          ),
+          TextSpan(
+            text: message.content,
+            style: theme.textStyleSize10W400Primary,
+          ),
+        ],
       ),
     );
   }

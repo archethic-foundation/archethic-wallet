@@ -30,6 +30,7 @@ class TalkRemoteDatasource with MessengerMixin {
     );
 
     return Talk(
+      creationDate: DateTime.now(),
       address: transaction.address!.address!,
       name: groupName,
       members: members,
