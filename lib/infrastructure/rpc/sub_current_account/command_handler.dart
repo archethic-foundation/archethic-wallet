@@ -16,8 +16,16 @@ class RPCSubscribeCurrentAccountCommandHandler extends RPCSubscriptionHandler<
       );
 
   @override
-  Map<String, dynamic> notificationFromModel(covariant Account model) => {
-        'name': model.name,
-        'genesisAddress': model.genesisAddress,
+  Map<String, dynamic> notificationFromModel(covariant Account? model) {
+    if (model == null) {
+      return {
+        'name': '',
+        'genesisAddress': '',
       };
+    }
+    return {
+      'name': model.name,
+      'genesisAddress': model.genesisAddress,
+    };
+  }
 }
