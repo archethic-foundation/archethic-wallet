@@ -102,16 +102,19 @@ class _MessageSendForm extends ConsumerStatefulWidget {
 
 class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
   late TextEditingController textEditingController;
+  late FocusNode messageFocusNode;
 
   @override
   void initState() {
     textEditingController = TextEditingController();
+    messageFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
     textEditingController.dispose();
+    messageFocusNode.dispose();
     super.dispose();
   }
 
@@ -137,6 +140,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                   child: _MessageTextField(
                     talkAddress: widget.talkAddress,
                     textEditingController: textEditingController,
+                    focusNode: messageFocusNode,
                   ),
                 ),
               ),
@@ -181,6 +185,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                                 ),
                               )
                               .text;
+                          messageFocusNode.requestFocus();
                         },
                   icon: Icon(
                     Icons.send,
@@ -202,10 +207,12 @@ class _MessageTextField extends ConsumerWidget {
   const _MessageTextField({
     required this.talkAddress,
     required this.textEditingController,
+    required this.focusNode,
   });
 
   final TextEditingController textEditingController;
   final String talkAddress;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -217,6 +224,7 @@ class _MessageTextField extends ConsumerWidget {
           autofocus: true,
           maxLines: null,
           controller: textEditingController,
+          focusNode: focusNode,
           onChanged: (value) => ref
               .read(
                 MessengerProviders.messageCreationForm(
