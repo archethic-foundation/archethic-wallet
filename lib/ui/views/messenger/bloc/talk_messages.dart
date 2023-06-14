@@ -49,9 +49,8 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
           .valueOrThrow;
 
       ref
-          .read(_talkMessagesNotifierProvider(talkAddress).notifier)
+          .read(_paginatedTalkMessagesNotifierProvider(talkAddress).notifier)
           .addMessage(messageCreated);
-
       state = state.copyWith(
         text: '',
         isCreating: false,
@@ -97,29 +96,81 @@ Future<double> _messageCreationFees(
 }
 
 @riverpod
-class _TalkMessagesNotifier extends _$TalkMessagesNotifier {
+class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
+  static const _pageSize = 10;
+
   @override
-  FutureOr<List<TalkMessage>> build(String talkAddress) async {
-    final repository = ref.watch(MessengerProviders._messengerRepository);
+  PagingController<int, TalkMessage> build(String talkAddress) {
+    final pagingController =
+        PagingController<int, TalkMessage>(firstPageKey: 0);
+    _addPageRequestListener(pagingController);
 
-    final account = await ref.watch(AccountProviders.selectedAccount.future);
-
-    return await repository
-        .getMessages(
-          reader: account!,
-          session: ref.watch(SessionProviders.session).loggedIn!,
-          talkAddress: talkAddress,
-        )
-        .valueOrThrow;
+    ref.onDispose(() {
+      state.dispose();
+    });
+    return pagingController;
   }
 
-  void addMessage(TalkMessage message) {
-    final loadedState = state.valueOrNull;
-    if (loadedState == null) return;
+  void _addPageRequestListener(
+    PagingController<int, TalkMessage> pagingController,
+  ) {
+    pagingController.addPageRequestListener((offset) async {
+      final nextPageItems = await ref.read(
+        MessengerProviders.messages(
+          talkAddress,
+          offset,
+          _pageSize,
+        ).future,
+      );
 
-    state = AsyncValue.data([
-      ...loadedState,
-      message,
-    ]);
+      final isLastPage = nextPageItems.length < _pageSize;
+      if (isLastPage) {
+        pagingController.appendLastPage(nextPageItems);
+      } else {
+        pagingController.appendPage(
+          nextPageItems,
+          offset + nextPageItems.length,
+        );
+      }
+    });
   }
+
+  void addMessage(TalkMessage messageCreated) {
+    final previousPaginationController = state;
+    state = PagingController.fromValue(
+      PagingState(
+        itemList: [messageCreated, ...state.itemList ?? []],
+        nextPageKey: (state.nextPageKey ?? 0) + 1,
+      ),
+      firstPageKey: 0,
+    );
+
+    _addPageRequestListener(state);
+
+    previousPaginationController.dispose();
+  }
+}
+
+@riverpod
+Future<List<TalkMessage>> _talkMessages(
+  _TalkMessagesRef ref,
+  String talkAddress,
+  int offset,
+  int pageSize,
+) async {
+  final repository = ref.watch(MessengerProviders._messengerRepository);
+
+  final account = await ref.watch(AccountProviders.selectedAccount.future);
+
+  final messages = await repository
+      .getMessages(
+        reader: account!,
+        session: ref.watch(SessionProviders.session).loggedIn!,
+        talkAddress: talkAddress,
+        pagingOffset: offset,
+        limit: pageSize,
+      )
+      .valueOrThrow;
+
+  return messages;
 }

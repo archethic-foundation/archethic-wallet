@@ -14,6 +14,7 @@ import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MessengerTalkPage extends ConsumerWidget {
@@ -93,6 +94,7 @@ class _MessageSendForm extends ConsumerStatefulWidget {
   });
 
   final String talkAddress;
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       __MessageSendFormState();
@@ -312,61 +314,53 @@ class _MessagesList extends ConsumerWidget {
   const _MessagesList({
     required this.talkAddress,
   });
-
   final String talkAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final pagingController =
+        ref.watch(MessengerProviders.paginatedMessages(talkAddress));
 
     if (me == null) return Container();
 
-    final talkMessages = ref
-        .watch(
-          MessengerProviders.messages(talkAddress),
-        )
-        .valueOrNull;
-
-    if (talkMessages == null) return Container();
-    talkMessages.sort(
-      (a, b) => a.date.compareTo(b.date),
-    );
-    return ListView.builder(
+    return PagedListView(
+      pagingController: pagingController,
       shrinkWrap: true,
-      itemCount: talkMessages.length,
       reverse: true,
-      itemBuilder: (context, index) {
-        final message = talkMessages.reversed.elementAt(index);
-        final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
+      builderDelegate: PagedChildBuilderDelegate<TalkMessage>(
+        itemBuilder: (context, message, index) {
+          final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
 
-        if (isSentByMe) {
+          if (isSentByMe) {
+            return Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 42, right: 8, bottom: 8),
+                child: _MessageItem(
+                  key: Key(message.address),
+                  color: theme.background!,
+                  message: message,
+                  showSender: false,
+                ),
+              ),
+            );
+          }
           return Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 42, right: 8, bottom: 8),
+              padding: const EdgeInsets.only(left: 8, right: 42, bottom: 8),
               child: _MessageItem(
                 key: Key(message.address),
-                color: theme.background!,
+                color: theme.iconDataWidgetIconBackground!,
                 message: message,
-                showSender: false,
+                showSender: true,
               ),
             ),
           );
-        }
-        return Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, right: 42, bottom: 8),
-            child: _MessageItem(
-              key: Key(message.address),
-              color: theme.iconDataWidgetIconBackground!,
-              message: message,
-              showSender: true,
-            ),
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }

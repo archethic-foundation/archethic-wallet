@@ -57,6 +57,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
 =======
       resolved-ref: "99af677ee31677d05f35c35450c2242c1c3d38ec"
@@ -67,6 +68,9 @@ packages:
 =======
       resolved-ref: e842a549dd50353707cff1cc6fc0301e686773e5
 >>>>>>> 4c1ed68b (GenesisPubKey management to display contact's name)
+=======
+      resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
+>>>>>>> 8809807a (:sparkles: Messages pagination.)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.2.0"
@@ -1147,6 +1151,7 @@ packages:
       sha256: "7c7b96bb9413a9c28229e717e6fd1e3edd1cc5569c1778fcca060ecf729b65ee"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "2.8.0"
   image_picker_windows:
     dependency: transitive
@@ -1156,6 +1161,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
+=======
+    version: "2.6.3"
+  infinite_scroll_pagination:
+    dependency: "direct main"
+    description:
+      name: infinite_scroll_pagination
+      sha256: "9517328f4e373f08f57dbb11c5aac5b05554142024d6b60c903f3b73476d52db"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
+>>>>>>> 8809807a (:sparkles: Messages pagination.)
   integration_test:
     dependency: "direct dev"
     description: flutter
@@ -1781,6 +1797,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliver_tools:
+    dependency: transitive
+    description:
+      name: sliver_tools
+      sha256: ccdc502098a8bfa07b3ec582c282620031481300035584e1bb3aca296a505e8c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.10"
   source_gen:
     dependency: transitive
     description:
