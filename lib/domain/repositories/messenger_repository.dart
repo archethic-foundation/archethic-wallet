@@ -28,6 +28,8 @@ abstract class MessengerRepositoryInterface {
     required Account reader,
     required LoggedInSession session,
     required String talkAddress,
+    int limit = 0,
+    int pagingOffset = 0,
   });
 
   Future<Result<TalkMessage, Failure>> sendMessage({

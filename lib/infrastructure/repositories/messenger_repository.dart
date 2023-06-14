@@ -87,25 +87,31 @@ class MessengerRepository implements MessengerRepositoryInterface {
     required Account reader,
     required LoggedInSession session,
     required String talkAddress,
+    int limit = 0,
+    int pagingOffset = 0,
   }) async =>
       Result.guard(
         () async {
           final keyPair = session.wallet.keychainSecuredInfos
               .services[_serviceName(reader)]!.keyPair!;
 
-          final newTalk = await _remoteDatasource.readMessages(
+          final messages = await _remoteDatasource.readMessages(
             apiService: sl.get<ApiService>(),
             scAddress: talkAddress,
             readerKeyPair: keyPair.toKeyPair,
+            limit: limit,
+            pagingOffset: pagingOffset,
           );
 
-          return newTalk
+          return messages
               .map(
-                (e) => TalkMessage(
-                  address: e.address,
-                  content: e.content,
-                  senderGenesisPublicKey: e.genesisPublicKey,
-                  date: DateTime.fromMillisecondsSinceEpoch(e.timestamp * 1000),
+                (message) => TalkMessage(
+                  address: message.address,
+                  content: message.content,
+                  senderGenesisPublicKey: message.genesisPublicKey,
+                  date: DateTime.fromMillisecondsSinceEpoch(
+                    message.timestamp * 1000,
+                  ),
                 ),
               )
               .toList();

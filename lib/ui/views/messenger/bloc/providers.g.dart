@@ -214,6 +214,106 @@ class _MessageCreationFeesProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+String _$talkMessagesHash() => r'b145aeb4672f368d39954ad88a45cd9eee51154b';
+typedef _TalkMessagesRef = AutoDisposeFutureProviderRef<List<TalkMessage>>;
+
+/// See also [_talkMessages].
+@ProviderFor(_talkMessages)
+const _talkMessagesProvider = _TalkMessagesFamily();
+
+/// See also [_talkMessages].
+class _TalkMessagesFamily extends Family<AsyncValue<List<TalkMessage>>> {
+  /// See also [_talkMessages].
+  const _TalkMessagesFamily();
+
+  /// See also [_talkMessages].
+  _TalkMessagesProvider call(
+    String talkAddress,
+    int offset,
+    int pageSize,
+  ) {
+    return _TalkMessagesProvider(
+      talkAddress,
+      offset,
+      pageSize,
+    );
+  }
+
+  @override
+  _TalkMessagesProvider getProviderOverride(
+    covariant _TalkMessagesProvider provider,
+  ) {
+    return call(
+      provider.talkAddress,
+      provider.offset,
+      provider.pageSize,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_talkMessagesProvider';
+}
+
+/// See also [_talkMessages].
+class _TalkMessagesProvider
+    extends AutoDisposeFutureProvider<List<TalkMessage>> {
+  /// See also [_talkMessages].
+  _TalkMessagesProvider(
+    this.talkAddress,
+    this.offset,
+    this.pageSize,
+  ) : super.internal(
+          (ref) => _talkMessages(
+            ref,
+            talkAddress,
+            offset,
+            pageSize,
+          ),
+          from: _talkMessagesProvider,
+          name: r'_talkMessagesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$talkMessagesHash,
+          dependencies: _TalkMessagesFamily._dependencies,
+          allTransitiveDependencies:
+              _TalkMessagesFamily._allTransitiveDependencies,
+        );
+
+  final String talkAddress;
+  final int offset;
+  final int pageSize;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _TalkMessagesProvider &&
+        other.talkAddress == talkAddress &&
+        other.offset == offset &&
+        other.pageSize == pageSize;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, talkAddress.hashCode);
+    hash = _SystemHash.combine(hash, offset.hashCode);
+    hash = _SystemHash.combine(hash, pageSize.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$messageCreationFormNotifierHash() =>
     r'8bac9f9f00575dd77a9136de17516c4744f0f154';
 
@@ -316,40 +416,41 @@ class _MessageCreationFormNotifierProvider
   }
 }
 
-String _$talkMessagesNotifierHash() =>
-    r'e5e6c05e4ac2c64ed5f64e3573a61a5aa1ad69d7';
+String _$paginatedTalkMessagesNotifierHash() =>
+    r'c0ae9322c4a72e45f3b08b11c30b649c608cf39e';
 
-abstract class _$TalkMessagesNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<List<TalkMessage>> {
+abstract class _$PaginatedTalkMessagesNotifier
+    extends BuildlessAutoDisposeNotifier<PagingController<int, TalkMessage>> {
   late final String talkAddress;
 
-  FutureOr<List<TalkMessage>> build(
+  PagingController<int, TalkMessage> build(
     String talkAddress,
   );
 }
 
-/// See also [_TalkMessagesNotifier].
-@ProviderFor(_TalkMessagesNotifier)
-const _talkMessagesNotifierProvider = _TalkMessagesNotifierFamily();
+/// See also [_PaginatedTalkMessagesNotifier].
+@ProviderFor(_PaginatedTalkMessagesNotifier)
+const _paginatedTalkMessagesNotifierProvider =
+    _PaginatedTalkMessagesNotifierFamily();
 
-/// See also [_TalkMessagesNotifier].
-class _TalkMessagesNotifierFamily
-    extends Family<AsyncValue<List<TalkMessage>>> {
-  /// See also [_TalkMessagesNotifier].
-  const _TalkMessagesNotifierFamily();
+/// See also [_PaginatedTalkMessagesNotifier].
+class _PaginatedTalkMessagesNotifierFamily
+    extends Family<PagingController<int, TalkMessage>> {
+  /// See also [_PaginatedTalkMessagesNotifier].
+  const _PaginatedTalkMessagesNotifierFamily();
 
-  /// See also [_TalkMessagesNotifier].
-  _TalkMessagesNotifierProvider call(
+  /// See also [_PaginatedTalkMessagesNotifier].
+  _PaginatedTalkMessagesNotifierProvider call(
     String talkAddress,
   ) {
-    return _TalkMessagesNotifierProvider(
+    return _PaginatedTalkMessagesNotifierProvider(
       talkAddress,
     );
   }
 
   @override
-  _TalkMessagesNotifierProvider getProviderOverride(
-    covariant _TalkMessagesNotifierProvider provider,
+  _PaginatedTalkMessagesNotifierProvider getProviderOverride(
+    covariant _PaginatedTalkMessagesNotifierProvider provider,
   ) {
     return call(
       provider.talkAddress,
@@ -368,34 +469,34 @@ class _TalkMessagesNotifierFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_talkMessagesNotifierProvider';
+  String? get name => r'_paginatedTalkMessagesNotifierProvider';
 }
 
-/// See also [_TalkMessagesNotifier].
-class _TalkMessagesNotifierProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<_TalkMessagesNotifier,
-        List<TalkMessage>> {
-  /// See also [_TalkMessagesNotifier].
-  _TalkMessagesNotifierProvider(
+/// See also [_PaginatedTalkMessagesNotifier].
+class _PaginatedTalkMessagesNotifierProvider
+    extends AutoDisposeNotifierProviderImpl<_PaginatedTalkMessagesNotifier,
+        PagingController<int, TalkMessage>> {
+  /// See also [_PaginatedTalkMessagesNotifier].
+  _PaginatedTalkMessagesNotifierProvider(
     this.talkAddress,
   ) : super.internal(
-          () => _TalkMessagesNotifier()..talkAddress = talkAddress,
-          from: _talkMessagesNotifierProvider,
-          name: r'_talkMessagesNotifierProvider',
+          () => _PaginatedTalkMessagesNotifier()..talkAddress = talkAddress,
+          from: _paginatedTalkMessagesNotifierProvider,
+          name: r'_paginatedTalkMessagesNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$talkMessagesNotifierHash,
-          dependencies: _TalkMessagesNotifierFamily._dependencies,
+                  : _$paginatedTalkMessagesNotifierHash,
+          dependencies: _PaginatedTalkMessagesNotifierFamily._dependencies,
           allTransitiveDependencies:
-              _TalkMessagesNotifierFamily._allTransitiveDependencies,
+              _PaginatedTalkMessagesNotifierFamily._allTransitiveDependencies,
         );
 
   final String talkAddress;
 
   @override
   bool operator ==(Object other) {
-    return other is _TalkMessagesNotifierProvider &&
+    return other is _PaginatedTalkMessagesNotifierProvider &&
         other.talkAddress == talkAddress;
   }
 
@@ -408,8 +509,8 @@ class _TalkMessagesNotifierProvider
   }
 
   @override
-  FutureOr<List<TalkMessage>> runNotifierBuild(
-    covariant _TalkMessagesNotifier notifier,
+  PagingController<int, TalkMessage> runNotifierBuild(
+    covariant _PaginatedTalkMessagesNotifier notifier,
   ) {
     return notifier.build(
       talkAddress,

@@ -12,6 +12,7 @@ import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/add_public_key_textfield_pk.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'create_talk_form.dart';
@@ -54,7 +55,8 @@ abstract class MessengerProviders {
   static final talkAddresses = _talkAddressesProvider;
 
   static const talk = _talkProvider;
-  static const messages = _talkMessagesNotifierProvider;
+  static const messages = _talkMessagesProvider;
+  static const paginatedMessages = _paginatedTalkMessagesNotifierProvider;
 
   static final talkCreationForm = _createTalkFormProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
