@@ -31,4 +31,9 @@ class AccessRecipient with _$AccessRecipient {
       );
 
   bool get isPublicKeyValid => (publicKey ?? const PublicKey('')).isValid;
+
+  String get name => map(
+        contact: (contact) => contact.contact.name,
+        publicKey: (value) => value.publicKey.publicKey,
+      );
 }

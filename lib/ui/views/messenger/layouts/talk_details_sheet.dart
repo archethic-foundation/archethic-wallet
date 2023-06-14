@@ -68,7 +68,7 @@ class TalkDetailsSheet extends ConsumerWidget {
                     );
                   },
                   child: SheetHeader(
-                    title: talk.value.name,
+                    title: talk.value.displayName,
                   ),
                 ),
                 _SectionTitle(

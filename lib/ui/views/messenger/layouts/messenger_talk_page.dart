@@ -59,7 +59,7 @@ class MessengerTalkPage extends ConsumerWidget {
                     widget: TalkDetailsSheet(talkAddress: talkAddress),
                   );
                 },
-                child: Text(data.value.name),
+                child: Text(data.value.displayName),
               );
             },
             orElse: () => const Text('           ')

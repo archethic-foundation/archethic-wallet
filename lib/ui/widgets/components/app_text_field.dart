@@ -142,6 +142,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                     ? InputDecoration(
                         labelText: widget.labelText ?? '',
                         labelStyle: theme.textStyleSize16W400Primary60,
+                        hintText: widget.hintText,
                         prefixIcon: const SizedBox(width: 48, height: 48),
                         suffixIcon: const SizedBox(width: 48, height: 48),
                       )
@@ -150,6 +151,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                             contentPadding: const EdgeInsets.only(right: 48),
                             labelText: widget.labelText ?? '',
                             labelStyle: theme.textStyleSize16W400Primary60,
+                            hintText: widget.hintText,
                             prefixIcon: const SizedBox(width: 48, height: 48),
                           )
                         : widget.prefixButton == null &&
@@ -158,12 +160,14 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                                 contentPadding: const EdgeInsets.only(left: 48),
                                 labelText: widget.labelText ?? '',
                                 labelStyle: theme.textStyleSize16W400Primary60,
+                                hintText: widget.hintText,
                                 suffixIcon:
                                     const SizedBox(width: 48, height: 48),
                               )
                             : InputDecoration(
                                 labelText: widget.labelText ?? '',
                                 labelStyle: theme.textStyleSize16W400Primary60,
+                                hintText: widget.hintText,
                                 prefixIconConstraints: const BoxConstraints(
                                   minWidth: 48,
                                   maxHeight: 48,
