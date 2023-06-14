@@ -1,5 +1,6 @@
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
@@ -14,7 +15,11 @@ class Talk with _$Talk {
     @HiveField(1) required String name,
     @HiveField(2) required List<AccessRecipient> members,
     @HiveField(3) required List<AccessRecipient> admins,
+    @HiveField(4) required DateTime creationDate,
+    @HiveField(5) TalkMessage? lastMessage,
   }) = _Talk;
+
+  DateTime get updateDate => lastMessage?.date ?? creationDate;
 
   const Talk._();
 }

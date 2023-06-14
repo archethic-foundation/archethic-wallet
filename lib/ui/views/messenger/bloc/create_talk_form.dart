@@ -74,7 +74,7 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
     return;
   }
 
-  Future<Result<Talk, Failure>> createTalk() => Result.guard(() async {
+  Future<Result<void, Failure>> createTalk() => Result.guard(() async {
         final session = ref.read(SessionProviders.session).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
@@ -86,8 +86,7 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
           contact: await ref.read(ContactProviders.getSelectedContact.future),
         );
 
-        final talk =
-            await ref.watch(MessengerProviders._messengerRepository).createTalk(
+        await ref.read(MessengerProviders._messengerRepository).createTalk(
           admins: [
             ...state.admins,
             creator,
@@ -100,8 +99,6 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
           session: session,
           groupName: state.name,
         ).valueOrThrow;
-        ref.invalidate(MessengerProviders.talkAddresses);
-
-        return talk;
+        ref.invalidate(MessengerProviders.talks);
       });
 }

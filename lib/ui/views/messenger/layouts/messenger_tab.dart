@@ -25,7 +25,7 @@ class MessengerBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncTalkAddresses = ref.watch(MessengerProviders.talkAddresses);
+    final asyncTalks = ref.watch(MessengerProviders.sortedTalks);
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
@@ -50,20 +50,20 @@ class MessengerBody extends ConsumerWidget {
           child: Column(
             children: [
               Expanded(
-                child: asyncTalkAddresses.map(
+                child: asyncTalks.map(
                   loading: (_) => Container(),
                   error: (_) => Container(),
-                  data: (talkAddress) => ListView.builder(
-                    itemCount: talkAddress.value.length,
+                  data: (talks) => ListView.builder(
+                    itemCount: talks.value.length,
                     itemBuilder: (context, index) {
-                      final talkId = talkAddress.value[index];
-                      return TalkListItem.autoLoad(
-                        key: Key(talkId),
+                      final talk = talks.value[index];
+                      return TalkListItem.loaded(
+                        key: Key(talk.address),
                         onTap: () => Navigator.of(context).pushNamed(
                           '/messenger_talk',
-                          arguments: talkId,
+                          arguments: talk.address,
                         ),
-                        talkId: talkId,
+                        talk: talk,
                       );
                     },
                   ),

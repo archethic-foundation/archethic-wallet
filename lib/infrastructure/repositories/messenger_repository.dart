@@ -30,11 +30,29 @@ class MessengerRepository implements MessengerRepositoryInterface {
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        return localDatasource.getTalkAddresses(owner.genesisAddress);
+        return localDatasource.getTalkAddresses(owner.genesisAddress).toList();
       });
 
   String _serviceName(Account account) =>
       'archethic-wallet-${Uri.encodeFull(account.name)}';
+
+  @override
+  Future<Result<Talk, Failure>> getTalk({
+    required Account owner,
+    required String talkAddress,
+  }) =>
+      Result.guard(() async {
+        final localDatasource = await _localDatasource;
+
+        final talk = await localDatasource.getTalk(
+          ownerAddress: owner.genesisAddress,
+          talkAddress: talkAddress,
+        );
+        if (talk == null) {
+          throw const Failure.serviceNotFound();
+        }
+        return talk;
+      });
 
   @override
   Future<Result<Talk, Failure>> createTalk({
@@ -65,24 +83,6 @@ class MessengerRepository implements MessengerRepositoryInterface {
       });
 
   @override
-  Future<Result<Talk, Failure>> getTalk({
-    required Account owner,
-    required String talkAddress,
-  }) =>
-      Result.guard(() async {
-        final localDatasource = await _localDatasource;
-
-        final talk = await localDatasource.getTalk(
-          ownerAddress: owner.genesisAddress,
-          talkAddress: talkAddress,
-        );
-        if (talk == null) {
-          throw const Failure.serviceNotFound();
-        }
-        return talk;
-      });
-
-  @override
   Future<Result<List<TalkMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
@@ -95,7 +95,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
           final keyPair = session.wallet.keychainSecuredInfos
               .services[_serviceName(reader)]!.keyPair!;
 
-          final messages = await _remoteDatasource.readMessages(
+          final aeMessages = await _remoteDatasource.readMessages(
             apiService: sl.get<ApiService>(),
             scAddress: talkAddress,
             readerKeyPair: keyPair.toKeyPair,
@@ -103,7 +103,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
             pagingOffset: pagingOffset,
           );
 
-          return messages
+          final talkMessages = aeMessages
               .map(
                 (message) => TalkMessage(
                   address: message.address,
@@ -115,6 +115,8 @@ class MessengerRepository implements MessengerRepositoryInterface {
                 ),
               )
               .toList();
+
+          return talkMessages;
         },
       );
 
@@ -163,7 +165,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
           senderKeyPair: keyPair.toKeyPair,
         );
 
-        return TalkMessage(
+        final message = TalkMessage(
           address: txAddress.address!,
           content: content,
           date: DateTime.now(),
@@ -171,7 +173,22 @@ class MessengerRepository implements MessengerRepositoryInterface {
               uint8ListToHex(Uint8List.fromList(keyPair.publicKey))
                   .toUpperCase(),
         );
+
+        return message;
       });
+
+  @override
+  Future<void> saveMessage({
+    required String talkAddress,
+    required Account creator,
+    required TalkMessage message,
+  }) async {
+    await (await _localDatasource).setTalkLastMessage(
+      ownerAddress: creator.genesisAddress,
+      talkAddress: talkAddress,
+      message: message,
+    );
+  }
 
   @override
   Future<void> clear() async {

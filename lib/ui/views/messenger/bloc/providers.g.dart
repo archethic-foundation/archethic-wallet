@@ -6,7 +6,21 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$talkHash() => r'055408df08658e6379db2d57c4ee624510dd9be1';
+String _$talksHash() => r'9df68aa3068b5364724b701394b53095d63c0d48';
+
+/// See also [_talks].
+@ProviderFor(_talks)
+final _talksProvider = AutoDisposeFutureProvider<Iterable<Talk>>.internal(
+  _talks,
+  name: r'_talksProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$talksHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _TalksRef = AutoDisposeFutureProviderRef<Iterable<Talk>>;
+String _$talkHash() => r'43ac2c0ff6372ced2df122cfe463fcab6ab7c0b8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,10 +56,10 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
 
   /// See also [_talk].
   _TalkProvider call(
-    String talkAddress,
+    String address,
   ) {
     return _TalkProvider(
-      talkAddress,
+      address,
     );
   }
 
@@ -54,7 +68,7 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
     covariant _TalkProvider provider,
   ) {
     return call(
-      provider.talkAddress,
+      provider.address,
     );
   }
 
@@ -77,11 +91,11 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
 class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   /// See also [_talk].
   _TalkProvider(
-    this.talkAddress,
+    this.address,
   ) : super.internal(
           (ref) => _talk(
             ref,
-            talkAddress,
+            address,
           ),
           from: _talkProvider,
           name: r'_talkProvider',
@@ -91,37 +105,36 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
           allTransitiveDependencies: _TalkFamily._allTransitiveDependencies,
         );
 
-  final String talkAddress;
+  final String address;
 
   @override
   bool operator ==(Object other) {
-    return other is _TalkProvider && other.talkAddress == talkAddress;
+    return other is _TalkProvider && other.address == address;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, talkAddress.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-String _$talkAddressesHash() => r'b7bf1e58753441455f419df8fae831aa57cb447d';
+String _$sortedTalksHash() => r'a69c62e57de2860c16c0b8d09c73490816d807a1';
 
-/// See also [_talkAddresses].
-@ProviderFor(_talkAddresses)
-final _talkAddressesProvider = AutoDisposeFutureProvider<List<String>>.internal(
-  _talkAddresses,
-  name: r'_talkAddressesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$talkAddressesHash,
+/// See also [_sortedTalks].
+@ProviderFor(_sortedTalks)
+final _sortedTalksProvider = AutoDisposeFutureProvider<List<Talk>>.internal(
+  _sortedTalks,
+  name: r'_sortedTalksProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sortedTalksHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _TalkAddressesRef = AutoDisposeFutureProviderRef<List<String>>;
+typedef _SortedTalksRef = AutoDisposeFutureProviderRef<List<Talk>>;
 String _$messageCreationFeesHash() =>
     r'd73daff392d278e20cddfd6d6fe9e3e1d46f71e9';
 typedef _MessageCreationFeesRef = AutoDisposeFutureProviderRef<double>;
@@ -315,7 +328,7 @@ class _TalkMessagesProvider
 }
 
 String _$messageCreationFormNotifierHash() =>
-    r'8bac9f9f00575dd77a9136de17516c4744f0f154';
+    r'8714e3cb84f7b345836fb5d3ca059dcee59053cc';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {
@@ -417,7 +430,7 @@ class _MessageCreationFormNotifierProvider
 }
 
 String _$paginatedTalkMessagesNotifierHash() =>
-    r'c0ae9322c4a72e45f3b08b11c30b649c608cf39e';
+    r'348794a80e8401c9f736dad95a46c1e3733f9ea0';
 
 abstract class _$PaginatedTalkMessagesNotifier
     extends BuildlessAutoDisposeNotifier<PagingController<int, TalkMessage>> {

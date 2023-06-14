@@ -39,6 +39,12 @@ abstract class MessengerRepositoryInterface {
     required String content,
   });
 
+  Future<void> saveMessage({
+    required String talkAddress,
+    required Account creator,
+    required TalkMessage message,
+  });
+
   Future<Result<double, Failure>> calculateFees({
     required LoggedInSession session,
     required String talkAddress,
