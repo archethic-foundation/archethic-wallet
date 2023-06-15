@@ -51,7 +51,10 @@ Future<void> main() async {
   await DBHelper.setupDatabase();
   await setupServiceLocator();
 
-  final isRpcEnabled = (await sl.get<SettingsRepositoryInterface>().getSettings(const Locale('fr'))).activeRPCServer;
+  final isRpcEnabled = (await sl
+          .get<SettingsRepositoryInterface>()
+          .getSettings(const Locale('fr')))
+      .activeRPCServer;
   final rpcWebsocketServer = sl.get<ArchethicWebsocketRPCServer>();
   if (isRpcEnabled && ArchethicWebsocketRPCServer.isPlatformCompatible) {
     rpcWebsocketServer.run();
@@ -169,7 +172,8 @@ class App extends ConsumerWidget {
               builder: (_) => const IntroWelcome(),
               settings: settings,
             ),
-            '/intro_welcome_get_first_infos': MaterialPageRoute<IntroNewWalletGetFirstInfos>(
+            '/intro_welcome_get_first_infos':
+                MaterialPageRoute<IntroNewWalletGetFirstInfos>(
               builder: (_) => const IntroNewWalletGetFirstInfos(),
               settings: settings,
             ),
@@ -213,7 +217,8 @@ class App extends ConsumerWidget {
               builder: (_) {
                 final args = settings.arguments as Map<String, dynamic>? ?? {};
                 return NftCreationProcessSheet(
-                  currentNftCategoryIndex: args['currentNftCategoryIndex'] as int,
+                  currentNftCategoryIndex:
+                      args['currentNftCategoryIndex'] as int,
                 );
               },
               settings: settings,
@@ -307,9 +312,11 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       AppDialogs.showInfoDialog(
         context,
         ref,
-        CaseChange.toUpperCase(localizations.warning, language.getLocaleString()),
+        CaseChange.toUpperCase(
+            localizations.warning, language.getLocaleString()),
         localizations.rootWarning,
-        buttonLabel: AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
+        buttonLabel:
+            AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
         onPressed: () async {
           await preferences.setHasSeenRootWarning();
         },
@@ -369,7 +376,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   void updateDefaultLocale() {
-    ref.read(LanguageProviders.defaultLocale.notifier).update((state) => Localizations.localeOf(context));
+    ref
+        .read(LanguageProviders.defaultLocale.notifier)
+        .update((state) => Localizations.localeOf(context));
   }
 
   @override
