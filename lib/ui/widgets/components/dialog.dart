@@ -53,7 +53,8 @@ class AppDialogs {
                 if (additionalContent != null)
                   TextSpan(
                     text: '\n\n$additionalContent',
-                    style: additionalContentStyle ?? theme.textStyleSize12W100Primary,
+                    style: additionalContentStyle ??
+                        theme.textStyleSize12W100Primary,
                   ),
               ],
             ),
@@ -91,7 +92,8 @@ class AppDialogs {
     );
   }
 
-  static void showInfoDialog(BuildContext context, WidgetRef ref, String title, String content,
+  static void showInfoDialog(
+      BuildContext context, WidgetRef ref, String title, String content,
       {String? buttonLabel, Function? onPressed}) {
     showDialog(
       context: context,
@@ -243,10 +245,12 @@ class PulsatingCircleLogo extends ConsumerStatefulWidget {
   final String? title;
 
   @override
-  ConsumerState<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
+  ConsumerState<PulsatingCircleLogo> createState() =>
+      PulsatingCircleLogoState();
 }
 
-class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with SingleTickerProviderStateMixin {
+class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
+    with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   late Animation<double> _animation;
 
@@ -313,7 +317,9 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo> with S
           height: 40,
         ),
         Text(
-          widget.title != null ? widget.title! : AppLocalizations.of(context)!.pleaseWait,
+          widget.title != null
+              ? widget.title!
+              : AppLocalizations.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
           style: theme.textStyleSize16W600EquinoxPrimary,
         ),
@@ -355,7 +361,9 @@ class _AnimationLoadingOverlayContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      margin: type == AnimationType.send ? const EdgeInsets.only(bottom: 10, left: 90, right: 90) : EdgeInsets.zero,
+      margin: type == AnimationType.send
+          ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
+          : EdgeInsets.zero,
       child: Center(
         child: _AnimationLoadingOverlayGetAnimation(
           type: type,
