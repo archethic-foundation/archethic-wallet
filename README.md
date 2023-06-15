@@ -21,7 +21,7 @@ Archethic Wallet has implemented the following features:
 - List of acquired tokens
 
 ### Security
-- Security access with Password, PIN, Yubicloud OTP, Face ID, Touch ID, Uniris Biometrics (2023)
+- Security access with Password, PIN, Yubicloud OTP, Face ID, Touch ID, Uniris Biometrics
 - Use of 24 Words Mnemonics
 
 ### Customization
