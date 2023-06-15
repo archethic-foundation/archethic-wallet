@@ -2,13 +2,13 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
-
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
+import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -16,6 +16,7 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
@@ -28,8 +29,11 @@ import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/navigation.dart';
+import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +51,7 @@ Future<void> main() async {
   await DBHelper.setupDatabase();
   await setupServiceLocator();
 
-  final isRpcEnabled = (await sl
-          .get<SettingsRepositoryInterface>()
-          .getSettings(const Locale('fr')))
-      .activeRPCServer;
+  final isRpcEnabled = (await sl.get<SettingsRepositoryInterface>().getSettings(const Locale('fr'))).activeRPCServer;
   final rpcWebsocketServer = sl.get<ArchethicWebsocketRPCServer>();
   if (isRpcEnabled && ArchethicWebsocketRPCServer.isPlatformCompatible) {
     rpcWebsocketServer.run();
@@ -168,8 +169,7 @@ class App extends ConsumerWidget {
               builder: (_) => const IntroWelcome(),
               settings: settings,
             ),
-            '/intro_welcome_get_first_infos':
-                MaterialPageRoute<IntroNewWalletGetFirstInfos>(
+            '/intro_welcome_get_first_infos': MaterialPageRoute<IntroNewWalletGetFirstInfos>(
               builder: (_) => const IntroNewWalletGetFirstInfos(),
               settings: settings,
             ),
@@ -213,8 +213,7 @@ class App extends ConsumerWidget {
               builder: (_) {
                 final args = settings.arguments as Map<String, dynamic>? ?? {};
                 return NftCreationProcessSheet(
-                  currentNftCategoryIndex:
-                      args['currentNftCategoryIndex'] as int,
+                  currentNftCategoryIndex: args['currentNftCategoryIndex'] as int,
                 );
               },
               settings: settings,
@@ -254,36 +253,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   Future<void> checkLoggedIn() async {
-    /*bool jailbroken = false;
-    bool developerMode = false;
-    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
-      jailbroken = await FlutterJailbreakDetection.jailbroken;
-      developerMode = await FlutterJailbreakDetection.developerMode;
-
-      if (!preferences.getHasSeenRootWarning() &&
-          (jailbroken || developerMode)) {
-        AppDialogs.showConfirmDialog(
-            context,
-            CaseChange.toUpperCase(AppLocalizations.of(context)!.warning,
-                StateContainer.of(context).curLanguage.getLocaleString()),
-            AppLocalizations.of(context)!.rootWarning,
-            AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
-            () async {
-              preferences.setHasSeenRootWarning();
-              checkLoggedIn();
-            },
-            cancelText: AppLocalizations.of(context)!.exit.toUpperCase(),
-            cancelAction: () {
-              if (!kIsWeb && Platform.isIOS) {
-                exit(0);
-              } else {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              }
-            });
-        return;
-      }
-    }*/
-
     try {
       // iOS key store is persistent, so if this is first launch
       // then we will clear the keystore
@@ -302,7 +271,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       FlutterNativeSplash.remove();
 
       if (session.isLoggedOut) {
-        await _goToIntroScreen();
+        _goToIntroScreen();
         return;
       }
 
@@ -310,24 +279,67 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     } catch (e, stack) {
       dev.log(e.toString(), error: e, stackTrace: stack);
       FlutterNativeSplash.remove();
-      await _goToIntroScreen();
+      _goToIntroScreen();
     }
   }
 
-  Future<void> _goToIntroScreen() async {
-    await Navigator.of(context).pushReplacementNamed('/intro_welcome');
+  Future _checkDeviceSecurity() async {
+    if (Platform.isIOS == false && Platform.isAndroid == false) {
+      return;
+    }
+
+    final preferences = await HivePreferencesDatasource.getInstance();
+    if (await SecurityManager().isDeviceJailbroken() == false &&
+        await SecurityManager().isDeviceDeveloperMode() == false) {
+      // user will see a popup next time his device is jailbroken or in dev mode
+      await preferences.setHasNotSeenRootWarning();
+      return;
+    }
+
+    final localizations = AppLocalizations.of(context)!;
+
+    // User never saw the error saying his device is unsafe, we will let him know that there is a mistake via a popup
+    // Next time he will launch the app he will only see a snack bar
+    if (preferences.getHasSeenRootWarning() == false) {
+      final language = ref.read(
+        LanguageProviders.selectedLanguage,
+      );
+      AppDialogs.showInfoDialog(
+        context,
+        ref,
+        CaseChange.toUpperCase(localizations.warning, language.getLocaleString()),
+        localizations.rootWarning,
+        buttonLabel: AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
+        onPressed: () async {
+          await preferences.setHasSeenRootWarning();
+        },
+      );
+    } else {
+      final theme = ref.watch(ThemeProviders.selectedTheme);
+      UIUtil.showSnackbar(
+        localizations.rootWarning,
+        context,
+        ref,
+        theme.text!,
+        theme.snackBarShadow!,
+        duration: const Duration(seconds: 10),
+      );
+    }
+  }
+
+  void _goToIntroScreen() {
+    Navigator.of(context).pushReplacementNamed('/intro_welcome');
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) async {
-        await initializeProviders();
-        await checkLoggedIn();
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await initializeProviders();
+      await checkLoggedIn();
+      await _checkDeviceSecurity();
+    });
   }
 
   @override
@@ -357,9 +369,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   void updateDefaultLocale() {
-    ref
-        .read(LanguageProviders.defaultLocale.notifier)
-        .update((state) => Localizations.localeOf(context));
+    ref.read(LanguageProviders.defaultLocale.notifier).update((state) => Localizations.localeOf(context));
   }
 
   @override
