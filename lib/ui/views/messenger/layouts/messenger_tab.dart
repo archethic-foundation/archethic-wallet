@@ -6,6 +6,7 @@ import 'package:aewallet/ui/views/messenger/layouts/create_talk_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -64,7 +65,16 @@ class MessengerBody extends ConsumerWidget {
                           arguments: talk.address,
                         ),
                         talk: talk,
-                      );
+                      )
+                          .animate(delay: (100 * index).ms)
+                          .fadeIn(duration: 300.ms, delay: 30.ms)
+                          .shimmer(
+                              blendMode: BlendMode.srcOver,
+                              color: Colors.white12)
+                          .move(
+                            begin: const Offset(-16, 0),
+                            curve: Curves.easeOutQuad,
+                          );
                     },
                   ),
                 ),
