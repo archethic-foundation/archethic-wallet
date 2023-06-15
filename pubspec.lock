@@ -54,23 +54,7 @@ packages:
     description:
       path: "."
       ref: sc_test_mi
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
-=======
-      resolved-ref: "99af677ee31677d05f35c35450c2242c1c3d38ec"
->>>>>>> 6bae349d (update pubspec)
-=======
-      resolved-ref: f03affadd27452079b7891662a064865e72600e9
->>>>>>> f3308389 (:sparkles: Messenger read/send messages.)
-=======
-      resolved-ref: e842a549dd50353707cff1cc6fc0301e686773e5
->>>>>>> 4c1ed68b (GenesisPubKey management to display contact's name)
-=======
-      resolved-ref: e3716f1bdc56fbdbe2ab22828b590391233d0e2f
->>>>>>> 8809807a (:sparkles: Messages pagination.)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.2.0"
@@ -1100,32 +1084,18 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-<<<<<<< HEAD
       sha256: b6951e25b795d053a6ba03af5f710069c99349de9341af95155d52665cb4607c
       url: "https://pub.dev"
     source: hosted
     version: "0.8.9"
-=======
-      sha256: "6432178560d95303cc70d038363f892f5a05750dd27bc55220c7301af54d05e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.8"
->>>>>>> abaf0502 (update desktop conf)
   image_picker_android:
     dependency: transitive
     description:
       name: image_picker_android
-<<<<<<< HEAD
       sha256: "216dbfb6609e46f78613b8913d046a162588ad4f34909ae7bf85e9f94ea6d922"
       url: "https://pub.dev"
     source: hosted
     version: "0.8.7"
-=======
-      sha256: "1ec6830289f5b6aeff3aa8239ea737c71950178dda389342dc2215adb06b4bd8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.6+20"
->>>>>>> abaf0502 (update desktop conf)
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1141,41 +1111,23 @@ packages:
       sha256: b3e2f21feb28b24dd73a35d7ad6e83f568337c70afab5eabac876e23803f264b
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
     version: "0.8.8"
-=======
-    version: "0.8.7+4"
->>>>>>> abaf0502 (update desktop conf)
   image_picker_linux:
     dependency: transitive
     description:
       name: image_picker_linux
-<<<<<<< HEAD
       sha256: "02cbc21fe1706b97942b575966e5fbbeaac535e76deef70d3a242e4afb857831"
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
-=======
-      sha256: "1d8f9a97178d6b8a035f1d2765f17f8ca3d36a40d5594e742a481b1e002f20be"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
->>>>>>> abaf0502 (update desktop conf)
   image_picker_macos:
     dependency: transitive
     description:
       name: image_picker_macos
-<<<<<<< HEAD
       sha256: cee2aa86c56780c13af2c77b5f2f72973464db204569e1ba2dd744459a065af4
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
-=======
-      sha256: ff094b36d6c06200808f733144a033e45b4e17d59524e1cf7d2af7e4cb94e1ab
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
->>>>>>> abaf0502 (update desktop conf)
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -1183,28 +1135,15 @@ packages:
       sha256: "7c7b96bb9413a9c28229e717e6fd1e3edd1cc5569c1778fcca060ecf729b65ee"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> abaf0502 (update desktop conf)
     version: "2.8.0"
   image_picker_windows:
     dependency: transitive
     description:
       name: image_picker_windows
-<<<<<<< HEAD
       sha256: c3066601ea42113922232c7b7b3330a2d86f029f685bba99d82c30e799914952
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
-=======
-    version: "2.6.3"
-=======
-      sha256: bf77b819eb62c487e6af53b9eb213adc12bd060ef7e43f3b1dd69c53cc24a61d
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
->>>>>>> abaf0502 (update desktop conf)
   infinite_scroll_pagination:
     dependency: "direct main"
     description:
@@ -1213,7 +1152,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
->>>>>>> 8809807a (:sparkles: Messages pagination.)
   integration_test:
     dependency: "direct dev"
     description: flutter
@@ -1399,24 +1337,10 @@ packages:
     dependency: "direct dev"
     description:
       name: msix
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: bf151b9a1648985e7604672ade54c8df693566099d0731e318548c47d54676e6
       url: "https://pub.dev"
     source: hosted
     version: "3.14.2"
-=======
-      sha256: c4ac0055da46764d9dca51f2f53b488294080fc8dc2de5730866558a37c6c07a
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.14.1"
->>>>>>> 6bae349d (update pubspec)
-=======
-      sha256: bf151b9a1648985e7604672ade54c8df693566099d0731e318548c47d54676e6
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.14.2"
->>>>>>> abaf0502 (update desktop conf)
   nfc_manager:
     dependency: "direct main"
     description:
