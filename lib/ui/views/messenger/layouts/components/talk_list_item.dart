@@ -6,7 +6,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class TalkListItem extends ConsumerWidget {
@@ -73,16 +72,7 @@ class _LoadingTalkListItem extends TalkListItem {
       elevation: 0,
       color: theme.backgroundAccountsListCardSelected,
       child: const SizedBox(height: 48),
-    )
-        .animate(
-          delay: animationDelay ?? Duration.zero,
-          onPlay: (controller) => controller.repeat(),
-        )
-        .shimmer(
-          blendMode: BlendMode.srcOver,
-          delay: 1000.ms,
-          angle: 0.5,
-        );
+    );
   }
 }
 
@@ -121,7 +111,7 @@ class _LoadedTalkListItem extends TalkListItem {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    talk.displayName,
+                    talk.displayName.substring(1),
                     style: theme.textStyleSize12W600Primary,
                   ),
                   Text(
@@ -171,7 +161,7 @@ class _LastMessagePreview extends ConsumerWidget {
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: '$contactName : ',
+            text: '${contactName.substring(1)} : ',
             style: theme.textStyleSize10W600Primary,
           ),
           TextSpan(
