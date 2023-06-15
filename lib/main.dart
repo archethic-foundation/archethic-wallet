@@ -119,12 +119,75 @@ Future<void> main() async {
   );
 }
 
-class App extends ConsumerWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
+
+  @override
+  ConsumerState<App> createState() => AppState();
+}
+
+class AppState extends ConsumerState<App> with WidgetsBindingObserver {
+  static final GlobalKey<NavigatorState> rootNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    didChangeAppLifecycleStateAsync(state);
+  }
+
+  void didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
+    debugPrint('Lifecycle State : $state');
+    var isDeviceSecured = false;
+
+    // Account for user changing locale when leaving the app
+    switch (state) {
+      case AppLifecycleState.paused:
+        isDeviceSecured = await SecurityManager().isDeviceSecured();
+        super.didChangeAppLifecycleState(state);
+        break;
+      case AppLifecycleState.resumed:
+        updateDefaultLocale();
+        // Value changed since last time we came in pause state
+        if (isDeviceSecured != await SecurityManager().isDeviceSecured()) {
+          SecurityManager().checkDeviceSecurity(
+            ref,
+            rootNavigatorKey.currentState!.overlay!.context,
+          );
+        }
+        super.didChangeAppLifecycleState(state);
+        break;
+      case AppLifecycleState.inactive:
+        super.didChangeAppLifecycleState(state);
+        break;
+      case AppLifecycleState.detached:
+        super.didChangeAppLifecycleState(state);
+        break;
+    }
+  }
+
+  void updateDefaultLocale() {
+    ref.read(LanguageProviders.defaultLocale.notifier).update(
+          (state) => Localizations.localeOf(
+            rootNavigatorKey.currentState!.overlay!.context,
+          ),
+        );
+  }
 
   // This widget is the root of the application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
@@ -136,6 +199,7 @@ class App extends ConsumerWidget {
       textStyle: theme.textStyleSize14W700Background,
       backgroundColor: theme.background,
       child: MaterialApp(
+        navigatorKey: rootNavigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Archethic Wallet',
         theme: ThemeData(
@@ -288,52 +352,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     }
   }
 
-  Future _checkDeviceSecurity() async {
-    if (Platform.isIOS == false && Platform.isAndroid == false) {
-      return;
-    }
-
-    final preferences = await HivePreferencesDatasource.getInstance();
-    if (await SecurityManager().isDeviceJailbroken() == false &&
-        await SecurityManager().isDeviceDeveloperMode() == false) {
-      // user will see a popup next time his device is jailbroken or in dev mode
-      await preferences.setHasNotSeenRootWarning();
-      return;
-    }
-
-    final localizations = AppLocalizations.of(context)!;
-
-    // User never saw the error saying his device is unsafe, we will let him know that there is a mistake via a popup
-    // Next time he will launch the app he will only see a snack bar
-    if (preferences.getHasSeenRootWarning() == false) {
-      final language = ref.read(
-        LanguageProviders.selectedLanguage,
-      );
-      AppDialogs.showInfoDialog(
-        context,
-        ref,
-        CaseChange.toUpperCase(
-            localizations.warning, language.getLocaleString()),
-        localizations.rootWarning,
-        buttonLabel:
-            AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
-        onPressed: () async {
-          await preferences.setHasSeenRootWarning();
-        },
-      );
-    } else {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
-      UIUtil.showSnackbar(
-        localizations.rootWarning,
-        context,
-        ref,
-        theme.text!,
-        theme.snackBarShadow!,
-        duration: const Duration(seconds: 10),
-      );
-    }
-  }
-
   void _goToIntroScreen() {
     Navigator.of(context).pushReplacementNamed('/intro_welcome');
   }
@@ -341,44 +359,11 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await initializeProviders();
       await checkLoggedIn();
-      await _checkDeviceSecurity();
+      await SecurityManager().checkDeviceSecurity(ref, context);
     });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Account for user changing locale when leaving the app
-    switch (state) {
-      case AppLifecycleState.paused:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.resumed:
-        updateDefaultLocale();
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.inactive:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.detached:
-        super.didChangeAppLifecycleState(state);
-        break;
-    }
-  }
-
-  void updateDefaultLocale() {
-    ref
-        .read(LanguageProviders.defaultLocale.notifier)
-        .update((state) => Localizations.localeOf(context));
   }
 
   @override
