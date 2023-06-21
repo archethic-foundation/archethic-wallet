@@ -47,7 +47,7 @@ class TalkRemoteDatasource with MessengerMixin {
     required String senderServiceName,
     required KeyPair senderKeyPair,
   }) async {
-    final transaction = await buildMessageSendTransaction(
+    final result = await buildMessageSendTransaction(
       keychain: keychain,
       apiService: apiService,
       scAddress: scAddress,
@@ -57,7 +57,7 @@ class TalkRemoteDatasource with MessengerMixin {
       senderKeyPair: senderKeyPair,
     );
 
-    final fee = await apiService.getTransactionFee(transaction);
+    final fee = await apiService.getTransactionFee(result.transaction);
     if (fee.fee == null) throw const Failure.invalidValue();
     return fromBigInt(fee.fee).toDouble();
   }
