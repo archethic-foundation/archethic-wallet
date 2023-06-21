@@ -9,14 +9,14 @@
 # packages, and plugins designed to encourage good coding practices.
 analyzer:
   exclude:
-    - '**/*.js'
-    - '**/*.ts'
-    - '**/*.json'
+    - "**/*.js"
+    - "**/*.ts"
+    - "**/*.json"
     - test/.test_coverage.dart
     - lib/localization.dart
     - lib/l10n/*
-    - '**/*.freezed.dart'
-    - '**/*.g.dart'
+    - "**/*.freezed.dart"
+    - "**/*.g.dart"
 
 language:
   strict-casts: true
@@ -132,7 +132,6 @@ linter:
     - prefer_const_literals_to_create_immutables
     - prefer_constructors_over_static_methods
     - prefer_contains
-    - prefer_equal_for_default_values
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
@@ -210,6 +209,5 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

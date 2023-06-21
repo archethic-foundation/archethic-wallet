@@ -89,6 +89,9 @@ dependencies:
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
 
+  # A Flutter plugin to use the Firebase Core API, which enables connecting to multiple Firebase apps.
+  firebase_core: ^2.14.0
+
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
   fl_chart: ^0.61.0
 
