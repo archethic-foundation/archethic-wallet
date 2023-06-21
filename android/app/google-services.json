@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "329689363769",
+    "project_id": "ae-wallet",
+    "storage_bucket": "ae-wallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329689363769:android:404e2e22d694f07d0fe4e8",
+        "android_client_info": {
+          "package_name": "net.archethic.archethic_wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329689363769-asrrmmau1hdjvvjkq6mdh7hmems0rseg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq41eMXuRmyMwqAxub0b3aWEFT36jDds4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329689363769-asrrmmau1hdjvvjkq6mdh7hmems0rseg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
