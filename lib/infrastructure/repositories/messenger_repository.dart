@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -14,7 +15,9 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
-class MessengerRepository implements MessengerRepositoryInterface {
+class MessengerRepository
+    with NotificationUtil
+    implements MessengerRepositoryInterface {
   final _localDatasource = HiveTalkDatasource.getInstance();
 
   // late HiveVaultDatasource? __vaultDatasource;
@@ -155,7 +158,7 @@ class MessengerRepository implements MessengerRepositoryInterface {
         final keyPair = session.wallet.keychainSecuredInfos
             .services[_serviceName(creator)]!.keyPair!;
 
-        final txAddress = await _remoteDatasource.sendMessage(
+        final sendMessageResult = await _remoteDatasource.sendMessage(
           apiService: sl.get<ApiService>(),
           scAddress: talkAddress,
           messageContent: content,
@@ -165,6 +168,8 @@ class MessengerRepository implements MessengerRepositoryInterface {
           senderKeyPair: keyPair.toKeyPair,
         );
 
+        final txAddress = sendMessageResult.transactionAddress;
+
         final message = TalkMessage(
           address: txAddress.address!,
           content: content,
@@ -172,6 +177,24 @@ class MessengerRepository implements MessengerRepositoryInterface {
           senderGenesisPublicKey:
               uint8ListToHex(Uint8List.fromList(keyPair.publicKey))
                   .toUpperCase(),
+        );
+
+        final previousKeyPair =
+            session.wallet.keychainSecuredInfos.toKeychain().deriveKeypair(
+                  _serviceName(creator),
+                  index: max(
+                    0,
+                    sendMessageResult.transactionIndex - 1,
+                  ),
+                );
+        await sendTransactionNotification(
+          notification: TransactionNotification(
+            txAddress: txAddress.address!,
+            txChainGenesisAddress: talkAddress,
+          ),
+          txIndex: sendMessageResult.transactionIndex,
+          senderKeyPair: previousKeyPair,
+          notifBackendBaseUrl: 'http://localhost:8300',
         );
 
         return message;
