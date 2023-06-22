@@ -7,6 +7,7 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/datasources/talk_local_datasource.dart';
 import 'package:aewallet/infrastructure/datasources/talk_remote_datasource.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
@@ -18,6 +19,12 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 class MessengerRepository
     with NotificationUtil
     implements MessengerRepositoryInterface {
+  MessengerRepository({
+    required this.networksSetting,
+  });
+
+  final NetworksSetting networksSetting;
+
   final _localDatasource = HiveTalkDatasource.getInstance();
 
   // late HiveVaultDatasource? __vaultDatasource;
@@ -194,7 +201,7 @@ class MessengerRepository
           ),
           txIndex: sendMessageResult.transactionIndex,
           senderKeyPair: previousKeyPair,
-          notifBackendBaseUrl: 'http://localhost:8300',
+          notifBackendBaseUrl: networksSetting.notificationBackendUrl,
         );
 
         return message;

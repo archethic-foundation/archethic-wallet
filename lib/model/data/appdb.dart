@@ -12,6 +12,7 @@ import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
+import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
@@ -36,6 +37,8 @@ class HiveTypeIds {
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
   static const talkMessage = 15;
+
+  static const notificationsSetup = 16;
 }
 
 class DBHelper {
@@ -65,7 +68,8 @@ class DBHelper {
       ..registerAdapter(TalkAdapter())
       ..registerAdapter(TalkMessageAdapter())
       ..registerAdapter(PubKeyAccessRecipientAdapter())
-      ..registerAdapter(ContactAccessRecipientAdapter());
+      ..registerAdapter(ContactAccessRecipientAdapter())
+      ..registerAdapter(NotificationsSetupAdapter());
   }
 
   // Contacts

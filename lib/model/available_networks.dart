@@ -23,6 +23,10 @@ class NetworksSetting extends SettingSelectionItem {
 
   final String networkDevEndpoint;
 
+  String get notificationBackendUrl {
+    return 'http://192.168.1.20:8300'; // TODO replace with production notification backend's url
+  }
+
   @override
   String getDisplayName(BuildContext context) {
     switch (network) {

@@ -20,25 +20,25 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>FlutterDeepLinkingEnabled</key>
-	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-		<key>CFBundleTypeRole</key>
-		<string>Editor</string>
-		<key>CFBundleURLName</key>
-		<string>archethic.tech</string>
-		<key>CFBundleURLSchemes</key>
-		<array>
-		<string>aewallet</string>
-		</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>archethic.tech</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>aewallet</string>
+			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 	<key>NFCReaderUsageDescription</key>
 	<string>This app uses the NFC to read the tags.</string>
 	<key>NSAppTransportSecurity</key>
@@ -48,12 +48,23 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for barcode scanning.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Protect the access to the app</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo library permission is required for upload photo to create NFT.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -88,10 +99,6 @@
 		<string>8B5D</string>
 		<string>8FC1</string>
 		<string>FE00</string>
-	</array>
-	<key>NSBonjourServices</key>
-	<array>
-		<string>_dartobservatory._tcp</string>
 	</array>
 	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
 	<array>
@@ -368,7 +375,5 @@
 		<string>E828BD080F</string>
 		<string>F0000000030001</string>
 	</array>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string></string>
 </dict>
 </plist>
