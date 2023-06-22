@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -320,6 +321,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   Future<void> initializeProviders() async {
     await ref.read(SettingsProviders.settings.notifier).initialize();
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
+    await ref.read(NotificationProviders.repository).initialize();
   }
 
   Future<void> checkLoggedIn() async {

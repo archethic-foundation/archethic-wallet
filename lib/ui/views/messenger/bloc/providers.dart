@@ -1,5 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/notification/providers.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -66,7 +68,11 @@ Future<List<Talk>> _sortedTalks(_SortedTalksRef ref) async {
 
 abstract class MessengerProviders {
   static final _messengerRepository = Provider<MessengerRepositoryInterface>(
-    (ref) => MessengerRepository(),
+    (ref) => MessengerRepository(
+      networksSetting: ref.watch(
+        SettingsProviders.settings.select((settings) => settings.network),
+      ),
+    ),
   );
 
   static final talks = _talksProvider;
