@@ -517,6 +517,7 @@
 	"signTransactionListTransactionsHeader": "Transaction %1",
 	"messengerHeader": "Messages",
 	"addMessengerGroup": "Créer une discussion",
+	"addRemoteMessengerGroup": "Ajouter cette discussion",
 	"addMessengerTalk": "Créer une conversation",
 	"addMessengerGroupNameLabel": "Nom du groupe ...",
 	"introNewMessengerTalk": "Choisissez le nom à donner à ce groupe, ainsi que les personnes à y inviter",
@@ -525,11 +526,12 @@
 	"addMessengerTalkFailure": "La création à échouée",
 	"messengerTalkMembersCount": "{membersCount} membres",
 	"@messengerTalkMembersCount": {
-	  "placeholders": {
-		"membersCount": {
-		  "type": "int",
-		  "format": "compact"
+		"placeholders": {
+			"membersCount": {
+				"type": "int",
+				"format": "compact"
+			}
 		}
-	  }
-	}
+	},
+	"searchDiscussionHint": "Rechercher une discussion\nà partir d'une adresse."
 }

@@ -121,6 +121,170 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   }
 }
 
+String _$remoteTalkHash() => r'ed7b1d88182f4cdacb77c6ddbb6ca827ce2ae567';
+typedef _RemoteTalkRef = AutoDisposeFutureProviderRef<Talk>;
+
+/// See also [_remoteTalk].
+@ProviderFor(_remoteTalk)
+const _remoteTalkProvider = _RemoteTalkFamily();
+
+/// See also [_remoteTalk].
+class _RemoteTalkFamily extends Family<AsyncValue<Talk>> {
+  /// See also [_remoteTalk].
+  const _RemoteTalkFamily();
+
+  /// See also [_remoteTalk].
+  _RemoteTalkProvider call(
+    String address,
+  ) {
+    return _RemoteTalkProvider(
+      address,
+    );
+  }
+
+  @override
+  _RemoteTalkProvider getProviderOverride(
+    covariant _RemoteTalkProvider provider,
+  ) {
+    return call(
+      provider.address,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_remoteTalkProvider';
+}
+
+/// See also [_remoteTalk].
+class _RemoteTalkProvider extends AutoDisposeFutureProvider<Talk> {
+  /// See also [_remoteTalk].
+  _RemoteTalkProvider(
+    this.address,
+  ) : super.internal(
+          (ref) => _remoteTalk(
+            ref,
+            address,
+          ),
+          from: _remoteTalkProvider,
+          name: r'_remoteTalkProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$remoteTalkHash,
+          dependencies: _RemoteTalkFamily._dependencies,
+          allTransitiveDependencies:
+              _RemoteTalkFamily._allTransitiveDependencies,
+        );
+
+  final String address;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _RemoteTalkProvider && other.address == address;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$addRemoteTalkHash() => r'ba3c393aaea903505324a43d0874a90328987bb9';
+typedef _AddRemoteTalkRef = AutoDisposeFutureProviderRef<Talk>;
+
+/// See also [_addRemoteTalk].
+@ProviderFor(_addRemoteTalk)
+const _addRemoteTalkProvider = _AddRemoteTalkFamily();
+
+/// See also [_addRemoteTalk].
+class _AddRemoteTalkFamily extends Family<AsyncValue<Talk>> {
+  /// See also [_addRemoteTalk].
+  const _AddRemoteTalkFamily();
+
+  /// See also [_addRemoteTalk].
+  _AddRemoteTalkProvider call(
+    Talk talk,
+  ) {
+    return _AddRemoteTalkProvider(
+      talk,
+    );
+  }
+
+  @override
+  _AddRemoteTalkProvider getProviderOverride(
+    covariant _AddRemoteTalkProvider provider,
+  ) {
+    return call(
+      provider.talk,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_addRemoteTalkProvider';
+}
+
+/// See also [_addRemoteTalk].
+class _AddRemoteTalkProvider extends AutoDisposeFutureProvider<Talk> {
+  /// See also [_addRemoteTalk].
+  _AddRemoteTalkProvider(
+    this.talk,
+  ) : super.internal(
+          (ref) => _addRemoteTalk(
+            ref,
+            talk,
+          ),
+          from: _addRemoteTalkProvider,
+          name: r'_addRemoteTalkProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$addRemoteTalkHash,
+          dependencies: _AddRemoteTalkFamily._dependencies,
+          allTransitiveDependencies:
+              _AddRemoteTalkFamily._allTransitiveDependencies,
+        );
+
+  final Talk talk;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _AddRemoteTalkProvider && other.talk == talk;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, talk.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$sortedTalksHash() => r'a69c62e57de2860c16c0b8d09c73490816d807a1';
 
 /// See also [_sortedTalks].

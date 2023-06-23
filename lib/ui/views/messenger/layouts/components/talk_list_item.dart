@@ -111,7 +111,7 @@ class _LoadedTalkListItem extends TalkListItem {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    talk.displayName.substring(1),
+                    talk.displayName,
                     style: theme.textStyleSize12W600Primary,
                   ),
                   Text(

@@ -32,6 +32,17 @@ abstract class MessengerRepositoryInterface {
     int pagingOffset = 0,
   });
 
+  Future<Result<Talk, Failure>> getRemoteTalk({
+    required Account currentAccount,
+    required LoggedInSession session,
+    required String talkAddress,
+  });
+
+  Future<Result<Talk, Failure>> addRemoteTalk({
+    required Talk talk,
+    required Account creator,
+  });
+
   Future<Result<TalkMessage, Failure>> sendMessage({
     required LoggedInSession session,
     required String talkAddress,
