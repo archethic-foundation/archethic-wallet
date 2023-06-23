@@ -12,6 +12,7 @@ import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
+import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -93,6 +94,22 @@ class MessengerRepository
       });
 
   @override
+  Future<Result<Talk, Failure>> addRemoteTalk({
+    required Talk talk,
+    required Account creator,
+  }) =>
+      Result.guard(() async {
+        final localDatasource = await _localDatasource;
+
+        await localDatasource.addTalk(
+          ownerAddress: creator.genesisAddress,
+          talk: talk,
+        );
+
+        return talk;
+      });
+
+  @override
   Future<Result<List<TalkMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
@@ -127,6 +144,56 @@ class MessengerRepository
               .toList();
 
           return talkMessages;
+        },
+      );
+
+  @override
+  Future<Result<Talk, Failure>> getRemoteTalk({
+    required Account currentAccount,
+    required LoggedInSession session,
+    required String talkAddress,
+  }) async =>
+      Result.guard(
+        () async {
+          final keyPair = session.wallet.keychainSecuredInfos
+              .services[_serviceName(currentAccount)]!.keyPair!;
+
+          final aeGroupMessage = await _remoteDatasource.getMessageGroup(
+            apiService: sl.get<ApiService>(),
+            scAddress: talkAddress,
+            keyPair: keyPair.toKeyPair,
+          );
+
+          if (aeGroupMessage == null) {
+            throw const Failure.invalidValue();
+          }
+
+          final admins = <AccessRecipient>[];
+          for (final adminPublicKey in aeGroupMessage.adminPublicKey) {
+            admins.add(
+              AccessRecipient.publicKey(
+                publicKey: PublicKey(adminPublicKey),
+              ),
+            );
+          }
+
+          final members = <AccessRecipient>[];
+          for (final adminPublicKey in aeGroupMessage.usersPubKey) {
+            members.add(
+              AccessRecipient.publicKey(
+                publicKey: PublicKey(adminPublicKey),
+              ),
+            );
+          }
+
+          return Talk(
+            address: aeGroupMessage.address,
+            admins: admins,
+            members: members,
+            creationDate: DateTime.fromMillisecondsSinceEpoch(
+              aeGroupMessage.timestamp,
+            ),
+          );
         },
       );
 

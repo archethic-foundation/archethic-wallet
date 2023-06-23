@@ -61,6 +61,42 @@ Future<Talk> _talk(_TalkRef ref, String address) async {
 }
 
 @riverpod
+Future<Talk> _remoteTalk(_TalkRef ref, String address) async {
+  final selectedAccount = await ref.watch(
+    AccountProviders.selectedAccount.future,
+  );
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  final session = ref.read(SessionProviders.session).loggedIn;
+  if (session == null) throw const Failure.loggedOut();
+
+  return ref
+      .watch(MessengerProviders._messengerRepository)
+      .getRemoteTalk(
+        currentAccount: selectedAccount,
+        session: session,
+        talkAddress: address,
+      )
+      .valueOrThrow;
+}
+
+@riverpod
+Future<Talk> _addRemoteTalk(_TalkRef ref, Talk talk) async {
+  final selectedAccount = await ref.watch(
+    AccountProviders.selectedAccount.future,
+  );
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  return ref
+      .watch(MessengerProviders._messengerRepository)
+      .addRemoteTalk(
+        creator: selectedAccount,
+        talk: talk,
+      )
+      .valueOrThrow;
+}
+
+@riverpod
 Future<List<Talk>> _sortedTalks(_SortedTalksRef ref) async {
   final talks = await ref.watch(_talksProvider.future);
   return talks.sorted((a, b) => b.updateDate.compareTo(a.updateDate));
@@ -77,7 +113,9 @@ abstract class MessengerProviders {
 
   static final talks = _talksProvider;
   static final sortedTalks = _sortedTalksProvider;
+  static const addRemoteTalk = _addRemoteTalkProvider;
   static const talk = _talkProvider;
+  static const remoteTalk = _remoteTalkProvider;
   static const messages = _talkMessagesProvider;
   static const paginatedMessages = _paginatedTalkMessagesNotifierProvider;
 

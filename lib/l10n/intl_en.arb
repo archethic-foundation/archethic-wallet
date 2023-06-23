@@ -540,6 +540,7 @@
   "signTransactionListTransactionsHeader": "Transaction %1",
   "messengerHeader": "Messenger",
   "addMessengerGroup": "Create a messaging group",
+  "addRemoteMessengerGroup": "Add this messaging group",
   "addMessengerTalk": "Create a talk group",
   "addMessengerGroupNameLabel": "Group name ...",
   "introNewMessengerTalk": "Choose a group name, and select people to invite",
@@ -547,12 +548,13 @@
   "messengerTalkAddAccess": "Add access",
   "addMessengerTalkFailure": "Creation failed",
   "messengerTalkMembersCount": "{membersCount} members",
-	"@messengerTalkMembersCount": {
-	  "placeholders": {
+  "@messengerTalkMembersCount": {
+    "placeholders": {
       "membersCount": {
         "type": "int",
         "format": "compact"
       }
-	  }
-	}
+    }
+  },
+  "searchDiscussionHint": "Search for a discussion\nfrom an address."
 }
