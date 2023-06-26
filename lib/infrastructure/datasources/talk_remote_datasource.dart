@@ -16,15 +16,9 @@ class TalkRemoteDatasource with MessengerMixin {
     final transaction = await createNewSC(
       keychain: keychain,
       apiService: apiService,
-      usersPubKey: members
-          .map((e) => e.publicKey?.publicKey)
-          .whereType<String>()
-          .toList(),
+      usersPubKey: members.map((e) => e.publicKey).whereType<String>().toList(),
       groupName: groupName,
-      adminsPubKey: admins
-          .map((e) => e.publicKey?.publicKey)
-          .whereType<String>()
-          .toList(),
+      adminsPubKey: admins.map((e) => e.publicKey).whereType<String>().toList(),
       adminAddress: adminAddress,
       serviceName: serviceName,
     );

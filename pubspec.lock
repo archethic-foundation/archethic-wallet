@@ -86,10 +86,10 @@ packages:
     dependency: "direct main"
     description:
       name: asn1lib
-      sha256: b74e3842a52c61f8819a1ec8444b4de5419b41a7465e69d4aa681445377398b0
+      sha256: ab96a1cb3beeccf8145c52e449233fe68364c9641623acd3adad66f8184f1039
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "1.4.0"
   async:
     dependency: transitive
     description:
@@ -598,10 +598,10 @@ packages:
     dependency: transitive
     description:
       name: file_selector_platform_interface
-      sha256: "412705a646a0ae90f33f37acfae6a0f7cbc02222d6cd34e479421c3e74d3853c"
+      sha256: "2a7f4bbf7bd2f022ecea85bfb1754e87f7dd403a9abc17a84a4fa2ddfe2abc0a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.5.1"
   file_selector_windows:
     dependency: transitive
     description:
@@ -691,10 +691,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_animate
-      sha256: be54662837a6e66cc53ee88549e808c625275e0faf5a43e11cf3182cb0bd1b02
+      sha256: f611a67082d4c5ff9b8b7737ec7e675a22af70a94c8c3c22109f14b078d4d2bf
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "4.1.1+1"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -1028,10 +1028,10 @@ packages:
     dependency: transitive
     description:
       name: grpc
-      sha256: "4e9bff1ebb4ff370cf471b1ab85007b408ade867dcc34b551eee7ee7da573002"
+      sha256: "6d39bf582aa2696226898749af1f5910f66c2362278cd013d16c37db83ca3c25"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.2.0"
   hex:
     dependency: transitive
     description:
@@ -1084,10 +1084,10 @@ packages:
     dependency: transitive
     description:
       name: http2
-      sha256: "38db0c4aa9f1cd238a5d2e86aa0cc7cc91c77e0c6c94ba64bbe85e4ff732a952"
+      sha256: "3f1286baeae57e96f4bd156cb07ab39ad96cf0d1537eed80dbc65d00447b4e0e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.1.0"
   http_methods:
     dependency: transitive
     description:
@@ -1148,10 +1148,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: d2bab152deb2547ea6f53d82ebca9b7e77386bb706e5789e815d37e08ea475bb
+      sha256: "216dbfb6609e46f78613b8913d046a162588ad4f34909ae7bf85e9f94ea6d922"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.7+3"
+    version: "0.8.7"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1401,10 +1401,10 @@ packages:
     dependency: "direct main"
     description:
       name: nfc_manager
-      sha256: d6a4cc6a8a37119b1e8cc242392c0c87623d319cf1423f6a90cb998a52970baf
+      sha256: cff1e59e316388f4508b4ba0cea4430e4ba39f8a68ecfb3e1256be25c13b0f4a
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0"
+    version: "3.2.0"
   ninja_asn1:
     dependency: transitive
     description:
@@ -1561,10 +1561,10 @@ packages:
     dependency: "direct dev"
     description:
       name: patrol
-      sha256: "145e496b8a97d0b6db8d561c5f2257dbdfd18e3c7b8de0e8f4864883ad0052a5"
+      sha256: ea12c41cfa88316cd460fe76bc2c53e5ae5175ed6a2b9cd7a8161407232ddac7
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.5"
+    version: "1.1.4"
   pdfx:
     dependency: "direct main"
     description:
@@ -2038,10 +2038,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "15f5acbf0dce90146a0f5a2c4a002b1814a6303c4c5c075aa2623b2d16156f03"
+      sha256: eed4e6a1164aa9794409325c3b707ff424d4d1c2a785e7db67f8bbda00e36e51
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.36"
+    version: "6.0.35"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -2070,10 +2070,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_platform_interface
-      sha256: bfdfa402f1f3298637d71ca8ecfe840b4696698213d5346e9d12d4ab647ee2ea
+      sha256: "6c9ca697a5ae218ce56cece69d46128169a58aa8653c1b01d26fcd4aad8c4370"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.2"
   url_launcher_web:
     dependency: transitive
     description:

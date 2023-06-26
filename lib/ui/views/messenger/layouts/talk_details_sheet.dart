@@ -110,11 +110,13 @@ class TalkDetailsSheet extends ConsumerWidget {
                               .animate(delay: (100 * index).ms)
                               .fadeIn(duration: 900.ms, delay: 200.ms)
                               .shimmer(
-                                  blendMode: BlendMode.srcOver,
-                                  color: Colors.white12)
+                                blendMode: BlendMode.srcOver,
+                                color: Colors.white12,
+                              )
                               .move(
-                                  begin: const Offset(-16, 0),
-                                  curve: Curves.easeOutQuad);
+                                begin: const Offset(-16, 0),
+                                curve: Curves.easeOutQuad,
+                              );
                         }).toList(),
                       ),
                     ),
@@ -226,7 +228,6 @@ class _MemberRole extends ConsumerWidget {
   const _MemberRole({
     required this.member,
     required this.talk,
-    super.key,
   });
 
   final AccessRecipient member;
@@ -236,7 +237,7 @@ class _MemberRole extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final isAdmin = talk.admins.any(
-      (admin) => admin.publicKey?.publicKey == member.publicKey?.publicKey,
+      (admin) => admin.publicKey == member.publicKey,
     );
 
     if (isAdmin) {

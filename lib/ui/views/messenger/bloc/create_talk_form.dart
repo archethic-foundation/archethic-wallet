@@ -102,6 +102,6 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
         ).valueOrThrow;
 
         ref.read(NotificationProviders.repository).subscribe(talk.address);
-        ref.invalidate(MessengerProviders.talks);
+        ref.invalidate(_talksProvider);
       });
 }

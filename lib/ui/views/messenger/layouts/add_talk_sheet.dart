@@ -133,8 +133,7 @@ class AddTalkSheet extends ConsumerWidget {
                     size: 14,
                   ),
                   onPressed: () async {
-                    await ref
-                        .read(MessengerProviders.addRemoteTalk(talk).future);
+                    await MessengerProviders.addRemoteTalk(ref, talk);
                   },
                 ),
               ],
@@ -243,7 +242,6 @@ class _MemberRole extends ConsumerWidget {
   const _MemberRole({
     required this.member,
     required this.talk,
-    super.key,
   });
 
   final AccessRecipient member;
@@ -253,7 +251,7 @@ class _MemberRole extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final isAdmin = talk.admins.any(
-      (admin) => admin.publicKey?.publicKey == member.publicKey?.publicKey,
+      (admin) => admin.publicKey == member.publicKey,
     );
 
     if (isAdmin) {

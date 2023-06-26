@@ -12,7 +12,6 @@ import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
-import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -172,7 +171,7 @@ class MessengerRepository
           for (final adminPublicKey in aeGroupMessage.adminPublicKey) {
             admins.add(
               AccessRecipient.publicKey(
-                publicKey: PublicKey(adminPublicKey),
+                publicKey: adminPublicKey,
               ),
             );
           }
@@ -181,7 +180,7 @@ class MessengerRepository
           for (final adminPublicKey in aeGroupMessage.usersPubKey) {
             members.add(
               AccessRecipient.publicKey(
-                publicKey: PublicKey(adminPublicKey),
+                publicKey: adminPublicKey,
               ),
             );
           }

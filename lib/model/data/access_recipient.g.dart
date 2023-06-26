@@ -17,7 +17,7 @@ class PubKeyAccessRecipientAdapter extends TypeAdapter<_$_AccessPublicKey> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_AccessPublicKey(
-      publicKey: fields[0] as PublicKey,
+      publicKey: fields[0] as String,
     );
   }
 

@@ -80,20 +80,22 @@ Future<Talk> _remoteTalk(_TalkRef ref, String address) async {
       .valueOrThrow;
 }
 
-@riverpod
-Future<Talk> _addRemoteTalk(_TalkRef ref, Talk talk) async {
-  final selectedAccount = await ref.watch(
+Future<Talk> _addRemoteTalk(WidgetRef ref, Talk talk) async {
+  final selectedAccount = await ref.read(
     AccountProviders.selectedAccount.future,
   );
   if (selectedAccount == null) throw const Failure.loggedOut();
 
-  return ref
-      .watch(MessengerProviders._messengerRepository)
+  final createdTalk = await ref
+      .read(MessengerProviders._messengerRepository)
       .addRemoteTalk(
         creator: selectedAccount,
         talk: talk,
       )
       .valueOrThrow;
+
+  ref.invalidate(_talksProvider);
+  return createdTalk;
 }
 
 @riverpod
@@ -111,9 +113,8 @@ abstract class MessengerProviders {
     ),
   );
 
-  static final talks = _talksProvider;
   static final sortedTalks = _sortedTalksProvider;
-  static const addRemoteTalk = _addRemoteTalkProvider;
+  static const addRemoteTalk = _addRemoteTalk;
   static const talk = _talkProvider;
   static const remoteTalk = _remoteTalkProvider;
   static const messages = _talkMessagesProvider;
@@ -126,8 +127,8 @@ abstract class MessengerProviders {
   static Future<void> reset(Ref ref) async {
     await ref.read(_messengerRepository).clear();
     ref
-      ..invalidate(talks)
-      ..invalidate(talkCreationForm)
-      ..invalidate(messages);
+      ..invalidate(_talksProvider)
+      ..invalidate(_createTalkFormProvider)
+      ..invalidate(_talkMessagesProvider);
   }
 }
