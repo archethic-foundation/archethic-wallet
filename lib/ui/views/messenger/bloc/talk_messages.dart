@@ -114,10 +114,43 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     );
     _addPageRequestListener(pagingController);
 
+    final notificationsSubscription = _addIncomingMessagesListener();
+
     ref.onDispose(() {
       state.dispose();
+      _removeIncomingMessagesListener(notificationsSubscription);
     });
     return pagingController;
+  }
+
+  StreamSubscription<TxSentEvent> _addIncomingMessagesListener() {
+    final notificationsRepository = ref.watch(
+      NotificationProviders.repository,
+    )..subscribe(talkAddress);
+
+    return notificationsRepository.events.listen(
+      (event) async {
+        final newMessage = await ref.read(
+          MessengerProviders.messages(
+            talkAddress,
+            0,
+            1,
+          ).future,
+        );
+        addMessage(newMessage.last);
+      },
+    );
+  }
+
+  void _removeIncomingMessagesListener(
+    StreamSubscription<TxSentEvent> subscription,
+  ) {
+    ref
+        .read(
+          NotificationProviders.repository,
+        )
+        .unsubscribe(talkAddress);
+    subscription.cancel();
   }
 
   void _addPageRequestListener(

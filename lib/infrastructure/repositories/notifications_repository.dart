@@ -47,7 +47,7 @@ class NotificationsRepositoryImpl
     if (fcmToken == null) return;
     await _client.unsubscribePushNotifs(
       token: fcmToken,
-      txChainGenesisAddresses: [txChainGenesisAddress],
+      txChainGenesisAddresses: {txChainGenesisAddress},
     );
     await _client.unsubscribeWebsocketNotifs([txChainGenesisAddress]);
 

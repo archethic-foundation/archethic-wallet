@@ -31,10 +31,10 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
     final notificationsSetup = await _getSetup();
     await _setSetup(
       notificationsSetup.copyWith(
-        listenedTxChains: [
+        listenedTxChains: {
           txChainGenesisAddress,
           ...notificationsSetup.listenedTxChains
-        ],
+        }.toList(),
       ),
     );
   }

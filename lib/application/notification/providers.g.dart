@@ -7,12 +7,12 @@ part of 'providers.dart';
 // **************************************************************************
 
 String _$notificationRepositoryHash() =>
-    r'987ef28507855e00b1ef79f6d1aece6b71ba62f2';
+    r'820412b33516775c7cd5cd97b011d067b5720329';
 
 /// See also [_notificationRepository].
 @ProviderFor(_notificationRepository)
 final _notificationRepositoryProvider =
-    AutoDisposeProvider<NotificationsRepository>.internal(
+    Provider<NotificationsRepository>.internal(
   _notificationRepository,
   name: r'_notificationRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,5 @@ final _notificationRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _NotificationRepositoryRef
-    = AutoDisposeProviderRef<NotificationsRepository>;
+typedef _NotificationRepositoryRef = ProviderRef<NotificationsRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
