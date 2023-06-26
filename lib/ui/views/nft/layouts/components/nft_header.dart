@@ -2,24 +2,23 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
-import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTHeader extends ConsumerWidget {
   const NFTHeader({
     super.key,
     required this.currentNftCategoryIndex,
+    required this.onPressBack,
     this.displayCategoryName = false,
   });
+
   final int currentNftCategoryIndex;
   final bool displayCategoryName;
+  final Function()? onPressBack;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,15 +55,7 @@ class NFTHeader extends ConsumerWidget {
               child: BackButton(
                 key: const Key('back'),
                 color: theme.text,
-                onPressed: () async {
-                  await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return const _NFTHeaderBackPopup();
-                    },
-                  );
-                },
+                onPressed: onPressBack,
               ),
             ),
           ],
@@ -110,63 +101,6 @@ class NFTHeader extends ConsumerWidget {
             ),
           ),
       ],
-    );
-  }
-}
-
-class _NFTHeaderBackPopup extends ConsumerWidget {
-  const _NFTHeaderBackPopup();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return PopupDialog(
-      title: Text(
-        localizations.exitNFTCreationProcessTitle,
-        style: theme.textStyleSize16W400Primary,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            localizations.exitNFTCreationProcessSubtitle,
-            style: theme.textStyleSize14W200Primary,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.no,
-                Dimens.buttonTopDimens,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.yes,
-                Dimens.buttonTopDimens,
-                onPressed: () {
-                  /**
-                   * Go back 2 times:
-                   * - Popup
-                   * - Nft form creation
-                   */
-                  var count = 0;
-                  Navigator.popUntil(context, (route) {
-                    return count++ == 2;
-                  });
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
