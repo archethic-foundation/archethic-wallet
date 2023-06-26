@@ -512,7 +512,7 @@ class _MessageCreationFormNotifierProvider
 }
 
 String _$paginatedTalkMessagesNotifierHash() =>
-    r'9f70a098b760975ca94a0a746052c83ed27cec7e';
+    r'46d108046080b4a135d9ae9fd739ad6ce3484d8b';
 
 abstract class _$PaginatedTalkMessagesNotifier
     extends BuildlessAutoDisposeNotifier<PagingController<int, TalkMessage>> {

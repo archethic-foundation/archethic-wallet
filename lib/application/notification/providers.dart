@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'providers.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 NotificationsRepository _notificationRepository(Ref ref) =>
     NotificationsRepositoryImpl(
       networksSetting: ref.watch(
