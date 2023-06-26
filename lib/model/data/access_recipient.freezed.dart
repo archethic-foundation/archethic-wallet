@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AccessRecipient {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(@HiveField(0) PublicKey publicKey) publicKey,
+    required TResult Function(@HiveField(0) String publicKey) publicKey,
     required TResult Function(@HiveField(0) Contact contact) contact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(@HiveField(0) PublicKey publicKey)? publicKey,
+    TResult? Function(@HiveField(0) String publicKey)? publicKey,
     TResult? Function(@HiveField(0) Contact contact)? contact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(@HiveField(0) PublicKey publicKey)? publicKey,
+    TResult Function(@HiveField(0) String publicKey)? publicKey,
     TResult Function(@HiveField(0) Contact contact)? contact,
     required TResult orElse(),
   }) =>
@@ -80,7 +80,7 @@ abstract class _$$_AccessPublicKeyCopyWith<$Res> {
           _$_AccessPublicKey value, $Res Function(_$_AccessPublicKey) then) =
       __$$_AccessPublicKeyCopyWithImpl<$Res>;
   @useResult
-  $Res call({@HiveField(0) PublicKey publicKey});
+  $Res call({@HiveField(0) String publicKey});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class __$$_AccessPublicKeyCopyWithImpl<$Res>
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
-              as PublicKey,
+              as String,
     ));
   }
 }
@@ -115,7 +115,7 @@ class _$_AccessPublicKey extends _AccessPublicKey {
 
   @override
   @HiveField(0)
-  final PublicKey publicKey;
+  final String publicKey;
 
   @override
   String toString() {
@@ -143,7 +143,7 @@ class _$_AccessPublicKey extends _AccessPublicKey {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(@HiveField(0) PublicKey publicKey) publicKey,
+    required TResult Function(@HiveField(0) String publicKey) publicKey,
     required TResult Function(@HiveField(0) Contact contact) contact,
   }) {
     return publicKey(this.publicKey);
@@ -152,7 +152,7 @@ class _$_AccessPublicKey extends _AccessPublicKey {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(@HiveField(0) PublicKey publicKey)? publicKey,
+    TResult? Function(@HiveField(0) String publicKey)? publicKey,
     TResult? Function(@HiveField(0) Contact contact)? contact,
   }) {
     return publicKey?.call(this.publicKey);
@@ -161,7 +161,7 @@ class _$_AccessPublicKey extends _AccessPublicKey {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(@HiveField(0) PublicKey publicKey)? publicKey,
+    TResult Function(@HiveField(0) String publicKey)? publicKey,
     TResult Function(@HiveField(0) Contact contact)? contact,
     required TResult orElse(),
   }) {
@@ -205,11 +205,11 @@ class _$_AccessPublicKey extends _AccessPublicKey {
 
 abstract class _AccessPublicKey extends AccessRecipient {
   const factory _AccessPublicKey(
-      {@HiveField(0) required final PublicKey publicKey}) = _$_AccessPublicKey;
+      {@HiveField(0) required final String publicKey}) = _$_AccessPublicKey;
   const _AccessPublicKey._() : super._();
 
   @HiveField(0)
-  PublicKey get publicKey;
+  String get publicKey;
   @JsonKey(ignore: true)
   _$$_AccessPublicKeyCopyWith<_$_AccessPublicKey> get copyWith =>
       throw _privateConstructorUsedError;
@@ -283,7 +283,7 @@ class _$_AccessContact extends _AccessContact {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(@HiveField(0) PublicKey publicKey) publicKey,
+    required TResult Function(@HiveField(0) String publicKey) publicKey,
     required TResult Function(@HiveField(0) Contact contact) contact,
   }) {
     return contact(this.contact);
@@ -292,7 +292,7 @@ class _$_AccessContact extends _AccessContact {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(@HiveField(0) PublicKey publicKey)? publicKey,
+    TResult? Function(@HiveField(0) String publicKey)? publicKey,
     TResult? Function(@HiveField(0) Contact contact)? contact,
   }) {
     return contact?.call(this.contact);
@@ -301,7 +301,7 @@ class _$_AccessContact extends _AccessContact {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(@HiveField(0) PublicKey publicKey)? publicKey,
+    TResult Function(@HiveField(0) String publicKey)? publicKey,
     TResult Function(@HiveField(0) Contact contact)? contact,
     required TResult orElse(),
   }) {

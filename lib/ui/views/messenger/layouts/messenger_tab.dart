@@ -1,7 +1,5 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
-import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_state.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/discussion_search_bar.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/talk_list_item.dart';
@@ -20,15 +18,7 @@ class MessengerTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      overrides: [
-        DiscussionSearchBarProvider.initialDiscussionSearchBar
-            .overrideWithValue(
-          const DiscussionSearchBarState(),
-        ),
-      ],
-      child: const MessengerBody(),
-    );
+    return const MessengerBody();
   }
 }
 

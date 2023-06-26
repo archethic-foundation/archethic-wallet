@@ -49,7 +49,7 @@ class AddPublicKeyTextFieldValue with _$AddPublicKeyTextFieldValue {
 
   AccessRecipient? get toAccessRecipient => mapOrNull(
         publicKey: (value) =>
-            AccessRecipient.publicKey(publicKey: value.publicKey),
+            AccessRecipient.publicKey(publicKey: value.publicKey.publicKey),
         contact: (value) => AccessRecipient.contact(contact: value.contact),
       );
 }

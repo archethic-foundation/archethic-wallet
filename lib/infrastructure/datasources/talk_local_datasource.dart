@@ -47,7 +47,10 @@ class HiveTalkDatasource with SecuredHiveMixin {
     required Talk talk,
   }) async {
     await _talkBox.put(
-      _talkKey(ownerAddress: ownerAddress, talkAddress: talk.address),
+      _talkKey(
+        ownerAddress: ownerAddress,
+        talkAddress: talk.address,
+      ),
       talk,
     );
   }

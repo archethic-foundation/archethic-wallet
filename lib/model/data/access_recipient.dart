@@ -15,7 +15,7 @@ class AccessRecipient with _$AccessRecipient {
     typeId: HiveTypeIds.pubKeyAccessRecipient,
   )
   const factory AccessRecipient.publicKey({
-    @HiveField(0) required PublicKey publicKey,
+    @HiveField(0) required String publicKey,
   }) = _AccessPublicKey;
   @HiveType(
     adapterName: 'ContactAccessRecipientAdapter',
@@ -25,15 +25,15 @@ class AccessRecipient with _$AccessRecipient {
     @HiveField(0) required Contact contact,
   }) = _AccessContact;
 
-  PublicKey? get publicKey => when(
+  String? get publicKey => when(
         publicKey: (publicKey) => publicKey,
-        contact: (contact) => PublicKey(contact.publicKey),
+        contact: (contact) => contact.publicKey,
       );
 
-  bool get isPublicKeyValid => (publicKey ?? const PublicKey('')).isValid;
+  bool get isPublicKeyValid => PublicKey(publicKey ?? '').isValid;
 
   String get name => map(
         contact: (contact) => contact.contact.name,
-        publicKey: (value) => value.publicKey.publicKey,
+        publicKey: (value) => value.publicKey,
       );
 }

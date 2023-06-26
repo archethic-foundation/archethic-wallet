@@ -6,12 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialDiscussionSearchBarProvider = Provider<DiscussionSearchBarState>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
 final _discussionSearchBarProvider = NotifierProvider.autoDispose<
     DiscussionSearchBarNotifier, DiscussionSearchBarState>(
   () {
@@ -19,13 +13,11 @@ final _discussionSearchBarProvider = NotifierProvider.autoDispose<
   },
   dependencies: [
     MessengerProviders.remoteTalk,
-    DiscussionSearchBarProvider.initialDiscussionSearchBar,
   ],
 );
 
 abstract class DiscussionSearchBarProvider {
   static final discussionSearchBar = _discussionSearchBarProvider;
-  static final initialDiscussionSearchBar = _initialDiscussionSearchBarProvider;
 }
 
 class DiscussionSearchBarNotifier
@@ -33,9 +25,7 @@ class DiscussionSearchBarNotifier
   DiscussionSearchBarNotifier();
 
   @override
-  DiscussionSearchBarState build() => ref.watch(
-        DiscussionSearchBarProvider.initialDiscussionSearchBar,
-      );
+  DiscussionSearchBarState build() => const DiscussionSearchBarState();
 
   void setError(String error) {
     state = state.copyWith(
@@ -87,8 +77,10 @@ class DiscussionSearchBarNotifier
     );
 
     if (talk.address.isEmpty) {
-      state =
-          state.copyWith(error: localizations!.invalidAddress, loading: false);
+      state = state.copyWith(
+        error: localizations!.invalidAddress,
+        loading: false,
+      );
       return;
     }
     state = state.copyWith(
