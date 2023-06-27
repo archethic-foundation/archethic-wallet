@@ -310,15 +310,15 @@ class _GetContactWithAddressProvider
 }
 
 String _$getContactWithPublicKeyHash() =>
-    r'62108be30a37c84a8cde033d6705e9aecf8b355f';
-typedef _GetContactWithPublicKeyRef = AutoDisposeFutureProviderRef<Contact>;
+    r'9f398d381eb5fedeba4fa599ebdee44f8f405d03';
+typedef _GetContactWithPublicKeyRef = AutoDisposeFutureProviderRef<Contact?>;
 
 /// See also [_getContactWithPublicKey].
 @ProviderFor(_getContactWithPublicKey)
 const _getContactWithPublicKeyProvider = _GetContactWithPublicKeyFamily();
 
 /// See also [_getContactWithPublicKey].
-class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact>> {
+class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact?>> {
   /// See also [_getContactWithPublicKey].
   const _GetContactWithPublicKeyFamily();
 
@@ -357,7 +357,7 @@ class _GetContactWithPublicKeyFamily extends Family<AsyncValue<Contact>> {
 
 /// See also [_getContactWithPublicKey].
 class _GetContactWithPublicKeyProvider
-    extends AutoDisposeFutureProvider<Contact> {
+    extends AutoDisposeFutureProvider<Contact?> {
   /// See also [_getContactWithPublicKey].
   _GetContactWithPublicKeyProvider(
     this.publicKey,
@@ -395,9 +395,9 @@ class _GetContactWithPublicKeyProvider
 }
 
 String _$getContactWithGenesisPublicKeyHash() =>
-    r'93092b68ce03278c300323d0e7ddde4030c88d22';
+    r'ba5b98ca4aea9d1f0bcab19a0ba1b455fea93b63';
 typedef _GetContactWithGenesisPublicKeyRef
-    = AutoDisposeFutureProviderRef<Contact>;
+    = AutoDisposeFutureProviderRef<Contact?>;
 
 /// See also [_getContactWithGenesisPublicKey].
 @ProviderFor(_getContactWithGenesisPublicKey)
@@ -406,7 +406,7 @@ const _getContactWithGenesisPublicKeyProvider =
 
 /// See also [_getContactWithGenesisPublicKey].
 class _GetContactWithGenesisPublicKeyFamily
-    extends Family<AsyncValue<Contact>> {
+    extends Family<AsyncValue<Contact?>> {
   /// See also [_getContactWithGenesisPublicKey].
   const _GetContactWithGenesisPublicKeyFamily();
 
@@ -445,7 +445,7 @@ class _GetContactWithGenesisPublicKeyFamily
 
 /// See also [_getContactWithGenesisPublicKey].
 class _GetContactWithGenesisPublicKeyProvider
-    extends AutoDisposeFutureProvider<Contact> {
+    extends AutoDisposeFutureProvider<Contact?> {
   /// See also [_getContactWithGenesisPublicKey].
   _GetContactWithGenesisPublicKeyProvider(
     this.genesisPublicKey,

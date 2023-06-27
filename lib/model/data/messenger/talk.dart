@@ -1,4 +1,3 @@
-import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,17 +12,12 @@ class Talk with _$Talk {
   const factory Talk({
     @HiveField(0) required String address,
     @HiveField(1) String? name,
-    @HiveField(2) required List<AccessRecipient> members,
-    @HiveField(3) required List<AccessRecipient> admins,
+    @HiveField(2) required List<String> membersPubKeys,
+    @HiveField(3) required List<String> adminsPubKeys,
     @HiveField(4) required DateTime creationDate,
     @HiveField(5) TalkMessage? lastMessage,
   }) = _Talk;
   const Talk._();
 
   DateTime get updateDate => lastMessage?.date ?? creationDate;
-
-  String get displayName {
-    if (name != null && name!.isNotEmpty) return name!;
-    return members.first.name;
-  }
 }

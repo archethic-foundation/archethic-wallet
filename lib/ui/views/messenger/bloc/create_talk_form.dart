@@ -88,13 +88,13 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
 
         final talk =
             await ref.read(MessengerProviders._messengerRepository).createTalk(
-          admins: [
-            ...state.admins,
-            creator,
+          adminsPubKeys: [
+            ...state.admins.map((recipient) => recipient.publicKey),
+            creator.publicKey,
           ],
-          members: [
-            ...state.members,
-            creator,
+          membersPubKeys: [
+            ...state.members.map((recipient) => recipient.publicKey),
+            creator.publicKey,
           ],
           creator: selectedAccount,
           session: session,

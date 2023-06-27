@@ -121,6 +121,176 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   }
 }
 
+String _$talkDisplayNameHash() => r'0c804df14048c53d1983cf9a77d360f791a454e4';
+typedef _TalkDisplayNameRef = AutoDisposeProviderRef<String>;
+
+/// See also [_talkDisplayName].
+@ProviderFor(_talkDisplayName)
+const _talkDisplayNameProvider = _TalkDisplayNameFamily();
+
+/// See also [_talkDisplayName].
+class _TalkDisplayNameFamily extends Family<String> {
+  /// See also [_talkDisplayName].
+  const _TalkDisplayNameFamily();
+
+  /// See also [_talkDisplayName].
+  _TalkDisplayNameProvider call(
+    Talk talk,
+  ) {
+    return _TalkDisplayNameProvider(
+      talk,
+    );
+  }
+
+  @override
+  _TalkDisplayNameProvider getProviderOverride(
+    covariant _TalkDisplayNameProvider provider,
+  ) {
+    return call(
+      provider.talk,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_talkDisplayNameProvider';
+}
+
+/// See also [_talkDisplayName].
+class _TalkDisplayNameProvider extends AutoDisposeProvider<String> {
+  /// See also [_talkDisplayName].
+  _TalkDisplayNameProvider(
+    this.talk,
+  ) : super.internal(
+          (ref) => _talkDisplayName(
+            ref,
+            talk,
+          ),
+          from: _talkDisplayNameProvider,
+          name: r'_talkDisplayNameProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$talkDisplayNameHash,
+          dependencies: _TalkDisplayNameFamily._dependencies,
+          allTransitiveDependencies:
+              _TalkDisplayNameFamily._allTransitiveDependencies,
+        );
+
+  final Talk talk;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _TalkDisplayNameProvider && other.talk == talk;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, talk.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$accessRecipientWithPublicKeyHash() =>
+    r'8cd0c92d333699019c70fa46161053c030e3e555';
+typedef _AccessRecipientWithPublicKeyRef
+    = AutoDisposeFutureProviderRef<AccessRecipient>;
+
+/// See also [_accessRecipientWithPublicKey].
+@ProviderFor(_accessRecipientWithPublicKey)
+const _accessRecipientWithPublicKeyProvider =
+    _AccessRecipientWithPublicKeyFamily();
+
+/// See also [_accessRecipientWithPublicKey].
+class _AccessRecipientWithPublicKeyFamily
+    extends Family<AsyncValue<AccessRecipient>> {
+  /// See also [_accessRecipientWithPublicKey].
+  const _AccessRecipientWithPublicKeyFamily();
+
+  /// See also [_accessRecipientWithPublicKey].
+  _AccessRecipientWithPublicKeyProvider call(
+    String pubKey,
+  ) {
+    return _AccessRecipientWithPublicKeyProvider(
+      pubKey,
+    );
+  }
+
+  @override
+  _AccessRecipientWithPublicKeyProvider getProviderOverride(
+    covariant _AccessRecipientWithPublicKeyProvider provider,
+  ) {
+    return call(
+      provider.pubKey,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_accessRecipientWithPublicKeyProvider';
+}
+
+/// See also [_accessRecipientWithPublicKey].
+class _AccessRecipientWithPublicKeyProvider
+    extends AutoDisposeFutureProvider<AccessRecipient> {
+  /// See also [_accessRecipientWithPublicKey].
+  _AccessRecipientWithPublicKeyProvider(
+    this.pubKey,
+  ) : super.internal(
+          (ref) => _accessRecipientWithPublicKey(
+            ref,
+            pubKey,
+          ),
+          from: _accessRecipientWithPublicKeyProvider,
+          name: r'_accessRecipientWithPublicKeyProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$accessRecipientWithPublicKeyHash,
+          dependencies: _AccessRecipientWithPublicKeyFamily._dependencies,
+          allTransitiveDependencies:
+              _AccessRecipientWithPublicKeyFamily._allTransitiveDependencies,
+        );
+
+  final String pubKey;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _AccessRecipientWithPublicKeyProvider &&
+        other.pubKey == pubKey;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, pubKey.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$remoteTalkHash() => r'ed7b1d88182f4cdacb77c6ddbb6ca827ce2ae567';
 typedef _RemoteTalkRef = AutoDisposeFutureProviderRef<Talk>;
 

@@ -21,9 +21,9 @@ mixin _$Talk {
   @HiveField(1)
   String? get name => throw _privateConstructorUsedError;
   @HiveField(2)
-  List<AccessRecipient> get members => throw _privateConstructorUsedError;
+  List<String> get membersPubKeys => throw _privateConstructorUsedError;
   @HiveField(3)
-  List<AccessRecipient> get admins => throw _privateConstructorUsedError;
+  List<String> get adminsPubKeys => throw _privateConstructorUsedError;
   @HiveField(4)
   DateTime get creationDate => throw _privateConstructorUsedError;
   @HiveField(5)
@@ -41,8 +41,8 @@ abstract class $TalkCopyWith<$Res> {
   $Res call(
       {@HiveField(0) String address,
       @HiveField(1) String? name,
-      @HiveField(2) List<AccessRecipient> members,
-      @HiveField(3) List<AccessRecipient> admins,
+      @HiveField(2) List<String> membersPubKeys,
+      @HiveField(3) List<String> adminsPubKeys,
       @HiveField(4) DateTime creationDate,
       @HiveField(5) TalkMessage? lastMessage});
 
@@ -64,8 +64,8 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
   $Res call({
     Object? address = null,
     Object? name = freezed,
-    Object? members = null,
-    Object? admins = null,
+    Object? membersPubKeys = null,
+    Object? adminsPubKeys = null,
     Object? creationDate = null,
     Object? lastMessage = freezed,
   }) {
@@ -78,14 +78,14 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      members: null == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
-      admins: null == admins
-          ? _value.admins
-          : admins // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
+      membersPubKeys: null == membersPubKeys
+          ? _value.membersPubKeys
+          : membersPubKeys // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      adminsPubKeys: null == adminsPubKeys
+          ? _value.adminsPubKeys
+          : adminsPubKeys // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       creationDate: null == creationDate
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
@@ -119,8 +119,8 @@ abstract class _$$_TalkCopyWith<$Res> implements $TalkCopyWith<$Res> {
   $Res call(
       {@HiveField(0) String address,
       @HiveField(1) String? name,
-      @HiveField(2) List<AccessRecipient> members,
-      @HiveField(3) List<AccessRecipient> admins,
+      @HiveField(2) List<String> membersPubKeys,
+      @HiveField(3) List<String> adminsPubKeys,
       @HiveField(4) DateTime creationDate,
       @HiveField(5) TalkMessage? lastMessage});
 
@@ -139,8 +139,8 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
   $Res call({
     Object? address = null,
     Object? name = freezed,
-    Object? members = null,
-    Object? admins = null,
+    Object? membersPubKeys = null,
+    Object? adminsPubKeys = null,
     Object? creationDate = null,
     Object? lastMessage = freezed,
   }) {
@@ -153,14 +153,14 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      members: null == members
-          ? _value._members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
-      admins: null == admins
-          ? _value._admins
-          : admins // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
+      membersPubKeys: null == membersPubKeys
+          ? _value._membersPubKeys
+          : membersPubKeys // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      adminsPubKeys: null == adminsPubKeys
+          ? _value._adminsPubKeys
+          : adminsPubKeys // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       creationDate: null == creationDate
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
@@ -180,12 +180,12 @@ class _$_Talk extends _Talk {
   const _$_Talk(
       {@HiveField(0) required this.address,
       @HiveField(1) this.name,
-      @HiveField(2) required final List<AccessRecipient> members,
-      @HiveField(3) required final List<AccessRecipient> admins,
+      @HiveField(2) required final List<String> membersPubKeys,
+      @HiveField(3) required final List<String> adminsPubKeys,
       @HiveField(4) required this.creationDate,
       @HiveField(5) this.lastMessage})
-      : _members = members,
-        _admins = admins,
+      : _membersPubKeys = membersPubKeys,
+        _adminsPubKeys = adminsPubKeys,
         super._();
 
   @override
@@ -194,22 +194,22 @@ class _$_Talk extends _Talk {
   @override
   @HiveField(1)
   final String? name;
-  final List<AccessRecipient> _members;
+  final List<String> _membersPubKeys;
   @override
   @HiveField(2)
-  List<AccessRecipient> get members {
-    if (_members is EqualUnmodifiableListView) return _members;
+  List<String> get membersPubKeys {
+    if (_membersPubKeys is EqualUnmodifiableListView) return _membersPubKeys;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_members);
+    return EqualUnmodifiableListView(_membersPubKeys);
   }
 
-  final List<AccessRecipient> _admins;
+  final List<String> _adminsPubKeys;
   @override
   @HiveField(3)
-  List<AccessRecipient> get admins {
-    if (_admins is EqualUnmodifiableListView) return _admins;
+  List<String> get adminsPubKeys {
+    if (_adminsPubKeys is EqualUnmodifiableListView) return _adminsPubKeys;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_admins);
+    return EqualUnmodifiableListView(_adminsPubKeys);
   }
 
   @override
@@ -221,7 +221,7 @@ class _$_Talk extends _Talk {
 
   @override
   String toString() {
-    return 'Talk(address: $address, name: $name, members: $members, admins: $admins, creationDate: $creationDate, lastMessage: $lastMessage)';
+    return 'Talk(address: $address, name: $name, membersPubKeys: $membersPubKeys, adminsPubKeys: $adminsPubKeys, creationDate: $creationDate, lastMessage: $lastMessage)';
   }
 
   @override
@@ -231,8 +231,10 @@ class _$_Talk extends _Talk {
             other is _$_Talk &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._members, _members) &&
-            const DeepCollectionEquality().equals(other._admins, _admins) &&
+            const DeepCollectionEquality()
+                .equals(other._membersPubKeys, _membersPubKeys) &&
+            const DeepCollectionEquality()
+                .equals(other._adminsPubKeys, _adminsPubKeys) &&
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
             (identical(other.lastMessage, lastMessage) ||
@@ -244,8 +246,8 @@ class _$_Talk extends _Talk {
       runtimeType,
       address,
       name,
-      const DeepCollectionEquality().hash(_members),
-      const DeepCollectionEquality().hash(_admins),
+      const DeepCollectionEquality().hash(_membersPubKeys),
+      const DeepCollectionEquality().hash(_adminsPubKeys),
       creationDate,
       lastMessage);
 
@@ -260,8 +262,8 @@ abstract class _Talk extends Talk {
   const factory _Talk(
       {@HiveField(0) required final String address,
       @HiveField(1) final String? name,
-      @HiveField(2) required final List<AccessRecipient> members,
-      @HiveField(3) required final List<AccessRecipient> admins,
+      @HiveField(2) required final List<String> membersPubKeys,
+      @HiveField(3) required final List<String> adminsPubKeys,
       @HiveField(4) required final DateTime creationDate,
       @HiveField(5) final TalkMessage? lastMessage}) = _$_Talk;
   const _Talk._() : super._();
@@ -274,10 +276,10 @@ abstract class _Talk extends Talk {
   String? get name;
   @override
   @HiveField(2)
-  List<AccessRecipient> get members;
+  List<String> get membersPubKeys;
   @override
   @HiveField(3)
-  List<AccessRecipient> get admins;
+  List<String> get adminsPubKeys;
   @override
   @HiveField(4)
   DateTime get creationDate;

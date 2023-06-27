@@ -19,8 +19,8 @@ class TalkAdapter extends TypeAdapter<_$_Talk> {
     return _$_Talk(
       address: fields[0] as String,
       name: fields[1] as String?,
-      members: (fields[2] as List).cast<AccessRecipient>(),
-      admins: (fields[3] as List).cast<AccessRecipient>(),
+      membersPubKeys: (fields[2] as List).cast<String>(),
+      adminsPubKeys: (fields[3] as List).cast<String>(),
       creationDate: fields[4] as DateTime,
       lastMessage: fields[5] as TalkMessage?,
     );
@@ -39,9 +39,9 @@ class TalkAdapter extends TypeAdapter<_$_Talk> {
       ..writeByte(5)
       ..write(obj.lastMessage)
       ..writeByte(2)
-      ..write(obj.members)
+      ..write(obj.membersPubKeys)
       ..writeByte(3)
-      ..write(obj.admins);
+      ..write(obj.adminsPubKeys);
   }
 
   @override

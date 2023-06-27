@@ -1,14 +1,13 @@
 import 'package:aewallet/domain/models/core/failures.dart';
-import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class TalkRemoteDatasource with MessengerMixin {
   Future<Talk> createTalk({
     required ApiService apiService,
-    required List<AccessRecipient> members,
+    required List<String> members,
     required String groupName,
-    required List<AccessRecipient> admins,
+    required List<String> admins,
     required String adminAddress,
     required String serviceName,
     required Keychain keychain,
@@ -16,9 +15,9 @@ class TalkRemoteDatasource with MessengerMixin {
     final transaction = await createNewSC(
       keychain: keychain,
       apiService: apiService,
-      usersPubKey: members.map((e) => e.publicKey).whereType<String>().toList(),
+      usersPubKey: members.map((e) => e).whereType<String>().toList(),
       groupName: groupName,
-      adminsPubKey: admins.map((e) => e.publicKey).whereType<String>().toList(),
+      adminsPubKey: admins.map((e) => e).whereType<String>().toList(),
       adminAddress: adminAddress,
       serviceName: serviceName,
     );
@@ -27,8 +26,8 @@ class TalkRemoteDatasource with MessengerMixin {
       creationDate: DateTime.now(),
       address: transaction.address!.address!,
       name: groupName,
-      members: members,
-      admins: admins,
+      membersPubKeys: members,
+      adminsPubKeys: admins,
     );
   }
 

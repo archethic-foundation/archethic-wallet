@@ -64,6 +64,59 @@ Future<Talk> _talk(_TalkRef ref, String address) async {
 }
 
 @riverpod
+String _talkDisplayName(_TalkDisplayNameRef ref, Talk talk) {
+  if (talk.name != null && talk.name!.isNotEmpty) return talk.name!;
+
+  return ref
+          .watch(
+            ContactProviders.getSelectedContact,
+          )
+          .mapOrNull(
+            data: (contactData) {
+              final memberToDisplayPubKey =
+                  talk.membersPubKeys.firstWhereOrNull(
+                (memberPublicKey) =>
+                    memberPublicKey != contactData.value.publicKey,
+              );
+              if (memberToDisplayPubKey == null) return null;
+
+              return ref
+                  .watch(
+                    _accessRecipientWithPublicKeyProvider(
+                      memberToDisplayPubKey,
+                    ),
+                  )
+                  .asData;
+            },
+          )
+          ?.value
+          .name ??
+      '...';
+  // final memberToDisplayPubKey = talk.membersPubKeys.firstWhereOrNull(
+  //   (memberPublicKey) => memberPublicKey != asyncSelectedContact.publicKey,
+  // );
+  // if (memberToDisplayPubKey == null) return '';
+
+  // return (await ref.watch(
+  //   _accessRecipientWithPublicKeyProvider(memberToDisplayPubKey).future,
+  // ))
+  //     .name;
+}
+
+@riverpod
+Future<AccessRecipient> _accessRecipientWithPublicKey(
+  _AccessRecipientWithPublicKeyRef ref,
+  String pubKey,
+) async {
+  final contact = await ref.watch(
+    ContactProviders.getContactWithGenesisPublicKey(pubKey).future,
+  );
+
+  if (contact != null) return AccessRecipient.contact(contact: contact);
+  return AccessRecipient.publicKey(publicKey: pubKey);
+}
+
+@riverpod
 Future<Talk> _remoteTalk(_TalkRef ref, String address) async {
   final selectedAccount = await ref.watch(
     AccountProviders.selectedAccount.future,
@@ -119,6 +172,9 @@ abstract class MessengerProviders {
   static final sortedTalks = _sortedTalksProvider;
   static const addRemoteTalk = _addRemoteTalk;
   static const talk = _talkProvider;
+  static const talkDisplayName = _talkDisplayNameProvider;
+  static const accessRecipientWithPublicKey =
+      _accessRecipientWithPublicKeyProvider;
   static const remoteTalk = _remoteTalkProvider;
   static const messages = _talkMessagesProvider;
   static const paginatedMessages = _paginatedTalkMessagesNotifierProvider;

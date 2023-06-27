@@ -12,7 +12,6 @@ class HiveTalkDatasource with SecuredHiveMixin {
     final encryptedBox = await SecuredHiveMixin.openLazySecuredBox<Talk>(
       'MessengerTalk',
     );
-
     return HiveTalkDatasource._(encryptedBox);
   }
 

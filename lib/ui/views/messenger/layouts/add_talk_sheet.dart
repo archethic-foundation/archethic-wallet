@@ -1,6 +1,5 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -66,12 +65,12 @@ class AddTalkSheet extends ConsumerWidget {
                 );
               },
               child: SheetHeader(
-                title: talk.displayName,
+                title: ref.watch(MessengerProviders.talkDisplayName(talk)),
               ),
             ),
             _SectionTitle(
-              text:
-                  localizations.messengerTalkMembersCount(talk.members.length),
+              text: localizations
+                  .messengerTalkMembersCount(talk.membersPubKeys.length),
             ),
             Expanded(
               child: ArchethicScrollbar(
@@ -82,27 +81,36 @@ class AddTalkSheet extends ConsumerWidget {
                     bottom: bottom + 80,
                   ),
                   child: Column(
-                    children: talk.members.map((accessRecipient) {
+                    children: talk.membersPubKeys.map((publicKey) {
                       index++;
+                      final accessRecipient = ref.watch(
+                        MessengerProviders.accessRecipientWithPublicKey(
+                          publicKey,
+                        ),
+                      );
+
                       return PublicKeyLine(
                         talk: talk,
-                        accessRecipient: accessRecipient,
-                        onTap: accessRecipient.map(
-                          contact: (contact) => () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  settings.activeVibrations,
-                                );
+                        pubKey: publicKey,
+                        onTap: accessRecipient.maybeMap(
+                          orElse: () => null,
+                          data: (recipient) => recipient.value.map(
+                            contact: (contact) => () {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    settings.activeVibrations,
+                                  );
 
-                            Sheets.showAppHeightNineSheet(
-                              context: context,
-                              ref: ref,
-                              widget: ContactDetail(
-                                contact: contact.contact,
-                              ),
-                            );
-                          },
-                          publicKey: (_) => null,
+                              Sheets.showAppHeightNineSheet(
+                                context: context,
+                                ref: ref,
+                                widget: ContactDetail(
+                                  contact: contact.contact,
+                                ),
+                              );
+                            },
+                            publicKey: (_) => null,
+                          ),
                         ),
                       )
                           .animate(delay: (100 * index).ms)
@@ -177,13 +185,13 @@ class _SectionTitle extends ConsumerWidget {
 class PublicKeyLine extends ConsumerWidget {
   const PublicKeyLine({
     super.key,
-    required this.accessRecipient,
+    required this.pubKey,
     required this.talk,
     this.onTap,
   });
 
   final Talk talk;
-  final AccessRecipient accessRecipient;
+  final String pubKey;
   final VoidCallback? onTap;
 
   @override
@@ -193,6 +201,11 @@ class PublicKeyLine extends ConsumerWidget {
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
+    final accessRecipient = ref.watch(
+      MessengerProviders.accessRecipientWithPublicKey(
+        pubKey,
+      ),
+    );
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -214,13 +227,16 @@ class PublicKeyLine extends ConsumerWidget {
             children: [
               Expanded(
                 child: AutoSizeText(
-                  accessRecipient.format(localizations),
+                  accessRecipient.maybeMap(
+                    data: (data) => data.value.format(localizations),
+                    orElse: () => '...',
+                  ),
                   style: theme.textStyleSize12W600Primary,
                 ),
               ),
               _MemberRole(
                 talk: talk,
-                member: accessRecipient,
+                memberPubKey: pubKey,
               ),
               if (onTap != null)
                 const Padding(
@@ -240,18 +256,18 @@ class PublicKeyLine extends ConsumerWidget {
 
 class _MemberRole extends ConsumerWidget {
   const _MemberRole({
-    required this.member,
+    required this.memberPubKey,
     required this.talk,
   });
 
-  final AccessRecipient member;
+  final String memberPubKey;
   final Talk talk;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final isAdmin = talk.admins.any(
-      (admin) => admin.publicKey == member.publicKey,
+    final isAdmin = talk.adminsPubKeys.any(
+      (adminPubKey) => adminPubKey == memberPubKey,
     );
 
     if (isAdmin) {
