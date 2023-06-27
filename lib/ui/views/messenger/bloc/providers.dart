@@ -28,8 +28,9 @@ part 'talk_messages.dart';
 
 @riverpod
 Future<Iterable<Talk>> _talks(_TalksRef ref) async {
-  final selectedAccount =
-      await ref.watch(AccountProviders.selectedAccount.future);
+  final selectedAccount = await ref.watch(
+    AccountProviders.selectedAccount.future,
+  );
   if (selectedAccount == null) throw const Failure.loggedOut();
 
   final repository = ref.watch(MessengerProviders._messengerRepository);
@@ -154,10 +155,51 @@ Future<Talk> _addRemoteTalk(WidgetRef ref, Talk talk) async {
   return createdTalk;
 }
 
+Future<void> _removeTalk(WidgetRef ref, Talk talk) async {
+  final selectedAccount = await ref.read(
+    AccountProviders.selectedAccount.future,
+  );
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  await ref
+      .read(MessengerProviders._messengerRepository)
+      .removeTalk(
+        owner: selectedAccount,
+        talk: talk,
+      )
+      .valueOrThrow;
+
+  ref.invalidate(_talksProvider);
+}
+
 @riverpod
 Future<List<Talk>> _sortedTalks(_SortedTalksRef ref) async {
   final talks = await ref.watch(_talksProvider.future);
   return talks.sorted((a, b) => b.updateDate.compareTo(a.updateDate));
+}
+
+void _subscribeNotificationsWorker(WidgetRef ref) {
+  ref.listen(_talksProvider, (previous, next) {
+    final previousTalksAdresses =
+        previous?.value?.map((talk) => talk.address.toLowerCase()).toSet() ??
+            {};
+    final nextTalksAdresses =
+        next.value?.map((talk) => talk.address.toLowerCase()).toSet() ?? {};
+
+    final talksToUnsubscribe =
+        previousTalksAdresses.difference(nextTalksAdresses).toList();
+    final talksToSubscribe =
+        nextTalksAdresses.difference(previousTalksAdresses).toList();
+
+    if (talksToUnsubscribe.isNotEmpty) {
+      ref
+          .read(NotificationProviders.repository)
+          .unsubscribe(talksToUnsubscribe);
+    }
+    if (talksToSubscribe.isNotEmpty) {
+      ref.read(NotificationProviders.repository).subscribe(talksToSubscribe);
+    }
+  });
 }
 
 abstract class MessengerProviders {
@@ -169,6 +211,8 @@ abstract class MessengerProviders {
     ),
   );
 
+  /// Watches Talks creation/deletion to update notifications subscriptions
+  static const subscribeNotificationsWorker = _subscribeNotificationsWorker;
   static final sortedTalks = _sortedTalksProvider;
   static const addRemoteTalk = _addRemoteTalk;
   static const talk = _talkProvider;

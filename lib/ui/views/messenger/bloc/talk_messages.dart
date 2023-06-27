@@ -52,13 +52,6 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
           .read(_paginatedTalkMessagesNotifierProvider(talkAddress).notifier)
           .addMessage(messageCreated);
 
-      await repository.saveMessage(
-        talkAddress: talkAddress,
-        creator: selectedAccount,
-        message: messageCreated,
-      );
-      ref.invalidate(_talkProvider(talkAddress));
-
       state = state.copyWith(
         text: '',
         isCreating: false,
@@ -126,30 +119,36 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
   StreamSubscription<TxSentEvent> _addIncomingMessagesListener() {
     final notificationsRepository = ref.watch(
       NotificationProviders.repository,
-    )..subscribe(talkAddress);
+    );
 
     return notificationsRepository.events.listen(
       (event) async {
-        final newMessage = await ref.read(
+        final newMessage = (await ref.read(
           MessengerProviders.messages(
             talkAddress,
             0,
             1,
           ).future,
-        );
-        addMessage(newMessage.last);
+        ))
+            .last;
+
+        if (_alreadyHasMessageWithAddress(newMessage.address)) {
+          return;
+        }
+        addMessage(newMessage);
       },
     );
   }
 
+  bool _alreadyHasMessageWithAddress(String address) =>
+      state.value.itemList != null &&
+      state.value.itemList!.any(
+        (message) => message.address.toLowerCase() == address.toLowerCase(),
+      );
+
   void _removeIncomingMessagesListener(
     StreamSubscription<TxSentEvent> subscription,
   ) {
-    ref
-        .read(
-          NotificationProviders.repository,
-        )
-        .unsubscribe(talkAddress);
     subscription.cancel();
   }
 
@@ -184,7 +183,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     state = controller;
   }
 
-  void addMessage(TalkMessage messageCreated) {
+  Future<void> addMessage(TalkMessage messageCreated) async {
     _pagingController = PagingController<int, TalkMessage>.fromValue(
       PagingState(
         itemList: [messageCreated, ...state.itemList ?? []],
@@ -192,6 +191,13 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
       ),
       firstPageKey: 0,
     );
+
+    await ref.read(MessengerProviders._messengerRepository).saveMessage(
+          talkAddress: talkAddress,
+          creator: (await ref.read(AccountProviders.selectedAccount.future))!,
+          message: messageCreated,
+        );
+    ref.invalidate(_talkProvider(talkAddress));
   }
 }
 

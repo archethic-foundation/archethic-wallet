@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:http/http.dart' as http;
@@ -52,10 +53,12 @@ class NotificationBackendClient {
     required String token,
     required Iterable<String> txChainGenesisAddresses,
   }) async {
-    socket.emit(
-      'unsubscribe',
-      jsonEncode({
-        'txChainGenesisAddress': txChainGenesisAddresses.toList(),
+    await http.post(
+      Uri.parse('$notificationBackendUrl/unsubscribe'),
+      headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
+      body: jsonEncode({
+        'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
+        'pushToken': token,
       }),
     );
   }
@@ -66,8 +69,10 @@ class NotificationBackendClient {
   }) async {
     await http.post(
       Uri.parse('$notificationBackendUrl/subscribe'),
+      headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
       body: jsonEncode(<String, dynamic>{
         'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
+        'pushToken': token,
       }),
     );
   }
@@ -86,9 +91,9 @@ class NotificationBackendClient {
   Future<void> unsubscribeWebsocketNotifs(
     Iterable<String> txChainGenesisAddresses,
   ) async {
-    http.post(
-      Uri.parse('$notificationBackendUrl/unsubscribe'),
-      body: jsonEncode({
+    socket.emit(
+      'unsubscribe',
+      jsonEncode({
         'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
       }),
     );

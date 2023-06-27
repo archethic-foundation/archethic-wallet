@@ -28,30 +28,30 @@ class NotificationsRepositoryImpl
   }
 
   @override
-  Future<void> subscribe(String txChainGenesisAddress) async {
+  Future<void> subscribe(List<String> txChainGenesisAddresses) async {
     final fcmToken = await cachedFcmToken;
     if (fcmToken == null) return;
 
     await _client.subscribePushNotifs(
       token: fcmToken,
-      txChainGenesisAddresses: [txChainGenesisAddress],
+      txChainGenesisAddresses: txChainGenesisAddresses,
     );
 
-    await _client.subscribeWebsocketNotifs([txChainGenesisAddress]);
-    await (await _localSetup).addListenedTxChain(txChainGenesisAddress);
+    await _client.subscribeWebsocketNotifs(txChainGenesisAddresses);
+    await (await _localSetup).addListenedTxChain(txChainGenesisAddresses);
   }
 
   @override
-  Future<void> unsubscribe(String txChainGenesisAddress) async {
+  Future<void> unsubscribe(List<String> txChainGenesisAddresses) async {
     final fcmToken = await cachedFcmToken;
     if (fcmToken == null) return;
     await _client.unsubscribePushNotifs(
       token: fcmToken,
-      txChainGenesisAddresses: {txChainGenesisAddress},
+      txChainGenesisAddresses: txChainGenesisAddresses,
     );
-    await _client.unsubscribeWebsocketNotifs([txChainGenesisAddress]);
+    await _client.unsubscribeWebsocketNotifs(txChainGenesisAddresses);
 
-    await (await _localSetup).removeListenedTxChain(txChainGenesisAddress);
+    await (await _localSetup).removeListenedTxChains(txChainGenesisAddresses);
   }
 
   @override

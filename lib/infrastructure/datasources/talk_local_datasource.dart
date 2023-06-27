@@ -74,4 +74,18 @@ class HiveTalkDatasource with SecuredHiveMixin {
       talk.copyWith(lastMessage: message),
     );
   }
+
+  Future<void> removeTalk({
+    required String ownerAddress,
+    required String talkAddress,
+  }) async {
+    final talkKey = _talkKey(
+      ownerAddress: ownerAddress,
+      talkAddress: talkAddress,
+    );
+
+    await _talkBox.delete(
+      talkKey,
+    );
+  }
 }
