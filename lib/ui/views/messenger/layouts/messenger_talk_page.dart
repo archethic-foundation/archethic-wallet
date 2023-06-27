@@ -51,6 +51,10 @@ class MessengerTalkPage extends ConsumerWidget {
           elevation: 0,
           title: talk.maybeMap(
             data: (data) {
+              final displayName = ref.watch(
+                MessengerProviders.talkDisplayName(data.value),
+              );
+
               return InkWell(
                 onTap: () {
                   Sheets.showAppHeightNineSheet(
@@ -59,7 +63,7 @@ class MessengerTalkPage extends ConsumerWidget {
                     widget: TalkDetailsSheet(talkAddress: talkAddress),
                   );
                 },
-                child: Text(data.value.displayName),
+                child: Text(displayName),
               );
             },
             orElse: () => const Text('           ')
@@ -419,9 +423,9 @@ class _MessageItem extends ConsumerWidget {
           children: [
             if (showSender)
               _contact.maybeWhen(
-                data: (data) {
+                data: (contact) {
                   return Text(
-                    data.name.substring(1),
+                    contact?.name.substring(1) ?? '',
                     style: theme.textStyleSize12W600Primary,
                   );
                 },

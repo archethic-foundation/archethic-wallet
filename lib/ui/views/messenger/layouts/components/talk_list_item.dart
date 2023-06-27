@@ -89,7 +89,7 @@ class _LoadedTalkListItem extends TalkListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-
+    final displayName = ref.watch(MessengerProviders.talkDisplayName(talk));
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -108,11 +108,14 @@ class _LoadedTalkListItem extends TalkListItem {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    talk.displayName,
-                    style: theme.textStyleSize12W600Primary,
+                  Expanded(
+                    child: Text(
+                      displayName,
+                      style: theme.textStyleSize12W600Primary,
+                    ),
                   ),
                   Text(
                     talk.updateDate.format(context),
@@ -152,7 +155,7 @@ class _LastMessagePreview extends ConsumerWidget {
         )
         .maybeMap(
           orElse: () => message.senderGenesisPublicKey,
-          data: (contact) => contact.value.name,
+          data: (contact) => contact.value?.name,
         );
 
     return RichText(
@@ -161,7 +164,7 @@ class _LastMessagePreview extends ConsumerWidget {
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: '${contactName.substring(1)} : ',
+            text: '${contactName?.substring(1)} : ',
             style: theme.textStyleSize10W600Primary,
           ),
           TextSpan(

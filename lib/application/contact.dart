@@ -61,25 +61,33 @@ Future<Contact?> _getContactWithAddress(
 }
 
 @riverpod
-Future<Contact> _getContactWithPublicKey(
+Future<Contact?> _getContactWithPublicKey(
   _GetContactWithPublicKeyRef ref,
   String publicKey,
 ) async {
-  final searchedContact = await ref
-      .watch(_contactRepositoryProvider)
-      .getContactWithPublicKey(publicKey);
-  return searchedContact;
+  try {
+    final searchedContact = await ref
+        .watch(_contactRepositoryProvider)
+        .getContactWithPublicKey(publicKey);
+    return searchedContact;
+  } catch (e) {
+    return null;
+  }
 }
 
 @riverpod
-Future<Contact> _getContactWithGenesisPublicKey(
+Future<Contact?> _getContactWithGenesisPublicKey(
   _GetContactWithGenesisPublicKeyRef ref,
   String genesisPublicKey,
 ) async {
-  final searchedContact = await ref
-      .watch(_contactRepositoryProvider)
-      .getContactWithGenesisPublicKey(genesisPublicKey);
-  return searchedContact;
+  try {
+    final searchedContact = await ref
+        .watch(_contactRepositoryProvider)
+        .getContactWithGenesisPublicKey(genesisPublicKey);
+    return searchedContact;
+  } catch (e) {
+    return null;
+  }
 }
 
 @riverpod

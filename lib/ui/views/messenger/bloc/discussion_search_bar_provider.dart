@@ -70,24 +70,31 @@ class DiscussionSearchBarNotifier
       talk: null,
     );
 
-    final talk = await ref.read(
-      MessengerProviders.remoteTalk(
-        searchCriteria,
-      ).future,
-    );
+    try {
+      final talk = await ref.read(
+        MessengerProviders.remoteTalk(
+          searchCriteria,
+        ).future,
+      );
 
-    if (talk.address.isEmpty) {
+      if (talk.address.isEmpty) {
+        state = state.copyWith(
+          error: localizations!.invalidAddress,
+          loading: false,
+        );
+        return;
+      }
       state = state.copyWith(
-        error: localizations!.invalidAddress,
+        talk: talk,
+        searchCriteria: '',
+        error: '',
         loading: false,
       );
-      return;
+    } catch (e) {
+      state = state.copyWith(
+        error: localizations!.messengerTalkNotFound,
+        loading: false,
+      );
     }
-    state = state.copyWith(
-      talk: talk,
-      searchCriteria: '',
-      error: '',
-      loading: false,
-    );
   }
 }

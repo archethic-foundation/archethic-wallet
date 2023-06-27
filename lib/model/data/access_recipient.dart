@@ -25,12 +25,12 @@ class AccessRecipient with _$AccessRecipient {
     @HiveField(0) required Contact contact,
   }) = _AccessContact;
 
-  String? get publicKey => when(
+  String get publicKey => when(
         publicKey: (publicKey) => publicKey,
         contact: (contact) => contact.publicKey,
       );
 
-  bool get isPublicKeyValid => PublicKey(publicKey ?? '').isValid;
+  bool get isPublicKeyValid => PublicKey(publicKey).isValid;
 
   String get name => map(
         contact: (contact) => contact.contact.name,

@@ -515,6 +515,7 @@
 	"nftChooseSource": "Veuillez indiquer la source :",
 	"serviceName": "Name :",
 	"signTransactionListTransactionsHeader": "Transaction %1",
+	"messengerTalkNotFound": "Discussion introuvable","messengerTalkNotFound": "Discussion introuvable",
 	"messengerHeader": "Messages",
 	"addMessengerGroup": "Créer une discussion",
 	"addRemoteMessengerGroup": "Ajouter cette discussion",
