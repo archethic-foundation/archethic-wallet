@@ -108,6 +108,20 @@ class MessengerRepository
       });
 
   @override
+  Future<Result<void, Failure>> removeTalk({
+    required Talk talk,
+    required Account owner,
+  }) =>
+      Result.guard(() async {
+        final localDatasource = await _localDatasource;
+
+        await localDatasource.removeTalk(
+          ownerAddress: owner.genesisAddress,
+          talkAddress: talk.address,
+        );
+      });
+
+  @override
   Future<Result<List<TalkMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,

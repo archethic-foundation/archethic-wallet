@@ -27,6 +27,7 @@ class MessengerBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    MessengerProviders.subscribeNotificationsWorker(ref);
     final asyncTalks = ref.watch(MessengerProviders.sortedTalks);
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);

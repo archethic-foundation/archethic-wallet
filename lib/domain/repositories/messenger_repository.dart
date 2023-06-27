@@ -42,6 +42,11 @@ abstract class MessengerRepositoryInterface {
     required Account creator,
   });
 
+  Future<Result<void, Failure>> removeTalk({
+    required Talk talk,
+    required Account owner,
+  });
+
   Future<Result<TalkMessage, Failure>> sendMessage({
     required LoggedInSession session,
     required String talkAddress,

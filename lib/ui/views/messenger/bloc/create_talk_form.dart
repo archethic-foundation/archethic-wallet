@@ -86,8 +86,7 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
           contact: await ref.read(ContactProviders.getSelectedContact.future),
         );
 
-        final talk =
-            await ref.read(MessengerProviders._messengerRepository).createTalk(
+        await ref.read(MessengerProviders._messengerRepository).createTalk(
           adminsPubKeys: [
             ...state.admins.map((recipient) => recipient.publicKey),
             creator.publicKey,
@@ -101,7 +100,6 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
           groupName: state.name,
         ).valueOrThrow;
 
-        ref.read(NotificationProviders.repository).subscribe(talk.address);
         ref.invalidate(_talksProvider);
       });
 }
