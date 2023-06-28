@@ -49,12 +49,26 @@ class NotificationBackendClient {
     );
   }
 
+  Future<void> updatePushSettings({
+    required String token,
+    required String locale,
+  }) async {
+    await http.put(
+      Uri.parse('$notificationBackendUrl/pushSettings'),
+      headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
+      body: jsonEncode({
+        'pushToken': token,
+        'locale': locale,
+      }),
+    );
+  }
+
   Future<void> unsubscribePushNotifs({
     required String token,
     required Iterable<String> txChainGenesisAddresses,
   }) async {
     await http.post(
-      Uri.parse('$notificationBackendUrl/unsubscribe'),
+      Uri.parse('$notificationBackendUrl/unsubscribePush'),
       headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
       body: jsonEncode({
         'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
@@ -68,7 +82,7 @@ class NotificationBackendClient {
     required Iterable<String> txChainGenesisAddresses,
   }) async {
     await http.post(
-      Uri.parse('$notificationBackendUrl/subscribe'),
+      Uri.parse('$notificationBackendUrl/subscribePush'),
       headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
       body: jsonEncode(<String, dynamic>{
         'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
