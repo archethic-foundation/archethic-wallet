@@ -189,6 +189,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
+    NotificationProviders.keepPushSettingsUpToDateWorker(ref);
 
     SystemChrome.setSystemUIOverlayStyle(
       theme.statusBar!,

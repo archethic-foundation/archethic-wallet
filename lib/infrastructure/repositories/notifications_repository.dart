@@ -28,6 +28,19 @@ class NotificationsRepositoryImpl
   }
 
   @override
+  Future<void> updatePushSettings({
+    required String locale,
+  }) async {
+    final fcmToken = await cachedFcmToken;
+    if (fcmToken == null) return;
+
+    await _client.updatePushSettings(
+      token: fcmToken,
+      locale: locale,
+    );
+  }
+
+  @override
   Future<void> subscribe(List<String> txChainGenesisAddresses) async {
     final fcmToken = await cachedFcmToken;
     if (fcmToken == null) return;

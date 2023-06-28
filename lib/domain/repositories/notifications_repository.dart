@@ -38,6 +38,13 @@ abstract class NotificationsRepository {
     required KeyPair senderKeyPair,
     required int txIndex,
     required String notifBackendBaseUrl,
+    required Map<String, PushNotification> pushNotification,
+  });
+
+  /// Updates settings about the notifications
+  /// the device wishes to receive
+  Future<void> updatePushSettings({
+    required String locale,
   });
 
   /// Starts listening to a TransactionChain updates.

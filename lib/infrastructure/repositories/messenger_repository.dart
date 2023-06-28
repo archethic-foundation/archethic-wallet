@@ -260,6 +260,16 @@ class MessengerRepository
             txAddress: txAddress.address!,
             txChainGenesisAddress: talkAddress,
           ),
+          pushNotification: {
+            'en': const PushNotification(
+              title: 'AEWallet',
+              body: 'You received a new AEMessage',
+            ),
+            'fr': const PushNotification(
+              title: 'AEWallet',
+              body: 'Vous avez reçu un nouveau AEMessage',
+            ),
+          },
           txIndex: sendMessageResult.transactionIndex,
           senderKeyPair: previousKeyPair,
           notifBackendBaseUrl: networksSetting.notificationBackendUrl,
