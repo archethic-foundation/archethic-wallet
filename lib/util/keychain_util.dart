@@ -188,7 +188,9 @@ class KeychainUtil with KeychainServiceMixin {
           recentTransactions: [],
           serviceType: serviceType,
         );
-        if (selectedAccount != null && selectedAccount.name == nameDecoded) {
+        if (selectedAccount != null &&
+            selectedAccount.name == nameDecoded &&
+            serviceType == 'archethicWallet') {
           account.selected = true;
         } else {
           account.selected = false;
