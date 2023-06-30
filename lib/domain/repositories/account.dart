@@ -1,7 +1,7 @@
 import 'package:aewallet/model/data/account.dart';
 
 abstract class AccountLocalRepositoryInterface {
-  Future<List<String>> accountNames();
+  Future<List<Account>> accounts();
 
   Future<Account?> getAccount(String name);
 

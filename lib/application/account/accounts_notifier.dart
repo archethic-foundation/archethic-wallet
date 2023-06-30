@@ -11,14 +11,9 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
 
     // Init avec la valeur du cache
     final repository = ref.watch(AccountProviders.accountsRepository);
-    final accountNames = await repository.accountNames();
+    final accountNames = await repository.accounts();
 
-    return [
-      for (final accountName in accountNames)
-        await ref.watch(
-          AccountProviders.account(accountName).future,
-        ),
-    ].whereType<Account>().toList();
+    return accountNames.whereType<Account>().toList();
   }
 
   Future<void> selectAccount(Account account) async {
