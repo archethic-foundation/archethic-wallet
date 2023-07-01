@@ -93,15 +93,6 @@ String _talkDisplayName(_TalkDisplayNameRef ref, Talk talk) {
           ?.value
           .name ??
       '...';
-  // final memberToDisplayPubKey = talk.membersPubKeys.firstWhereOrNull(
-  //   (memberPublicKey) => memberPublicKey != asyncSelectedContact.publicKey,
-  // );
-  // if (memberToDisplayPubKey == null) return '';
-
-  // return (await ref.watch(
-  //   _accessRecipientWithPublicKeyProvider(memberToDisplayPubKey).future,
-  // ))
-  //     .name;
 }
 
 @riverpod
