@@ -15,12 +15,15 @@ NotificationsRepository _notificationRepository(Ref ref) =>
       ),
     );
 
-Future<void> _keepPushSettingsUpToDateWorker(WidgetRef ref) async {
-  ref.listen(LanguageProviders.selectedLocale, (previous, next) async {
-    await ref
-        .read(NotificationProviders.repository)
-        .updatePushSettings(locale: next.languageCode);
-  });
+Future<void> _keepPushSettingsUpToDateWorker(
+  WidgetRef ref,
+) async {
+  final locale = ref.watch(
+    LanguageProviders.selectedLocale.select((value) => value.languageCode),
+  );
+  await ref.watch(NotificationProviders.repository).updatePushSettings(
+        locale: locale,
+      );
 }
 
 abstract class NotificationProviders {
