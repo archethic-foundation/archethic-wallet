@@ -215,6 +215,7 @@ abstract class MessengerProviders {
   static const subscribeNotificationsWorker = _subscribeNotificationsWorker;
   static final sortedTalks = _sortedTalksProvider;
   static const addRemoteTalk = _addRemoteTalk;
+  static const removeTalk = _removeTalk;
   static const talk = _talkProvider;
   static const talkDisplayName = _talkDisplayNameProvider;
   static const accessRecipientWithPublicKey =

@@ -17,6 +17,7 @@ analyzer:
     - lib/l10n/*
     - "**/*.freezed.dart"
     - "**/*.g.dart"
+    - "lib/firebase_options.dart"
 
 language:
   strict-casts: true

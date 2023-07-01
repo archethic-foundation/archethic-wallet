@@ -40,7 +40,8 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
   }
 
   Future<void> removeListenedTxChains(
-      List<String> txChainGenesisAddresses) async {
+    List<String> txChainGenesisAddresses,
+  ) async {
     final notificationsSetup = await _getSetup();
     await _setSetup(
       notificationsSetup.copyWith(

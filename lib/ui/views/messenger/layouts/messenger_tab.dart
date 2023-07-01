@@ -75,8 +75,9 @@ class MessengerBody extends ConsumerWidget {
                           .animate(delay: (100 * index).ms)
                           .fadeIn(duration: 300.ms, delay: 30.ms)
                           .shimmer(
-                              blendMode: BlendMode.srcOver,
-                              color: Colors.white12)
+                            blendMode: BlendMode.srcOver,
+                            color: Colors.white12,
+                          )
                           .move(
                             begin: const Offset(-16, 0),
                             curve: Curves.easeOutQuad,
