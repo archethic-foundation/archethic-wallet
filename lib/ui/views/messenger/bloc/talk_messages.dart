@@ -110,7 +110,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     final notificationsSubscription = _addIncomingMessagesListener();
 
     ref.onDispose(() {
-      state.dispose();
+      _pagingController.dispose();
       _removeIncomingMessagesListener(notificationsSubscription);
     });
     return pagingController;
@@ -141,8 +141,8 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
   }
 
   bool _alreadyHasMessageWithAddress(String address) =>
-      state.value.itemList != null &&
-      state.value.itemList!.any(
+      _pagingController.value.itemList != null &&
+      _pagingController.value.itemList!.any(
         (message) => message.address.toLowerCase() == address.toLowerCase(),
       );
 
@@ -176,6 +176,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     });
   }
 
+  PagingController<int, TalkMessage> get _pagingController => state;
   set _pagingController(PagingController<int, TalkMessage> controller) {
     state.dispose();
 
@@ -186,8 +187,10 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
   Future<void> addMessage(TalkMessage messageCreated) async {
     _pagingController = PagingController<int, TalkMessage>.fromValue(
       PagingState(
-        itemList: [messageCreated, ...state.itemList ?? []],
-        nextPageKey: state.nextPageKey == null ? null : state.nextPageKey! + 1,
+        itemList: [messageCreated, ..._pagingController.itemList ?? []],
+        nextPageKey: _pagingController.nextPageKey == null
+            ? null
+            : _pagingController.nextPageKey! + 1,
       ),
       firstPageKey: 0,
     );
