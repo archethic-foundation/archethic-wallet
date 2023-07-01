@@ -54,7 +54,7 @@ abstract class MessengerRepositoryInterface {
     required String content,
   });
 
-  Future<void> saveMessage({
+  Future<void> updateTalkLastMessage({
     required String talkAddress,
     required Account creator,
     required TalkMessage message,

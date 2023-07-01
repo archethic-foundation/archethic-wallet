@@ -173,6 +173,10 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
           offset + nextPageItems.length,
         );
       }
+
+      if (offset == 0) {
+        await _updateTalkLastMessage(nextPageItems.first);
+      }
     });
   }
 
@@ -182,6 +186,17 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
 
     _addPageRequestListener(controller);
     state = controller;
+  }
+
+  Future<void> _updateTalkLastMessage(TalkMessage message) async {
+    await ref
+        .read(MessengerProviders._messengerRepository)
+        .updateTalkLastMessage(
+          talkAddress: talkAddress,
+          creator: (await ref.read(AccountProviders.selectedAccount.future))!,
+          message: message,
+        );
+    ref.invalidate(_talkProvider(talkAddress));
   }
 
   Future<void> addMessage(TalkMessage messageCreated) async {
@@ -195,12 +210,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
       firstPageKey: 0,
     );
 
-    await ref.read(MessengerProviders._messengerRepository).saveMessage(
-          talkAddress: talkAddress,
-          creator: (await ref.read(AccountProviders.selectedAccount.future))!,
-          message: messageCreated,
-        );
-    ref.invalidate(_talkProvider(talkAddress));
+    await _updateTalkLastMessage(messageCreated);
   }
 }
 
