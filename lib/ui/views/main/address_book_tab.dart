@@ -137,39 +137,19 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
             ),
             Row(
               children: <Widget>[
-                if (connectivityStatusProvider ==
-                    ConnectivityStatus.isConnected)
-                  AppButtonTiny(
-                    AppButtonTinyType.primary,
-                    localizations.addContact,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('addContact'),
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel,
-                      size: 14,
-                    ),
-                    onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: const AddContactSheet(),
-                      );
-                    },
-                  )
-                else
-                  AppButtonTiny(
-                    AppButtonTinyType.primaryOutline,
-                    localizations.addContact,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('addContact'),
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel!.withOpacity(0.3),
-                      size: 14,
-                    ),
-                    onPressed: () {},
-                  ),
+                AppButtonTinyConnectivity(
+                  localizations.addContact,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('addContact'),
+                  icon: Icons.add,
+                  onPressed: () {
+                    Sheets.showAppHeightNineSheet(
+                      context: context,
+                      ref: ref,
+                      widget: const AddContactSheet(),
+                    );
+                  },
+                ),
               ],
             ),
           ],

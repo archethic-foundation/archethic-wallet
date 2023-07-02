@@ -154,88 +154,49 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
           if (widget.displaySendButton)
             Row(
               children: <Widget>[
-                if (connectivityStatusProvider ==
-                    ConnectivityStatus.isConnected)
-                  AppButtonTiny(
-                    AppButtonTinyType.primary,
-                    localizations.send,
-                    Dimens.buttonTopDimens,
-                    key: const Key('sendNFT'),
-                    icon: Icon(
-                      UiIcons.send,
-                      color: theme.mainButtonLabel,
-                      size: 14,
-                    ),
-                    onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      await TransferSheet(
-                        transferType: TransferType.nft,
-                        accountToken: accountSelected.accountNFT!.firstWhere(
-                          (element) =>
-                              element.tokenInformations!.id ==
-                              widget.tokenInformations.id,
-                        ),
-                        recipient: const TransferRecipient.address(
-                          address: Address(address: ''),
-                        ),
-                      ).show(
-                        context: context,
-                        ref: ref,
-                      );
-                    },
-                  )
-                else
-                  AppButtonTiny(
-                    AppButtonTinyType.primaryOutline,
-                    localizations.send,
-                    Dimens.buttonTopDimens,
-                    key: const Key('sendNFT'),
-                    icon: Icon(
-                      UiIcons.send,
-                      color: theme.mainButtonLabel!.withOpacity(0.3),
-                      size: 14,
-                    ),
-                    onPressed: () {},
-                  ),
+                AppButtonTinyConnectivity(
+                  localizations.send,
+                  Dimens.buttonTopDimens,
+                  key: const Key('sendNFT'),
+                  icon: UiIcons.send,
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    await TransferSheet(
+                      transferType: TransferType.nft,
+                      accountToken: accountSelected.accountNFT!.firstWhere(
+                        (element) =>
+                            element.tokenInformations!.id ==
+                            widget.tokenInformations.id,
+                      ),
+                      recipient: const TransferRecipient.address(
+                        address: Address(address: ''),
+                      ),
+                    ).show(
+                      context: context,
+                      ref: ref,
+                    );
+                  },
+                ),
               ],
             ),
           Row(
             children: <Widget>[
-              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.viewExplorer,
-                  Dimens.buttonBottomDimens,
-                  icon: Icon(
-                    Icons.more_horiz,
-                    color: theme.mainButtonLabel,
-                    size: 14,
-                  ),
-                  key: const Key('viewExplorer'),
-                  onPressed: () async {
-                    UIUtil.showWebview(
-                      context,
-                      '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
-                      '',
-                    );
-                  },
-                )
-              else
-                AppButtonTiny(
-                  AppButtonTinyType.primaryOutline,
-                  localizations.viewExplorer,
-                  Dimens.buttonBottomDimens,
-                  icon: Icon(
-                    Icons.more_horiz,
-                    color: theme.mainButtonLabel!.withOpacity(0.3),
-                    size: 14,
-                  ),
-                  key: const Key('viewExplorer'),
-                  onPressed: () {},
-                ),
+              AppButtonTinyConnectivity(
+                localizations.viewExplorer,
+                Dimens.buttonBottomDimens,
+                icon: Icons.more_horiz,
+                key: const Key('viewExplorer'),
+                onPressed: () async {
+                  UIUtil.showWebview(
+                    context,
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
+                    '',
+                  );
+                },
+              ),
             ],
           ),
         ],

@@ -88,53 +88,33 @@ class TransferFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (transfer.canTransfer &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        actionButtonTitle ?? localizations.send,
-                        Dimens.buttonTopDimens,
-                        key: const Key('send'),
-                        icon: Icon(
-                          UiIcons.send,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        onPressed: () async {
-                          final transferNotifier = ref
-                              .read(TransferFormProvider.transferForm.notifier);
+                    AppButtonTinyConnectivity(
+                      actionButtonTitle ?? localizations.send,
+                      Dimens.buttonTopDimens,
+                      key: const Key('send'),
+                      icon: UiIcons.send,
+                      onPressed: () async {
+                        final transferNotifier = ref
+                            .read(TransferFormProvider.transferForm.notifier);
 
-                          final isAddressOk =
-                              await transferNotifier.controlAddress(
-                            context,
-                            accountSelected,
-                          );
-                          final isAmountOk = transferNotifier.controlAmount(
-                            context,
-                            accountSelected,
-                          );
+                        final isAddressOk =
+                            await transferNotifier.controlAddress(
+                          context,
+                          accountSelected,
+                        );
+                        final isAmountOk = transferNotifier.controlAmount(
+                          context,
+                          accountSelected,
+                        );
 
-                          if (isAddressOk && isAmountOk) {
-                            transferNotifier.setTransferProcessStep(
-                              TransferProcessStep.confirmation,
-                            );
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        actionButtonTitle ?? localizations.send,
-                        Dimens.buttonTopDimens,
-                        key: const Key('send'),
-                        icon: Icon(
-                          UiIcons.send,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                        if (isAddressOk && isAmountOk) {
+                          transferNotifier.setTransferProcessStep(
+                            TransferProcessStep.confirmation,
+                          );
+                        }
+                      },
+                      disabled: !transfer.canTransfer,
+                    ),
                   ],
                 ),
               ],

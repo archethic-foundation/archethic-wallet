@@ -383,94 +383,71 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              if (wordListSelected.length != 24 ||
-                                  connectivityStatusProvider ==
-                                      ConnectivityStatus.isDisconnected)
-                                AppButtonTiny(
-                                  AppButtonTinyType.primaryOutline,
-                                  localizations.confirm,
-                                  Dimens.buttonTopDimens,
-                                  key: const Key('confirm'),
-                                  onPressed: () {},
-                                )
-                              else
-                                AppButtonTiny(
-                                  AppButtonTinyType.primary,
-                                  localizations.confirm,
-                                  Dimens.buttonTopDimens,
-                                  key: const Key('confirm'),
-                                  onPressed: () async {
-                                    var orderOk = true;
+                              AppButtonTinyConnectivity(
+                                localizations.confirm,
+                                Dimens.buttonTopDimens,
+                                key: const Key('confirm'),
+                                disabled: wordListSelected.length != 24,
+                                onPressed: () async {
+                                  var orderOk = true;
 
-                                    for (var i = 0;
-                                        i < originalWordsList.length;
-                                        i++) {
-                                      if (originalWordsList[i] !=
-                                          wordListSelected[i]) {
-                                        orderOk = false;
-                                      }
+                                  for (var i = 0;
+                                      i < originalWordsList.length;
+                                      i++) {
+                                    if (originalWordsList[i] !=
+                                        wordListSelected[i]) {
+                                      orderOk = false;
                                     }
-                                    if (orderOk == false) {
-                                      setState(() {
-                                        UIUtil.showSnackbar(
-                                          localizations.confirmSecretPhraseKo,
-                                          context,
-                                          ref,
-                                          theme.text!,
-                                          theme.snackBarShadow!,
-                                        );
-                                      });
-                                    } else {
-                                      await _launchSecurityConfiguration(
-                                        widget.name!,
-                                        widget.seed!,
+                                  }
+                                  if (orderOk == false) {
+                                    setState(() {
+                                      UIUtil.showSnackbar(
+                                        localizations.confirmSecretPhraseKo,
+                                        context,
+                                        ref,
+                                        theme.text!,
+                                        theme.snackBarShadow!,
                                       );
-                                    }
-                                  },
-                                ),
+                                    });
+                                  } else {
+                                    await _launchSecurityConfiguration(
+                                      widget.name!,
+                                      widget.seed!,
+                                    );
+                                  }
+                                },
+                              ),
                             ],
                           ),
                           Row(
                             children: <Widget>[
-                              if (connectivityStatusProvider ==
-                                  ConnectivityStatus.isConnected)
-                                AppButtonTiny(
-                                  AppButtonTinyType.primary,
-                                  localizations.pass,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('pass'),
-                                  onPressed: () {
-                                    AppDialogs.showConfirmDialog(
-                                      context,
-                                      ref,
-                                      localizations
-                                          .passBackupConfirmationDisclaimer,
-                                      localizations
-                                          .passBackupConfirmationMessage,
-                                      localizations.yes,
-                                      () async {
-                                        await _launchSecurityConfiguration(
-                                          widget.name!,
-                                          widget.seed!,
-                                        );
-                                      },
-                                      titleStyle: theme
-                                          .textStyleSize14W600EquinoxPrimaryRed,
-                                      additionalContent:
-                                          localizations.archethicDoesntKeepCopy,
-                                      additionalContentStyle:
-                                          theme.textStyleSize12W300PrimaryRed,
-                                    );
-                                  },
-                                )
-                              else
-                                AppButtonTiny(
-                                  AppButtonTinyType.primaryOutline,
-                                  localizations.pass,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('pass'),
-                                  onPressed: () {},
-                                ),
+                              AppButtonTinyConnectivity(
+                                localizations.pass,
+                                Dimens.buttonBottomDimens,
+                                key: const Key('pass'),
+                                onPressed: () {
+                                  AppDialogs.showConfirmDialog(
+                                    context,
+                                    ref,
+                                    localizations
+                                        .passBackupConfirmationDisclaimer,
+                                    localizations.passBackupConfirmationMessage,
+                                    localizations.yes,
+                                    () async {
+                                      await _launchSecurityConfiguration(
+                                        widget.name!,
+                                        widget.seed!,
+                                      );
+                                    },
+                                    titleStyle: theme
+                                        .textStyleSize14W600EquinoxPrimaryRed,
+                                    additionalContent:
+                                        localizations.archethicDoesntKeepCopy,
+                                    additionalContentStyle:
+                                        theme.textStyleSize12W300PrimaryRed,
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ],
@@ -481,51 +458,40 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              if (wordListSelected.length != 24 ||
-                                  connectivityStatusProvider ==
-                                      ConnectivityStatus.isDisconnected)
-                                AppButtonTiny(
-                                  AppButtonTinyType.primaryOutline,
-                                  localizations.confirm,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('confirm'),
-                                  onPressed: () {},
-                                )
-                              else
-                                AppButtonTiny(
-                                  AppButtonTinyType.primary,
-                                  localizations.confirm,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('confirm'),
-                                  onPressed: () async {
-                                    var orderOk = true;
+                              AppButtonTinyConnectivity(
+                                localizations.confirm,
+                                Dimens.buttonBottomDimens,
+                                disabled: wordListSelected.length != 24,
+                                key: const Key('confirm'),
+                                onPressed: () async {
+                                  var orderOk = true;
 
-                                    for (var i = 0;
-                                        i < originalWordsList.length;
-                                        i++) {
-                                      if (originalWordsList[i] !=
-                                          wordListSelected[i]) {
-                                        orderOk = false;
-                                      }
+                                  for (var i = 0;
+                                      i < originalWordsList.length;
+                                      i++) {
+                                    if (originalWordsList[i] !=
+                                        wordListSelected[i]) {
+                                      orderOk = false;
                                     }
-                                    if (orderOk == false) {
-                                      setState(() {
-                                        UIUtil.showSnackbar(
-                                          localizations.confirmSecretPhraseKo,
-                                          context,
-                                          ref,
-                                          theme.text!,
-                                          theme.snackBarShadow!,
-                                        );
-                                      });
-                                    } else {
-                                      await _launchSecurityConfiguration(
-                                        widget.name!,
-                                        widget.seed!,
+                                  }
+                                  if (orderOk == false) {
+                                    setState(() {
+                                      UIUtil.showSnackbar(
+                                        localizations.confirmSecretPhraseKo,
+                                        context,
+                                        ref,
+                                        theme.text!,
+                                        theme.snackBarShadow!,
                                       );
-                                    }
-                                  },
-                                ),
+                                    });
+                                  } else {
+                                    await _launchSecurityConfiguration(
+                                      widget.name!,
+                                      widget.seed!,
+                                    );
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         ],

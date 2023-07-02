@@ -100,53 +100,32 @@ class AddTokenFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (addToken.canAddToken &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.createToken,
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createToken'),
-                        onPressed: () async {
-                          final isNameOk =
-                              addTokenNotifier.controlName(context);
-                          final isSymbolOk =
-                              addTokenNotifier.controlSymbol(context);
-                          final isInitialSupplyOk =
-                              addTokenNotifier.controlInitialSupply(context);
-                          final isAmountOk = addTokenNotifier.controlAmount(
-                            context,
-                            accountSelected,
+                    AppButtonTinyConnectivity(
+                      localizations.createToken,
+                      icon: Icons.add,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('createToken'),
+                      onPressed: () async {
+                        final isNameOk = addTokenNotifier.controlName(context);
+                        final isSymbolOk =
+                            addTokenNotifier.controlSymbol(context);
+                        final isInitialSupplyOk =
+                            addTokenNotifier.controlInitialSupply(context);
+                        final isAmountOk = addTokenNotifier.controlAmount(
+                          context,
+                          accountSelected,
+                        );
+                        if (isNameOk &&
+                            isSymbolOk &&
+                            isInitialSupplyOk &&
+                            isAmountOk) {
+                          addTokenNotifier.setAddTokenProcessStep(
+                            AddTokenProcessStep.confirmation,
                           );
-                          if (isNameOk &&
-                              isSymbolOk &&
-                              isInitialSupplyOk &&
-                              isAmountOk) {
-                            addTokenNotifier.setAddTokenProcessStep(
-                              AddTokenProcessStep.confirmation,
-                            );
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.createToken,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createToken'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                        }
+                      },
+                      disabled: !addToken.canAddToken,
+                    ),
                   ],
                 ),
               ],

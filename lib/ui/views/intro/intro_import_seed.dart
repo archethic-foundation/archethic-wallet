@@ -448,119 +448,107 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (isPressed == true ||
-                            phrase.contains('') ||
-                            connectivityStatusProvider ==
-                                ConnectivityStatus.isDisconnected)
-                          AppButtonTiny(
-                            AppButtonTinyType.primaryOutline,
-                            localizations.ok,
-                            Dimens.buttonTopDimens,
-                            key: const Key('seedWordsOKbutton'),
-                            onPressed: () {},
-                          )
-                        else
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.ok,
-                            Dimens.buttonTopDimens,
-                            key: const Key('seedWordsOKbutton'),
-                            onPressed: () async {
-                              setState(() {
-                                _mnemonicError = '';
-                                isPressed = true;
-                              });
+                        AppButtonTinyConnectivity(
+                          localizations.ok,
+                          Dimens.buttonTopDimens,
+                          disabled: isPressed == true || phrase.contains(''),
+                          key: const Key('seedWordsOKbutton'),
+                          onPressed: () async {
+                            setState(() {
+                              _mnemonicError = '';
+                              isPressed = true;
+                            });
 
-                              _mnemonicIsValid = true;
-                              for (final word in phrase) {
-                                final _word = word.trim();
-                                if (_word == '') {
+                            _mnemonicIsValid = true;
+                            for (final word in phrase) {
+                              final _word = word.trim();
+                              if (_word == '') {
+                                _mnemonicIsValid = false;
+                                _mnemonicError =
+                                    localizations.mnemonicSizeError;
+                              } else {
+                                if (AppMnemomics.isValidWord(
+                                      _word,
+                                      languageCode: languageSeed,
+                                    ) ==
+                                    false) {
                                   _mnemonicIsValid = false;
-                                  _mnemonicError =
-                                      localizations.mnemonicSizeError;
-                                } else {
-                                  if (AppMnemomics.isValidWord(
-                                        _word,
-                                        languageCode: languageSeed,
-                                      ) ==
-                                      false) {
-                                    _mnemonicIsValid = false;
-                                    _mnemonicError = localizations
-                                        .mnemonicInvalidWord
-                                        .replaceAll('%1', _word);
-                                  }
+                                  _mnemonicError = localizations
+                                      .mnemonicInvalidWord
+                                      .replaceAll('%1', _word);
                                 }
                               }
+                            }
 
-                              if (!_mnemonicIsValid) {
-                                UIUtil.showSnackbar(
-                                  _mnemonicError,
-                                  context,
-                                  ref,
-                                  theme.text!,
-                                  theme.snackBarShadow!,
-                                );
-                                setState(() {
-                                  isPressed = false;
-                                });
-                                return;
-                              }
-                              ShowSendingAnimation.build(context, theme);
-                              final newSession = await ref
-                                  .read(SessionProviders.session.notifier)
-                                  .restoreFromMnemonics(
-                                    mnemonics: phrase.toList(),
-                                    languageCode: languageSeed,
-                                  );
-
-                              if (newSession == null) {
-                                setState(() {
-                                  _mnemonicIsValid = false;
-                                  isPressed = false;
-                                });
-                                UIUtil.showSnackbar(
-                                  localizations.noKeychain,
-                                  context,
-                                  ref,
-                                  theme.text!,
-                                  theme.snackBarShadow!,
-                                );
-                                Navigator.of(context).pop();
-                                return;
-                              }
-
-                              final accountSelected = await _accountsDialog(
-                                newSession.wallet.appKeychain.accounts,
-                              );
-
-                              ref
-                                  .read(
-                                    AccountProviders.account(
-                                      accountSelected!.name,
-                                    ).notifier,
-                                  )
-                                  .refreshRecentTransactions();
-                              ref
-                                  .read(
-                                    AccountProviders.account(
-                                      accountSelected.name,
-                                    ).notifier,
-                                  )
-                                  .refreshNFTs();
-                              final securityConfigOk =
-                                  await _launchSecurityConfiguration(
-                                accountSelected.name,
-                                newSession.wallet.seed,
+                            if (!_mnemonicIsValid) {
+                              UIUtil.showSnackbar(
+                                _mnemonicError,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
                               );
                               setState(() {
                                 isPressed = false;
                               });
+                              return;
+                            }
+                            ShowSendingAnimation.build(context, theme);
+                            final newSession = await ref
+                                .read(SessionProviders.session.notifier)
+                                .restoreFromMnemonics(
+                                  mnemonics: phrase.toList(),
+                                  languageCode: languageSeed,
+                                );
 
-                              if (securityConfigOk == false) {
-                                Navigator.of(context).pop(false);
-                              }
-                            },
-                          ),
+                            if (newSession == null) {
+                              setState(() {
+                                _mnemonicIsValid = false;
+                                isPressed = false;
+                              });
+                              UIUtil.showSnackbar(
+                                localizations.noKeychain,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                              Navigator.of(context).pop();
+                              return;
+                            }
+
+                            final accountSelected = await _accountsDialog(
+                              newSession.wallet.appKeychain.accounts,
+                            );
+
+                            ref
+                                .read(
+                                  AccountProviders.account(
+                                    accountSelected!.name,
+                                  ).notifier,
+                                )
+                                .refreshRecentTransactions();
+                            ref
+                                .read(
+                                  AccountProviders.account(
+                                    accountSelected.name,
+                                  ).notifier,
+                                )
+                                .refreshNFTs();
+                            final securityConfigOk =
+                                await _launchSecurityConfiguration(
+                              accountSelected.name,
+                              newSession.wallet.seed,
+                            );
+                            setState(() {
+                              isPressed = false;
+                            });
+
+                            if (securityConfigOk == false) {
+                              Navigator.of(context).pop(false);
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ],

@@ -242,56 +242,36 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          if (nftCreation.canConfirmNFTCreation == false ||
-                              connectivityStatusProvider ==
-                                  ConnectivityStatus.isDisconnected)
-                            AppButtonTiny(
-                              AppButtonTinyType.primaryOutline,
-                              localizations.confirm,
-                              Dimens.buttonTopDimens,
-                              key: const Key('confirm'),
-                              icon: Icon(
-                                Icons.check,
-                                color: theme.mainButtonLabel!.withOpacity(0.3),
-                                size: 14,
-                              ),
-                              onPressed: () {},
-                            )
-                          else
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              localizations.confirm,
-                              Dimens.buttonTopDimens,
-                              key: const Key('confirm'),
-                              icon: Icon(
-                                Icons.check,
-                                color: theme.mainButtonLabel,
-                                size: 14,
-                              ),
-                              onPressed: () async {
-                                // Authenticate
-                                final authMethod = AuthenticationMethod(
-                                  ref.read(
-                                    AuthenticationProviders.settings.select(
-                                      (settings) =>
-                                          settings.authenticationMethod,
-                                    ),
+                          AppButtonTinyConnectivity(
+                            localizations.confirm,
+                            Dimens.buttonTopDimens,
+                            key: const Key('confirm'),
+                            icon: Icons.check,
+                            onPressed: () async {
+                              // Authenticate
+                              final authMethod = AuthenticationMethod(
+                                ref.read(
+                                  AuthenticationProviders.settings.select(
+                                    (settings) => settings.authenticationMethod,
                                   ),
-                                );
-                                final auth = await AuthFactory.authenticate(
-                                  context,
-                                  ref,
-                                  authMethod: authMethod,
-                                  activeVibrations: ref
-                                      .read(SettingsProviders.settings)
-                                      .activeVibrations,
-                                );
-                                if (auth) {
-                                  EventTaxiImpl.singleton()
-                                      .fire(AuthenticatedEvent());
-                                }
-                              },
-                            )
+                                ),
+                              );
+                              final auth = await AuthFactory.authenticate(
+                                context,
+                                ref,
+                                authMethod: authMethod,
+                                activeVibrations: ref
+                                    .read(SettingsProviders.settings)
+                                    .activeVibrations,
+                              );
+                              if (auth) {
+                                EventTaxiImpl.singleton()
+                                    .fire(AuthenticatedEvent());
+                              }
+                            },
+                            disabled:
+                                nftCreation.canConfirmNFTCreation == false,
+                          )
                         ],
                       ),
                       Row(

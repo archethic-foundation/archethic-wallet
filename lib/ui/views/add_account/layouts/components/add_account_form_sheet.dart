@@ -98,43 +98,23 @@ class AddAccountFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (addAccount.canAddAccount &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.addAccount,
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
-                        onPressed: () async {
-                          final isNameOk =
-                              addAccountNotifier.controlName(context);
+                    AppButtonTinyConnectivity(
+                      localizations.addAccount,
+                      Dimens.buttonBottomDimens,
+                      disabled: !addAccount.canAddAccount,
+                      icon: Icons.add,
+                      key: const Key('addAccount'),
+                      onPressed: () async {
+                        final isNameOk =
+                            addAccountNotifier.controlName(context);
 
-                          if (isNameOk) {
-                            addAccountNotifier.setAddAccountProcessStep(
-                              AddAccountProcessStep.confirmation,
-                            );
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.addAccount,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                        if (isNameOk) {
+                          addAccountNotifier.setAddAccountProcessStep(
+                            AddAccountProcessStep.confirmation,
+                          );
+                        }
+                      },
+                    )
                   ],
                 ),
               ],
