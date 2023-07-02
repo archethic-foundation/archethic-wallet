@@ -225,29 +225,18 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (isPressed == true ||
-                            connectivityStatusProvider ==
-                                ConnectivityStatus.isDisconnected)
-                          AppButtonTiny(
-                            AppButtonTinyType.primaryOutline,
-                            localizations.iveBackedItUp,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('iveBackedItUp'),
-                            onPressed: () {},
-                          )
-                        else
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.iveBackedItUp,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('iveBackedItUp'),
-                            onPressed: () async {
-                              Navigator.of(context).pushNamed(
-                                '/intro_backup_confirm',
-                                arguments: {'name': widget.name, 'seed': seed},
-                              );
-                            },
-                          ),
+                        AppButtonTinyConnectivity(
+                          localizations.iveBackedItUp,
+                          Dimens.buttonBottomDimens,
+                          key: const Key('iveBackedItUp'),
+                          onPressed: () async {
+                            Navigator.of(context).pushNamed(
+                              '/intro_backup_confirm',
+                              arguments: {'name': widget.name, 'seed': seed},
+                            );
+                          },
+                          disabled: isPressed == true,
+                        ),
                       ],
                     ),
                   ],

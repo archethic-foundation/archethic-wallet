@@ -180,38 +180,19 @@ class _TransactionInfos extends ConsumerWidget {
         ),
         Row(
           children: <Widget>[
-            if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.viewExplorer,
-                Dimens.buttonBottomDimens,
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: theme.mainButtonLabel,
-                  size: 14,
-                ),
-                key: const Key('viewExplorer'),
-                onPressed: () async {
-                  UIUtil.showWebview(
-                    context,
-                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$txAddress',
-                    '',
-                  );
-                },
-              )
-            else
-              AppButtonTiny(
-                AppButtonTinyType.primaryOutline,
-                localizations.viewExplorer,
-                Dimens.buttonBottomDimens,
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: theme.mainButtonLabel!.withOpacity(0.3),
-                  size: 14,
-                ),
-                key: const Key('viewExplorer'),
-                onPressed: () {},
-              ),
+            AppButtonTinyConnectivity(
+              localizations.viewExplorer,
+              Dimens.buttonBottomDimens,
+              icon: Icons.more_horiz,
+              key: const Key('viewExplorer'),
+              onPressed: () async {
+                UIUtil.showWebview(
+                  context,
+                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$txAddress',
+                  '',
+                );
+              },
+            ),
           ],
         ),
       ],

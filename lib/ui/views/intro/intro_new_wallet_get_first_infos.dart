@@ -187,50 +187,39 @@ class _IntroNewWalletDisclaimerState
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.ok,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('okButton'),
-                            onPressed: () {
-                              if (nameController.text.trim().isEmpty) {
-                                UIUtil.showSnackbar(
-                                  localizations
-                                      .introNewWalletGetFirstInfosNameBlank,
-                                  context,
-                                  ref,
-                                  theme.text!,
-                                  theme.snackBarShadow!,
-                                );
-                              } else {
-                                AppDialogs.showConfirmDialog(
-                                  context,
-                                  ref,
-                                  localizations.newAccount,
-                                  localizations.newAccountConfirmation
-                                      .replaceAll('%1', nameController.text),
-                                  localizations.yes,
-                                  () async {
-                                    Navigator.of(context).pushNamed(
-                                      '/intro_backup_safety',
-                                      arguments: nameController.text,
-                                    );
-                                  },
-                                  cancelText: localizations.no,
-                                );
-                              }
-                            },
-                          )
-                        else
-                          AppButtonTiny(
-                            AppButtonTinyType.primaryOutline,
-                            localizations.ok,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('okButton'),
-                            onPressed: () {},
-                          ),
+                        AppButtonTinyConnectivity(
+                          localizations.ok,
+                          Dimens.buttonBottomDimens,
+                          key: const Key('okButton'),
+                          onPressed: () {
+                            if (nameController.text.trim().isEmpty) {
+                              UIUtil.showSnackbar(
+                                localizations
+                                    .introNewWalletGetFirstInfosNameBlank,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                            } else {
+                              AppDialogs.showConfirmDialog(
+                                context,
+                                ref,
+                                localizations.newAccount,
+                                localizations.newAccountConfirmation
+                                    .replaceAll('%1', nameController.text),
+                                localizations.yes,
+                                () async {
+                                  Navigator.of(context).pushNamed(
+                                    '/intro_backup_safety',
+                                    arguments: nameController.text,
+                                  );
+                                },
+                                cancelText: localizations.no,
+                              );
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ],

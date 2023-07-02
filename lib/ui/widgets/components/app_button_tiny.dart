@@ -45,22 +45,23 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
         connectivityStatusProvider == ConnectivityStatus.isConnected;
 
     return AppButtonTiny(
-        (!disabled && isConnected)
-            ? AppButtonTinyType.primary
-            : AppButtonTinyType.primaryOutline,
-        buttonText,
-        dimens,
-        width: width,
-        icon: Icon(
-          icon,
-          color: (!disabled && isConnected)
-              ? theme.mainButtonLabel
-              : theme.mainButtonLabel!.withOpacity(0.3),
-          size: 14,
-        ),
-        key: key,
-        onPressed: onPressed,
-        disabled: disabled);
+      (!disabled && isConnected)
+          ? AppButtonTinyType.primary
+          : AppButtonTinyType.primaryOutline,
+      buttonText,
+      dimens,
+      width: width,
+      icon: Icon(
+        icon,
+        color: (!disabled && isConnected)
+            ? theme.mainButtonLabel
+            : theme.mainButtonLabel!.withOpacity(0.3),
+        size: 14,
+      ),
+      key: key,
+      onPressed: onPressed,
+      disabled: disabled,
+    );
   }
 }
 
@@ -92,12 +93,16 @@ class AppButtonTiny extends ConsumerWidget {
     WidgetRef ref,
   ) {
     return Expanded(
-      child: AppButtonTinyWithoutExpanded(type, buttonText, dimens,
-          onPressed: onPressed,
-          showProgressIndicator: showProgressIndicator,
-          disabled: disabled,
-          icon: icon,
-          width: width),
+      child: AppButtonTinyWithoutExpanded(
+        type,
+        buttonText,
+        dimens,
+        onPressed: onPressed,
+        showProgressIndicator: showProgressIndicator,
+        disabled: disabled,
+        icon: icon,
+        width: width,
+      ),
     );
   } //
 }

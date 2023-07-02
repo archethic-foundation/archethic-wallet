@@ -47,39 +47,26 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
             const NFTCreationProcessPropertiesTabTextfieldValue(),
             Row(
               children: <Widget>[
-                if (nftCreation.canAddProperty)
-                  AppButtonTiny(
-                    AppButtonTinyType.primary,
-                    AppLocalization.of(context)!.addNFTProperty,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('addNFTProperty'),
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel,
-                      size: 14,
-                    ),
-                    onPressed: () {
-                      if (nftCreationNotifier.controlAddNFTProperty(context)) {
-                        nftCreationNotifier.setProperty(
-                          nftCreation.propertyName,
-                          nftCreation.propertyValue,
-                        );
-                      }
-                    },
-                  )
-                else
-                  AppButtonTiny(
-                    AppButtonTinyType.primaryOutline,
-                    AppLocalization.of(context)!.addNFTProperty,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('addNFTProperty'),
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel!.withOpacity(0.3),
-                      size: 14,
-                    ),
-                    onPressed: () {},
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  AppLocalization.of(context)!.addNFTProperty,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('addNFTProperty'),
+                  icon: Icon(
+                    Icons.add,
+                    color: theme.mainButtonLabel,
+                    size: 14,
                   ),
+                  onPressed: () {
+                    if (nftCreationNotifier.controlAddNFTProperty(context)) {
+                      nftCreationNotifier.setProperty(
+                        nftCreation.propertyName,
+                        nftCreation.propertyValue,
+                      );
+                    }
+                  },
+                  disabled: !nftCreation.canAddProperty,
+                ),
               ],
             ),
             const NFTCreationProcessPropertiesTabTextfieldSearch(),

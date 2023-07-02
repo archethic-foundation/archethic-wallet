@@ -162,26 +162,15 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.understandButton,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('understandButton'),
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed('/intro_backup', arguments: name);
-                            },
-                          )
-                        else
-                          AppButtonTiny(
-                            AppButtonTinyType.primaryOutline,
-                            localizations.understandButton,
-                            Dimens.buttonBottomDimens,
-                            key: const Key('understandButton'),
-                            onPressed: () {},
-                          ),
+                        AppButtonTinyConnectivity(
+                          localizations.understandButton,
+                          Dimens.buttonBottomDimens,
+                          key: const Key('understandButton'),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('/intro_backup', arguments: name);
+                          },
+                        ),
                       ],
                     ),
                   ],

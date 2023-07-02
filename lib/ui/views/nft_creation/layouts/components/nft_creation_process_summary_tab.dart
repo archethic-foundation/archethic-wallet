@@ -54,45 +54,25 @@ class _NFTCreationProcessSummaryTabState
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          if (nftCreation.canCreateNFT &&
-                              connectivityStatusProvider ==
-                                  ConnectivityStatus.isConnected)
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              AppLocalization.of(context)!.createTheNFT,
-                              Dimens.buttonTopDimens,
-                              key: const Key('createTheNFT'),
-                              icon: Icon(
-                                RpgAwesome.mining_diamonds,
-                                color: theme.mainButtonLabel,
-                                size: 14,
-                              ),
-                              onPressed: () async {
-                                final isNameOk =
-                                    nftCreationNotifier.controlName(context);
-                                final isFileOk =
-                                    nftCreationNotifier.controlFile(context);
+                          AppButtonTinyConnectivity(
+                            AppLocalization.of(context)!.createTheNFT,
+                            Dimens.buttonTopDimens,
+                            key: const Key('createTheNFT'),
+                            icon: RpgAwesome.mining_diamonds,
+                            onPressed: () async {
+                              final isNameOk =
+                                  nftCreationNotifier.controlName(context);
+                              final isFileOk =
+                                  nftCreationNotifier.controlFile(context);
 
-                                if (isNameOk && isFileOk) {
-                                  nftCreationNotifier.setNftCreationProcessStep(
-                                    NftCreationProcessStep.confirmation,
-                                  );
-                                }
-                              },
-                            )
-                          else
-                            AppButtonTiny(
-                              AppButtonTinyType.primaryOutline,
-                              AppLocalization.of(context)!.createTheNFT,
-                              Dimens.buttonTopDimens,
-                              key: const Key('createTheNFT'),
-                              icon: Icon(
-                                RpgAwesome.mining_diamonds,
-                                color: theme.mainButtonLabel!.withOpacity(0.3),
-                                size: 14,
-                              ),
-                              onPressed: () async {},
-                            ),
+                              if (isNameOk && isFileOk) {
+                                nftCreationNotifier.setNftCreationProcessStep(
+                                  NftCreationProcessStep.confirmation,
+                                );
+                              }
+                            },
+                            disabled: !nftCreation.canCreateNFT,
+                          ),
                         ],
                       ),
                     ],
