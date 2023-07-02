@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/token_informations.dart';
@@ -61,7 +60,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
     return SafeArea(

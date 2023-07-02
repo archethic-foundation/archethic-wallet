@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -189,7 +188,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         ),
       ).notifier,
     );
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

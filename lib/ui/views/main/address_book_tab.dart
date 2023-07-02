@@ -1,4 +1,3 @@
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -45,7 +44,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
         search: searchNameController.text,
       ),
     );
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return Container(
       padding: const EdgeInsets.only(left: 15, right: 15),
       height: MediaQuery.of(context).size.height,

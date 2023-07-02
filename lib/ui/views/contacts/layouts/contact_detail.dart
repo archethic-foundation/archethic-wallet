@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -40,7 +39,6 @@ class ContactDetail extends ConsumerWidget {
         contact.name,
       ),
     );
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return SafeArea(
       minimum: EdgeInsets.only(
