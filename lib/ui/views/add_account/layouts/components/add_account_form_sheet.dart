@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -36,7 +35,6 @@ class AddAccountFormSheet extends ConsumerWidget {
     final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
     final addAccountNotifier =
         ref.watch(AddAccountFormProvider.addAccountForm.notifier);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -98,43 +96,23 @@ class AddAccountFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (addAccount.canAddAccount &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.addAccount,
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
-                        onPressed: () async {
-                          final isNameOk =
-                              addAccountNotifier.controlName(context);
+                    AppButtonTinyConnectivity(
+                      localizations.addAccount,
+                      icon: Icons.add,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('addAccount'),
+                      onPressed: () async {
+                        final isNameOk =
+                            addAccountNotifier.controlName(context);
 
-                          if (isNameOk) {
-                            addAccountNotifier.setAddAccountProcessStep(
-                              AddAccountProcessStep.confirmation,
-                            );
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.addAccount,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                        if (isNameOk) {
+                          addAccountNotifier.setAddAccountProcessStep(
+                            AddAccountProcessStep.confirmation,
+                          );
+                        }
+                      },
+                      disabled: !addAccount.canAddAccount,
+                    ),
                   ],
                 ),
               ],

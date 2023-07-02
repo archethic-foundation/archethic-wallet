@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -153,7 +152,6 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     if (session == null) return const SizedBox();
 
     return Column(
@@ -214,40 +212,21 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               children: <Widget>[
-                if (accountSelected!.balance!.isNativeTokenValuePositive() &&
-                    connectivityStatusProvider ==
-                        ConnectivityStatus.isConnected)
-                  AppButtonTiny(
-                    AppButtonTinyType.primary,
-                    localizations.createFungibleToken,
-                    Dimens.buttonBottomDimens,
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel,
-                      size: 14,
-                    ),
-                    key: const Key('createTokenFungible'),
-                    onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: const AddTokenSheet(),
-                      );
-                    },
-                  )
-                else
-                  AppButtonTiny(
-                    AppButtonTinyType.primaryOutline,
-                    localizations.createFungibleToken,
-                    Dimens.buttonBottomDimens,
-                    icon: Icon(
-                      Icons.add,
-                      color: theme.mainButtonLabel!.withOpacity(0.3),
-                      size: 14,
-                    ),
-                    key: const Key('createTokenFungible'),
-                    onPressed: () {},
-                  ),
+                AppButtonTinyConnectivity(
+                  localizations.createFungibleToken,
+                  Dimens.buttonBottomDimens,
+                  icon: Icons.add,
+                  key: const Key('createTokenFungible'),
+                  onPressed: () {
+                    Sheets.showAppHeightNineSheet(
+                      context: context,
+                      ref: ref,
+                      widget: const AddTokenSheet(),
+                    );
+                  },
+                  disabled:
+                      !accountSelected!.balance!.isNativeTokenValuePositive(),
+                ),
               ],
             ),
           ),
