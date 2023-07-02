@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -31,7 +30,6 @@ class AddTokenFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -39,7 +37,6 @@ class AddTokenFormSheet extends ConsumerWidget {
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -100,53 +97,32 @@ class AddTokenFormSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (addToken.canAddToken &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.createToken,
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createToken'),
-                        onPressed: () async {
-                          final isNameOk =
-                              addTokenNotifier.controlName(context);
-                          final isSymbolOk =
-                              addTokenNotifier.controlSymbol(context);
-                          final isInitialSupplyOk =
-                              addTokenNotifier.controlInitialSupply(context);
-                          final isAmountOk = addTokenNotifier.controlAmount(
-                            context,
-                            accountSelected,
+                    AppButtonTinyConnectivity(
+                      localizations.createToken,
+                      icon: Icons.add,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('createToken'),
+                      onPressed: () async {
+                        final isNameOk = addTokenNotifier.controlName(context);
+                        final isSymbolOk =
+                            addTokenNotifier.controlSymbol(context);
+                        final isInitialSupplyOk =
+                            addTokenNotifier.controlInitialSupply(context);
+                        final isAmountOk = addTokenNotifier.controlAmount(
+                          context,
+                          accountSelected,
+                        );
+                        if (isNameOk &&
+                            isSymbolOk &&
+                            isInitialSupplyOk &&
+                            isAmountOk) {
+                          addTokenNotifier.setAddTokenProcessStep(
+                            AddTokenProcessStep.confirmation,
                           );
-                          if (isNameOk &&
-                              isSymbolOk &&
-                              isInitialSupplyOk &&
-                              isAmountOk) {
-                            addTokenNotifier.setAddTokenProcessStep(
-                              AddTokenProcessStep.confirmation,
-                            );
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.createToken,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createToken'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                        }
+                      },
+                      disabled: !addToken.canAddToken,
+                    ),
                   ],
                 ),
               ],

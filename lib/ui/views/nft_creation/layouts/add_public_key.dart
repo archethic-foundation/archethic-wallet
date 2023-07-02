@@ -125,42 +125,34 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                       if (widget.readOnly == false)
                         Row(
                           children: <Widget>[
-                            if (nftCreation.canAddAccess)
-                              AppButtonTiny(
-                                AppButtonTinyType.primary,
-                                localizations.propertyAccessAddAccess,
-                                Dimens.buttonBottomDimens,
-                                key: const Key('addPublicKey'),
-                                onPressed: () async {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        preferences.activeVibrations,
-                                      );
+                            AppButtonTiny(
+                              AppButtonTinyType.primary,
+                              localizations.propertyAccessAddAccess,
+                              Dimens.buttonBottomDimens,
+                              key: const Key('addPublicKey'),
+                              onPressed: () async {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
+                                    );
 
-                                  ref
-                                      .read(
-                                        NftCreationFormProvider.nftCreationForm(
-                                          ref.read(
-                                            NftCreationFormProvider
-                                                .nftCreationFormArgs,
-                                          ),
-                                        ).notifier,
-                                      )
-                                      .addPublicKey(
-                                        widget.propertyName,
-                                        nftCreation.propertyAccessRecipient,
-                                        context,
-                                      );
-                                },
-                              )
-                            else
-                              AppButtonTiny(
-                                AppButtonTinyType.primaryOutline,
-                                localizations.propertyAccessAddAccess,
-                                Dimens.buttonBottomDimens,
-                                key: const Key('addPublicKey'),
-                                onPressed: () {},
-                              ),
+                                ref
+                                    .read(
+                                      NftCreationFormProvider.nftCreationForm(
+                                        ref.read(
+                                          NftCreationFormProvider
+                                              .nftCreationFormArgs,
+                                        ),
+                                      ).notifier,
+                                    )
+                                    .addPublicKey(
+                                      widget.propertyName,
+                                      nftCreation.propertyAccessRecipient,
+                                      context,
+                                    );
+                              },
+                              disabled: !nftCreation.canAddAccess,
+                            ),
                           ],
                         ),
                       GetPublicKeys(

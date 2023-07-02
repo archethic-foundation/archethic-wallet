@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -137,9 +136,7 @@ class _TransactionInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Column(
       children: <Widget>[
@@ -180,38 +177,19 @@ class _TransactionInfos extends ConsumerWidget {
         ),
         Row(
           children: <Widget>[
-            if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.viewExplorer,
-                Dimens.buttonBottomDimens,
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: theme.mainButtonLabel,
-                  size: 14,
-                ),
-                key: const Key('viewExplorer'),
-                onPressed: () async {
-                  UIUtil.showWebview(
-                    context,
-                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$txAddress',
-                    '',
-                  );
-                },
-              )
-            else
-              AppButtonTiny(
-                AppButtonTinyType.primaryOutline,
-                localizations.viewExplorer,
-                Dimens.buttonBottomDimens,
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: theme.mainButtonLabel!.withOpacity(0.3),
-                  size: 14,
-                ),
-                key: const Key('viewExplorer'),
-                onPressed: () {},
-              ),
+            AppButtonTinyConnectivity(
+              localizations.viewExplorer,
+              Dimens.buttonBottomDimens,
+              icon: Icons.more_horiz,
+              key: const Key('viewExplorer'),
+              onPressed: () async {
+                UIUtil.showWebview(
+                  context,
+                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$txAddress',
+                  '',
+                );
+              },
+            ),
           ],
         ),
       ],

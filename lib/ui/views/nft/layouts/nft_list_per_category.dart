@@ -71,51 +71,31 @@ class NFTListPerCategory extends ConsumerWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    if (accountSelected.balance!.isNativeTokenValuePositive() &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.createNFT,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createNFT'),
-                        icon: Icon(
-                          Iconsax.diamonds,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          Navigator.of(context).pushNamed(
-                            '/nft_creation',
-                            arguments: {
-                              'seed': ref
-                                  .read(SessionProviders.session)
-                                  .loggedIn!
-                                  .wallet
-                                  .seed,
-                              'currentNftCategoryIndex':
-                                  currentNftCategoryIndex,
-                            },
-                          );
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.createNFT,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('createNFT'),
-                        icon: Icon(
-                          Iconsax.diamonds,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                    AppButtonTinyConnectivity(
+                      localizations.createNFT,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('createNFT'),
+                      icon: Iconsax.diamonds,
+                      onPressed: () async {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              preferences.activeVibrations,
+                            );
+                        Navigator.of(context).pushNamed(
+                          '/nft_creation',
+                          arguments: {
+                            'seed': ref
+                                .read(SessionProviders.session)
+                                .loggedIn!
+                                .wallet
+                                .seed,
+                            'currentNftCategoryIndex': currentNftCategoryIndex,
+                          },
+                        );
+                      },
+                      disabled: !accountSelected.balance!
+                          .isNativeTokenValuePositive(),
+                    ),
                   ],
                 ),
               ],
