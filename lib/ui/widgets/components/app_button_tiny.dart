@@ -59,7 +59,7 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
         size: 14,
       ),
       key: key,
-      onPressed: onPressed,
+      onPressed: isConnected ? onPressed : () {},
       disabled: disabled,
     );
   }
