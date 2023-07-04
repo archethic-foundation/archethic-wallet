@@ -24,7 +24,7 @@ class NetworksSetting extends SettingSelectionItem {
   final String networkDevEndpoint;
 
   String get notificationBackendUrl {
-    return 'http://localhost:8300'; // TODO(reddwarf03):  replace with production notification backend's url
+    return 'https://push.archethic.net';
   }
 
   @override
