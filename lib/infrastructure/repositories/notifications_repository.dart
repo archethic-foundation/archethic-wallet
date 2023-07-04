@@ -12,6 +12,7 @@ class NotificationsRepositoryImpl
   NotificationsRepositoryImpl({required this.networksSetting}) {
     _client = NotificationBackendClient(
       notificationBackendUrl: networksSetting.notificationBackendUrl,
+      onConnect: _onConnect,
     );
   }
 
@@ -67,15 +68,23 @@ class NotificationsRepositoryImpl
     await (await _localSetup).removeListenedTxChains(txChainGenesisAddresses);
   }
 
+  Future<void> _onConnect() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token != null) {
+      await _updatePushSubscriptions(
+        previousToken: await cachedFcmToken,
+        newToken: token,
+      );
+      (await _localSetup).updateFcmToken(token);
+    }
+
+    await _restoreWebsocketSubscriptions();
+  }
+
   @override
   Future<void> initialize() async {
     await _client.connect();
-
     await Firebase.initializeApp();
-    final token = await FirebaseMessaging.instance.getToken();
-    (await _localSetup).updateFcmToken(token);
-
-    await _restoreWebsocketSubscriptions();
 
     FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
       final previousFcmToken = await cachedFcmToken;
