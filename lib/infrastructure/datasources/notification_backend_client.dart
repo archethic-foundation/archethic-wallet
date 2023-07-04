@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 class NotificationBackendClient {
   NotificationBackendClient({
     required this.notificationBackendUrl,
+    required this.onConnect,
   }) {
     socket = socket_io.io(
       notificationBackendUrl,
@@ -29,6 +31,8 @@ class NotificationBackendClient {
         log('Did disconnect', name: _logName);
       });
   }
+
+  final VoidCallback onConnect;
 
   static const _logName = 'NotificationBackendClient';
 
