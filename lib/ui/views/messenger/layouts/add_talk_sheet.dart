@@ -6,6 +6,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
+import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -141,7 +142,16 @@ class AddTalkSheet extends ConsumerWidget {
                     size: 14,
                   ),
                   onPressed: () async {
-                    await MessengerProviders.addRemoteTalk(ref, talk);
+                    await ref
+                        .read(MessengerProviders.talks.notifier)
+                        .addRemoteTalk(talk);
+                    ref
+                        .read(
+                          DiscussionSearchBarProvider
+                              .discussionSearchBar.notifier,
+                        )
+                        .reset();
+                    Navigator.of(context).pop();
                   },
                 ),
               ],

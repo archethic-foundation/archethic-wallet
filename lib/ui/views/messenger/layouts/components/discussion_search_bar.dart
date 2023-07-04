@@ -73,7 +73,12 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     ref.listen<DiscussionSearchBarState>(
       DiscussionSearchBarProvider.discussionSearchBar,
-      (_, discussionSearchBar) {
+      (previousState, discussionSearchBar) {
+        if (previousState?.searchCriteria !=
+            discussionSearchBar.searchCriteria) {
+          _updateAdressTextController();
+        }
+
         if (discussionSearchBar.isControlsOk) {
           Sheets.showAppHeightNineSheet(
             context: context,

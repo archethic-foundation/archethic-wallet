@@ -4,26 +4,17 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _discussionSearchBarProvider = NotifierProvider.autoDispose<
-    DiscussionSearchBarNotifier, DiscussionSearchBarState>(
-  () {
-    return DiscussionSearchBarNotifier();
-  },
-  dependencies: [
-    MessengerProviders.remoteTalk,
-  ],
-);
+part 'discussion_search_bar_provider.g.dart';
 
 abstract class DiscussionSearchBarProvider {
-  static final discussionSearchBar = _discussionSearchBarProvider;
+  static final discussionSearchBar = _discussionSearchBarNotifierProvider;
 }
 
-class DiscussionSearchBarNotifier
+@riverpod
+class _DiscussionSearchBarNotifier
     extends AutoDisposeNotifier<DiscussionSearchBarState> {
-  DiscussionSearchBarNotifier();
-
   @override
   DiscussionSearchBarState build() => const DiscussionSearchBarState();
 
@@ -43,6 +34,7 @@ class DiscussionSearchBarNotifier
     state = state.copyWith(
       loading: false,
       talk: null,
+      searchCriteria: '',
       error: '',
     );
   }
