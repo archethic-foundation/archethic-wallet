@@ -230,7 +230,7 @@ abstract class MessengerProviders {
   static Future<void> reset(Ref ref) async {
     await ref.read(_messengerRepository).clear();
     ref
-      ..invalidate(_talksProvider)
+      ..invalidate(_talkProvider)
       ..invalidate(_createTalkFormProvider)
       ..invalidate(_talkMessagesProvider);
   }
