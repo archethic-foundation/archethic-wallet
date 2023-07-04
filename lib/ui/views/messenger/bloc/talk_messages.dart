@@ -98,7 +98,7 @@ Future<double> _messageCreationFees(
 
 @riverpod
 class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
-  static const _pageSize = 10;
+  static const _pageSize = 7;
 
   @override
   PagingController<int, TalkMessage> build(String talkAddress) {
@@ -119,6 +119,11 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     ref.listen(
       NotificationProviders.txSentEvents(talkAddress),
       (_, event) async {
+        final txEvent = event.valueOrNull;
+        if (txEvent == null) return;
+
+        if (_alreadyHasMessageWithAddress(txEvent.txAddress)) return;
+
         final newMessage = (await ref.read(
           MessengerProviders.messages(
             talkAddress,
