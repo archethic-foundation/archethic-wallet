@@ -364,24 +364,28 @@ class _ButtonNewWallet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    return _ButtonAction(
-      key: const Key('newWallet'),
-      enabled: !cguChecked,
-      label: localizations.newWallet,
-      dimension: Dimens.buttonTopDimens,
-      onPressed: () async {
-        if (cguChecked) {
-          await ref.read(SettingsProviders.settings.notifier).setNetwork(
-                const NetworksSetting(
-                  network: AvailableNetworks.archethicMainNet,
-                  networkDevEndpoint: '',
-                ),
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.newWallet,
+          Dimens.buttonTopDimens,
+          key: const Key('newWallet'),
+          onPressed: () async {
+            if (cguChecked) {
+              await ref.read(SettingsProviders.settings.notifier).setNetwork(
+                    const NetworksSetting(
+                      network: AvailableNetworks.archethicMainNet,
+                      networkDevEndpoint: '',
+                    ),
+                  );
+              Navigator.of(context).pushNamed(
+                '/intro_welcome_get_first_infos',
               );
-          Navigator.of(context).pushNamed(
-            '/intro_welcome_get_first_infos',
-          );
-        }
-      },
+            }
+          },
+          disabled: !cguChecked,
+        ),
+      ],
     );
   }
 }
@@ -395,56 +399,27 @@ class _ButtonImportWallet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    return _ButtonAction(
-      key: const Key('importWallet'),
-      enabled: !cguChecked,
-      label: localizations.importWallet,
-      dimension: Dimens.buttonBottomDimens,
-      onPressed: () async {
-        if (cguChecked) {
-          await NetworkDialog.getDialog(
-            context,
-            ref,
-            ref.read(
-              SettingsProviders.settings.select(
-                (settings) => settings.network,
-              ),
-            ),
-          );
-          Navigator.of(context).pushNamed('/intro_import');
-        }
-      },
-    );
-  }
-}
-
-class _ButtonAction extends ConsumerWidget {
-  const _ButtonAction({
-    required super.key,
-    required this.enabled,
-    required this.onPressed,
-    required this.label,
-    required this.dimension,
-  });
-
-  final bool enabled;
-  final Function() onPressed;
-  final String label;
-  final List<double> dimension;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: <Widget>[
-        // Import Wallet Button
-        AppButtonTiny(
-          enabled
-              ? AppButtonTinyType.primaryOutline
-              : AppButtonTinyType.primary,
-          label,
-          dimension,
-          key: key,
-          onPressed: onPressed,
+        AppButtonTinyConnectivity(
+          localizations.importWallet,
+          Dimens.buttonBottomDimens,
+          key: const Key('importWallet'),
+          onPressed: () async {
+            if (cguChecked) {
+              await NetworkDialog.getDialog(
+                context,
+                ref,
+                ref.read(
+                  SettingsProviders.settings.select(
+                    (settings) => settings.network,
+                  ),
+                ),
+              );
+              Navigator.of(context).pushNamed('/intro_import');
+            }
+          },
+          disabled: !cguChecked,
         ),
       ],
     );
