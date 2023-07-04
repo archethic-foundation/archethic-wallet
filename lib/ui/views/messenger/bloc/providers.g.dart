@@ -6,20 +6,6 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$talksHash() => r'9df68aa3068b5364724b701394b53095d63c0d48';
-
-/// See also [_talks].
-@ProviderFor(_talks)
-final _talksProvider = AutoDisposeFutureProvider<Iterable<Talk>>.internal(
-  _talks,
-  name: r'_talksProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$talksHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _TalksRef = AutoDisposeFutureProviderRef<Iterable<Talk>>;
 String _$talkHash() => r'43ac2c0ff6372ced2df122cfe463fcab6ab7c0b8';
 
 /// Copied from Dart SDK
@@ -579,6 +565,21 @@ class _TalkMessagesProvider
   }
 }
 
+String _$talksHash() => r'6b47bb4eea2daae55335c700cd5464d4e4bed172';
+
+/// See also [_Talks].
+@ProviderFor(_Talks)
+final _talksProvider =
+    AutoDisposeAsyncNotifierProvider<_Talks, Iterable<Talk>>.internal(
+  _Talks.new,
+  name: r'_talksProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$talksHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Talks = AutoDisposeAsyncNotifier<Iterable<Talk>>;
 String _$messageCreationFormNotifierHash() =>
     r'08232b825245fcdcfbc984448dca7aa6332e4776';
 
@@ -682,7 +683,7 @@ class _MessageCreationFormNotifierProvider
 }
 
 String _$paginatedTalkMessagesNotifierHash() =>
-    r'1f4447d6815654164dcbdbfc7a80936adbe5b36e';
+    r'1a9006eb4f73522d9cbbc129d9c809e9ff206582';
 
 abstract class _$PaginatedTalkMessagesNotifier
     extends BuildlessAutoDisposeNotifier<PagingController<int, TalkMessage>> {

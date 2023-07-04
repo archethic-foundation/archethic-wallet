@@ -27,25 +27,69 @@ part 'providers.g.dart';
 part 'talk_messages.dart';
 
 @riverpod
-Future<Iterable<Talk>> _talks(_TalksRef ref) async {
-  final selectedAccount = await ref.watch(
-    AccountProviders.selectedAccount.future,
-  );
-  if (selectedAccount == null) throw const Failure.loggedOut();
+class _Talks extends AutoDisposeAsyncNotifier<Iterable<Talk>> {
+  @override
+  FutureOr<Iterable<Talk>> build() async {
+    final selectedAccount = await ref.watch(
+      AccountProviders.selectedAccount.future,
+    );
+    if (selectedAccount == null) throw const Failure.loggedOut();
 
-  final repository = ref.watch(MessengerProviders._messengerRepository);
+    final repository = ref.watch(MessengerProviders._messengerRepository);
 
-  final talkAddresses = await repository
-      .getTalkAddresses(
-        owner: selectedAccount,
-      )
-      .valueOrThrow;
+    final talkAddresses = await repository
+        .getTalkAddresses(
+          owner: selectedAccount,
+        )
+        .valueOrThrow;
 
-  return Future.wait(
-    talkAddresses.map(
-      (talkAddress) => ref.watch(_talkProvider(talkAddress).future),
-    ),
-  );
+    return Future.wait(
+      talkAddresses.map(
+        (talkAddress) => ref.watch(_talkProvider(talkAddress).future),
+      ),
+    );
+  }
+
+  Future<Talk> addRemoteTalk(Talk talk) async {
+    final talks = state.valueOrNull;
+    if (talks == null) throw const Failure.other();
+
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
+    );
+    if (selectedAccount == null) throw const Failure.loggedOut();
+
+    final createdTalk = await ref
+        .read(MessengerProviders._messengerRepository)
+        .addRemoteTalk(
+          creator: selectedAccount,
+          talk: talk,
+        )
+        .valueOrThrow;
+
+    ref.invalidateSelf();
+    return createdTalk;
+  }
+
+  Future<void> removeTalk(Talk talk) async {
+    final talks = state.valueOrNull;
+    if (talks == null) throw const Failure.other();
+
+    final selectedAccount = await ref.read(
+      AccountProviders.selectedAccount.future,
+    );
+    if (selectedAccount == null) throw const Failure.loggedOut();
+
+    await ref
+        .read(MessengerProviders._messengerRepository)
+        .removeTalk(
+          owner: selectedAccount,
+          talk: talk,
+        )
+        .valueOrThrow;
+
+    ref.invalidateSelf();
+  }
 }
 
 @riverpod
@@ -128,41 +172,6 @@ Future<Talk> _remoteTalk(_TalkRef ref, String address) async {
       .valueOrThrow;
 }
 
-Future<Talk> _addRemoteTalk(WidgetRef ref, Talk talk) async {
-  final selectedAccount = await ref.read(
-    AccountProviders.selectedAccount.future,
-  );
-  if (selectedAccount == null) throw const Failure.loggedOut();
-
-  final createdTalk = await ref
-      .read(MessengerProviders._messengerRepository)
-      .addRemoteTalk(
-        creator: selectedAccount,
-        talk: talk,
-      )
-      .valueOrThrow;
-
-  ref.invalidate(_talksProvider);
-  return createdTalk;
-}
-
-Future<void> _removeTalk(WidgetRef ref, Talk talk) async {
-  final selectedAccount = await ref.read(
-    AccountProviders.selectedAccount.future,
-  );
-  if (selectedAccount == null) throw const Failure.loggedOut();
-
-  await ref
-      .read(MessengerProviders._messengerRepository)
-      .removeTalk(
-        owner: selectedAccount,
-        talk: talk,
-      )
-      .valueOrThrow;
-
-  ref.invalidate(_talksProvider);
-}
-
 @riverpod
 Future<List<Talk>> _sortedTalks(_SortedTalksRef ref) async {
   final talks = await ref.watch(_talksProvider.future);
@@ -204,9 +213,8 @@ abstract class MessengerProviders {
 
   /// Watches Talks creation/deletion to update notifications subscriptions
   static const subscribeNotificationsWorker = _subscribeNotificationsWorker;
+  static final talks = _talksProvider;
   static final sortedTalks = _sortedTalksProvider;
-  static const addRemoteTalk = _addRemoteTalk;
-  static const removeTalk = _removeTalk;
   static const talk = _talkProvider;
   static const talkDisplayName = _talkDisplayNameProvider;
   static const accessRecipientWithPublicKey =
