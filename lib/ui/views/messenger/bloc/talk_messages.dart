@@ -107,22 +107,18 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
     );
     _addPageRequestListener(pagingController);
 
-    final notificationsSubscription = _addIncomingMessagesListener();
+    _addIncomingMessagesListener();
 
     ref.onDispose(() {
       _pagingController.dispose();
-      _removeIncomingMessagesListener(notificationsSubscription);
     });
     return pagingController;
   }
 
-  StreamSubscription<TxSentEvent> _addIncomingMessagesListener() {
-    final notificationsRepository = ref.watch(
-      NotificationProviders.repository,
-    );
-
-    return notificationsRepository.events.listen(
-      (event) async {
+  void _addIncomingMessagesListener() {
+    ref.listen(
+      NotificationProviders.txSentEvents(talkAddress),
+      (_, event) async {
         final newMessage = (await ref.read(
           MessengerProviders.messages(
             talkAddress,
@@ -145,12 +141,6 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
       _pagingController.value.itemList!.any(
         (message) => message.address.toLowerCase() == address.toLowerCase(),
       );
-
-  void _removeIncomingMessagesListener(
-    StreamSubscription<TxSentEvent> subscription,
-  ) {
-    subscription.cancel();
-  }
 
   void _addPageRequestListener(
     PagingController<int, TalkMessage> pagingController,

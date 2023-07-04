@@ -8,7 +8,6 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
-import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/message.dart';

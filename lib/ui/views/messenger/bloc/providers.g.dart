@@ -565,7 +565,7 @@ class _TalkMessagesProvider
   }
 }
 
-String _$talksHash() => r'6b47bb4eea2daae55335c700cd5464d4e4bed172';
+String _$talksHash() => r'81be6d6bc0cd5bbdf9a1f0dbdea3712829bf8e5e';
 
 /// See also [_Talks].
 @ProviderFor(_Talks)
@@ -683,7 +683,7 @@ class _MessageCreationFormNotifierProvider
 }
 
 String _$paginatedTalkMessagesNotifierHash() =>
-    r'1a9006eb4f73522d9cbbc129d9c809e9ff206582';
+    r'c694e2aecce7273284bc1da428ea6bb094da962d';
 
 abstract class _$PaginatedTalkMessagesNotifier
     extends BuildlessAutoDisposeNotifier<PagingController<int, TalkMessage>> {

@@ -8,12 +8,23 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'providers.g.dart';
 
 @Riverpod(keepAlive: true)
-NotificationsRepository _notificationRepository(Ref ref) =>
+NotificationsRepository _notificationRepository(
+  _NotificationRepositoryRef ref,
+) =>
     NotificationsRepositoryImpl(
       networksSetting: ref.watch(
         SettingsProviders.settings.select((value) => value.network),
       ),
     );
+
+@riverpod
+Stream<TxSentEvent> _txSentEvents(
+  _TxSentEventsRef ref,
+  String txChainGenesisAddress,
+) =>
+    ref.watch(_notificationRepositoryProvider).events.where(
+          (event) => event.txChainGenesisAddress == txChainGenesisAddress,
+        );
 
 Future<void> _keepPushSettingsUpToDateWorker(
   WidgetRef ref,
@@ -21,7 +32,7 @@ Future<void> _keepPushSettingsUpToDateWorker(
   final locale = ref.watch(
     LanguageProviders.selectedLocale.select((value) => value.languageCode),
   );
-  await ref.watch(NotificationProviders.repository).updatePushSettings(
+  await ref.watch(_notificationRepositoryProvider).updatePushSettings(
         locale: locale,
       );
 }
@@ -29,4 +40,5 @@ Future<void> _keepPushSettingsUpToDateWorker(
 abstract class NotificationProviders {
   static final repository = _notificationRepositoryProvider;
   static const keepPushSettingsUpToDateWorker = _keepPushSettingsUpToDateWorker;
+  static const txSentEvents = _txSentEventsProvider;
 }

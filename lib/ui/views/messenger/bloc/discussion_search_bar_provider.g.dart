@@ -7,7 +7,7 @@ part of 'discussion_search_bar_provider.dart';
 // **************************************************************************
 
 String _$discussionSearchBarNotifierHash() =>
-    r'7a7fed3710c9d57514425aa92b7f8500c1bf0e09';
+    r'27598059d30b8361ab6bf8dc123b8b73464cbff0';
 
 /// See also [_DiscussionSearchBarNotifier].
 @ProviderFor(_DiscussionSearchBarNotifier)
