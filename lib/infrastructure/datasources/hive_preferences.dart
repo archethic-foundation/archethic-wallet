@@ -62,10 +62,8 @@ class HivePreferencesDatasource {
 
   Future<void> _removeValue<T>(dynamic key) => _box.delete(key);
 
-  Future<void> setHasSeenRootWarning() => _setValue(hasShownRootWarning, true);
-
-  Future<void> setHasNotSeenRootWarning() =>
-      _setValue(hasShownRootWarning, false);
+  Future<void> setHasShownRootWarning(bool hasShown) =>
+      _setValue(hasShownRootWarning, hasShown);
 
   bool getHasSeenRootWarning() =>
       _getValue(hasShownRootWarning, defaultValue: false);

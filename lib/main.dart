@@ -8,7 +8,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -16,7 +15,6 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
@@ -29,8 +27,6 @@ import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/navigation.dart';
 import 'package:aewallet/util/security_manager.dart';
@@ -147,7 +143,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     didChangeAppLifecycleStateAsync(state);
   }
 
-  void didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
+  Future didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
     debugPrint('Lifecycle State : $state');
     var isDeviceSecured = false;
 
