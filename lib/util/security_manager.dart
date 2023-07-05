@@ -7,6 +7,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,6 +34,9 @@ class SecurityManager {
   }
 
   Future checkDeviceSecurity(WidgetRef ref, BuildContext context) async {
+    if (kIsWeb == true) {
+      return;
+    }
     if (Platform.isIOS == false && Platform.isAndroid == false) {
       return;
     }
@@ -40,7 +44,7 @@ class SecurityManager {
     final preferences = await HivePreferencesDatasource.getInstance();
     if (await isDeviceSecured()) {
       // user will see a popup next time his device is jailbroken or in dev mode
-      await preferences.setHasNotSeenRootWarning();
+      await preferences.setHasShownRootWarning(false);
       return;
     }
 
@@ -61,7 +65,7 @@ class SecurityManager {
         buttonLabel:
             AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
         onPressed: () async {
-          await preferences.setHasSeenRootWarning();
+          await preferences.setHasShownRootWarning(true);
         },
       );
     } else {
