@@ -60,8 +60,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 20,
           bottom: 80,
-          left: 15,
-          right: 15,
         ),
         child: Column(
           children: [
@@ -109,7 +107,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                         LengthLimitingTextInputFormatter(20),
                       ],
                       onChanged: (text) {
-                        ref.read(
+                        ref.watch(
                           ContactProviders.fetchContacts(
                             search: text,
                           ),

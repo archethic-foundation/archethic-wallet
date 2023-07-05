@@ -42,9 +42,6 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
       final originPrivateKey = apiService.getOriginKey();
       final keychain = wallet.keychainSecuredInfos.toKeychain();
 
-      final serviceName =
-          'archethic-wallet-${Uri.encodeFull(senderAccount.name)}';
-
       var indexSearchRef = '';
       switch (type) {
         case 'keychain':
@@ -81,7 +78,7 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
           signedTransaction = keychain
               .buildTransaction(
                 transaction,
-                serviceName,
+                senderAccount.name,
                 accountIndex,
               )
               .originSign(originPrivateKey);

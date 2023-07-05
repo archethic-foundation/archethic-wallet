@@ -129,7 +129,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     ? FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          selectedAccount?.name ?? ' ',
+                          selectedAccount?.nameDisplayed ?? ' ',
                           style: theme.textStyleSize24W700EquinoxPrimary,
                         ),
                       )

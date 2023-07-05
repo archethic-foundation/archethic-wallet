@@ -165,6 +165,10 @@ class KeychainUtil with KeychainServiceMixin {
       final genesisAddressAccountList = <String>[];
       final lastAddressAccountList = <String>[];
 
+      await sl
+          .get<DBHelper>()
+          .deleteContactByType(ContactType.keychainService.name);
+
       /// Get all services for archethic blockchain
       keychain.services.forEach((serviceName, service) async {
         final serviceType = getServiceTypeFromPath(service.derivationPath);
@@ -210,19 +214,15 @@ class KeychainUtil with KeychainServiceMixin {
         accounts.add(account);
 
         if (serviceType == 'archethicWallet') {
-          try {
-            await sl.get<DBHelper>().getContactWithName(account.name);
-          } catch (e) {
-            final newContact = Contact(
-              name: '@$nameDecoded',
-              address: uint8ListToHex(genesisAddress),
-              type: ContactType.keychainService.name,
-              publicKey:
-                  uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)
-                      .toUpperCase(),
-            );
-            await sl.get<DBHelper>().saveContact(newContact);
-          }
+          final newContact = Contact(
+            name: '@${account.nameDisplayed}',
+            address: uint8ListToHex(genesisAddress),
+            type: ContactType.keychainService.name,
+            publicKey:
+                uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)
+                    .toUpperCase(),
+          );
+          await sl.get<DBHelper>().saveContact(newContact);
         }
       });
 
@@ -289,7 +289,7 @@ class KeychainUtil with KeychainServiceMixin {
         }
       }
 
-      accounts.sort((a, b) => a.name.compareTo(b.name));
+      accounts.sort((a, b) => a.nameDisplayed.compareTo(b.nameDisplayed));
       currentAppWallet.appKeychain.accounts = accounts;
 
       await sl.get<DBHelper>().saveAppWallet(currentAppWallet);
@@ -346,8 +346,7 @@ extension KeychainConversionsExt on Keychain {
         curve: value.curve,
         derivationPath: value.derivationPath,
         hashAlgo: value.hashAlgo,
-        // TODO(reddwarf03): Adapt to aeweb
-        name: key.replaceAll('archethic-wallet-', ''),
+        name: key,
         keyPair: KeychainServiceKeyPair(
           privateKey: keyPair.privateKey!,
           publicKey: keyPair.publicKey!,

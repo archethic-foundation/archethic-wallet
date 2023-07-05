@@ -29,7 +29,8 @@ class ContactsDialog {
     );
 
     for (final contact in contacts) {
-      if (contact.format.toUpperCase() != accountSelected!.name.toUpperCase()) {
+      if (contact.format.toUpperCase() !=
+          accountSelected!.nameDisplayed.toUpperCase()) {
         pickerItemsList.add(
           PickerItem(
             contact.name.substring(1),
@@ -92,16 +93,19 @@ class ContactsDialog {
                           }).toList();
                           pickerItemsList.clear();
                           for (final contact in contacts) {
-                            pickerItemsList.add(
-                              PickerItem(
-                                contact.name.substring(1),
-                                null,
-                                null,
-                                null,
-                                contact,
-                                true,
-                              ),
-                            );
+                            if (contact.format.toUpperCase() !=
+                                accountSelected!.nameDisplayed.toUpperCase()) {
+                              pickerItemsList.add(
+                                PickerItem(
+                                  contact.name.substring(1),
+                                  null,
+                                  null,
+                                  null,
+                                  contact,
+                                  true,
+                                ),
+                              );
+                            }
                           }
                         },
                       );

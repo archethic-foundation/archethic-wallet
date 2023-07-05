@@ -9,7 +9,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/provider.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/transaction_raw.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/transaction_raw.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -74,7 +74,10 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                       formData.value.signTransactionCommand
                                           .origin.name,
                                     )
-                                    .replaceAll('%2', accountSelected!.name)
+                                    .replaceAll(
+                                      '%2',
+                                      accountSelected!.nameDisplayed,
+                                    )
                                 : localizations
                                     .signXTransactionsCommandReceivedNotification
                                     .replaceAll(
@@ -88,7 +91,10 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                           .length
                                           .toString(),
                                     )
-                                    .replaceAll('%3', accountSelected!.name),
+                                    .replaceAll(
+                                      '%3',
+                                      accountSelected!.nameDisplayed,
+                                    ),
                             style: theme.textStyleSize12W400Primary,
                           ),
                           Column(
