@@ -171,6 +171,21 @@ class DBHelper {
     await box.delete(contact.name);
   }
 
+  Future<void> deleteContactByName(String name) async {
+    final box = await Hive.openBox<Contact>(contactsTable);
+    await box.delete(name);
+  }
+
+  Future<void> deleteContactByType(String type) async {
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
+    for (final contact in contactsList) {
+      if (contact.type.toLowerCase() == type.toLowerCase()) {
+        await box.delete(contact.name);
+      }
+    }
+  }
+
   Future<void> clearContacts() async {
     final box = await Hive.openBox<Contact>(contactsTable);
     await box.clear();

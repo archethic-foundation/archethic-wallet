@@ -17,7 +17,6 @@ class ContactList extends ConsumerWidget {
           ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.only(
-              left: 15,
               top: 15,
               bottom: 15,
             ),

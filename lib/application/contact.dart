@@ -28,11 +28,12 @@ Future<List<Contact>> _fetchContacts(
 
 @riverpod
 Future<Contact> _getSelectedContact(_GetSelectedContactRef ref) async {
-  final selectedAccountName =
-      await ref.watch(AccountProviders.selectedAccountName.future);
-  if (selectedAccountName == null) throw Exception();
+  final selectedAccountNameDisplayed =
+      await ref.watch(AccountProviders.selectedAccountNameDisplayed.future);
+  if (selectedAccountNameDisplayed == null) throw Exception();
 
-  return ref.watch(_getContactWithNameProvider(selectedAccountName).future);
+  return ref
+      .watch(_getContactWithNameProvider(selectedAccountNameDisplayed).future);
 }
 
 @riverpod

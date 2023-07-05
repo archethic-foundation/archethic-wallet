@@ -38,10 +38,10 @@ class AccountListItem extends ConsumerWidget {
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     AsyncValue<Contact>? contact;
-    if (account.serviceType != 'other') {
+    if (account.serviceType == 'archethicWallet') {
       contact = ref.watch(
         ContactProviders.getContactWithName(
-          account.name,
+          account.nameDisplayed,
         ),
       );
     }
@@ -77,13 +77,15 @@ class AccountListItem extends ConsumerWidget {
                 );
 
             if (selectedAccount == null ||
-                selectedAccount.name != account.name) {
+                selectedAccount.nameDisplayed != account.nameDisplayed) {
               ShowSendingAnimation.build(context, theme);
               await ref
                   .read(AccountProviders.accounts.notifier)
                   .selectAccount(account);
               await ref
-                  .read(AccountProviders.account(account.name).notifier)
+                  .read(
+                    AccountProviders.account(account.name).notifier,
+                  )
                   .refreshRecentTransactions();
             }
 
@@ -145,7 +147,7 @@ class AccountListItem extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AutoSizeText(
-                        account.name,
+                        account.nameDisplayed,
                         style: theme.textStyleSize12W400Primary,
                       ),
                       const SizedBox(height: 2),

@@ -15,7 +15,7 @@ part 'account.g.dart';
 
 /// Next field available : 14
 @HiveType(typeId: 1)
-class Account extends HiveObject {
+class Account extends HiveObject with KeychainServiceMixin {
   Account({
     required this.name,
     required this.genesisAddress,
@@ -30,6 +30,8 @@ class Account extends HiveObject {
     this.nftCategoryList,
     this.serviceType,
   });
+
+  String get nameDisplayed => getShortName(name);
 
   Account copyWith({
     String? name,
@@ -341,18 +343,16 @@ class Account extends HiveObject {
 }
 
 mixin KeychainServiceMixin {
-  final kDerivationPathArchethicWalletWithoutService =
-      "m/650'/archethic-wallet-";
-  final kDerivationPathAEWebWithoutService = "m/650'/aeweb-";
-  final kDerivationPathOtherWithoutService = "m/650'/";
+  final kMainDerivation = "m/650'/";
 
   String getServiceTypeFromPath(String derivationPath) {
     var serviceType = 'other';
-    if (derivationPath
-        .startsWith(kDerivationPathArchethicWalletWithoutService)) {
+    final name = derivationPath.replaceFirst(kMainDerivation, '');
+
+    if (name.startsWith('archethic-wallet-')) {
       serviceType = 'archethicWallet';
     } else {
-      if (derivationPath.startsWith(kDerivationPathAEWebWithoutService)) {
+      if (name.startsWith('aeweb-')) {
         serviceType = 'aeweb';
       }
     }
@@ -360,29 +360,12 @@ mixin KeychainServiceMixin {
   }
 
   String getNameFromPath(String derivationPath) {
-    final serviceType = getServiceTypeFromPath(derivationPath);
-    late List<String> path;
-
-    if (serviceType == 'archethicWallet') {
-      path = derivationPath
-          .replaceAll(kDerivationPathArchethicWalletWithoutService, '')
-          .split('/')
-        ..last = '';
-    } else {
-      if (serviceType == 'aeweb') {
-        path = derivationPath
-            .replaceAll(kDerivationPathAEWebWithoutService, '')
-            .split('/')
-          ..last = '';
-      } else {
-        path = derivationPath
-            .replaceAll(kDerivationPathOtherWithoutService, '')
-            .split('/')
-          ..last = '';
-      }
-    }
-    var name = path.join('/');
-    name = name.substring(0, name.length - 1);
+    var name = derivationPath.replaceFirst(kMainDerivation, '');
+    name = name.split('/').first;
     return Uri.decodeFull(name);
+  }
+
+  String getShortName(String name) {
+    return name.replaceAll('archethic-wallet-', '').replaceAll('aeweb-', '');
   }
 }

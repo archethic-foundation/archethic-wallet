@@ -79,7 +79,11 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     final accounts =
         ref.read(AccountProviders.sortedAccounts).valueOrNull ?? [];
     if (accounts
-        .where((Account element) => element.name == state.name)
+        .where(
+          (Account element) =>
+              element.nameDisplayed == state.name &&
+              element.serviceType == 'archethicWallet',
+        )
         .isNotEmpty) {
       state = state.copyWith(
         errorText: AppLocalizations.of(context)!.addAccountExists,
@@ -98,7 +102,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     late Transaction transaction;
 
     transaction = Transaction.keychain(
-      name: state.name,
+      name: 'archethic-wallet-${state.name}',
       seed: state.seed,
     );
 

@@ -55,7 +55,7 @@ class HiveAppWalletDTO extends HiveObject {
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),
       genesisAddress: uint8ListToHex(genesisAddress),
-      name: name,
+      name: kServiceName,
       balance: AccountBalance(
         nativeTokenName: AccountBalance.cryptoCurrencyLabel,
         nativeTokenValue: 0,

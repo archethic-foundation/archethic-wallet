@@ -664,17 +664,17 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         final account = accounts[i];
         pickerItemsList.add(
           PickerItem(
-            account.name,
+            account.nameDisplayed,
             null,
             null,
             null,
             account,
             true,
-            key: Key('accountName${account.name}'),
+            key: Key('accountName${account.nameDisplayed}'),
           ),
         );
         log(
-          '<<accountName${account.name}>>',
+          '<<accountName${account.nameDisplayed}>>',
         );
       }
     }

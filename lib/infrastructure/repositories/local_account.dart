@@ -7,9 +7,13 @@ class AccountLocalRepository implements AccountLocalRepositoryInterface {
   final DBHelper _dbHelper = sl.get<DBHelper>();
 
   @override
-  Future<List<Account>> accounts() async {
+  Future<List<String>> accountNames() async {
     final accounts = await _dbHelper.getAccounts();
-    return accounts;
+    return accounts
+        .map(
+          (account) => account.name,
+        )
+        .toList();
   }
 
   @override

@@ -24,7 +24,7 @@ class RPCSubscribeCurrentAccountCommandHandler extends RPCSubscriptionHandler<
       };
     }
     return {
-      'name': model.name,
+      'name': model.nameDisplayed,
       'genesisAddress': model.genesisAddress,
     };
   }

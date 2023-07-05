@@ -111,10 +111,6 @@ class ArchethicTransactionRepository
   ) async {
     final originPrivateKey = apiService.getOriginKey();
 
-    final nameEncoded = Uri.encodeFull(
-      transfer.accountSelectedName,
-    );
-    final service = 'archethic-wallet-$nameEncoded';
     final keychain = transfer.keychainSecuredInfos.toKeychain();
 
     final indexMap = await apiService.getTransactionIndex(
@@ -152,14 +148,16 @@ class ArchethicTransactionRepository
       keychain: keychain,
       keyPair: archethic.KeyPair(
         privateKey: Uint8List.fromList(
-          transfer.keychainSecuredInfos.services[service]!.keyPair!.privateKey,
+          transfer.keychainSecuredInfos.services[transfer.accountSelectedName]!
+              .keyPair!.privateKey,
         ),
         publicKey: Uint8List.fromList(
-          transfer.keychainSecuredInfos.services[service]!.keyPair!.publicKey,
+          transfer.keychainSecuredInfos.services[transfer.accountSelectedName]!
+              .keyPair!.publicKey,
         ),
       ),
       originPrivateKey: originPrivateKey,
-      serviceName: service,
+      serviceName: transfer.accountSelectedName,
       tokenTransferList: tokenTransferList,
       ucoTransferList: ucoTransferList,
       message: transfer.message,
@@ -171,11 +169,6 @@ class ArchethicTransactionRepository
   ) async {
     final originPrivateKey = apiService.getOriginKey();
     final keychain = token.keychainSecuredInfos.toKeychain();
-
-    final nameEncoded = Uri.encodeFull(
-      token.accountSelectedName,
-    );
-    final service = 'archethic-wallet-$nameEncoded';
 
     final indexMap = await apiService.getTransactionIndex(
       [token.transactionLastAddress],
@@ -192,14 +185,16 @@ class ArchethicTransactionRepository
       keychain: keychain,
       keyPair: archethic.KeyPair(
         privateKey: Uint8List.fromList(
-          token.keychainSecuredInfos.services[service]!.keyPair!.privateKey,
+          token.keychainSecuredInfos.services[token.accountSelectedName]!
+              .keyPair!.privateKey,
         ),
         publicKey: Uint8List.fromList(
-          token.keychainSecuredInfos.services[service]!.keyPair!.publicKey,
+          token.keychainSecuredInfos.services[token.accountSelectedName]!
+              .keyPair!.publicKey,
         ),
       ),
       originPrivateKey: originPrivateKey,
-      serviceName: service,
+      serviceName: token.accountSelectedName,
       aeip: token.aeip,
       tokenProperties: token.properties,
     );
@@ -212,16 +207,12 @@ class ArchethicTransactionRepository
     final originPrivateKey = apiService.getOriginKey();
     final keychain = await apiService.getKeychain(seed);
 
-    final nameEncoded = Uri.encodeFull(
-      nameAccount,
-    );
-    final kServiceName = 'archethic-wallet-$nameEncoded';
-    final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
+    final kDerivationPathWithoutIndex = "m/650'/$nameAccount/";
     const index = 0;
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
     return KeychainTransactionBuilder.build(
-      keychain: keychain.copyWithService(kServiceName, kDerivationPath),
+      keychain: keychain.copyWithService(nameAccount, kDerivationPath),
       originPrivateKey: originPrivateKey,
     );
   }
