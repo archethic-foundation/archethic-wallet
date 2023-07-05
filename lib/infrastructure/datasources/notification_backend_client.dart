@@ -23,6 +23,7 @@ class NotificationBackendClient {
       })
       ..onConnect((_) {
         log('Did connect', name: _logName);
+        onConnect();
       })
       ..onReconnect((_) {
         log('Did reconnect', name: _logName);
