@@ -22,6 +22,7 @@ class RecentTransaction extends HiveObject {
     this.type,
     this.decryptedSecret,
     this.ownerships,
+    this.indexInLedger = 0,
   });
 
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
@@ -95,6 +96,7 @@ class RecentTransaction extends HiveObject {
 
   List<Ownership>? ownerships;
   String? tokenAddress;
+  int indexInLedger;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'address': address,

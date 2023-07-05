@@ -112,7 +112,7 @@ class AppService {
                 keptRecentTransaction.from == element.from &&
                 keptRecentTransaction.type == element.type &&
                 keptRecentTransaction.tokenAddress == element.tokenAddress &&
-                keptRecentTransaction.tokenAddress == element.tokenAddress,
+                keptRecentTransaction.indexInLedger == element.indexInLedger,
           );
 
           if (matchingIndex == -1) {
@@ -188,6 +188,7 @@ class AppService {
       }
 
       if (transaction.type! == 'transfer') {
+        var indexInLedger = 0;
         for (final transfer in transaction.data!.ledger!.uco!.transfers) {
           final recentTransaction = RecentTransaction()
             ..address = transaction.address!.address
@@ -201,9 +202,12 @@ class AppService {
                     .toDouble()
             ..timestamp = transaction.validationStamp!.timestamp
             ..from = transaction.address!.address
-            ..ownerships = transaction.data!.ownerships;
+            ..ownerships = transaction.data!.ownerships
+            ..indexInLedger = indexInLedger;
           recentTransactions.add(recentTransaction);
+          indexInLedger++;
         }
+        indexInLedger = 0;
         for (final transfer in transaction.data!.ledger!.token!.transfers) {
           final recentTransaction = RecentTransaction()
             ..address = transaction.address!.address
@@ -218,8 +222,10 @@ class AppService {
             ..timestamp = transaction.validationStamp!.timestamp
             ..from = transaction.address!.address
             ..ownerships = transaction.data!.ownerships
-            ..tokenAddress = transfer.tokenAddress;
+            ..tokenAddress = transfer.tokenAddress
+            ..indexInLedger = indexInLedger;
           recentTransactions.add(recentTransaction);
+          indexInLedger++;
         }
       }
     }
@@ -354,10 +360,15 @@ class AppService {
           _removeRecentTransactionsDuplicates(recentTransactions);
     }
 
-    // Sort by timestamp desc
-    recentTransactions.sort(
-      (a, b) => b.timestamp!.compareTo(a.timestamp!),
-    );
+    // Sort by timestamp desc and index ledger desc
+    recentTransactions.sort((a, b) {
+      final compareTimestamp = b.timestamp!.compareTo(a.timestamp!);
+      if (compareTimestamp != 0) {
+        return compareTimestamp;
+      } else {
+        return b.indexInLedger.compareTo(a.indexInLedger);
+      }
+    });
 
     // Get 10 first transactions
     recentTransactions = recentTransactions.sublist(

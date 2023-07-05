@@ -1092,6 +1092,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "txListFeesIncluded": "Included in the previous transaction",
+  "@txListFeesIncluded": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "txListTypeTransactionLabelNewToken": "New Token",
   "@txListTypeTransactionLabelNewToken": {
     "type": "text",
