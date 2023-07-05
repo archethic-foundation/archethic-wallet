@@ -39,9 +39,8 @@ class SingleContact extends ConsumerWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
-                    margin: const EdgeInsetsDirectional.only(start: 2),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,

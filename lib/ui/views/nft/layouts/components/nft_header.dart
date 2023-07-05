@@ -12,10 +12,13 @@ class NFTHeader extends ConsumerWidget {
   const NFTHeader({
     super.key,
     required this.currentNftCategoryIndex,
+    required this.onPressBack,
     this.displayCategoryName = false,
   });
+
   final int currentNftCategoryIndex;
   final bool displayCategoryName;
+  final Function()? onPressBack;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,9 +55,7 @@ class NFTHeader extends ConsumerWidget {
               child: BackButton(
                 key: const Key('back'),
                 color: theme.text,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: onPressBack,
               ),
             ),
           ],

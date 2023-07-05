@@ -56,7 +56,7 @@ class UCOTransferDetail extends ConsumerWidget {
           SheetDetailCard(
             children: [
               Text(
-                '${localizations.txListFrom} ${accountSelected.name}',
+                '${localizations.txListFrom} ${accountSelected.nameDisplayed}',
                 style: theme.textStyleSize12W400Primary,
               ),
             ],

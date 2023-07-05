@@ -15,7 +15,6 @@ class _NFTCreationProcessSummaryTabState
     extends ConsumerState<NFTCreationProcessSummaryTab> {
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -28,7 +27,6 @@ class _NFTCreationProcessSummaryTabState
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
     );
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -54,47 +52,27 @@ class _NFTCreationProcessSummaryTabState
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          if (nftCreation.canCreateNFT &&
-                              connectivityStatusProvider ==
-                                  ConnectivityStatus.isConnected)
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              AppLocalizations.of(context)!.createTheNFT,
-                              Dimens.buttonTopDimens,
-                              key: const Key('createTheNFT'),
-                              icon: Icon(
-                                Iconsax.diamonds,
-                                color: theme.mainButtonLabel,
-                                size: 14,
-                              ),
-                              onPressed: () async {
-                                final isNameOk =
-                                    nftCreationNotifier.controlName(context);
-                                final isFileOk =
-                                    nftCreationNotifier.controlFile(context);
-                                final isUrlOk =
-                                    nftCreationNotifier.controlURL(context);
+                          AppButtonTinyConnectivity(
+                            AppLocalizations.of(context)!.createTheNFT,
+                            Dimens.buttonTopDimens,
+                            key: const Key('createTheNFT'),
+                            icon: Iconsax.diamonds,
+                            onPressed: () async {
+                              final isNameOk =
+                                  nftCreationNotifier.controlName(context);
+                              final isFileOk =
+                                  nftCreationNotifier.controlFile(context);
+                              final isUrlOk =
+                                  nftCreationNotifier.controlURL(context);
 
-                                if (isNameOk && (isFileOk || isUrlOk)) {
-                                  nftCreationNotifier.setNftCreationProcessStep(
-                                    NftCreationProcessStep.confirmation,
-                                  );
-                                }
-                              },
-                            )
-                          else
-                            AppButtonTiny(
-                              AppButtonTinyType.primaryOutline,
-                              AppLocalizations.of(context)!.createTheNFT,
-                              Dimens.buttonTopDimens,
-                              key: const Key('createTheNFT'),
-                              icon: Icon(
-                                Iconsax.diamonds,
-                                color: theme.mainButtonLabel!.withOpacity(0.3),
-                                size: 14,
-                              ),
-                              onPressed: () async {},
-                            ),
+                              if (isNameOk && (isFileOk || isUrlOk)) {
+                                nftCreationNotifier.setNftCreationProcessStep(
+                                  NftCreationProcessStep.confirmation,
+                                );
+                              }
+                            },
+                            disabled: !nftCreation.canCreateNFT,
+                          ),
                         ],
                       ),
                     ],

@@ -205,24 +205,16 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          if (enterPasswordController!.text == '')
-                            AppButtonTiny(
-                              AppButtonTinyType.primaryOutline,
-                              localizations.confirm,
-                              Dimens.buttonTopDimens,
-                              key: const Key('confirm'),
-                              onPressed: () async {},
-                            )
-                          else
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              localizations.confirm,
-                              Dimens.buttonTopDimens,
-                              key: const Key('confirm'),
-                              onPressed: () async {
-                                await _verifyPassword();
-                              },
-                            ),
+                          AppButtonTiny(
+                            AppButtonTinyType.primary,
+                            localizations.confirm,
+                            Dimens.buttonTopDimens,
+                            key: const Key('confirm'),
+                            onPressed: () async {
+                              await _verifyPassword();
+                            },
+                            disabled: enterPasswordController!.text == '',
+                          ),
                         ],
                       ),
                     ],

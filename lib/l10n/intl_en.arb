@@ -1092,6 +1092,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "txListFeesIncluded": "Included in the previous transaction",
+  "@txListFeesIncluded": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "txListTypeTransactionLabelNewToken": "New Token",
   "@txListTypeTransactionLabelNewToken": {
     "type": "text",
@@ -2996,6 +3002,18 @@
   },
   "createNFTConfirmation": "Are you sure you want to create this NFT?",
   "@createNFTConfirmation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exitNFTCreationProcessTitle": "Exit NFT Creation Process - Confirmation",
+  "@exitNFTCreationProcessTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "exitNFTCreationProcessSubtitle": "Are you sure you want to exit the NFT creation process? All the information you have entered so far will be lost.",
+  "@exitNFTCreationProcessSubtitle": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

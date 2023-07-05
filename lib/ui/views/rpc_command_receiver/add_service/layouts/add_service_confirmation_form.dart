@@ -85,7 +85,8 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                                   formData
                                       .value.signTransactionCommand.origin.name,
                                 )
-                                .replaceAll('%2', accountSelected!.name),
+                                .replaceAll(
+                                    '%2', accountSelected!.nameDisplayed),
                             style: theme.textStyleSize12W400Primary,
                           ),
                           const SizedBox(
@@ -223,8 +224,9 @@ class AddServiceConfirmationForm extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                    accountSelected!.balance!.nativeTokenValue,
-                    AccountBalance.cryptoCurrencyLabel,),
+                  accountSelected!.balance!.nativeTokenValue,
+                  AccountBalance.cryptoCurrencyLabel,
+                ),
                 style: theme.textStyleSize12W400Primary,
               ),
             ],

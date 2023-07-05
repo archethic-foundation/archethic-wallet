@@ -4,7 +4,6 @@ import 'dart:async';
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
@@ -191,7 +190,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return SafeArea(
       minimum:
@@ -226,53 +224,32 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (connectivityStatusProvider ==
-                        ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.confirm,
-                        Dimens.buttonTopDimens,
-                        key: const Key('confirm'),
-                        icon: Icon(
-                          Icons.check,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        onPressed: () async {
-                          final authMethod = AuthenticationMethod(
-                            ref.read(
-                              AuthenticationProviders.settings.select(
-                                (settings) => settings.authenticationMethod,
-                              ),
+                    AppButtonTinyConnectivity(
+                      localizations.confirm,
+                      Dimens.buttonTopDimens,
+                      key: const Key('confirm'),
+                      icon: Icons.check,
+                      onPressed: () async {
+                        final authMethod = AuthenticationMethod(
+                          ref.read(
+                            AuthenticationProviders.settings.select(
+                              (settings) => settings.authenticationMethod,
                             ),
-                          );
-                          final auth = await AuthFactory.authenticate(
-                            context,
-                            ref,
-                            authMethod: authMethod,
-                            activeVibrations: ref
-                                .read(SettingsProviders.settings)
-                                .activeVibrations,
-                          );
-                          if (auth) {
-                            EventTaxiImpl.singleton()
-                                .fire(AuthenticatedEvent());
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.confirm,
-                        Dimens.buttonTopDimens,
-                        key: const Key('confirm'),
-                        icon: Icon(
-                          Icons.check,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                          ),
+                        );
+                        final auth = await AuthFactory.authenticate(
+                          context,
+                          ref,
+                          authMethod: authMethod,
+                          activeVibrations: ref
+                              .read(SettingsProviders.settings)
+                              .activeVibrations,
+                        );
+                        if (auth) {
+                          EventTaxiImpl.singleton().fire(AuthenticatedEvent());
+                        }
+                      },
+                    ),
                   ],
                 ),
                 Row(

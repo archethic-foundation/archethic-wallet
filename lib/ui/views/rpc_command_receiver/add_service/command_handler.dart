@@ -99,6 +99,10 @@ class AddServiceHandler extends CommandHandler {
                         await ref
                             .read(SessionProviders.session.notifier)
                             .refresh();
+
+                        await ref
+                            .read(AccountProviders.selectedAccount.notifier)
+                            .refreshRecentTransactions();
                       }
                     });
 

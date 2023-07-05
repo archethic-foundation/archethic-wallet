@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -69,7 +68,6 @@ class AddContactSheetBody extends ConsumerWidget {
         ref.watch(ContactCreationFormProvider.contactCreationForm);
     final contactCreationNotifier =
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     ref.listen<ContactCreationFormState>(
       ContactCreationFormProvider.contactCreationForm,
@@ -149,71 +147,51 @@ class AddContactSheetBody extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (contactCreation.canCreateContact &&
-                        connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.addContact,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addContact'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        onPressed: () async {
-                          final isNameOk =
-                              await contactCreationNotifier.controlName(
-                            context,
+                    AppButtonTinyConnectivity(
+                      localizations.addContact,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('addContact'),
+                      icon: Icons.add,
+                      onPressed: () async {
+                        final isNameOk =
+                            await contactCreationNotifier.controlName(
+                          context,
+                        );
+
+                        final isAddressOk =
+                            await contactCreationNotifier.controlAddress(
+                          context,
+                        );
+
+                        if (isNameOk && isAddressOk) {
+                          final newContact = Contact(
+                            name: '@${contactCreation.name}',
+                            address: contactCreation.address,
+                            type: ContactType.externalContact.name,
+                            publicKey:
+                                contactCreation.publicKeyToStore.toUpperCase(),
+                            favorite: false,
+                          );
+                          ref.read(
+                            ContactProviders.saveContact(contact: newContact),
                           );
 
-                          final isAddressOk =
-                              await contactCreationNotifier.controlAddress(
+                          ref
+                              .read(AccountProviders.selectedAccount.notifier)
+                              .refreshRecentTransactions();
+                          UIUtil.showSnackbar(
+                            localizations.contactAdded
+                                .replaceAll('%1', newContact.format),
                             context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
                           );
-
-                          if (isNameOk && isAddressOk) {
-                            final newContact = Contact(
-                              name: '@${contactCreation.name}',
-                              address: contactCreation.address,
-                              type: ContactType.externalContact.name,
-                              publicKey: contactCreation.publicKeyToStore
-                                  .toUpperCase(),
-                              favorite: false,
-                            );
-                            ref.read(
-                              ContactProviders.saveContact(contact: newContact),
-                            );
-
-                            ref
-                                .read(AccountProviders.selectedAccount.notifier)
-                                .refreshRecentTransactions();
-                            UIUtil.showSnackbar(
-                              localizations.contactAdded
-                                  .replaceAll('%1', newContact.format),
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
-                            );
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.addContact,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addContact'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
-                      ),
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      disabled: !contactCreation.canCreateContact,
+                    ),
                   ],
                 ),
               ],

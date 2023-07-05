@@ -66,7 +66,6 @@ class AccountsListWidget extends ConsumerWidget {
             ),
             itemCount: accountsList.length,
             itemBuilder: (BuildContext context, int index) {
-              // Build contact
               return AccountListItem(
                 account: accountsList[index],
               )

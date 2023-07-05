@@ -224,9 +224,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                               FeedbackType.light,
                               preferences.activeVibrations,
                             );
-                        final nameEncoded = Uri.encodeFull(
-                          session.wallet.appKeychain.getAccountSelected()!.name,
-                        );
 
                         await nftSearchBarNotifier.searchNFT(
                           searchController.text,
@@ -234,7 +231,9 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                           session
                               .wallet
                               .keychainSecuredInfos
-                              .services['archethic-wallet-$nameEncoded']!
+                              .services[session.wallet.appKeychain
+                                  .getAccountSelected()!
+                                  .name]!
                               .keyPair!,
                         );
                       },

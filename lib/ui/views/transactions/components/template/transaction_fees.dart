@@ -40,7 +40,12 @@ class TransactionFees extends ConsumerWidget {
 
     return Row(
       children: <Widget>[
-        if (settings.showBalances == true)
+        if (transaction.indexInLedger > 0)
+          Text(
+            '${localizations.txListFees} ${localizations.txListFeesIncluded}',
+            style: theme.textStyleSize12W400Primary,
+          )
+        else if (settings.showBalances == true)
           primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native
               ? Text(
                   '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',

@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sortedAccountsHash() => r'890718a09341a058dd459b77bc4e8472b7a6bd92';
+String _$sortedAccountsHash() => r'5bdc20f92e21ee900619360af880fd64f96e9317';
 
 /// See also [_sortedAccounts].
 @ProviderFor(_sortedAccounts)
@@ -39,6 +39,24 @@ final _selectedAccountNameProvider =
 );
 
 typedef _SelectedAccountNameRef = AutoDisposeFutureProviderRef<String?>;
+String _$selectedAccountNameDisplayedHash() =>
+    r'17e4d2e89e9e50b0887df22fb1ca57ea8155479d';
+
+/// See also [_selectedAccountNameDisplayed].
+@ProviderFor(_selectedAccountNameDisplayed)
+final _selectedAccountNameDisplayedProvider =
+    AutoDisposeFutureProvider<String?>.internal(
+  _selectedAccountNameDisplayed,
+  name: r'_selectedAccountNameDisplayedProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedAccountNameDisplayedHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _SelectedAccountNameDisplayedRef
+    = AutoDisposeFutureProviderRef<String?>;
 String _$accountsNotifierHash() => r'033b8b933a00f33c59ee317f517ffa0d04f911d0';
 
 /// See also [_AccountsNotifier].

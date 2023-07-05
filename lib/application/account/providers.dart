@@ -22,7 +22,7 @@ Future<List<Account>> _sortedAccounts(_SortedAccountsRef ref) async {
   return [
     ...accounts,
   ]..sort(
-      (a, b) => a.name.compareTo(b.name),
+      (a, b) => a.nameDisplayed.compareTo(b.nameDisplayed),
     );
 }
 
@@ -41,4 +41,6 @@ abstract class AccountProviders {
   static final sortedAccounts = _sortedAccountsProvider;
   static final selectedAccount = _selectedAccountNotifierProvider;
   static final selectedAccountName = _selectedAccountNameProvider;
+  static final selectedAccountNameDisplayed =
+      _selectedAccountNameDisplayedProvider;
 }

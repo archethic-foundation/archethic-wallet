@@ -112,7 +112,7 @@ class AppService {
                 keptRecentTransaction.from == element.from &&
                 keptRecentTransaction.type == element.type &&
                 keptRecentTransaction.tokenAddress == element.tokenAddress &&
-                keptRecentTransaction.tokenAddress == element.tokenAddress,
+                keptRecentTransaction.indexInLedger == element.indexInLedger,
           );
 
           if (matchingIndex == -1) {
@@ -138,11 +138,13 @@ class AppService {
     List<TransactionInput> transactionInputs,
     String txAddress,
     int mostRecentTimestamp,
+    int transactionTimestamp,
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transactionInput in transactionInputs) {
       if (transactionInput.from!.toUpperCase() != txAddress.toUpperCase() &&
-          transactionInput.timestamp! > mostRecentTimestamp) {
+          transactionInput.timestamp! > mostRecentTimestamp &&
+          transactionInput.timestamp! > transactionTimestamp) {
         final recentTransaction = RecentTransaction()
           ..address = transactionInput.from
           ..amount = fromBigInt(transactionInput.amount).toDouble()
@@ -186,6 +188,7 @@ class AppService {
       }
 
       if (transaction.type! == 'transfer') {
+        var indexInLedger = 0;
         for (final transfer in transaction.data!.ledger!.uco!.transfers) {
           final recentTransaction = RecentTransaction()
             ..address = transaction.address!.address
@@ -199,9 +202,12 @@ class AppService {
                     .toDouble()
             ..timestamp = transaction.validationStamp!.timestamp
             ..from = transaction.address!.address
-            ..ownerships = transaction.data!.ownerships;
+            ..ownerships = transaction.data!.ownerships
+            ..indexInLedger = indexInLedger;
           recentTransactions.add(recentTransaction);
+          indexInLedger++;
         }
+        indexInLedger = 0;
         for (final transfer in transaction.data!.ledger!.token!.transfers) {
           final recentTransaction = RecentTransaction()
             ..address = transaction.address!.address
@@ -216,8 +222,10 @@ class AppService {
             ..timestamp = transaction.validationStamp!.timestamp
             ..from = transaction.address!.address
             ..ownerships = transaction.data!.ownerships
-            ..tokenAddress = transfer.tokenAddress;
+            ..tokenAddress = transfer.tokenAddress
+            ..indexInLedger = indexInLedger;
           recentTransactions.add(recentTransaction);
+          indexInLedger++;
         }
       }
     }
@@ -253,6 +261,7 @@ class AppService {
             transactionInputs[address]!,
             address,
             mostRecentTimestamp,
+            transaction[address]!.validationStamp!.timestamp!,
           ),
         );
       }
@@ -297,9 +306,6 @@ class AppService {
     var recentTransactions = <RecentTransaction>[];
 
     final keychain = keychainSecuredInfos.toKeychain();
-    final nameEncoded = Uri.encodeFull(
-      name,
-    );
 
     final lastIndex = await sl.get<ApiService>().getTransactionIndex(
       [lastAddress],
@@ -313,7 +319,7 @@ class AppService {
     while (nbRecentTransactions < 10 && index > 0) {
       addressToSearch = uint8ListToHex(
         keychain.deriveAddress(
-          'archethic-wallet-$nameEncoded',
+          name,
           index: index,
         ),
       );
@@ -342,6 +348,7 @@ class AppService {
             genesisTransactionInputsMap[genesisAddress]!,
             genesisAddress,
             mostRecentTimestamp,
+            0,
           ),
         );
       }
@@ -353,10 +360,15 @@ class AppService {
           _removeRecentTransactionsDuplicates(recentTransactions);
     }
 
-    // Sort by timestamp desc
-    recentTransactions.sort(
-      (a, b) => b.timestamp!.compareTo(a.timestamp!),
-    );
+    // Sort by timestamp desc and index ledger desc
+    recentTransactions.sort((a, b) {
+      final compareTimestamp = b.timestamp!.compareTo(a.timestamp!);
+      if (compareTimestamp != 0) {
+        return compareTimestamp;
+      } else {
+        return b.indexInLedger.compareTo(a.indexInLedger);
+      }
+    });
 
     // Get 10 first transactions
     recentTransactions = recentTransactions.sublist(
@@ -413,9 +425,9 @@ class AppService {
         case RecentTransaction.transferOutput:
           if (recentTransaction.recipient != null) {
             if (recentTransaction.timestamp! > mostRecentTimestamp) {
-              ownershipsAddresses.add(recentTransaction.address!);
+              ownershipsAddresses.add(recentTransaction.recipient!);
             }
-            recentTransactionLastAddresses.add(recentTransaction.address!);
+            recentTransactionLastAddresses.add(recentTransaction.recipient!);
           }
           break;
       }
@@ -445,8 +457,7 @@ class AppService {
       ownershipsMap.addAll(getTransactionOwnership);
     }
 
-    final keychainServiceKeyPair =
-        keychainSecuredInfos.services['archethic-wallet-$nameEncoded']!.keyPair;
+    final keychainServiceKeyPair = keychainSecuredInfos.services[name]!.keyPair;
     for (var recentTransaction in recentTransactions) {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
@@ -519,7 +530,7 @@ class AppService {
           type: '',
           data: Transaction.initData(),
           address:
-              Address(address: lastTransactionAddressToSearch.toLowerCase()),
+              Address(address: lastTransactionAddressToSearch.toUpperCase()),
         );
       }
     }
@@ -527,8 +538,8 @@ class AppService {
     // Update contacts' last address
     for (final contact in contactsList) {
       if (lastAddressesMap[contact.address] != null &&
-          lastAddressesMap[contact.address]!.address!.address!.toLowerCase() !=
-              contact.address.toLowerCase()) {
+          lastAddressesMap[contact.address]!.address!.address!.toUpperCase() !=
+              contact.address.toUpperCase()) {
         contact.address = lastAddressesMap[contact.address]!.address!.address ??
             contact.address;
         await sl.get<DBHelper>().saveContact(contact);
@@ -554,21 +565,29 @@ class AppService {
     required Map<String, Transaction> lastAddressesMap,
     required List<Contact> contactsList,
   }) {
+    lastAddressesMap = lastAddressesMap.map((key, value) {
+      return MapEntry(key.toUpperCase(), value);
+    });
+
     for (final recentTransaction in recentTransactions) {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null) {
-            if (lastAddressesMap[recentTransaction.from!] != null &&
-                lastAddressesMap[recentTransaction.from!]!.address != null) {
+            if (lastAddressesMap[recentTransaction.from!.toUpperCase()] !=
+                    null &&
+                lastAddressesMap[recentTransaction.from!.toUpperCase()]!
+                        .address !=
+                    null) {
               try {
                 recentTransaction.contactInformations = contactsList
                     .where(
                       (contact) =>
-                          lastAddressesMap[recentTransaction.from!]!
+                          lastAddressesMap[
+                                  recentTransaction.from!.toUpperCase()]!
                               .address!
                               .address!
-                              .toLowerCase() ==
-                          contact.address.toLowerCase(),
+                              .toUpperCase() ==
+                          contact.address.toUpperCase(),
                     )
                     .first;
               } catch (e) {
@@ -581,18 +600,21 @@ class AppService {
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.recipient != null) {
-            if (lastAddressesMap[recentTransaction.recipient!] != null &&
-                lastAddressesMap[recentTransaction.recipient!]!.address !=
+            if (lastAddressesMap[recentTransaction.recipient!.toUpperCase()] !=
+                    null &&
+                lastAddressesMap[recentTransaction.recipient!.toUpperCase()]!
+                        .address !=
                     null) {
               try {
                 recentTransaction.contactInformations = contactsList
                     .where(
                       (contact) =>
-                          lastAddressesMap[recentTransaction.recipient!]!
+                          lastAddressesMap[
+                                  recentTransaction.recipient!.toUpperCase()]!
                               .address!
                               .address!
-                              .toLowerCase() ==
-                          contact.address.toLowerCase(),
+                              .toUpperCase() ==
+                          contact.address.toUpperCase(),
                     )
                     .first;
               } catch (e) {
@@ -701,9 +723,6 @@ class AppService {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
     final nftList = List<AccountToken>.empty(growable: true);
-    final nameEncoded = Uri.encodeFull(
-      name,
-    );
 
     final tokenAddressList = <String>[];
     if (balance == null) {
@@ -739,8 +758,7 @@ class AppService {
             secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
           tokenWithoutFile.addAll(
             _tokenPropertiesDecryptedSecret(
-              keypair: keychainSecuredInfos
-                  .services['archethic-wallet-$nameEncoded']!.keyPair!,
+              keypair: keychainSecuredInfos.services[name]!.keyPair!,
               ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
             ),
           );

@@ -32,7 +32,7 @@ class NFTCreationProcessFilePreviewHTTP extends ConsumerWidget {
           errorMessage: localizations.nftURLEmpty,
         ),
         SelectableText(
-          '${localizations.nftIPFSFrom}\n$fileUrl',
+          '${localizations.nftHTTPFrom}\n$fileUrl',
           style: theme.textStyleSize12W100Primary,
         ),
       ],
