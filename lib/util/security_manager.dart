@@ -60,7 +60,9 @@ class SecurityManager {
         context,
         ref,
         CaseChange.toUpperCase(
-            localizations.warning, language.getLocaleString()),
+          localizations.warning,
+          language.getLocaleString(),
+        ),
         localizations.rootWarning,
         buttonLabel:
             AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),

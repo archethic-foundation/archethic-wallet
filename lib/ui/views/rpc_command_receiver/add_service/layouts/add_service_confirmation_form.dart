@@ -86,7 +86,9 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                                       .value.signTransactionCommand.origin.name,
                                 )
                                 .replaceAll(
-                                    '%2', accountSelected!.nameDisplayed),
+                                  '%2',
+                                  accountSelected!.nameDisplayed,
+                                ),
                             style: theme.textStyleSize12W400Primary,
                           ),
                           const SizedBox(

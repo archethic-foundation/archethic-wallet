@@ -228,7 +228,9 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                               preferences.activeVibrations,
                             );
                         final nameEncoded = Uri.encodeFull(
-                          session.wallet.appKeychain.getAccountSelected()!.name,
+                          (await session.wallet.appKeychain
+                                  .getAccountSelected())!
+                              .name,
                         );
 
                         await discussionSearchBarNotifier.searchDiscussion(
