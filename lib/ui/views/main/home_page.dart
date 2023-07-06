@@ -4,6 +4,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
@@ -98,7 +99,7 @@ class _HomePageState extends ConsumerState<HomePage>
             NFTTab(
               key: Key('bottomBarAddressNFTlink'),
             ),
-            MessengerTab(),
+            if (FeatureFlags.messagingActive) MessengerTab(),
           ],
         ),
       ),

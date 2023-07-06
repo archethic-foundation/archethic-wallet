@@ -8,6 +8,7 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
@@ -189,7 +190,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final language = ref.watch(LanguageProviders.selectedLanguage);
-    NotificationProviders.keepPushSettingsUpToDateWorker(ref);
+    if (FeatureFlags.messagingActive) {
+      NotificationProviders.keepPushSettingsUpToDateWorker(ref);
+    }
 
     SystemChrome.setSystemUIOverlayStyle(
       theme.statusBar!,
@@ -322,7 +325,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   Future<void> initializeProviders() async {
     await ref.read(SettingsProviders.settings.notifier).initialize();
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
-    await ref.read(NotificationProviders.repository).initialize();
+    if (FeatureFlags.messagingActive) {
+      await ref.read(NotificationProviders.repository).initialize();
+    }
   }
 
   Future<void> checkLoggedIn() async {

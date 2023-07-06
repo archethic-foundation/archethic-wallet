@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -82,18 +83,20 @@ class MainBottomBar extends ConsumerWidget {
                 activeColor: theme.bottomBarActiveColor!,
                 inactiveColor: theme.bottomBarInactiveIcon,
               ),
-              BottomBarItem(
-                key: const Key('bottomBarMessenger'),
-                icon: const Icon(
-                  Iconsax.messages_2,
-                  size: 30,
+              if (FeatureFlags.messagingActive)
+                BottomBarItem(
+                  key: const Key('bottomBarMessenger'),
+                  icon: const Icon(
+                    Iconsax.messages_2,
+                    size: 30,
+                  ),
+                  backgroundColorOpacity:
+                      theme.bottomBarBackgroundColorOpacity!,
+                  activeIconColor: theme.bottomBarActiveIconColor,
+                  activeTitleColor: theme.bottomBarActiveTitleColor,
+                  activeColor: theme.bottomBarActiveColor!,
+                  inactiveColor: theme.bottomBarInactiveIcon,
                 ),
-                backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
-                activeIconColor: theme.bottomBarActiveIconColor,
-                activeTitleColor: theme.bottomBarActiveTitleColor,
-                activeColor: theme.bottomBarActiveColor!,
-                inactiveColor: theme.bottomBarInactiveIcon,
-              ),
             ],
           ),
         ),
