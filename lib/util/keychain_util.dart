@@ -160,7 +160,8 @@ class KeychainUtil with KeychainServiceMixin {
         currentAppWallet = appWallet;
       }
 
-      final selectedAccount = currentAppWallet.appKeychain.getAccountSelected();
+      final selectedAccount =
+          await currentAppWallet.appKeychain.getAccountSelected();
 
       final genesisAddressAccountList = <String>[];
       final lastAddressAccountList = <String>[];

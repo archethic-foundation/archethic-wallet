@@ -225,16 +225,13 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                               preferences.activeVibrations,
                             );
 
+                        final selectedAccount = await session.wallet.appKeychain
+                            .getAccountSelected();
                         await nftSearchBarNotifier.searchNFT(
                           searchController.text,
                           context,
-                          session
-                              .wallet
-                              .keychainSecuredInfos
-                              .services[session.wallet.appKeychain
-                                  .getAccountSelected()!
-                                  .name]!
-                              .keyPair!,
+                          session.wallet.keychainSecuredInfos
+                              .services[selectedAccount!.name]!.keyPair!,
                         );
                       },
                     )
