@@ -93,8 +93,13 @@ class AppDialogs {
   }
 
   static void showInfoDialog(
-      BuildContext context, WidgetRef ref, String title, String content,
-      {String? buttonLabel, Function? onPressed}) {
+    BuildContext context,
+    WidgetRef ref,
+    String title,
+    String content, {
+    String? buttonLabel,
+    Function? onPressed,
+  }) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
