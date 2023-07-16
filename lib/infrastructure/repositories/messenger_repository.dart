@@ -42,9 +42,6 @@ class MessengerRepository
         return localDatasource.getTalkAddresses(owner.genesisAddress).toList();
       });
 
-  String _serviceName(Account account) =>
-      'archethic-wallet-${Uri.encodeFull(account.name)}';
-
   @override
   Future<Result<Talk, Failure>> getTalk({
     required Account owner,
@@ -80,7 +77,7 @@ class MessengerRepository
           admins: adminsPubKeys,
           apiService: sl.get<ApiService>(),
           groupName: groupName,
-          serviceName: _serviceName(creator),
+          serviceName: creator.name,
           members: membersPubKeys,
         );
         await localDatasource.addTalk(
@@ -131,8 +128,8 @@ class MessengerRepository
   }) async =>
       Result.guard(
         () async {
-          final keyPair = session.wallet.keychainSecuredInfos
-              .services[_serviceName(reader)]!.keyPair!;
+          final keyPair = session
+              .wallet.keychainSecuredInfos.services[reader.name]!.keyPair!;
 
           final aeMessages = await _remoteDatasource.readMessages(
             apiService: sl.get<ApiService>(),
@@ -168,7 +165,7 @@ class MessengerRepository
       Result.guard(
         () async {
           final keyPair = session.wallet.keychainSecuredInfos
-              .services[_serviceName(currentAccount)]!.keyPair!;
+              .services[currentAccount.name]!.keyPair!;
 
           final aeGroupMessage = await _remoteDatasource.getMessageGroup(
             apiService: sl.get<ApiService>(),
@@ -200,8 +197,8 @@ class MessengerRepository
   }) async =>
       Result.guard(
         () {
-          final keyPair = session.wallet.keychainSecuredInfos
-              .services[_serviceName(creator)]!.keyPair!;
+          final keyPair = session
+              .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
 
           return _remoteDatasource.calculateMessageSendFees(
             apiService: sl.get<ApiService>(),
@@ -209,7 +206,7 @@ class MessengerRepository
             messageContent: content,
             keychain: session.wallet.keychainSecuredInfos.toKeychain(),
             senderAddress: creator.lastAddress!,
-            senderServiceName: _serviceName(creator),
+            senderServiceName: creator.name,
             senderKeyPair: keyPair.toKeyPair,
           );
         },
@@ -223,8 +220,8 @@ class MessengerRepository
     required String content,
   }) =>
       Result.guard(() async {
-        final keyPair = session.wallet.keychainSecuredInfos
-            .services[_serviceName(creator)]!.keyPair!;
+        final keyPair = session
+            .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
 
         final sendMessageResult = await _remoteDatasource.sendMessage(
           apiService: sl.get<ApiService>(),
@@ -232,7 +229,7 @@ class MessengerRepository
           messageContent: content,
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
           senderAddress: creator.lastAddress!,
-          senderServiceName: _serviceName(creator),
+          senderServiceName: creator.name,
           senderKeyPair: keyPair.toKeyPair,
         );
 
@@ -249,7 +246,7 @@ class MessengerRepository
 
         final previousKeyPair =
             session.wallet.keychainSecuredInfos.toKeychain().deriveKeypair(
-                  _serviceName(creator),
+                  creator.name,
                   index: max(
                     0,
                     sendMessageResult.transactionIndex - 1,

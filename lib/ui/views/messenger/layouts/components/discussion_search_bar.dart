@@ -227,19 +227,14 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                               FeedbackType.light,
                               preferences.activeVibrations,
                             );
-                        final nameEncoded = Uri.encodeFull(
-                          (await session.wallet.appKeychain
-                                  .getAccountSelected())!
-                              .name,
-                        );
+                        final name = (await session.wallet.appKeychain
+                                .getAccountSelected())!
+                            .name;
 
                         await discussionSearchBarNotifier.searchDiscussion(
                           searchController.text,
                           context,
-                          session
-                              .wallet
-                              .keychainSecuredInfos
-                              .services['archethic-wallet-$nameEncoded']!
+                          session.wallet.keychainSecuredInfos.services[name]!
                               .keyPair!,
                         );
                       },
