@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:flutter/foundation.dart';
@@ -29,9 +28,6 @@ class VersionManager {
       // https://github.com/archethic-foundation/archethic-wallet/pull/759
       log('upgrade 2.1.1 management start', name: 'checkVersion');
       await ref.read(SessionProviders.session.notifier).refresh();
-      await ref
-          .read(AccountProviders.selectedAccount.notifier)
-          .refreshRecentTransactions();
       log('upgrade 2.1.1 management ended', name: 'checkVersion');
     }
     await preferences.setCurrentVersion(currentVersion);
