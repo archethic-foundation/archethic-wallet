@@ -34,6 +34,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/navigation.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:aewallet/util/version_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -372,6 +373,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       await initializeProviders();
       await checkLoggedIn();
       await SecurityManager().checkDeviceSecurity(ref, context);
+      await VersionManager().checkCurrentVersion(
+        ref,
+      );
     });
   }
 
