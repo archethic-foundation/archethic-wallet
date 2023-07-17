@@ -2,11 +2,13 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/application/version_manager.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
@@ -34,7 +36,6 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/navigation.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
-import 'package:aewallet/application/version_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
