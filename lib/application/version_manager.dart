@@ -22,7 +22,7 @@ Future<void> _checkCurrentVersion(
   final currentVersion = await CurrentVersionRepository().getCurrentVersion();
 
   log('currentVersion: $currentVersion', name: 'checkVersion');
-  if (versionStored != currentVersion && currentVersion == '2.1.1') {
+  if (versionStored != currentVersion.$1 && currentVersion.$1 == '2.1.1') {
     // We need to reload keychain because of account's name structure change
     // https://github.com/archethic-foundation/archethic-wallet/pull/759
     log('upgrade 2.1.1 management start', name: 'checkVersion');
