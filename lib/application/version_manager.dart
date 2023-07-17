@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:flutter/foundation.dart';
@@ -21,13 +22,15 @@ Future<void> _checkCurrentVersion(
   final currentVersion = await CurrentVersionRepository().getCurrentVersion();
 
   log('currentVersion: $currentVersion', name: 'checkVersion');
-  //if (versionStored != currentVersion && currentVersion == '2.1.1') {
-  // We need to reload keychain because of account's name structure change
-  // https://github.com/archethic-foundation/archethic-wallet/pull/759
-  log('upgrade 2.1.1 management start', name: 'checkVersion');
-  await ref.read(SessionProviders.session.notifier).refresh();
-  log('upgrade 2.1.1 management ended', name: 'checkVersion');
-  //}
+  if (versionStored != currentVersion && currentVersion == '2.1.1') {
+    // We need to reload keychain because of account's name structure change
+    // https://github.com/archethic-foundation/archethic-wallet/pull/759
+    log('upgrade 2.1.1 management start', name: 'checkVersion');
+    await ref.read(SessionProviders.session.notifier).refresh();
+    await ref.read(AccountProviders.selectedAccount.notifier).refreshAll();
+
+    log('upgrade 2.1.1 management ended', name: 'checkVersion');
+  }
   await preferences.setCurrentVersion(currentVersion.$1);
 
   return;
