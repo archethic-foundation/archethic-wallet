@@ -47,6 +47,7 @@ class HivePreferencesDatasource {
   static const String languageSeed = 'archethic_wallet_language_seed';
   static const String mainScreenCurrentPage =
       'archethic_wallet_main_screen_current_page';
+  static const String currentVersion = 'archethic_wallet_currentVersion';
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
@@ -67,6 +68,11 @@ class HivePreferencesDatasource {
 
   bool getHasSeenRootWarning() =>
       _getValue(hasShownRootWarning, defaultValue: false);
+
+  Future<void> setCurrentVersion(String version) =>
+      _setValue(currentVersion, version);
+
+  String getCurrentVersion() => _getValue(currentVersion, defaultValue: '');
 
   Future<void> setAuthMethod(AuthenticationMethod method) =>
       _setValue(authMethod, method.getIndex());
