@@ -23,7 +23,7 @@ final _sortedAccountsProvider =
 
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
 String _$selectedAccountNameHash() =>
-    r'ed92e55365a9b6566dfdec965483b9f54e6bcaf3';
+    r'63e95818e7ab3f93de3fb44ee555a20e0757516d';
 
 /// See also [_selectedAccountName].
 @ProviderFor(_selectedAccountName)
@@ -40,7 +40,7 @@ final _selectedAccountNameProvider =
 
 typedef _SelectedAccountNameRef = AutoDisposeFutureProviderRef<String?>;
 String _$selectedAccountNameDisplayedHash() =>
-    r'17e4d2e89e9e50b0887df22fb1ca57ea8155479d';
+    r'e9acd45b1dbea966778c07cbb7b3e1020ef98e5b';
 
 /// See also [_selectedAccountNameDisplayed].
 @ProviderFor(_selectedAccountNameDisplayed)
@@ -74,7 +74,7 @@ final _accountsNotifierProvider =
 
 typedef _$AccountsNotifier = AutoDisposeAsyncNotifier<List<Account>>;
 String _$selectedAccountNotifierHash() =>
-    r'92372abd1516b94f62efe537520f0b03e5ff581f';
+    r'21b80b2036f29bf5f4127b34b17972bf52118d83';
 
 /// See also [_SelectedAccountNotifier].
 @ProviderFor(_SelectedAccountNotifier)

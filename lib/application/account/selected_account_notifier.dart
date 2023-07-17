@@ -2,22 +2,16 @@ part of 'providers.dart';
 
 @riverpod
 Future<String?> _selectedAccountName(_SelectedAccountNameRef ref) async {
-  final accounts = await ref.watch(AccountProviders.accounts.future);
-  for (final account in accounts) {
-    if (account.selected == true) return account.name;
-  }
-  return null;
+  final account = await ref.watch(AccountProviders.selectedAccount.future);
+  return account?.name;
 }
 
 @riverpod
 Future<String?> _selectedAccountNameDisplayed(
   _SelectedAccountNameRef ref,
 ) async {
-  final accounts = await ref.watch(AccountProviders.accounts.future);
-  for (final account in accounts) {
-    if (account.selected == true) return account.nameDisplayed;
-  }
-  return null;
+  final account = await ref.watch(AccountProviders.selectedAccount.future);
+  return account?.nameDisplayed;
 }
 
 @riverpod
@@ -27,6 +21,10 @@ class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
     final accounts = await ref.watch(AccountProviders.accounts.future);
     for (final account in accounts) {
       if (account.selected == true) return account;
+    }
+
+    if (accounts.isNotEmpty) {
+      ref.read(AccountProviders.accounts.notifier).selectAccount(accounts[0]);
     }
     return null;
   }
