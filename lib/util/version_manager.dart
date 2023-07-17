@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -17,7 +16,7 @@ class VersionManager {
   VersionManager._internal();
   static final VersionManager _singleton = VersionManager._internal();
 
-  Future checkCurrentVersion(WidgetRef ref, BuildContext context) async {
+  Future checkCurrentVersion(WidgetRef ref) async {
     final preferences = await HivePreferencesDatasource.getInstance();
 
     final versionStored = preferences.getCurrentVersion();
