@@ -23,7 +23,9 @@ Stream<TxSentEvent> _txSentEvents(
   String txChainGenesisAddress,
 ) =>
     ref.watch(_notificationRepositoryProvider).events.where(
-          (event) => event.txChainGenesisAddress == txChainGenesisAddress,
+          (event) =>
+              event.txChainGenesisAddress.toUpperCase() ==
+              txChainGenesisAddress.toUpperCase(),
         );
 
 Future<void> _keepPushSettingsUpToDateWorker(
