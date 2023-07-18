@@ -8,20 +8,17 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
-import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -42,7 +39,8 @@ class IntroBackupConfirm extends ConsumerStatefulWidget {
   ConsumerState<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
 
-class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
+class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
+    with SecurityConfigurationMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
@@ -408,7 +406,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                                       );
                                     });
                                   } else {
-                                    await _launchSecurityConfiguration(
+                                    await launchSecurityConfiguration(
+                                      context,
+                                      ref,
                                       widget.name!,
                                       widget.seed!,
                                     );
@@ -433,7 +433,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                                     localizations.passBackupConfirmationMessage,
                                     localizations.yes,
                                     () async {
-                                      await _launchSecurityConfiguration(
+                                      await launchSecurityConfiguration(
+                                        context,
+                                        ref,
                                         widget.name!,
                                         widget.seed!,
                                       );
@@ -483,7 +485,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                                       );
                                     });
                                   } else {
-                                    await _launchSecurityConfiguration(
+                                    await launchSecurityConfiguration(
+                                      context,
+                                      ref,
                                       widget.name!,
                                       widget.seed!,
                                     );
@@ -508,82 +512,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
         ),
       ),
     );
-  }
-
-  Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-    final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
-    final accessModes = <PickerItem>[
-      PickerItem(
-        const AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.pin).getDescription(context),
-        AuthenticationMethod.getIcon(AuthMethod.pin),
-        theme.pickerItemIconEnabled,
-        AuthMethod.pin,
-        true,
-      ),
-      PickerItem(
-        const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.password).getDescription(context),
-        AuthenticationMethod.getIcon(AuthMethod.password),
-        theme.pickerItemIconEnabled,
-        AuthMethod.password,
-        true,
-      )
-    ];
-    if (biometricsAvalaible) {
-      accessModes.add(
-        PickerItem(
-          const AuthenticationMethod(AuthMethod.biometrics)
-              .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometrics)
-              .getDescription(context),
-          AuthenticationMethod.getIcon(AuthMethod.biometrics),
-          theme.pickerItemIconEnabled,
-          AuthMethod.biometrics,
-          true,
-        ),
-      );
-    }
-    accessModes
-      ..add(
-        PickerItem(
-          const AuthenticationMethod(AuthMethod.biometricsUniris)
-              .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometricsUniris)
-              .getDescription(context),
-          AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
-          theme.pickerItemIconEnabled,
-          AuthMethod.biometricsUniris,
-          false,
-        ),
-      )
-      ..add(
-        PickerItem(
-          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-              .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-              .getDescription(context),
-          AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
-          theme.pickerItemIconEnabled,
-          AuthMethod.yubikeyWithYubicloud,
-          true,
-        ),
-      );
-
-    final bool securityConfiguration = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return IntroConfigureSecurity(
-            accessModes: accessModes,
-            name: name,
-            seed: seed,
-          );
-        },
-      ),
-    );
-
-    return securityConfiguration;
   }
 
   Future<void> createKeychain() async {

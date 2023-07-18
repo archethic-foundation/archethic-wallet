@@ -8,19 +8,17 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
+import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -41,7 +39,8 @@ class IntroImportSeedPage extends ConsumerStatefulWidget {
   ConsumerState<IntroImportSeedPage> createState() => _IntroImportSeedState();
 }
 
-class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
+class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
+    with SecurityConfigurationMixin {
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
@@ -535,7 +534,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                 )
                                 .refreshNFTs();
                             final securityConfigOk =
-                                await _launchSecurityConfiguration(
+                                await launchSecurityConfiguration(
+                              context,
+                              ref,
                               accountSelected.name,
                               newSession.wallet.seed,
                             );
@@ -564,84 +565,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         ),
       ),
     );
-  }
-
-  Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-    final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
-    final accessModes = <PickerItem>[
-      PickerItem(
-        const AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.pin).getDescription(context),
-        AuthenticationMethod.getIcon(AuthMethod.pin),
-        theme.pickerItemIconEnabled,
-        AuthMethod.pin,
-        true,
-        key: const Key('accessModePIN'),
-      ),
-      PickerItem(
-        const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.password).getDescription(context),
-        AuthenticationMethod.getIcon(AuthMethod.password),
-        theme.pickerItemIconEnabled,
-        AuthMethod.password,
-        true,
-        key: const Key('accessModePassword'),
-      )
-    ];
-    if (biometricsAvalaible) {
-      accessModes.add(
-        PickerItem(
-          const AuthenticationMethod(AuthMethod.biometrics)
-              .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometrics)
-              .getDescription(context),
-          AuthenticationMethod.getIcon(AuthMethod.biometrics),
-          theme.pickerItemIconEnabled,
-          AuthMethod.biometrics,
-          true,
-        ),
-      );
-    }
-    accessModes
-      ..add(
-        PickerItem(
-          const AuthenticationMethod(AuthMethod.biometricsUniris)
-              .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometricsUniris)
-              .getDescription(context),
-          AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
-          theme.pickerItemIconEnabled,
-          AuthMethod.biometricsUniris,
-          false,
-        ),
-      )
-      ..add(
-        PickerItem(
-          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-              .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-              .getDescription(context),
-          AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
-          theme.pickerItemIconEnabled,
-          AuthMethod.yubikeyWithYubicloud,
-          true,
-        ),
-      );
-
-    final bool securityConfiguration = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return IntroConfigureSecurity(
-            accessModes: accessModes,
-            name: name,
-            seed: seed,
-          );
-        },
-      ),
-    );
-
-    return securityConfiguration;
   }
 
   Future<Account?> _accountsDialog(List<Account> accounts) async {
