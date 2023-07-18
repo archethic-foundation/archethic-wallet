@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/available_networks.dart';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +9,19 @@ import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 
 class Web3AuthnUtil {
+  Future<void> init() async {
+    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+      await Web3AuthFlutter.init(
+        Web3AuthOptions(
+          clientId:
+              'BJTc0YRH3meAdkLVxpRP4mkfKfUZCyvadZHuVzRl1XcqZGqaLX6K72BSjP4LVO0iwj3ZwZik6sAf3z2R-4TzFGI',
+          network: web3authenums.Network.testnet,
+          redirectUrl: Uri.parse('tech.archethic.wallet://auth'),
+        ),
+      );
+    }
+  }
+
   ///
   /// authenticateWithWeb3Authn()
   ///
@@ -21,44 +33,21 @@ class Web3AuthnUtil {
     web3authenums.Provider provider,
   ) async {
     var auth = false;
+    if (kIsWeb || (!kIsWeb && !Platform.isIOS && !Platform.isAndroid)) {
+      return auth;
+    }
     try {
-      await Web3AuthFlutter.init(
-        _getWebAuthOptions(ref),
-      );
-
-      await Web3AuthFlutter.initialize();
-
       final response = await Web3AuthFlutter.login(
-        LoginParams(loginProvider: web3authenums.Provider.discord),
+        LoginParams(
+          loginProvider: web3authenums.Provider.discord,
+        ),
       );
       if (response.sessionId != null) {
         auth = true;
       }
-    } on UserCancelledException {
-      log('User cancelled.');
-    } on UnKnownException {
-      log('Unknown exception occurred');
+    } catch (e) {
+      log(e.toString());
     }
     return auth;
-  }
-
-  Web3AuthOptions _getWebAuthOptions(
-    WidgetRef ref,
-  ) {
-    final settings = ref.watch(SettingsProviders.settings);
-    if (settings.network.network == AvailableNetworks.archethicTestNet ||
-        kDebugMode) {
-      return Web3AuthOptions(
-        clientId:
-            'BHZPoRIHdrfrdXj5E8G5Y72LGnh7L8UFuM8O0KrZSOs4T8lgiZnebB5Oc6cbgYSo3qSz7WBZXIs8fs6jgZqFFgw',
-        network: web3authenums.Network.testnet,
-      );
-    } else {
-      return Web3AuthOptions(
-        clientId:
-            'BHZPoRIHdrfrdXj5E8G5Y72LGnh7L8UFuM8O0KrZSOs4T8lgiZnebB5Oc6cbgYSo3qSz7WBZXIs8fs6jgZqFFgw',
-        network: web3authenums.Network.mainnet,
-      );
-    }
   }
 }
