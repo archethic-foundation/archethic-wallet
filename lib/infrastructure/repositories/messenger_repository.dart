@@ -144,9 +144,9 @@ class MessengerRepository
                 (message) => TalkMessage(
                   address: message.address,
                   content: message.content,
-                  senderGenesisPublicKey: message.genesisPublicKey,
+                  senderGenesisPublicKey: message.senderGenesisPublicKey,
                   date: DateTime.fromMillisecondsSinceEpoch(
-                    message.timestamp * 1000,
+                    message.timestampCreation * 1000,
                   ),
                 ),
               )
@@ -182,7 +182,7 @@ class MessengerRepository
             adminsPubKeys: aeGroupMessage.adminPublicKey,
             membersPubKeys: aeGroupMessage.usersPubKey,
             creationDate: DateTime.fromMillisecondsSinceEpoch(
-              aeGroupMessage.timestamp,
+              aeGroupMessage.timestampLastUpdate,
             ),
           );
         },
