@@ -16,6 +16,7 @@ import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/web3authn_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:web3auth_flutter/enums.dart' as web3authnenums;
 
 class IntroConfigureSecurity extends ConsumerStatefulWidget {
   const IntroConfigureSecurity({
@@ -234,6 +236,15 @@ class _IntroConfigureSecurityState
 
                                         break;
                                       case AuthMethod.ledger:
+                                        break;
+                                      case AuthMethod.discord:
+                                        authenticated = await sl
+                                            .get<Web3AuthnUtil>()
+                                            .authenticateWithWeb3Authn(
+                                              context,
+                                              ref,
+                                              web3authnenums.Provider.discord,
+                                            );
                                         break;
                                     }
                                     if (authenticated) {

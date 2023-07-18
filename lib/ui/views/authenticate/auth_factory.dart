@@ -6,11 +6,13 @@ import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/web3authn_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:web3auth_flutter/enums.dart' as web3authnenums;
 
 class AuthFactory {
   static Future<void> forceAuthenticate(
@@ -84,6 +86,14 @@ class AuthFactory {
         break;
       case AuthMethod.ledger:
         break;
+      case AuthMethod.discord:
+        auth = await _authenticateWithDiscord(
+          context,
+          ref,
+          transitions: transitions,
+          canCancel: canCancel,
+        );
+        break;
     }
     if (auth) {
       sl.get<HapticUtil>().feedback(FeedbackType.success, activeVibrations);
@@ -139,6 +149,20 @@ class AuthFactory {
     final auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
           context,
           AppLocalizations.of(context)!.unlockBiometrics,
+        );
+    return auth;
+  }
+
+  static Future<bool> _authenticateWithDiscord(
+    BuildContext context,
+    WidgetRef ref, {
+    bool transitions = false,
+    required bool canCancel,
+  }) async {
+    final auth = await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+          context,
+          ref,
+          web3authnenums.Provider.discord,
         );
     return auth;
   }

@@ -14,12 +14,14 @@ import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/web3authn_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:web3auth_flutter/enums.dart' as web3authnenums;
 
 class AuthentificationMethodDialog {
   static Future<bool> _applyAuthMethod(
@@ -59,6 +61,12 @@ class AuthentificationMethodDialog {
             'description': localizations.setYubicloudDescription,
           },
         ))! as bool,
+      AuthMethod.discord =>
+        await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+              context,
+              ref,
+              web3authnenums.Provider.discord,
+            ),
       AuthMethod.ledger => throw UnimplementedError(),
     };
   }
@@ -72,6 +80,7 @@ class AuthentificationMethodDialog {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
     );
+
     final preferences = ref.watch(SettingsProviders.settings);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {

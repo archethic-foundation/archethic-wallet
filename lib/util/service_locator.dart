@@ -12,6 +12,7 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
+import 'package:aewallet/util/web3authn_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, ApiService, OracleService;
 import 'package:archethic_messaging_lib_dart/archethic_messaging_lib_dart.dart';
@@ -25,6 +26,7 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<DBHelper>(DBHelper.new)
     ..registerLazySingleton<HapticUtil>(HapticUtil.new)
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
+    ..registerLazySingleton<Web3AuthnUtil>(Web3AuthnUtil.new)
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
     ..registerLazySingleton<CommandDispatcher>(
