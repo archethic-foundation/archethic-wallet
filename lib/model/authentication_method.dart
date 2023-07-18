@@ -11,6 +11,7 @@ enum AuthMethod {
   ledger,
   password,
   discord,
+  google,
 }
 
 /// Represent the available authentication methods our app supports
@@ -36,6 +37,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return localizations.passwordMethod;
       case AuthMethod.discord:
         return localizations.discordMethod;
+      case AuthMethod.google:
+        return localizations.googleMethod;
     }
   }
 
@@ -54,6 +57,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return localizations.configureSecurityExplanationPassword;
       case AuthMethod.discord:
         return localizations.configureSecurityExplanationDiscord;
+      case AuthMethod.google:
+        return localizations.configureSecurityExplanationGoogle;
     }
   }
 
@@ -71,6 +76,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return 'assets/icons/password.png';
       case AuthMethod.discord:
         return 'assets/icons/discord.png';
+      case AuthMethod.google:
+        return 'assets/icons/google.png';
     }
   }
 

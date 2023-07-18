@@ -39,7 +39,7 @@ class Web3AuthnUtil {
     try {
       final response = await Web3AuthFlutter.login(
         LoginParams(
-          loginProvider: web3authenums.Provider.discord,
+          loginProvider: provider,
         ),
       );
       if (response.sessionId != null) {

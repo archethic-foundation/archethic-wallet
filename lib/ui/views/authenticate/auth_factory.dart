@@ -87,12 +87,18 @@ class AuthFactory {
       case AuthMethod.ledger:
         break;
       case AuthMethod.discord:
-        auth = await _authenticateWithDiscord(
-          context,
-          ref,
-          transitions: transitions,
-          canCancel: canCancel,
-        );
+        auth = await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+              context,
+              ref,
+              web3authnenums.Provider.discord,
+            );
+        return auth;
+      case AuthMethod.google:
+        auth = await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+              context,
+              ref,
+              web3authnenums.Provider.google,
+            );
         break;
     }
     if (auth) {
@@ -149,20 +155,6 @@ class AuthFactory {
     final auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
           context,
           AppLocalizations.of(context)!.unlockBiometrics,
-        );
-    return auth;
-  }
-
-  static Future<bool> _authenticateWithDiscord(
-    BuildContext context,
-    WidgetRef ref, {
-    bool transitions = false,
-    required bool canCancel,
-  }) async {
-    final auth = await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
-          context,
-          ref,
-          web3authnenums.Provider.discord,
         );
     return auth;
   }

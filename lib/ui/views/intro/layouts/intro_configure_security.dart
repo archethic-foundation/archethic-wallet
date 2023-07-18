@@ -246,6 +246,15 @@ class _IntroConfigureSecurityState
                                               web3authnenums.Provider.discord,
                                             );
                                         break;
+                                      case AuthMethod.google:
+                                        authenticated = await sl
+                                            .get<Web3AuthnUtil>()
+                                            .authenticateWithWeb3Authn(
+                                              context,
+                                              ref,
+                                              web3authnenums.Provider.discord,
+                                            );
+                                        break;
                                     }
                                     if (authenticated) {
                                       await ref

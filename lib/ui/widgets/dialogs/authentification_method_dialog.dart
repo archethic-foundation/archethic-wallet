@@ -67,6 +67,12 @@ class AuthentificationMethodDialog {
               ref,
               web3authnenums.Provider.discord,
             ),
+      AuthMethod.google =>
+        await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+              context,
+              ref,
+              web3authnenums.Provider.google,
+            ),
       AuthMethod.ledger => throw UnimplementedError(),
     };
   }
