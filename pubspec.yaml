@@ -249,6 +249,9 @@ dependencies:
   # RPC server
   web_socket_channel: ^2.4.0
 
+  # Web3Auth is where passwordless auth meets non-custodial key infrastructure for Web3 apps and wallets
+  web3auth_flutter: ^2.0.1
+
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
   window_manager: ^0.3.5
 
