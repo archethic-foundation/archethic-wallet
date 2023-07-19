@@ -57,5 +57,5 @@ jobs:
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}
-          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
+          name: archethic-wallet-${{ steps.get_version.outputs.version_app }}-appimage
+          path: Archethic Wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
