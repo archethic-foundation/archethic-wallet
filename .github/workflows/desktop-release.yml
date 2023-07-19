@@ -58,5 +58,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: archethic-wallet-${{ steps.get_version.outputs.version_app }}-appimage
-          path: archethic_Wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
-          
+          path: archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
