@@ -252,7 +252,7 @@ class _IntroConfigureSecurityState
                                             .authenticateWithWeb3Authn(
                                               context,
                                               ref,
-                                              web3authnenums.Provider.discord,
+                                              web3authnenums.Provider.google,
                                             );
                                         break;
                                     }
