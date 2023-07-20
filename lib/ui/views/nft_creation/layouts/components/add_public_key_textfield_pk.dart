@@ -63,7 +63,7 @@ class _AddPublicKeyTextFieldPkState
         .propertyAccessRecipient;
     publicKeyController.text = propertyAccessRecipient.when(
       publicKey: (publicKey) => publicKey.publicKey,
-      contact: (contact) => contact.name,
+      contact: (contact) => contact.format,
       unknownContact: (name) => name,
     );
   }

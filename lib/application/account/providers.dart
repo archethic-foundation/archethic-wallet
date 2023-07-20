@@ -41,6 +41,4 @@ abstract class AccountProviders {
   static final sortedAccounts = _sortedAccountsProvider;
   static final selectedAccount = _selectedAccountNotifierProvider;
   static final selectedAccountName = _selectedAccountNameProvider;
-  static final selectedAccountNameDisplayed =
-      _selectedAccountNameDisplayedProvider;
 }

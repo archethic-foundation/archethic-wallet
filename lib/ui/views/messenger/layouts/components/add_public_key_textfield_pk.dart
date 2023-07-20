@@ -7,6 +7,7 @@ import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -169,7 +170,7 @@ class _AddPublicKeyTextFieldPkState
   void _updatePublicKeyTextController() {
     publicKeyController.text = accessRecipient?.when(
           publicKey: (publicKey) => publicKey.publicKey,
-          contact: (contact) => contact.name,
+          contact: (contact) => contact.format,
           unknownContact: (name) => name,
         ) ??
         '';

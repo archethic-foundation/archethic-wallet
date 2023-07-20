@@ -1,6 +1,7 @@
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
@@ -33,7 +34,7 @@ class AccessRecipient with _$AccessRecipient {
   bool get isPublicKeyValid => PublicKey(publicKey).isValid;
 
   String get name => map(
-        contact: (contact) => contact.contact.name,
+        contact: (contact) => contact.contact.format,
         publicKey: (value) => value.publicKey,
       );
 }

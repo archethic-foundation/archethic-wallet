@@ -41,7 +41,7 @@ class AccountListItem extends ConsumerWidget {
     if (account.serviceType == 'archethicWallet') {
       contact = ref.watch(
         ContactProviders.getContactWithName(
-          account.nameDisplayed,
+          Uri.encodeFull(account.nameDisplayed),
         ),
       );
     }

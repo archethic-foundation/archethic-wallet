@@ -13,6 +13,7 @@ import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -967,8 +968,8 @@ class AppService {
             final contact = await sl.get<DBHelper>().getContactWithAddress(
                   transaction.data!.ledger!.uco!.transfers[i].to!,
                 );
-            if (contact != null && contact.name.length > 1) {
-              recipientContactName = contact.name.substring(1);
+            if (contact != null && contact.format.length > 1) {
+              recipientContactName = contact.format.substring(1);
             }
 
             if (recipientContactName.isEmpty) {

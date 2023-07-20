@@ -135,7 +135,7 @@ class AddServiceHandler extends CommandHandler {
             '%1',
             command.origin.name,
           )
-          .replaceAll('%2', accountSelected!.name),
+          .replaceAll('%2', accountSelected!.nameDisplayed),
     );
   }
 }

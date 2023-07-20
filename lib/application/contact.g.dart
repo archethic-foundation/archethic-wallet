@@ -127,7 +127,7 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
 }
 
 String _$getSelectedContactHash() =>
-    r'8e47f2905d722b7de30ebebafda77e836a5b2e2b';
+    r'b76abfb987991770f9866447bd0d5b025705d7d9';
 
 /// See also [_getSelectedContact].
 @ProviderFor(_getSelectedContact)

@@ -23,7 +23,7 @@ final _notificationRepositoryProvider =
 );
 
 typedef _NotificationRepositoryRef = ProviderRef<NotificationsRepository>;
-String _$txSentEventsHash() => r'7555e6b25dce9862c0ed04d1066359a01c8eb726';
+String _$txSentEventsHash() => r'442bca912203ab07636d9d482414c42562622911';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -165,7 +165,7 @@ class AddContactSheetBody extends ConsumerWidget {
 
                         if (isNameOk && isAddressOk) {
                           final newContact = Contact(
-                            name: '@${contactCreation.name}',
+                            name: '@${Uri.encodeFull(contactCreation.name)}',
                             address: contactCreation.address,
                             type: ContactType.externalContact.name,
                             publicKey:

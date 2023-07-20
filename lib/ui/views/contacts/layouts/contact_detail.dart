@@ -36,7 +36,7 @@ class ContactDetail extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final _contact = ref.watch(
       ContactProviders.getContactWithName(
-        contact.name,
+        contact.format,
       ),
     );
 
@@ -222,28 +222,27 @@ class ContactDetail extends ConsumerWidget {
               ),
             ),
           ),
-          if (contact.name != contact.format)
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButtonTinyConnectivity(
-                      localizations.viewExplorer,
-                      Dimens.buttonBottomDimens,
-                      icon: Icons.more_horiz,
-                      key: const Key('viewExplorer'),
-                      onPressed: () async {
-                        UIUtil.showWebview(
-                          context,
-                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
-                          '',
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  AppButtonTinyConnectivity(
+                    localizations.viewExplorer,
+                    Dimens.buttonBottomDimens,
+                    icon: Icons.more_horiz,
+                    key: const Key('viewExplorer'),
+                    onPressed: () async {
+                      UIUtil.showWebview(
+                        context,
+                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
+                        '',
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

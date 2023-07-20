@@ -33,7 +33,7 @@ class ContactsDialog {
           accountSelected!.nameDisplayed.toUpperCase()) {
         pickerItemsList.add(
           PickerItem(
-            contact.name.substring(1),
+            contact.format,
             null,
             null,
             null,
@@ -83,12 +83,12 @@ class ContactsDialog {
                         ..removeWhere(
                           (element) =>
                               element.format.toUpperCase() ==
-                              accountSelected!.name.toUpperCase(),
+                              accountSelected!.nameDisplayed.toUpperCase(),
                         );
                       setState(
                         () {
                           contacts = contacts.where((Contact contact) {
-                            final contactName = contact.name.toUpperCase();
+                            final contactName = contact.format.toUpperCase();
                             return contactName.contains(text.toUpperCase());
                           }).toList();
                           pickerItemsList.clear();
@@ -97,7 +97,7 @@ class ContactsDialog {
                                 accountSelected!.nameDisplayed.toUpperCase()) {
                               pickerItemsList.add(
                                 PickerItem(
-                                  contact.name.substring(1),
+                                  contact.format,
                                   null,
                                   null,
                                   null,

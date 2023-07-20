@@ -32,7 +32,21 @@ class Account extends HiveObject with KeychainServiceMixin {
     this.serviceType,
   });
 
-  String get nameDisplayed => getShortName(name);
+  String get nameDisplayed => _getShortName(name);
+
+  String _getShortName(String name) {
+    var result = name;
+    if (name.startsWith('archethic-wallet-')) {
+      result = result.replaceFirst('archethic-wallet-', '');
+    }
+    if (name.startsWith('aeweb-')) {
+      result = result.replaceFirst('aeweb-', '');
+    }
+
+    return Uri.decodeFull(
+      result,
+    );
+  }
 
   Account copyWith({
     String? name,
@@ -361,12 +375,7 @@ mixin KeychainServiceMixin {
   }
 
   String getNameFromPath(String derivationPath) {
-    var name = derivationPath.replaceFirst(kMainDerivation, '');
-    name = name.split('/').first;
-    return Uri.decodeFull(name);
-  }
-
-  String getShortName(String name) {
-    return name.replaceAll('archethic-wallet-', '').replaceAll('aeweb-', '');
+    final name = derivationPath.replaceFirst(kMainDerivation, '');
+    return name.split('/').first;
   }
 }

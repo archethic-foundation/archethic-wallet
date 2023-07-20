@@ -537,7 +537,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 await launchSecurityConfiguration(
                               context,
                               ref,
-                              accountSelected.name,
                               newSession.wallet.seed,
                             );
                             setState(() {

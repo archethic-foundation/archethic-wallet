@@ -116,7 +116,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           await KeychainUtil().createKeyChainAccess(
             ref.read(SettingsProviders.settings).network,
             widget.seed,
-            widget.name,
             event.params!['keychainAddress']! as String,
             event.params!['originPrivateKey']! as String,
             event.params!['keychain']! as Keychain,
@@ -409,7 +408,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                     await launchSecurityConfiguration(
                                       context,
                                       ref,
-                                      widget.name!,
                                       widget.seed!,
                                     );
                                   }
@@ -436,7 +434,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       await launchSecurityConfiguration(
                                         context,
                                         ref,
-                                        widget.name!,
                                         widget.seed!,
                                       );
                                     },
@@ -488,7 +485,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                     await launchSecurityConfiguration(
                                       context,
                                       ref,
-                                      widget.name!,
                                       widget.seed!,
                                     );
                                   }

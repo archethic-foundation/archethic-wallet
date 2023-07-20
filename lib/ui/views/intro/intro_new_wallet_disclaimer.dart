@@ -167,8 +167,10 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                           Dimens.buttonBottomDimens,
                           key: const Key('understandButton'),
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed('/intro_backup', arguments: name);
+                            Navigator.of(context).pushNamed(
+                              '/intro_backup',
+                              arguments: name,
+                            );
                           },
                         ),
                       ],

@@ -23,7 +23,6 @@ class KeychainUtil with KeychainServiceMixin {
   Future<void> createKeyChainAccess(
     NetworksSetting networkSettings,
     String? seed,
-    String? name,
     String keychainAddress,
     String originPrivateKey,
     Keychain keychain,
@@ -82,10 +81,8 @@ class KeychainUtil with KeychainServiceMixin {
       ),
     );
 
-    final nameEncoded = Uri.encodeFull(name!);
-
     /// Default service for wallet
-    final kServiceName = 'archethic-wallet-$nameEncoded';
+    final kServiceName = 'archethic-wallet-${Uri.encodeFull(name!)}';
     final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
@@ -175,7 +172,7 @@ class KeychainUtil with KeychainServiceMixin {
         final serviceType = getServiceTypeFromPath(service.derivationPath);
 
         final genesisAddress = keychain.deriveAddress(serviceName);
-        final nameDecoded = getNameFromPath(service.derivationPath);
+        final name = getNameFromPath(service.derivationPath);
 
         genesisAddressAccountList.add(
           uint8ListToHex(genesisAddress),
@@ -185,7 +182,7 @@ class KeychainUtil with KeychainServiceMixin {
               Duration.millisecondsPerSecond,
           lastAddress: uint8ListToHex(genesisAddress),
           genesisAddress: uint8ListToHex(genesisAddress),
-          name: nameDecoded,
+          name: name,
           balance: AccountBalance(
             nativeTokenName: '',
             nativeTokenValue: 0,
@@ -194,7 +191,7 @@ class KeychainUtil with KeychainServiceMixin {
           serviceType: serviceType,
         );
         if (selectedAccount != null &&
-            selectedAccount.name == nameDecoded &&
+            selectedAccount.name == name &&
             serviceType == 'archethicWallet') {
           account.selected = true;
         } else {
@@ -216,7 +213,7 @@ class KeychainUtil with KeychainServiceMixin {
 
         if (serviceType == 'archethicWallet') {
           final newContact = Contact(
-            name: '@${account.nameDisplayed}',
+            name: '@${Uri.encodeFull(account.nameDisplayed)}',
             address: uint8ListToHex(genesisAddress),
             type: ContactType.keychainService.name,
             publicKey:

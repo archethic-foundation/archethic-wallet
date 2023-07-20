@@ -55,7 +55,7 @@ class _TransferTextFieldAddressState
     final recipient = ref.read(TransferFormProvider.transferForm).recipient;
     sendAddressController.text = recipient.when(
       address: (address) => address.address!,
-      contact: (contact) => contact.name,
+      contact: (contact) => contact.format,
       unknownContact: (name) => name,
     );
   }

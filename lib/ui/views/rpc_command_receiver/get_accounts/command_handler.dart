@@ -19,7 +19,7 @@ class GetAccountsCommandHandler extends CommandHandler {
             for (final accountAppName in appAccounts) {
               accounts.add(
                 AppAccount(
-                  name: accountAppName.name,
+                  name: accountAppName.nameDisplayed,
                   genesisAddress: accountAppName.genesisAddress,
                 ),
               );

@@ -9,7 +9,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 mixin SecurityConfigurationMixin {
   Future<bool> launchSecurityConfiguration(
-      BuildContext context, WidgetRef ref, String name, String seed) async {
+    BuildContext context,
+    WidgetRef ref,
+    String seed,
+  ) async {
     final theme = ref.read(ThemeProviders.selectedTheme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[
@@ -77,7 +80,6 @@ mixin SecurityConfigurationMixin {
         builder: (BuildContext context) {
           return IntroConfigureSecurity(
             accessModes: accessModes,
-            name: name,
             seed: seed,
           );
         },
