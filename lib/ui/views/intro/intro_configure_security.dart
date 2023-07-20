@@ -23,11 +23,9 @@ class IntroConfigureSecurity extends ConsumerStatefulWidget {
   const IntroConfigureSecurity({
     super.key,
     this.accessModes,
-    required this.name,
     required this.seed,
   });
   final List<PickerItem>? accessModes;
-  final String? name;
   final String? seed;
 
   @override

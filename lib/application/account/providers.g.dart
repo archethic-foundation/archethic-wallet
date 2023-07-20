@@ -39,24 +39,6 @@ final _selectedAccountNameProvider =
 );
 
 typedef _SelectedAccountNameRef = AutoDisposeFutureProviderRef<String?>;
-String _$selectedAccountNameDisplayedHash() =>
-    r'e9acd45b1dbea966778c07cbb7b3e1020ef98e5b';
-
-/// See also [_selectedAccountNameDisplayed].
-@ProviderFor(_selectedAccountNameDisplayed)
-final _selectedAccountNameDisplayedProvider =
-    AutoDisposeFutureProvider<String?>.internal(
-  _selectedAccountNameDisplayed,
-  name: r'_selectedAccountNameDisplayedProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$selectedAccountNameDisplayedHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _SelectedAccountNameDisplayedRef
-    = AutoDisposeFutureProviderRef<String?>;
 String _$accountsNotifierHash() => r'033b8b933a00f33c59ee317f517ffa0d04f911d0';
 
 /// See also [_AccountsNotifier].

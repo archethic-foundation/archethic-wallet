@@ -6,6 +6,7 @@ import 'package:aewallet/domain/models/token_property_access.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,7 @@ enum NftCreationTab { import, infos, properties, summary }
 class NftCreationFormState with _$NftCreationFormState {
   const factory NftCreationFormState({
     @Default(NftCreationProcessStep.form)
-        NftCreationProcessStep nftCreationProcessStep,
+    NftCreationProcessStep nftCreationProcessStep,
     @Default(0) int currentNftCategoryIndex,
     @Default(0) int indexTab,
     required AsyncValue<double> feeEstimation,
@@ -72,7 +73,7 @@ class NftCreationFormState with _$NftCreationFormState {
 
   bool get canAddAccess => propertyAccessRecipient.when(
         publicKey: (publicKey) => publicKey.publicKey.isNotEmpty,
-        contact: (contact) => contact.name.isNotEmpty,
+        contact: (contact) => contact.format.isNotEmpty,
         unknownContact: (name) => false,
       );
 

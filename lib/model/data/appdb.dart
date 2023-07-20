@@ -16,6 +16,7 @@ import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
@@ -78,7 +79,7 @@ class DBHelper {
     final contactsList = box.values.toList()
       ..sort(
         (Contact a, Contact b) =>
-            a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+            a.format.toLowerCase().compareTo(b.format.toLowerCase()),
       );
     return contactsList;
   }
@@ -89,7 +90,7 @@ class DBHelper {
 
     final contactsListSelected = List<Contact>.empty(growable: true);
     for (final contact in contactsList) {
-      if (contact.name.contains(pattern)) {
+      if (contact.format.contains(pattern)) {
         contactsListSelected.add(contact);
       }
     }

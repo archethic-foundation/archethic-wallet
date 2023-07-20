@@ -7,7 +7,7 @@ part of 'version_manager.dart';
 // **************************************************************************
 
 String _$checkCurrentVersionHash() =>
-    r'5813fb53d68163384c080230f203afe0f628c24c';
+    r'4ba6df6c5e95a6c5f1adc1ba87ef270d50988039';
 
 /// See also [_checkCurrentVersion].
 @ProviderFor(_checkCurrentVersion)

@@ -39,13 +39,13 @@ class _AccountNotifier
 
   Future<void> refreshRecentTransactions() => _refresh(
         (account) async {
-          log('${DateTime.now()} Start method refreshRecentTransactions for ${account.name}');
+          log('${DateTime.now()} Start method refreshRecentTransactions for ${account.nameDisplayed}');
           await Future.wait([
             _refreshRecentTransactions(account),
             _refreshBalance(account),
             account.updateFungiblesTokens(),
           ]);
-          log('${DateTime.now()} End method refreshRecentTransactions for ${account.name}');
+          log('${DateTime.now()} End method refreshRecentTransactions for ${account.nameDisplayed}');
         },
       );
 

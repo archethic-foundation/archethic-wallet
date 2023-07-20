@@ -45,10 +45,8 @@ class HiveAppWalletDTO extends HiveObject {
 
     var appWallet = await sl.get<DBHelper>().createAppWallet(keychainAddress);
 
-    final nameEncoded = Uri.encodeFull(name!);
-
     /// Default service for wallet
-    final kServiceName = 'archethic-wallet-$nameEncoded';
+    final kServiceName = 'archethic-wallet-${Uri.encodeFull(name!)}';
 
     final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
@@ -67,11 +65,16 @@ class HiveAppWalletDTO extends HiveObject {
     appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
 
     final newContact = Contact(
-      name: '@$name',
+      name: '@${Uri.encodeFull(name)}',
       address: uint8ListToHex(genesisAddress),
       type: ContactType.keychainService.name,
-      publicKey: uint8ListToHex(keychain.deriveKeypair(kServiceName).publicKey!)
-          .toUpperCase(),
+      publicKey: uint8ListToHex(
+        keychain
+            .deriveKeypair(
+              kServiceName,
+            )
+            .publicKey!,
+      ).toUpperCase(),
     );
     await sl.get<DBHelper>().saveContact(newContact);
 

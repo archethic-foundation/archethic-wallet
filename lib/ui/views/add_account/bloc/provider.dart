@@ -102,7 +102,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     late Transaction transaction;
 
     transaction = Transaction.keychain(
-      name: 'archethic-wallet-${state.name}',
+      name: 'archethic-wallet-${Uri.encodeFull(state.name)}',
       seed: state.seed,
     );
 

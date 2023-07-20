@@ -10,6 +10,7 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';

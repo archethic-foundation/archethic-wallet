@@ -2,6 +2,7 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/messenger/talk.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/date_util.dart';
@@ -155,7 +156,7 @@ class _LastMessagePreview extends ConsumerWidget {
         )
         .maybeMap(
           orElse: () => message.senderGenesisPublicKey,
-          data: (contact) => contact.value?.name,
+          data: (contact) => contact.value?.format,
         );
 
     return RichText(

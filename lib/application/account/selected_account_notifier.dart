@@ -7,14 +7,6 @@ Future<String?> _selectedAccountName(_SelectedAccountNameRef ref) async {
 }
 
 @riverpod
-Future<String?> _selectedAccountNameDisplayed(
-  _SelectedAccountNameRef ref,
-) async {
-  final account = await ref.watch(AccountProviders.selectedAccount.future);
-  return account?.nameDisplayed;
-}
-
-@riverpod
 class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
   @override
   FutureOr<Account?> build() async {

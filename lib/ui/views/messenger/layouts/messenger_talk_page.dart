@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/talk_details_sheet.dart';
@@ -425,7 +426,7 @@ class _MessageItem extends ConsumerWidget {
               _contact.maybeWhen(
                 data: (contact) {
                   return Text(
-                    contact?.name.substring(1) ?? '',
+                    contact?.format ?? '',
                     style: theme.textStyleSize12W600Primary,
                   );
                 },

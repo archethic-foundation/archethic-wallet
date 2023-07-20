@@ -2,6 +2,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,12 +29,15 @@ Future<List<Contact>> _fetchContacts(
 
 @riverpod
 Future<Contact> _getSelectedContact(_GetSelectedContactRef ref) async {
-  final selectedAccountNameDisplayed =
-      await ref.watch(AccountProviders.selectedAccountNameDisplayed.future);
-  if (selectedAccountNameDisplayed == null) throw Exception();
+  final selectedAccount =
+      await ref.watch(AccountProviders.selectedAccount.future);
+  if (selectedAccount == null) throw Exception();
 
-  return ref
-      .watch(_getContactWithNameProvider(selectedAccountNameDisplayed).future);
+  return ref.watch(
+    _getContactWithNameProvider(
+      Uri.encodeFull(selectedAccount.nameDisplayed),
+    ).future,
+  );
 }
 
 @riverpod
@@ -148,7 +152,7 @@ class ContactRepository {
     return contacts
         .where(
           (contact) =>
-              contact.name.toLowerCase().contains(search.toLowerCase()),
+              contact.format.toLowerCase().contains(search.toLowerCase()),
         )
         .toList();
   }

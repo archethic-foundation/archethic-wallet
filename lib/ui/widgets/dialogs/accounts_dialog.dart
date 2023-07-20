@@ -19,7 +19,7 @@ class AccountsDialog {
     for (final account in accounts) {
       pickerItemsList.add(
         PickerItem(
-          account.name,
+          account.nameDisplayed,
           null,
           null,
           null,
