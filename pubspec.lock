@@ -671,6 +671,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
+<<<<<<< HEAD
+=======
+  flutter_cache_strategy:
+    dependency: "direct main"
+    description:
+      name: flutter_cache_strategy
+      sha256: "4b40d85e7cf041e76a1ef0e1f31d4578c5e238c2d9f49754427ab34cc89866fc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+3"
+>>>>>>> afc81614 (Internalize dynamic_height_grid_view widget)
   flutter_driver:
     dependency: transitive
     description: flutter
