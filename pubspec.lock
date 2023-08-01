@@ -672,6 +672,7 @@ packages:
     source: hosted
     version: "3.3.1"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   flutter_cache_strategy:
     dependency: "direct main"
@@ -682,6 +683,8 @@ packages:
     source: hosted
     version: "1.0.0+3"
 >>>>>>> afc81614 (Internalize dynamic_height_grid_view widget)
+=======
+>>>>>>> 28014b54 (Add cache management)
   flutter_driver:
     dependency: transitive
     description: flutter

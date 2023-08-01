@@ -39,6 +39,8 @@ class NFTThumbnail extends ConsumerWidget {
           if (TokenUtil.isTokenFile(snapshot.data)) {
             final typeMime = tokenInformations.tokenProperties!['type_mime'];
             return NFTThumbnailImage(
+              key: UniqueKey(),
+              address: tokenInformations.address!,
               token: snapshot.data,
               roundBorder: roundBorder,
               typeMime: typeMime,
