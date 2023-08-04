@@ -6,6 +6,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/get_accounts/command_hand
 import 'package:aewallet/ui/views/rpc_command_receiver/get_current_account/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_endpoint/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/get_services_from_keychain/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/get_storage_nonce_public_key/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_address/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_keypair/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/command_handler.dart';
@@ -60,6 +61,9 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
       )
       ..addHandler(
         AddServiceHandler(context: context, ref: ref),
+      )
+      ..addHandler(
+        GetStorageNoncePublicKeyHandler(),
       )
       ..addHandler(
         GetServicesFromKeychainCommandHandler(ref: ref),

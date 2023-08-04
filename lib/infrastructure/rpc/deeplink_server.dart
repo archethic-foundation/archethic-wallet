@@ -7,6 +7,7 @@ import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/get_storage_nonce_public_key/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
@@ -92,6 +93,15 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
         route: const DeeplinkRpcRoute('sign_transactions'),
         handle: (request) => _handle(
           RPCSignTransactionsCommandHandler(),
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('get_storage_nonce_public_key'),
+        handle: (request) => _handle(
+          RPCGetStorageNoncePublicKeyCommandHandler(),
           request,
         ),
       ),
