@@ -2,7 +2,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -14,7 +13,7 @@ class NftCategoryDialog {
   static Future<NftCategory?> getDialog(
     BuildContext context,
     WidgetRef ref,
-    TokenInformations tokenInformations,
+    String tokenId,
   ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     final listNftCategory = await ref.read(
@@ -26,7 +25,7 @@ class NftCategoryDialog {
         ref.watch(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
       // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
-      tokenInformations.id,
+      tokenId,
     );
 
     for (final nftCategory in listNftCategory) {

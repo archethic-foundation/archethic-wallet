@@ -37,7 +37,7 @@ class AppService {
   Future<Map<String, Token>> getToken(
     List<String> addresses, {
     String request =
-        'genesis, name, id, supply, symbol, type, properties, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
+        'genesis, name, id, supply, symbol, type, decimals, properties, collection, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
   }) async {
     final tokenMap = <String, Token>{};
     var antiSpam = 0;
@@ -716,18 +716,19 @@ class AppService {
     return fungiblesTokensList;
   }
 
-  Future<List<AccountToken>> getNFTList(
+  Future<(List<AccountToken>, List<AccountToken>)> getNFTList(
     String address,
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
   ) async {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
     final balance = balanceMap[address];
-    final nftList = List<AccountToken>.empty(growable: true);
+    final nftList = <AccountToken>[];
+    final nftCollectionList = <AccountToken>[];
 
     final tokenAddressList = <String>[];
     if (balance == null) {
-      return [];
+      return (<AccountToken>[], <AccountToken>[]);
     }
 
     for (final tokenBalance in balance.token) {
@@ -748,16 +749,14 @@ class AppService {
               'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
         );
 
+    final nftCollectionMap = <String, dynamic>{};
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
       if (token != null && token.type == 'non-fungible') {
-        final tokenWithoutFile = {...token.properties}
-          ..removeWhere((key, value) => key == 'content');
-
         if (secretMap[tokenBalance.address] != null &&
             secretMap[tokenBalance.address]!.data != null &&
             secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
-          tokenWithoutFile.addAll(
+          token.properties.addAll(
             _tokenPropertiesDecryptedSecret(
               keypair: keychainSecuredInfos.services[name]!.keyPair!,
               ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
@@ -773,21 +772,40 @@ class AppService {
           type: token.type,
           supply: fromBigInt(token.supply).toDouble(),
           symbol: token.symbol,
-          tokenProperties: tokenWithoutFile,
+          decimals: token.decimals,
+          tokenCollection: token.collection,
+          tokenProperties: token.properties,
         );
-        final accountNFT = AccountToken(
-          tokenInformations: tokenInformations,
-          amount: fromBigInt(tokenBalance.amount).toDouble(),
-        );
-        nftList.add(accountNFT);
+
+        if (tokenInformations.tokenCollection != null &&
+            tokenInformations.tokenCollection!.isNotEmpty) {
+          final accountNFT = AccountToken(
+            tokenInformations: tokenInformations,
+            amount: fromBigInt(tokenBalance.amount).toDouble(),
+          );
+          nftCollectionMap[tokenInformations.address!] = accountNFT;
+        } else {
+          final accountNFTCollection = AccountToken(
+            tokenInformations: tokenInformations,
+            amount: fromBigInt(tokenBalance.amount).toDouble(),
+          );
+          nftList.add(accountNFTCollection);
+        }
       }
     }
     nftList.sort(
       (a, b) =>
           a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
     );
+    nftCollectionMap.forEach((key, value) {
+      nftCollectionList.add(value);
+    });
 
-    return nftList;
+    nftCollectionList.sort(
+      (a, b) =>
+          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
+    );
+    return (nftList, nftCollectionList);
   }
 
   Map<String, dynamic> _tokenPropertiesDecryptedSecret({
@@ -1205,9 +1223,11 @@ class AppService {
       name: token.name,
       id: token.id,
       type: token.type,
+      decimals: token.decimals,
       supply: fromBigInt(token.supply).toDouble(),
       symbol: token.symbol,
       tokenProperties: tokenWithoutFile,
+      tokenCollection: token.collection,
     );
     return tokenInformations;
   }

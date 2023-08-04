@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:ui';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_properties.dart';
@@ -11,9 +13,11 @@ import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
 import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -26,12 +30,22 @@ import 'package:material_symbols_icons/symbols.dart';
 class NFTDetail extends ConsumerStatefulWidget {
   const NFTDetail({
     super.key,
-    required this.tokenInformations,
+    required this.name,
+    required this.address,
+    required this.symbol,
+    required this.properties,
+    required this.collection,
+    required this.tokenId,
     this.displaySendButton = true,
   });
 
-  final TokenInformations tokenInformations;
   final bool displaySendButton;
+  final String name;
+  final String address;
+  final String symbol;
+  final String tokenId;
+  final List<Map<String, dynamic>> collection;
+  final Map<String, dynamic> properties;
 
   @override
   ConsumerState<NFTDetail> createState() => _NFTDetailState();
@@ -67,7 +81,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
       child: Column(
         children: <Widget>[
           SheetHeader(
-            title: widget.tokenInformations.name!,
+            title: widget.name,
             widgetLeft: const SizedBox(width: 50),
             widgetRight: SizedBox(
               width: 50,
@@ -98,8 +112,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                               bottom: 40,
                             ),
                             child: QRCodeWithOptions(
-                              infoQRCode: widget.tokenInformations.address!
-                                  .toUpperCase(),
+                              infoQRCode: widget.address.toUpperCase(),
                               size: 150,
                               messageCopied: localizations.addressCopied,
                             ),
@@ -112,12 +125,11 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
               ),
             ),
           ),
-          if (widget.tokenInformations.symbol != null &&
-              widget.tokenInformations.symbol!.isNotEmpty)
+          if (widget.symbol.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
-                '[${widget.tokenInformations.symbol}]',
+                '[${widget.symbol}]',
                 style: theme.textStyleSize12W400Primary,
               ),
             ),
@@ -134,16 +146,81 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   child: ArchethicScrollbar(
                     child: Column(
                       children: <Widget>[
-                        NFTThumbnail(
-                          tokenInformations: widget.tokenInformations,
-                          withContentInfo: true,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        if (widget.collection.isEmpty)
+                          NFTThumbnail(
+                            address: widget.address,
+                            properties: widget.properties,
+                            withContentInfo: true,
+                          ),
+                        if (widget.collection.isEmpty)
+                          const SizedBox(
+                            height: 10,
+                          ),
                         NFTDetailProperties(
-                          tokenInformations: widget.tokenInformations,
+                          properties: widget.properties,
                         ),
+                        if (widget.collection.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 30,
+                              right: 30,
+                            ),
+                            child: ScrollConfiguration(
+                              behavior:
+                                  ScrollConfiguration.of(context).copyWith(
+                                dragDevices: {
+                                  PointerDeviceKind.touch,
+                                  PointerDeviceKind.mouse,
+                                  PointerDeviceKind.trackpad,
+                                },
+                              ),
+                              child: DynamicHeightGridView(
+                                crossAxisCount: Responsive.isDesktop(context) ||
+                                        Responsive.isTablet(context)
+                                    ? 3
+                                    : 2,
+                                crossAxisSpacing: 20,
+                                shrinkWrap: true,
+                                itemCount: widget.collection.length,
+                                builder: (context, index) {
+                                  final tokenInformations =
+                                      widget.collection[index];
+
+                                  return Column(
+                                    children: [
+                                      Text('${tokenInformations['name']}'),
+                                      GestureDetector(
+                                        onTap: () {
+                                          sl.get<HapticUtil>().feedback(
+                                                FeedbackType.light,
+                                                preferences.activeVibrations,
+                                              );
+                                          Sheets.showAppHeightNineSheet(
+                                            context: context,
+                                            ref: ref,
+                                            widget: NFTDetail(
+                                              address: widget.address,
+                                              name: tokenInformations['name'],
+                                              properties: tokenInformations,
+                                              collection: const [],
+                                              symbol:
+                                                  tokenInformations['symbol'],
+                                              tokenId: widget.tokenId,
+                                            ),
+                                          );
+                                        },
+                                        child: NFTThumbnail(
+                                          address: widget.address,
+                                          properties: tokenInformations,
+                                          roundBorder: true,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -168,8 +245,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                       transferType: TransferType.nft,
                       accountToken: accountSelected.accountNFT!.firstWhere(
                         (element) =>
-                            element.tokenInformations!.id ==
-                            widget.tokenInformations.id,
+                            element.tokenInformations!.id == widget.tokenId,
                       ),
                       recipient: const TransferRecipient.address(
                         address: Address(address: ''),
@@ -192,7 +268,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 onPressed: () async {
                   UIUtil.showWebview(
                     context,
-                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.tokenInformations.address}',
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
                     '',
                   );
                 },

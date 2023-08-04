@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +8,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class NFTDetailProperties extends ConsumerWidget {
   const NFTDetailProperties({
     super.key,
-    required this.tokenInformations,
+    required this.properties,
   });
 
-  final TokenInformations tokenInformations;
+  final Map<String, dynamic> properties;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final description = tokenInformations.tokenProperties!['description'] ?? '';
+    final description = properties['description'] ?? '';
 
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
@@ -33,12 +32,11 @@ class NFTDetailProperties extends ConsumerWidget {
                   style: theme.textStyleSize14W600Primary,
                 ),
               ),
-            if (tokenInformations.tokenProperties != null &&
-                tokenInformations.tokenProperties!.isNotEmpty)
+            if (properties.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: Wrap(
-                  children: tokenInformations.tokenProperties!.entries.map((
+                  children: properties.entries.map((
                     MapEntry<String, dynamic> entry,
                   ) {
                     return entry.key != 'content' &&

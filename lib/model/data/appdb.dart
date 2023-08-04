@@ -41,6 +41,7 @@ class HiveTypeIds {
   static const discussionMessage = 15;
   static const notificationsSetup = 16;
   static const cacheItem = 17;
+  static const tokenCollection = 18;
 }
 
 class DBHelper {

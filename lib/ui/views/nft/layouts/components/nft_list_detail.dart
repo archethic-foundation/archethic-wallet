@@ -19,12 +19,22 @@ import 'package:material_symbols_icons/symbols.dart';
 class NFTListDetail extends ConsumerWidget {
   const NFTListDetail({
     super.key,
-    required this.tokenInformations,
+    required this.name,
+    required this.address,
+    required this.properties,
+    required this.tokenId,
     required this.index,
+    required this.symbol,
+    required this.collection,
     this.roundBorder = false,
   });
 
-  final TokenInformations tokenInformations;
+  final String name;
+  final String address;
+  final String tokenId;
+  final String symbol;
+  final Map<String, dynamic> properties;
+  final List<Map<String, dynamic>> collection;
   final int index;
   final bool roundBorder;
 
@@ -35,23 +45,22 @@ class NFTListDetail extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     var propertiesToCount = 0;
-    if (tokenInformations.tokenProperties != null) {
-      tokenInformations.tokenProperties!.forEach((key, value) {
-        if (key != 'name' &&
-            key != 'content' &&
-            key != 'type_mime' &&
-            key != 'description') {
-          propertiesToCount++;
-        }
-      });
-    }
+
+    properties.forEach((key, value) {
+      if (key != 'name' &&
+          key != 'content' &&
+          key != 'type_mime' &&
+          key != 'description') {
+        propertiesToCount++;
+      }
+    });
 
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: <Widget>[
           Text(
-            tokenInformations.name!,
+            name,
             style: theme.textStyleSize12W600Primary,
           ),
 
@@ -69,7 +78,14 @@ class NFTListDetail extends ConsumerWidget {
               Sheets.showAppHeightNineSheet(
                 context: context,
                 ref: ref,
-                widget: NFTDetail(tokenInformations: tokenInformations),
+                widget: NFTDetail(
+                  address: address,
+                  name: name,
+                  properties: properties,
+                  collection: collection,
+                  symbol: symbol,
+                  tokenId: tokenId,
+                ),
               );
             },
             onLongPressEnd: (details) {
@@ -77,7 +93,8 @@ class NFTListDetail extends ConsumerWidget {
                 context,
                 ref,
                 details,
-                tokenInformations,
+                address,
+                tokenId,
               );
             },
             child: Card(
@@ -89,10 +106,13 @@ class NFTListDetail extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(25),
                 side: const BorderSide(color: Colors.white10),
               ),
-              child: NFTThumbnail(
-                tokenInformations: tokenInformations,
-                roundBorder: roundBorder,
-              ),
+              child: collection.isNotEmpty
+                  ? const Text('Collection')
+                  : NFTThumbnail(
+                      address: address,
+                      properties: properties,
+                      roundBorder: roundBorder,
+                    ),
             ),
           ),
           // TODO(reddwarf03): Implement this feature (3)

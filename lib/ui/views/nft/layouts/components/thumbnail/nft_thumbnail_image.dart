@@ -7,7 +7,6 @@ import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -15,15 +14,13 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 class NFTThumbnailImage extends StatefulWidget {
   const NFTThumbnailImage({
     super.key,
-    required this.token,
+    required this.properties,
     required this.address,
     this.roundBorder = false,
-    required this.typeMime,
   });
 
-  final Token token;
+  final Map<String, dynamic> properties;
   final bool roundBorder;
-  final String typeMime;
   final String address;
 
   @override
@@ -46,13 +43,12 @@ class NFTThumbnailImageState extends State<NFTThumbnailImage>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (MimeUtil.isImage(widget.typeMime) == true ||
-            MimeUtil.isPdf(widget.typeMime) == true)
+        if (MimeUtil.isImage(widget.properties['type_mime']) == true ||
+            MimeUtil.isPdf(widget.properties['type_mime']) == true)
           FutureBuilder<Uint8List?>(
             future: _getImageFromToken(
               widget.address,
-              widget.token,
-              widget.typeMime,
+              widget.properties,
             ),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
@@ -95,8 +91,7 @@ class NFTThumbnailImageState extends State<NFTThumbnailImage>
 
 Future<Uint8List> _getImageFromToken(
   String address,
-  Token token,
-  String typeMime,
+  Map<String, dynamic> properties,
 ) async {
   dev.log(
     'start _getImageFromToken ${DateTime.now().toUtc()}',
@@ -116,8 +111,7 @@ Future<Uint8List> _getImageFromToken(
     } else {
       dev.log('No cache for token $address', name: 'cacheManagement');
       final imageBytes = await TokenUtil.getImageFromToken(
-        token,
-        typeMime,
+        properties,
       );
       if (imageBytes == null) {
         dev.log(
@@ -140,8 +134,7 @@ Future<Uint8List> _getImageFromToken(
   } else {
     dev.log('No cache for token $address', name: 'cacheManagement');
     final imageBytes = await TokenUtil.getImageFromToken(
-      token,
-      typeMime,
+      properties,
     );
     dev.log(
       'end _getImageFromToken ${DateTime.now().toUtc()}',
