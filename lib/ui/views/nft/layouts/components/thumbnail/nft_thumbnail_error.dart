@@ -24,6 +24,7 @@ class NFTThumbnailError extends ConsumerWidget {
         child: Center(
           child: Text(
             message,
+            textAlign: TextAlign.center,
             style: theme.textStyleSize12W100Primary,
           ),
         ),

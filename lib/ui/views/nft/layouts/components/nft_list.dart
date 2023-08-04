@@ -110,7 +110,12 @@ class NFTList extends ConsumerWidget {
             final tokenInformations =
                 accountTokenList[index].tokenInformations!;
             return NFTListDetail(
-              tokenInformations: tokenInformations,
+              address: tokenInformations.address ?? '',
+              name: tokenInformations.name ?? '',
+              properties: tokenInformations.tokenProperties ?? {},
+              symbol: tokenInformations.symbol ?? '',
+              tokenId: tokenInformations.id ?? '',
+              collection: tokenInformations.tokenCollection ?? [],
               index: index,
               roundBorder: true,
             );

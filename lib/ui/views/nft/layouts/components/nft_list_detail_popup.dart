@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_category_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -17,7 +16,8 @@ class NFTListDetailPopup {
     BuildContext context,
     WidgetRef ref,
     LongPressEndDetails details,
-    TokenInformations tokenInformations,
+    String address,
+    String tokenId,
   ) async {
     final theme = ref.read(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
@@ -45,7 +45,8 @@ class NFTListDetailPopup {
           label: localizations.nftCategoryChangeCategory,
           value: 'moveCategory',
           icon: Symbols.drive_file_move,
-          tokenInformations: tokenInformations,
+          address: address,
+          tokenId: tokenId,
         ),
       ],
     );
@@ -57,7 +58,8 @@ class NFTListDetailPopup {
     required String label,
     required IconData icon,
     required String value,
-    required TokenInformations tokenInformations,
+    required String address,
+    required String tokenId,
   }) {
     final theme = ref.read(ThemeProviders.selectedTheme);
 
@@ -70,11 +72,11 @@ class NFTListDetailPopup {
               preferences.activeVibrations,
             );
         final nftCategoryChoosen =
-            await NftCategoryDialog.getDialog(context, ref, tokenInformations);
+            await NftCategoryDialog.getDialog(context, ref, tokenId);
         final selectedAccount =
             await ref.read(AccountProviders.selectedAccount.future);
         await selectedAccount?.updateNftInfosOffChain(
-          tokenAddress: tokenInformations.address,
+          tokenAddress: address,
           categoryNftIndex: nftCategoryChoosen!.id,
         );
 

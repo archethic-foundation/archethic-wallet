@@ -13,10 +13,6 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: "1a5e13736d59235ce0139621b4bbe29bc89839e202409081bc667eb3cd20674c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.5"
   adaptive_number:
     dependency: transitive
     description:
@@ -61,8 +57,26 @@ packages:
     dependency: "direct main"
     description:
       path: "."
+<<<<<<< HEAD
       ref: dev
+<<<<<<< HEAD
       resolved-ref: e98b2d19703f014713e77ec0fa3945cb88556e27
+=======
+<<<<<<< HEAD
+      resolved-ref: "38586b6e532491a60b089a0c3cffa4f7d4e4c04a"
+=======
+      resolved-ref: af12635e9e0a9eb507e4979b35f46d019a1f3fe5
+=======
+<<<<<<< HEAD
+      ref: "84-add-a-method-for-calling-smart-contract-functions"
+      resolved-ref: "51a281b264b8d0b53012b776c227257cc268f31e"
+=======
+      ref: dev
+      resolved-ref: "557554a1d38603d7ac00e5c1e8b2ae3a453b4728"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
+>>>>>>> 61c658fb (Loading NFT - Optimize performance)
+>>>>>>> 722abffe (Loading NFT - Optimize performance)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -454,10 +468,28 @@ packages:
     dependency: transitive
     description:
       name: dio
+<<<<<<< HEAD
       sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
       url: "https://pub.dev"
     source: hosted
     version: "5.3.2"
+<<<<<<< HEAD
+=======
+  dynamic_height_grid_view:
+    dependency: "direct main"
+    description:
+      name: dynamic_height_grid_view
+      sha256: "618d9f529a00fd68238e03fa9c6cc29a2fc9ad6fae1248505fc86972f2e0f716"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
+=======
+      sha256: "9d6445da1caf8412070670c03c39ad5b12a78cc8c2361417b220905a2bcbdd2f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> ad578d4f (Loading NFT - Optimize performance)
   ecdsa:
     dependency: transitive
     description:
@@ -582,10 +614,17 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
+<<<<<<< HEAD
       sha256: c78132175edda4bc532a71e01a32964e4b4fcf53de7853a422d96dac3725f389
       url: "https://pub.dev"
     source: hosted
     version: "2.15.1"
+=======
+      sha256: "2e9324f719e90200dc7d3c4f5d2abc26052f9f2b995d3b6626c47a0dfe1c8192"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.15.0"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -606,26 +645,68 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_messaging
+<<<<<<< HEAD
       sha256: "6c1a2a047d6f165b7c5f947467ac5138731a2af82c7af1c12d691dbb834f6b73"
       url: "https://pub.dev"
     source: hosted
     version: "14.6.7"
+=======
+<<<<<<< HEAD
+      sha256: db4a38be54fd84849c21be1ae1b44f0d4637eec1069bf5c49ea95e81f582bbc0
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.6.6"
+=======
+      sha256: "8ac91d83a028eef050de770f1dc98421e215714d245f34de7b154d436676fbd0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.6.5"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
+<<<<<<< HEAD
       sha256: bcba58d28f8cda607a323240c6d314c2c62b62ebfbb0f2d704ebefef07b52b5f
       url: "https://pub.dev"
     source: hosted
     version: "4.5.6"
+=======
+<<<<<<< HEAD
+      sha256: "164119eed47ff19284e28bea9165a03da110c56ea09dd996622cfccad14d0efd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.5"
+=======
+      sha256: b2995e3640efb646e9ebf0e2fa50dea84895f0746a31d7e3af0e5e009a533a1a
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.4"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
+<<<<<<< HEAD
       sha256: "962d09ec9dfa486cbbc218258ad41e8ec7997a2eba46919049496e1cafd960c5"
       url: "https://pub.dev"
     source: hosted
     version: "3.5.6"
+=======
+<<<<<<< HEAD
+      sha256: "6196d20731733834d7afb175c4345be57ddbd5daebca83cd52a430d62c2279fe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.5"
+=======
+      sha256: "5d8446a28339124a2cb4f57a6ca454a3aca7d0c5c0cdfa5707afb192f7c830a7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.4"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
   fixnum:
     dependency: transitive
     description:
@@ -853,10 +934,17 @@ packages:
     dependency: "direct dev"
     description:
       name: freezed
+<<<<<<< HEAD
       sha256: "83462cfc33dc9680533a7f3a4a6ab60aa94f287db5f4ee6511248c22833c497f"
       url: "https://pub.dev"
     source: hosted
     version: "2.4.2"
+=======
+      sha256: "2df89855fe181baae3b6d714dc3c4317acf4fccd495a6f36e5e00f24144c6c3b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -1464,10 +1552,24 @@ packages:
     dependency: transitive
     description:
       name: path_provider_foundation
+<<<<<<< HEAD
       sha256: "19314d595120f82aca0ba62787d58dde2cc6b5df7d2f0daf72489e38d1b57f2d"
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+=======
+<<<<<<< HEAD
+      sha256: "1b744d3d774e5a879bb76d6cd1ecee2ba2c6960c03b1020cd35212f6aa267ac5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+=======
+      sha256: "916731ccbdce44d545414dd9961f26ba5fbaa74bcbb55237d8e65a623a8c7297"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.4"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
   path_provider_linux:
     dependency: transitive
     description:
@@ -1496,7 +1598,12 @@ packages:
     dependency: "direct dev"
     description:
       name: patrol
+<<<<<<< HEAD
       sha256: "4b244396a82f5c30b8af9bd39466fc5d2465cd53f0db44db2cd1750ac574fc52"
+=======
+<<<<<<< HEAD
+      sha256: f00be47d5b1c9554eeb21a4bbc22e086eca99a91af48e5bac266ca83c86c4857
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
@@ -1508,6 +1615,12 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+=======
+      sha256: "145e496b8a97d0b6db8d561c5f2257dbdfd18e3c7b8de0e8f4864883ad0052a5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.5"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
   pdfx:
     dependency: "direct main"
     description:
@@ -1696,10 +1809,24 @@ packages:
     dependency: "direct dev"
     description:
       name: riverpod_generator
+<<<<<<< HEAD
       sha256: d132b1ccb476e60f99989caa6ba9b1c4d88409806c93d880d1633c60c382454d
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+=======
+<<<<<<< HEAD
+      sha256: f668015d7b719c413c6001d4790689ea4a7bf76d5109118a1a98d5c23b20160d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.6"
+=======
+      sha256: "691180275664a5420c87d72c1ed26ef8404d32b823807540172bfd1660425376"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.4"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
   rxdart:
     dependency: "direct main"
     description:
@@ -1965,10 +2092,24 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
+<<<<<<< HEAD
       sha256: b04af59516ab45762b2ca6da40fa830d72d0f6045cd97744450b73493fa76330
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+=======
+<<<<<<< HEAD
+      sha256: "3dd2388cc0c42912eee04434531a26a82512b9cb1827e0214430c9bcbddfe025"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.38"
+=======
+      sha256: "78cb6dea3e93148615109e58e42c35d1ffbf5ef66c44add673d0ab75f12ff3af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.37"
+>>>>>>> 4af840ce (Loading NFT - Optimize performance)
+>>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
   url_launcher_ios:
     dependency: transitive
     description:

@@ -15,7 +15,7 @@ part 'account.g.dart';
 
 @HiveType(typeId: HiveTypeIds.account)
 
-/// Next field available : 14
+/// Next field available : 15
 class Account extends HiveObject with KeychainServiceMixin {
   Account({
     required this.name,
@@ -27,6 +27,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     this.recentTransactions,
     this.accountTokens,
     this.accountNFT,
+    this.accountNFTCollections,
     this.nftInfosOffChainList,
     this.nftCategoryList,
     this.serviceType,
@@ -59,6 +60,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     List<RecentTransaction>? recentTransactions,
     List<AccountToken>? accountTokens,
     List<AccountToken>? accountNFT,
+    List<AccountToken>? accountNFTCollections,
     List<NftInfosOffChain>? nftInfosOffChainList,
     List<int>? nftCategoryList,
   }) =>
@@ -74,6 +76,8 @@ class Account extends HiveObject with KeychainServiceMixin {
         recentTransactions: recentTransactions ?? this.recentTransactions,
         accountTokens: accountTokens ?? this.accountTokens,
         accountNFT: accountNFT ?? this.accountNFT,
+        accountNFTCollections:
+            accountNFTCollections ?? this.accountNFTCollections,
         nftInfosOffChainList: nftInfosOffChainList ?? this.nftInfosOffChainList,
         nftCategoryList: nftCategoryList ?? this.nftCategoryList,
       );
@@ -126,6 +130,10 @@ class Account extends HiveObject with KeychainServiceMixin {
   @HiveField(13)
   String? serviceType;
 
+  /// NFT Collections
+  @HiveField(14)
+  List<AccountToken>? accountNFTCollections;
+
   Future<void> updateLastAddress() async {
     final lastAddressFromAddressMap =
         await sl.get<AddressService>().lastAddressFromAddress([genesisAddress]);
@@ -145,9 +153,12 @@ class Account extends HiveObject with KeychainServiceMixin {
   Future<void> updateNFT(
     KeychainSecuredInfos keychainSecuredInfos,
   ) async {
-    accountNFT = await sl
+    final nftListResult = await sl
         .get<AppService>()
         .getNFTList(lastAddress!, name, keychainSecuredInfos);
+
+    accountNFT = nftListResult.$1;
+    accountNFTCollections = nftListResult.$2;
 
     var nftInfosOffChainExist = false;
     if (accountNFT != null) {
@@ -174,6 +185,37 @@ class Account extends HiveObject with KeychainServiceMixin {
               categoryNftIndex: 0,
               favorite: false,
               id: accountToken.tokenInformations!.id,
+            ),
+          );
+        }
+      }
+    }
+
+    if (accountNFTCollections != null) {
+      for (final accountNFTCollection in accountNFTCollections!) {
+        if (nftInfosOffChainList == null) {
+          nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
+          nftInfosOffChainList!.add(
+            NftInfosOffChain(
+              categoryNftIndex: 0,
+              favorite: false,
+              id: accountNFTCollection.tokenInformations!.id,
+            ),
+          );
+        }
+        for (final nftInfosOffChain in nftInfosOffChainList!) {
+          nftInfosOffChainExist = false;
+          if (accountNFTCollection.tokenInformations!.id ==
+              nftInfosOffChain.id) {
+            nftInfosOffChainExist = true;
+          }
+        }
+        if (nftInfosOffChainExist == false) {
+          nftInfosOffChainList!.add(
+            NftInfosOffChain(
+              categoryNftIndex: 0,
+              favorite: false,
+              id: accountNFTCollection.tokenInformations!.id,
             ),
           );
         }
@@ -322,8 +364,8 @@ class Account extends HiveObject with KeychainServiceMixin {
     int categoryNftIndex, {
     bool? favorite,
   }) {
-    final accountNFTFiltered = List<AccountToken>.empty(growable: true);
-    if (accountNFT == null) {
+    final accountNFTFiltered = <AccountToken>[];
+    if (accountNFT == null && accountNFTCollections == null) {
       return accountNFTFiltered;
     } else {
       if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
@@ -346,6 +388,27 @@ class Account extends HiveObject with KeychainServiceMixin {
             }
           }
         }
+        if (accountNFTCollections != null) {
+          for (final accountNFTCollection in accountNFTCollections!) {
+            final nftInfosOffChain = nftInfosOffChainList!
+                .where(
+                  (element) =>
+                      element.id == accountNFTCollection.tokenInformations!.id,
+                )
+                .firstOrNull;
+            if (nftInfosOffChain != null &&
+                nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
+              if (favorite == null) {
+                accountNFTFiltered.add(accountNFTCollection);
+              } else {
+                if (nftInfosOffChain.favorite == favorite) {
+                  accountNFTFiltered.add(accountNFTCollection);
+                }
+              }
+            }
+          }
+        }
+
         return accountNFTFiltered;
       }
     }

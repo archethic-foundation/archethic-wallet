@@ -73,6 +73,16 @@ int _getNbNFTInCategory(
       count++;
     }
   }
+  for (final accountCollection in account.accountNFTCollections!) {
+    final nftInfosOffChain = account.nftInfosOffChainList!
+        .where(
+          (element) => element.id == accountCollection.tokenInformations!.id,
+        )
+        .firstOrNull;
+    if (nftInfosOffChain!.categoryNftIndex == categoryNftIndex) {
+      count++;
+    }
+  }
   return count;
 }
 
