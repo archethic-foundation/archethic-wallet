@@ -88,7 +88,7 @@ abstract class _RPCGetStorageNoncePublicKeyCommandData
 
 /// @nodoc
 mixin _$RPCGetStorageNoncePublicKeyResultData {
-  String get storageNoncePublicKey => throw _privateConstructorUsedError;
+  AuthorizedKey get authorizedKey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RPCGetStorageNoncePublicKeyResultDataCopyWith<
@@ -104,7 +104,9 @@ abstract class $RPCGetStorageNoncePublicKeyResultDataCopyWith<$Res> {
       _$RPCGetStorageNoncePublicKeyResultDataCopyWithImpl<$Res,
           RPCGetStorageNoncePublicKeyResultData>;
   @useResult
-  $Res call({String storageNoncePublicKey});
+  $Res call({AuthorizedKey authorizedKey});
+
+  $AuthorizedKeyCopyWith<$Res> get authorizedKey;
 }
 
 /// @nodoc
@@ -121,14 +123,22 @@ class _$RPCGetStorageNoncePublicKeyResultDataCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? storageNoncePublicKey = null,
+    Object? authorizedKey = null,
   }) {
     return _then(_value.copyWith(
-      storageNoncePublicKey: null == storageNoncePublicKey
-          ? _value.storageNoncePublicKey
-          : storageNoncePublicKey // ignore: cast_nullable_to_non_nullable
-              as String,
+      authorizedKey: null == authorizedKey
+          ? _value.authorizedKey
+          : authorizedKey // ignore: cast_nullable_to_non_nullable
+              as AuthorizedKey,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthorizedKeyCopyWith<$Res> get authorizedKey {
+    return $AuthorizedKeyCopyWith<$Res>(_value.authorizedKey, (value) {
+      return _then(_value.copyWith(authorizedKey: value) as $Val);
+    });
   }
 }
 
@@ -141,7 +151,10 @@ abstract class _$$_RPCGetStorageNoncePublicKeyResultDataCopyWith<$Res>
       __$$_RPCGetStorageNoncePublicKeyResultDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String storageNoncePublicKey});
+  $Res call({AuthorizedKey authorizedKey});
+
+  @override
+  $AuthorizedKeyCopyWith<$Res> get authorizedKey;
 }
 
 /// @nodoc
@@ -157,13 +170,13 @@ class __$$_RPCGetStorageNoncePublicKeyResultDataCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? storageNoncePublicKey = null,
+    Object? authorizedKey = null,
   }) {
     return _then(_$_RPCGetStorageNoncePublicKeyResultData(
-      storageNoncePublicKey: null == storageNoncePublicKey
-          ? _value.storageNoncePublicKey
-          : storageNoncePublicKey // ignore: cast_nullable_to_non_nullable
-              as String,
+      authorizedKey: null == authorizedKey
+          ? _value.authorizedKey
+          : authorizedKey // ignore: cast_nullable_to_non_nullable
+              as AuthorizedKey,
     ));
   }
 }
@@ -172,16 +185,15 @@ class __$$_RPCGetStorageNoncePublicKeyResultDataCopyWithImpl<$Res>
 
 class _$_RPCGetStorageNoncePublicKeyResultData
     extends _RPCGetStorageNoncePublicKeyResultData {
-  const _$_RPCGetStorageNoncePublicKeyResultData(
-      {required this.storageNoncePublicKey})
+  const _$_RPCGetStorageNoncePublicKeyResultData({required this.authorizedKey})
       : super._();
 
   @override
-  final String storageNoncePublicKey;
+  final AuthorizedKey authorizedKey;
 
   @override
   String toString() {
-    return 'RPCGetStorageNoncePublicKeyResultData(storageNoncePublicKey: $storageNoncePublicKey)';
+    return 'RPCGetStorageNoncePublicKeyResultData(authorizedKey: $authorizedKey)';
   }
 
   @override
@@ -189,12 +201,12 @@ class _$_RPCGetStorageNoncePublicKeyResultData
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RPCGetStorageNoncePublicKeyResultData &&
-            (identical(other.storageNoncePublicKey, storageNoncePublicKey) ||
-                other.storageNoncePublicKey == storageNoncePublicKey));
+            (identical(other.authorizedKey, authorizedKey) ||
+                other.authorizedKey == authorizedKey));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, storageNoncePublicKey);
+  int get hashCode => Object.hash(runtimeType, authorizedKey);
 
   @JsonKey(ignore: true)
   @override
@@ -208,12 +220,12 @@ class _$_RPCGetStorageNoncePublicKeyResultData
 abstract class _RPCGetStorageNoncePublicKeyResultData
     extends RPCGetStorageNoncePublicKeyResultData {
   const factory _RPCGetStorageNoncePublicKeyResultData(
-          {required final String storageNoncePublicKey}) =
+          {required final AuthorizedKey authorizedKey}) =
       _$_RPCGetStorageNoncePublicKeyResultData;
   const _RPCGetStorageNoncePublicKeyResultData._() : super._();
 
   @override
-  String get storageNoncePublicKey;
+  AuthorizedKey get authorizedKey;
   @override
   @JsonKey(ignore: true)
   _$$_RPCGetStorageNoncePublicKeyResultDataCopyWith<

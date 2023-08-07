@@ -63,7 +63,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
         AddServiceHandler(context: context, ref: ref),
       )
       ..addHandler(
-        GetStorageNoncePublicKeyHandler(),
+        GetStorageNoncePublicKeyHandler(ref: ref),
       )
       ..addHandler(
         GetServicesFromKeychainCommandHandler(ref: ref),
