@@ -574,5 +574,6 @@
   "admin": "Admin",
   "next": "Next",
   "name": "Name",
-  "discussionNoMessages": "Your discussion currently has no messages."
+  "discussionNoMessages": "Your discussion currently has no messages.",
+  "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure"
 }

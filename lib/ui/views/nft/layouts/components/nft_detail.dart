@@ -1,23 +1,20 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:ui';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_collection.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_properties.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
+import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -139,92 +136,44 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: SafeArea(
-                  minimum: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.035,
-                    top: 50,
-                  ),
-                  child: ArchethicScrollbar(
-                    child: Column(
-                      children: <Widget>[
-                        if (widget.collection.isEmpty)
-                          NFTThumbnail(
-                            address: widget.address,
-                            properties: widget.properties,
-                            withContentInfo: true,
-                          ),
-                        if (widget.collection.isEmpty)
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        NFTDetailProperties(
-                          properties: widget.properties,
-                        ),
-                        if (widget.collection.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 30,
-                              right: 30,
-                            ),
-                            child: ScrollConfiguration(
-                              behavior:
-                                  ScrollConfiguration.of(context).copyWith(
-                                dragDevices: {
-                                  PointerDeviceKind.touch,
-                                  PointerDeviceKind.mouse,
-                                  PointerDeviceKind.trackpad,
-                                },
-                              ),
-                              child: DynamicHeightGridView(
-                                crossAxisCount: Responsive.isDesktop(context) ||
-                                        Responsive.isTablet(context)
-                                    ? 3
-                                    : 2,
-                                crossAxisSpacing: 20,
-                                shrinkWrap: true,
-                                itemCount: widget.collection.length,
-                                builder: (context, index) {
-                                  final tokenInformations =
-                                      widget.collection[index];
-
-                                  return Column(
-                                    children: [
-                                      Text('${tokenInformations['name']}'),
-                                      GestureDetector(
-                                        onTap: () {
-                                          sl.get<HapticUtil>().feedback(
-                                                FeedbackType.light,
-                                                preferences.activeVibrations,
-                                              );
-                                          Sheets.showAppHeightNineSheet(
-                                            context: context,
-                                            ref: ref,
-                                            widget: NFTDetail(
-                                              address: widget.address,
-                                              name: tokenInformations['name'],
-                                              properties: tokenInformations,
-                                              collection: const [],
-                                              symbol:
-                                                  tokenInformations['symbol'],
-                                              tokenId: widget.tokenId,
-                                            ),
-                                          );
-                                        },
-                                        child: NFTThumbnail(
-                                          address: widget.address,
-                                          properties: tokenInformations,
-                                          roundBorder: true,
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                      ],
+                    minimum: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.035,
+                      top: 20,
                     ),
-                  ),
-                ),
+                    child: widget.collection.isEmpty
+                        ? ArchethicScrollbar(
+                            child: Column(
+                              children: <Widget>[
+                                NFTThumbnail(
+                                  address: widget.address,
+                                  properties: widget.properties,
+                                  withContentInfo: true,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                NFTDetailProperties(
+                                  properties: widget.properties,
+                                ),
+                              ],
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              NFTDetailProperties(
+                                properties: widget.properties,
+                              ),
+                              Expanded(
+                                child: NFTDetailCollection(
+                                  address: widget.address,
+                                  collection: widget.collection,
+                                  tokenId: widget.tokenId,
+                                  name: widget.name,
+                                  symbol: widget.symbol,
+                                ),
+                              ),
+                            ],
+                          )),
               ),
             ),
           ),

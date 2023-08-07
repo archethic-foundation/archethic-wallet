@@ -1284,6 +1284,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  json_schema:
+    dependency: "direct main"
+    description:
+      name: json_schema
+      sha256: "0fa8e7bacc5b690eeaa03d98ac38d676deb95ed645880b7504fcf34be8bdd17b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.2"
   json_serializable:
     dependency: "direct dev"
     description:
@@ -1781,6 +1789,25 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+<<<<<<< HEAD
+=======
+  requests:
+    dependency: "direct main"
+    description:
+      name: requests
+      sha256: "18b5511c2d6cca922260d0c38e78ed76d4a359fea966fcb4aebe30d8351638ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.7.0"
+  rfc_6901:
+    dependency: transitive
+    description:
+      name: rfc_6901
+      sha256: "8d97680dada633146cf75ab9382f2ce2b7e4bd63ceecd867416cf43b5832b988"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
+>>>>>>> 8283b20f (Display properties)
   riverpod:
     dependency: transitive
     description:
@@ -2080,6 +2107,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  uri:
+    dependency: transitive
+    description:
+      name: uri
+      sha256: "889eea21e953187c6099802b7b4cf5219ba8f3518f604a1033064d45b1b8268a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   url_launcher:
     dependency: "direct main"
     description:

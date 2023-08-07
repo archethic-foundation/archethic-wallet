@@ -163,6 +163,12 @@ dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: any
 
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
+  json_annotation: ^4.8.0
+
+  # JSON Schema implementation in Dart
+  json_schema: ^5.1.2
+
   # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
 
@@ -309,6 +315,7 @@ flutter:
     - assets/themes/fire_red_flat/
     - assets/themes/pearl_grey/
     - assets/themes/pearl_grey_flat/
+    - lib/model/json-schemas/nft/opensea.json
 
   fonts:
     - family: Montserrat
