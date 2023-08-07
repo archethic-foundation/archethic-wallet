@@ -1,9 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_archethic.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_opensea.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:json_schema/json_schema.dart';
 
 class NFTDetailProperties extends ConsumerWidget {
   const NFTDetailProperties({
@@ -25,12 +30,9 @@ class NFTDetailProperties extends ConsumerWidget {
         child: Column(
           children: [
             if (description != '')
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  description,
-                  style: theme.textStyleSize14W600Primary,
-                ),
+              Text(
+                description,
+                style: theme.textStyleSize10W400Primary,
               ),
             if (properties.isNotEmpty)
               Padding(
@@ -45,10 +47,21 @@ class NFTDetailProperties extends ConsumerWidget {
                             entry.key != 'type_mime'
                         ? Padding(
                             padding: const EdgeInsets.all(5),
-                            child: _buildTokenProperty(
-                              context,
-                              ref,
-                              {entry.key: entry.value},
+                            child: FutureBuilder(
+                              future: _buildTokenProperty(
+                                context,
+                                ref,
+                                {entry.key: entry.value},
+                              ),
+                              builder: (
+                                BuildContext context,
+                                AsyncSnapshot<Widget> snapshot,
+                              ) {
+                                if (snapshot.hasData) {
+                                  return snapshot.data!;
+                                }
+                                return const SizedBox();
+                              },
                             ),
                           )
                         : const SizedBox();
@@ -61,65 +74,23 @@ class NFTDetailProperties extends ConsumerWidget {
     );
   }
 
-  // TODO(Chralu): Extract to a [Widget] subclass (3)
-  Widget _buildTokenProperty(
+  Future<Widget> _buildTokenProperty(
     BuildContext context,
     WidgetRef ref,
     Map<String, dynamic> property,
-  ) {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: GestureDetector(
-        onTap: () async {},
-        onLongPress: () {},
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: theme.backgroundAccountsListCardSelected!,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          color: theme.backgroundAccountsListCardSelected,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: AutoSizeText(
-                                property.entries.first.key,
-                                style: theme.textStyleSize12W600Primary,
-                              ),
-                            ),
-                            Container(
-                              width: 200,
-                              padding: const EdgeInsets.only(left: 20),
-                              child: AutoSizeText(
-                                property.entries.first.value,
-                                style: theme.textStyleSize12W400Primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+  ) async {
+    final openseaJsonC =
+        await rootBundle.loadString('lib/model/json-schemas/nft/opensea.json');
+    final openseaMap = json.decode(openseaJsonC);
+    final openseaSchema = JsonSchema.create(openseaMap);
+    final validationResult = openseaSchema.validate(property);
+    if (validationResult.isValid) {
+      return NFTPropertiesOpensea(
+        properties: properties,
+      );
+    }
+    return NFTPropertiesArchethic(
+      properties: properties,
     );
   }
 }

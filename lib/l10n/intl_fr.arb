@@ -555,5 +555,6 @@
 	"deleteContact": "Supprimer le contact",
 	"discussion": "Discussion",
 	"favorites": "Favoris",
-	"explorer": "Explorateur"
+	"explorer": "Explorateur",
+	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea"
 }
