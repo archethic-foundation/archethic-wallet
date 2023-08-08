@@ -82,6 +82,7 @@ class NFTDetailCollection extends ConsumerWidget {
                         widget: NFTDetail(
                           address: address,
                           name: name,
+                          nameInCollection: tokenInformations['name'],
                           properties: tokenInformations,
                           collection: const [],
                           symbol: symbol,

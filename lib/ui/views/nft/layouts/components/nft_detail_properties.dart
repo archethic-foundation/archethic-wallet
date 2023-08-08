@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_archethic.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_opensea.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_unknown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,13 +84,25 @@ class NFTDetailProperties extends ConsumerWidget {
         await rootBundle.loadString('lib/model/json-schemas/nft/opensea.json');
     final openseaMap = json.decode(openseaJsonC);
     final openseaSchema = JsonSchema.create(openseaMap);
-    final validationResult = openseaSchema.validate(property);
-    if (validationResult.isValid) {
+    final openseaValidationResult = openseaSchema.validate(property);
+    if (openseaValidationResult.isValid) {
       return NFTPropertiesOpensea(
         properties: properties,
       );
     }
-    return NFTPropertiesArchethic(
+
+    final archethicJsonC = await rootBundle
+        .loadString('lib/model/json-schemas/nft/archethic.json');
+    final archethicMap = json.decode(archethicJsonC);
+    final archethicSchema = JsonSchema.create(archethicMap);
+    final archethicValidationResult = archethicSchema.validate(property);
+    if (archethicValidationResult.isValid) {
+      return NFTPropertiesArchethic(
+        properties: properties,
+      );
+    }
+
+    return NFTPropertiesUnknown(
       properties: properties,
     );
   }

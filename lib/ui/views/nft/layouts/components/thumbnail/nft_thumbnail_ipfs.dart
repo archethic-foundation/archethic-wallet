@@ -1,5 +1,3 @@
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
@@ -7,6 +5,8 @@ import 'package:aewallet/util/url_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
   const NFTThumbnailIPFS({
@@ -23,12 +23,10 @@ class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final raw = TokenUtil.getIPFSUrlFromToken(
       properties,
     );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
       children: <Widget>[
         if (raw == null)
           NFTThumbnailError(
@@ -48,11 +46,19 @@ class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
                   errorMessage: localizations.nftAEWebEmpty,
                 ),
         if (withContentInfo)
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: SelectableText(
-              '${localizations.nftIPFSFrom}\n${raw!}',
-              style: theme.textStyleSize12W100Primary,
+          Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              tooltip: raw,
+              iconSize: 16,
+              onPressed: () {
+                launchUrl(
+                  Uri.parse(
+                    UrlUtil.convertUrlIPFSForWeb(raw!),
+                  ),
+                );
+              },
+              icon: const Icon(Iconsax.export_3),
             ),
           ),
       ],

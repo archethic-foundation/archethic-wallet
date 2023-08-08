@@ -579,5 +579,6 @@
   "discussion": "Discussion",
   "favorites": "Favorites",
   "explorer": "Explorer",
-  "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure"
+  "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
+  "nftPropertieUnknownStructure": "Unknown properties format"
 }
