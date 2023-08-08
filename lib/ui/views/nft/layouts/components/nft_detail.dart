@@ -33,6 +33,7 @@ class NFTDetail extends ConsumerStatefulWidget {
     required this.properties,
     required this.collection,
     required this.tokenId,
+    this.nameInCollection,
     this.displaySendButton = true,
   });
 
@@ -43,6 +44,7 @@ class NFTDetail extends ConsumerStatefulWidget {
   final String tokenId;
   final List<Map<String, dynamic>> collection;
   final Map<String, dynamic> properties;
+  final String? nameInCollection;
 
   @override
   ConsumerState<NFTDetail> createState() => _NFTDetailState();
@@ -136,44 +138,46 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: SafeArea(
-                    minimum: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.035,
-                      top: 20,
-                    ),
-                    child: widget.collection.isEmpty
-                        ? ArchethicScrollbar(
-                            child: Column(
-                              children: <Widget>[
-                                NFTThumbnail(
-                                  address: widget.address,
-                                  properties: widget.properties,
-                                  withContentInfo: true,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                NFTDetailProperties(
-                                  properties: widget.properties,
-                                ),
-                              ],
-                            ),
-                          )
-                        : Column(
-                            children: [
+                  minimum: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.035,
+                    top: 20,
+                  ),
+                  child: widget.collection.isEmpty
+                      ? ArchethicScrollbar(
+                          child: Column(
+                            children: <Widget>[
+                              NFTThumbnail(
+                                nameInCollection: widget.nameInCollection,
+                                address: widget.address,
+                                properties: widget.properties,
+                                withContentInfo: true,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               NFTDetailProperties(
                                 properties: widget.properties,
                               ),
-                              Expanded(
-                                child: NFTDetailCollection(
-                                  address: widget.address,
-                                  collection: widget.collection,
-                                  tokenId: widget.tokenId,
-                                  name: widget.name,
-                                  symbol: widget.symbol,
-                                ),
-                              ),
                             ],
-                          )),
+                          ),
+                        )
+                      : Column(
+                          children: [
+                            NFTDetailProperties(
+                              properties: widget.properties,
+                            ),
+                            Expanded(
+                              child: NFTDetailCollection(
+                                address: widget.address,
+                                collection: widget.collection,
+                                tokenId: widget.tokenId,
+                                name: widget.name,
+                                symbol: widget.symbol,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
               ),
             ),
           ),

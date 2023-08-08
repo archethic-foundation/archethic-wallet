@@ -552,5 +552,6 @@
 	"next": "Suivant",
 	"name": "Nom",
 	"discussionNoMessages": "Votre discussion ne dispose pour le moment d'aucun message",
-	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea"
+	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea",
+	"nftPropertieUnknownStructure": "Structure des propriétés inconnue"
 }

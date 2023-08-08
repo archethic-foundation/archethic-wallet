@@ -575,5 +575,6 @@
   "next": "Next",
   "name": "Name",
   "discussionNoMessages": "Your discussion currently has no messages.",
-  "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure"
+  "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
+  "nftPropertieUnknownStructure": "Unknown properties format"
 }
