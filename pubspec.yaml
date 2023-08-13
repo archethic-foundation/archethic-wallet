@@ -166,11 +166,11 @@ dependencies:
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.8.0
 
-  # JSON Schema implementation in Dart
-  json_schema: ^5.1.2
-
   # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
+
+  # JSON Schema implementation in Dart
+  json_schema: ^5.1.2
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
