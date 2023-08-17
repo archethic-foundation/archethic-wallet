@@ -221,7 +221,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                     Container(
@@ -397,7 +397,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                                             .toString(),
                                                       ),
                                                       inputFormatters: [
-                                                        LowerCaseTextFormatter()
+                                                        LowerCaseTextFormatter(),
                                                       ],
                                                       controller:
                                                           textEditingController,
@@ -427,7 +427,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                                               theme.gradient,
                                                         ),
                                                       ),
-                                                    )
+                                                    ),
                                                   ],
                                                 );
                                               },

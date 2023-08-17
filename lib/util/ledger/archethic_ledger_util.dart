@@ -17,7 +17,7 @@ Uint8List getSignTxnAPDU(
 ) {
   var payload = concatUint8List([
     hexToUint8List(onChainWalletData.encodedWalletKey!),
-    hexToUint8List(onChainWalletData.encryptedWallet!)
+    hexToUint8List(onChainWalletData.encryptedWallet!),
   ]);
   log(uint8ListToHex(transaction.originSignaturePayload()));
   payload = concatUint8List([transaction.originSignaturePayload(), payload]);
@@ -35,7 +35,7 @@ Uint8List getSignTxnAPDU(
 Uint8List getArchAddressAPDU(OnChainWalletData onChainWalletData) {
   final payload = concatUint8List([
     hexToUint8List(onChainWalletData.encodedWalletKey!),
-    hexToUint8List(onChainWalletData.encryptedWallet!)
+    hexToUint8List(onChainWalletData.encryptedWallet!),
   ]);
   final payloadLength = hexToUint8List(payload.lengthInBytes.toRadixString(16));
   final addressPayload = concatUint8List([payloadLength, payload]);

@@ -59,7 +59,7 @@ class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
                   ref.read(
                     NftCreationFormProvider.nftCreationFormArgs,
                   ),
-                )
+                ),
               ],
               widget: AddPublicKey(
                 propertyName: propertyName,

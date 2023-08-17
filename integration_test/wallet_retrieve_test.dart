@@ -10,7 +10,6 @@ void main() {
   patrolTest(
     'As a user I can retrieve my wallet',
     nativeAutomatorConfig: nativeAutomatorConfig,
-    nativeAutomation: true,
     ($) async {
       await app.main();
       await importWalletAction($);

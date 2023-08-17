@@ -26,7 +26,7 @@ class TransactionInformation extends ConsumerWidget {
           Text(
             message,
             style: theme.textStyleSize12W400Primary,
-          )
+          ),
       ],
     );
   }

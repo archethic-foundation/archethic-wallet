@@ -207,7 +207,7 @@ class _ActionButton extends ConsumerWidget {
                     Text(
                       text,
                       style: theme.textStyleSize14W600EquinoxPrimaryDisabled,
-                    )
+                    ),
                 ],
               ),
             )
@@ -239,7 +239,7 @@ class _ActionButton extends ConsumerWidget {
                   Text(
                     text,
                     style: theme.textStyleSize14W600EquinoxPrimaryDisabled,
-                  )
+                  ),
               ],
             ),
     );

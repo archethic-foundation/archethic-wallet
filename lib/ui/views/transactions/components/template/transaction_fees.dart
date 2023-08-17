@@ -59,7 +59,7 @@ class TransactionFees extends ConsumerWidget {
           Text(
             '···········',
             style: theme.textStyleSize12W600Primary60,
-          )
+          ),
       ],
     );
   }

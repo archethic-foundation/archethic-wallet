@@ -27,7 +27,7 @@ class HoneyOrangeFlatTheme implements BaseTheme {
   Gradient? gradientMainButton = const LinearGradient(
     colors: <Color>[
       Color.fromARGB(255, 43, 43, 43),
-      Color.fromARGB(255, 43, 43, 43)
+      Color.fromARGB(255, 43, 43, 43),
     ],
     transform: GradientRotation(pi / 9),
   );

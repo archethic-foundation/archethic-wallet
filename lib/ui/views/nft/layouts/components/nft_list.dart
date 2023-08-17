@@ -79,7 +79,7 @@ class NFTList extends ConsumerWidget {
               Text(
                 localizations.nftListEmptyExplanation,
                 style: theme.textStyleSize12W100Primary,
-              )
+              ),
             ],
           ),
         ),

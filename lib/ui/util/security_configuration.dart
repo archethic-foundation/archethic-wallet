@@ -33,7 +33,7 @@ mixin SecurityConfigurationMixin {
         AuthMethod.password,
         true,
         key: const Key('accessModePassword'),
-      )
+      ),
     ];
     if (biometricsAvalaible) {
       accessModes.add(

@@ -3,18 +3,18 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.1.1+445
+version: 2.1.1+446
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
-  flutter: "3.10.5"
+  flutter: "3.13.0"
 
 dependencies:
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
   animate_do: ^3.0.2
 
   # Retrieve version and url for local app update against store app Android and iOS
-  app_version_update: ^3.1.0
+  app_version_update: ^4.0.1
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^3.2.0
@@ -24,7 +24,7 @@ dependencies:
   #    ref: sc_test_mi
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
-  asn1lib: ^1.4.0
+  asn1lib: ^1.5.0
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
@@ -51,10 +51,10 @@ dependencies:
   coingecko_api: ^1.1.1+1
 
   # Collections and utilities functions and classes related to collections.
-  collection: ^1.17.0
+  collection: ^1.17.2
 
   # Flutter plugin for discovering the state of the network (WiFi & mobile/cellular) connectivity on Android and iOS.
-  connectivity_plus: ^3.0.3
+  connectivity_plus: ^4.0.2
 
   # Encapsulates TabController, TabBar and TabBarView into a single customizable Widget.
   contained_tab_bar_view: ^0.8.0
@@ -66,7 +66,7 @@ dependencies:
   crypto: ^3.0.3
 
   # The decimal package allows you to deal with decimal numbers without losing precision
-  decimal: ^2.3.2
+  decimal: ^2.3.3
 
   # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
   deeplink_rpc: ^1.0.4
@@ -84,25 +84,25 @@ dependencies:
   expandable: ^5.0.1
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.2.7
+  file_picker: ^5.3.3
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
 
   # A Flutter plugin to use the Firebase Core API, which enables connecting to multiple Firebase apps.
-  firebase_core: ^2.14.0
+  firebase_core: ^2.15.1
 
   # A package to use FCM
-  firebase_messaging: ^14.6.3
+  firebase_messaging: ^14.6.6
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
-  fl_chart: ^0.61.0
+  fl_chart: ^0.63.0
 
   flutter:
     sdk: flutter
 
   # Add beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
-  flutter_animate: ^4.1.1+1
+  flutter_animate: ^4.2.0+1
 
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
   flutter_jailbreak_detection: ^1.10.0
@@ -117,7 +117,7 @@ dependencies:
     sdk: flutter
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.3.0
+  flutter_native_splash: ^2.3.2
 
   # State management
   flutter_riverpod: ^2.3.6
@@ -132,7 +132,7 @@ dependencies:
   flutter_vibrate: ^1.3.0
 
   # Annotations for freezed
-  freezed_annotation: ^2.2.0
+  freezed_annotation: ^2.4.1
 
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: ^7.2.0
@@ -140,13 +140,8 @@ dependencies:
   # Ghost CMS API client that closely follows the official implementation
   ghost: ^2.0.2
 
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
-  gql: ^0.14.0
-
   # Gradient borders for inputs and containers. Borders package integrated with a basic flutter widgets as a container and input decorations. Easy in use, platform independent.
   gradient_borders: ^1.0.0
-
-  graphql_flutter: ^5.1.2
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
   hive: ^2.2.3
@@ -162,10 +157,10 @@ dependencies:
   iconsax: ^0.0.8
 
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
-  image_picker: ^0.8.6+1
+  image_picker: ^1.0.2
 
   # ListViews pagination
-  infinite_scroll_pagination: ^3.2.0
+  infinite_scroll_pagination: ^4.0.0
 
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: any
@@ -187,13 +182,13 @@ dependencies:
   mime_dart: ^3.0.0
 
   # Flutter plugin for accessing the NFC features on Android and iOS.
-  nfc_manager: ^3.2.0
+  nfc_manager: ^3.3.0
 
   # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
   oktoast: ^3.3.1
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^3.0.2
+  package_info_plus: ^4.1.0
 
   # Customizable indicators for your PageViews.
   page_view_indicators: ^2.0.0
@@ -205,10 +200,10 @@ dependencies:
   path: ^1.8.3
 
   # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
-  path_provider: ^2.0.14
+  path_provider: ^2.1.0
 
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
-  pdfx: 2.2.0
+  pdfx: ^2.4.0
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
   phoenix_socket: ^0.6.2
@@ -226,20 +221,25 @@ dependencies:
   requests: ^4.7.0
 
   # A package exposing annotations for riverpod_generator
-  riverpod_annotation: ^2.1.1
+  riverpod_annotation: ^2.1.2
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
   rxdart: ^0.27.7
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^6.3.0
+  share_plus: ^7.1.0
 
-  shelf: ^1.4.0
-  shelf_router: ^1.1.3
+  # A model for web server middleware that encourages composition and easy reuse.
+  shelf: ^1.4.1
+
+  # A convenient request router for the shelf web-framework, with support for URL-parameters, nested routers and routers generated from source annotations
+  shelf_router: ^1.1.4
+
+  # Dartlang port of socket.io-client for web, flutter, dartvm to use
+  socket_io_client: ^2.0.3+1
 
   # Lock mechanism to prevent concurrent access to asynchronous code.
-  socket_io_client: ^2.0.2
-  synchronized: ^3.0.1
+  synchronized: ^3.1.0
 
   # Tuple data structure
   tuple: ^2.0.1
@@ -248,7 +248,7 @@ dependencies:
   unorm_dart: ^0.2.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.10
+  url_launcher: ^6.1.12
 
   # String validation and sanitization for Dart
   validators: ^3.0.0
@@ -257,27 +257,27 @@ dependencies:
   web_socket_channel: ^2.4.0
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
-  window_manager: ^0.3.0
+  window_manager: ^0.3.5
 
   # Yubico dart library for Dart/Flutter
   yubidart: ^1.0.4
 
 dev_dependencies:
-  build_runner: ^2.4.4
-  flutter_lints: ^2.0.1
+  build_runner: ^2.4.5
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
-  freezed: ^2.3.2
-  hive_generator: ^2.0.0
+  freezed: ^2.4.2
+  hive_generator: ^2.0.1
   # Integration Tests
   integration_test:
     sdk: flutter
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.7.0
   # A command-line tool that create Msix installer from your flutter windows-build files.
-  msix: ^3.13.2
+  msix: ^3.16.1
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
-  patrol: ^1.1.4
+  patrol: ^2.2.3
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: ^2.2.3
 

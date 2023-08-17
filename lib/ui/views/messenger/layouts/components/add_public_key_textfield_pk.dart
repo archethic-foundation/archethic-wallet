@@ -195,7 +195,7 @@ class _AddPublicKeyTextFieldPkState
             publicKey: (_) => 68,
             orElse: () => 20,
           ),
-        )
+        ),
       ],
       textInputAction: TextInputAction.done,
       maxLines: null,

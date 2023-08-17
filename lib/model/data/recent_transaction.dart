@@ -109,6 +109,6 @@ class RecentTransaction extends HiveObject {
         'content': content,
         'timestamp': timestamp,
         'type': type,
-        'decryptedSecret': decryptedSecret
+        'decryptedSecret': decryptedSecret,
       };
 }

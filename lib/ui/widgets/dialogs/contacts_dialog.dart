@@ -74,7 +74,7 @@ class ContactsDialog {
                     style: theme.textStyleSize16W600Primary,
                     inputFormatters: <TextInputFormatter>[
                       UpperCaseTextFormatter(),
-                      LengthLimitingTextInputFormatter(20)
+                      LengthLimitingTextInputFormatter(20),
                     ],
                     onChanged: (text) async {
                       contacts = await ref.read(

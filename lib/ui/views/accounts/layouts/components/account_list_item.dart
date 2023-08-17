@@ -228,7 +228,7 @@ class AccountListItem extends ConsumerWidget {
                           AutoSizeText(
                             '···········',
                             style: theme.textStyleSize12W600Primary60,
-                          )
+                          ),
                       ],
                     ),
               ],

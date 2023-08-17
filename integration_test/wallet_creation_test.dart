@@ -9,8 +9,7 @@ import 'config/config.dart';
 
 void main() {
   patrolTest('As a user I can create a Wallet',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
+      nativeAutomatorConfig: nativeAutomatorConfig, ($) async {
     await app.main();
     await $.pumpWidgetAndSettle(
       const app.App(),

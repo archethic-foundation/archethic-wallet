@@ -308,7 +308,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
                     BoxShadow(
                       color: colors[i],
                       spreadRadius: _animation.value * (i + 1),
-                    )
+                    ),
                 ],
               ),
               child: SvgPicture.asset(

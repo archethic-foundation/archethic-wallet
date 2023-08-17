@@ -155,7 +155,7 @@ class AddTalkSheet extends ConsumerWidget {
                   },
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

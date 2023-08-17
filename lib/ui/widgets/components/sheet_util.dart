@@ -40,7 +40,7 @@ class Sheets {
                       Colors.white,
                       Colors.white,
                       Colors.transparent,
-                      Colors.transparent
+                      Colors.transparent,
                     ],
                     stops: const [0.0, 0.55, 0.6, 1.0],
                     center: const FractionalOffset(0.95, 0.95),

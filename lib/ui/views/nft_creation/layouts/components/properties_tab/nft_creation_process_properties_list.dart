@@ -48,7 +48,7 @@ class NFTCreationProcessPropertiesList extends ConsumerWidget {
                 'content',
                 'type_mime',
                 'name',
-                'description'
+                'description',
               ],
               readOnly: readOnly,
             ),

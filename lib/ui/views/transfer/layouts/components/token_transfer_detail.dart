@@ -81,7 +81,7 @@ class TokenTransferDetail extends ConsumerWidget {
                     'NFT "${transfer.accountToken!.tokenInformations!.name!}"',
                   ),
                   style: theme.textStyleSize12W400Primary,
-                )
+                ),
             ],
           ),
           SheetDetailCard(
@@ -120,7 +120,7 @@ class TokenTransferDetail extends ConsumerWidget {
                     'NFT "${transfer.accountToken!.tokenInformations!.name!}"',
                   ),
                   style: theme.textStyleSize12W400Primary,
-                )
+                ),
             ],
           ),
           if (transfer.message.isNotEmpty)

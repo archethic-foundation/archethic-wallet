@@ -78,7 +78,7 @@ class AvailableCurrency extends SettingSelectionItem {
       'PT',
       'SK',
       'SI',
-      'ES'
+      'ES',
     ];
     if (eurCountries.contains(countryCode)) return AvailableCurrencyEnum.eur;
 

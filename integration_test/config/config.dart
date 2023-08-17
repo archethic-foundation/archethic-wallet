@@ -44,6 +44,6 @@ const testWalletConf = WalletConfiguration(
     'buzz',
     'orphan',
     'feed',
-    'connect'
+    'connect',
   ],
 );

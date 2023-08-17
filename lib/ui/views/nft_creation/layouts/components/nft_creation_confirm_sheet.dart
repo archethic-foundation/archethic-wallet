@@ -269,7 +269,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             },
                             disabled:
                                 nftCreation.canConfirmNFTCreation == false,
-                          )
+                          ),
                         ],
                       ),
                       Row(

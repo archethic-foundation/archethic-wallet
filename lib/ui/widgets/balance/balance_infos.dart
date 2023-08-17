@@ -74,7 +74,7 @@ class BalanceInfos extends ConsumerWidget {
                               accountSelectedBalance: accountSelectedBalance,
                             )
                           else
-                            const _BalanceInfosNotShowed()
+                            const _BalanceInfosNotShowed(),
                         ],
                       )
                     : Row(
@@ -92,7 +92,7 @@ class BalanceInfos extends ConsumerWidget {
                               accountSelectedBalance: accountSelectedBalance,
                             )
                           else
-                            const _BalanceInfosNotShowed()
+                            const _BalanceInfosNotShowed(),
                         ],
                       ),
               ),

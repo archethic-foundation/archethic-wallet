@@ -162,7 +162,7 @@ class AccountTab extends ConsumerWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

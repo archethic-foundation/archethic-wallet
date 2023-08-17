@@ -227,7 +227,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
           inputFormatters: <LengthLimitingTextInputFormatter>[
-            LengthLimitingTextInputFormatter(10)
+            LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (String text) {
             setState(() {
@@ -259,7 +259,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           cursorColor: theme.text,
           style: theme.textStyleSize16W700Primary,
           inputFormatters: <LengthLimitingTextInputFormatter>[
-            LengthLimitingTextInputFormatter(40)
+            LengthLimitingTextInputFormatter(40),
           ],
           onChanged: (String text) {
             setState(() {

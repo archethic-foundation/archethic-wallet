@@ -93,7 +93,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               else if (hasNotifications)
                 preferences.activeNotifications
                     ? const MainAppBarIconNotificationEnabled()
-                    : const MainAppBarIconNotificationDisabled()
+                    : const MainAppBarIconNotificationDisabled(),
             ],
             title: preferences.mainScreenCurrentPage == 1
                 ? InkWell(

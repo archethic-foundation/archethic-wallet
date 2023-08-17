@@ -59,11 +59,10 @@ class HistoryChart extends StatelessWidget {
       isCurved: true,
       gradient: gradientColors,
       isStrokeCapRound: true,
-      barWidth: 2,
       belowBarData: completeChart
           ? BarAreaData(show: true, gradient: gradientColorsBar)
-          : BarAreaData(show: false),
-      dotData: FlDotData(show: false),
+          : BarAreaData(),
+      dotData: const FlDotData(show: false),
     );
 
     return LineChartData(
@@ -103,16 +102,14 @@ class HistoryChart extends StatelessWidget {
             }).toList();
           },
         ),
-        handleBuiltInTouches: true,
-        enabled: true,
       ),
       lineBarsData: [barData],
       borderData: FlBorderData(
         show: false,
       ),
       titlesData: FlTitlesData(
-        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: const AxisTitles(),
+        leftTitles: const AxisTitles(),
         topTitles: completeChart
             ? AxisTitles(
                 sideTitles: SideTitles(
@@ -156,7 +153,7 @@ class HistoryChart extends StatelessWidget {
                   },
                 ),
               )
-            : AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            : const AxisTitles(),
         rightTitles: completeChart
             ? AxisTitles(
                 sideTitles: SideTitles(
@@ -181,7 +178,7 @@ class HistoryChart extends StatelessWidget {
                   },
                 ),
               )
-            : AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            : const AxisTitles(),
       ),
       gridData: FlGridData(
         drawVerticalLine: false,
@@ -198,8 +195,8 @@ class HistoryChart extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: LineChart(
         _chartData,
-        swapAnimationCurve: Curves.decelerate,
-        swapAnimationDuration: const Duration(milliseconds: 1000),
+        curve: Curves.decelerate,
+        duration: const Duration(milliseconds: 1000),
       ),
     );
   }

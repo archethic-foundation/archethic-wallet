@@ -28,7 +28,7 @@ class TransferEntryTemplate extends ConsumerWidget {
         const SizedBox(
           width: 2,
         ),
-        icon
+        icon,
       ],
     );
   }

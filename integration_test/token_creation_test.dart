@@ -7,8 +7,7 @@ import 'config/config.dart';
 
 void main() {
   patrolTest('As a user I can create a token',
-      nativeAutomatorConfig: nativeAutomatorConfig,
-      nativeAutomation: true, ($) async {
+      nativeAutomatorConfig: nativeAutomatorConfig, ($) async {
     await app.main();
     await importWalletAction($);
 

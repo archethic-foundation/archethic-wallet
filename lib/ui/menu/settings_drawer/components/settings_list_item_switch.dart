@@ -59,7 +59,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               inactiveTrackColor: theme.inactiveTrackColorSwitch,
               activeTrackColor: theme.activeTrackColorSwitch,
               activeColor: theme.activeColorSwitch,
-            )
+            ),
           ],
         ),
       ),

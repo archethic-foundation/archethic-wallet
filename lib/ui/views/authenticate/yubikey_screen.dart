@@ -358,7 +358,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                         );
                       },
                     ),
-                  )
+                  ),
               ],
             ),
           ),

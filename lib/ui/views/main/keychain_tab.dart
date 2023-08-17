@@ -52,7 +52,7 @@ class KeychainTab extends ConsumerWidget {
                     AccountsListWidget(
                       currencyName: settings.currency.name,
                       accountsList: accountsList,
-                    )
+                    ),
                   ],
                 ),
               ),

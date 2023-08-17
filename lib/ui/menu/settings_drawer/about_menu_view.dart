@@ -137,7 +137,7 @@ class AboutMenuView extends ConsumerWidget {
                         gradient: LinearGradient(
                           colors: <Color>[
                             theme.drawerBackground!,
-                            theme.backgroundDark00!
+                            theme.backgroundDark00!,
                           ],
                           begin: const AlignmentDirectional(0.5, -1),
                           end: const AlignmentDirectional(0.5, 1),

@@ -1,7 +1,7 @@
 import 'package:patrol/patrol.dart';
 import 'package:requests/requests.dart';
 
-Future<void> faucetRequestAction(PatrolTester $) async {
+Future<void> faucetRequestAction(PatrolIntegrationTester $) async {
   // Request the form
   final formRequest =
       await Requests.get('https://testnet.archethic.net/faucet');

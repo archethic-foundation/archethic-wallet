@@ -107,7 +107,7 @@ class MessengerBody extends ConsumerWidget {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

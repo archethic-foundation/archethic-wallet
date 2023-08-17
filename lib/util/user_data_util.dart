@@ -23,7 +23,7 @@ class QRScanErrs {
   static const List<String> errorList = <String>[
     permissionDenied,
     unknownError,
-    cancelError
+    cancelError,
   ];
 }
 

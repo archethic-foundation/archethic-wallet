@@ -33,7 +33,7 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
       notificationsSetup.copyWith(
         listenedTxChains: {
           ...txChainGenesisAddresses,
-          ...notificationsSetup.listenedTxChains
+          ...notificationsSetup.listenedTxChains,
         }.toList(),
       ),
     );

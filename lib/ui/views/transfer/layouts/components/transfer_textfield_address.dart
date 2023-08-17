@@ -87,7 +87,7 @@ class _TransferTextFieldAddressState
                 contact: (_) => 20,
                 orElse: () => 20,
               ),
-            )
+            ),
           ],
           textInputAction: TextInputAction.next,
           maxLines: null,

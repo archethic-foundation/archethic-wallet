@@ -130,7 +130,7 @@ class AppService {
 
           return [
             for (var i = 0; i < keptRecentTransactions.length; i++)
-              i == matchingIndex ? element : keptRecentTransactions[i]
+              i == matchingIndex ? element : keptRecentTransactions[i],
           ];
         },
       );
@@ -495,7 +495,7 @@ class AppService {
     // Get last transactions for all tx and contacts
     final lastTransactionAddressesToSearch = [
       ...recentTransactionLastAddresses,
-      ...contactsAddresses
+      ...contactsAddresses,
     ];
 
     final lastAddressesMap = <String, Transaction>{};

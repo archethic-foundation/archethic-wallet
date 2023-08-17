@@ -119,7 +119,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               ),
               SizedBox(
                 height: 250,
-              )
+              ),
             ],
           ),
           loading: (loading) => const Column(
@@ -130,7 +130,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               ),
               SizedBox(
                 height: 250,
-              )
+              ),
             ],
           ),
         ),
@@ -152,7 +152,7 @@ class _LastArticlesNotShowed extends StatelessWidget {
         ),
         SizedBox(
           height: 250,
-        )
+        ),
       ],
     );
   }

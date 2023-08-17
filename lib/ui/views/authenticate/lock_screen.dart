@@ -111,7 +111,7 @@ class AppLockScreen extends ConsumerWidget {
                               style: theme.textStyleSize14W600Primary,
                               textAlign: TextAlign.center,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

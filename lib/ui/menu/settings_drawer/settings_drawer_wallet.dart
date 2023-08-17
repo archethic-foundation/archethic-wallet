@@ -79,6 +79,9 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
       case AppLifecycleState.inactive:
         super.didChangeAppLifecycleState(state);
         break;
+      case AppLifecycleState.hidden:
+        super.didChangeAppLifecycleState(state);
+        break;
     }
   }
 

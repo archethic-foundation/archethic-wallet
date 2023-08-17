@@ -187,7 +187,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
               ),
               SizedBox(
                 height: 0,
-              )
+              ),
             ],
             onChange: (index) {
               _pageController!.jumpToPage(index);

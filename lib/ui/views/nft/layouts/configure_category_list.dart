@@ -129,7 +129,7 @@ class ReorderableWidget extends ConsumerWidget {
                   );
                 },
                 children: [
-                  for (NftCategory nftCategory in nftCategoryToSort)
+                  for (final NftCategory nftCategory in nftCategoryToSort)
                     Column(
                       key: ValueKey(nftCategory),
                       children: [
@@ -169,7 +169,7 @@ class ReorderableWidget extends ConsumerWidget {
                         ),
                         const Divider(
                           height: 1,
-                        )
+                        ),
                       ],
                     ),
                 ],
@@ -187,7 +187,7 @@ class ReorderableWidget extends ConsumerWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
-                  for (NftCategory nftCategory in nftCategoryToHidden)
+                  for (final NftCategory nftCategory in nftCategoryToHidden)
                     if (nftCategory.id != 0)
                       Column(
                         key: ValueKey(nftCategory),
@@ -217,7 +217,7 @@ class ReorderableWidget extends ConsumerWidget {
                           ),
                           const Divider(
                             height: 1,
-                          )
+                          ),
                         ],
                       ),
                 ],
@@ -235,7 +235,7 @@ class ReorderableWidget extends ConsumerWidget {
                     onPressed: () {},
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

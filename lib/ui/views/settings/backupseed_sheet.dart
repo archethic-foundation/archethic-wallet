@@ -108,7 +108,7 @@ class AppSeedBackupSheet extends ConsumerWidget {
                                 ),
                               )
                             else
-                              const SizedBox()
+                              const SizedBox(),
                           ],
                         ),
                       ),

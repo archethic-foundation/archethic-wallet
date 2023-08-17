@@ -3,7 +3,7 @@ import 'package:patrol/patrol.dart';
 
 import '../config/config.dart';
 
-Future<void> importWalletAction(PatrolTester $) async {
+Future<void> importWalletAction(PatrolIntegrationTester $) async {
   await $(CheckboxListTile).tap();
   await $(#importWallet).tap();
   final finder = createFinder(RegExp('.*testnet.*'));

@@ -26,6 +26,6 @@ class RPCSubscribeAccountCommandHandler
           'balance': {
             'nativeTokenName': model.balance!.nativeTokenName,
             'nativeTokenValue': model.balance!.nativeTokenValue,
-          }
+          },
       };
 }

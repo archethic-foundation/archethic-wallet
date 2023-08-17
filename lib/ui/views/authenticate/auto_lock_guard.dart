@@ -91,6 +91,11 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         break;
       case AppLifecycleState.detached:
         break;
+      case AppLifecycleState.hidden:
+        ref
+            .read(AuthenticationProviders.startupAuthentication.notifier)
+            .scheduleAutolock();
+        break;
     }
     super.didChangeAppLifecycleState(state);
   }

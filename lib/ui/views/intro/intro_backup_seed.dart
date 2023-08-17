@@ -178,7 +178,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                       ),
                                     ),
                                   ],
-                                )
+                                ),
                             ],
                           ),
                           Container(

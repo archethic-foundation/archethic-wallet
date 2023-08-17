@@ -218,7 +218,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
                         }
                       },
-                    )
+                    ),
                   ],
                 ),
                 Row(

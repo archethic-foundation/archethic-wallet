@@ -105,7 +105,7 @@ class ContactDetailTab extends ConsumerWidget {
                     description,
                     textAlign: TextAlign.left,
                     style: theme.textStyleSize12W100Primary,
-                  )
+                  ),
                 ],
               ),
             ),

@@ -141,7 +141,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                         ),
                         NFTDetailProperties(
                           tokenInformations: widget.tokenInformations,
-                        )
+                        ),
                       ],
                     ),
                   ),

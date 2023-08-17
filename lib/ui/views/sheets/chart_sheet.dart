@@ -136,7 +136,7 @@ class ChartSheet extends ConsumerWidget {
             ),
           ],
         ),
-        if (asyncChartInfos.valueOrNull != null) const BalanceInfosKpi()
+        if (asyncChartInfos.valueOrNull != null) const BalanceInfosKpi(),
       ],
     );
   }

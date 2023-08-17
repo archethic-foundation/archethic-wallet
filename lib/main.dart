@@ -176,6 +176,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       case AppLifecycleState.detached:
         super.didChangeAppLifecycleState(state);
         break;
+      case AppLifecycleState.hidden:
+        super.didChangeAppLifecycleState(state);
+        break;
     }
   }
 
@@ -217,7 +220,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
+          GlobalWidgetsLocalizations.delegate,
         ],
         locale: language.getLocale(),
         supportedLocales: ref.read(LanguageProviders.availableLocales),

@@ -62,7 +62,7 @@ class TransactionInput extends ConsumerWidget {
               transaction.decryptedSecret!.isNotEmpty)
             TransactionComment(transaction: transaction)
           else
-            const SizedBox()
+            const SizedBox(),
         ],
       ),
       information: TransactionInputInformation(

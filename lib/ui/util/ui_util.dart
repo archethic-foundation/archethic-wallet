@@ -105,7 +105,7 @@ class UIUtil {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
       case ThreeLineAddressTextType.primary:
@@ -164,7 +164,7 @@ class UIUtil {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
     }

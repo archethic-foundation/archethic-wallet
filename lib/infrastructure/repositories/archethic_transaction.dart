@@ -129,7 +129,7 @@ class ArchethicTransactionRepository
             to: token.recipientAddress.address,
             tokenAddress: token.tokenAddress,
             tokenId: token.tokenId,
-          )
+          ),
         ];
       },
       uco: (uco) {
@@ -137,7 +137,7 @@ class ArchethicTransactionRepository
           archethic.UCOTransfer(
             amount: archethic.toBigInt(uco.amount),
             to: uco.recipientAddress.address,
-          )
+          ),
         ];
       },
     );

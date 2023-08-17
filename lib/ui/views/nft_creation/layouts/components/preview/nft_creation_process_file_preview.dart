@@ -26,13 +26,13 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
     final isTypeImportFile = [
       FileImportType.file,
       FileImportType.camera,
-      FileImportType.image
+      FileImportType.image,
     ].contains(nftCreation.fileImportType);
 
     final isTypeImportURL = [
       FileImportType.ipfs,
       FileImportType.aeweb,
-      FileImportType.http
+      FileImportType.http,
     ].contains(nftCreation.fileImportType);
 
     final isInvalidFile = nftCreation.file == null ||
@@ -99,7 +99,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
           ),
         const SizedBox(
           height: 10,
-        )
+        ),
       ],
     );
   }

@@ -51,7 +51,7 @@ class KeychainUtil with KeychainServiceMixin {
           TransactionSendEventType.keychainAccess,
           params: <String, Object>{
             'keychainAddress': keychainAddress,
-            'keychain': keychain
+            'keychain': keychain,
           },
         );
       },
@@ -118,7 +118,7 @@ class KeychainUtil with KeychainServiceMixin {
             'keychainAddress':
                 keychainTransaction.address!.address!.toUpperCase(),
             'originPrivateKey': originPrivateKey,
-            'keychain': keychain
+            'keychain': keychain,
           },
         );
       },

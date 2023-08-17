@@ -190,7 +190,7 @@ class NFTCategoryRepository {
         id: 6,
         name: localizations.nftCategoryLoyaltyCard,
         image: 'assets/images/category_nft_loyalty_card.jpg',
-      )
+      ),
     ];
   }
 

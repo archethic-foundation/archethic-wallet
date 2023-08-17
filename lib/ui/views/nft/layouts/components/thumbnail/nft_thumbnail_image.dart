@@ -56,7 +56,7 @@ class NFTThumbnailImage extends ConsumerWidget {
                 return const NFTThumbnailLoading();
               }
             },
-          )
+          ),
       ],
     );
   }
