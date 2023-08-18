@@ -68,7 +68,7 @@ class NFTThumbnail extends ConsumerWidget {
             withContentInfo: withContentInfo,
           )
         else
-          NFTThumbnailError(message: localizations.nftNotFound)
+          NFTThumbnailError(message: localizations.nftNotFound),
       ],
     );
   }
