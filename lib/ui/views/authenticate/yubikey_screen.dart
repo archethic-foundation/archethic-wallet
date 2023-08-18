@@ -42,8 +42,6 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
 
   double buttonSize = 100;
 
-  VerificationResponse verificationResponse = VerificationResponse();
-
   FocusNode? enterOTPFocusNode;
   TextEditingController? enterOTPController;
   String buttonNFCLabel = 'get my OTP via NFC';
@@ -90,8 +88,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
     final vault = await HiveVaultDatasource.getInstance();
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
     final yubikeyClientID = vault.getYubikeyClientID();
-    verificationResponse = await YubicoService()
-        .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
+    final verificationResponse =
+        await Yubidart().otp.verify(otp, yubikeyClientAPIKey, yubikeyClientID);
     switch (verificationResponse.status) {
       case 'BAD_OTP':
         UIUtil.showSnackbar(

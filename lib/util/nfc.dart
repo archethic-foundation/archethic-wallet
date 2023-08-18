@@ -30,7 +30,7 @@ class NFCUtil {
       await NfcManager.instance.startSession(
         alertMessage: 'Yubikey OTP Validation',
         onDiscovered: (NfcTag tag) async {
-          otp = YubicoService().getOTPFromYubiKeyNFC(tag);
+          otp = Yubidart().otp.getOTPFromYubiKeyNFC(tag);
           EventTaxiImpl.singleton().fire(OTPReceiveEvent(otp: otp));
           await NfcManager.instance.stopSession();
         },
