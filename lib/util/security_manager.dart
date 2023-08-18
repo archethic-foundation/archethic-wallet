@@ -18,6 +18,17 @@ class SecurityManager {
   }
 
   SecurityManager._internal();
+
+  bool _checkPlatform() {
+    if (kIsWeb == true) {
+      return false;
+    }
+    if (Platform.isIOS == false && Platform.isAndroid == false) {
+      return false;
+    }
+    return true;
+  }
+
   static final SecurityManager _singleton = SecurityManager._internal();
 
   Future<bool> isDeviceJailbroken() async {
@@ -29,15 +40,15 @@ class SecurityManager {
   }
 
   Future<bool> isDeviceSecured() async {
+    if (_checkPlatform() == false) {
+      return true;
+    }
     return await SecurityManager().isDeviceJailbroken() == false &&
         await SecurityManager().isDeviceDeveloperMode() == false;
   }
 
   Future checkDeviceSecurity(WidgetRef ref, BuildContext context) async {
-    if (kIsWeb == true) {
-      return;
-    }
-    if (Platform.isIOS == false && Platform.isAndroid == false) {
+    if (_checkPlatform() == false) {
       return;
     }
 
