@@ -85,6 +85,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
               tokenId: nftSearchBar.tokenInformations!.id ?? '',
               collection: nftSearchBar.tokenInformations!.tokenCollection ?? [],
               displaySendButton: false,
+              detailCollection: false,
             ),
           );
 

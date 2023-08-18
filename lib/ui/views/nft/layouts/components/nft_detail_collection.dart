@@ -86,7 +86,8 @@ class NFTDetailCollection extends ConsumerWidget {
                           properties: tokenInformations,
                           collection: const [],
                           symbol: symbol,
-                          tokenId: tokenId,
+                          tokenId: tokenInformations['id'],
+                          detailCollection: true,
                         ),
                       );
                     },

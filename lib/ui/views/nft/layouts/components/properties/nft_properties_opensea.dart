@@ -34,7 +34,7 @@ class NFTPropertiesOpensea extends ConsumerWidget {
         Text(
           localizations.nftPropertiesOpenseaStructure,
           style: theme.textStyleSize10W100Primary,
-        )
+        ),
       ],
     );
   }

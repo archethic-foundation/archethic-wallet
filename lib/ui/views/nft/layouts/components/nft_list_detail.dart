@@ -85,6 +85,7 @@ class NFTListDetail extends ConsumerWidget {
                   collection: collection,
                   symbol: symbol,
                   tokenId: tokenId,
+                  detailCollection: collection.isNotEmpty,
                 ),
               );
             },

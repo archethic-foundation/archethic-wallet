@@ -764,6 +764,14 @@ class AppService {
           );
         }
 
+        final collectionWithTokenId = <Map<String, dynamic>>[];
+        var numTokenId = 1;
+        for (final collection in token.collection) {
+          collection['id'] = numTokenId.toString();
+          numTokenId++;
+          collectionWithTokenId.add(collection);
+        }
+
         final tokenInformations = TokenInformations(
           address: tokenBalance.address,
           name: token.name,
@@ -773,7 +781,7 @@ class AppService {
           supply: fromBigInt(token.supply).toDouble(),
           symbol: token.symbol,
           decimals: token.decimals,
-          tokenCollection: token.collection,
+          tokenCollection: collectionWithTokenId,
           tokenProperties: token.properties,
         );
 

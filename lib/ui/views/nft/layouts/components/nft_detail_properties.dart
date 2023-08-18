@@ -45,6 +45,7 @@ class NFTDetailProperties extends ConsumerWidget {
                     return entry.key != 'content' &&
                             entry.key != 'description' &&
                             entry.key != 'name' &&
+                            entry.key != 'id' &&
                             entry.key != 'type_mime'
                         ? Padding(
                             padding: const EdgeInsets.all(5),

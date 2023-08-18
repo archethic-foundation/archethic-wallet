@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -33,6 +34,7 @@ class NFTDetail extends ConsumerStatefulWidget {
     required this.properties,
     required this.collection,
     required this.tokenId,
+    required this.detailCollection,
     this.nameInCollection,
     this.displaySendButton = true,
   });
@@ -45,6 +47,7 @@ class NFTDetail extends ConsumerStatefulWidget {
   final List<Map<String, dynamic>> collection;
   final Map<String, dynamic> properties;
   final String? nameInCollection;
+  final bool detailCollection;
 
   @override
   ConsumerState<NFTDetail> createState() => _NFTDetailState();
@@ -194,12 +197,19 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
-                    await TransferSheet(
-                      transferType: TransferType.nft,
-                      accountToken: accountSelected.accountNFT!.firstWhere(
+                    late AccountToken accountToken;
+                    if (widget.detailCollection == false) {
+                      accountToken = accountSelected.accountNFT!.firstWhere(
                         (element) =>
                             element.tokenInformations!.id == widget.tokenId,
-                      ),
+                      );
+                    } else {
+                      accountToken = accountSelected.accountNFTCollections![0];
+                    }
+
+                    await TransferSheet(
+                      transferType: TransferType.nft,
+                      accountToken: accountToken,
                       recipient: const TransferRecipient.address(
                         address: Address(address: ''),
                       ),
