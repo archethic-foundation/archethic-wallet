@@ -426,6 +426,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dependency_validator:
+    dependency: "direct dev"
+    description:
+      name: dependency_validator
+      sha256: "08349175533ed0bd06eb9b6043cde66c45b2bfc7ebc222a7542cdb1324f1bf03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.2"
   device_info_plus:
     dependency: transitive
     description:
@@ -498,14 +506,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.4"
-  expandable:
-    dependency: "direct main"
-    description:
-      name: expandable
-      sha256: "9604d612d4d1146dafa96c6d8eec9c2ff0994658d6d09fed720ab788c7f5afc2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
   extension:
     dependency: transitive
     description:
@@ -708,14 +708,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  flutter_lints:
-    dependency: "direct dev"
-    description:
-      name: flutter_lints
-      sha256: "2118df84ef0c3ca93f96123a616ae8540879991b8b57af2f81b76a7ada49b2a4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -1057,14 +1049,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  http_methods:
-    dependency: transitive
-    description:
-      name: http_methods
-      sha256: "6bccce8f1ec7b5d701e7921dca35e202d425b57e317ba1a37f2638590e29e566"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   http_multi_server:
     dependency: transitive
     description:
@@ -1207,7 +1191,7 @@ packages:
     source: hosted
     version: "0.6.7"
   json_annotation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: json_annotation
       sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
@@ -1254,14 +1238,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  lints:
-    dependency: transitive
-    description:
-      name: lints
-      sha256: "0a217c6c989d21039f1498c3ed9f3ed71b354e69873f13a8dfc3c9fe76f1b452"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   loading_animation_widget:
     dependency: "direct main"
     description:
@@ -1446,14 +1422,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  page_view_indicators:
-    dependency: "direct main"
-    description:
-      name: page_view_indicators
-      sha256: d2ebf6c26d1b065f137e88a2b88181dea6b96d7a34abe9a237fbf214888d0f3f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   password_strength:
     dependency: "direct main"
     description:
@@ -1575,7 +1543,7 @@ packages:
     source: hosted
     version: "5.4.0"
   phoenix_socket:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: phoenix_socket
       sha256: dcbf94b27a5492e14b7cc74dfd2e2a6cec73cfb09cee4f1cc19a58dfa40eb3c2
@@ -1775,21 +1743,13 @@ packages:
     source: hosted
     version: "3.3.0"
   shelf:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shelf
       sha256: ad29c505aee705f41a4d8963641f91ac4cee3c8fad5947e033390a7bd8180fa4
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
-  shelf_router:
-    dependency: "direct main"
-    description:
-      name: shelf_router
-      sha256: f5e5d492440a7fb165fe1e2e1a623f31f734d3370900070b2b1e0d0428d59864
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.4"
   shelf_web_socket:
     dependency: transitive
     description:
@@ -2068,7 +2028,7 @@ packages:
     source: hosted
     version: "3.0.7"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"

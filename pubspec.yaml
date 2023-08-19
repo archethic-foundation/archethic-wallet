@@ -80,9 +80,6 @@ dependencies:
   # Dart package to decode Exif data from tiff, jpeg and heic files.
   exif: ^3.1.4
 
-  # A Flutter widget that can be expanded or collapsed by clicking on a header or an icon.
-  expandable: ^5.0.1
-
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
   file_picker: ^5.3.3
 
@@ -169,9 +166,6 @@ dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: any
 
-  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
-  json_annotation: ^4.8.0
-
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   json_rpc_2: ^3.0.2
   ledger_dart_lib: ^0.1.2
@@ -194,9 +188,6 @@ dependencies:
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info_plus: ^4.1.0
 
-  # Customizable indicators for your PageViews.
-  page_view_indicators: ^2.0.0
-
   # A basic password strength estimator for Dart. Considers the length of the password, used characters, and whether or not the password appears in the top 10,000 most used passwords.
   password_strength: ^0.2.0
 
@@ -208,9 +199,6 @@ dependencies:
 
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
   pdfx: ^2.4.0
-
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  phoenix_socket: ^0.6.2
 
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
   pointycastle: ^3.7.0
@@ -230,12 +218,6 @@ dependencies:
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^7.1.0
 
-  # A model for web server middleware that encourages composition and easy reuse.
-  shelf: ^1.4.1
-
-  # A convenient request router for the shelf web-framework, with support for URL-parameters, nested routers and routers generated from source annotations
-  shelf_router: ^1.1.4
-
   # Dartlang port of socket.io-client for web, flutter, dartvm to use
   socket_io_client: ^2.0.3+1
 
@@ -251,6 +233,9 @@ dependencies:
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
   url_launcher: ^6.1.12
 
+  # RFC4122 (v1, v4, v5) UUID Generator and Parser for all Dart platforms (Web, VM, Flutter)
+  uuid: ^3.0.7
+
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
@@ -265,7 +250,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.5
-  flutter_lints: ^2.0.2
+  dependency_validator: ^3.0.0
   freezed: ^2.4.2
   hive_generator: ^2.0.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
