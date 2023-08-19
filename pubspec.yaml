@@ -163,9 +163,6 @@ dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: any
 
-  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
-  json_annotation: ^4.8.0
-
   # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
 
