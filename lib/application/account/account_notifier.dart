@@ -58,8 +58,18 @@ class _AccountNotifier
   Future<void> refreshNFTs() => _refresh(
         (account) async {
           final session = ref.read(SessionProviders.session).loggedIn!;
+          final tokenInformations = await ref.read(
+            NFTProviders.getNFTList(
+              account.lastAddress!,
+              account.name,
+              session.wallet.keychainSecuredInfos,
+            ).future,
+          );
+
           await account.updateNFT(
             session.wallet.keychainSecuredInfos,
+            tokenInformations.$1,
+            tokenInformations.$2,
           );
         },
       );
@@ -70,12 +80,21 @@ class _AccountNotifier
         (account) async {
           log('${DateTime.now()} Start method refreshAll');
           final session = ref.read(SessionProviders.session).loggedIn!;
+          final tokenInformations = await ref.read(
+            NFTProviders.getNFTList(
+              account.lastAddress!,
+              account.name,
+              session.wallet.keychainSecuredInfos,
+            ).future,
+          );
           await Future.wait([
             _refreshRecentTransactions(account),
             _refreshBalance(account),
             account.updateFungiblesTokens(),
             account.updateNFT(
               session.wallet.keychainSecuredInfos,
+              tokenInformations.$1,
+              tokenInformations.$2,
             ),
           ]);
           log('${DateTime.now()} End method refreshAll');
