@@ -186,6 +186,107 @@ class _GetNFTProviderElement
   @override
   KeychainServiceKeyPair get keychainServiceKeyPair =>
       (origin as _GetNFTProvider).keychainServiceKeyPair;
+String _$getNFTListHash() => r'84e6002875c9f1950d3b7b17eb951a233c9ac317';
+typedef _GetNFTListRef
+    = AutoDisposeFutureProviderRef<(List<AccountToken>, List<AccountToken>)>;
+
+/// See also [_getNFTList].
+@ProviderFor(_getNFTList)
+const _getNFTListProvider = _GetNFTListFamily();
+
+/// See also [_getNFTList].
+class _GetNFTListFamily
+    extends Family<AsyncValue<(List<AccountToken>, List<AccountToken>)>> {
+  /// See also [_getNFTList].
+  const _GetNFTListFamily();
+
+  /// See also [_getNFTList].
+  _GetNFTListProvider call(
+    String address,
+    String name,
+    KeychainSecuredInfos keychainSecuredInfos,
+  ) {
+    return _GetNFTListProvider(
+      address,
+      name,
+      keychainSecuredInfos,
+    );
+  }
+
+  @override
+  _GetNFTListProvider getProviderOverride(
+    covariant _GetNFTListProvider provider,
+  ) {
+    return call(
+      provider.address,
+      provider.name,
+      provider.keychainSecuredInfos,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getNFTListProvider';
+}
+
+/// See also [_getNFTList].
+class _GetNFTListProvider extends AutoDisposeFutureProvider<
+    (List<AccountToken>, List<AccountToken>)> {
+  /// See also [_getNFTList].
+  _GetNFTListProvider(
+    this.address,
+    this.name,
+    this.keychainSecuredInfos,
+  ) : super.internal(
+          (ref) => _getNFTList(
+            ref,
+            address,
+            name,
+            keychainSecuredInfos,
+          ),
+          from: _getNFTListProvider,
+          name: r'_getNFTListProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getNFTListHash,
+          dependencies: _GetNFTListFamily._dependencies,
+          allTransitiveDependencies:
+              _GetNFTListFamily._allTransitiveDependencies,
+        );
+
+  final String address;
+  final String name;
+  final KeychainSecuredInfos keychainSecuredInfos;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetNFTListProvider &&
+        other.address == address &&
+        other.name == name &&
+        other.keychainSecuredInfos == keychainSecuredInfos;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, keychainSecuredInfos.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+>>>>>>> b6535d4a (move files)
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -152,17 +152,12 @@ class Account extends HiveObject with KeychainServiceMixin {
 
   Future<void> updateNFT(
     KeychainSecuredInfos keychainSecuredInfos,
+    List<AccountToken>? accountNFT,
+    List<AccountToken>? accountNFTCollections,
   ) async {
-    final nftListResult = await sl
-        .get<AppService>()
-        .getNFTList(lastAddress!, name, keychainSecuredInfos);
-
-    accountNFT = nftListResult.$1;
-    accountNFTCollections = nftListResult.$2;
-
     var nftInfosOffChainExist = false;
     if (accountNFT != null) {
-      for (final accountToken in accountNFT!) {
+      for (final accountToken in accountNFT) {
         if (nftInfosOffChainList == null) {
           nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
           nftInfosOffChainList!.add(
@@ -192,7 +187,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     }
 
     if (accountNFTCollections != null) {
-      for (final accountNFTCollection in accountNFTCollections!) {
+      for (final accountNFTCollection in accountNFTCollections) {
         if (nftInfosOffChainList == null) {
           nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
           nftInfosOffChainList!.add(
