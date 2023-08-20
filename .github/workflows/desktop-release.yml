@@ -6,6 +6,7 @@ on:
       - dev
       - testnet
       - mainnet
+      - 752-nft-list-display-problem
 
 jobs:
   build-linux:
