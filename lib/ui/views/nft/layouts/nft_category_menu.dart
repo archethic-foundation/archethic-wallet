@@ -91,12 +91,15 @@ class NftCategoryMenu extends ConsumerWidget {
                     ),
                     if (count > 0)
                       Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 5),
+                        padding: const EdgeInsets.only(left: 12, top: 12),
                         child: badge.Badge(
                           badgeAnimation: const badge.BadgeAnimation.slide(
                             toAnimate: false,
                           ),
-                          badgeContent: Text(count.toString()),
+                          badgeContent: Text(
+                            count.toString(),
+                            style: theme.textStyleSize10W100Primary,
+                          ),
                         ),
                       ),
                   ],
