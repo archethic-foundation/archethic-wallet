@@ -1,10 +1,7 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
-import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -38,13 +35,8 @@ Future<void> _checkCurrentVersion(
 
 class CurrentVersionRepository {
   Future<(String, String)> getCurrentVersion() async {
-    if (!kIsWeb && Platform.isWindows) {
-      // TODO(reddwarf03): Not optimal but ok for the moment
-      return ('2.1.1', '');
-    } else {
-      final packageInfo = await PackageInfo.fromPlatform();
-      return (packageInfo.version, packageInfo.buildNumber);
-    }
+    final packageInfo = await PackageInfo.fromPlatform();
+    return (packageInfo.version, packageInfo.buildNumber);
   }
 }
 
