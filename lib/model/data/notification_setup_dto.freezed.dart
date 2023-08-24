@@ -112,9 +112,8 @@ class __$$_NotificationsSetupCopyWithImpl<$Res>
 class _$_NotificationsSetup extends _NotificationsSetup {
   const _$_NotificationsSetup(
       {@HiveField(0, defaultValue: [])
-          required final List<String> listenedTxChains,
-      @HiveField(1)
-          this.lastFcmToken})
+      required final List<String> listenedTxChains,
+      @HiveField(1) this.lastFcmToken})
       : _listenedTxChains = listenedTxChains,
         super._();
 
@@ -163,9 +162,8 @@ class _$_NotificationsSetup extends _NotificationsSetup {
 abstract class _NotificationsSetup extends NotificationsSetup {
   const factory _NotificationsSetup(
       {@HiveField(0, defaultValue: [])
-          required final List<String> listenedTxChains,
-      @HiveField(1)
-          final String? lastFcmToken}) = _$_NotificationsSetup;
+      required final List<String> listenedTxChains,
+      @HiveField(1) final String? lastFcmToken}) = _$_NotificationsSetup;
   const _NotificationsSetup._() : super._();
 
   @override
