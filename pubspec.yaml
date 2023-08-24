@@ -166,8 +166,10 @@ dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: any
 
-  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
+  # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
+
+  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
