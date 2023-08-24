@@ -40,6 +40,7 @@ class HiveTypeIds {
   static const talkMessage = 15;
 
   static const notificationsSetup = 16;
+  static const cacheItem = 17;
 }
 
 class DBHelper {
