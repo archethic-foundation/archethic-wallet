@@ -5,7 +5,7 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
+import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:event_taxi/event_taxi.dart';

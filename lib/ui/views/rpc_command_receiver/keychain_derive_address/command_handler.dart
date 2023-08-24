@@ -5,7 +5,7 @@ import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/keychain_derive_address.dart';
-import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
+import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -4,7 +4,7 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/get_services_from_keychain.dart';
-import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
+import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

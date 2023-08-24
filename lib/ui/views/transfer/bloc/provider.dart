@@ -8,7 +8,7 @@ import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
-import 'package:aewallet/infrastructure/repositories/archethic_transaction.dart';
+import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
