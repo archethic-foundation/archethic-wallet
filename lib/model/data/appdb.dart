@@ -17,6 +17,7 @@ import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
@@ -71,7 +72,8 @@ class DBHelper {
       ..registerAdapter(TalkMessageAdapter())
       ..registerAdapter(PubKeyAccessRecipientAdapter())
       ..registerAdapter(ContactAccessRecipientAdapter())
-      ..registerAdapter(NotificationsSetupAdapter());
+      ..registerAdapter(NotificationsSetupAdapter())
+      ..registerAdapter(CacheItemHiveAdapter());
   }
 
   // Contacts
