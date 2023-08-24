@@ -38,6 +38,7 @@ import 'package:aewallet/ui/widgets/dialogs/lock_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_timeout_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/primary_currency_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/theme_dialog.dart';
+import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -48,6 +49,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 
 part 'about_menu_view.dart';

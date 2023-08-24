@@ -381,6 +381,10 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
           for (final element in session.wallet.appKeychain.accounts) {
             await element.clearRecentTransactionsFromCache();
           }
+          final cache = await Hive.openBox<CacheItemHive>(
+            CacheManagerHive.cacheManagerHiveTable,
+          );
+          await cache.clear();
           ref
               .read(AccountProviders.selectedAccount.notifier)
               .refreshRecentTransactions();
