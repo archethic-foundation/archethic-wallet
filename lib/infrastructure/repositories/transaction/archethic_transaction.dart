@@ -52,6 +52,7 @@ class ArchethicTransactionRepository
         : lastAddressFromAddressMap[genesisAddress]!;
   }
 
+  // TODO(chralu): Clarify the usage
   @override
   Future<Result<List<RecentTransaction>, Failure>> getRecentTransactions({
     required Account account,

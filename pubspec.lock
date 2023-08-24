@@ -458,14 +458,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.3.2"
-  dynamic_height_grid_view:
-    dependency: "direct main"
-    description:
-      name: dynamic_height_grid_view
-      sha256: "618d9f529a00fd68238e03fa9c6cc29a2fc9ad6fae1248505fc86972f2e0f716"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   ecdsa:
     dependency: transitive
     description:
@@ -685,7 +677,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_hooks:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_hooks
       sha256: "9eab8fd7aa752c3c1c0a364f9825851d410eb935243411682f4b1b0a4c569d71"
