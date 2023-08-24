@@ -497,7 +497,7 @@
   "nftAEWebUrlEmpty": "The AEWeb address is required.",
   "nftIPFSUrlEmpty": "The IPFS address is required.",
   "nftHTTPUrlEmpty": "The url is required.",
-  "nftIPFSFrom": "From IPFS url: ",
+  "nftIPFSFrom": "See on IPFS: ",
   "nftAEWebFrom": "From AEWeb url: ",
   "nftHTTPFrom": "From url: ",
   "nftAEWebLinkDisclaimer": "Note that the content returned by AEweb may not be fixed and could return different values over time.",
