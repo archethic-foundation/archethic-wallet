@@ -40,16 +40,13 @@ class ImageNetwork extends ConsumerWidget {
         height: height,
         fit: fit,
         errorWidget: (context, url, error) {
-          if (error.statusCode == 404) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: Text(
-                localizations.imageNotAvailable,
-                style: theme.textStyleSize12W400Primary,
-              ),
-            );
-          }
-          return const SizedBox();
+          return Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            child: Text(
+              localizations.imageNotAvailable,
+              style: theme.textStyleSize12W400Primary,
+            ),
+          );
         },
         progressIndicatorBuilder: (context, url, progress) {
           return loading;
