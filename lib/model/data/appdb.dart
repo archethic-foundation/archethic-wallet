@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 import 'package:aewallet/model/available_currency.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
+import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -14,8 +16,6 @@ import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';

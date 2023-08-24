@@ -5,12 +5,12 @@ import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
+import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';

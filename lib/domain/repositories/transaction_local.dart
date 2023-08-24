@@ -1,5 +1,5 @@
 import 'package:aewallet/domain/models/core/failures.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
 
 abstract class TransactionLocalRepositoryInterface {
   Future<List<RecentTransaction>> getRecentTransactions(String accountName);

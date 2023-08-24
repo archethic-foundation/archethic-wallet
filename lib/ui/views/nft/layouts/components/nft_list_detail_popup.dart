@@ -1,7 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_category_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';

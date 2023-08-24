@@ -2,7 +2,7 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/market_price.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_hidden_value.dart';
 import 'package:aewallet/util/currency_util.dart';

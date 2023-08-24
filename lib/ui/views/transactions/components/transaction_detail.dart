@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/token_creation/token_creation.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_hosting/transaction_hosting.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input.dart';

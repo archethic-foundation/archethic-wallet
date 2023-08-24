@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfer_entry_template.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_icon.dart';
 import 'package:aewallet/util/number_util.dart';

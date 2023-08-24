@@ -3,8 +3,8 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/secured_settings.dart';
-import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:hive/hive.dart';
 
 class HiveVaultDatasource with SecuredHiveMixin {

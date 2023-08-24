@@ -6,13 +6,13 @@ import 'dart:typed_data';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_networks.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos_service.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
-import 'package:aewallet/model/keychain_secured_infos.dart';
-import 'package:aewallet/model/keychain_secured_infos_service.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';

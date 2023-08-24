@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';

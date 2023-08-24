@@ -1,9 +1,9 @@
 import 'package:aewallet/domain/repositories/transaction_local.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/usecases/read_usecases.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:flutter/material.dart';
 
 @immutable

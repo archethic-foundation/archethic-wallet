@@ -2,7 +2,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';

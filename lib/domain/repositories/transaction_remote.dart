@@ -2,9 +2,9 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/transaction.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/recent_transaction.dart';
-import 'package:aewallet/model/keychain_secured_infos.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 typedef TransactionConfirmationHandler = Future<void> Function(

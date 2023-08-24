@@ -1,4 +1,4 @@
-import 'package:aewallet/model/keychain_secured_infos.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'secured_settings.freezed.dart';
