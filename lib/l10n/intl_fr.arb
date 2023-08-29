@@ -143,7 +143,7 @@
 	"understandButton": "Je comprends",
 	"confirmSecretPhrase": "Confirmez votre phrase secrète.",
 	"confirmSecretPhraseKo": "L'ordre n'est pas correct.",
-	"backupSecretPhrase": "Phrase secrète de sauvegarde",
+	"backupSecretPhrase": "Phrase secrète de de récupération",
 	"ok": "Ok",
 	"addressInfos": "Mon adresse publique pour recevoir des fonds",
 	"informations": "Informations",
@@ -352,7 +352,7 @@
 	"messageInvalid": "Votre message ne peut pas comporter (pour le moment) des caractères spéciaux.",
 	"pass": "Passer",
 	"passBackupConfirmationDisclaimer": "CLAUSE DE NON-RESPONSABILITE",
-	"passBackupConfirmationMessage": "Nous vous invitons à confirmer manuellement l'enregistrement de votre recovery phrase. En cas de perte, vous perdrez vos fonds.",
+	"passBackupConfirmationMessage": "Nous vous invitons à confirmer manuellement l'enregistrement de votre phrase secrète de récupération. En cas de perte, vous perdrez vos fonds.",
 	"archethicDoesntKeepCopy": "Pour rappel, Archethic n'en garde aucune copie.",
 	"accountsKeychainAddressHeader": "Adresse de votre porte-clés",
 	"amountZero": "Le montant doit être > 0",
@@ -534,5 +534,9 @@
 			}
 		}
 	},
-	"searchDiscussionHint": "Rechercher à partir d'une adresse"
+	"searchDiscussionHint": "Rechercher à partir d'une adresse",
+	"passRecoveryPhraseBackupSecureLater": "Me le rappeler plus tard",
+	"passRecoveryPhraseBackupSecureNow": "Sécuriser mon portefeuille maintenant",
+	"recoveryPhraseBackupRequired": "Sauvegardez votre phrase secrète de récupération pour protéger votre portefeuille et les fonds associés",
+	"recoveryPhraseSave": "Sauvegarder la phrase secrète"
 }

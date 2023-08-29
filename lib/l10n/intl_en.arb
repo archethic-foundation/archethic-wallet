@@ -143,7 +143,7 @@
   "understandButton": "I understand",
   "confirmSecretPhrase": "Confirm your secret phrase.",
   "confirmSecretPhraseKo": "The order is not correct.",
-  "backupSecretPhrase": "Backup Secret Phrase",
+  "backupSecretPhrase": "Secret Recovery Phrase",
   "ok": "Ok",
   "addressInfos": "My public address to receive funds",
   "informations": "Informations",
@@ -557,5 +557,9 @@
       }
     }
   },
-  "searchDiscussionHint": "Search from an address"
+  "searchDiscussionHint": "Search from an address",
+  "passRecoveryPhraseBackupSecureLater": "Remind me later",
+  "passRecoveryPhraseBackupSecureNow": "Secure my wallet now",
+  "recoveryPhraseBackupRequired": "Save your secret recovery phrase to protect your wallet and associated funds",
+  "recoveryPhraseSave": "Save secret phrase"
 }

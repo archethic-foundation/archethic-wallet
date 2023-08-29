@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -533,6 +534,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                   ).notifier,
                                 )
                                 .refreshNFTs();
+                            ref.read(
+                              RecoveryPhraseSavedProvider
+                                  .setRecoveryPhraseSaved(true),
+                            );
                             final securityConfigOk =
                                 await launchSecurityConfiguration(
                               context,

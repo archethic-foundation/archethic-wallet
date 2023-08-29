@@ -13,6 +13,7 @@ import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/main_bottombar.dart';
+import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
@@ -95,7 +96,13 @@ class _HomePageState extends ConsumerState<HomePage>
           children: const [
             AddressBookTab(),
             KeychainTab(),
-            AccountTab(),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                AccountTab(),
+                RecoveryPhraseBanner(),
+              ],
+            ),
             NFTTab(
               key: Key('bottomBarAddressNFTlink'),
             ),

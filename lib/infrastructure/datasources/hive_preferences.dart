@@ -41,6 +41,8 @@ class HivePreferencesDatasource {
   static const String priceChartScale = 'archethic_wallet_priceChartScale';
   static const String activeVibrations = 'archethic_wallet_activeVibrations';
   static const String activeRPCServer = 'archethic_wallet_activeRPCServer';
+  static const String recoveryPhraseSaved =
+      'archethic_wallet_recoveryPhraseSaved';
 
   static const String activeNotifications =
       'archethic_wallet_activeNotifications';
@@ -177,6 +179,12 @@ class HivePreferencesDatasource {
       _setValue(activeRPCServer, value);
 
   bool getActiveRPCServer() => _getValue(activeRPCServer, defaultValue: true);
+
+  Future<void> setRecoveryPhraseSaved(bool value) =>
+      _setValue(recoveryPhraseSaved, value);
+
+  bool getRecoveryPhraseSaved() =>
+      _getValue(recoveryPhraseSaved, defaultValue: false);
 
   Future<void> setMainScreenCurrentPage(int value) =>
       _setValue(mainScreenCurrentPage, value);

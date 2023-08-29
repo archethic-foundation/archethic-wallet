@@ -2,13 +2,13 @@
 import 'dart:async';
 
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
@@ -25,16 +25,20 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IntroBackupConfirm extends ConsumerStatefulWidget {
-  const IntroBackupConfirm({required this.name, required this.seed, super.key});
+  const IntroBackupConfirm({
+    required this.name,
+    required this.seed,
+    this.welcomeProcess = true,
+    super.key,
+  });
   final String? name;
   final String? seed;
-
+  final bool welcomeProcess;
   @override
   ConsumerState<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
@@ -215,7 +219,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
@@ -371,51 +374,58 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                         ),
                       ),
                     ),
-                    if (settings.network.network ==
-                            AvailableNetworks.archethicTestNet ||
-                        kDebugMode)
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              AppButtonTinyConnectivity(
-                                localizations.confirm,
-                                Dimens.buttonTopDimens,
-                                key: const Key('confirm'),
-                                onPressed: () async {
-                                  var orderOk = true;
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            AppButtonTinyConnectivity(
+                              localizations.confirm,
+                              Dimens.buttonTopDimens,
+                              key: const Key('confirm'),
+                              onPressed: () async {
+                                var orderOk = true;
 
-                                  for (var i = 0;
-                                      i < originalWordsList.length;
-                                      i++) {
-                                    if (originalWordsList[i] !=
-                                        wordListSelected[i]) {
-                                      orderOk = false;
-                                    }
+                                for (var i = 0;
+                                    i < originalWordsList.length;
+                                    i++) {
+                                  if (originalWordsList[i] !=
+                                      wordListSelected[i]) {
+                                    orderOk = false;
                                   }
-                                  if (orderOk == false) {
-                                    setState(() {
-                                      UIUtil.showSnackbar(
-                                        localizations.confirmSecretPhraseKo,
-                                        context,
-                                        ref,
-                                        theme.text!,
-                                        theme.snackBarShadow!,
-                                      );
-                                    });
-                                  } else {
+                                }
+                                if (orderOk == false) {
+                                  setState(() {
+                                    UIUtil.showSnackbar(
+                                      localizations.confirmSecretPhraseKo,
+                                      context,
+                                      ref,
+                                      theme.text!,
+                                      theme.snackBarShadow!,
+                                    );
+                                  });
+                                } else {
+                                  ref.read(
+                                    RecoveryPhraseSavedProvider
+                                        .setRecoveryPhraseSaved(true),
+                                  );
+
+                                  if (widget.welcomeProcess) {
                                     await launchSecurityConfiguration(
                                       context,
                                       ref,
                                       widget.seed!,
                                     );
+                                  } else {
+                                    Navigator.pop(context);
                                   }
-                                },
-                                disabled: wordListSelected.length != 24,
-                              ),
-                            ],
-                          ),
+                                }
+                              },
+                              disabled: wordListSelected.length != 24,
+                            ),
+                          ],
+                        ),
+                        if (widget.welcomeProcess)
                           Row(
                             children: <Widget>[
                               AppButtonTinyConnectivity(
@@ -429,8 +439,13 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                     localizations
                                         .passBackupConfirmationDisclaimer,
                                     localizations.passBackupConfirmationMessage,
-                                    localizations.yes,
+                                    localizations
+                                        .passRecoveryPhraseBackupSecureLater,
                                     () async {
+                                      ref.read(
+                                        RecoveryPhraseSavedProvider
+                                            .setRecoveryPhraseSaved(false),
+                                      );
                                       await launchSecurityConfiguration(
                                         context,
                                         ref,
@@ -443,58 +458,15 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                         localizations.archethicDoesntKeepCopy,
                                     additionalContentStyle:
                                         theme.textStyleSize12W300PrimaryRed,
+                                    cancelText: localizations
+                                        .passRecoveryPhraseBackupSecureNow,
                                   );
                                 },
                               ),
                             ],
                           ),
-                        ],
-                      )
-                    else
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              AppButtonTinyConnectivity(
-                                localizations.confirm,
-                                Dimens.buttonBottomDimens,
-                                key: const Key('confirm'),
-                                onPressed: () async {
-                                  var orderOk = true;
-
-                                  for (var i = 0;
-                                      i < originalWordsList.length;
-                                      i++) {
-                                    if (originalWordsList[i] !=
-                                        wordListSelected[i]) {
-                                      orderOk = false;
-                                    }
-                                  }
-                                  if (orderOk == false) {
-                                    setState(() {
-                                      UIUtil.showSnackbar(
-                                        localizations.confirmSecretPhraseKo,
-                                        context,
-                                        ref,
-                                        theme.text!,
-                                        theme.snackBarShadow!,
-                                      );
-                                    });
-                                  } else {
-                                    await launchSecurityConfiguration(
-                                      context,
-                                      ref,
-                                      widget.seed!,
-                                    );
-                                  }
-                                },
-                                disabled: wordListSelected.length != 24,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      ],
+                    ),
                   ],
                 ),
                 if (connectivityStatusProvider ==
