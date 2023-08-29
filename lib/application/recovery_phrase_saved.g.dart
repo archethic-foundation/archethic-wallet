@@ -1,0 +1,130 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'recovery_phrase_saved.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$isRecoveryPhraseSavedHash() =>
+    r'e74fe27f4e109056a3fc68bc6793e9edf1eb878a';
+
+/// See also [_isRecoveryPhraseSaved].
+@ProviderFor(_isRecoveryPhraseSaved)
+final _isRecoveryPhraseSavedProvider = AutoDisposeFutureProvider<bool>.internal(
+  _isRecoveryPhraseSaved,
+  name: r'_isRecoveryPhraseSavedProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isRecoveryPhraseSavedHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _IsRecoveryPhraseSavedRef = AutoDisposeFutureProviderRef<bool>;
+String _$setRecoveryPhraseSavedHash() =>
+    r'd149ec4155d979322fa510fbbe64bd6e88dee9af';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+typedef _SetRecoveryPhraseSavedRef = AutoDisposeFutureProviderRef<void>;
+
+/// See also [_setRecoveryPhraseSaved].
+@ProviderFor(_setRecoveryPhraseSaved)
+const _setRecoveryPhraseSavedProvider = _SetRecoveryPhraseSavedFamily();
+
+/// See also [_setRecoveryPhraseSaved].
+class _SetRecoveryPhraseSavedFamily extends Family<AsyncValue<void>> {
+  /// See also [_setRecoveryPhraseSaved].
+  const _SetRecoveryPhraseSavedFamily();
+
+  /// See also [_setRecoveryPhraseSaved].
+  _SetRecoveryPhraseSavedProvider call(
+    bool value,
+  ) {
+    return _SetRecoveryPhraseSavedProvider(
+      value,
+    );
+  }
+
+  @override
+  _SetRecoveryPhraseSavedProvider getProviderOverride(
+    covariant _SetRecoveryPhraseSavedProvider provider,
+  ) {
+    return call(
+      provider.value,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_setRecoveryPhraseSavedProvider';
+}
+
+/// See also [_setRecoveryPhraseSaved].
+class _SetRecoveryPhraseSavedProvider extends AutoDisposeFutureProvider<void> {
+  /// See also [_setRecoveryPhraseSaved].
+  _SetRecoveryPhraseSavedProvider(
+    this.value,
+  ) : super.internal(
+          (ref) => _setRecoveryPhraseSaved(
+            ref,
+            value,
+          ),
+          from: _setRecoveryPhraseSavedProvider,
+          name: r'_setRecoveryPhraseSavedProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$setRecoveryPhraseSavedHash,
+          dependencies: _SetRecoveryPhraseSavedFamily._dependencies,
+          allTransitiveDependencies:
+              _SetRecoveryPhraseSavedFamily._allTransitiveDependencies,
+        );
+
+  final bool value;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _SetRecoveryPhraseSavedProvider && other.value == value;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, value.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
