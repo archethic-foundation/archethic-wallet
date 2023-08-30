@@ -516,7 +516,7 @@
 	"serviceName": "Name :",
 	"signTransactionListTransactionsHeader": "Transaction %1",
 	"messengerTalkNotFound": "Discussion introuvable",
-	"messengerHeader": "Messages",
+	"messengerHeader": "Discussions",
 	"addMessengerGroup": "Créer une discussion",
 	"addRemoteMessengerGroup": "Ajouter cette discussion",
 	"addMessengerTalk": "Créer une conversation",
@@ -524,7 +524,7 @@
 	"introNewMessengerTalk": "Choisissez le nom à donner à ce groupe, ainsi que les personnes à y inviter",
 	"messengerTalkAccessDescription": "Ajoutez ou supprimez des clés publiques pouvant accéder à cette conversation.",
 	"messengerTalkAddAccess": "Ajouter un accès",
-	"addMessengerTalkFailure": "La création à échouée",
+	"addMessengerTalkFailure": "La création a échoué",
 	"messengerTalkMembersCount": "{membersCount} membres",
 	"@messengerTalkMembersCount": {
 		"placeholders": {
@@ -534,5 +534,5 @@
 			}
 		}
 	},
-	"searchDiscussionHint": "Rechercher une discussion\nà partir d'une adresse."
+	"searchDiscussionHint": "Rechercher à partir d'une adresse"
 }
