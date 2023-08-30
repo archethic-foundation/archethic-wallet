@@ -104,7 +104,7 @@ class _LoadedTalkListItem extends TalkListItem {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -118,11 +118,17 @@ class _LoadedTalkListItem extends TalkListItem {
                       style: theme.textStyleSize12W600Primary,
                     ),
                   ),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     talk.updateDate.format(context),
-                    style: theme.textStyleSize10W100Primary,
+                    style: theme.textStyleSize12W100Primary,
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 4,
               ),
               if (talk.lastMessage != null)
                 Padding(
@@ -165,7 +171,9 @@ class _LastMessagePreview extends ConsumerWidget {
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: '${contactName?.substring(1)} : ',
+            text: (contactName?.startsWith('@') ?? false)
+                ? '${contactName?.substring(1)} : '
+                : '$contactName : ',
             style: theme.textStyleSize10W600Primary,
           ),
           TextSpan(
