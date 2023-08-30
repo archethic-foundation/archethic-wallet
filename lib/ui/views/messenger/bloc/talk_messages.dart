@@ -169,7 +169,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
         );
       }
 
-      if (offset == 0) {
+      if (offset == 0 && nextPageItems.isNotEmpty) {
         await _updateTalkLastMessage(nextPageItems.first);
       }
     });
