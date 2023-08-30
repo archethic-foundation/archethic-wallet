@@ -3,15 +3,12 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_state.dart';
 import 'package:aewallet/ui/views/messenger/layouts/add_talk_sheet.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -114,10 +111,29 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
     return Column(
       children: [
         TextFormField(
+          onFieldSubmitted: (val) async {
+            if (val.isEmpty) {
+              return;
+            }
+
+            final name =
+                (await session.wallet.appKeychain.getAccountSelected())!.name;
+
+            await discussionSearchBarNotifier.searchDiscussion(
+              searchController.text,
+              context,
+              session.wallet.keychainSecuredInfos.services[name]!.keyPair!,
+            );
+          },
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.zero,
-            prefixIcon: hasQRCode
+            prefixIcon: Icon(
+              Iconsax.search_normal,
+              color: theme.text,
+              size: 16,
+            ),
+            suffixIcon: hasQRCode
                 ? InkWell(
                     child: Icon(
                       Iconsax.scan_barcode,
@@ -134,6 +150,7 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                         context,
                         ref,
                       );
+
                       if (scanResult == null) {
                         UIUtil.showSnackbar(
                           AppLocalizations.of(
@@ -163,12 +180,6 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                     },
                   )
                 : null,
-            suffixIcon: PasteIcon(
-              onPaste: (String value) {
-                discussionSearchBarNotifier.setSearchCriteria(value);
-                _updateAdressTextController();
-              },
-            ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(90),
@@ -184,74 +195,12 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
           textAlign: TextAlign.center,
           controller: searchController,
           autocorrect: false,
-          maxLines: 2,
-          textInputAction: TextInputAction.done,
+          textInputAction: TextInputAction.search,
           cursorColor: theme.text,
           inputFormatters: <TextInputFormatter>[
             UpperCaseTextFormatter(),
             LengthLimitingTextInputFormatter(68),
           ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: discussionSearchBar.loading
-              ? AppButtonTinyWithoutExpanded(
-                  AppButtonTinyType.primaryOutline,
-                  width: MediaQuery.of(context).size.width,
-                  localizations.search,
-                  Dimens.buttonTopDimens,
-                  key: const Key('search'),
-                  icon: Icon(
-                    Icons.search,
-                    color: theme.text30,
-                    size: 14,
-                  ),
-                  showProgressIndicator: true,
-                  onPressed: () {},
-                )
-              : connectivityStatusProvider == ConnectivityStatus.isConnected
-                  ? AppButtonTinyWithoutExpanded(
-                      AppButtonTinyType.primary,
-                      width: MediaQuery.of(context).size.width,
-                      localizations.search,
-                      Dimens.buttonTopDimens,
-                      key: const Key('search'),
-                      icon: Icon(
-                        Icons.search,
-                        color: theme.text,
-                        size: 14,
-                      ),
-                      showProgressIndicator: discussionSearchBar.loading,
-                      onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        final name = (await session.wallet.appKeychain
-                                .getAccountSelected())!
-                            .name;
-
-                        await discussionSearchBarNotifier.searchDiscussion(
-                          searchController.text,
-                          context,
-                          session.wallet.keychainSecuredInfos.services[name]!
-                              .keyPair!,
-                        );
-                      },
-                    )
-                  : AppButtonTinyWithoutExpanded(
-                      AppButtonTinyType.primaryOutline,
-                      width: MediaQuery.of(context).size.width,
-                      localizations.search,
-                      Dimens.buttonTopDimens,
-                      key: const Key('search'),
-                      icon: Icon(
-                        Icons.search,
-                        color: theme.text30,
-                        size: 14,
-                      ),
-                      onPressed: () {},
-                    ),
         ),
       ],
     );
