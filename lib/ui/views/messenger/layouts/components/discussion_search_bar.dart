@@ -1,4 +1,3 @@
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -61,13 +60,9 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final session = ref.watch(SessionProviders.session).loggedIn!;
     final localizations = AppLocalizations.of(context)!;
-    final discussionSearchBar = ref.watch(
-      DiscussionSearchBarProvider.discussionSearchBar,
-    );
     final discussionSearchBarNotifier = ref.watch(
       DiscussionSearchBarProvider.discussionSearchBar.notifier,
     );
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     ref.listen<DiscussionSearchBarState>(
       DiscussionSearchBarProvider.discussionSearchBar,
       (previousState, discussionSearchBar) {
