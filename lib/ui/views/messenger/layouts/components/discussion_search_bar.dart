@@ -195,6 +195,8 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
           textAlign: TextAlign.center,
           controller: searchController,
           autocorrect: false,
+          maxLines:
+              null, // max number of lines cannot be set because small devices (such as iPhone SE) cannot display 68 characters in 2 lines
           textInputAction: TextInputAction.search,
           cursorColor: theme.text,
           inputFormatters: <TextInputFormatter>[
