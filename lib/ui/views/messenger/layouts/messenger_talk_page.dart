@@ -15,6 +15,7 @@ import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -50,22 +51,25 @@ class MessengerTalkPage extends ConsumerWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          actions: [
+            IconButton(
+              icon: const Icon(Iconsax.info_circle),
+              onPressed: () async {
+                Sheets.showAppHeightNineSheet(
+                  context: context,
+                  ref: ref,
+                  widget: TalkDetailsSheet(talkAddress: talkAddress),
+                );
+              },
+            ),
+          ],
           title: talk.maybeMap(
             data: (data) {
               final displayName = ref.watch(
                 MessengerProviders.talkDisplayName(data.value),
               );
 
-              return InkWell(
-                onTap: () {
-                  Sheets.showAppHeightNineSheet(
-                    context: context,
-                    ref: ref,
-                    widget: TalkDetailsSheet(talkAddress: talkAddress),
-                  );
-                },
-                child: Text(displayName),
-              );
+              return Text(displayName);
             },
             orElse: () => const Text('           ')
                 .animate(
@@ -111,9 +115,14 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
 
   @override
   void initState() {
+    super.initState();
+
     textEditingController = TextEditingController();
     messageFocusNode = FocusNode();
-    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      messageFocusNode.requestFocus();
+    });
   }
 
   @override
@@ -190,7 +199,6 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                                 ),
                               )
                               .text;
-                          messageFocusNode.requestFocus();
                         },
                   icon: Icon(
                     Icons.send,
@@ -226,7 +234,6 @@ class _MessageTextField extends ConsumerWidget {
     return Stack(
       children: [
         TextField(
-          autofocus: true,
           maxLines: null,
           controller: textEditingController,
           focusNode: focusNode,
