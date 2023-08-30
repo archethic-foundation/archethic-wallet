@@ -10,6 +10,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_talk_sheet.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -79,6 +80,21 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       widget: const ConfigureCategoryList(),
                       onDisposed: () => ref
                           .invalidate(NftCategoryProviders.fetchNftCategories),
+                    );
+                  },
+                ),
+              if (preferences.mainScreenCurrentPage == 4)
+                IconButton(
+                  icon: const Icon(Iconsax.edit),
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    Sheets.showAppHeightNineSheet(
+                      context: context,
+                      ref: ref,
+                      widget: const CreateTalkSheet(),
                     );
                   },
                 )
