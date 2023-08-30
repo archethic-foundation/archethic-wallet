@@ -17,7 +17,7 @@ extension DurationUtil on Duration {
 extension FormatDateTimeDependingDays on DateTime {
   String format(BuildContext context) {
     if (difference(DateTime.now()).inDays < 1) {
-      return DateFormat().add_Hms().format(this);
+      return DateFormat().add_Hm().format(this);
     } else {
       if (difference(DateTime.now()).inDays < 30) {
         return DateFormat.MEd(
