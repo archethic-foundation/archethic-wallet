@@ -539,7 +539,7 @@
   "serviceName": "Name :",
   "signTransactionListTransactionsHeader": "Transaction %1",
   "messengerTalkNotFound": "Messaging group not found",
-  "messengerHeader": "Messenger",
+  "messengerHeader": "Discussions",
   "addMessengerGroup": "Create a messaging group",
   "addRemoteMessengerGroup": "Add this messaging group",
   "addMessengerTalk": "Create a talk group",
@@ -557,5 +557,5 @@
       }
     }
   },
-  "searchDiscussionHint": "Search for a discussion\nfrom an address."
+  "searchDiscussionHint": "Search from an address"
 }
