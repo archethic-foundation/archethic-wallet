@@ -30,7 +30,7 @@ class InfoBanner extends ConsumerWidget {
       width: MediaQuery.of(context).size.width,
       height: height,
       child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
@@ -41,12 +41,7 @@ class InfoBanner extends ConsumerWidget {
           elevation: 0,
           color: theme.background,
           child: Container(
-            padding: const EdgeInsets.only(
-              top: 5,
-              bottom: 5,
-              left: 10,
-              right: 10,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             width: MediaQuery.of(context).size.width,
             alignment: Alignment.center,
             child: Text(
