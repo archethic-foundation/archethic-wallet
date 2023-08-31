@@ -97,7 +97,7 @@ class CreateTalkSheet extends ConsumerWidget {
                             ),
                           ),
                           Divider(
-                            color: theme.textStyleSize14W700Primary.color,
+                            color: theme.text,
                           ),
                           TextButton(
                             onPressed: () {
@@ -125,7 +125,7 @@ class CreateTalkSheet extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      Divider(color: theme.textStyleSize14W700Primary.color),
+                      Divider(color: theme.text),
                       const SizedBox(
                         height: 15,
                       ),
