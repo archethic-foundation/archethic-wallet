@@ -121,55 +121,46 @@ class CreateTalkSheet extends ConsumerWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    if (formState.canSubmit)
-                      AppButtonTiny(
-                        AppButtonTinyType.primary,
-                        localizations.addMessengerTalk,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addMessengerTalk'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel,
-                          size: 14,
-                        ),
-                        onPressed: () async {
-                          ShowSendingAnimation.build(
-                            context,
-                            theme,
-                          );
-                          final result = await formNotifier.createTalk();
-                          Navigator.of(context).pop();
-
-                          result.map(
-                            success: (success) {
-                              Navigator.of(context).pop();
-                            },
-                            failure: (failure) {
-                              UIUtil.showSnackbar(
-                                localizations.addMessengerTalkFailure,
-                                context,
-                                ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
-                                duration: const Duration(seconds: 5),
-                              );
-                            },
-                          );
-                        },
-                      )
-                    else
-                      AppButtonTiny(
-                        AppButtonTinyType.primaryOutline,
-                        localizations.addMessengerTalk,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addMessengerTalk'),
-                        icon: Icon(
-                          Icons.add,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
-                          size: 14,
-                        ),
-                        onPressed: () {},
+                    AppButtonTiny(
+                      AppButtonTinyType.primary,
+                      localizations.addMessengerTalk,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('addMessengerTalk'),
+                      icon: Icon(
+                        Icons.add,
+                        color: formState.canSubmit
+                            ? theme.mainButtonLabel
+                            : theme
+                                .textStyleSize18W600EquinoxMainButtonLabelDisabled
+                                .color,
+                        size: 14,
                       ),
+                      disabled: formState.canSubmit == false,
+                      onPressed: () async {
+                        ShowSendingAnimation.build(
+                          context,
+                          theme,
+                        );
+                        final result = await formNotifier.createTalk();
+                        Navigator.of(context).pop();
+
+                        result.map(
+                          success: (success) {
+                            Navigator.of(context).pop();
+                          },
+                          failure: (failure) {
+                            UIUtil.showSnackbar(
+                              localizations.addMessengerTalkFailure,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                              duration: const Duration(seconds: 5),
+                            );
+                          },
+                        );
+                      },
+                    )
                   ],
                 ),
               ],

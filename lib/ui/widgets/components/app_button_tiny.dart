@@ -175,11 +175,11 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
               ? _NoIconButton(
                   showProgressIndicator: showProgressIndicator,
                   buttonText: buttonText,
-                  onPressed: handlePressed,
+                  onPressed: disabled == true ? null : handlePressed,
                 )
               : _IconButton(
                   buttonText: buttonText,
-                  onPressed: handlePressed,
+                  onPressed: disabled == true ? null : handlePressed,
                   icon: icon,
                   showProgressIndicator: showProgressIndicator,
                 ),
@@ -202,11 +202,11 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
               ? _NoIconButton(
                   showProgressIndicator: showProgressIndicator,
                   buttonText: buttonText,
-                  onPressed: handlePressed,
+                  onPressed: disabled == true ? null : handlePressed,
                 )
               : _IconButtonOutline(
                   buttonText: buttonText,
-                  onPressed: handlePressed,
+                  onPressed: disabled == true ? null : handlePressed,
                   icon: icon,
                 ),
         );
@@ -300,7 +300,10 @@ class _IconButton extends ConsumerWidget {
               child: SizedBox.square(
                 dimension: 8,
                 child: CircularProgressIndicator(
-                  color: theme.textStyleSize12W400EquinoxMainButtonLabel.color,
+                  color: onPressed == null
+                      ? theme.textStyleSize18W600EquinoxMainButtonLabelDisabled
+                          .color
+                      : theme.textStyleSize12W400EquinoxMainButtonLabel.color,
                   strokeWidth: 1,
                 ),
               ),
@@ -313,7 +316,12 @@ class _IconButton extends ConsumerWidget {
           AutoSizeText(
             buttonText,
             textAlign: TextAlign.center,
-            style: theme.textStyleSize12W400EquinoxMainButtonLabel,
+            style: theme.textStyleSize12W400EquinoxMainButtonLabel.copyWith(
+              color: onPressed == null
+                  ? theme
+                      .textStyleSize18W600EquinoxMainButtonLabelDisabled.color
+                  : theme.textStyleSize12W400EquinoxMainButtonLabel.color,
+            ),
             maxLines: 1,
             stepGranularity: 0.5,
           ),
