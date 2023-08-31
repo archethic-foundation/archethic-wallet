@@ -117,52 +117,48 @@ class CreateTalkSheet extends ConsumerWidget {
                 ),
               ),
             ),
-            Column(
+            Row(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.addMessengerTalk,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('addMessengerTalk'),
-                      icon: Icon(
-                        Icons.add,
-                        color: formState.canSubmit
-                            ? theme.mainButtonLabel
-                            : theme
-                                .textStyleSize18W600EquinoxMainButtonLabelDisabled
-                                .color,
-                        size: 14,
-                      ),
-                      disabled: formState.canSubmit == false,
-                      onPressed: () async {
-                        ShowSendingAnimation.build(
-                          context,
-                          theme,
-                        );
-                        final result = await formNotifier.createTalk();
-                        Navigator.of(context).pop();
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  localizations.addMessengerTalk,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('addMessengerTalk'),
+                  icon: Icon(
+                    Icons.add,
+                    color: formState.canSubmit
+                        ? theme.mainButtonLabel
+                        : theme
+                            .textStyleSize18W600EquinoxMainButtonLabelDisabled
+                            .color,
+                    size: 14,
+                  ),
+                  disabled: formState.canSubmit == false,
+                  onPressed: () async {
+                    ShowSendingAnimation.build(
+                      context,
+                      theme,
+                    );
+                    final result = await formNotifier.createTalk();
+                    Navigator.of(context).pop();
 
-                        result.map(
-                          success: (success) {
-                            Navigator.of(context).pop();
-                          },
-                          failure: (failure) {
-                            UIUtil.showSnackbar(
-                              localizations.addMessengerTalkFailure,
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
-                              duration: const Duration(seconds: 5),
-                            );
-                          },
+                    result.map(
+                      success: (success) {
+                        Navigator.of(context).pop();
+                      },
+                      failure: (failure) {
+                        UIUtil.showSnackbar(
+                          localizations.addMessengerTalkFailure,
+                          context,
+                          ref,
+                          theme.text!,
+                          theme.snackBarShadow!,
+                          duration: const Duration(seconds: 5),
                         );
                       },
-                    )
-                  ],
-                ),
+                    );
+                  },
+                )
               ],
             ),
           ],
