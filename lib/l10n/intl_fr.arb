@@ -539,5 +539,8 @@
 	"passRecoveryPhraseBackupSecureLater": "Me le rappeler plus tard",
 	"passRecoveryPhraseBackupSecureNow": "Sécuriser mon portefeuille maintenant",
 	"recoveryPhraseBackupRequired": "Sauvegardez votre phrase secrète de récupération pour protéger votre portefeuille et les fonds associés",
-	"recoveryPhraseSave": "Sauvegarder la phrase secrète"
+	"recoveryPhraseSave": "Sauvegarder la phrase secrète",
+	"newContact": "Nouveau contact",
+	"contactsHeader": "Contacts",
+	"noContacts" : "Vous n'avez aucun contact"
 }

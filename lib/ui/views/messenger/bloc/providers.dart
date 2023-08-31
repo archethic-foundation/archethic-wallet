@@ -20,7 +20,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'create_talk_form.dart';
+part 'create_group_form.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
 part 'talk_messages.dart';

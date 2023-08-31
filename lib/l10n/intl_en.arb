@@ -562,5 +562,8 @@
   "passRecoveryPhraseBackupSecureLater": "Remind me later",
   "passRecoveryPhraseBackupSecureNow": "Secure my wallet now",
   "recoveryPhraseBackupRequired": "Save your secret recovery phrase to protect your wallet and associated funds",
-  "recoveryPhraseSave": "Save secret phrase"
+  "recoveryPhraseSave": "Save secret phrase",
+  "newContact": "New contact",
+  "contactsHeader": "Contacts",
+  "noContacts" : "You have no contacts"
 }
