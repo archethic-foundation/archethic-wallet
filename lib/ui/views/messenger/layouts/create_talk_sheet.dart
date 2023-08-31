@@ -84,7 +84,7 @@ class CreateTalkSheet extends ConsumerWidget {
                               children: [
                                 Icon(
                                   Icons.group_add_outlined,
-                                  color: theme.textStyleSize14W700Primary.color,
+                                  color: theme.text,
                                 ),
                                 const SizedBox(
                                   width: 8,
@@ -111,7 +111,7 @@ class CreateTalkSheet extends ConsumerWidget {
                               children: [
                                 Icon(
                                   Iconsax.user_add,
-                                  color: theme.textStyleSize14W700Primary.color,
+                                  color: theme.text,
                                 ),
                                 const SizedBox(
                                   width: 8,
