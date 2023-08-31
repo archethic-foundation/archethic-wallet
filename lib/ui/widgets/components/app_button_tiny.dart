@@ -301,7 +301,7 @@ class _IconButton extends ConsumerWidget {
                 dimension: 8,
                 child: CircularProgressIndicator(
                   color: onPressed == null
-                      ? theme.textStyleSize18W600EquinoxMainButtonLabelDisabled
+                      ? theme.textStyleSize12W400EquinoxMainButtonLabelDisabled
                           .color
                       : theme.textStyleSize12W400EquinoxMainButtonLabel.color,
                   strokeWidth: 1,
@@ -319,7 +319,7 @@ class _IconButton extends ConsumerWidget {
             style: theme.textStyleSize12W400EquinoxMainButtonLabel.copyWith(
               color: onPressed == null
                   ? theme
-                      .textStyleSize18W600EquinoxMainButtonLabelDisabled.color
+                      .textStyleSize12W400EquinoxMainButtonLabelDisabled.color
                   : theme.textStyleSize12W400EquinoxMainButtonLabel.color,
             ),
             maxLines: 1,
