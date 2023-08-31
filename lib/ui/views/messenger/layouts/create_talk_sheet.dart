@@ -1,19 +1,11 @@
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/views/messenger/layouts/components/add_public_key_textfield_pk.dart';
-import 'package:aewallet/ui/views/messenger/layouts/components/public_key_item.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_group_sheet.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,10 +18,6 @@ class CreateTalkSheet extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
-    final formNotifier =
-        ref.watch(MessengerProviders.talkCreationForm.notifier);
-    final formState = ref.watch(MessengerProviders.talkCreationForm);
-
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -37,7 +25,7 @@ class CreateTalkSheet extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             SheetHeader(
-              title: localizations.addMessengerTalk,
+              title: localizations.newTalk,
             ),
             Expanded(
               child: ArchethicScrollbar(
@@ -50,180 +38,46 @@ class CreateTalkSheet extends ConsumerWidget {
                   ),
                   child: Column(
                     children: <Widget>[
-                      Text(
-                        localizations.introNewMessengerTalk,
-                        style: theme.textStyleSize14W600Primary,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: AddMessengerTalkNameTextField(),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          localizations.messengerTalkAccessDescription,
-                          style: theme.textStyleSize12W100Primary,
-                          textAlign: TextAlign.justify,
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Expanded(
-                            child: AddPublicKeyTextFieldPk(
-                              onChanged: (recipient) {
-                                if (recipient == null) return;
-                                formNotifier.setMemberAddFieldValue(recipient);
+                          TextButton(
+                              onPressed: () {
+                                Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  ref: ref,
+                                  widget: const CreateGroupSheet(),
+                                );
                               },
-                            ),
-                          ),
-                          TextButton.icon(
-                            onPressed: formState.memberAddFieldValue
-                                        ?.isPublicKeyValid ??
-                                    false
-                                ? () {
-                                    formNotifier.addMember(
-                                      formState.memberAddFieldValue!,
-                                    );
-                                  }
-                                : null,
-                            style: TextButton.styleFrom(
-                              iconColor: theme.text,
-                              disabledIconColor: Colors.grey,
-                            ),
-                            icon: const Icon(Icons.add),
-                            label: Container(),
-                          ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.group_add_outlined,
+                                    color:
+                                        theme.textStyleSize14W600Primary.color,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    localizations.newGroup,
+                                    style: theme.textStyleSize14W600Primary,
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
-                      Column(
-                        children: formState.members
-                            .map(
-                              (e) => PublicKeyLine(
-                                accessRecipient: e,
-                                onTapRemove: () => formNotifier.removeMember(e),
-                              ),
-                            )
-                            .toList(),
-                      ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            Row(
-              children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addMessengerTalk,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addMessengerTalk'),
-                  icon: Icon(
-                    Icons.add,
-                    color: formState.canSubmit
-                        ? theme.mainButtonLabel
-                        : theme
-                            .textStyleSize18W600EquinoxMainButtonLabelDisabled
-                            .color,
-                    size: 14,
-                  ),
-                  disabled: formState.canSubmit == false,
-                  onPressed: () async {
-                    ShowSendingAnimation.build(
-                      context,
-                      theme,
-                    );
-                    final result = await formNotifier.createTalk();
-                    Navigator.of(context).pop();
-
-                    result.map(
-                      success: (success) {
-                        Navigator.of(context).pop();
-                      },
-                      failure: (failure) {
-                        UIUtil.showSnackbar(
-                          localizations.addMessengerTalkFailure,
-                          context,
-                          ref,
-                          theme.text!,
-                          theme.snackBarShadow!,
-                          duration: const Duration(seconds: 5),
-                        );
-                      },
-                    );
-                  },
-                )
-              ],
-            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class AddMessengerTalkNameTextField extends ConsumerStatefulWidget {
-  const AddMessengerTalkNameTextField({
-    super.key,
-  });
-
-  @override
-  ConsumerState<AddMessengerTalkNameTextField> createState() =>
-      _AddMessengerTalkNameTextFieldState();
-}
-
-class _AddMessengerTalkNameTextFieldState
-    extends ConsumerState<AddMessengerTalkNameTextField> {
-  late TextEditingController nameController;
-  late FocusNode nameFocusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    nameFocusNode = FocusNode();
-    nameController = TextEditingController(text: '');
-  }
-
-  @override
-  void dispose() {
-    nameFocusNode.dispose();
-    nameController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(
-    BuildContext context,
-  ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final localizations = AppLocalizations.of(context)!;
-    final createTalkFormNotifier =
-        ref.watch(MessengerProviders.talkCreationForm.notifier);
-
-    return AppTextField(
-      focusNode: nameFocusNode,
-      controller: nameController,
-      cursorColor: theme.text,
-      textInputAction: TextInputAction.next,
-      labelText: localizations.addMessengerGroupNameLabel,
-      autocorrect: false,
-      keyboardType: TextInputType.text,
-      style: theme.textStyleSize16W600Primary,
-      inputFormatters: <TextInputFormatter>[
-        LengthLimitingTextInputFormatter(
-          20,
-        ),
-        UpperCaseTextFormatter(),
-      ],
-      onChanged: (text) async {
-        createTalkFormNotifier.setName(text);
-      },
     );
   }
 }
