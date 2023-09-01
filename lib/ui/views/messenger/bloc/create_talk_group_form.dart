@@ -10,11 +10,11 @@ final _createTalkGroupFormProvider = NotifierProvider.autoDispose<
 @freezed
 class CreateTalkGroupFormState with _$CreateTalkGroupFormState {
   const factory CreateTalkGroupFormState({
-    required String name,
+    @Default('') String name,
     AccessRecipient? memberAddFieldValue,
-    required List<AccessRecipient> members,
+    @Default([]) List<AccessRecipient> members,
     AccessRecipient? adminAddFieldValue,
-    required List<AccessRecipient> admins,
+    @Default([]) List<AccessRecipient> admins,
   }) = _CreateTalkGroupFormState;
   const CreateTalkGroupFormState._();
 
@@ -26,11 +26,7 @@ class CreateTalkGroupFormNotifier
   CreateTalkGroupFormNotifier();
 
   @override
-  CreateTalkGroupFormState build() => const CreateTalkGroupFormState(
-        name: '',
-        members: [],
-        admins: [],
-      );
+  CreateTalkGroupFormState build() => const CreateTalkGroupFormState();
 
   void setMemberAddFieldValue(AddPublicKeyTextFieldValue fieldValue) {
     state = state.copyWith(memberAddFieldValue: fieldValue.toAccessRecipient);

@@ -109,14 +109,16 @@ class __$$_CreateTalkContactFormStateCopyWithImpl<$Res>
 
 class _$_CreateTalkContactFormState extends _CreateTalkContactFormState {
   const _$_CreateTalkContactFormState(
-      {required this.name, required final List<AccessRecipient> members})
+      {this.name = '', final List<AccessRecipient> members = const []})
       : _members = members,
         super._();
 
   @override
+  @JsonKey()
   final String name;
   final List<AccessRecipient> _members;
   @override
+  @JsonKey()
   List<AccessRecipient> get members {
     if (_members is EqualUnmodifiableListView) return _members;
     // ignore: implicit_dynamic_type
@@ -151,9 +153,8 @@ class _$_CreateTalkContactFormState extends _CreateTalkContactFormState {
 
 abstract class _CreateTalkContactFormState extends CreateTalkContactFormState {
   const factory _CreateTalkContactFormState(
-          {required final String name,
-          required final List<AccessRecipient> members}) =
-      _$_CreateTalkContactFormState;
+      {final String name,
+      final List<AccessRecipient> members}) = _$_CreateTalkContactFormState;
   const _CreateTalkContactFormState._() : super._();
 
   @override
@@ -335,21 +336,23 @@ class __$$_CreateTalkGroupFormStateCopyWithImpl<$Res>
 
 class _$_CreateTalkGroupFormState extends _CreateTalkGroupFormState {
   const _$_CreateTalkGroupFormState(
-      {required this.name,
+      {this.name = '',
       this.memberAddFieldValue,
-      required final List<AccessRecipient> members,
+      final List<AccessRecipient> members = const [],
       this.adminAddFieldValue,
-      required final List<AccessRecipient> admins})
+      final List<AccessRecipient> admins = const []})
       : _members = members,
         _admins = admins,
         super._();
 
   @override
+  @JsonKey()
   final String name;
   @override
   final AccessRecipient? memberAddFieldValue;
   final List<AccessRecipient> _members;
   @override
+  @JsonKey()
   List<AccessRecipient> get members {
     if (_members is EqualUnmodifiableListView) return _members;
     // ignore: implicit_dynamic_type
@@ -360,6 +363,7 @@ class _$_CreateTalkGroupFormState extends _CreateTalkGroupFormState {
   final AccessRecipient? adminAddFieldValue;
   final List<AccessRecipient> _admins;
   @override
+  @JsonKey()
   List<AccessRecipient> get admins {
     if (_admins is EqualUnmodifiableListView) return _admins;
     // ignore: implicit_dynamic_type
@@ -404,12 +408,11 @@ class _$_CreateTalkGroupFormState extends _CreateTalkGroupFormState {
 
 abstract class _CreateTalkGroupFormState extends CreateTalkGroupFormState {
   const factory _CreateTalkGroupFormState(
-          {required final String name,
-          final AccessRecipient? memberAddFieldValue,
-          required final List<AccessRecipient> members,
-          final AccessRecipient? adminAddFieldValue,
-          required final List<AccessRecipient> admins}) =
-      _$_CreateTalkGroupFormState;
+      {final String name,
+      final AccessRecipient? memberAddFieldValue,
+      final List<AccessRecipient> members,
+      final AccessRecipient? adminAddFieldValue,
+      final List<AccessRecipient> admins}) = _$_CreateTalkGroupFormState;
   const _CreateTalkGroupFormState._() : super._();
 
   @override

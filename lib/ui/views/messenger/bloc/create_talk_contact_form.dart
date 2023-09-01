@@ -10,8 +10,8 @@ final _createTalkContactFormProvider = NotifierProvider.autoDispose<
 @freezed
 class CreateTalkContactFormState with _$CreateTalkContactFormState {
   const factory CreateTalkContactFormState({
-    required String name,
-    required List<AccessRecipient> members,
+    @Default('') String name,
+    @Default([]) List<AccessRecipient> members,
   }) = _CreateTalkContactFormState;
   const CreateTalkContactFormState._();
 }
@@ -21,10 +21,7 @@ class CreateTalkContactFormNotifier
   CreateTalkContactFormNotifier();
 
   @override
-  CreateTalkContactFormState build() => const CreateTalkContactFormState(
-        name: '',
-        members: [],
-      );
+  CreateTalkContactFormState build() => const CreateTalkContactFormState();
 
   void addMember(AccessRecipient member) {
     if (state.members.contains(member)) return;
