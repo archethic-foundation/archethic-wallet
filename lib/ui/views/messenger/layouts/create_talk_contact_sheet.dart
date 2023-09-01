@@ -1,5 +1,6 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -37,7 +38,7 @@ class _CreateTalkContactSheetState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref
           .read(MessengerProviders.talkContactCreationForm.notifier)
-          .setName(widget.contact.displayName);
+          .setName(widget.contact.format);
       final member = AddPublicKeyTextFieldValue.contact(contact: widget.contact)
           .toAccessRecipient!;
       ref
@@ -114,7 +115,7 @@ class _CreateTalkContactSheetState
                       Row(
                         children: [
                           Text(
-                            widget.contact.displayName,
+                            widget.contact.format,
                             style: theme.textStyleSize16W700Primary,
                           ),
                           const Expanded(child: SizedBox()),

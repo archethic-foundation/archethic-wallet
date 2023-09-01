@@ -36,9 +36,9 @@ class CreateTalkContactFormNotifier
     );
   }
 
-  Future<void> setName(
+  void setName(
     String name,
-  ) async {
+  ) {
     state = state.copyWith(
       name: name,
     );
