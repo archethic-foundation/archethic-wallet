@@ -24,10 +24,12 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
     required this.contact,
+    this.editMode = true,
     super.key,
   });
 
   final Contact contact;
+  final bool editMode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,7 +59,8 @@ class ContactDetail extends ConsumerWidget {
                   top: 10,
                   start: 10,
                 ),
-                child: contact.type == ContactType.keychainService.name
+                child: contact.type == ContactType.keychainService.name ||
+                        editMode == false
                     ? const SizedBox()
                     : TextButton(
                         onPressed: () {
@@ -125,7 +128,7 @@ class ContactDetail extends ConsumerWidget {
                   ],
                 ),
               ),
-              if (contact.type == ContactType.keychainService.name)
+              if (contact.type == ContactType.keychainService.name || editMode == false)
                 const SizedBox(
                   width: 50,
                   height: 50,

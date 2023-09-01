@@ -1,65 +1,36 @@
 part of 'providers.dart';
 
-final _createTalkFormProvider =
-    NotifierProvider.autoDispose<CreateTalkFormNotifier, CreateTalkFormState>(
+final _createTalkContactFormProvider = NotifierProvider.autoDispose<
+    CreateTalkContactFormNotifier, CreateTalkContactFormState>(
   () {
-    return CreateTalkFormNotifier();
+    return CreateTalkContactFormNotifier();
   },
 );
 
 @freezed
-class CreateTalkFormState with _$CreateTalkFormState {
-  const factory CreateTalkFormState({
+class CreateTalkContactFormState with _$CreateTalkContactFormState {
+  const factory CreateTalkContactFormState({
     required String name,
-    AccessRecipient? memberAddFieldValue,
     required List<AccessRecipient> members,
-    AccessRecipient? adminAddFieldValue,
-    required List<AccessRecipient> admins,
-  }) = _CreateTalkFormState;
-  const CreateTalkFormState._();
-
-  bool get canSubmit => members.isNotEmpty;
+  }) = _CreateTalkContactFormState;
+  const CreateTalkContactFormState._();
 }
 
-class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
-  CreateTalkFormNotifier();
+class CreateTalkContactFormNotifier
+    extends AutoDisposeNotifier<CreateTalkContactFormState> {
+  CreateTalkContactFormNotifier();
 
   @override
-  CreateTalkFormState build() => const CreateTalkFormState(
+  CreateTalkContactFormState build() => const CreateTalkContactFormState(
         name: '',
         members: [],
-        admins: [],
       );
-
-  void setMemberAddFieldValue(AddPublicKeyTextFieldValue fieldValue) {
-    state = state.copyWith(memberAddFieldValue: fieldValue.toAccessRecipient);
-  }
 
   void addMember(AccessRecipient member) {
     if (state.members.contains(member)) return;
     state = state.copyWith(
       members: [
         ...state.members,
-        member,
-      ],
-    );
-  }
-
-  void removeMember(AccessRecipient member) {
-    state = state.copyWith(
-      members: state.members.where((element) => element != member).toList(),
-    );
-  }
-
-  void setAdminAddFieldValue(AddPublicKeyTextFieldValue fieldValue) {
-    state = state.copyWith(adminAddFieldValue: fieldValue.toAccessRecipient);
-  }
-
-  void addAdmin(AccessRecipient member) {
-    if (state.admins.contains(member)) return;
-    state = state.copyWith(
-      admins: [
-        ...state.admins,
         member,
       ],
     );
@@ -88,7 +59,6 @@ class CreateTalkFormNotifier extends AutoDisposeNotifier<CreateTalkFormState> {
 
         await ref.read(MessengerProviders._messengerRepository).createTalk(
           adminsPubKeys: [
-            ...state.admins.map((recipient) => recipient.publicKey),
             creator.publicKey,
           ],
           membersPubKeys: [

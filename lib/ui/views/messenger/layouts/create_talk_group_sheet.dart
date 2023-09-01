@@ -17,8 +17,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateGroupSheet extends ConsumerWidget {
-  const CreateGroupSheet({super.key});
+class CreateTalkGroupSheet extends ConsumerWidget {
+  const CreateTalkGroupSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,8 +27,8 @@ class CreateGroupSheet extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     final formNotifier =
-        ref.watch(MessengerProviders.talkCreationForm.notifier);
-    final formState = ref.watch(MessengerProviders.talkCreationForm);
+        ref.watch(MessengerProviders.talkGroupCreationForm.notifier);
+    final formState = ref.watch(MessengerProviders.talkGroupCreationForm);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -233,7 +233,7 @@ class _AddMessengerTalkNameTextFieldState
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final createTalkFormNotifier =
-        ref.watch(MessengerProviders.talkCreationForm.notifier);
+        ref.watch(MessengerProviders.talkGroupCreationForm.notifier);
 
     return AppTextField(
       focusNode: nameFocusNode,
