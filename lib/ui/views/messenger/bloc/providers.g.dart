@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef _TalkRef = AutoDisposeFutureProviderRef<Talk>;
-
 /// See also [_talk].
 @ProviderFor(_talk)
 const _talkProvider = _TalkFamily();
@@ -77,10 +75,10 @@ class _TalkFamily extends Family<AsyncValue<Talk>> {
 class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   /// See also [_talk].
   _TalkProvider(
-    this.address,
-  ) : super.internal(
+    String address,
+  ) : this._internal(
           (ref) => _talk(
-            ref,
+            ref as _TalkRef,
             address,
           ),
           from: _talkProvider,
@@ -89,9 +87,43 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
               const bool.fromEnvironment('dart.vm.product') ? null : _$talkHash,
           dependencies: _TalkFamily._dependencies,
           allTransitiveDependencies: _TalkFamily._allTransitiveDependencies,
+          address: address,
         );
 
+  _TalkProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.address,
+  }) : super.internal();
+
   final String address;
+
+  @override
+  Override overrideWith(
+    FutureOr<Talk> Function(_TalkRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _TalkProvider._internal(
+        (ref) => create(ref as _TalkRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        address: address,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Talk> createElement() {
+    return _TalkProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -107,8 +139,20 @@ class _TalkProvider extends AutoDisposeFutureProvider<Talk> {
   }
 }
 
+mixin _TalkRef on AutoDisposeFutureProviderRef<Talk> {
+  /// The parameter `address` of this provider.
+  String get address;
+}
+
+class _TalkProviderElement extends AutoDisposeFutureProviderElement<Talk>
+    with _TalkRef {
+  _TalkProviderElement(super.provider);
+
+  @override
+  String get address => (origin as _TalkProvider).address;
+}
+
 String _$talkDisplayNameHash() => r'0c804df14048c53d1983cf9a77d360f791a454e4';
-typedef _TalkDisplayNameRef = AutoDisposeProviderRef<String>;
 
 /// See also [_talkDisplayName].
 @ProviderFor(_talkDisplayName)
@@ -156,10 +200,10 @@ class _TalkDisplayNameFamily extends Family<String> {
 class _TalkDisplayNameProvider extends AutoDisposeProvider<String> {
   /// See also [_talkDisplayName].
   _TalkDisplayNameProvider(
-    this.talk,
-  ) : super.internal(
+    Talk talk,
+  ) : this._internal(
           (ref) => _talkDisplayName(
-            ref,
+            ref as _TalkDisplayNameRef,
             talk,
           ),
           from: _talkDisplayNameProvider,
@@ -171,9 +215,43 @@ class _TalkDisplayNameProvider extends AutoDisposeProvider<String> {
           dependencies: _TalkDisplayNameFamily._dependencies,
           allTransitiveDependencies:
               _TalkDisplayNameFamily._allTransitiveDependencies,
+          talk: talk,
         );
 
+  _TalkDisplayNameProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.talk,
+  }) : super.internal();
+
   final Talk talk;
+
+  @override
+  Override overrideWith(
+    String Function(_TalkDisplayNameRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _TalkDisplayNameProvider._internal(
+        (ref) => create(ref as _TalkDisplayNameRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        talk: talk,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<String> createElement() {
+    return _TalkDisplayNameProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -189,10 +267,21 @@ class _TalkDisplayNameProvider extends AutoDisposeProvider<String> {
   }
 }
 
+mixin _TalkDisplayNameRef on AutoDisposeProviderRef<String> {
+  /// The parameter `talk` of this provider.
+  Talk get talk;
+}
+
+class _TalkDisplayNameProviderElement extends AutoDisposeProviderElement<String>
+    with _TalkDisplayNameRef {
+  _TalkDisplayNameProviderElement(super.provider);
+
+  @override
+  Talk get talk => (origin as _TalkDisplayNameProvider).talk;
+}
+
 String _$accessRecipientWithPublicKeyHash() =>
     r'8cd0c92d333699019c70fa46161053c030e3e555';
-typedef _AccessRecipientWithPublicKeyRef
-    = AutoDisposeFutureProviderRef<AccessRecipient>;
 
 /// See also [_accessRecipientWithPublicKey].
 @ProviderFor(_accessRecipientWithPublicKey)
@@ -243,10 +332,10 @@ class _AccessRecipientWithPublicKeyProvider
     extends AutoDisposeFutureProvider<AccessRecipient> {
   /// See also [_accessRecipientWithPublicKey].
   _AccessRecipientWithPublicKeyProvider(
-    this.pubKey,
-  ) : super.internal(
+    String pubKey,
+  ) : this._internal(
           (ref) => _accessRecipientWithPublicKey(
-            ref,
+            ref as _AccessRecipientWithPublicKeyRef,
             pubKey,
           ),
           from: _accessRecipientWithPublicKeyProvider,
@@ -258,9 +347,45 @@ class _AccessRecipientWithPublicKeyProvider
           dependencies: _AccessRecipientWithPublicKeyFamily._dependencies,
           allTransitiveDependencies:
               _AccessRecipientWithPublicKeyFamily._allTransitiveDependencies,
+          pubKey: pubKey,
         );
 
+  _AccessRecipientWithPublicKeyProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.pubKey,
+  }) : super.internal();
+
   final String pubKey;
+
+  @override
+  Override overrideWith(
+    FutureOr<AccessRecipient> Function(
+            _AccessRecipientWithPublicKeyRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _AccessRecipientWithPublicKeyProvider._internal(
+        (ref) => create(ref as _AccessRecipientWithPublicKeyRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        pubKey: pubKey,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<AccessRecipient> createElement() {
+    return _AccessRecipientWithPublicKeyProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -277,8 +402,22 @@ class _AccessRecipientWithPublicKeyProvider
   }
 }
 
+mixin _AccessRecipientWithPublicKeyRef
+    on AutoDisposeFutureProviderRef<AccessRecipient> {
+  /// The parameter `pubKey` of this provider.
+  String get pubKey;
+}
+
+class _AccessRecipientWithPublicKeyProviderElement
+    extends AutoDisposeFutureProviderElement<AccessRecipient>
+    with _AccessRecipientWithPublicKeyRef {
+  _AccessRecipientWithPublicKeyProviderElement(super.provider);
+
+  @override
+  String get pubKey => (origin as _AccessRecipientWithPublicKeyProvider).pubKey;
+}
+
 String _$remoteTalkHash() => r'ed7b1d88182f4cdacb77c6ddbb6ca827ce2ae567';
-typedef _RemoteTalkRef = AutoDisposeFutureProviderRef<Talk>;
 
 /// See also [_remoteTalk].
 @ProviderFor(_remoteTalk)
@@ -326,10 +465,10 @@ class _RemoteTalkFamily extends Family<AsyncValue<Talk>> {
 class _RemoteTalkProvider extends AutoDisposeFutureProvider<Talk> {
   /// See also [_remoteTalk].
   _RemoteTalkProvider(
-    this.address,
-  ) : super.internal(
+    String address,
+  ) : this._internal(
           (ref) => _remoteTalk(
-            ref,
+            ref as _TalkRef,
             address,
           ),
           from: _remoteTalkProvider,
@@ -341,9 +480,43 @@ class _RemoteTalkProvider extends AutoDisposeFutureProvider<Talk> {
           dependencies: _RemoteTalkFamily._dependencies,
           allTransitiveDependencies:
               _RemoteTalkFamily._allTransitiveDependencies,
+          address: address,
         );
 
+  _RemoteTalkProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.address,
+  }) : super.internal();
+
   final String address;
+
+  @override
+  Override overrideWith(
+    FutureOr<Talk> Function(_RemoteTalkRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _RemoteTalkProvider._internal(
+        (ref) => create(ref as _RemoteTalkRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        address: address,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Talk> createElement() {
+    return _RemoteTalkProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -357,6 +530,19 @@ class _RemoteTalkProvider extends AutoDisposeFutureProvider<Talk> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _RemoteTalkRef on AutoDisposeFutureProviderRef<Talk> {
+  /// The parameter `address` of this provider.
+  String get address;
+}
+
+class _RemoteTalkProviderElement extends AutoDisposeFutureProviderElement<Talk>
+    with _RemoteTalkRef {
+  _RemoteTalkProviderElement(super.provider);
+
+  @override
+  String get address => (origin as _RemoteTalkProvider).address;
 }
 
 String _$sortedTalksHash() => r'a69c62e57de2860c16c0b8d09c73490816d807a1';
@@ -375,7 +561,6 @@ final _sortedTalksProvider = AutoDisposeFutureProvider<List<Talk>>.internal(
 typedef _SortedTalksRef = AutoDisposeFutureProviderRef<List<Talk>>;
 String _$messageCreationFeesHash() =>
     r'd73daff392d278e20cddfd6d6fe9e3e1d46f71e9';
-typedef _MessageCreationFeesRef = AutoDisposeFutureProviderRef<double>;
 
 /// See also [_messageCreationFees].
 @ProviderFor(_messageCreationFees)
@@ -426,11 +611,11 @@ class _MessageCreationFeesFamily extends Family<AsyncValue<double>> {
 class _MessageCreationFeesProvider extends AutoDisposeFutureProvider<double> {
   /// See also [_messageCreationFees].
   _MessageCreationFeesProvider(
-    this.talkAddress,
-    this.content,
-  ) : super.internal(
+    String talkAddress,
+    String content,
+  ) : this._internal(
           (ref) => _messageCreationFees(
-            ref,
+            ref as _MessageCreationFeesRef,
             talkAddress,
             content,
           ),
@@ -443,10 +628,47 @@ class _MessageCreationFeesProvider extends AutoDisposeFutureProvider<double> {
           dependencies: _MessageCreationFeesFamily._dependencies,
           allTransitiveDependencies:
               _MessageCreationFeesFamily._allTransitiveDependencies,
+          talkAddress: talkAddress,
+          content: content,
         );
+
+  _MessageCreationFeesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.talkAddress,
+    required this.content,
+  }) : super.internal();
 
   final String talkAddress;
   final String content;
+
+  @override
+  Override overrideWith(
+    FutureOr<double> Function(_MessageCreationFeesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _MessageCreationFeesProvider._internal(
+        (ref) => create(ref as _MessageCreationFeesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        talkAddress: talkAddress,
+        content: content,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<double> createElement() {
+    return _MessageCreationFeesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -465,8 +687,27 @@ class _MessageCreationFeesProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+mixin _MessageCreationFeesRef on AutoDisposeFutureProviderRef<double> {
+  /// The parameter `talkAddress` of this provider.
+  String get talkAddress;
+
+  /// The parameter `content` of this provider.
+  String get content;
+}
+
+class _MessageCreationFeesProviderElement
+    extends AutoDisposeFutureProviderElement<double>
+    with _MessageCreationFeesRef {
+  _MessageCreationFeesProviderElement(super.provider);
+
+  @override
+  String get talkAddress =>
+      (origin as _MessageCreationFeesProvider).talkAddress;
+  @override
+  String get content => (origin as _MessageCreationFeesProvider).content;
+}
+
 String _$talkMessagesHash() => r'b145aeb4672f368d39954ad88a45cd9eee51154b';
-typedef _TalkMessagesRef = AutoDisposeFutureProviderRef<List<TalkMessage>>;
 
 /// See also [_talkMessages].
 @ProviderFor(_talkMessages)
@@ -521,12 +762,12 @@ class _TalkMessagesProvider
     extends AutoDisposeFutureProvider<List<TalkMessage>> {
   /// See also [_talkMessages].
   _TalkMessagesProvider(
-    this.talkAddress,
-    this.offset,
-    this.pageSize,
-  ) : super.internal(
+    String talkAddress,
+    int offset,
+    int pageSize,
+  ) : this._internal(
           (ref) => _talkMessages(
-            ref,
+            ref as _TalkMessagesRef,
             talkAddress,
             offset,
             pageSize,
@@ -540,11 +781,51 @@ class _TalkMessagesProvider
           dependencies: _TalkMessagesFamily._dependencies,
           allTransitiveDependencies:
               _TalkMessagesFamily._allTransitiveDependencies,
+          talkAddress: talkAddress,
+          offset: offset,
+          pageSize: pageSize,
         );
+
+  _TalkMessagesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.talkAddress,
+    required this.offset,
+    required this.pageSize,
+  }) : super.internal();
 
   final String talkAddress;
   final int offset;
   final int pageSize;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<TalkMessage>> Function(_TalkMessagesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _TalkMessagesProvider._internal(
+        (ref) => create(ref as _TalkMessagesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        talkAddress: talkAddress,
+        offset: offset,
+        pageSize: pageSize,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<TalkMessage>> createElement() {
+    return _TalkMessagesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -563,6 +844,30 @@ class _TalkMessagesProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _TalkMessagesRef on AutoDisposeFutureProviderRef<List<TalkMessage>> {
+  /// The parameter `talkAddress` of this provider.
+  String get talkAddress;
+
+  /// The parameter `offset` of this provider.
+  int get offset;
+
+  /// The parameter `pageSize` of this provider.
+  int get pageSize;
+}
+
+class _TalkMessagesProviderElement
+    extends AutoDisposeFutureProviderElement<List<TalkMessage>>
+    with _TalkMessagesRef {
+  _TalkMessagesProviderElement(super.provider);
+
+  @override
+  String get talkAddress => (origin as _TalkMessagesProvider).talkAddress;
+  @override
+  int get offset => (origin as _TalkMessagesProvider).offset;
+  @override
+  int get pageSize => (origin as _TalkMessagesProvider).pageSize;
 }
 
 String _$talksHash() => r'81be6d6bc0cd5bbdf9a1f0dbdea3712829bf8e5e';
@@ -642,8 +947,8 @@ class _MessageCreationFormNotifierProvider
         MessageCreationFormState> {
   /// See also [_MessageCreationFormNotifier].
   _MessageCreationFormNotifierProvider(
-    this.talkAddress,
-  ) : super.internal(
+    String talkAddress,
+  ) : this._internal(
           () => _MessageCreationFormNotifier()..talkAddress = talkAddress,
           from: _messageCreationFormNotifierProvider,
           name: r'_messageCreationFormNotifierProvider',
@@ -654,9 +959,51 @@ class _MessageCreationFormNotifierProvider
           dependencies: _MessageCreationFormNotifierFamily._dependencies,
           allTransitiveDependencies:
               _MessageCreationFormNotifierFamily._allTransitiveDependencies,
+          talkAddress: talkAddress,
         );
 
+  _MessageCreationFormNotifierProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.talkAddress,
+  }) : super.internal();
+
   final String talkAddress;
+
+  @override
+  MessageCreationFormState runNotifierBuild(
+    covariant _MessageCreationFormNotifier notifier,
+  ) {
+    return notifier.build(
+      talkAddress,
+    );
+  }
+
+  @override
+  Override overrideWith(_MessageCreationFormNotifier Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: _MessageCreationFormNotifierProvider._internal(
+        () => create()..talkAddress = talkAddress,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        talkAddress: talkAddress,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<_MessageCreationFormNotifier,
+      MessageCreationFormState> createElement() {
+    return _MessageCreationFormNotifierProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -671,19 +1018,26 @@ class _MessageCreationFormNotifierProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _MessageCreationFormNotifierRef
+    on AutoDisposeNotifierProviderRef<MessageCreationFormState> {
+  /// The parameter `talkAddress` of this provider.
+  String get talkAddress;
+}
+
+class _MessageCreationFormNotifierProviderElement
+    extends AutoDisposeNotifierProviderElement<_MessageCreationFormNotifier,
+        MessageCreationFormState> with _MessageCreationFormNotifierRef {
+  _MessageCreationFormNotifierProviderElement(super.provider);
 
   @override
-  MessageCreationFormState runNotifierBuild(
-    covariant _MessageCreationFormNotifier notifier,
-  ) {
-    return notifier.build(
-      talkAddress,
-    );
-  }
+  String get talkAddress =>
+      (origin as _MessageCreationFormNotifierProvider).talkAddress;
 }
 
 String _$paginatedTalkMessagesNotifierHash() =>
-    r'e99219c552e4a1d3a67875f97ab62c6056d639a7';
+    r'b188e1e48f28cbcd36df4beae1f1f252e95af29a';
 
 abstract class _$PaginatedTalkMessagesNotifier
     extends BuildlessAutoDisposeNotifier<PagingController<int, TalkMessage>> {
@@ -744,8 +1098,8 @@ class _PaginatedTalkMessagesNotifierProvider
         PagingController<int, TalkMessage>> {
   /// See also [_PaginatedTalkMessagesNotifier].
   _PaginatedTalkMessagesNotifierProvider(
-    this.talkAddress,
-  ) : super.internal(
+    String talkAddress,
+  ) : this._internal(
           () => _PaginatedTalkMessagesNotifier()..talkAddress = talkAddress,
           from: _paginatedTalkMessagesNotifierProvider,
           name: r'_paginatedTalkMessagesNotifierProvider',
@@ -756,9 +1110,51 @@ class _PaginatedTalkMessagesNotifierProvider
           dependencies: _PaginatedTalkMessagesNotifierFamily._dependencies,
           allTransitiveDependencies:
               _PaginatedTalkMessagesNotifierFamily._allTransitiveDependencies,
+          talkAddress: talkAddress,
         );
 
+  _PaginatedTalkMessagesNotifierProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.talkAddress,
+  }) : super.internal();
+
   final String talkAddress;
+
+  @override
+  PagingController<int, TalkMessage> runNotifierBuild(
+    covariant _PaginatedTalkMessagesNotifier notifier,
+  ) {
+    return notifier.build(
+      talkAddress,
+    );
+  }
+
+  @override
+  Override overrideWith(_PaginatedTalkMessagesNotifier Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: _PaginatedTalkMessagesNotifierProvider._internal(
+        () => create()..talkAddress = talkAddress,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        talkAddress: talkAddress,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<_PaginatedTalkMessagesNotifier,
+      PagingController<int, TalkMessage>> createElement() {
+    return _PaginatedTalkMessagesNotifierProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -773,15 +1169,23 @@ class _PaginatedTalkMessagesNotifierProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _PaginatedTalkMessagesNotifierRef
+    on AutoDisposeNotifierProviderRef<PagingController<int, TalkMessage>> {
+  /// The parameter `talkAddress` of this provider.
+  String get talkAddress;
+}
+
+class _PaginatedTalkMessagesNotifierProviderElement
+    extends AutoDisposeNotifierProviderElement<_PaginatedTalkMessagesNotifier,
+        PagingController<int, TalkMessage>>
+    with _PaginatedTalkMessagesNotifierRef {
+  _PaginatedTalkMessagesNotifierProviderElement(super.provider);
 
   @override
-  PagingController<int, TalkMessage> runNotifierBuild(
-    covariant _PaginatedTalkMessagesNotifier notifier,
-  ) {
-    return notifier.build(
-      talkAddress,
-    );
-  }
+  String get talkAddress =>
+      (origin as _PaginatedTalkMessagesNotifierProvider).talkAddress;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

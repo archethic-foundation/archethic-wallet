@@ -20,7 +20,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'create_group_form.dart';
+part 'create_talk_contact_form.dart';
+part 'create_talk_group_form.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
 part 'talk_messages.dart';
@@ -222,7 +223,8 @@ abstract class MessengerProviders {
   static const messages = _talkMessagesProvider;
   static const paginatedMessages = _paginatedTalkMessagesNotifierProvider;
 
-  static final talkCreationForm = _createTalkFormProvider;
+  static final talkContactCreationForm = _createTalkContactFormProvider;
+  static final talkGroupCreationForm = _createTalkGroupFormProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
 
@@ -230,7 +232,8 @@ abstract class MessengerProviders {
     await ref.read(_messengerRepository).clear();
     ref
       ..invalidate(_talkProvider)
-      ..invalidate(_createTalkFormProvider)
+      ..invalidate(_createTalkContactFormProvider)
+      ..invalidate(_createTalkGroupFormProvider)
       ..invalidate(_talkMessagesProvider);
   }
 }

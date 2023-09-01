@@ -38,4 +38,11 @@ class Contact extends HiveObject {
   /// Favorite
   @HiveField(6)
   bool? favorite;
+
+  String get displayName {
+    if (name.startsWith('@')) {
+      return name.substring(1);
+    }
+    return name;
+  }
 }

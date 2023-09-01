@@ -540,7 +540,8 @@
   "signTransactionListTransactionsHeader": "Transaction %1",
   "messengerTalkNotFound": "Messaging group not found",
   "messengerHeader": "Discussions",
-  "newTalk": "New discussion",
+  "newDiscussion": "New discussion",
+  "createDiscussion": "Create a discussion",
   "newGroup": "New group",
   "addRemoteMessengerGroup": "Add this messaging group",
   "createGroup": "Create a group",
@@ -565,5 +566,6 @@
   "recoveryPhraseSave": "Save secret phrase",
   "newContact": "New contact",
   "contactsHeader": "Contacts",
-  "noContacts" : "You have no contacts"
+  "noContacts" : "You have no contacts",
+  "aboutToCreateADiscussion": "You are about to create a discussion with"
 }

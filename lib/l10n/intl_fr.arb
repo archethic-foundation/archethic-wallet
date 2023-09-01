@@ -517,7 +517,8 @@
 	"signTransactionListTransactionsHeader": "Transaction %1",
 	"messengerTalkNotFound": "Discussion introuvable",
 	"messengerHeader": "Discussions",
-	"newTalk": "Nouvelle discussion",
+	"newDiscussion": "Nouvelle discussion",
+	"createDiscussion": "Créer une discussion",
 	"newGroup": "Nouveau groupe",
 	"addRemoteMessengerGroup": "Ajouter cette discussion",
 	"createGroup": "Créer un groupe",
@@ -542,5 +543,6 @@
 	"recoveryPhraseSave": "Sauvegarder la phrase secrète",
 	"newContact": "Nouveau contact",
 	"contactsHeader": "Contacts",
-	"noContacts" : "Vous n'avez aucun contact"
+	"noContacts" : "Vous n'avez aucun contact",
+	"aboutToCreateADiscussion": "Vous êtes sur le point de créer une discussion avec"
 }

@@ -36,15 +36,16 @@ class PickerItem<T extends Object> {
 
 // TODO(reddwarf03): specify [PickerItem.value] types (thanks to Generics) (3)
 class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
-  const PickerWidget({
-    super.key,
-    this.pickerItems,
-    this.onSelected,
-    this.selectedIndex = -1,
-  });
+  const PickerWidget(
+      {super.key,
+      this.pickerItems,
+      this.onSelected,
+      this.selectedIndex = -1,
+      this.showSelectedItem = true});
   final ValueChanged<PickerItem<T>>? onSelected;
   final List<PickerItem<T>>? pickerItems;
   final int selectedIndex;
+  final bool showSelectedItem;
 
   @override
   ConsumerState<PickerWidget> createState() => _PickerWidgetState();
@@ -78,7 +79,9 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                         FeedbackType.light,
                         preferences.activeVibrations,
                       );
-                  selectedIndex = index;
+                  if (widget.showSelectedItem == true) {
+                    selectedIndex = index;
+                  }
                   widget.onSelected!(widget.pickerItems![index]);
                   setState(() {});
                 }
