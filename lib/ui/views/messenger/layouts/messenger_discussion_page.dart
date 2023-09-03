@@ -60,7 +60,8 @@ class MessengerDiscussionPage extends ConsumerWidget {
                   context: context,
                   ref: ref,
                   widget: DiscussionDetailsSheet(
-                      discussionAddress: discussionAddress),
+                    discussionAddress: discussionAddress,
+                  ),
                 );
               },
             ),

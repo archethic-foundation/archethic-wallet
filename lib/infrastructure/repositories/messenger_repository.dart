@@ -25,6 +25,9 @@ class MessengerRepository
   final NetworksSetting networksSetting;
 
   final _localDatasource = HiveDiscussionDatasource.getInstance();
+  MessagingService? _messagingService;
+  MessagingService get messagingService =>
+      _messagingService ??= sl.get<MessagingService>();
 
   // late HiveVaultDatasource? __vaultDatasource;
   // Future<HiveVaultDatasource> get _vaultDatasource async =>
@@ -74,14 +77,14 @@ class MessengerRepository
         final localDatasource = await _localDatasource;
 
         final newDiscussion = await _remoteDatasource.createDiscussion(
+          messagingService: messagingService,
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
           adminAddress: creator.lastAddress!,
-          admins: adminsPubKeys,
+          adminsPubKeys: adminsPubKeys,
           apiService: sl.get<ApiService>(),
           discussionName: discussionName,
           serviceName: creator.name,
           membersPubKey: membersPubKeys,
-          messagingService: sl.get<MessagingService>(),
         );
         await localDatasource.addDiscussion(
           ownerAddress: creator.genesisAddress,
@@ -134,9 +137,9 @@ class MessengerRepository
           final keyPair = session
               .wallet.keychainSecuredInfos.services[reader.name]!.keyPair!;
 
-          final aeMessages = await _remoteDatasource.read(
+          final aeMessages = await messagingService.readMessages(
             apiService: sl.get<ApiService>(),
-            scAddress: discussionAddress,
+            discussionSCAddress: discussionAddress,
             readerKeyPair: keyPair.toKeyPair,
             limit: limit,
             pagingOffset: pagingOffset,
@@ -170,10 +173,9 @@ class MessengerRepository
           final keyPair = session.wallet.keychainSecuredInfos
               .services[currentAccount.name]!.keyPair!;
 
-          final aeGroupMessage =
-              await _remoteDatasource.getDiscussionFromSCAddress(
+          final aeGroupMessage = await messagingService.getDiscussion(
             apiService: sl.get<ApiService>(),
-            scAddress: discussionAddress,
+            discussionSCAddress: discussionAddress,
             keyPair: keyPair.toKeyPair,
           );
 
@@ -205,6 +207,7 @@ class MessengerRepository
               .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
 
           return _remoteDatasource.calculateMessageSendFees(
+            messagingService: messagingService,
             apiService: sl.get<ApiService>(),
             scAddress: discussionAddress,
             messageContent: content,
@@ -226,10 +229,9 @@ class MessengerRepository
       Result.guard(() async {
         final keyPair = session
             .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
-
-        final sendMessageResult = await _remoteDatasource.send(
+        final sendMessageResult = await messagingService.sendMessage(
           apiService: sl.get<ApiService>(),
-          scAddress: discussionAddress,
+          discussionSCAddress: discussionAddress,
           messageContent: content,
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
           senderAddress: creator.lastAddress!,

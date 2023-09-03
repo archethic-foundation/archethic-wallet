@@ -46,8 +46,6 @@ class _SystemHash {
   }
 }
 
-typedef _TxSentEventsRef = AutoDisposeStreamProviderRef<TxSentEvent>;
-
 /// See also [_txSentEvents].
 @ProviderFor(_txSentEvents)
 const _txSentEventsProvider = _TxSentEventsFamily();
@@ -94,10 +92,10 @@ class _TxSentEventsFamily extends Family<AsyncValue<TxSentEvent>> {
 class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
   /// See also [_txSentEvents].
   _TxSentEventsProvider(
-    this.txChainGenesisAddress,
-  ) : super.internal(
+    String txChainGenesisAddress,
+  ) : this._internal(
           (ref) => _txSentEvents(
-            ref,
+            ref as _TxSentEventsRef,
             txChainGenesisAddress,
           ),
           from: _txSentEventsProvider,
@@ -109,9 +107,43 @@ class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
           dependencies: _TxSentEventsFamily._dependencies,
           allTransitiveDependencies:
               _TxSentEventsFamily._allTransitiveDependencies,
+          txChainGenesisAddress: txChainGenesisAddress,
         );
 
+  _TxSentEventsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.txChainGenesisAddress,
+  }) : super.internal();
+
   final String txChainGenesisAddress;
+
+  @override
+  Override overrideWith(
+    Stream<TxSentEvent> Function(_TxSentEventsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _TxSentEventsProvider._internal(
+        (ref) => create(ref as _TxSentEventsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        txChainGenesisAddress: txChainGenesisAddress,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<TxSentEvent> createElement() {
+    return _TxSentEventsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -126,6 +158,21 @@ class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _TxSentEventsRef on AutoDisposeStreamProviderRef<TxSentEvent> {
+  /// The parameter `txChainGenesisAddress` of this provider.
+  String get txChainGenesisAddress;
+}
+
+class _TxSentEventsProviderElement
+    extends AutoDisposeStreamProviderElement<TxSentEvent>
+    with _TxSentEventsRef {
+  _TxSentEventsProviderElement(super.provider);
+
+  @override
+  String get txChainGenesisAddress =>
+      (origin as _TxSentEventsProvider).txChainGenesisAddress;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

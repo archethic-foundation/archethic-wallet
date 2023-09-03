@@ -204,124 +204,124 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       theme.statusBar!,
     );
     return GestureDetector(
-        onTap: () {
-          // Hide soft input keyboard after tapping outside anywhere on screen
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: OKToast(
-          textStyle: theme.textStyleSize14W700Background,
-          backgroundColor: theme.background,
-          child: MaterialApp(
-            navigatorKey: rootNavigatorKey,
-            debugShowCheckedModeBanner: false,
-            title: 'Archethic Wallet',
-            theme: ThemeData(
-              dialogBackgroundColor: theme.backgroundDark,
-              primaryColor: theme.text,
-              fontFamily: theme.secondaryFont,
-              brightness: theme.brightness,
-            ),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            locale: language.getLocale(),
-            supportedLocales: ref.read(LanguageProviders.availableLocales),
-            initialRoute: '/',
-            onGenerateRoute: (RouteSettings settings) {
-              if (deeplinkRpcReceiver.canHandle(settings.name)) {
-                deeplinkRpcReceiver.handle(settings.name);
-                return null;
-              }
-
-              final routes = <String, MaterialPageRoute>{
-                '/': NoTransitionRoute<Splash>(
-                  builder: (_) => const Splash(),
-                  settings: settings,
-                ),
-                '/home': NoTransitionRoute<HomePage>(
-                  builder: (_) => const AutoLockGuard(child: HomePage()),
-                  settings: settings,
-                ),
-                '/intro_welcome': NoTransitionRoute<IntroWelcome>(
-                  builder: (_) => const IntroWelcome(),
-                  settings: settings,
-                ),
-                '/intro_welcome_get_first_infos':
-                    MaterialPageRoute<IntroNewWalletGetFirstInfos>(
-                  builder: (_) => const IntroNewWalletGetFirstInfos(),
-                  settings: settings,
-                ),
-                '/intro_backup': MaterialPageRoute<IntroBackupSeedPage>(
-                  builder: (_) => IntroBackupSeedPage(
-                    name: settings.arguments as String?,
-                  ),
-                  settings: settings,
-                ),
-                '/intro_backup_safety':
-                    MaterialPageRoute<IntroNewWalletDisclaimer>(
-                  builder: (_) => IntroNewWalletDisclaimer(
-                    name: settings.arguments as String?,
-                  ),
-                  settings: settings,
-                ),
-                '/intro_import': MaterialPageRoute<IntroImportSeedPage>(
-                  builder: (_) => const IntroImportSeedPage(),
-                  settings: settings,
-                ),
-                '/intro_backup_confirm': MaterialPageRoute<IntroBackupConfirm>(
-                  builder: (_) {
-                    final args =
-                        settings.arguments as Map<String, dynamic>? ?? {};
-                    return IntroBackupConfirm(
-                      name:
-                          args['name'] == null ? null : args['name'] as String,
-                      seed:
-                          args['seed'] == null ? null : args['seed'] as String,
-                    );
-                  },
-                  settings: settings,
-                ),
-                '/lock_screen_transition': MaterialPageRoute<AppLockScreen>(
-                  builder: (_) => const AppLockScreen(),
-                  settings: settings,
-                ),
-                '/nft_list_per_category': MaterialPageRoute<NFTListPerCategory>(
-                  builder: (_) => NFTListPerCategory(
-                    currentNftCategoryIndex: settings.arguments as int?,
-                  ),
-                  settings: settings,
-                ),
-                '/nft_creation': MaterialPageRoute(
-                  builder: (_) {
-                    final args =
-                        settings.arguments as Map<String, dynamic>? ?? {};
-                    return NftCreationProcessSheet(
-                      currentNftCategoryIndex:
-                          args['currentNftCategoryIndex'] as int,
-                    );
-                  },
-                  settings: settings,
-                ),
-                '/messenger_discussion': MaterialPageRoute(
-                  builder: (_) => MessengerDiscussionPage(
-                      discussionAddress: settings.arguments! as String),
-                ),
-              };
-
-              /// Wraps all routes with [RPCCommandReceiver]
-              /// That way, RPCCommandReceiver should never been disposed.
-              final route = routes[settings.name];
-              return route?.copyWith(
-                builder: (context) => RPCCommandReceiver(
-                  child: route.builder(context),
-                ),
-              );
-            },
+      onTap: () {
+        // Hide soft input keyboard after tapping outside anywhere on screen
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: OKToast(
+        textStyle: theme.textStyleSize14W700Background,
+        backgroundColor: theme.background,
+        child: MaterialApp(
+          navigatorKey: rootNavigatorKey,
+          debugShowCheckedModeBanner: false,
+          title: 'Archethic Wallet',
+          theme: ThemeData(
+            dialogBackgroundColor: theme.backgroundDark,
+            primaryColor: theme.text,
+            fontFamily: theme.secondaryFont,
+            brightness: theme.brightness,
           ),
-        ));
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          locale: language.getLocale(),
+          supportedLocales: ref.read(LanguageProviders.availableLocales),
+          initialRoute: '/',
+          onGenerateRoute: (RouteSettings settings) {
+            if (deeplinkRpcReceiver.canHandle(settings.name)) {
+              deeplinkRpcReceiver.handle(settings.name);
+              return null;
+            }
+
+            final routes = <String, MaterialPageRoute>{
+              '/': NoTransitionRoute<Splash>(
+                builder: (_) => const Splash(),
+                settings: settings,
+              ),
+              '/home': NoTransitionRoute<HomePage>(
+                builder: (_) => const AutoLockGuard(child: HomePage()),
+                settings: settings,
+              ),
+              '/intro_welcome': NoTransitionRoute<IntroWelcome>(
+                builder: (_) => const IntroWelcome(),
+                settings: settings,
+              ),
+              '/intro_welcome_get_first_infos':
+                  MaterialPageRoute<IntroNewWalletGetFirstInfos>(
+                builder: (_) => const IntroNewWalletGetFirstInfos(),
+                settings: settings,
+              ),
+              '/intro_backup': MaterialPageRoute<IntroBackupSeedPage>(
+                builder: (_) => IntroBackupSeedPage(
+                  name: settings.arguments as String?,
+                ),
+                settings: settings,
+              ),
+              '/intro_backup_safety':
+                  MaterialPageRoute<IntroNewWalletDisclaimer>(
+                builder: (_) => IntroNewWalletDisclaimer(
+                  name: settings.arguments as String?,
+                ),
+                settings: settings,
+              ),
+              '/intro_import': MaterialPageRoute<IntroImportSeedPage>(
+                builder: (_) => const IntroImportSeedPage(),
+                settings: settings,
+              ),
+              '/intro_backup_confirm': MaterialPageRoute<IntroBackupConfirm>(
+                builder: (_) {
+                  final args =
+                      settings.arguments as Map<String, dynamic>? ?? {};
+                  return IntroBackupConfirm(
+                    name: args['name'] == null ? null : args['name'] as String,
+                    seed: args['seed'] == null ? null : args['seed'] as String,
+                  );
+                },
+                settings: settings,
+              ),
+              '/lock_screen_transition': MaterialPageRoute<AppLockScreen>(
+                builder: (_) => const AppLockScreen(),
+                settings: settings,
+              ),
+              '/nft_list_per_category': MaterialPageRoute<NFTListPerCategory>(
+                builder: (_) => NFTListPerCategory(
+                  currentNftCategoryIndex: settings.arguments as int?,
+                ),
+                settings: settings,
+              ),
+              '/nft_creation': MaterialPageRoute(
+                builder: (_) {
+                  final args =
+                      settings.arguments as Map<String, dynamic>? ?? {};
+                  return NftCreationProcessSheet(
+                    currentNftCategoryIndex:
+                        args['currentNftCategoryIndex'] as int,
+                  );
+                },
+                settings: settings,
+              ),
+              '/messenger_discussion': MaterialPageRoute(
+                builder: (_) => MessengerDiscussionPage(
+                  discussionAddress: settings.arguments! as String,
+                ),
+              ),
+            };
+
+            /// Wraps all routes with [RPCCommandReceiver]
+            /// That way, RPCCommandReceiver should never been disposed.
+            final route = routes[settings.name];
+            return route?.copyWith(
+              builder: (context) => RPCCommandReceiver(
+                child: route.builder(context),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 

@@ -63,8 +63,6 @@ class _SystemHash {
   }
 }
 
-typedef _CurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
-
 /// See also [_currencyMarketPrice].
 @ProviderFor(_currencyMarketPrice)
 const _currencyMarketPriceProvider = _CurrencyMarketPriceFamily();
@@ -111,10 +109,10 @@ class _CurrencyMarketPriceFamily extends Family<AsyncValue<MarketPrice>> {
 class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
   /// See also [_currencyMarketPrice].
   _CurrencyMarketPriceProvider({
-    required this.currency,
-  }) : super.internal(
+    required AvailableCurrencyEnum currency,
+  }) : this._internal(
           (ref) => _currencyMarketPrice(
-            ref,
+            ref as _CurrencyMarketPriceRef,
             currency: currency,
           ),
           from: _currencyMarketPriceProvider,
@@ -126,9 +124,43 @@ class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
           dependencies: _CurrencyMarketPriceFamily._dependencies,
           allTransitiveDependencies:
               _CurrencyMarketPriceFamily._allTransitiveDependencies,
+          currency: currency,
         );
 
+  _CurrencyMarketPriceProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.currency,
+  }) : super.internal();
+
   final AvailableCurrencyEnum currency;
+
+  @override
+  Override overrideWith(
+    FutureOr<MarketPrice> Function(_CurrencyMarketPriceRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _CurrencyMarketPriceProvider._internal(
+        (ref) => create(ref as _CurrencyMarketPriceRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        currency: currency,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<MarketPrice> createElement() {
+    return _CurrencyMarketPriceProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -142,6 +174,20 @@ class _CurrencyMarketPriceProvider extends FutureProvider<MarketPrice> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _CurrencyMarketPriceRef on FutureProviderRef<MarketPrice> {
+  /// The parameter `currency` of this provider.
+  AvailableCurrencyEnum get currency;
+}
+
+class _CurrencyMarketPriceProviderElement
+    extends FutureProviderElement<MarketPrice> with _CurrencyMarketPriceRef {
+  _CurrencyMarketPriceProviderElement(super.provider);
+
+  @override
+  AvailableCurrencyEnum get currency =>
+      (origin as _CurrencyMarketPriceProvider).currency;
 }
 
 String _$selectedCurrencyMarketPriceHash() =>
@@ -163,7 +209,6 @@ final _selectedCurrencyMarketPriceProvider =
 typedef _SelectedCurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
 String _$convertedToSelectedCurrencyHash() =>
     r'14676bcb79ec50eed6b6457e45add978ecccf121';
-typedef _ConvertedToSelectedCurrencyRef = AutoDisposeFutureProviderRef<double>;
 
 /// See also [_convertedToSelectedCurrency].
 @ProviderFor(_convertedToSelectedCurrency)
@@ -213,10 +258,10 @@ class _ConvertedToSelectedCurrencyProvider
     extends AutoDisposeFutureProvider<double> {
   /// See also [_convertedToSelectedCurrency].
   _ConvertedToSelectedCurrencyProvider({
-    required this.nativeAmount,
-  }) : super.internal(
+    required double nativeAmount,
+  }) : this._internal(
           (ref) => _convertedToSelectedCurrency(
-            ref,
+            ref as _ConvertedToSelectedCurrencyRef,
             nativeAmount: nativeAmount,
           ),
           from: _convertedToSelectedCurrencyProvider,
@@ -228,9 +273,43 @@ class _ConvertedToSelectedCurrencyProvider
           dependencies: _ConvertedToSelectedCurrencyFamily._dependencies,
           allTransitiveDependencies:
               _ConvertedToSelectedCurrencyFamily._allTransitiveDependencies,
+          nativeAmount: nativeAmount,
         );
 
+  _ConvertedToSelectedCurrencyProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.nativeAmount,
+  }) : super.internal();
+
   final double nativeAmount;
+
+  @override
+  Override overrideWith(
+    FutureOr<double> Function(_ConvertedToSelectedCurrencyRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _ConvertedToSelectedCurrencyProvider._internal(
+        (ref) => create(ref as _ConvertedToSelectedCurrencyRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        nativeAmount: nativeAmount,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<double> createElement() {
+    return _ConvertedToSelectedCurrencyProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -245,6 +324,21 @@ class _ConvertedToSelectedCurrencyProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _ConvertedToSelectedCurrencyRef on AutoDisposeFutureProviderRef<double> {
+  /// The parameter `nativeAmount` of this provider.
+  double get nativeAmount;
+}
+
+class _ConvertedToSelectedCurrencyProviderElement
+    extends AutoDisposeFutureProviderElement<double>
+    with _ConvertedToSelectedCurrencyRef {
+  _ConvertedToSelectedCurrencyProviderElement(super.provider);
+
+  @override
+  double get nativeAmount =>
+      (origin as _ConvertedToSelectedCurrencyProvider).nativeAmount;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

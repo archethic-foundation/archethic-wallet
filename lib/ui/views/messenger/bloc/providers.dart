@@ -22,6 +22,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'create_discussion_contact_form.dart';
 part 'create_discussion_group_form.dart';
+
 part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
@@ -111,10 +112,12 @@ Future<Discussion> _discussion(_DiscussionRef ref, String address) async {
 
 @riverpod
 String _discussionDisplayName(
-    _DiscussionDisplayNameRef ref, Discussion discussion) {
-  if (discussion.name != null && discussion.name!.isNotEmpty)
+  _DiscussionDisplayNameRef ref,
+  Discussion discussion,
+) {
+  if (discussion.name != null && discussion.name!.isNotEmpty) {
     return discussion.name!;
-
+  }
   return ref
           .watch(
             ContactProviders.getSelectedContact,
@@ -156,7 +159,10 @@ Future<AccessRecipient> _accessRecipientWithPublicKey(
 }
 
 @riverpod
-Future<Discussion> _remoteDiscussion(_DiscussionRef ref, String address) async {
+Future<Discussion> _remoteDiscussion(
+  _RemoteDiscussionRef ref,
+  String address,
+) async {
   final selectedAccount = await ref.watch(
     AccountProviders.selectedAccount.future,
   );

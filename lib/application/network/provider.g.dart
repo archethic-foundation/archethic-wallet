@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef _NetworkLinkRef = AutoDisposeProviderRef<String>;
-
 /// See also [_networkLink].
 @ProviderFor(_networkLink)
 const _networkLinkProvider = _NetworkLinkFamily();
@@ -77,10 +75,10 @@ class _NetworkLinkFamily extends Family<String> {
 class _NetworkLinkProvider extends AutoDisposeProvider<String> {
   /// See also [_networkLink].
   _NetworkLinkProvider({
-    required this.network,
-  }) : super.internal(
+    required AvailableNetworks network,
+  }) : this._internal(
           (ref) => _networkLink(
-            ref,
+            ref as _NetworkLinkRef,
             network: network,
           ),
           from: _networkLinkProvider,
@@ -92,9 +90,43 @@ class _NetworkLinkProvider extends AutoDisposeProvider<String> {
           dependencies: _NetworkLinkFamily._dependencies,
           allTransitiveDependencies:
               _NetworkLinkFamily._allTransitiveDependencies,
+          network: network,
         );
 
+  _NetworkLinkProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.network,
+  }) : super.internal();
+
   final AvailableNetworks network;
+
+  @override
+  Override overrideWith(
+    String Function(_NetworkLinkRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _NetworkLinkProvider._internal(
+        (ref) => create(ref as _NetworkLinkRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        network: network,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<String> createElement() {
+    return _NetworkLinkProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -110,8 +142,20 @@ class _NetworkLinkProvider extends AutoDisposeProvider<String> {
   }
 }
 
+mixin _NetworkLinkRef on AutoDisposeProviderRef<String> {
+  /// The parameter `network` of this provider.
+  AvailableNetworks get network;
+}
+
+class _NetworkLinkProviderElement extends AutoDisposeProviderElement<String>
+    with _NetworkLinkRef {
+  _NetworkLinkProviderElement(super.provider);
+
+  @override
+  AvailableNetworks get network => (origin as _NetworkLinkProvider).network;
+}
+
 String _$networkNodesHash() => r'9e80abce0e872f3536ca1c81cd6d2710eda2ba87';
-typedef _NetworkNodesRef = AutoDisposeFutureProviderRef<List<Node>>;
 
 /// See also [_networkNodes].
 @ProviderFor(_networkNodes)
@@ -159,10 +203,10 @@ class _NetworkNodesFamily extends Family<AsyncValue<List<Node>>> {
 class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
   /// See also [_networkNodes].
   _NetworkNodesProvider({
-    required this.network,
-  }) : super.internal(
+    required AvailableNetworks network,
+  }) : this._internal(
           (ref) => _networkNodes(
-            ref,
+            ref as _NetworkNodesRef,
             network: network,
           ),
           from: _networkNodesProvider,
@@ -174,9 +218,43 @@ class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
           dependencies: _NetworkNodesFamily._dependencies,
           allTransitiveDependencies:
               _NetworkNodesFamily._allTransitiveDependencies,
+          network: network,
         );
 
+  _NetworkNodesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.network,
+  }) : super.internal();
+
   final AvailableNetworks network;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Node>> Function(_NetworkNodesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _NetworkNodesProvider._internal(
+        (ref) => create(ref as _NetworkNodesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        network: network,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Node>> createElement() {
+    return _NetworkNodesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -192,8 +270,20 @@ class _NetworkNodesProvider extends AutoDisposeFutureProvider<List<Node>> {
   }
 }
 
+mixin _NetworkNodesRef on AutoDisposeFutureProviderRef<List<Node>> {
+  /// The parameter `network` of this provider.
+  AvailableNetworks get network;
+}
+
+class _NetworkNodesProviderElement
+    extends AutoDisposeFutureProviderElement<List<Node>> with _NetworkNodesRef {
+  _NetworkNodesProviderElement(super.provider);
+
+  @override
+  AvailableNetworks get network => (origin as _NetworkNodesProvider).network;
+}
+
 String _$isReservedNodeUriHash() => r'60dab84965fa35027911aaa0cabff6c5523183b5';
-typedef _IsReservedNodeUriRef = AutoDisposeFutureProviderRef<bool>;
 
 /// See also [_isReservedNodeUri].
 @ProviderFor(_isReservedNodeUri)
@@ -241,10 +331,10 @@ class _IsReservedNodeUriFamily extends Family<AsyncValue<bool>> {
 class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
   /// See also [_isReservedNodeUri].
   _IsReservedNodeUriProvider({
-    required this.uri,
-  }) : super.internal(
+    required Uri uri,
+  }) : this._internal(
           (ref) => _isReservedNodeUri(
-            ref,
+            ref as _IsReservedNodeUriRef,
             uri: uri,
           ),
           from: _isReservedNodeUriProvider,
@@ -256,9 +346,43 @@ class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
           dependencies: _IsReservedNodeUriFamily._dependencies,
           allTransitiveDependencies:
               _IsReservedNodeUriFamily._allTransitiveDependencies,
+          uri: uri,
         );
 
+  _IsReservedNodeUriProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.uri,
+  }) : super.internal();
+
   final Uri uri;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(_IsReservedNodeUriRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _IsReservedNodeUriProvider._internal(
+        (ref) => create(ref as _IsReservedNodeUriRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        uri: uri,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _IsReservedNodeUriProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -272,6 +396,19 @@ class _IsReservedNodeUriProvider extends AutoDisposeFutureProvider<bool> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _IsReservedNodeUriRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `uri` of this provider.
+  Uri get uri;
+}
+
+class _IsReservedNodeUriProviderElement
+    extends AutoDisposeFutureProviderElement<bool> with _IsReservedNodeUriRef {
+  _IsReservedNodeUriProviderElement(super.provider);
+
+  @override
+  Uri get uri => (origin as _IsReservedNodeUriProvider).uri;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

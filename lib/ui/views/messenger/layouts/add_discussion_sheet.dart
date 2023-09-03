@@ -67,12 +67,14 @@ class AddDiscussionSheet extends ConsumerWidget {
               },
               child: SheetHeader(
                 title: ref.watch(
-                    MessengerProviders.discussionDisplayName(discussion)),
+                  MessengerProviders.discussionDisplayName(discussion),
+                ),
               ),
             ),
             _SectionTitle(
               text: localizations.messengerDiscussionMembersCount(
-                  discussion.membersPubKeys.length),
+                discussion.membersPubKeys.length,
+              ),
             ),
             Expanded(
               child: ArchethicScrollbar(

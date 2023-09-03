@@ -115,7 +115,8 @@ class ContactCreationFormNotifier
       return false;
     }
     final nameExists = await ref.read(
-      ContactProviders.isContactExistsWithName(name: '@${state.name}').future,
+      ContactProviders.isContactExistsWithName(contactName: '@${state.name}')
+          .future,
     );
     if (nameExists) {
       state = state.copyWith(

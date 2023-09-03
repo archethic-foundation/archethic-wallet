@@ -45,8 +45,6 @@ class _SystemHash {
   }
 }
 
-typedef _FetchContactsRef = AutoDisposeFutureProviderRef<List<Contact>>;
-
 /// See also [_fetchContacts].
 @ProviderFor(_fetchContacts)
 const _fetchContactsProvider = _FetchContactsFamily();
@@ -93,10 +91,10 @@ class _FetchContactsFamily extends Family<AsyncValue<List<Contact>>> {
 class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
   /// See also [_fetchContacts].
   _FetchContactsProvider({
-    this.search = '',
-  }) : super.internal(
+    String search = '',
+  }) : this._internal(
           (ref) => _fetchContacts(
-            ref,
+            ref as _FetchContactsRef,
             search: search,
           ),
           from: _fetchContactsProvider,
@@ -108,9 +106,43 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
           dependencies: _FetchContactsFamily._dependencies,
           allTransitiveDependencies:
               _FetchContactsFamily._allTransitiveDependencies,
+          search: search,
         );
 
+  _FetchContactsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.search,
+  }) : super.internal();
+
   final String search;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Contact>> Function(_FetchContactsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _FetchContactsProvider._internal(
+        (ref) => create(ref as _FetchContactsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        search: search,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<Contact>> createElement() {
+    return _FetchContactsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -124,6 +156,20 @@ class _FetchContactsProvider extends AutoDisposeFutureProvider<List<Contact>> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _FetchContactsRef on AutoDisposeFutureProviderRef<List<Contact>> {
+  /// The parameter `search` of this provider.
+  String get search;
+}
+
+class _FetchContactsProviderElement
+    extends AutoDisposeFutureProviderElement<List<Contact>>
+    with _FetchContactsRef {
+  _FetchContactsProviderElement(super.provider);
+
+  @override
+  String get search => (origin as _FetchContactsProvider).search;
 }
 
 String _$getSelectedContactHash() =>
@@ -143,8 +189,7 @@ final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>.internal(
 
 typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact>;
 String _$getContactWithNameHash() =>
-    r'7272ba74ac24402574cf64136acc86fa939f3ca3';
-typedef _GetContactWithNameRef = AutoDisposeFutureProviderRef<Contact>;
+    r'02013ceec0ce5f5617e7684f2a0f4bd80116843e';
 
 /// See also [_getContactWithName].
 @ProviderFor(_getContactWithName)
@@ -157,10 +202,10 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
 
   /// See also [_getContactWithName].
   _GetContactWithNameProvider call(
-    String name,
+    String contactName,
   ) {
     return _GetContactWithNameProvider(
-      name,
+      contactName,
     );
   }
 
@@ -169,7 +214,7 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
     covariant _GetContactWithNameProvider provider,
   ) {
     return call(
-      provider.name,
+      provider.contactName,
     );
   }
 
@@ -192,11 +237,11 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
 class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
   /// See also [_getContactWithName].
   _GetContactWithNameProvider(
-    this.name,
-  ) : super.internal(
+    String contactName,
+  ) : this._internal(
           (ref) => _getContactWithName(
-            ref,
-            name,
+            ref as _GetContactWithNameRef,
+            contactName,
           ),
           from: _getContactWithNameProvider,
           name: r'_getContactWithNameProvider',
@@ -207,27 +252,75 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
           dependencies: _GetContactWithNameFamily._dependencies,
           allTransitiveDependencies:
               _GetContactWithNameFamily._allTransitiveDependencies,
+          contactName: contactName,
         );
 
-  final String name;
+  _GetContactWithNameProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.contactName,
+  }) : super.internal();
+
+  final String contactName;
+
+  @override
+  Override overrideWith(
+    FutureOr<Contact> Function(_GetContactWithNameRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetContactWithNameProvider._internal(
+        (ref) => create(ref as _GetContactWithNameRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        contactName: contactName,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Contact> createElement() {
+    return _GetContactWithNameProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
-    return other is _GetContactWithNameProvider && other.name == name;
+    return other is _GetContactWithNameProvider &&
+        other.contactName == contactName;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, contactName.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
+mixin _GetContactWithNameRef on AutoDisposeFutureProviderRef<Contact> {
+  /// The parameter `contactName` of this provider.
+  String get contactName;
+}
+
+class _GetContactWithNameProviderElement
+    extends AutoDisposeFutureProviderElement<Contact>
+    with _GetContactWithNameRef {
+  _GetContactWithNameProviderElement(super.provider);
+
+  @override
+  String get contactName => (origin as _GetContactWithNameProvider).contactName;
+}
+
 String _$getContactWithAddressHash() =>
     r'5d7e119dd654939aebe4963994fc8b0888a944c4';
-typedef _GetContactWithAddressRef = AutoDisposeFutureProviderRef<Contact?>;
 
 /// See also [_getContactWithAddress].
 @ProviderFor(_getContactWithAddress)
@@ -276,10 +369,10 @@ class _GetContactWithAddressProvider
     extends AutoDisposeFutureProvider<Contact?> {
   /// See also [_getContactWithAddress].
   _GetContactWithAddressProvider(
-    this.address,
-  ) : super.internal(
+    String address,
+  ) : this._internal(
           (ref) => _getContactWithAddress(
-            ref,
+            ref as _GetContactWithAddressRef,
             address,
           ),
           from: _getContactWithAddressProvider,
@@ -291,9 +384,43 @@ class _GetContactWithAddressProvider
           dependencies: _GetContactWithAddressFamily._dependencies,
           allTransitiveDependencies:
               _GetContactWithAddressFamily._allTransitiveDependencies,
+          address: address,
         );
 
+  _GetContactWithAddressProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.address,
+  }) : super.internal();
+
   final String address;
+
+  @override
+  Override overrideWith(
+    FutureOr<Contact?> Function(_GetContactWithAddressRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetContactWithAddressProvider._internal(
+        (ref) => create(ref as _GetContactWithAddressRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        address: address,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Contact?> createElement() {
+    return _GetContactWithAddressProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -309,9 +436,22 @@ class _GetContactWithAddressProvider
   }
 }
 
+mixin _GetContactWithAddressRef on AutoDisposeFutureProviderRef<Contact?> {
+  /// The parameter `address` of this provider.
+  String get address;
+}
+
+class _GetContactWithAddressProviderElement
+    extends AutoDisposeFutureProviderElement<Contact?>
+    with _GetContactWithAddressRef {
+  _GetContactWithAddressProviderElement(super.provider);
+
+  @override
+  String get address => (origin as _GetContactWithAddressProvider).address;
+}
+
 String _$getContactWithPublicKeyHash() =>
     r'9f398d381eb5fedeba4fa599ebdee44f8f405d03';
-typedef _GetContactWithPublicKeyRef = AutoDisposeFutureProviderRef<Contact?>;
 
 /// See also [_getContactWithPublicKey].
 @ProviderFor(_getContactWithPublicKey)
@@ -360,10 +500,10 @@ class _GetContactWithPublicKeyProvider
     extends AutoDisposeFutureProvider<Contact?> {
   /// See also [_getContactWithPublicKey].
   _GetContactWithPublicKeyProvider(
-    this.publicKey,
-  ) : super.internal(
+    String publicKey,
+  ) : this._internal(
           (ref) => _getContactWithPublicKey(
-            ref,
+            ref as _GetContactWithPublicKeyRef,
             publicKey,
           ),
           from: _getContactWithPublicKeyProvider,
@@ -375,9 +515,43 @@ class _GetContactWithPublicKeyProvider
           dependencies: _GetContactWithPublicKeyFamily._dependencies,
           allTransitiveDependencies:
               _GetContactWithPublicKeyFamily._allTransitiveDependencies,
+          publicKey: publicKey,
         );
 
+  _GetContactWithPublicKeyProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.publicKey,
+  }) : super.internal();
+
   final String publicKey;
+
+  @override
+  Override overrideWith(
+    FutureOr<Contact?> Function(_GetContactWithPublicKeyRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetContactWithPublicKeyProvider._internal(
+        (ref) => create(ref as _GetContactWithPublicKeyRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        publicKey: publicKey,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Contact?> createElement() {
+    return _GetContactWithPublicKeyProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -394,10 +568,23 @@ class _GetContactWithPublicKeyProvider
   }
 }
 
+mixin _GetContactWithPublicKeyRef on AutoDisposeFutureProviderRef<Contact?> {
+  /// The parameter `publicKey` of this provider.
+  String get publicKey;
+}
+
+class _GetContactWithPublicKeyProviderElement
+    extends AutoDisposeFutureProviderElement<Contact?>
+    with _GetContactWithPublicKeyRef {
+  _GetContactWithPublicKeyProviderElement(super.provider);
+
+  @override
+  String get publicKey =>
+      (origin as _GetContactWithPublicKeyProvider).publicKey;
+}
+
 String _$getContactWithGenesisPublicKeyHash() =>
     r'ba5b98ca4aea9d1f0bcab19a0ba1b455fea93b63';
-typedef _GetContactWithGenesisPublicKeyRef
-    = AutoDisposeFutureProviderRef<Contact?>;
 
 /// See also [_getContactWithGenesisPublicKey].
 @ProviderFor(_getContactWithGenesisPublicKey)
@@ -448,10 +635,10 @@ class _GetContactWithGenesisPublicKeyProvider
     extends AutoDisposeFutureProvider<Contact?> {
   /// See also [_getContactWithGenesisPublicKey].
   _GetContactWithGenesisPublicKeyProvider(
-    this.genesisPublicKey,
-  ) : super.internal(
+    String genesisPublicKey,
+  ) : this._internal(
           (ref) => _getContactWithGenesisPublicKey(
-            ref,
+            ref as _GetContactWithGenesisPublicKeyRef,
             genesisPublicKey,
           ),
           from: _getContactWithGenesisPublicKeyProvider,
@@ -463,9 +650,44 @@ class _GetContactWithGenesisPublicKeyProvider
           dependencies: _GetContactWithGenesisPublicKeyFamily._dependencies,
           allTransitiveDependencies:
               _GetContactWithGenesisPublicKeyFamily._allTransitiveDependencies,
+          genesisPublicKey: genesisPublicKey,
         );
 
+  _GetContactWithGenesisPublicKeyProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.genesisPublicKey,
+  }) : super.internal();
+
   final String genesisPublicKey;
+
+  @override
+  Override overrideWith(
+    FutureOr<Contact?> Function(_GetContactWithGenesisPublicKeyRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetContactWithGenesisPublicKeyProvider._internal(
+        (ref) => create(ref as _GetContactWithGenesisPublicKeyRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        genesisPublicKey: genesisPublicKey,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Contact?> createElement() {
+    return _GetContactWithGenesisPublicKeyProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -482,8 +704,23 @@ class _GetContactWithGenesisPublicKeyProvider
   }
 }
 
+mixin _GetContactWithGenesisPublicKeyRef
+    on AutoDisposeFutureProviderRef<Contact?> {
+  /// The parameter `genesisPublicKey` of this provider.
+  String get genesisPublicKey;
+}
+
+class _GetContactWithGenesisPublicKeyProviderElement
+    extends AutoDisposeFutureProviderElement<Contact?>
+    with _GetContactWithGenesisPublicKeyRef {
+  _GetContactWithGenesisPublicKeyProviderElement(super.provider);
+
+  @override
+  String get genesisPublicKey =>
+      (origin as _GetContactWithGenesisPublicKeyProvider).genesisPublicKey;
+}
+
 String _$saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
-typedef _SaveContactRef = AutoDisposeFutureProviderRef<void>;
 
 /// See also [_saveContact].
 @ProviderFor(_saveContact)
@@ -531,10 +768,10 @@ class _SaveContactFamily extends Family<AsyncValue<void>> {
 class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
   /// See also [_saveContact].
   _SaveContactProvider({
-    this.contact,
-  }) : super.internal(
+    Contact? contact,
+  }) : this._internal(
           (ref) => _saveContact(
-            ref,
+            ref as _SaveContactRef,
             contact: contact,
           ),
           from: _saveContactProvider,
@@ -546,9 +783,43 @@ class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
           dependencies: _SaveContactFamily._dependencies,
           allTransitiveDependencies:
               _SaveContactFamily._allTransitiveDependencies,
+          contact: contact,
         );
 
+  _SaveContactProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.contact,
+  }) : super.internal();
+
   final Contact? contact;
+
+  @override
+  Override overrideWith(
+    FutureOr<void> Function(_SaveContactRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _SaveContactProvider._internal(
+        (ref) => create(ref as _SaveContactRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        contact: contact,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<void> createElement() {
+    return _SaveContactProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -564,8 +835,20 @@ class _SaveContactProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
+mixin _SaveContactRef on AutoDisposeFutureProviderRef<void> {
+  /// The parameter `contact` of this provider.
+  Contact? get contact;
+}
+
+class _SaveContactProviderElement extends AutoDisposeFutureProviderElement<void>
+    with _SaveContactRef {
+  _SaveContactProviderElement(super.provider);
+
+  @override
+  Contact? get contact => (origin as _SaveContactProvider).contact;
+}
+
 String _$deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
-typedef _DeleteContactRef = AutoDisposeFutureProviderRef<void>;
 
 /// See also [_deleteContact].
 @ProviderFor(_deleteContact)
@@ -613,10 +896,10 @@ class _DeleteContactFamily extends Family<AsyncValue<void>> {
 class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
   /// See also [_deleteContact].
   _DeleteContactProvider({
-    this.contact,
-  }) : super.internal(
+    Contact? contact,
+  }) : this._internal(
           (ref) => _deleteContact(
-            ref,
+            ref as _DeleteContactRef,
             contact: contact,
           ),
           from: _deleteContactProvider,
@@ -628,9 +911,43 @@ class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
           dependencies: _DeleteContactFamily._dependencies,
           allTransitiveDependencies:
               _DeleteContactFamily._allTransitiveDependencies,
+          contact: contact,
         );
 
+  _DeleteContactProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.contact,
+  }) : super.internal();
+
   final Contact? contact;
+
+  @override
+  Override overrideWith(
+    FutureOr<void> Function(_DeleteContactRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _DeleteContactProvider._internal(
+        (ref) => create(ref as _DeleteContactRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        contact: contact,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<void> createElement() {
+    return _DeleteContactProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -646,9 +963,21 @@ class _DeleteContactProvider extends AutoDisposeFutureProvider<void> {
   }
 }
 
+mixin _DeleteContactRef on AutoDisposeFutureProviderRef<void> {
+  /// The parameter `contact` of this provider.
+  Contact? get contact;
+}
+
+class _DeleteContactProviderElement
+    extends AutoDisposeFutureProviderElement<void> with _DeleteContactRef {
+  _DeleteContactProviderElement(super.provider);
+
+  @override
+  Contact? get contact => (origin as _DeleteContactProvider).contact;
+}
+
 String _$isContactExistsWithNameHash() =>
-    r'af7f5b8a34da3b3530efd34c75a5a930c0576100';
-typedef _IsContactExistsWithNameRef = AutoDisposeFutureProviderRef<bool>;
+    r'b18c734decf17f6100eb45137e53610775b90d10';
 
 /// See also [_isContactExistsWithName].
 @ProviderFor(_isContactExistsWithName)
@@ -661,10 +990,10 @@ class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
 
   /// See also [_isContactExistsWithName].
   _IsContactExistsWithNameProvider call({
-    String? name,
+    String? contactName,
   }) {
     return _IsContactExistsWithNameProvider(
-      name: name,
+      contactName: contactName,
     );
   }
 
@@ -673,7 +1002,7 @@ class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
     covariant _IsContactExistsWithNameProvider provider,
   ) {
     return call(
-      name: provider.name,
+      contactName: provider.contactName,
     );
   }
 
@@ -696,11 +1025,11 @@ class _IsContactExistsWithNameFamily extends Family<AsyncValue<bool>> {
 class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
   /// See also [_isContactExistsWithName].
   _IsContactExistsWithNameProvider({
-    this.name,
-  }) : super.internal(
+    String? contactName,
+  }) : this._internal(
           (ref) => _isContactExistsWithName(
-            ref,
-            name: name,
+            ref as _IsContactExistsWithNameRef,
+            contactName: contactName,
           ),
           from: _isContactExistsWithNameProvider,
           name: r'_isContactExistsWithNameProvider',
@@ -711,27 +1040,76 @@ class _IsContactExistsWithNameProvider extends AutoDisposeFutureProvider<bool> {
           dependencies: _IsContactExistsWithNameFamily._dependencies,
           allTransitiveDependencies:
               _IsContactExistsWithNameFamily._allTransitiveDependencies,
+          contactName: contactName,
         );
 
-  final String? name;
+  _IsContactExistsWithNameProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.contactName,
+  }) : super.internal();
+
+  final String? contactName;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(_IsContactExistsWithNameRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _IsContactExistsWithNameProvider._internal(
+        (ref) => create(ref as _IsContactExistsWithNameRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        contactName: contactName,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _IsContactExistsWithNameProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
-    return other is _IsContactExistsWithNameProvider && other.name == name;
+    return other is _IsContactExistsWithNameProvider &&
+        other.contactName == contactName;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, contactName.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
+mixin _IsContactExistsWithNameRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `contactName` of this provider.
+  String? get contactName;
+}
+
+class _IsContactExistsWithNameProviderElement
+    extends AutoDisposeFutureProviderElement<bool>
+    with _IsContactExistsWithNameRef {
+  _IsContactExistsWithNameProviderElement(super.provider);
+
+  @override
+  String? get contactName =>
+      (origin as _IsContactExistsWithNameProvider).contactName;
+}
+
 String _$isContactExistsWithAddressHash() =>
     r'4a2281e577a2bfa9fee0005c51763af7ad2b687b';
-typedef _IsContactExistsWithAddressRef = AutoDisposeFutureProviderRef<bool>;
 
 /// See also [_isContactExistsWithAddress].
 @ProviderFor(_isContactExistsWithAddress)
@@ -780,10 +1158,10 @@ class _IsContactExistsWithAddressProvider
     extends AutoDisposeFutureProvider<bool> {
   /// See also [_isContactExistsWithAddress].
   _IsContactExistsWithAddressProvider({
-    this.address,
-  }) : super.internal(
+    String? address,
+  }) : this._internal(
           (ref) => _isContactExistsWithAddress(
-            ref,
+            ref as _IsContactExistsWithAddressRef,
             address: address,
           ),
           from: _isContactExistsWithAddressProvider,
@@ -795,9 +1173,43 @@ class _IsContactExistsWithAddressProvider
           dependencies: _IsContactExistsWithAddressFamily._dependencies,
           allTransitiveDependencies:
               _IsContactExistsWithAddressFamily._allTransitiveDependencies,
+          address: address,
         );
 
+  _IsContactExistsWithAddressProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.address,
+  }) : super.internal();
+
   final String? address;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(_IsContactExistsWithAddressRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _IsContactExistsWithAddressProvider._internal(
+        (ref) => create(ref as _IsContactExistsWithAddressRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        address: address,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _IsContactExistsWithAddressProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -812,6 +1224,21 @@ class _IsContactExistsWithAddressProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _IsContactExistsWithAddressRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `address` of this provider.
+  String? get address;
+}
+
+class _IsContactExistsWithAddressProviderElement
+    extends AutoDisposeFutureProviderElement<bool>
+    with _IsContactExistsWithAddressRef {
+  _IsContactExistsWithAddressProviderElement(super.provider);
+
+  @override
+  String? get address =>
+      (origin as _IsContactExistsWithAddressProvider).address;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

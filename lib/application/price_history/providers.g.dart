@@ -58,8 +58,6 @@ class _SystemHash {
   }
 }
 
-typedef _PriceHistoryRef = FutureProviderRef<List<PriceHistoryValue>>;
-
 /// See also [_priceHistory].
 @ProviderFor(_priceHistory)
 const _priceHistoryProvider = _PriceHistoryFamily();
@@ -106,10 +104,10 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
 class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
   /// See also [_priceHistory].
   _PriceHistoryProvider({
-    required this.scaleOption,
-  }) : super.internal(
+    required MarketPriceHistoryInterval scaleOption,
+  }) : this._internal(
           (ref) => _priceHistory(
-            ref,
+            ref as _PriceHistoryRef,
             scaleOption: scaleOption,
           ),
           from: _priceHistoryProvider,
@@ -121,9 +119,44 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
           dependencies: _PriceHistoryFamily._dependencies,
           allTransitiveDependencies:
               _PriceHistoryFamily._allTransitiveDependencies,
+          scaleOption: scaleOption,
         );
 
+  _PriceHistoryProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.scaleOption,
+  }) : super.internal();
+
   final MarketPriceHistoryInterval scaleOption;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<PriceHistoryValue>> Function(_PriceHistoryRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _PriceHistoryProvider._internal(
+        (ref) => create(ref as _PriceHistoryRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        scaleOption: scaleOption,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<List<PriceHistoryValue>> createElement() {
+    return _PriceHistoryProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -139,8 +172,22 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
   }
 }
 
+mixin _PriceHistoryRef on FutureProviderRef<List<PriceHistoryValue>> {
+  /// The parameter `scaleOption` of this provider.
+  MarketPriceHistoryInterval get scaleOption;
+}
+
+class _PriceHistoryProviderElement
+    extends FutureProviderElement<List<PriceHistoryValue>>
+    with _PriceHistoryRef {
+  _PriceHistoryProviderElement(super.provider);
+
+  @override
+  MarketPriceHistoryInterval get scaleOption =>
+      (origin as _PriceHistoryProvider).scaleOption;
+}
+
 String _$priceEvolutionHash() => r'bcc3b22660c82056f10a536b6f8285b00e202ec6';
-typedef _PriceEvolutionRef = FutureProviderRef<double>;
 
 /// See also [_priceEvolution].
 @ProviderFor(_priceEvolution)
@@ -188,10 +235,10 @@ class _PriceEvolutionFamily extends Family<AsyncValue<double>> {
 class _PriceEvolutionProvider extends FutureProvider<double> {
   /// See also [_priceEvolution].
   _PriceEvolutionProvider({
-    required this.scaleOption,
-  }) : super.internal(
+    required MarketPriceHistoryInterval scaleOption,
+  }) : this._internal(
           (ref) => _priceEvolution(
-            ref,
+            ref as _PriceEvolutionRef,
             scaleOption: scaleOption,
           ),
           from: _priceEvolutionProvider,
@@ -203,9 +250,43 @@ class _PriceEvolutionProvider extends FutureProvider<double> {
           dependencies: _PriceEvolutionFamily._dependencies,
           allTransitiveDependencies:
               _PriceEvolutionFamily._allTransitiveDependencies,
+          scaleOption: scaleOption,
         );
 
+  _PriceEvolutionProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.scaleOption,
+  }) : super.internal();
+
   final MarketPriceHistoryInterval scaleOption;
+
+  @override
+  Override overrideWith(
+    FutureOr<double> Function(_PriceEvolutionRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _PriceEvolutionProvider._internal(
+        (ref) => create(ref as _PriceEvolutionRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        scaleOption: scaleOption,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<double> createElement() {
+    return _PriceEvolutionProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -219,6 +300,20 @@ class _PriceEvolutionProvider extends FutureProvider<double> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _PriceEvolutionRef on FutureProviderRef<double> {
+  /// The parameter `scaleOption` of this provider.
+  MarketPriceHistoryInterval get scaleOption;
+}
+
+class _PriceEvolutionProviderElement extends FutureProviderElement<double>
+    with _PriceEvolutionRef {
+  _PriceEvolutionProviderElement(super.provider);
+
+  @override
+  MarketPriceHistoryInterval get scaleOption =>
+      (origin as _PriceEvolutionProvider).scaleOption;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

@@ -49,8 +49,10 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
           .valueOrThrow;
 
       ref
-          .read(_paginatedDiscussionMessagesNotifierProvider(discussionAddress)
-              .notifier)
+          .read(
+            _paginatedDiscussionMessagesNotifierProvider(discussionAddress)
+                .notifier,
+          )
           .addMessage(messageCreated);
 
       state = state.copyWith(

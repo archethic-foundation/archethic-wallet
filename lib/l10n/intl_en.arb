@@ -566,6 +566,6 @@
   "recoveryPhraseSave": "Save secret phrase",
   "newContact": "New contact",
   "contactsHeader": "Contacts",
-  "noContacts" : "You have no contacts",
+  "noContacts": "You have no contacts",
   "aboutToCreateADiscussion": "You are about to create a discussion with"
 }

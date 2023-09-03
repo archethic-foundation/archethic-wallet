@@ -86,7 +86,7 @@ List<NftCategory> _getListByDefault(
 
 @riverpod
 List<NftCategory> _listNFTCategoryHidden(
-  _GetListByDefaultRef ref, {
+  _ListNFTCategoryHiddenRef ref, {
   required BuildContext context,
 }) {
   final nftCategoryToHidden =

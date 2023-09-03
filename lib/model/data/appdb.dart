@@ -35,7 +35,7 @@ class HiveTypeIds {
   static const accountToken = 8;
   static const tokenInformations = 9;
   static const nftInfosOffChain = 11;
-  static const talk = 12;
+  static const discussion = 12;
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
   static const discussionMessage = 15;
@@ -176,11 +176,12 @@ class DBHelper {
     }
   }
 
-  Future<Contact> getContactWithName(String name) async {
+  Future<Contact> getContactWithName(String contactName) async {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     Contact? contactSelected;
-    final nameWithAt = name.startsWith('@') ? name : '@$name';
+    final nameWithAt =
+        contactName.startsWith('@') ? contactName : '@$contactName';
 
     for (final contact in contactsList) {
       if (contact.name.toLowerCase() == nameWithAt.toLowerCase()) {
@@ -194,9 +195,9 @@ class DBHelper {
     }
   }
 
-  Future<bool> contactExistsWithName(String name) async {
+  Future<bool> contactExistsWithName(String contactName) async {
     try {
-      await getContactWithName(name);
+      await getContactWithName(contactName);
       return true;
     } catch (_) {
       return false;

@@ -120,17 +120,18 @@ class _CreateDiscussionContactSheetState
                           ),
                           const Expanded(child: SizedBox()),
                           IconButton(
-                              onPressed: () {
-                                Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  ref: ref,
-                                  widget: ContactDetail(
-                                    contact: widget.contact,
-                                    editMode: false,
-                                  ),
-                                );
-                              },
-                              icon: const Icon(Icons.info_outline)),
+                            onPressed: () {
+                              Sheets.showAppHeightNineSheet(
+                                context: context,
+                                ref: ref,
+                                widget: ContactDetail(
+                                  contact: widget.contact,
+                                  editMode: false,
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.info_outline),
+                          ),
                         ],
                       ),
                       const SizedBox(
@@ -178,7 +179,7 @@ class _CreateDiscussionContactSheetState
                       },
                     );
                   },
-                )
+                ),
               ],
             ),
           ],

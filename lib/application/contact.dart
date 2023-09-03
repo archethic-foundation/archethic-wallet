@@ -43,13 +43,13 @@ Future<Contact> _getSelectedContact(_GetSelectedContactRef ref) async {
 @riverpod
 Future<Contact> _getContactWithName(
   _GetContactWithNameRef ref,
-  String name,
+  String contactName,
 ) async {
   final searchedContact = await ref
       .watch(
         _contactRepositoryProvider,
       )
-      .getContactWithName(name);
+      .getContactWithName(contactName);
   return searchedContact;
 }
 
@@ -121,12 +121,14 @@ Future<void> _deleteContact(
 @riverpod
 Future<bool> _isContactExistsWithName(
   _IsContactExistsWithNameRef ref, {
-  String? name,
+  String? contactName,
 }) async {
-  if (name == null) {
+  if (contactName == null) {
     throw Exception('Name is null');
   }
-  return ref.watch(_contactRepositoryProvider).isContactExistsWithName(name);
+  return ref
+      .watch(_contactRepositoryProvider)
+      .isContactExistsWithName(contactName);
 }
 
 @riverpod
@@ -165,12 +167,12 @@ class ContactRepository {
     await sl.get<DBHelper>().deleteContact(newContact);
   }
 
-  Future<bool> isContactExistsWithName(String name) async {
-    return sl.get<DBHelper>().contactExistsWithName(name);
+  Future<bool> isContactExistsWithName(String contactName) async {
+    return sl.get<DBHelper>().contactExistsWithName(contactName);
   }
 
-  Future<Contact> getContactWithName(String name) async {
-    return sl.get<DBHelper>().getContactWithName(name);
+  Future<Contact> getContactWithName(String contactName) async {
+    return sl.get<DBHelper>().getContactWithName(contactName);
   }
 
   Future<Contact?> getContactWithAddress(String address) async {
