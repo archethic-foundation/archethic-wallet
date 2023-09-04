@@ -136,7 +136,7 @@ class __$$_DiscussionMessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-@HiveType(typeId: HiveTypeIds.talkMessage)
+@HiveType(typeId: HiveTypeIds.discussionMessage)
 class _$_DiscussionMessage extends _DiscussionMessage {
   const _$_DiscussionMessage(
       {@HiveField(0) required this.senderGenesisPublicKey,

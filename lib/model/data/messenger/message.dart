@@ -7,7 +7,7 @@ part 'message.g.dart';
 
 @freezed
 class DiscussionMessage with _$DiscussionMessage {
-  @HiveType(typeId: HiveTypeIds.talkMessage)
+  @HiveType(typeId: HiveTypeIds.discussionMessage)
   const factory DiscussionMessage({
     @HiveField(0) required String senderGenesisPublicKey,
     @HiveField(1) required String content,
