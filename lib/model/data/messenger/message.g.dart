@@ -6,17 +6,17 @@ part of 'message.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TalkMessageAdapter extends TypeAdapter<_$_TalkMessage> {
+class DiscussionMessageAdapter extends TypeAdapter<_$_DiscussionMessage> {
   @override
   final int typeId = 15;
 
   @override
-  _$_TalkMessage read(BinaryReader reader) {
+  _$_DiscussionMessage read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_TalkMessage(
+    return _$_DiscussionMessage(
       senderGenesisPublicKey: fields[0] as String,
       content: fields[1] as String,
       date: fields[2] as DateTime,
@@ -25,7 +25,7 @@ class TalkMessageAdapter extends TypeAdapter<_$_TalkMessage> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_TalkMessage obj) {
+  void write(BinaryWriter writer, _$_DiscussionMessage obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +44,7 @@ class TalkMessageAdapter extends TypeAdapter<_$_TalkMessage> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TalkMessageAdapter &&
+      other is DiscussionMessageAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

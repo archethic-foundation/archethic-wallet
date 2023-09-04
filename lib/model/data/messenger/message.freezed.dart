@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$TalkMessage {
+mixin _$DiscussionMessage {
   @HiveField(0)
   String get senderGenesisPublicKey => throw _privateConstructorUsedError;
   @HiveField(1)
@@ -26,15 +26,15 @@ mixin _$TalkMessage {
   String get address => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TalkMessageCopyWith<TalkMessage> get copyWith =>
+  $DiscussionMessageCopyWith<DiscussionMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TalkMessageCopyWith<$Res> {
-  factory $TalkMessageCopyWith(
-          TalkMessage value, $Res Function(TalkMessage) then) =
-      _$TalkMessageCopyWithImpl<$Res, TalkMessage>;
+abstract class $DiscussionMessageCopyWith<$Res> {
+  factory $DiscussionMessageCopyWith(
+          DiscussionMessage value, $Res Function(DiscussionMessage) then) =
+      _$DiscussionMessageCopyWithImpl<$Res, DiscussionMessage>;
   @useResult
   $Res call(
       {@HiveField(0) String senderGenesisPublicKey,
@@ -44,9 +44,9 @@ abstract class $TalkMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TalkMessageCopyWithImpl<$Res, $Val extends TalkMessage>
-    implements $TalkMessageCopyWith<$Res> {
-  _$TalkMessageCopyWithImpl(this._value, this._then);
+class _$DiscussionMessageCopyWithImpl<$Res, $Val extends DiscussionMessage>
+    implements $DiscussionMessageCopyWith<$Res> {
+  _$DiscussionMessageCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,11 +83,11 @@ class _$TalkMessageCopyWithImpl<$Res, $Val extends TalkMessage>
 }
 
 /// @nodoc
-abstract class _$$_TalkMessageCopyWith<$Res>
-    implements $TalkMessageCopyWith<$Res> {
-  factory _$$_TalkMessageCopyWith(
-          _$_TalkMessage value, $Res Function(_$_TalkMessage) then) =
-      __$$_TalkMessageCopyWithImpl<$Res>;
+abstract class _$$_DiscussionMessageCopyWith<$Res>
+    implements $DiscussionMessageCopyWith<$Res> {
+  factory _$$_DiscussionMessageCopyWith(_$_DiscussionMessage value,
+          $Res Function(_$_DiscussionMessage) then) =
+      __$$_DiscussionMessageCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -98,11 +98,11 @@ abstract class _$$_TalkMessageCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TalkMessageCopyWithImpl<$Res>
-    extends _$TalkMessageCopyWithImpl<$Res, _$_TalkMessage>
-    implements _$$_TalkMessageCopyWith<$Res> {
-  __$$_TalkMessageCopyWithImpl(
-      _$_TalkMessage _value, $Res Function(_$_TalkMessage) _then)
+class __$$_DiscussionMessageCopyWithImpl<$Res>
+    extends _$DiscussionMessageCopyWithImpl<$Res, _$_DiscussionMessage>
+    implements _$$_DiscussionMessageCopyWith<$Res> {
+  __$$_DiscussionMessageCopyWithImpl(
+      _$_DiscussionMessage _value, $Res Function(_$_DiscussionMessage) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -113,7 +113,7 @@ class __$$_TalkMessageCopyWithImpl<$Res>
     Object? date = null,
     Object? address = null,
   }) {
-    return _then(_$_TalkMessage(
+    return _then(_$_DiscussionMessage(
       senderGenesisPublicKey: null == senderGenesisPublicKey
           ? _value.senderGenesisPublicKey
           : senderGenesisPublicKey // ignore: cast_nullable_to_non_nullable
@@ -137,8 +137,8 @@ class __$$_TalkMessageCopyWithImpl<$Res>
 /// @nodoc
 
 @HiveType(typeId: HiveTypeIds.talkMessage)
-class _$_TalkMessage extends _TalkMessage {
-  const _$_TalkMessage(
+class _$_DiscussionMessage extends _DiscussionMessage {
+  const _$_DiscussionMessage(
       {@HiveField(0) required this.senderGenesisPublicKey,
       @HiveField(1) required this.content,
       @HiveField(2) required this.date,
@@ -160,14 +160,14 @@ class _$_TalkMessage extends _TalkMessage {
 
   @override
   String toString() {
-    return 'TalkMessage(senderGenesisPublicKey: $senderGenesisPublicKey, content: $content, date: $date, address: $address)';
+    return 'DiscussionMessage(senderGenesisPublicKey: $senderGenesisPublicKey, content: $content, date: $date, address: $address)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TalkMessage &&
+            other is _$_DiscussionMessage &&
             (identical(other.senderGenesisPublicKey, senderGenesisPublicKey) ||
                 other.senderGenesisPublicKey == senderGenesisPublicKey) &&
             (identical(other.content, content) || other.content == content) &&
@@ -182,17 +182,18 @@ class _$_TalkMessage extends _TalkMessage {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TalkMessageCopyWith<_$_TalkMessage> get copyWith =>
-      __$$_TalkMessageCopyWithImpl<_$_TalkMessage>(this, _$identity);
+  _$$_DiscussionMessageCopyWith<_$_DiscussionMessage> get copyWith =>
+      __$$_DiscussionMessageCopyWithImpl<_$_DiscussionMessage>(
+          this, _$identity);
 }
 
-abstract class _TalkMessage extends TalkMessage {
-  const factory _TalkMessage(
+abstract class _DiscussionMessage extends DiscussionMessage {
+  const factory _DiscussionMessage(
       {@HiveField(0) required final String senderGenesisPublicKey,
       @HiveField(1) required final String content,
       @HiveField(2) required final DateTime date,
-      @HiveField(3) required final String address}) = _$_TalkMessage;
-  const _TalkMessage._() : super._();
+      @HiveField(3) required final String address}) = _$_DiscussionMessage;
+  const _DiscussionMessage._() : super._();
 
   @override
   @HiveField(0)
@@ -208,6 +209,6 @@ abstract class _TalkMessage extends TalkMessage {
   String get address;
   @override
   @JsonKey(ignore: true)
-  _$$_TalkMessageCopyWith<_$_TalkMessage> get copyWith =>
+  _$$_DiscussionMessageCopyWith<_$_DiscussionMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }

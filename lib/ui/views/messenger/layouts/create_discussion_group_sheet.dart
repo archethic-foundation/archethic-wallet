@@ -17,8 +17,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateTalkGroupSheet extends ConsumerWidget {
-  const CreateTalkGroupSheet({super.key});
+class CreateDiscussionGroupSheet extends ConsumerWidget {
+  const CreateDiscussionGroupSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,8 +27,8 @@ class CreateTalkGroupSheet extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     final formNotifier =
-        ref.watch(MessengerProviders.talkGroupCreationForm.notifier);
-    final formState = ref.watch(MessengerProviders.talkGroupCreationForm);
+        ref.watch(MessengerProviders.discussionGroupCreationForm.notifier);
+    final formState = ref.watch(MessengerProviders.discussionGroupCreationForm);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -79,12 +79,12 @@ class CreateTalkGroupSheet extends ConsumerWidget {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        localizations.introNewMessengerTalk,
+                        localizations.introNewMessengerDiscussion,
                         style: theme.textStyleSize14W600Primary,
                       ),
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
-                        child: AddMessengerTalkNameTextField(),
+                        child: AddMessengerDiscussionNameTextField(),
                       ),
                       const SizedBox(
                         height: 40,
@@ -92,7 +92,7 @@ class CreateTalkGroupSheet extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: Text(
-                          localizations.messengerTalkAccessDescription,
+                          localizations.messengerDiscussionAccessDescription,
                           style: theme.textStyleSize12W100Primary,
                           textAlign: TextAlign.justify,
                         ),
@@ -151,7 +151,7 @@ class CreateTalkGroupSheet extends ConsumerWidget {
                   AppButtonTinyType.primary,
                   localizations.createGroup,
                   Dimens.buttonBottomDimens,
-                  key: const Key('addMessengerTalk'),
+                  key: const Key('addMessengerDiscussion'),
                   icon: Icon(
                     Icons.add,
                     color: formState.canSubmit
@@ -167,17 +167,17 @@ class CreateTalkGroupSheet extends ConsumerWidget {
                       context,
                       theme,
                     );
-                    final result = await formNotifier.createTalk();
+                    final result = await formNotifier.createDiscussion();
                     Navigator.of(context).pop(); // wait popup
 
                     result.map(
                       success: (success) {
                         Navigator.of(context).pop(); // new group sheet
-                        Navigator.of(context).pop(); // new talk sheet
+                        Navigator.of(context).pop(); // new discussion sheet
                       },
                       failure: (failure) {
                         UIUtil.showSnackbar(
-                          localizations.addMessengerTalkFailure,
+                          localizations.addMessengerDiscussionFailure,
                           context,
                           ref,
                           theme.text!,
@@ -197,18 +197,18 @@ class CreateTalkGroupSheet extends ConsumerWidget {
   }
 }
 
-class AddMessengerTalkNameTextField extends ConsumerStatefulWidget {
-  const AddMessengerTalkNameTextField({
+class AddMessengerDiscussionNameTextField extends ConsumerStatefulWidget {
+  const AddMessengerDiscussionNameTextField({
     super.key,
   });
 
   @override
-  ConsumerState<AddMessengerTalkNameTextField> createState() =>
-      _AddMessengerTalkNameTextFieldState();
+  ConsumerState<AddMessengerDiscussionNameTextField> createState() =>
+      _AddMessengerDiscussionNameTextFieldState();
 }
 
-class _AddMessengerTalkNameTextFieldState
-    extends ConsumerState<AddMessengerTalkNameTextField> {
+class _AddMessengerDiscussionNameTextFieldState
+    extends ConsumerState<AddMessengerDiscussionNameTextField> {
   late TextEditingController nameController;
   late FocusNode nameFocusNode;
 
@@ -232,8 +232,8 @@ class _AddMessengerTalkNameTextFieldState
   ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
-    final createTalkFormNotifier =
-        ref.watch(MessengerProviders.talkGroupCreationForm.notifier);
+    final createDiscussionFormNotifier =
+        ref.watch(MessengerProviders.discussionGroupCreationForm.notifier);
 
     return AppTextField(
       focusNode: nameFocusNode,
@@ -251,7 +251,7 @@ class _AddMessengerTalkNameTextFieldState
         UpperCaseTextFormatter(),
       ],
       onChanged: (text) async {
-        createTalkFormNotifier.setName(text);
+        createDiscussionFormNotifier.setName(text);
       },
     );
   }

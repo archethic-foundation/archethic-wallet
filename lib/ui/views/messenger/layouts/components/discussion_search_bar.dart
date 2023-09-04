@@ -7,7 +7,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_state.dart';
-import 'package:aewallet/ui/views/messenger/layouts/add_talk_sheet.dart';
+import 'package:aewallet/ui/views/messenger/layouts/add_discussion_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -75,8 +75,8 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
           Sheets.showAppHeightNineSheet(
             context: context,
             ref: ref,
-            widget: AddTalkSheet(
-              talk: discussionSearchBar.talk!,
+            widget: AddDiscussionSheet(
+              discussion: discussionSearchBar.discussion!,
             ),
           );
 

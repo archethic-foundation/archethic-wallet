@@ -33,7 +33,7 @@ class _DiscussionSearchBarNotifier
   void reset() {
     state = state.copyWith(
       loading: false,
-      talk: null,
+      discussion: null,
       searchCriteria: '',
       error: '',
     );
@@ -59,17 +59,17 @@ class _DiscussionSearchBarNotifier
 
     state = state.copyWith(
       loading: true,
-      talk: null,
+      discussion: null,
     );
 
     try {
-      final talk = await ref.read(
-        MessengerProviders.remoteTalk(
+      final discussion = await ref.read(
+        MessengerProviders.remoteDiscussion(
           searchCriteria,
         ).future,
       );
 
-      if (talk.address.isEmpty) {
+      if (discussion.address.isEmpty) {
         state = state.copyWith(
           error: localizations!.invalidAddress,
           loading: false,
@@ -77,14 +77,14 @@ class _DiscussionSearchBarNotifier
         return;
       }
       state = state.copyWith(
-        talk: talk,
+        discussion: discussion,
         searchCriteria: '',
         error: '',
         loading: false,
       );
     } catch (e) {
       state = state.copyWith(
-        error: localizations!.messengerTalkNotFound,
+        error: localizations!.messengerDiscussionNotFound,
         loading: false,
       );
     }

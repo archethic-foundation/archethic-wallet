@@ -6,13 +6,13 @@ part 'message.freezed.dart';
 part 'message.g.dart';
 
 @freezed
-class TalkMessage with _$TalkMessage {
+class DiscussionMessage with _$DiscussionMessage {
   @HiveType(typeId: HiveTypeIds.talkMessage)
-  const factory TalkMessage({
+  const factory DiscussionMessage({
     @HiveField(0) required String senderGenesisPublicKey,
     @HiveField(1) required String content,
     @HiveField(2) required DateTime date,
     @HiveField(3) required String address,
-  }) = _TalkMessage;
-  const TalkMessage._();
+  }) = _DiscussionMessage;
+  const DiscussionMessage._();
 }

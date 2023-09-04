@@ -10,7 +10,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/messenger/layouts/create_talk_sheet.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/icons.dart';
@@ -94,7 +94,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     Sheets.showAppHeightNineSheet(
                       context: context,
                       ref: ref,
-                      widget: const CreateTalkSheet(),
+                      widget: const CreateDiscussionSheet(),
                     );
                   },
                 )

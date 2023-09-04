@@ -1,32 +1,33 @@
 part of 'providers.dart';
 
-final _createTalkGroupFormProvider = NotifierProvider.autoDispose<
-    CreateTalkGroupFormNotifier, CreateTalkGroupFormState>(
+final _createDiscussionGroupFormProvider = NotifierProvider.autoDispose<
+    CreateDiscussionGroupFormNotifier, CreateDiscussionGroupFormState>(
   () {
-    return CreateTalkGroupFormNotifier();
+    return CreateDiscussionGroupFormNotifier();
   },
 );
 
 @freezed
-class CreateTalkGroupFormState with _$CreateTalkGroupFormState {
-  const factory CreateTalkGroupFormState({
+class CreateDiscussionGroupFormState with _$CreateDiscussionGroupFormState {
+  const factory CreateDiscussionGroupFormState({
     @Default('') String name,
     AccessRecipient? memberAddFieldValue,
     @Default([]) List<AccessRecipient> members,
     AccessRecipient? adminAddFieldValue,
     @Default([]) List<AccessRecipient> admins,
-  }) = _CreateTalkGroupFormState;
-  const CreateTalkGroupFormState._();
+  }) = _CreateDiscussionGroupFormState;
+  const CreateDiscussionGroupFormState._();
 
   bool get canSubmit => members.isNotEmpty;
 }
 
-class CreateTalkGroupFormNotifier
-    extends AutoDisposeNotifier<CreateTalkGroupFormState> {
-  CreateTalkGroupFormNotifier();
+class CreateDiscussionGroupFormNotifier
+    extends AutoDisposeNotifier<CreateDiscussionGroupFormState> {
+  CreateDiscussionGroupFormNotifier();
 
   @override
-  CreateTalkGroupFormState build() => const CreateTalkGroupFormState();
+  CreateDiscussionGroupFormState build() =>
+      const CreateDiscussionGroupFormState();
 
   void setMemberAddFieldValue(AddPublicKeyTextFieldValue fieldValue) {
     state = state.copyWith(memberAddFieldValue: fieldValue.toAccessRecipient);
@@ -71,7 +72,7 @@ class CreateTalkGroupFormNotifier
     return;
   }
 
-  Future<Result<void, Failure>> createTalk() => Result.guard(() async {
+  Future<Result<void, Failure>> createDiscussion() => Result.guard(() async {
         final session = ref.read(SessionProviders.session).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
@@ -83,7 +84,9 @@ class CreateTalkGroupFormNotifier
           contact: await ref.read(ContactProviders.getSelectedContact.future),
         );
 
-        await ref.read(MessengerProviders._messengerRepository).createTalk(
+        await ref
+            .read(MessengerProviders._messengerRepository)
+            .createDiscussion(
           adminsPubKeys: [
             ...state.admins.map((recipient) => recipient.publicKey),
             creator.publicKey,
@@ -94,9 +97,9 @@ class CreateTalkGroupFormNotifier
           ],
           creator: selectedAccount,
           session: session,
-          groupName: state.name,
+          discussionName: state.name,
         ).valueOrThrow;
 
-        ref.invalidate(_talksProvider);
+        ref.invalidate(_discussionsProvider);
       });
 }

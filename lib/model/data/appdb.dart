@@ -11,8 +11,8 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/model/data/price.dart';
@@ -68,8 +68,8 @@ class DBHelper {
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationsAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
-      ..registerAdapter(TalkAdapter())
-      ..registerAdapter(TalkMessageAdapter())
+      ..registerAdapter(DiscussionAdapter())
+      ..registerAdapter(DiscussionMessageAdapter())
       ..registerAdapter(PubKeyAccessRecipientAdapter())
       ..registerAdapter(ContactAccessRecipientAdapter())
       ..registerAdapter(NotificationsSetupAdapter())

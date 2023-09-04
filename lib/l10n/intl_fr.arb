@@ -515,7 +515,7 @@
 	"nftChooseSource": "Veuillez indiquer la source :",
 	"serviceName": "Name :",
 	"signTransactionListTransactionsHeader": "Transaction %1",
-	"messengerTalkNotFound": "Discussion introuvable",
+	"messengerDiscussionNotFound": "Discussion introuvable",
 	"messengerHeader": "Discussions",
 	"newDiscussion": "Nouvelle discussion",
 	"createDiscussion": "Créer une discussion",
@@ -523,12 +523,12 @@
 	"addRemoteMessengerGroup": "Ajouter cette discussion",
 	"createGroup": "Créer un groupe",
 	"addMessengerGroupNameLabel": "Nom du groupe ...",
-	"introNewMessengerTalk": "Choisissez le nom à donner à ce groupe, ainsi que les personnes à y inviter",
-	"messengerTalkAccessDescription": "Ajoutez ou supprimez des clés publiques pouvant accéder à cette conversation.",
-	"messengerTalkAddAccess": "Ajouter un accès",
-	"addMessengerTalkFailure": "La création a échoué",
-	"messengerTalkMembersCount": "{membersCount} membres",
-	"@messengerTalkMembersCount": {
+	"introNewMessengerDiscussion": "Choisissez le nom à donner à ce groupe, ainsi que les personnes à y inviter",
+	"messengerDiscussionAccessDescription": "Ajoutez ou supprimez des clés publiques pouvant accéder à cette conversation.",
+	"messengerDiscussionAddAccess": "Ajouter un accès",
+	"addMessengerDiscussionFailure": "La création a échoué",
+	"messengerDiscussionMembersCount": "{membersCount} membres",
+	"@messengerDiscussionMembersCount": {
 		"placeholders": {
 			"membersCount": {
 				"type": "int",

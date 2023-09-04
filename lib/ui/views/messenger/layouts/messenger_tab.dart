@@ -1,7 +1,7 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/discussion_list_item.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/discussion_search_bar.dart';
-import 'package:aewallet/ui/views/messenger/layouts/components/talk_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ class MessengerBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     MessengerProviders.subscribeNotificationsWorker(ref);
-    final asyncTalks = ref.watch(MessengerProviders.sortedTalks);
+    final asyncDiscussions = ref.watch(MessengerProviders.sortedDiscussions);
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return DecoratedBox(
@@ -51,20 +51,20 @@ class MessengerBody extends ConsumerWidget {
                 height: 20,
               ),
               Expanded(
-                child: asyncTalks.map(
+                child: asyncDiscussions.map(
                   loading: (_) => Container(),
                   error: (_) => Container(),
-                  data: (talks) => ListView.builder(
-                    itemCount: talks.value.length,
+                  data: (discussions) => ListView.builder(
+                    itemCount: discussions.value.length,
                     itemBuilder: (context, index) {
-                      final talk = talks.value[index];
-                      return TalkListItem.loaded(
-                        key: Key(talk.address),
+                      final discussion = discussions.value[index];
+                      return DiscussionListItem.loaded(
+                        key: Key(discussion.address),
                         onTap: () => Navigator.of(context).pushNamed(
-                          '/messenger_talk',
-                          arguments: talk.address,
+                          '/messenger_discussion',
+                          arguments: discussion.address,
                         ),
-                        talk: talk,
+                        discussion: discussion,
                       )
                           .animate(delay: (100 * index).ms)
                           .fadeIn(duration: 300.ms, delay: 30.ms)
