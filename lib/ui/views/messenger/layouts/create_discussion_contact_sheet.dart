@@ -17,8 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateTalkContactSheet extends ConsumerStatefulWidget {
-  const CreateTalkContactSheet({
+class CreateDiscussionContactSheet extends ConsumerStatefulWidget {
+  const CreateDiscussionContactSheet({
     super.key,
     required this.contact,
   });
@@ -26,23 +26,23 @@ class CreateTalkContactSheet extends ConsumerStatefulWidget {
   final Contact contact;
 
   @override
-  ConsumerState<CreateTalkContactSheet> createState() =>
-      _CreateTalkContactSheetState();
+  ConsumerState<CreateDiscussionContactSheet> createState() =>
+      _CreateDiscussionContactSheetState();
 }
 
-class _CreateTalkContactSheetState
-    extends ConsumerState<CreateTalkContactSheet> {
+class _CreateDiscussionContactSheetState
+    extends ConsumerState<CreateDiscussionContactSheet> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref
-          .read(MessengerProviders.talkContactCreationForm.notifier)
+          .read(MessengerProviders.discussionContactCreationForm.notifier)
           .setName(widget.contact.format);
       final member = AddPublicKeyTextFieldValue.contact(contact: widget.contact)
           .toAccessRecipient!;
       ref
-          .read(MessengerProviders.talkContactCreationForm.notifier)
+          .read(MessengerProviders.discussionContactCreationForm.notifier)
           .addMember(member);
     });
   }
@@ -54,7 +54,7 @@ class _CreateTalkContactSheetState
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     final formNotifier =
-        ref.watch(MessengerProviders.talkContactCreationForm.notifier);
+        ref.watch(MessengerProviders.discussionContactCreationForm.notifier);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -147,7 +147,7 @@ class _CreateTalkContactSheetState
                   AppButtonTinyType.primary,
                   localizations.createDiscussion,
                   Dimens.buttonBottomDimens,
-                  key: const Key('addMessengerTalk'),
+                  key: const Key('addMessengerDiscussion'),
                   icon: Icon(
                     Icons.add,
                     color: theme.mainButtonLabel,
@@ -158,17 +158,17 @@ class _CreateTalkContactSheetState
                       context,
                       theme,
                     );
-                    final result = await formNotifier.createTalk();
+                    final result = await formNotifier.createDiscussion();
                     Navigator.of(context).pop(); // wait popup
 
                     result.map(
                       success: (success) {
                         Navigator.of(context).pop(); // new contact sheet
-                        Navigator.of(context).pop(); // new talk sheet
+                        Navigator.of(context).pop(); // new discussion sheet
                       },
                       failure: (failure) {
                         UIUtil.showSnackbar(
-                          localizations.addMessengerTalkFailure,
+                          localizations.addMessengerDiscussionFailure,
                           context,
                           ref,
                           theme.text!,

@@ -10,8 +10,8 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/add_public_key_textfield_pk.dart';
 import 'package:collection/collection.dart';
@@ -20,16 +20,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'create_talk_contact_form.dart';
-part 'create_talk_group_form.dart';
+part 'create_discussion_contact_form.dart';
+part 'create_discussion_group_form.dart';
+part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
-part 'talk_messages.dart';
 
 @riverpod
-class _Talks extends AutoDisposeAsyncNotifier<Iterable<Talk>> {
+class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
   @override
-  FutureOr<Iterable<Talk>> build() async {
+  FutureOr<Iterable<Discussion>> build() async {
     final selectedAccount = await ref.watch(
       AccountProviders.selectedAccount.future,
     );
@@ -37,43 +37,44 @@ class _Talks extends AutoDisposeAsyncNotifier<Iterable<Talk>> {
 
     final repository = ref.watch(MessengerProviders._messengerRepository);
 
-    final talkAddresses = await repository
-        .getTalkAddresses(
+    final discussionAddresses = await repository
+        .getDiscussionAddresses(
           owner: selectedAccount,
         )
         .valueOrThrow;
 
     return Future.wait(
-      talkAddresses.map(
-        (talkAddress) => ref.watch(_talkProvider(talkAddress).future),
+      discussionAddresses.map(
+        (discussionAddress) =>
+            ref.watch(_discussionProvider(discussionAddress).future),
       ),
     );
   }
 
-  Future<Talk> addRemoteTalk(Talk talk) async {
-    final talks = state.valueOrNull;
-    if (talks == null) throw const Failure.other();
+  Future<Discussion> addRemoteDiscussion(Discussion discussion) async {
+    final discussions = state.valueOrNull;
+    if (discussions == null) throw const Failure.other();
 
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,
     );
     if (selectedAccount == null) throw const Failure.loggedOut();
 
-    final createdTalk = await ref
+    final createdDiscussion = await ref
         .read(MessengerProviders._messengerRepository)
-        .addRemoteTalk(
+        .addRemoteDiscussion(
           creator: selectedAccount,
-          talk: talk,
+          discussion: discussion,
         )
         .valueOrThrow;
 
     ref.invalidateSelf();
-    return createdTalk;
+    return createdDiscussion;
   }
 
-  Future<void> removeTalk(Talk talk) async {
-    final talks = state.valueOrNull;
-    if (talks == null) throw const Failure.other();
+  Future<void> removeDiscussion(Discussion discussion) async {
+    final discussions = state.valueOrNull;
+    if (discussions == null) throw const Failure.other();
 
     final selectedAccount = await ref.read(
       AccountProviders.selectedAccount.future,
@@ -82,9 +83,9 @@ class _Talks extends AutoDisposeAsyncNotifier<Iterable<Talk>> {
 
     await ref
         .read(MessengerProviders._messengerRepository)
-        .removeTalk(
+        .removeDiscussion(
           owner: selectedAccount,
-          talk: talk,
+          discussion: discussion,
         )
         .valueOrThrow;
 
@@ -93,7 +94,7 @@ class _Talks extends AutoDisposeAsyncNotifier<Iterable<Talk>> {
 }
 
 @riverpod
-Future<Talk> _talk(_TalkRef ref, String address) async {
+Future<Discussion> _discussion(_DiscussionRef ref, String address) async {
   final selectedAccount = await ref.watch(
     AccountProviders.selectedAccount.future,
   );
@@ -101,16 +102,18 @@ Future<Talk> _talk(_TalkRef ref, String address) async {
 
   return ref
       .watch(MessengerProviders._messengerRepository)
-      .getTalk(
+      .getDiscussion(
         owner: selectedAccount,
-        talkAddress: address,
+        discussionAddress: address,
       )
       .valueOrThrow;
 }
 
 @riverpod
-String _talkDisplayName(_TalkDisplayNameRef ref, Talk talk) {
-  if (talk.name != null && talk.name!.isNotEmpty) return talk.name!;
+String _discussionDisplayName(
+    _DiscussionDisplayNameRef ref, Discussion discussion) {
+  if (discussion.name != null && discussion.name!.isNotEmpty)
+    return discussion.name!;
 
   return ref
           .watch(
@@ -119,7 +122,7 @@ String _talkDisplayName(_TalkDisplayNameRef ref, Talk talk) {
           .mapOrNull(
             data: (contactData) {
               final memberToDisplayPubKey =
-                  talk.membersPubKeys.firstWhereOrNull(
+                  discussion.membersPubKeys.firstWhereOrNull(
                 (memberPublicKey) =>
                     memberPublicKey != contactData.value.publicKey,
               );
@@ -153,7 +156,7 @@ Future<AccessRecipient> _accessRecipientWithPublicKey(
 }
 
 @riverpod
-Future<Talk> _remoteTalk(_TalkRef ref, String address) async {
+Future<Discussion> _remoteDiscussion(_DiscussionRef ref, String address) async {
   final selectedAccount = await ref.watch(
     AccountProviders.selectedAccount.future,
   );
@@ -164,40 +167,47 @@ Future<Talk> _remoteTalk(_TalkRef ref, String address) async {
 
   return ref
       .watch(MessengerProviders._messengerRepository)
-      .getRemoteTalk(
+      .getRemoteDiscussion(
         currentAccount: selectedAccount,
         session: session,
-        talkAddress: address,
+        discussionAddress: address,
       )
       .valueOrThrow;
 }
 
 @riverpod
-Future<List<Talk>> _sortedTalks(_SortedTalksRef ref) async {
-  final talks = await ref.watch(_talksProvider.future);
-  return talks.sorted((a, b) => b.updateDate.compareTo(a.updateDate));
+Future<List<Discussion>> _sortedDiscussions(_SortedDiscussionsRef ref) async {
+  final discussions = await ref.watch(_discussionsProvider.future);
+  return discussions.sorted((a, b) => b.updateDate.compareTo(a.updateDate));
 }
 
 void _subscribeNotificationsWorker(WidgetRef ref) {
-  ref.listen(_talksProvider, (previous, next) {
-    final previousTalksAdresses =
-        previous?.value?.map((talk) => talk.address.toLowerCase()).toSet() ??
-            {};
-    final nextTalksAdresses =
-        next.value?.map((talk) => talk.address.toLowerCase()).toSet() ?? {};
+  ref.listen(_discussionsProvider, (previous, next) {
+    final previousDiscussionsAdresses = previous?.value
+            ?.map((discussion) => discussion.address.toLowerCase())
+            .toSet() ??
+        {};
+    final nextDiscussionsAdresses = next.value
+            ?.map((discussion) => discussion.address.toLowerCase())
+            .toSet() ??
+        {};
 
-    final talksToUnsubscribe =
-        previousTalksAdresses.difference(nextTalksAdresses).toList();
-    final talksToSubscribe =
-        nextTalksAdresses.difference(previousTalksAdresses).toList();
+    final discussionsToUnsubscribe = previousDiscussionsAdresses
+        .difference(nextDiscussionsAdresses)
+        .toList();
+    final discussionsToSubscribe = nextDiscussionsAdresses
+        .difference(previousDiscussionsAdresses)
+        .toList();
 
-    if (talksToUnsubscribe.isNotEmpty) {
+    if (discussionsToUnsubscribe.isNotEmpty) {
       ref
           .read(NotificationProviders.repository)
-          .unsubscribe(talksToUnsubscribe);
+          .unsubscribe(discussionsToUnsubscribe);
     }
-    if (talksToSubscribe.isNotEmpty) {
-      ref.read(NotificationProviders.repository).subscribe(talksToSubscribe);
+    if (discussionsToSubscribe.isNotEmpty) {
+      ref
+          .read(NotificationProviders.repository)
+          .subscribe(discussionsToSubscribe);
     }
   });
 }
@@ -211,29 +221,30 @@ abstract class MessengerProviders {
     ),
   );
 
-  /// Watches Talks creation/deletion to update notifications subscriptions
+  /// Watches Discussions creation/deletion to update notifications subscriptions
   static const subscribeNotificationsWorker = _subscribeNotificationsWorker;
-  static final talks = _talksProvider;
-  static final sortedTalks = _sortedTalksProvider;
-  static const talk = _talkProvider;
-  static const talkDisplayName = _talkDisplayNameProvider;
+  static final discussions = _discussionsProvider;
+  static final sortedDiscussions = _sortedDiscussionsProvider;
+  static const discussion = _discussionProvider;
+  static const discussionDisplayName = _discussionDisplayNameProvider;
   static const accessRecipientWithPublicKey =
       _accessRecipientWithPublicKeyProvider;
-  static const remoteTalk = _remoteTalkProvider;
-  static const messages = _talkMessagesProvider;
-  static const paginatedMessages = _paginatedTalkMessagesNotifierProvider;
+  static const remoteDiscussion = _remoteDiscussionProvider;
+  static const messages = _discussionMessagesProvider;
+  static const paginatedMessages = _paginatedDiscussionMessagesNotifierProvider;
 
-  static final talkContactCreationForm = _createTalkContactFormProvider;
-  static final talkGroupCreationForm = _createTalkGroupFormProvider;
+  static final discussionContactCreationForm =
+      _createDiscussionContactFormProvider;
+  static final discussionGroupCreationForm = _createDiscussionGroupFormProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_messengerRepository).clear();
     ref
-      ..invalidate(_talkProvider)
-      ..invalidate(_createTalkContactFormProvider)
-      ..invalidate(_createTalkGroupFormProvider)
-      ..invalidate(_talkMessagesProvider);
+      ..invalidate(_discussionProvider)
+      ..invalidate(_createDiscussionContactFormProvider)
+      ..invalidate(_createDiscussionGroupFormProvider)
+      ..invalidate(_discussionMessagesProvider);
   }
 }

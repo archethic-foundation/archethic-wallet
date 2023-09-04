@@ -3,21 +3,21 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
-part 'talk.freezed.dart';
-part 'talk.g.dart';
+part 'discussion.freezed.dart';
+part 'discussion.g.dart';
 
 @freezed
-class Talk with _$Talk {
+class Discussion with _$Discussion {
   @HiveType(typeId: HiveTypeIds.talk)
-  const factory Talk({
+  const factory Discussion({
     @HiveField(0) required String address,
     @HiveField(1) String? name,
     @HiveField(2) required List<String> membersPubKeys,
     @HiveField(3) required List<String> adminsPubKeys,
     @HiveField(4) required DateTime creationDate,
-    @HiveField(5) TalkMessage? lastMessage,
-  }) = _Talk;
-  const Talk._();
+    @HiveField(5) DiscussionMessage? lastMessage,
+  }) = _Discussion;
+  const Discussion._();
 
   DateTime get updateDate => lastMessage?.date ?? creationDate;
 }

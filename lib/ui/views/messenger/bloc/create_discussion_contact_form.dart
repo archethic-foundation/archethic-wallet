@@ -1,27 +1,28 @@
 part of 'providers.dart';
 
-final _createTalkContactFormProvider = NotifierProvider.autoDispose<
-    CreateTalkContactFormNotifier, CreateTalkContactFormState>(
+final _createDiscussionContactFormProvider = NotifierProvider.autoDispose<
+    CreateDiscussionContactFormNotifier, CreateDiscussionContactFormState>(
   () {
-    return CreateTalkContactFormNotifier();
+    return CreateDiscussionContactFormNotifier();
   },
 );
 
 @freezed
-class CreateTalkContactFormState with _$CreateTalkContactFormState {
-  const factory CreateTalkContactFormState({
+class CreateDiscussionContactFormState with _$CreateDiscussionContactFormState {
+  const factory CreateDiscussionContactFormState({
     @Default('') String name,
     @Default([]) List<AccessRecipient> members,
-  }) = _CreateTalkContactFormState;
-  const CreateTalkContactFormState._();
+  }) = _CreateDiscussionContactFormState;
+  const CreateDiscussionContactFormState._();
 }
 
-class CreateTalkContactFormNotifier
-    extends AutoDisposeNotifier<CreateTalkContactFormState> {
-  CreateTalkContactFormNotifier();
+class CreateDiscussionContactFormNotifier
+    extends AutoDisposeNotifier<CreateDiscussionContactFormState> {
+  CreateDiscussionContactFormNotifier();
 
   @override
-  CreateTalkContactFormState build() => const CreateTalkContactFormState();
+  CreateDiscussionContactFormState build() =>
+      const CreateDiscussionContactFormState();
 
   void addMember(AccessRecipient member) {
     if (state.members.contains(member)) return;
@@ -42,7 +43,7 @@ class CreateTalkContactFormNotifier
     return;
   }
 
-  Future<Result<void, Failure>> createTalk() => Result.guard(() async {
+  Future<Result<void, Failure>> createDiscussion() => Result.guard(() async {
         final session = ref.read(SessionProviders.session).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
@@ -54,7 +55,9 @@ class CreateTalkContactFormNotifier
           contact: await ref.read(ContactProviders.getSelectedContact.future),
         );
 
-        await ref.read(MessengerProviders._messengerRepository).createTalk(
+        await ref
+            .read(MessengerProviders._messengerRepository)
+            .createDiscussion(
           adminsPubKeys: [
             creator.publicKey,
           ],
@@ -64,9 +67,9 @@ class CreateTalkContactFormNotifier
           ],
           creator: selectedAccount,
           session: session,
-          groupName: state.name,
+          discussionName: state.name,
         ).valueOrThrow;
 
-        ref.invalidate(_talksProvider);
+        ref.invalidate(_discussionsProvider);
       });
 }

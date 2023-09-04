@@ -8,7 +8,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/views/messenger/layouts/talk_details_sheet.dart';
+import 'package:aewallet/ui/views/messenger/layouts/discussion_details_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
@@ -19,19 +19,20 @@ import 'package:iconsax/iconsax.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class MessengerTalkPage extends ConsumerWidget {
-  const MessengerTalkPage({
+class MessengerDiscussionPage extends ConsumerWidget {
+  const MessengerDiscussionPage({
     super.key,
-    required this.talkAddress,
+    required this.discussionAddress,
   });
 
-  final String talkAddress;
+  final String discussionAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    final talk = ref.watch(MessengerProviders.talk(talkAddress));
+    final discussion =
+        ref.watch(MessengerProviders.discussion(discussionAddress));
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -58,15 +59,16 @@ class MessengerTalkPage extends ConsumerWidget {
                 Sheets.showAppHeightNineSheet(
                   context: context,
                   ref: ref,
-                  widget: TalkDetailsSheet(talkAddress: talkAddress),
+                  widget: DiscussionDetailsSheet(
+                      discussionAddress: discussionAddress),
                 );
               },
             ),
           ],
-          title: talk.maybeMap(
+          title: discussion.maybeMap(
             data: (data) {
               final displayName = ref.watch(
-                MessengerProviders.talkDisplayName(data.value),
+                MessengerProviders.discussionDisplayName(data.value),
               );
 
               return Text(displayName);
@@ -84,11 +86,11 @@ class MessengerTalkPage extends ConsumerWidget {
           children: [
             Expanded(
               child: _MessagesList(
-                talkAddress: talkAddress,
+                discussionAddress: discussionAddress,
               ),
             ),
             _MessageSendForm(
-              talkAddress: talkAddress,
+              discussionAddress: discussionAddress,
             ),
           ],
         ),
@@ -99,10 +101,10 @@ class MessengerTalkPage extends ConsumerWidget {
 
 class _MessageSendForm extends ConsumerStatefulWidget {
   const _MessageSendForm({
-    required this.talkAddress,
+    required this.discussionAddress,
   });
 
-  final String talkAddress;
+  final String discussionAddress;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -136,7 +138,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final isCreating = ref.watch(
-      MessengerProviders.messageCreationForm(widget.talkAddress)
+      MessengerProviders.messageCreationForm(widget.discussionAddress)
           .select((value) => value.isCreating),
     );
 
@@ -152,7 +154,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 120),
                   child: _MessageTextField(
-                    talkAddress: widget.talkAddress,
+                    discussionAddress: widget.discussionAddress,
                     textEditingController: textEditingController,
                     focusNode: messageFocusNode,
                   ),
@@ -177,7 +179,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                   onPressed: ref
                           .watch(
                             MessengerProviders.messageCreationForm(
-                              widget.talkAddress,
+                              widget.discussionAddress,
                             ),
                           )
                           .text
@@ -187,7 +189,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                           await ref
                               .read(
                                 MessengerProviders.messageCreationForm(
-                                  widget.talkAddress,
+                                  widget.discussionAddress,
                                 ).notifier,
                               )
                               .createMessage();
@@ -195,7 +197,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                           textEditingController.text = ref
                               .read(
                                 MessengerProviders.messageCreationForm(
-                                  widget.talkAddress,
+                                  widget.discussionAddress,
                                 ),
                               )
                               .text;
@@ -209,7 +211,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
             ],
           ),
           const SizedBox(height: 6),
-          _MessageCreationFormFees(talkAddress: widget.talkAddress),
+          _MessageCreationFormFees(discussionAddress: widget.discussionAddress),
         ],
       ),
     );
@@ -218,13 +220,13 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
 
 class _MessageTextField extends ConsumerWidget {
   const _MessageTextField({
-    required this.talkAddress,
+    required this.discussionAddress,
     required this.textEditingController,
     required this.focusNode,
   });
 
   final TextEditingController textEditingController;
-  final String talkAddress;
+  final String discussionAddress;
   final FocusNode focusNode;
 
   @override
@@ -240,7 +242,7 @@ class _MessageTextField extends ConsumerWidget {
           onChanged: (value) => ref
               .read(
                 MessengerProviders.messageCreationForm(
-                  talkAddress,
+                  discussionAddress,
                 ).notifier,
               )
               .setText(value),
@@ -262,23 +264,24 @@ class _MessageTextField extends ConsumerWidget {
 
 class _MessageCreationFormFees extends ConsumerWidget {
   const _MessageCreationFormFees({
-    required this.talkAddress,
+    required this.discussionAddress,
   });
 
-  final String talkAddress;
+  final String discussionAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final text =
-        ref.watch(MessengerProviders.messageCreationForm(talkAddress)).text;
+    final text = ref
+        .watch(MessengerProviders.messageCreationForm(discussionAddress))
+        .text;
 
     if (text.isEmpty) return const SizedBox(height: 12);
 
     final nativeFeeEstimation = ref
         .watch(
           MessengerProviders.messageCreationFees(
-            talkAddress,
+            discussionAddress,
             text,
           ),
         )
@@ -332,16 +335,16 @@ class _MessageCreationFormFees extends ConsumerWidget {
 
 class _MessagesList extends ConsumerWidget {
   const _MessagesList({
-    required this.talkAddress,
+    required this.discussionAddress,
   });
-  final String talkAddress;
+  final String discussionAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final pagingController =
-        ref.watch(MessengerProviders.paginatedMessages(talkAddress));
+        ref.watch(MessengerProviders.paginatedMessages(discussionAddress));
 
     if (me == null) return Container();
 
@@ -349,7 +352,7 @@ class _MessagesList extends ConsumerWidget {
       pagingController: pagingController,
       shrinkWrap: true,
       reverse: true,
-      builderDelegate: PagedChildBuilderDelegate<TalkMessage>(
+      builderDelegate: PagedChildBuilderDelegate<DiscussionMessage>(
         itemBuilder: (context, message, index) {
           final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
 
@@ -393,7 +396,7 @@ class _MessageItem extends ConsumerWidget {
     super.key,
   });
 
-  final TalkMessage message;
+  final DiscussionMessage message;
   final Color color;
   final bool showSender;
 

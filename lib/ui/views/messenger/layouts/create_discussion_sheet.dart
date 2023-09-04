@@ -5,8 +5,8 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
-import 'package:aewallet/ui/views/messenger/layouts/create_talk_contact_sheet.dart';
-import 'package:aewallet/ui/views/messenger/layouts/create_talk_group_sheet.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_contact_sheet.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_group_sheet.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -17,8 +17,8 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 
-class CreateTalkSheet extends ConsumerWidget {
-  const CreateTalkSheet({super.key});
+class CreateDiscussionSheet extends ConsumerWidget {
+  const CreateDiscussionSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -79,7 +79,7 @@ class CreateTalkSheet extends ConsumerWidget {
                               Sheets.showAppHeightNineSheet(
                                 context: context,
                                 ref: ref,
-                                widget: const CreateTalkGroupSheet(),
+                                widget: const CreateDiscussionGroupSheet(),
                               );
                             },
                             child: Row(
@@ -156,7 +156,7 @@ class CreateTalkSheet extends ConsumerWidget {
                               Sheets.showAppHeightNineSheet(
                                 context: context,
                                 ref: ref,
-                                widget: CreateTalkContactSheet(
+                                widget: CreateDiscussionContactSheet(
                                   contact: value.value as Contact,
                                 ),
                               );

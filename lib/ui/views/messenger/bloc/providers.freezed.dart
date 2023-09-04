@@ -15,30 +15,31 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CreateTalkContactFormState {
+mixin _$CreateDiscussionContactFormState {
   String get name => throw _privateConstructorUsedError;
   List<AccessRecipient> get members => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CreateTalkContactFormStateCopyWith<CreateTalkContactFormState>
+  $CreateDiscussionContactFormStateCopyWith<CreateDiscussionContactFormState>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateTalkContactFormStateCopyWith<$Res> {
-  factory $CreateTalkContactFormStateCopyWith(CreateTalkContactFormState value,
-          $Res Function(CreateTalkContactFormState) then) =
-      _$CreateTalkContactFormStateCopyWithImpl<$Res,
-          CreateTalkContactFormState>;
+abstract class $CreateDiscussionContactFormStateCopyWith<$Res> {
+  factory $CreateDiscussionContactFormStateCopyWith(
+          CreateDiscussionContactFormState value,
+          $Res Function(CreateDiscussionContactFormState) then) =
+      _$CreateDiscussionContactFormStateCopyWithImpl<$Res,
+          CreateDiscussionContactFormState>;
   @useResult
   $Res call({String name, List<AccessRecipient> members});
 }
 
 /// @nodoc
-class _$CreateTalkContactFormStateCopyWithImpl<$Res,
-        $Val extends CreateTalkContactFormState>
-    implements $CreateTalkContactFormStateCopyWith<$Res> {
-  _$CreateTalkContactFormStateCopyWithImpl(this._value, this._then);
+class _$CreateDiscussionContactFormStateCopyWithImpl<$Res,
+        $Val extends CreateDiscussionContactFormState>
+    implements $CreateDiscussionContactFormStateCopyWith<$Res> {
+  _$CreateDiscussionContactFormStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -65,25 +66,25 @@ class _$CreateTalkContactFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CreateTalkContactFormStateCopyWith<$Res>
-    implements $CreateTalkContactFormStateCopyWith<$Res> {
-  factory _$$_CreateTalkContactFormStateCopyWith(
-          _$_CreateTalkContactFormState value,
-          $Res Function(_$_CreateTalkContactFormState) then) =
-      __$$_CreateTalkContactFormStateCopyWithImpl<$Res>;
+abstract class _$$_CreateDiscussionContactFormStateCopyWith<$Res>
+    implements $CreateDiscussionContactFormStateCopyWith<$Res> {
+  factory _$$_CreateDiscussionContactFormStateCopyWith(
+          _$_CreateDiscussionContactFormState value,
+          $Res Function(_$_CreateDiscussionContactFormState) then) =
+      __$$_CreateDiscussionContactFormStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, List<AccessRecipient> members});
 }
 
 /// @nodoc
-class __$$_CreateTalkContactFormStateCopyWithImpl<$Res>
-    extends _$CreateTalkContactFormStateCopyWithImpl<$Res,
-        _$_CreateTalkContactFormState>
-    implements _$$_CreateTalkContactFormStateCopyWith<$Res> {
-  __$$_CreateTalkContactFormStateCopyWithImpl(
-      _$_CreateTalkContactFormState _value,
-      $Res Function(_$_CreateTalkContactFormState) _then)
+class __$$_CreateDiscussionContactFormStateCopyWithImpl<$Res>
+    extends _$CreateDiscussionContactFormStateCopyWithImpl<$Res,
+        _$_CreateDiscussionContactFormState>
+    implements _$$_CreateDiscussionContactFormStateCopyWith<$Res> {
+  __$$_CreateDiscussionContactFormStateCopyWithImpl(
+      _$_CreateDiscussionContactFormState _value,
+      $Res Function(_$_CreateDiscussionContactFormState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +93,7 @@ class __$$_CreateTalkContactFormStateCopyWithImpl<$Res>
     Object? name = null,
     Object? members = null,
   }) {
-    return _then(_$_CreateTalkContactFormState(
+    return _then(_$_CreateDiscussionContactFormState(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -107,8 +108,9 @@ class __$$_CreateTalkContactFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CreateTalkContactFormState extends _CreateTalkContactFormState {
-  const _$_CreateTalkContactFormState(
+class _$_CreateDiscussionContactFormState
+    extends _CreateDiscussionContactFormState {
+  const _$_CreateDiscussionContactFormState(
       {this.name = '', final List<AccessRecipient> members = const []})
       : _members = members,
         super._();
@@ -127,14 +129,14 @@ class _$_CreateTalkContactFormState extends _CreateTalkContactFormState {
 
   @override
   String toString() {
-    return 'CreateTalkContactFormState(name: $name, members: $members)';
+    return 'CreateDiscussionContactFormState(name: $name, members: $members)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CreateTalkContactFormState &&
+            other is _$_CreateDiscussionContactFormState &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._members, _members));
   }
@@ -146,16 +148,18 @@ class _$_CreateTalkContactFormState extends _CreateTalkContactFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CreateTalkContactFormStateCopyWith<_$_CreateTalkContactFormState>
-      get copyWith => __$$_CreateTalkContactFormStateCopyWithImpl<
-          _$_CreateTalkContactFormState>(this, _$identity);
+  _$$_CreateDiscussionContactFormStateCopyWith<
+          _$_CreateDiscussionContactFormState>
+      get copyWith => __$$_CreateDiscussionContactFormStateCopyWithImpl<
+          _$_CreateDiscussionContactFormState>(this, _$identity);
 }
 
-abstract class _CreateTalkContactFormState extends CreateTalkContactFormState {
-  const factory _CreateTalkContactFormState(
-      {final String name,
-      final List<AccessRecipient> members}) = _$_CreateTalkContactFormState;
-  const _CreateTalkContactFormState._() : super._();
+abstract class _CreateDiscussionContactFormState
+    extends CreateDiscussionContactFormState {
+  const factory _CreateDiscussionContactFormState(
+          {final String name, final List<AccessRecipient> members}) =
+      _$_CreateDiscussionContactFormState;
+  const _CreateDiscussionContactFormState._() : super._();
 
   @override
   String get name;
@@ -163,12 +167,13 @@ abstract class _CreateTalkContactFormState extends CreateTalkContactFormState {
   List<AccessRecipient> get members;
   @override
   @JsonKey(ignore: true)
-  _$$_CreateTalkContactFormStateCopyWith<_$_CreateTalkContactFormState>
+  _$$_CreateDiscussionContactFormStateCopyWith<
+          _$_CreateDiscussionContactFormState>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$CreateTalkGroupFormState {
+mixin _$CreateDiscussionGroupFormState {
   String get name => throw _privateConstructorUsedError;
   AccessRecipient? get memberAddFieldValue =>
       throw _privateConstructorUsedError;
@@ -177,15 +182,17 @@ mixin _$CreateTalkGroupFormState {
   List<AccessRecipient> get admins => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CreateTalkGroupFormStateCopyWith<CreateTalkGroupFormState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CreateDiscussionGroupFormStateCopyWith<CreateDiscussionGroupFormState>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateTalkGroupFormStateCopyWith<$Res> {
-  factory $CreateTalkGroupFormStateCopyWith(CreateTalkGroupFormState value,
-          $Res Function(CreateTalkGroupFormState) then) =
-      _$CreateTalkGroupFormStateCopyWithImpl<$Res, CreateTalkGroupFormState>;
+abstract class $CreateDiscussionGroupFormStateCopyWith<$Res> {
+  factory $CreateDiscussionGroupFormStateCopyWith(
+          CreateDiscussionGroupFormState value,
+          $Res Function(CreateDiscussionGroupFormState) then) =
+      _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
+          CreateDiscussionGroupFormState>;
   @useResult
   $Res call(
       {String name,
@@ -199,10 +206,10 @@ abstract class $CreateTalkGroupFormStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CreateTalkGroupFormStateCopyWithImpl<$Res,
-        $Val extends CreateTalkGroupFormState>
-    implements $CreateTalkGroupFormStateCopyWith<$Res> {
-  _$CreateTalkGroupFormStateCopyWithImpl(this._value, this._then);
+class _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
+        $Val extends CreateDiscussionGroupFormState>
+    implements $CreateDiscussionGroupFormStateCopyWith<$Res> {
+  _$CreateDiscussionGroupFormStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -268,12 +275,12 @@ class _$CreateTalkGroupFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CreateTalkGroupFormStateCopyWith<$Res>
-    implements $CreateTalkGroupFormStateCopyWith<$Res> {
-  factory _$$_CreateTalkGroupFormStateCopyWith(
-          _$_CreateTalkGroupFormState value,
-          $Res Function(_$_CreateTalkGroupFormState) then) =
-      __$$_CreateTalkGroupFormStateCopyWithImpl<$Res>;
+abstract class _$$_CreateDiscussionGroupFormStateCopyWith<$Res>
+    implements $CreateDiscussionGroupFormStateCopyWith<$Res> {
+  factory _$$_CreateDiscussionGroupFormStateCopyWith(
+          _$_CreateDiscussionGroupFormState value,
+          $Res Function(_$_CreateDiscussionGroupFormState) then) =
+      __$$_CreateDiscussionGroupFormStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -290,12 +297,13 @@ abstract class _$$_CreateTalkGroupFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CreateTalkGroupFormStateCopyWithImpl<$Res>
-    extends _$CreateTalkGroupFormStateCopyWithImpl<$Res,
-        _$_CreateTalkGroupFormState>
-    implements _$$_CreateTalkGroupFormStateCopyWith<$Res> {
-  __$$_CreateTalkGroupFormStateCopyWithImpl(_$_CreateTalkGroupFormState _value,
-      $Res Function(_$_CreateTalkGroupFormState) _then)
+class __$$_CreateDiscussionGroupFormStateCopyWithImpl<$Res>
+    extends _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
+        _$_CreateDiscussionGroupFormState>
+    implements _$$_CreateDiscussionGroupFormStateCopyWith<$Res> {
+  __$$_CreateDiscussionGroupFormStateCopyWithImpl(
+      _$_CreateDiscussionGroupFormState _value,
+      $Res Function(_$_CreateDiscussionGroupFormState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -307,7 +315,7 @@ class __$$_CreateTalkGroupFormStateCopyWithImpl<$Res>
     Object? adminAddFieldValue = freezed,
     Object? admins = null,
   }) {
-    return _then(_$_CreateTalkGroupFormState(
+    return _then(_$_CreateDiscussionGroupFormState(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -334,8 +342,9 @@ class __$$_CreateTalkGroupFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CreateTalkGroupFormState extends _CreateTalkGroupFormState {
-  const _$_CreateTalkGroupFormState(
+class _$_CreateDiscussionGroupFormState
+    extends _CreateDiscussionGroupFormState {
+  const _$_CreateDiscussionGroupFormState(
       {this.name = '',
       this.memberAddFieldValue,
       final List<AccessRecipient> members = const [],
@@ -372,14 +381,14 @@ class _$_CreateTalkGroupFormState extends _CreateTalkGroupFormState {
 
   @override
   String toString() {
-    return 'CreateTalkGroupFormState(name: $name, memberAddFieldValue: $memberAddFieldValue, members: $members, adminAddFieldValue: $adminAddFieldValue, admins: $admins)';
+    return 'CreateDiscussionGroupFormState(name: $name, memberAddFieldValue: $memberAddFieldValue, members: $members, adminAddFieldValue: $adminAddFieldValue, admins: $admins)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CreateTalkGroupFormState &&
+            other is _$_CreateDiscussionGroupFormState &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.memberAddFieldValue, memberAddFieldValue) ||
                 other.memberAddFieldValue == memberAddFieldValue) &&
@@ -401,19 +410,20 @@ class _$_CreateTalkGroupFormState extends _CreateTalkGroupFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CreateTalkGroupFormStateCopyWith<_$_CreateTalkGroupFormState>
-      get copyWith => __$$_CreateTalkGroupFormStateCopyWithImpl<
-          _$_CreateTalkGroupFormState>(this, _$identity);
+  _$$_CreateDiscussionGroupFormStateCopyWith<_$_CreateDiscussionGroupFormState>
+      get copyWith => __$$_CreateDiscussionGroupFormStateCopyWithImpl<
+          _$_CreateDiscussionGroupFormState>(this, _$identity);
 }
 
-abstract class _CreateTalkGroupFormState extends CreateTalkGroupFormState {
-  const factory _CreateTalkGroupFormState(
+abstract class _CreateDiscussionGroupFormState
+    extends CreateDiscussionGroupFormState {
+  const factory _CreateDiscussionGroupFormState(
       {final String name,
       final AccessRecipient? memberAddFieldValue,
       final List<AccessRecipient> members,
       final AccessRecipient? adminAddFieldValue,
-      final List<AccessRecipient> admins}) = _$_CreateTalkGroupFormState;
-  const _CreateTalkGroupFormState._() : super._();
+      final List<AccessRecipient> admins}) = _$_CreateDiscussionGroupFormState;
+  const _CreateDiscussionGroupFormState._() : super._();
 
   @override
   String get name;
@@ -427,13 +437,13 @@ abstract class _CreateTalkGroupFormState extends CreateTalkGroupFormState {
   List<AccessRecipient> get admins;
   @override
   @JsonKey(ignore: true)
-  _$$_CreateTalkGroupFormStateCopyWith<_$_CreateTalkGroupFormState>
+  _$$_CreateDiscussionGroupFormStateCopyWith<_$_CreateDiscussionGroupFormState>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$MessageCreationFormState {
-  String get talkAddress => throw _privateConstructorUsedError;
+  String get discussionAddress => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get isCreating => throw _privateConstructorUsedError;
 
@@ -448,7 +458,7 @@ abstract class $MessageCreationFormStateCopyWith<$Res> {
           $Res Function(MessageCreationFormState) then) =
       _$MessageCreationFormStateCopyWithImpl<$Res, MessageCreationFormState>;
   @useResult
-  $Res call({String talkAddress, String text, bool isCreating});
+  $Res call({String discussionAddress, String text, bool isCreating});
 }
 
 /// @nodoc
@@ -465,14 +475,14 @@ class _$MessageCreationFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? talkAddress = null,
+    Object? discussionAddress = null,
     Object? text = null,
     Object? isCreating = null,
   }) {
     return _then(_value.copyWith(
-      talkAddress: null == talkAddress
-          ? _value.talkAddress
-          : talkAddress // ignore: cast_nullable_to_non_nullable
+      discussionAddress: null == discussionAddress
+          ? _value.discussionAddress
+          : discussionAddress // ignore: cast_nullable_to_non_nullable
               as String,
       text: null == text
           ? _value.text
@@ -495,7 +505,7 @@ abstract class _$$_MessageCreationFormStateCopyWith<$Res>
       __$$_MessageCreationFormStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String talkAddress, String text, bool isCreating});
+  $Res call({String discussionAddress, String text, bool isCreating});
 }
 
 /// @nodoc
@@ -510,14 +520,14 @@ class __$$_MessageCreationFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? talkAddress = null,
+    Object? discussionAddress = null,
     Object? text = null,
     Object? isCreating = null,
   }) {
     return _then(_$_MessageCreationFormState(
-      talkAddress: null == talkAddress
-          ? _value.talkAddress
-          : talkAddress // ignore: cast_nullable_to_non_nullable
+      discussionAddress: null == discussionAddress
+          ? _value.discussionAddress
+          : discussionAddress // ignore: cast_nullable_to_non_nullable
               as String,
       text: null == text
           ? _value.text
@@ -535,11 +545,13 @@ class __$$_MessageCreationFormStateCopyWithImpl<$Res>
 
 class _$_MessageCreationFormState extends _MessageCreationFormState {
   const _$_MessageCreationFormState(
-      {required this.talkAddress, required this.text, required this.isCreating})
+      {required this.discussionAddress,
+      required this.text,
+      required this.isCreating})
       : super._();
 
   @override
-  final String talkAddress;
+  final String discussionAddress;
   @override
   final String text;
   @override
@@ -547,7 +559,7 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
 
   @override
   String toString() {
-    return 'MessageCreationFormState(talkAddress: $talkAddress, text: $text, isCreating: $isCreating)';
+    return 'MessageCreationFormState(discussionAddress: $discussionAddress, text: $text, isCreating: $isCreating)';
   }
 
   @override
@@ -555,15 +567,16 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MessageCreationFormState &&
-            (identical(other.talkAddress, talkAddress) ||
-                other.talkAddress == talkAddress) &&
+            (identical(other.discussionAddress, discussionAddress) ||
+                other.discussionAddress == discussionAddress) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.isCreating, isCreating) ||
                 other.isCreating == isCreating));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, talkAddress, text, isCreating);
+  int get hashCode =>
+      Object.hash(runtimeType, discussionAddress, text, isCreating);
 
   @JsonKey(ignore: true)
   @override
@@ -575,13 +588,13 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
 
 abstract class _MessageCreationFormState extends MessageCreationFormState {
   const factory _MessageCreationFormState(
-      {required final String talkAddress,
+      {required final String discussionAddress,
       required final String text,
       required final bool isCreating}) = _$_MessageCreationFormState;
   const _MessageCreationFormState._() : super._();
 
   @override
-  String get talkAddress;
+  String get discussionAddress;
   @override
   String get text;
   @override

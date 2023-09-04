@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'talk.dart';
+part of 'discussion.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Talk {
+mixin _$Discussion {
   @HiveField(0)
   String get address => throw _privateConstructorUsedError;
   @HiveField(1)
@@ -27,16 +27,18 @@ mixin _$Talk {
   @HiveField(4)
   DateTime get creationDate => throw _privateConstructorUsedError;
   @HiveField(5)
-  TalkMessage? get lastMessage => throw _privateConstructorUsedError;
+  DiscussionMessage? get lastMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TalkCopyWith<Talk> get copyWith => throw _privateConstructorUsedError;
+  $DiscussionCopyWith<Discussion> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TalkCopyWith<$Res> {
-  factory $TalkCopyWith(Talk value, $Res Function(Talk) then) =
-      _$TalkCopyWithImpl<$Res, Talk>;
+abstract class $DiscussionCopyWith<$Res> {
+  factory $DiscussionCopyWith(
+          Discussion value, $Res Function(Discussion) then) =
+      _$DiscussionCopyWithImpl<$Res, Discussion>;
   @useResult
   $Res call(
       {@HiveField(0) String address,
@@ -44,15 +46,15 @@ abstract class $TalkCopyWith<$Res> {
       @HiveField(2) List<String> membersPubKeys,
       @HiveField(3) List<String> adminsPubKeys,
       @HiveField(4) DateTime creationDate,
-      @HiveField(5) TalkMessage? lastMessage});
+      @HiveField(5) DiscussionMessage? lastMessage});
 
-  $TalkMessageCopyWith<$Res>? get lastMessage;
+  $DiscussionMessageCopyWith<$Res>? get lastMessage;
 }
 
 /// @nodoc
-class _$TalkCopyWithImpl<$Res, $Val extends Talk>
-    implements $TalkCopyWith<$Res> {
-  _$TalkCopyWithImpl(this._value, this._then);
+class _$DiscussionCopyWithImpl<$Res, $Val extends Discussion>
+    implements $DiscussionCopyWith<$Res> {
+  _$DiscussionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -93,27 +95,29 @@ class _$TalkCopyWithImpl<$Res, $Val extends Talk>
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as TalkMessage?,
+              as DiscussionMessage?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $TalkMessageCopyWith<$Res>? get lastMessage {
+  $DiscussionMessageCopyWith<$Res>? get lastMessage {
     if (_value.lastMessage == null) {
       return null;
     }
 
-    return $TalkMessageCopyWith<$Res>(_value.lastMessage!, (value) {
+    return $DiscussionMessageCopyWith<$Res>(_value.lastMessage!, (value) {
       return _then(_value.copyWith(lastMessage: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_TalkCopyWith<$Res> implements $TalkCopyWith<$Res> {
-  factory _$$_TalkCopyWith(_$_Talk value, $Res Function(_$_Talk) then) =
-      __$$_TalkCopyWithImpl<$Res>;
+abstract class _$$_DiscussionCopyWith<$Res>
+    implements $DiscussionCopyWith<$Res> {
+  factory _$$_DiscussionCopyWith(
+          _$_Discussion value, $Res Function(_$_Discussion) then) =
+      __$$_DiscussionCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -122,16 +126,18 @@ abstract class _$$_TalkCopyWith<$Res> implements $TalkCopyWith<$Res> {
       @HiveField(2) List<String> membersPubKeys,
       @HiveField(3) List<String> adminsPubKeys,
       @HiveField(4) DateTime creationDate,
-      @HiveField(5) TalkMessage? lastMessage});
+      @HiveField(5) DiscussionMessage? lastMessage});
 
   @override
-  $TalkMessageCopyWith<$Res>? get lastMessage;
+  $DiscussionMessageCopyWith<$Res>? get lastMessage;
 }
 
 /// @nodoc
-class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
-    implements _$$_TalkCopyWith<$Res> {
-  __$$_TalkCopyWithImpl(_$_Talk _value, $Res Function(_$_Talk) _then)
+class __$$_DiscussionCopyWithImpl<$Res>
+    extends _$DiscussionCopyWithImpl<$Res, _$_Discussion>
+    implements _$$_DiscussionCopyWith<$Res> {
+  __$$_DiscussionCopyWithImpl(
+      _$_Discussion _value, $Res Function(_$_Discussion) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -144,7 +150,7 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
     Object? creationDate = null,
     Object? lastMessage = freezed,
   }) {
-    return _then(_$_Talk(
+    return _then(_$_Discussion(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -168,7 +174,7 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as TalkMessage?,
+              as DiscussionMessage?,
     ));
   }
 }
@@ -176,8 +182,8 @@ class __$$_TalkCopyWithImpl<$Res> extends _$TalkCopyWithImpl<$Res, _$_Talk>
 /// @nodoc
 
 @HiveType(typeId: HiveTypeIds.talk)
-class _$_Talk extends _Talk {
-  const _$_Talk(
+class _$_Discussion extends _Discussion {
+  const _$_Discussion(
       {@HiveField(0) required this.address,
       @HiveField(1) this.name,
       @HiveField(2) required final List<String> membersPubKeys,
@@ -217,18 +223,18 @@ class _$_Talk extends _Talk {
   final DateTime creationDate;
   @override
   @HiveField(5)
-  final TalkMessage? lastMessage;
+  final DiscussionMessage? lastMessage;
 
   @override
   String toString() {
-    return 'Talk(address: $address, name: $name, membersPubKeys: $membersPubKeys, adminsPubKeys: $adminsPubKeys, creationDate: $creationDate, lastMessage: $lastMessage)';
+    return 'Discussion(address: $address, name: $name, membersPubKeys: $membersPubKeys, adminsPubKeys: $adminsPubKeys, creationDate: $creationDate, lastMessage: $lastMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Talk &&
+            other is _$_Discussion &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
@@ -254,19 +260,19 @@ class _$_Talk extends _Talk {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TalkCopyWith<_$_Talk> get copyWith =>
-      __$$_TalkCopyWithImpl<_$_Talk>(this, _$identity);
+  _$$_DiscussionCopyWith<_$_Discussion> get copyWith =>
+      __$$_DiscussionCopyWithImpl<_$_Discussion>(this, _$identity);
 }
 
-abstract class _Talk extends Talk {
-  const factory _Talk(
+abstract class _Discussion extends Discussion {
+  const factory _Discussion(
       {@HiveField(0) required final String address,
       @HiveField(1) final String? name,
       @HiveField(2) required final List<String> membersPubKeys,
       @HiveField(3) required final List<String> adminsPubKeys,
       @HiveField(4) required final DateTime creationDate,
-      @HiveField(5) final TalkMessage? lastMessage}) = _$_Talk;
-  const _Talk._() : super._();
+      @HiveField(5) final DiscussionMessage? lastMessage}) = _$_Discussion;
+  const _Discussion._() : super._();
 
   @override
   @HiveField(0)
@@ -285,8 +291,9 @@ abstract class _Talk extends Talk {
   DateTime get creationDate;
   @override
   @HiveField(5)
-  TalkMessage? get lastMessage;
+  DiscussionMessage? get lastMessage;
   @override
   @JsonKey(ignore: true)
-  _$$_TalkCopyWith<_$_Talk> get copyWith => throw _privateConstructorUsedError;
+  _$$_DiscussionCopyWith<_$_Discussion> get copyWith =>
+      throw _privateConstructorUsedError;
 }

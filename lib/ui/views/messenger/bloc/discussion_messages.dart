@@ -3,7 +3,7 @@ part of 'providers.dart';
 @freezed
 class MessageCreationFormState with _$MessageCreationFormState {
   const factory MessageCreationFormState({
-    required String talkAddress,
+    required String discussionAddress,
     required String text,
     required bool isCreating,
   }) = _MessageCreationFormState;
@@ -13,9 +13,9 @@ class MessageCreationFormState with _$MessageCreationFormState {
 @riverpod
 class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
   @override
-  MessageCreationFormState build(String talkAddress) =>
+  MessageCreationFormState build(String discussionAddress) =>
       MessageCreationFormState(
-        talkAddress: talkAddress,
+        discussionAddress: discussionAddress,
         text: '',
         isCreating: false,
       );
@@ -41,7 +41,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
       state = state.copyWith(isCreating: true);
       final messageCreated = await repository
           .sendMessage(
-            talkAddress: talkAddress,
+            discussionAddress: discussionAddress,
             content: content,
             creator: selectedAccount,
             session: session,
@@ -49,7 +49,8 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
           .valueOrThrow;
 
       ref
-          .read(_paginatedTalkMessagesNotifierProvider(talkAddress).notifier)
+          .read(_paginatedDiscussionMessagesNotifierProvider(discussionAddress)
+              .notifier)
           .addMessage(messageCreated);
 
       state = state.copyWith(
@@ -68,7 +69,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
 @riverpod
 Future<double> _messageCreationFees(
   _MessageCreationFeesRef ref,
-  String talkAddress,
+  String discussionAddress,
   String content,
 ) async {
   final task = CancelableTask<double>(
@@ -85,7 +86,7 @@ Future<double> _messageCreationFees(
           .calculateFees(
             creator: selectedAccount,
             session: session,
-            talkAddress: talkAddress,
+            discussionAddress: discussionAddress,
             content: content,
           )
           .valueOrThrow;
@@ -97,12 +98,13 @@ Future<double> _messageCreationFees(
 }
 
 @riverpod
-class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
+class _PaginatedDiscussionMessagesNotifier
+    extends _$PaginatedDiscussionMessagesNotifier {
   static const _pageSize = 7;
 
   @override
-  PagingController<int, TalkMessage> build(String talkAddress) {
-    final pagingController = PagingController<int, TalkMessage>(
+  PagingController<int, DiscussionMessage> build(String discussionAddress) {
+    final pagingController = PagingController<int, DiscussionMessage>(
       firstPageKey: 0,
     );
     _addPageRequestListener(pagingController);
@@ -117,7 +119,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
 
   void _addIncomingMessagesListener() {
     ref.listen(
-      NotificationProviders.txSentEvents(talkAddress),
+      NotificationProviders.txSentEvents(discussionAddress),
       (_, event) async {
         final txEvent = event.valueOrNull;
         if (txEvent == null) return;
@@ -126,7 +128,7 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
 
         final newMessage = (await ref.read(
           MessengerProviders.messages(
-            talkAddress,
+            discussionAddress,
             0,
             1,
           ).future,
@@ -148,12 +150,12 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
       );
 
   void _addPageRequestListener(
-    PagingController<int, TalkMessage> pagingController,
+    PagingController<int, DiscussionMessage> pagingController,
   ) {
     pagingController.addPageRequestListener((offset) async {
       final nextPageItems = await ref.read(
         MessengerProviders.messages(
-          talkAddress,
+          discussionAddress,
           offset,
           _pageSize,
         ).future,
@@ -170,32 +172,32 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
       }
 
       if (offset == 0 && nextPageItems.isNotEmpty) {
-        await _updateTalkLastMessage(nextPageItems.first);
+        await _updateDiscussionLastMessage(nextPageItems.first);
       }
     });
   }
 
-  PagingController<int, TalkMessage> get _pagingController => state;
-  set _pagingController(PagingController<int, TalkMessage> controller) {
+  PagingController<int, DiscussionMessage> get _pagingController => state;
+  set _pagingController(PagingController<int, DiscussionMessage> controller) {
     state.dispose();
 
     _addPageRequestListener(controller);
     state = controller;
   }
 
-  Future<void> _updateTalkLastMessage(TalkMessage message) async {
+  Future<void> _updateDiscussionLastMessage(DiscussionMessage message) async {
     await ref
         .read(MessengerProviders._messengerRepository)
-        .updateTalkLastMessage(
-          talkAddress: talkAddress,
+        .updateDiscussionLastMessage(
+          discussionAddress: discussionAddress,
           creator: (await ref.read(AccountProviders.selectedAccount.future))!,
           message: message,
         );
-    ref.invalidate(_talkProvider(talkAddress));
+    ref.invalidate(_discussionProvider(discussionAddress));
   }
 
-  Future<void> addMessage(TalkMessage messageCreated) async {
-    _pagingController = PagingController<int, TalkMessage>.fromValue(
+  Future<void> addMessage(DiscussionMessage messageCreated) async {
+    _pagingController = PagingController<int, DiscussionMessage>.fromValue(
       PagingState(
         itemList: [messageCreated, ..._pagingController.itemList ?? []],
         nextPageKey: _pagingController.nextPageKey == null
@@ -205,14 +207,14 @@ class _PaginatedTalkMessagesNotifier extends _$PaginatedTalkMessagesNotifier {
       firstPageKey: 0,
     );
 
-    await _updateTalkLastMessage(messageCreated);
+    await _updateDiscussionLastMessage(messageCreated);
   }
 }
 
 @riverpod
-Future<List<TalkMessage>> _talkMessages(
-  _TalkMessagesRef ref,
-  String talkAddress,
+Future<List<DiscussionMessage>> _discussionMessages(
+  _DiscussionMessagesRef ref,
+  String discussionAddress,
   int offset,
   int pageSize,
 ) async {
@@ -224,7 +226,7 @@ Future<List<TalkMessage>> _talkMessages(
       .getMessages(
         reader: account!,
         session: ref.watch(SessionProviders.session).loggedIn!,
-        talkAddress: talkAddress,
+        discussionAddress: discussionAddress,
         pagingOffset: offset,
         limit: pageSize,
       )

@@ -1,14 +1,11 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -23,13 +20,13 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AddTalkSheet extends ConsumerWidget {
-  const AddTalkSheet({
-    required this.talk,
+class DiscussionDetailsSheet extends ConsumerWidget {
+  const DiscussionDetailsSheet({
+    required this.discussionAddress,
     super.key,
   });
 
-  final Talk talk;
+  final String discussionAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,125 +35,110 @@ class AddTalkSheet extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
 
+    final asyncDiscussion =
+        ref.watch(MessengerProviders.discussion(discussionAddress));
     var index = 0;
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum: EdgeInsets.only(
           bottom: MediaQuery.of(context).size.height * 0.035,
         ),
-        child: Column(
-          children: <Widget>[
-            InkWell(
-              onTap: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      settings.activeVibrations,
+        child: asyncDiscussion.maybeMap(
+          orElse: Container.new,
+          data: (discussion) {
+            final discussionDisplayName = ref.watch(
+              MessengerProviders.discussionDisplayName(discussion.value),
+            );
+
+            return Column(
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          settings.activeVibrations,
+                        );
+                    Clipboard.setData(
+                      ClipboardData(
+                        text: discussion.value.address.toUpperCase(),
+                      ),
                     );
-                Clipboard.setData(
-                  ClipboardData(
-                    text: talk.address.toUpperCase(),
-                  ),
-                );
-                UIUtil.showSnackbar(
-                  localizations.addressCopied,
-                  context,
-                  ref,
-                  theme.text!,
-                  theme.snackBarShadow!,
-                );
-              },
-              child: SheetHeader(
-                title: ref.watch(MessengerProviders.talkDisplayName(talk)),
-              ),
-            ),
-            _SectionTitle(
-              text: localizations
-                  .messengerTalkMembersCount(talk.membersPubKeys.length),
-            ),
-            Expanded(
-              child: ArchethicScrollbar(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 15,
-                    right: 15,
-                    bottom: bottom + 80,
-                  ),
-                  child: Column(
-                    children: talk.membersPubKeys.map((publicKey) {
-                      index++;
-                      final accessRecipient = ref.watch(
-                        MessengerProviders.accessRecipientWithPublicKey(
-                          publicKey,
-                        ),
-                      );
-
-                      return PublicKeyLine(
-                        talk: talk,
-                        pubKey: publicKey,
-                        onTap: accessRecipient.maybeMap(
-                          orElse: () => null,
-                          data: (recipient) => recipient.value.map(
-                            contact: (contact) => () {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    settings.activeVibrations,
-                                  );
-
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                widget: ContactDetail(
-                                  contact: contact.contact,
-                                ),
-                              );
-                            },
-                            publicKey: (_) => null,
-                          ),
-                        ),
-                      )
-                          .animate(delay: (100 * index).ms)
-                          .fadeIn(duration: 900.ms, delay: 200.ms)
-                          .shimmer(
-                            blendMode: BlendMode.srcOver,
-                            color: Colors.white12,
-                          )
-                          .move(
-                            begin: const Offset(-16, 0),
-                            curve: Curves.easeOutQuad,
-                          );
-                    }).toList(),
+                    UIUtil.showSnackbar(
+                      localizations.addressCopied,
+                      context,
+                      ref,
+                      theme.text!,
+                      theme.snackBarShadow!,
+                    );
+                  },
+                  child: SheetHeader(
+                    title: discussionDisplayName,
                   ),
                 ),
-              ),
-            ),
-            Row(
-              children: [
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addRemoteMessengerGroup,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addRemoteMessengerGroup'),
-                  icon: Icon(
-                    Icons.add,
-                    color: theme.mainButtonLabel,
-                    size: 14,
+                _SectionTitle(
+                  text: localizations.messengerDiscussionMembersCount(
+                    discussion.value.membersPubKeys.length,
                   ),
-                  onPressed: () async {
-                    await ref
-                        .read(MessengerProviders.talks.notifier)
-                        .addRemoteTalk(talk);
-                    ref
-                        .read(
-                          DiscussionSearchBarProvider
-                              .discussionSearchBar.notifier,
-                        )
-                        .reset();
-                    Navigator.of(context).pop();
-                  },
+                ),
+                Expanded(
+                  child: ArchethicScrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: bottom + 80,
+                      ),
+                      child: Column(
+                        children: discussion.value.membersPubKeys.map((pubKey) {
+                          index++;
+                          final accessRecipient = ref.watch(
+                            MessengerProviders.accessRecipientWithPublicKey(
+                              pubKey,
+                            ),
+                          );
+
+                          return PublicKeyLine(
+                            discussion: discussion.value,
+                            pubKey: pubKey,
+                            onTap: accessRecipient.maybeMap(
+                              orElse: () => null,
+                              data: (recipient) => recipient.value.map(
+                                contact: (contact) => () {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        settings.activeVibrations,
+                                      );
+
+                                  Sheets.showAppHeightNineSheet(
+                                    context: context,
+                                    ref: ref,
+                                    widget: ContactDetail(
+                                      contact: contact.contact,
+                                    ),
+                                  );
+                                },
+                                publicKey: (_) => null,
+                              ),
+                            ),
+                          )
+                              .animate(delay: (100 * index).ms)
+                              .fadeIn(duration: 900.ms, delay: 200.ms)
+                              .shimmer(
+                                blendMode: BlendMode.srcOver,
+                                color: Colors.white12,
+                              )
+                              .move(
+                                begin: const Offset(-16, 0),
+                                curve: Curves.easeOutQuad,
+                              );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
                 ),
               ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -196,11 +178,11 @@ class PublicKeyLine extends ConsumerWidget {
   const PublicKeyLine({
     super.key,
     required this.pubKey,
-    required this.talk,
+    required this.discussion,
     this.onTap,
   });
 
-  final Talk talk;
+  final Discussion discussion;
   final String pubKey;
   final VoidCallback? onTap;
 
@@ -245,7 +227,7 @@ class PublicKeyLine extends ConsumerWidget {
                 ),
               ),
               _MemberRole(
-                talk: talk,
+                discussion: discussion,
                 memberPubKey: pubKey,
               ),
               if (onTap != null)
@@ -267,16 +249,16 @@ class PublicKeyLine extends ConsumerWidget {
 class _MemberRole extends ConsumerWidget {
   const _MemberRole({
     required this.memberPubKey,
-    required this.talk,
+    required this.discussion,
   });
 
   final String memberPubKey;
-  final Talk talk;
+  final Discussion discussion;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final isAdmin = talk.adminsPubKeys.any(
+    final isAdmin = discussion.adminsPubKeys.any(
       (adminPubKey) => adminPubKey == memberPubKey,
     );
 

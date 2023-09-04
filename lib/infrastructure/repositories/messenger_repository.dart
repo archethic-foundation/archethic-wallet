@@ -5,12 +5,12 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
-import 'package:aewallet/infrastructure/datasources/talk_local_datasource.dart';
-import 'package:aewallet/infrastructure/datasources/talk_remote_datasource.dart';
+import 'package:aewallet/infrastructure/datasources/discussion_local_datasource.dart';
+import 'package:aewallet/infrastructure/datasources/discussion_remote_datasource.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -24,105 +24,108 @@ class MessengerRepository
 
   final NetworksSetting networksSetting;
 
-  final _localDatasource = HiveTalkDatasource.getInstance();
+  final _localDatasource = HiveDiscussionDatasource.getInstance();
 
   // late HiveVaultDatasource? __vaultDatasource;
   // Future<HiveVaultDatasource> get _vaultDatasource async =>
   //     __vaultDatasource ??= await HiveVaultDatasource.getInstance();
 
-  final _remoteDatasource = TalkRemoteDatasource();
+  final _remoteDatasource = DiscussionRemoteDatasource();
 
   @override
-  Future<Result<List<String>, Failure>> getTalkAddresses({
+  Future<Result<List<String>, Failure>> getDiscussionAddresses({
     required Account owner,
   }) async =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        return localDatasource.getTalkAddresses(owner.genesisAddress).toList();
+        return localDatasource
+            .getDiscussionAddresses(owner.genesisAddress)
+            .toList();
       });
 
   @override
-  Future<Result<Talk, Failure>> getTalk({
+  Future<Result<Discussion, Failure>> getDiscussion({
     required Account owner,
-    required String talkAddress,
+    required String discussionAddress,
   }) =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        final talk = await localDatasource.getTalk(
+        final discussion = await localDatasource.getDiscussion(
           ownerAddress: owner.genesisAddress,
-          talkAddress: talkAddress,
+          discussionAddress: discussionAddress,
         );
-        if (talk == null) {
+        if (discussion == null) {
           throw const Failure.serviceNotFound();
         }
-        return talk;
+        return discussion;
       });
 
   @override
-  Future<Result<Talk, Failure>> createTalk({
+  Future<Result<Discussion, Failure>> createDiscussion({
     required List<String> membersPubKeys,
     required List<String> adminsPubKeys,
     required Account creator,
     required LoggedInSession session,
-    required String groupName,
+    required String discussionName,
   }) =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        final newTalk = await _remoteDatasource.createTalk(
+        final newDiscussion = await _remoteDatasource.createDiscussion(
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
           adminAddress: creator.lastAddress!,
           admins: adminsPubKeys,
           apiService: sl.get<ApiService>(),
-          groupName: groupName,
+          discussionName: discussionName,
           serviceName: creator.name,
-          members: membersPubKeys,
+          membersPubKey: membersPubKeys,
+          messagingService: sl.get<MessagingService>(),
         );
-        await localDatasource.addTalk(
+        await localDatasource.addDiscussion(
           ownerAddress: creator.genesisAddress,
-          talk: newTalk,
+          discussion: newDiscussion,
         );
 
-        return newTalk;
+        return newDiscussion;
       });
 
   @override
-  Future<Result<Talk, Failure>> addRemoteTalk({
-    required Talk talk,
+  Future<Result<Discussion, Failure>> addRemoteDiscussion({
+    required Discussion discussion,
     required Account creator,
   }) =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        await localDatasource.addTalk(
+        await localDatasource.addDiscussion(
           ownerAddress: creator.genesisAddress,
-          talk: talk,
+          discussion: discussion,
         );
 
-        return talk;
+        return discussion;
       });
 
   @override
-  Future<Result<void, Failure>> removeTalk({
-    required Talk talk,
+  Future<Result<void, Failure>> removeDiscussion({
+    required Discussion discussion,
     required Account owner,
   }) =>
       Result.guard(() async {
         final localDatasource = await _localDatasource;
 
-        await localDatasource.removeTalk(
+        await localDatasource.removeDiscussion(
           ownerAddress: owner.genesisAddress,
-          talkAddress: talk.address,
+          discussionAddress: discussion.address,
         );
       });
 
   @override
-  Future<Result<List<TalkMessage>, Failure>> getMessages({
+  Future<Result<List<DiscussionMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
     int limit = 0,
     int pagingOffset = 0,
   }) async =>
@@ -131,17 +134,17 @@ class MessengerRepository
           final keyPair = session
               .wallet.keychainSecuredInfos.services[reader.name]!.keyPair!;
 
-          final aeMessages = await _remoteDatasource.readMessages(
+          final aeMessages = await _remoteDatasource.read(
             apiService: sl.get<ApiService>(),
-            scAddress: talkAddress,
+            scAddress: discussionAddress,
             readerKeyPair: keyPair.toKeyPair,
             limit: limit,
             pagingOffset: pagingOffset,
           );
 
-          final talkMessages = aeMessages
+          final discussionMessages = aeMessages
               .map(
-                (message) => TalkMessage(
+                (message) => DiscussionMessage(
                   address: message.address,
                   content: message.content,
                   senderGenesisPublicKey: message.senderGenesisPublicKey,
@@ -152,24 +155,25 @@ class MessengerRepository
               )
               .toList();
 
-          return talkMessages;
+          return discussionMessages;
         },
       );
 
   @override
-  Future<Result<Talk, Failure>> getRemoteTalk({
+  Future<Result<Discussion, Failure>> getRemoteDiscussion({
     required Account currentAccount,
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
   }) async =>
       Result.guard(
         () async {
           final keyPair = session.wallet.keychainSecuredInfos
               .services[currentAccount.name]!.keyPair!;
 
-          final aeGroupMessage = await _remoteDatasource.getMessageGroup(
+          final aeGroupMessage =
+              await _remoteDatasource.getDiscussionFromSCAddress(
             apiService: sl.get<ApiService>(),
-            scAddress: talkAddress,
+            scAddress: discussionAddress,
             keyPair: keyPair.toKeyPair,
           );
 
@@ -177,7 +181,7 @@ class MessengerRepository
             throw const Failure.invalidValue();
           }
 
-          return Talk(
+          return Discussion(
             address: aeGroupMessage.address,
             adminsPubKeys: aeGroupMessage.adminPublicKey,
             membersPubKeys: aeGroupMessage.usersPubKey,
@@ -191,7 +195,7 @@ class MessengerRepository
   @override
   Future<Result<double, Failure>> calculateFees({
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
     required Account creator,
     required String content,
   }) async =>
@@ -202,7 +206,7 @@ class MessengerRepository
 
           return _remoteDatasource.calculateMessageSendFees(
             apiService: sl.get<ApiService>(),
-            scAddress: talkAddress,
+            scAddress: discussionAddress,
             messageContent: content,
             keychain: session.wallet.keychainSecuredInfos.toKeychain(),
             senderAddress: creator.lastAddress!,
@@ -213,9 +217,9 @@ class MessengerRepository
       );
 
   @override
-  Future<Result<TalkMessage, Failure>> sendMessage({
+  Future<Result<DiscussionMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
     required Account creator,
     required String content,
   }) =>
@@ -223,9 +227,9 @@ class MessengerRepository
         final keyPair = session
             .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
 
-        final sendMessageResult = await _remoteDatasource.sendMessage(
+        final sendMessageResult = await _remoteDatasource.send(
           apiService: sl.get<ApiService>(),
-          scAddress: talkAddress,
+          scAddress: discussionAddress,
           messageContent: content,
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
           senderAddress: creator.lastAddress!,
@@ -235,7 +239,7 @@ class MessengerRepository
 
         final txAddress = sendMessageResult.transactionAddress;
 
-        final message = TalkMessage(
+        final message = DiscussionMessage(
           address: txAddress.address!,
           content: content,
           date: DateTime.now(),
@@ -255,7 +259,7 @@ class MessengerRepository
         await sendTransactionNotification(
           notification: TransactionNotification(
             txAddress: txAddress.address!,
-            txChainGenesisAddress: talkAddress,
+            txChainGenesisAddress: discussionAddress,
           ),
           pushNotification: {
             'en': const PushNotification(
@@ -276,14 +280,14 @@ class MessengerRepository
       });
 
   @override
-  Future<void> updateTalkLastMessage({
-    required String talkAddress,
+  Future<void> updateDiscussionLastMessage({
+    required String discussionAddress,
     required Account creator,
-    required TalkMessage message,
+    required DiscussionMessage message,
   }) async {
-    await (await _localDatasource).setTalkLastMessage(
+    await (await _localDatasource).setDiscussionLastMessage(
       ownerAddress: creator.genesisAddress,
-      talkAddress: talkAddress,
+      discussionAddress: discussionAddress,
       message: message,
     );
   }

@@ -1,4 +1,4 @@
-import 'package:aewallet/model/data/messenger/talk.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'discussion_search_bar_state.freezed.dart';
@@ -9,9 +9,10 @@ class DiscussionSearchBarState with _$DiscussionSearchBarState {
     @Default('') String searchCriteria,
     @Default(false) bool loading,
     @Default('') String error,
-    Talk? talk,
+    Discussion? discussion,
   }) = _DiscussionSearchBarState;
   const DiscussionSearchBarState._();
 
-  bool get isControlsOk => error == '' && loading == false && talk != null;
+  bool get isControlsOk =>
+      error == '' && loading == false && discussion != null;
 }

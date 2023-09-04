@@ -1,7 +1,7 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
@@ -9,50 +9,52 @@ import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-abstract class TalkListItem extends ConsumerWidget {
-  const TalkListItem({super.key});
+abstract class DiscussionListItem extends ConsumerWidget {
+  const DiscussionListItem({super.key});
 
-  const factory TalkListItem.autoLoad({
+  const factory DiscussionListItem.autoLoad({
     Key? key,
-    required String talkId,
+    required String discussionId,
     required VoidCallback onTap,
-  }) = _AutoloadTalkListItem;
+  }) = _AutoloadDiscussionListItem;
 
-  const factory TalkListItem.loaded({
+  const factory DiscussionListItem.loaded({
     Key? key,
-    required Talk talk,
+    required Discussion discussion,
     required VoidCallback onTap,
-  }) = _LoadedTalkListItem;
+  }) = _LoadedDiscussionListItem;
 
-  const factory TalkListItem.loading({
+  const factory DiscussionListItem.loading({
     Key? key,
     Duration? animationDelay,
-  }) = _LoadingTalkListItem;
+  }) = _LoadingDiscussionListItem;
 }
 
-class _AutoloadTalkListItem extends TalkListItem {
-  const _AutoloadTalkListItem({
+class _AutoloadDiscussionListItem extends DiscussionListItem {
+  const _AutoloadDiscussionListItem({
     super.key,
-    required this.talkId,
+    required this.discussionId,
     required this.onTap,
   });
 
-  final String talkId;
+  final String discussionId;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncTalk = ref.watch(MessengerProviders.talk(talkId));
-    return asyncTalk.map(
-      error: (_) => const TalkListItem.loading(),
-      loading: (_) => const TalkListItem.loading(),
-      data: (talk) => TalkListItem.loaded(onTap: onTap, talk: talk.value),
+    final asyncDiscussion =
+        ref.watch(MessengerProviders.discussion(discussionId));
+    return asyncDiscussion.map(
+      error: (_) => const DiscussionListItem.loading(),
+      loading: (_) => const DiscussionListItem.loading(),
+      data: (discussion) =>
+          DiscussionListItem.loaded(onTap: onTap, discussion: discussion.value),
     );
   }
 }
 
-class _LoadingTalkListItem extends TalkListItem {
-  const _LoadingTalkListItem({
+class _LoadingDiscussionListItem extends DiscussionListItem {
+  const _LoadingDiscussionListItem({
     super.key,
     this.animationDelay,
   });
@@ -77,20 +79,21 @@ class _LoadingTalkListItem extends TalkListItem {
   }
 }
 
-class _LoadedTalkListItem extends TalkListItem {
-  const _LoadedTalkListItem({
+class _LoadedDiscussionListItem extends DiscussionListItem {
+  const _LoadedDiscussionListItem({
     super.key,
-    required this.talk,
+    required this.discussion,
     required this.onTap,
   });
 
-  final Talk talk;
+  final Discussion discussion;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final displayName = ref.watch(MessengerProviders.talkDisplayName(talk));
+    final displayName =
+        ref.watch(MessengerProviders.discussionDisplayName(discussion));
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -122,7 +125,7 @@ class _LoadedTalkListItem extends TalkListItem {
                     width: 8,
                   ),
                   Text(
-                    talk.updateDate.format(context),
+                    discussion.updateDate.format(context),
                     style: theme.textStyleSize12W100Primary,
                   ),
                 ],
@@ -130,10 +133,10 @@ class _LoadedTalkListItem extends TalkListItem {
               const SizedBox(
                 height: 4,
               ),
-              if (talk.lastMessage != null)
+              if (discussion.lastMessage != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
-                  child: _LastMessagePreview(message: talk.lastMessage!),
+                  child: _LastMessagePreview(message: discussion.lastMessage!),
                 ),
             ],
           ),
@@ -148,7 +151,7 @@ class _LastMessagePreview extends ConsumerWidget {
     required this.message,
   });
 
-  final TalkMessage message;
+  final DiscussionMessage message;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

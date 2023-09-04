@@ -2,67 +2,67 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
-import 'package:aewallet/model/data/messenger/talk.dart';
 
 abstract class MessengerRepositoryInterface {
-  Future<Result<List<String>, Failure>> getTalkAddresses({
+  Future<Result<List<String>, Failure>> getDiscussionAddresses({
     required Account owner,
   });
 
-  Future<Result<Talk, Failure>> getTalk({
+  Future<Result<Discussion, Failure>> getDiscussion({
     required Account owner,
-    required String talkAddress,
+    required String discussionAddress,
   });
 
-  Future<Result<Talk, Failure>> createTalk({
+  Future<Result<Discussion, Failure>> createDiscussion({
     required List<String> membersPubKeys,
     required List<String> adminsPubKeys,
     required Account creator,
     required LoggedInSession session,
-    required String groupName,
+    required String discussionName,
   });
 
-  Future<Result<List<TalkMessage>, Failure>> getMessages({
+  Future<Result<List<DiscussionMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
     int limit = 0,
     int pagingOffset = 0,
   });
 
-  Future<Result<Talk, Failure>> getRemoteTalk({
+  Future<Result<Discussion, Failure>> getRemoteDiscussion({
     required Account currentAccount,
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
   });
 
-  Future<Result<Talk, Failure>> addRemoteTalk({
-    required Talk talk,
+  Future<Result<Discussion, Failure>> addRemoteDiscussion({
+    required Discussion discussion,
     required Account creator,
   });
 
-  Future<Result<void, Failure>> removeTalk({
-    required Talk talk,
+  Future<Result<void, Failure>> removeDiscussion({
+    required Discussion discussion,
     required Account owner,
   });
 
-  Future<Result<TalkMessage, Failure>> sendMessage({
+  Future<Result<DiscussionMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
     required Account creator,
     required String content,
   });
 
-  Future<void> updateTalkLastMessage({
-    required String talkAddress,
+  Future<void> updateDiscussionLastMessage({
+    required String discussionAddress,
     required Account creator,
-    required TalkMessage message,
+    required DiscussionMessage message,
   });
 
   Future<Result<double, Failure>> calculateFees({
     required LoggedInSession session,
-    required String talkAddress,
+    required String discussionAddress,
     required Account creator,
     required String content,
   });

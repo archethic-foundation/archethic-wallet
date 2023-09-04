@@ -19,7 +19,7 @@ mixin _$DiscussionSearchBarState {
   String get searchCriteria => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
-  Talk? get talk => throw _privateConstructorUsedError;
+  Discussion? get discussion => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DiscussionSearchBarStateCopyWith<DiscussionSearchBarState> get copyWith =>
@@ -32,9 +32,13 @@ abstract class $DiscussionSearchBarStateCopyWith<$Res> {
           $Res Function(DiscussionSearchBarState) then) =
       _$DiscussionSearchBarStateCopyWithImpl<$Res, DiscussionSearchBarState>;
   @useResult
-  $Res call({String searchCriteria, bool loading, String error, Talk? talk});
+  $Res call(
+      {String searchCriteria,
+      bool loading,
+      String error,
+      Discussion? discussion});
 
-  $TalkCopyWith<$Res>? get talk;
+  $DiscussionCopyWith<$Res>? get discussion;
 }
 
 /// @nodoc
@@ -54,7 +58,7 @@ class _$DiscussionSearchBarStateCopyWithImpl<$Res,
     Object? searchCriteria = null,
     Object? loading = null,
     Object? error = null,
-    Object? talk = freezed,
+    Object? discussion = freezed,
   }) {
     return _then(_value.copyWith(
       searchCriteria: null == searchCriteria
@@ -69,22 +73,22 @@ class _$DiscussionSearchBarStateCopyWithImpl<$Res,
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      talk: freezed == talk
-          ? _value.talk
-          : talk // ignore: cast_nullable_to_non_nullable
-              as Talk?,
+      discussion: freezed == discussion
+          ? _value.discussion
+          : discussion // ignore: cast_nullable_to_non_nullable
+              as Discussion?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $TalkCopyWith<$Res>? get talk {
-    if (_value.talk == null) {
+  $DiscussionCopyWith<$Res>? get discussion {
+    if (_value.discussion == null) {
       return null;
     }
 
-    return $TalkCopyWith<$Res>(_value.talk!, (value) {
-      return _then(_value.copyWith(talk: value) as $Val);
+    return $DiscussionCopyWith<$Res>(_value.discussion!, (value) {
+      return _then(_value.copyWith(discussion: value) as $Val);
     });
   }
 }
@@ -98,10 +102,14 @@ abstract class _$$_DiscussionSearchBarStateCopyWith<$Res>
       __$$_DiscussionSearchBarStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String searchCriteria, bool loading, String error, Talk? talk});
+  $Res call(
+      {String searchCriteria,
+      bool loading,
+      String error,
+      Discussion? discussion});
 
   @override
-  $TalkCopyWith<$Res>? get talk;
+  $DiscussionCopyWith<$Res>? get discussion;
 }
 
 /// @nodoc
@@ -119,7 +127,7 @@ class __$$_DiscussionSearchBarStateCopyWithImpl<$Res>
     Object? searchCriteria = null,
     Object? loading = null,
     Object? error = null,
-    Object? talk = freezed,
+    Object? discussion = freezed,
   }) {
     return _then(_$_DiscussionSearchBarState(
       searchCriteria: null == searchCriteria
@@ -134,10 +142,10 @@ class __$$_DiscussionSearchBarStateCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      talk: freezed == talk
-          ? _value.talk
-          : talk // ignore: cast_nullable_to_non_nullable
-              as Talk?,
+      discussion: freezed == discussion
+          ? _value.discussion
+          : discussion // ignore: cast_nullable_to_non_nullable
+              as Discussion?,
     ));
   }
 }
@@ -149,7 +157,7 @@ class _$_DiscussionSearchBarState extends _DiscussionSearchBarState {
       {this.searchCriteria = '',
       this.loading = false,
       this.error = '',
-      this.talk})
+      this.discussion})
       : super._();
 
   @override
@@ -162,11 +170,11 @@ class _$_DiscussionSearchBarState extends _DiscussionSearchBarState {
   @JsonKey()
   final String error;
   @override
-  final Talk? talk;
+  final Discussion? discussion;
 
   @override
   String toString() {
-    return 'DiscussionSearchBarState(searchCriteria: $searchCriteria, loading: $loading, error: $error, talk: $talk)';
+    return 'DiscussionSearchBarState(searchCriteria: $searchCriteria, loading: $loading, error: $error, discussion: $discussion)';
   }
 
   @override
@@ -178,12 +186,13 @@ class _$_DiscussionSearchBarState extends _DiscussionSearchBarState {
                 other.searchCriteria == searchCriteria) &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.talk, talk) || other.talk == talk));
+            (identical(other.discussion, discussion) ||
+                other.discussion == discussion));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, searchCriteria, loading, error, talk);
+      Object.hash(runtimeType, searchCriteria, loading, error, discussion);
 
   @JsonKey(ignore: true)
   @override
@@ -198,7 +207,7 @@ abstract class _DiscussionSearchBarState extends DiscussionSearchBarState {
       {final String searchCriteria,
       final bool loading,
       final String error,
-      final Talk? talk}) = _$_DiscussionSearchBarState;
+      final Discussion? discussion}) = _$_DiscussionSearchBarState;
   const _DiscussionSearchBarState._() : super._();
 
   @override
@@ -208,7 +217,7 @@ abstract class _DiscussionSearchBarState extends DiscussionSearchBarState {
   @override
   String get error;
   @override
-  Talk? get talk;
+  Discussion? get discussion;
   @override
   @JsonKey(ignore: true)
   _$$_DiscussionSearchBarStateCopyWith<_$_DiscussionSearchBarState>
