@@ -187,7 +187,7 @@ class CreateDiscussionGroupSheet extends ConsumerWidget {
                       },
                     );
                   },
-                )
+                ),
               ],
             ),
           ],

@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef _ConvertedValueRef = AutoDisposeProviderRef<double>;
-
 /// See also [_convertedValue].
 @ProviderFor(_convertedValue)
 const _convertedValueProvider = _ConvertedValueFamily();
@@ -80,11 +78,11 @@ class _ConvertedValueFamily extends Family<double> {
 class _ConvertedValueProvider extends AutoDisposeProvider<double> {
   /// See also [_convertedValue].
   _ConvertedValueProvider({
-    required this.amount,
-    required this.tokenPrice,
-  }) : super.internal(
+    required double amount,
+    required double tokenPrice,
+  }) : this._internal(
           (ref) => _convertedValue(
-            ref,
+            ref as _ConvertedValueRef,
             amount: amount,
             tokenPrice: tokenPrice,
           ),
@@ -97,10 +95,47 @@ class _ConvertedValueProvider extends AutoDisposeProvider<double> {
           dependencies: _ConvertedValueFamily._dependencies,
           allTransitiveDependencies:
               _ConvertedValueFamily._allTransitiveDependencies,
+          amount: amount,
+          tokenPrice: tokenPrice,
         );
+
+  _ConvertedValueProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.amount,
+    required this.tokenPrice,
+  }) : super.internal();
 
   final double amount;
   final double tokenPrice;
+
+  @override
+  Override overrideWith(
+    double Function(_ConvertedValueRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _ConvertedValueProvider._internal(
+        (ref) => create(ref as _ConvertedValueRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        amount: amount,
+        tokenPrice: tokenPrice,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<double> createElement() {
+    return _ConvertedValueProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -119,9 +154,26 @@ class _ConvertedValueProvider extends AutoDisposeProvider<double> {
   }
 }
 
+mixin _ConvertedValueRef on AutoDisposeProviderRef<double> {
+  /// The parameter `amount` of this provider.
+  double get amount;
+
+  /// The parameter `tokenPrice` of this provider.
+  double get tokenPrice;
+}
+
+class _ConvertedValueProviderElement extends AutoDisposeProviderElement<double>
+    with _ConvertedValueRef {
+  _ConvertedValueProviderElement(super.provider);
+
+  @override
+  double get amount => (origin as _ConvertedValueProvider).amount;
+  @override
+  double get tokenPrice => (origin as _ConvertedValueProvider).tokenPrice;
+}
+
 String _$convertedValueLabelHash() =>
     r'd6786e9e48ba90083afd92be1adac47cb9034f82';
-typedef _ConvertedValueLabelRef = AutoDisposeProviderRef<String>;
 
 /// See also [_convertedValueLabel].
 @ProviderFor(_convertedValueLabel)
@@ -175,12 +227,12 @@ class _ConvertedValueLabelFamily extends Family<String> {
 class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
   /// See also [_convertedValueLabel].
   _ConvertedValueLabelProvider({
-    required this.amount,
-    required this.tokenPrice,
-    required this.context,
-  }) : super.internal(
+    required double amount,
+    required double tokenPrice,
+    required BuildContext context,
+  }) : this._internal(
           (ref) => _convertedValueLabel(
-            ref,
+            ref as _ConvertedValueLabelRef,
             amount: amount,
             tokenPrice: tokenPrice,
             context: context,
@@ -194,11 +246,51 @@ class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
           dependencies: _ConvertedValueLabelFamily._dependencies,
           allTransitiveDependencies:
               _ConvertedValueLabelFamily._allTransitiveDependencies,
+          amount: amount,
+          tokenPrice: tokenPrice,
+          context: context,
         );
+
+  _ConvertedValueLabelProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.amount,
+    required this.tokenPrice,
+    required this.context,
+  }) : super.internal();
 
   final double amount;
   final double tokenPrice;
   final BuildContext context;
+
+  @override
+  Override overrideWith(
+    String Function(_ConvertedValueLabelRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _ConvertedValueLabelProvider._internal(
+        (ref) => create(ref as _ConvertedValueLabelRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        amount: amount,
+        tokenPrice: tokenPrice,
+        context: context,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<String> createElement() {
+    return _ConvertedValueLabelProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -217,6 +309,29 @@ class _ConvertedValueLabelProvider extends AutoDisposeProvider<String> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _ConvertedValueLabelRef on AutoDisposeProviderRef<String> {
+  /// The parameter `amount` of this provider.
+  double get amount;
+
+  /// The parameter `tokenPrice` of this provider.
+  double get tokenPrice;
+
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+}
+
+class _ConvertedValueLabelProviderElement
+    extends AutoDisposeProviderElement<String> with _ConvertedValueLabelRef {
+  _ConvertedValueLabelProviderElement(super.provider);
+
+  @override
+  double get amount => (origin as _ConvertedValueLabelProvider).amount;
+  @override
+  double get tokenPrice => (origin as _ConvertedValueLabelProvider).tokenPrice;
+  @override
+  BuildContext get context => (origin as _ConvertedValueLabelProvider).context;
 }
 
 String _$selectedPrimaryCurrencyHash() =>

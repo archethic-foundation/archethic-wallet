@@ -48,9 +48,6 @@ class _SystemHash {
   }
 }
 
-typedef _SelectedAccountNftCategoriesRef
-    = AutoDisposeFutureProviderRef<List<NftCategory>>;
-
 /// See also [_selectedAccountNftCategories].
 @ProviderFor(_selectedAccountNftCategories)
 const _selectedAccountNftCategoriesProvider =
@@ -100,10 +97,10 @@ class _SelectedAccountNftCategoriesProvider
     extends AutoDisposeFutureProvider<List<NftCategory>> {
   /// See also [_selectedAccountNftCategories].
   _SelectedAccountNftCategoriesProvider({
-    required this.context,
-  }) : super.internal(
+    required BuildContext context,
+  }) : this._internal(
           (ref) => _selectedAccountNftCategories(
-            ref,
+            ref as _SelectedAccountNftCategoriesRef,
             context: context,
           ),
           from: _selectedAccountNftCategoriesProvider,
@@ -115,9 +112,45 @@ class _SelectedAccountNftCategoriesProvider
           dependencies: _SelectedAccountNftCategoriesFamily._dependencies,
           allTransitiveDependencies:
               _SelectedAccountNftCategoriesFamily._allTransitiveDependencies,
+          context: context,
         );
 
+  _SelectedAccountNftCategoriesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.context,
+  }) : super.internal();
+
   final BuildContext context;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<NftCategory>> Function(
+            _SelectedAccountNftCategoriesRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _SelectedAccountNftCategoriesProvider._internal(
+        (ref) => create(ref as _SelectedAccountNftCategoriesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        context: context,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<NftCategory>> createElement() {
+    return _SelectedAccountNftCategoriesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -134,8 +167,23 @@ class _SelectedAccountNftCategoriesProvider
   }
 }
 
+mixin _SelectedAccountNftCategoriesRef
+    on AutoDisposeFutureProviderRef<List<NftCategory>> {
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+}
+
+class _SelectedAccountNftCategoriesProviderElement
+    extends AutoDisposeFutureProviderElement<List<NftCategory>>
+    with _SelectedAccountNftCategoriesRef {
+  _SelectedAccountNftCategoriesProviderElement(super.provider);
+
+  @override
+  BuildContext get context =>
+      (origin as _SelectedAccountNftCategoriesProvider).context;
+}
+
 String _$fetchNftCategoryHash() => r'cd908e74d75cc876b704d525b019fcee83b43504';
-typedef _FetchNftCategoryRef = AutoDisposeProviderRef<List<NftCategory>>;
 
 /// See also [_fetchNftCategory].
 @ProviderFor(_fetchNftCategory)
@@ -186,11 +234,11 @@ class _FetchNftCategoryFamily extends Family<List<NftCategory>> {
 class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
   /// See also [_fetchNftCategory].
   _FetchNftCategoryProvider({
-    required this.context,
-    required this.account,
-  }) : super.internal(
+    required BuildContext context,
+    required Account account,
+  }) : this._internal(
           (ref) => _fetchNftCategory(
-            ref,
+            ref as _FetchNftCategoryRef,
             context: context,
             account: account,
           ),
@@ -203,10 +251,47 @@ class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
           dependencies: _FetchNftCategoryFamily._dependencies,
           allTransitiveDependencies:
               _FetchNftCategoryFamily._allTransitiveDependencies,
+          context: context,
+          account: account,
         );
+
+  _FetchNftCategoryProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.context,
+    required this.account,
+  }) : super.internal();
 
   final BuildContext context;
   final Account account;
+
+  @override
+  Override overrideWith(
+    List<NftCategory> Function(_FetchNftCategoryRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _FetchNftCategoryProvider._internal(
+        (ref) => create(ref as _FetchNftCategoryRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        context: context,
+        account: account,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<List<NftCategory>> createElement() {
+    return _FetchNftCategoryProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -225,9 +310,27 @@ class _FetchNftCategoryProvider extends AutoDisposeProvider<List<NftCategory>> {
   }
 }
 
+mixin _FetchNftCategoryRef on AutoDisposeProviderRef<List<NftCategory>> {
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+
+  /// The parameter `account` of this provider.
+  Account get account;
+}
+
+class _FetchNftCategoryProviderElement
+    extends AutoDisposeProviderElement<List<NftCategory>>
+    with _FetchNftCategoryRef {
+  _FetchNftCategoryProviderElement(super.provider);
+
+  @override
+  BuildContext get context => (origin as _FetchNftCategoryProvider).context;
+  @override
+  Account get account => (origin as _FetchNftCategoryProvider).account;
+}
+
 String _$getNbNFTInCategoryHash() =>
     r'99a8437aa88eaa3ba56d8b6701a7dfca89a6d58f';
-typedef _GetNbNFTInCategoryRef = AutoDisposeProviderRef<int>;
 
 /// See also [_getNbNFTInCategory].
 @ProviderFor(_getNbNFTInCategory)
@@ -278,11 +381,11 @@ class _GetNbNFTInCategoryFamily extends Family<int> {
 class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
   /// See also [_getNbNFTInCategory].
   _GetNbNFTInCategoryProvider({
-    required this.account,
-    required this.categoryNftIndex,
-  }) : super.internal(
+    required Account account,
+    required int categoryNftIndex,
+  }) : this._internal(
           (ref) => _getNbNFTInCategory(
-            ref,
+            ref as _GetNbNFTInCategoryRef,
             account: account,
             categoryNftIndex: categoryNftIndex,
           ),
@@ -295,10 +398,47 @@ class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
           dependencies: _GetNbNFTInCategoryFamily._dependencies,
           allTransitiveDependencies:
               _GetNbNFTInCategoryFamily._allTransitiveDependencies,
+          account: account,
+          categoryNftIndex: categoryNftIndex,
         );
+
+  _GetNbNFTInCategoryProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.account,
+    required this.categoryNftIndex,
+  }) : super.internal();
 
   final Account account;
   final int categoryNftIndex;
+
+  @override
+  Override overrideWith(
+    int Function(_GetNbNFTInCategoryRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetNbNFTInCategoryProvider._internal(
+        (ref) => create(ref as _GetNbNFTInCategoryRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        account: account,
+        categoryNftIndex: categoryNftIndex,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<int> createElement() {
+    return _GetNbNFTInCategoryProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -317,8 +457,26 @@ class _GetNbNFTInCategoryProvider extends AutoDisposeProvider<int> {
   }
 }
 
+mixin _GetNbNFTInCategoryRef on AutoDisposeProviderRef<int> {
+  /// The parameter `account` of this provider.
+  Account get account;
+
+  /// The parameter `categoryNftIndex` of this provider.
+  int get categoryNftIndex;
+}
+
+class _GetNbNFTInCategoryProviderElement extends AutoDisposeProviderElement<int>
+    with _GetNbNFTInCategoryRef {
+  _GetNbNFTInCategoryProviderElement(super.provider);
+
+  @override
+  Account get account => (origin as _GetNbNFTInCategoryProvider).account;
+  @override
+  int get categoryNftIndex =>
+      (origin as _GetNbNFTInCategoryProvider).categoryNftIndex;
+}
+
 String _$getListByDefaultHash() => r'9512b96c85cc9b4ac7c455dd875784ae2c880d9e';
-typedef _GetListByDefaultRef = AutoDisposeProviderRef<List<NftCategory>>;
 
 /// See also [_getListByDefault].
 @ProviderFor(_getListByDefault)
@@ -366,10 +524,10 @@ class _GetListByDefaultFamily extends Family<List<NftCategory>> {
 class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
   /// See also [_getListByDefault].
   _GetListByDefaultProvider({
-    required this.context,
-  }) : super.internal(
+    required BuildContext context,
+  }) : this._internal(
           (ref) => _getListByDefault(
-            ref,
+            ref as _GetListByDefaultRef,
             context: context,
           ),
           from: _getListByDefaultProvider,
@@ -381,9 +539,43 @@ class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
           dependencies: _GetListByDefaultFamily._dependencies,
           allTransitiveDependencies:
               _GetListByDefaultFamily._allTransitiveDependencies,
+          context: context,
         );
 
+  _GetListByDefaultProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.context,
+  }) : super.internal();
+
   final BuildContext context;
+
+  @override
+  Override overrideWith(
+    List<NftCategory> Function(_GetListByDefaultRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetListByDefaultProvider._internal(
+        (ref) => create(ref as _GetListByDefaultRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        context: context,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<List<NftCategory>> createElement() {
+    return _GetListByDefaultProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -399,9 +591,22 @@ class _GetListByDefaultProvider extends AutoDisposeProvider<List<NftCategory>> {
   }
 }
 
+mixin _GetListByDefaultRef on AutoDisposeProviderRef<List<NftCategory>> {
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+}
+
+class _GetListByDefaultProviderElement
+    extends AutoDisposeProviderElement<List<NftCategory>>
+    with _GetListByDefaultRef {
+  _GetListByDefaultProviderElement(super.provider);
+
+  @override
+  BuildContext get context => (origin as _GetListByDefaultProvider).context;
+}
+
 String _$listNFTCategoryHiddenHash() =>
-    r'ea0858e984f5a91c285cc1f97941383dd49dd4a7';
-typedef _ListNFTCategoryHiddenRef = AutoDisposeProviderRef<List<NftCategory>>;
+    r'e3d77d9dfa59a31ebb6cf4149c54902406d1449f';
 
 /// See also [_listNFTCategoryHidden].
 @ProviderFor(_listNFTCategoryHidden)
@@ -450,10 +655,10 @@ class _ListNFTCategoryHiddenProvider
     extends AutoDisposeProvider<List<NftCategory>> {
   /// See also [_listNFTCategoryHidden].
   _ListNFTCategoryHiddenProvider({
-    required this.context,
-  }) : super.internal(
+    required BuildContext context,
+  }) : this._internal(
           (ref) => _listNFTCategoryHidden(
-            ref,
+            ref as _ListNFTCategoryHiddenRef,
             context: context,
           ),
           from: _listNFTCategoryHiddenProvider,
@@ -465,9 +670,43 @@ class _ListNFTCategoryHiddenProvider
           dependencies: _ListNFTCategoryHiddenFamily._dependencies,
           allTransitiveDependencies:
               _ListNFTCategoryHiddenFamily._allTransitiveDependencies,
+          context: context,
         );
 
+  _ListNFTCategoryHiddenProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.context,
+  }) : super.internal();
+
   final BuildContext context;
+
+  @override
+  Override overrideWith(
+    List<NftCategory> Function(_ListNFTCategoryHiddenRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _ListNFTCategoryHiddenProvider._internal(
+        (ref) => create(ref as _ListNFTCategoryHiddenRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        context: context,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<List<NftCategory>> createElement() {
+    return _ListNFTCategoryHiddenProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -483,9 +722,23 @@ class _ListNFTCategoryHiddenProvider
   }
 }
 
+mixin _ListNFTCategoryHiddenRef on AutoDisposeProviderRef<List<NftCategory>> {
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+}
+
+class _ListNFTCategoryHiddenProviderElement
+    extends AutoDisposeProviderElement<List<NftCategory>>
+    with _ListNFTCategoryHiddenRef {
+  _ListNFTCategoryHiddenProviderElement(super.provider);
+
+  @override
+  BuildContext get context =>
+      (origin as _ListNFTCategoryHiddenProvider).context;
+}
+
 String _$getDescriptionHeaderHash() =>
     r'185dffe43711a9f602f89b67628173a12657f14a';
-typedef _GetDescriptionHeaderRef = AutoDisposeProviderRef<String>;
 
 /// See also [_getDescriptionHeader].
 @ProviderFor(_getDescriptionHeader)
@@ -536,11 +789,11 @@ class _GetDescriptionHeaderFamily extends Family<String> {
 class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
   /// See also [_getDescriptionHeader].
   _GetDescriptionHeaderProvider({
-    required this.context,
-    required this.id,
-  }) : super.internal(
+    required BuildContext context,
+    required int id,
+  }) : this._internal(
           (ref) => _getDescriptionHeader(
-            ref,
+            ref as _GetDescriptionHeaderRef,
             context: context,
             id: id,
           ),
@@ -553,10 +806,47 @@ class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
           dependencies: _GetDescriptionHeaderFamily._dependencies,
           allTransitiveDependencies:
               _GetDescriptionHeaderFamily._allTransitiveDependencies,
+          context: context,
+          id: id,
         );
+
+  _GetDescriptionHeaderProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.context,
+    required this.id,
+  }) : super.internal();
 
   final BuildContext context;
   final int id;
+
+  @override
+  Override overrideWith(
+    String Function(_GetDescriptionHeaderRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetDescriptionHeaderProvider._internal(
+        (ref) => create(ref as _GetDescriptionHeaderRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        context: context,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<String> createElement() {
+    return _GetDescriptionHeaderProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -573,6 +863,24 @@ class _GetDescriptionHeaderProvider extends AutoDisposeProvider<String> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _GetDescriptionHeaderRef on AutoDisposeProviderRef<String> {
+  /// The parameter `context` of this provider.
+  BuildContext get context;
+
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _GetDescriptionHeaderProviderElement
+    extends AutoDisposeProviderElement<String> with _GetDescriptionHeaderRef {
+  _GetDescriptionHeaderProviderElement(super.provider);
+
+  @override
+  BuildContext get context => (origin as _GetDescriptionHeaderProvider).context;
+  @override
+  int get id => (origin as _GetDescriptionHeaderProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

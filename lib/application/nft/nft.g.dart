@@ -44,8 +44,6 @@ class _SystemHash {
   }
 }
 
-typedef _GetNFTRef = AutoDisposeFutureProviderRef<TokenInformations?>;
-
 /// See also [_getNFT].
 @ProviderFor(_getNFT)
 const _getNFTProvider = _GetNFTFamily();
@@ -95,11 +93,11 @@ class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
 class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
   /// See also [_getNFT].
   _GetNFTProvider(
-    this.address,
-    this.keychainServiceKeyPair,
-  ) : super.internal(
+    String address,
+    KeychainServiceKeyPair keychainServiceKeyPair,
+  ) : this._internal(
           (ref) => _getNFT(
-            ref,
+            ref as _GetNFTRef,
             address,
             keychainServiceKeyPair,
           ),
@@ -111,10 +109,47 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
                   : _$getNFTHash,
           dependencies: _GetNFTFamily._dependencies,
           allTransitiveDependencies: _GetNFTFamily._allTransitiveDependencies,
+          address: address,
+          keychainServiceKeyPair: keychainServiceKeyPair,
         );
+
+  _GetNFTProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.address,
+    required this.keychainServiceKeyPair,
+  }) : super.internal();
 
   final String address;
   final KeychainServiceKeyPair keychainServiceKeyPair;
+
+  @override
+  Override overrideWith(
+    FutureOr<TokenInformations?> Function(_GetNFTRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetNFTProvider._internal(
+        (ref) => create(ref as _GetNFTRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        address: address,
+        keychainServiceKeyPair: keychainServiceKeyPair,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<TokenInformations?> createElement() {
+    return _GetNFTProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -131,6 +166,26 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _GetNFTRef on AutoDisposeFutureProviderRef<TokenInformations?> {
+  /// The parameter `address` of this provider.
+  String get address;
+
+  /// The parameter `keychainServiceKeyPair` of this provider.
+  KeychainServiceKeyPair get keychainServiceKeyPair;
+}
+
+class _GetNFTProviderElement
+    extends AutoDisposeFutureProviderElement<TokenInformations?>
+    with _GetNFTRef {
+  _GetNFTProviderElement(super.provider);
+
+  @override
+  String get address => (origin as _GetNFTProvider).address;
+  @override
+  KeychainServiceKeyPair get keychainServiceKeyPair =>
+      (origin as _GetNFTProvider).keychainServiceKeyPair;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

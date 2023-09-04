@@ -181,7 +181,7 @@ class __$$_DiscussionCopyWithImpl<$Res>
 
 /// @nodoc
 
-@HiveType(typeId: HiveTypeIds.talk)
+@HiveType(typeId: HiveTypeIds.discussion)
 class _$_Discussion extends _Discussion {
   const _$_Discussion(
       {@HiveField(0) required this.address,

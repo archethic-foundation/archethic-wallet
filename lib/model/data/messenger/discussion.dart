@@ -8,7 +8,7 @@ part 'discussion.g.dart';
 
 @freezed
 class Discussion with _$Discussion {
-  @HiveType(typeId: HiveTypeIds.talk)
+  @HiveType(typeId: HiveTypeIds.discussion)
   const factory Discussion({
     @HiveField(0) required String address,
     @HiveField(1) String? name,

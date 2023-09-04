@@ -543,6 +543,6 @@
 	"recoveryPhraseSave": "Sauvegarder la phrase secrète",
 	"newContact": "Nouveau contact",
 	"contactsHeader": "Contacts",
-	"noContacts" : "Vous n'avez aucun contact",
+	"noContacts": "Vous n'avez aucun contact",
 	"aboutToCreateADiscussion": "Vous êtes sur le point de créer une discussion avec"
 }

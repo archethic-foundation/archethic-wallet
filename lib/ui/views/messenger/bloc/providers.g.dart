@@ -156,7 +156,7 @@ class _DiscussionProviderElement
 }
 
 String _$discussionDisplayNameHash() =>
-    r'e3de2ca39a589c14a114310adcd9acf4ed2b4e9a';
+    r'ca1955ae1b91e4f54d33e98816e2f359534806b0';
 
 /// See also [_discussionDisplayName].
 @ProviderFor(_discussionDisplayName)
@@ -423,7 +423,7 @@ class _AccessRecipientWithPublicKeyProviderElement
   String get pubKey => (origin as _AccessRecipientWithPublicKeyProvider).pubKey;
 }
 
-String _$remoteDiscussionHash() => r'2642695500be3967ad60df9f4b0e9fd56b5f694a';
+String _$remoteDiscussionHash() => r'5056733923772dafac677ce03b1d44a0a6c6641a';
 
 /// See also [_remoteDiscussion].
 @ProviderFor(_remoteDiscussion)
@@ -474,7 +474,7 @@ class _RemoteDiscussionProvider extends AutoDisposeFutureProvider<Discussion> {
     String address,
   ) : this._internal(
           (ref) => _remoteDiscussion(
-            ref as _DiscussionRef,
+            ref as _RemoteDiscussionRef,
             address,
           ),
           from: _remoteDiscussionProvider,
@@ -1052,7 +1052,7 @@ class _MessageCreationFormNotifierProviderElement
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>
-    r'9965c77eb07df123427a564c859cccc55713c049';
+    r'9c5b727d054e84e43e2a16909d0b36aeb73d6152';
 
 abstract class _$PaginatedDiscussionMessagesNotifier
     extends BuildlessAutoDisposeNotifier<

@@ -4,11 +4,11 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class DiscussionRemoteDatasource with MessengerMixin {
   Future<Discussion> createDiscussion({
-    required ApiService apiService,
     required MessagingService messagingService,
+    required ApiService apiService,
     required List<String> membersPubKey,
     required String discussionName,
-    required List<String> admins,
+    required List<String> adminsPubKeys,
     required String adminAddress,
     required String serviceName,
     required Keychain keychain,
@@ -18,7 +18,7 @@ class DiscussionRemoteDatasource with MessengerMixin {
       apiService: apiService,
       membersPubKey: membersPubKey.map((e) => e).whereType<String>().toList(),
       discussionName: discussionName,
-      adminsPubKey: admins.map((e) => e).whereType<String>().toList(),
+      adminsPubKey: adminsPubKeys.map((e) => e).whereType<String>().toList(),
       adminAddress: adminAddress,
       serviceName: serviceName,
     );
@@ -28,11 +28,12 @@ class DiscussionRemoteDatasource with MessengerMixin {
       address: transaction.address!.address!,
       name: discussionName,
       membersPubKeys: membersPubKey,
-      adminsPubKeys: admins,
+      adminsPubKeys: adminsPubKeys,
     );
   }
 
   Future<double> calculateMessageSendFees({
+    required MessagingService messagingService,
     required Keychain keychain,
     required ApiService apiService,
     required String scAddress,
@@ -41,10 +42,10 @@ class DiscussionRemoteDatasource with MessengerMixin {
     required String senderServiceName,
     required KeyPair senderKeyPair,
   }) async {
-    final result = await buildMessageSendTransaction(
+    final result = await messagingService.buildMessage(
       keychain: keychain,
       apiService: apiService,
-      scAddress: scAddress,
+      discussionSCAddress: scAddress,
       messageContent: messageContent,
       senderAddress: senderAddress,
       senderServiceName: senderServiceName,

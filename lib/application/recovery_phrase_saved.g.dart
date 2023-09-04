@@ -46,8 +46,6 @@ class _SystemHash {
   }
 }
 
-typedef _SetRecoveryPhraseSavedRef = AutoDisposeFutureProviderRef<void>;
-
 /// See also [_setRecoveryPhraseSaved].
 @ProviderFor(_setRecoveryPhraseSaved)
 const _setRecoveryPhraseSavedProvider = _SetRecoveryPhraseSavedFamily();
@@ -94,10 +92,10 @@ class _SetRecoveryPhraseSavedFamily extends Family<AsyncValue<void>> {
 class _SetRecoveryPhraseSavedProvider extends AutoDisposeFutureProvider<void> {
   /// See also [_setRecoveryPhraseSaved].
   _SetRecoveryPhraseSavedProvider(
-    this.value,
-  ) : super.internal(
+    bool value,
+  ) : this._internal(
           (ref) => _setRecoveryPhraseSaved(
-            ref,
+            ref as _SetRecoveryPhraseSavedRef,
             value,
           ),
           from: _setRecoveryPhraseSavedProvider,
@@ -109,9 +107,43 @@ class _SetRecoveryPhraseSavedProvider extends AutoDisposeFutureProvider<void> {
           dependencies: _SetRecoveryPhraseSavedFamily._dependencies,
           allTransitiveDependencies:
               _SetRecoveryPhraseSavedFamily._allTransitiveDependencies,
+          value: value,
         );
 
+  _SetRecoveryPhraseSavedProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.value,
+  }) : super.internal();
+
   final bool value;
+
+  @override
+  Override overrideWith(
+    FutureOr<void> Function(_SetRecoveryPhraseSavedRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _SetRecoveryPhraseSavedProvider._internal(
+        (ref) => create(ref as _SetRecoveryPhraseSavedRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        value: value,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<void> createElement() {
+    return _SetRecoveryPhraseSavedProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -125,6 +157,20 @@ class _SetRecoveryPhraseSavedProvider extends AutoDisposeFutureProvider<void> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin _SetRecoveryPhraseSavedRef on AutoDisposeFutureProviderRef<void> {
+  /// The parameter `value` of this provider.
+  bool get value;
+}
+
+class _SetRecoveryPhraseSavedProviderElement
+    extends AutoDisposeFutureProviderElement<void>
+    with _SetRecoveryPhraseSavedRef {
+  _SetRecoveryPhraseSavedProviderElement(super.provider);
+
+  @override
+  bool get value => (origin as _SetRecoveryPhraseSavedProvider).value;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
