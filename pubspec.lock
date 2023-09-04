@@ -61,8 +61,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: activate_version_tx_2
-      resolved-ref: "76779865c2a765350b17f7a4db61f3075480fbf4"
+      ref: dev
+      resolved-ref: af12635e9e0a9eb507e4979b35f46d019a1f3fe5
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
