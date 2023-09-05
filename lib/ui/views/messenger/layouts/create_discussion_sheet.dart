@@ -151,7 +151,6 @@ class CreateDiscussionSheet extends ConsumerWidget {
                         child: SingleChildScrollView(
                           child: PickerWidget(
                             pickerItems: pickerItemsList,
-                            showSelectedItem: false,
                             onSelected: (value) {
                               Sheets.showAppHeightNineSheet(
                                 context: context,

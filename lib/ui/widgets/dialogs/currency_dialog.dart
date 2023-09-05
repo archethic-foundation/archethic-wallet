@@ -64,7 +64,7 @@ class CurrencyDialog {
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: currency.getIndex(),
+              selectedIndexes: [currency.getIndex()],
               onSelected: (value) async {
                 final currency =
                     AvailableCurrency(value.value as AvailableCurrencyEnum);

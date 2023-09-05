@@ -52,7 +52,7 @@ class PrimaryCurrencyDialog {
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex: primaryCurrency.getIndex(),
+            selectedIndexes: [primaryCurrency.getIndex()],
             onSelected: (value) async {
               final primaryCurrency = AvailablePrimaryCurrency(
                 value.value as AvailablePrimaryCurrencyEnum,

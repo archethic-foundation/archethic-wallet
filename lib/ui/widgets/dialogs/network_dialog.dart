@@ -60,7 +60,7 @@ class NetworkDialog with UrlUtil {
           title: const _NetworkTitle(),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex: curNetworksSetting.getIndex(),
+            selectedIndexes: [curNetworksSetting.getIndex()],
             onSelected: (value) async {
               final selectedNetworkSettings = value.value as NetworksSetting;
               await ref

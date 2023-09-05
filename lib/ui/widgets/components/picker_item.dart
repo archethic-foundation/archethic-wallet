@@ -36,25 +36,30 @@ class PickerItem<T extends Object> {
 
 // TODO(reddwarf03): specify [PickerItem.value] types (thanks to Generics) (3)
 class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
-  const PickerWidget({
+  PickerWidget({
     super.key,
     this.pickerItems,
     this.onSelected,
-    this.selectedIndex = -1,
-    this.showSelectedItem = true,
-  });
+    this.onUnselected,
+    this.selectedIndexes,
+    this.multipleSelectionsAllowed = false,
+  }) {
+    // the list cannot have a const value because we will always need (even for mono selection cases) to add/remove elements within it
+    if (this.selectedIndexes == null) {
+      this.selectedIndexes = [];
+    }
+  }
   final ValueChanged<PickerItem<T>>? onSelected;
+  final ValueChanged<PickerItem<T>>? onUnselected;
   final List<PickerItem<T>>? pickerItems;
-  final int selectedIndex;
-  final bool showSelectedItem;
+  late List<int>? selectedIndexes;
+  final bool multipleSelectionsAllowed;
 
   @override
   ConsumerState<PickerWidget> createState() => _PickerWidgetState();
 }
 
 class _PickerWidgetState extends ConsumerState<PickerWidget> {
-  int selectedIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
@@ -66,12 +71,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           final pickerItem = widget.pickerItems![index];
-          bool isItemSelected;
-          if (selectedIndex != -1) {
-            isItemSelected = index == selectedIndex;
-          } else {
-            isItemSelected = index == widget.selectedIndex;
-          }
+          final isItemSelected = widget.selectedIndexes!.contains(index);
           if (widget.pickerItems![index].displayed) {
             return InkWell(
               onTap: () {
@@ -80,10 +80,17 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                         FeedbackType.light,
                         preferences.activeVibrations,
                       );
-                  if (widget.showSelectedItem == true) {
-                    selectedIndex = index;
+                  if (widget.multipleSelectionsAllowed == false) {
+                    widget.selectedIndexes!.clear();
                   }
-                  widget.onSelected!(widget.pickerItems![index]);
+                  // If the user taps again on a previous selection, we will unselect it to him
+                  if (widget.selectedIndexes!.contains(index)) {
+                    widget.selectedIndexes!.remove(index);
+                    widget.onUnselected?.call(widget.pickerItems![index]);
+                  } else {
+                    widget.selectedIndexes!.add(index);
+                    widget.onSelected?.call(widget.pickerItems![index]);
+                  }
                   setState(() {});
                 }
               },

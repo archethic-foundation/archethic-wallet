@@ -71,7 +71,7 @@ class AccountsDialog {
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: selectedIndex,
+              selectedIndexes: [selectedIndex],
               onSelected: (value) {
                 Navigator.pop(context, value.value);
               },
