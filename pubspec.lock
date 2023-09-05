@@ -61,8 +61,6 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-<<<<<<< HEAD
-<<<<<<< HEAD
       ref: dev
 <<<<<<< HEAD
       resolved-ref: e98b2d19703f014713e77ec0fa3945cb88556e27
@@ -71,6 +69,7 @@ packages:
       resolved-ref: "38586b6e532491a60b089a0c3cffa4f7d4e4c04a"
 =======
       resolved-ref: af12635e9e0a9eb507e4979b35f46d019a1f3fe5
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
       ref: "84-add-a-method-for-calling-smart-contract-functions"
@@ -101,7 +100,12 @@ packages:
       resolved-ref: "4b5223ff97718012fb29c2961aafb36a928b4bb3"
 >>>>>>> 1ecd975a (generate pubspec)
 >>>>>>> fd20b477 (generate pubspec)
+<<<<<<< HEAD
 >>>>>>> 3c7f6596 (generate pubspec)
+=======
+=======
+>>>>>>> 027927d6 (fix due rebase)
+>>>>>>> 84210fdc (fix due rebase)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -645,107 +649,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_messaging
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "6c1a2a047d6f165b7c5f947467ac5138731a2af82c7af1c12d691dbb834f6b73"
       url: "https://pub.dev"
     source: hosted
     version: "14.6.7"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: db4a38be54fd84849c21be1ae1b44f0d4637eec1069bf5c49ea95e81f582bbc0
-      url: "https://pub.dev"
-    source: hosted
-    version: "14.6.6"
-<<<<<<< HEAD
-=======
-      sha256: "8ac91d83a028eef050de770f1dc98421e215714d245f34de7b154d436676fbd0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "14.6.5"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-=======
->>>>>>> cd148814 (update depencies)
-=======
-      sha256: "6c1a2a047d6f165b7c5f947467ac5138731a2af82c7af1c12d691dbb834f6b73"
-      url: "https://pub.dev"
-    source: hosted
-    version: "14.6.7"
->>>>>>> 1ecd975a (generate pubspec)
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: bcba58d28f8cda607a323240c6d314c2c62b62ebfbb0f2d704ebefef07b52b5f
       url: "https://pub.dev"
     source: hosted
     version: "4.5.6"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: "164119eed47ff19284e28bea9165a03da110c56ea09dd996622cfccad14d0efd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.5"
-<<<<<<< HEAD
-=======
-      sha256: b2995e3640efb646e9ebf0e2fa50dea84895f0746a31d7e3af0e5e009a533a1a
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.4"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-=======
->>>>>>> cd148814 (update depencies)
-=======
-      sha256: bcba58d28f8cda607a323240c6d314c2c62b62ebfbb0f2d704ebefef07b52b5f
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.6"
->>>>>>> 1ecd975a (generate pubspec)
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "962d09ec9dfa486cbbc218258ad41e8ec7997a2eba46919049496e1cafd960c5"
       url: "https://pub.dev"
     source: hosted
     version: "3.5.6"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: "6196d20731733834d7afb175c4345be57ddbd5daebca83cd52a430d62c2279fe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.5.5"
-<<<<<<< HEAD
-=======
-      sha256: "5d8446a28339124a2cb4f57a6ca454a3aca7d0c5c0cdfa5707afb192f7c830a7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.5.4"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-=======
->>>>>>> cd148814 (update depencies)
-=======
-      sha256: "962d09ec9dfa486cbbc218258ad41e8ec7997a2eba46919049496e1cafd960c5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.5.6"
->>>>>>> 1ecd975a (generate pubspec)
   fixnum:
     dependency: transitive
     description:
@@ -1213,17 +1136,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_ios
-<<<<<<< HEAD
       sha256: c5538cacefacac733c724be7484377923b476216ad1ead35a0d2eadcdc0fc497
       url: "https://pub.dev"
     source: hosted
     version: "0.8.8+2"
-=======
-      sha256: bee3b7c7e6266a37fb1bfdc275bc60427029d447205d44933aac130fbb9d3330
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.8+1"
->>>>>>> 1ecd975a (generate pubspec)
   image_picker_linux:
     dependency: transitive
     description:
@@ -1585,30 +1501,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_foundation
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "19314d595120f82aca0ba62787d58dde2cc6b5df7d2f0daf72489e38d1b57f2d"
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: "1b744d3d774e5a879bb76d6cd1ecee2ba2c6960c03b1020cd35212f6aa267ac5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
-<<<<<<< HEAD
-=======
-      sha256: "916731ccbdce44d545414dd9961f26ba5fbaa74bcbb55237d8e65a623a8c7297"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.4"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-=======
->>>>>>> cd148814 (update depencies)
   path_provider_linux:
     dependency: transitive
     description:
@@ -1637,15 +1533,7 @@ packages:
     dependency: "direct dev"
     description:
       name: patrol
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "4b244396a82f5c30b8af9bd39466fc5d2465cd53f0db44db2cd1750ac574fc52"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: f00be47d5b1c9554eeb21a4bbc22e086eca99a91af48e5bac266ca83c86c4857
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
@@ -1853,30 +1741,10 @@ packages:
     dependency: "direct dev"
     description:
       name: riverpod_generator
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: d132b1ccb476e60f99989caa6ba9b1c4d88409806c93d880d1633c60c382454d
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: f668015d7b719c413c6001d4790689ea4a7bf76d5109118a1a98d5c23b20160d
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.6"
-<<<<<<< HEAD
-=======
-      sha256: "691180275664a5420c87d72c1ed26ef8404d32b823807540172bfd1660425376"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.4"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-=======
->>>>>>> cd148814 (update depencies)
   rxdart:
     dependency: "direct main"
     description:
@@ -1892,11 +1760,7 @@ packages:
       sha256: "6ee02c8a1158e6dae7ca430da79436e3b1c9563c8cf02f524af997c201ac2b90"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
     version: "0.1.9"
-=======
-    version: "0.1.6"
->>>>>>> 1ecd975a (generate pubspec)
   share_plus:
     dependency: "direct main"
     description:
@@ -2154,30 +2018,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: b04af59516ab45762b2ca6da40fa830d72d0f6045cd97744450b73493fa76330
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> cd148814 (update depencies)
-      sha256: "3dd2388cc0c42912eee04434531a26a82512b9cb1827e0214430c9bcbddfe025"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.38"
-<<<<<<< HEAD
-=======
-      sha256: "78cb6dea3e93148615109e58e42c35d1ffbf5ef66c44add673d0ab75f12ff3af"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.37"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-=======
->>>>>>> cd148814 (update depencies)
   url_launcher_ios:
     dependency: transitive
     description:
