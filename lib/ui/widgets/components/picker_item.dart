@@ -52,7 +52,7 @@ class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
   final ValueChanged<PickerItem<T>>? onSelected;
   final ValueChanged<PickerItem<T>>? onUnselected;
   final List<PickerItem<T>>? pickerItems;
-  late List<int>? selectedIndexes;
+  List<int>? selectedIndexes;
   final bool multipleSelectionsAllowed;
 
   @override
