@@ -56,6 +56,18 @@ class DiscussionDetailsPage extends ConsumerWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(localizations.discussionInfo),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pushNamed(
+                '/update_discussion',
+                arguments: discussionAddress,
+              ),
+              child: Text(
+                localizations.modify,
+                style: theme.textStyleSize12W400Primary,
+              ),
+            ),
+          ],
         ),
         body: TapOutsideUnfocus(
           child: SafeArea(

@@ -568,5 +568,6 @@
   "contactsHeader": "Contacts",
   "noContacts": "You have no contacts",
   "aboutToCreateADiscussion": "You are about to create a discussion with",
-  "discussionInfo": "Discussion info"
+  "discussionInfo": "Discussion info",
+  "modify": "Modify"
 }
