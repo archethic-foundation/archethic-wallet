@@ -56,4 +56,35 @@ class DiscussionRemoteDatasource {
     if (fee.fee == null) throw const Failure.invalidValue();
     return fromBigInt(fee.fee).toDouble();
   }
+
+  Future<Discussion> updateDiscussion({
+    required MessagingService messagingService,
+    required ApiService apiService,
+    required String discussionSCAddress,
+    required List<String> membersPubKey,
+    required String discussionName,
+    required List<String> adminsPubKeys,
+    required String adminAddress,
+    required String serviceName,
+    required Keychain keychain,
+  }) async {
+    final transaction = await messagingService.updateDiscussion(
+      keychain: keychain,
+      apiService: apiService,
+      discussionSCAddress: discussionSCAddress,
+      membersPubKey: membersPubKey,
+      discussionName: discussionName,
+      adminsPubKey: adminsPubKeys,
+      adminAddress: adminAddress,
+      serviceName: serviceName,
+    );
+
+    return Discussion(
+      creationDate: DateTime.now(),
+      address: transaction.address!.address!,
+      name: discussionName,
+      membersPubKeys: membersPubKey,
+      adminsPubKeys: adminsPubKeys,
+    );
+  }
 }

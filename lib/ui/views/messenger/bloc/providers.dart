@@ -25,6 +25,7 @@ part 'create_discussion_form.dart';
 part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
+part 'update_discussion_form.dart';
 
 @riverpod
 class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
@@ -241,6 +242,7 @@ abstract class MessengerProviders {
   static final createDiscussionForm = _createDiscussionFormProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
+  static final updateDiscussionForm = _updateDiscussionFormProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_messengerRepository).clear();

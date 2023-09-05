@@ -68,4 +68,14 @@ abstract class MessengerRepositoryInterface {
   });
 
   Future<void> clear();
+
+  Future<Result<Discussion, Failure>> updateDiscussion({
+    required String discussionSCAddress,
+    required List<String> membersPubKeys,
+    required String discussionName,
+    required List<String> adminsPubKeys,
+    required String adminAddress,
+    required String serviceName,
+    required LoggedInSession session,
+  });
 }

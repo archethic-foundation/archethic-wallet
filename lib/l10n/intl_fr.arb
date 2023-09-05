@@ -522,7 +522,7 @@
 	"newGroup": "Nouveau groupe",
 	"addRemoteMessengerGroup": "Ajouter cette discussion",
 	"createGroup": "Créer un groupe",
-	"addMessengerGroupNameLabel": "Nom du groupe ...",
+	"discussionName": "Nom de la discussion",
 	"introNewMessengerDiscussion": "Choisissez le nom à donner à ce groupe, ainsi que les personnes à y inviter",
 	"messengerDiscussionAccessDescription": "Ajoutez ou supprimez des clés publiques pouvant accéder à cette conversation.",
 	"messengerDiscussionAddAccess": "Ajouter un accès",

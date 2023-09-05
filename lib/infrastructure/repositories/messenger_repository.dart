@@ -95,6 +95,32 @@ class MessengerRepository
       });
 
   @override
+  Future<Result<Discussion, Failure>> updateDiscussion({
+    required String discussionSCAddress,
+    required List<String> membersPubKeys,
+    required String discussionName,
+    required List<String> adminsPubKeys,
+    required String adminAddress,
+    required String serviceName,
+    required LoggedInSession session,
+  }) async =>
+      Result.guard(() async {
+        final updatedDiscussion = await _remoteDatasource.updateDiscussion(
+          messagingService: messagingService,
+          keychain: session.wallet.keychainSecuredInfos.toKeychain(),
+          apiService: sl.get<ApiService>(),
+          discussionSCAddress: discussionSCAddress,
+          membersPubKey: membersPubKeys,
+          discussionName: discussionName,
+          adminsPubKeys: adminsPubKeys,
+          adminAddress: adminAddress,
+          serviceName: serviceName,
+        );
+
+        return updatedDiscussion;
+      });
+
+  @override
   Future<Result<Discussion, Failure>> addRemoteDiscussion({
     required Discussion discussion,
     required Account creator,

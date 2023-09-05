@@ -20,11 +20,11 @@ import 'package:material_symbols_icons/symbols.dart';
 
 class DiscussionDetailsPage extends ConsumerWidget {
   const DiscussionDetailsPage({
-    required this.discussionAddress,
+    required this.discussion,
     super.key,
   });
 
-  final String discussionAddress;
+  final Discussion discussion;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,9 +32,6 @@ class DiscussionDetailsPage extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
-
-    final asyncDiscussion =
-        ref.watch(MessengerProviders.discussion(discussionAddress));
 
     var index = 0;
     return DecoratedBox(
@@ -61,7 +58,7 @@ class DiscussionDetailsPage extends ConsumerWidget {
             TextButton(
               onPressed: () => Navigator.of(context).pushNamed(
                 '/update_discussion',
-                arguments: discussionAddress,
+                arguments: discussion,
               ),
               child: Text(
                 localizations.modify,
@@ -87,84 +84,69 @@ class DiscussionDetailsPage extends ConsumerWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    asyncDiscussion.maybeMap(
-                      data: (data) {
-                        final displayName = ref.watch(
-                          MessengerProviders.discussionDisplayName(data.value),
-                        );
-
-                        return Text(
-                          displayName,
-                          textAlign: TextAlign.center,
-                          style: theme.textStyleSize28W700Primary,
-                        );
-                      },
-                      orElse: () => const SizedBox(),
+                    Text(
+                      ref.watch(
+                        MessengerProviders.discussionDisplayName(discussion),
+                      ),
+                      textAlign: TextAlign.center,
+                      style: theme.textStyleSize28W700Primary,
                     ),
                     const SizedBox(
                       height: 8,
                     ),
-                    asyncDiscussion.maybeMap(
-                      orElse: Container.new,
-                      data: (discussion) {
-                        return Column(
-                          children: <Widget>[
-                            _SectionTitle(
-                              text:
-                                  localizations.messengerDiscussionMembersCount(
-                                discussion.value.membersPubKeys.length,
+                    Column(
+                      children: <Widget>[
+                        _SectionTitle(
+                          text: localizations.messengerDiscussionMembersCount(
+                            discussion.membersPubKeys.length,
+                          ),
+                        ),
+                        Column(
+                          children: discussion.membersPubKeys.map((pubKey) {
+                            index++;
+                            final accessRecipient = ref.watch(
+                              MessengerProviders.accessRecipientWithPublicKey(
+                                pubKey,
                               ),
-                            ),
-                            Column(
-                              children:
-                                  discussion.value.membersPubKeys.map((pubKey) {
-                                index++;
-                                final accessRecipient = ref.watch(
-                                  MessengerProviders
-                                      .accessRecipientWithPublicKey(
-                                    pubKey,
-                                  ),
-                                );
+                            );
 
-                                return PublicKeyLine(
-                                  discussion: discussion.value,
-                                  pubKey: pubKey,
-                                  onTap: accessRecipient.maybeMap(
-                                    orElse: () => null,
-                                    data: (recipient) => recipient.value.map(
-                                      contact: (contact) => () {
-                                        sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              settings.activeVibrations,
-                                            );
-
-                                        Sheets.showAppHeightNineSheet(
-                                          context: context,
-                                          ref: ref,
-                                          widget: ContactDetail(
-                                            contact: contact.contact,
-                                          ),
+                            return PublicKeyLine(
+                              discussion: discussion,
+                              pubKey: pubKey,
+                              onTap: accessRecipient.maybeMap(
+                                orElse: () => null,
+                                data: (recipient) => recipient.value.map(
+                                  contact: (contact) => () {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          settings.activeVibrations,
                                         );
-                                      },
-                                      publicKey: (_) => null,
-                                    ),
-                                  ),
-                                )
-                                    .animate(delay: (100 * index).ms)
-                                    .fadeIn(duration: 900.ms, delay: 200.ms)
-                                    .shimmer(
-                                      blendMode: BlendMode.srcOver,
-                                      color: Colors.white12,
-                                    )
-                                    .move(
-                                      begin: const Offset(-16, 0),
-                                      curve: Curves.easeOutQuad,
+
+                                    Sheets.showAppHeightNineSheet(
+                                      context: context,
+                                      ref: ref,
+                                      widget: ContactDetail(
+                                        contact: contact.contact,
+                                      ),
                                     );
-                              }).toList(),
-                            ),
-                          ],
-                        );
-                      },
+                                  },
+                                  publicKey: (_) => null,
+                                ),
+                              ),
+                            )
+                                .animate(delay: (100 * index).ms)
+                                .fadeIn(duration: 900.ms, delay: 200.ms)
+                                .shimmer(
+                                  blendMode: BlendMode.srcOver,
+                                  color: Colors.white12,
+                                )
+                                .move(
+                                  begin: const Offset(-16, 0),
+                                  curve: Curves.easeOutQuad,
+                                );
+                          }).toList(),
+                        ),
+                      ],
                     ),
                   ],
                 ),

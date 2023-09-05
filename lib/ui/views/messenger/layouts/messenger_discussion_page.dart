@@ -89,16 +89,15 @@ class MessengerDiscussionPage extends ConsumerWidget {
             Expanded(
               child: _MessagesList(
                 discussionAddress: discussionAddress,
-              ),
+                ),
+                ),
+                _MessageSendForm(
+                  discussionAddress: discussionAddress,
+                ),
+              ],
             ),
-            _MessageSendForm(
-              discussionAddress: discussionAddress,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+          ),);
+        }
 }
 
 class _MessageSendForm extends ConsumerStatefulWidget {
