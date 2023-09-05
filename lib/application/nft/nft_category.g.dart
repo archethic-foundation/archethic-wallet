@@ -331,7 +331,6 @@ class _FetchNftCategoryProviderElement
 
 String _$getNbNFTInCategoryHash() =>
     r'ef4fef4957211431653e9c0cebad8a2af50d0c5b';
-typedef _GetNbNFTInCategoryRef = AutoDisposeProviderRef<int>;
 
 /// See also [_getNbNFTInCategory].
 @ProviderFor(_getNbNFTInCategory)
