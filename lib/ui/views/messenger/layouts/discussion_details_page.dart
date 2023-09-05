@@ -3,25 +3,22 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class DiscussionDetailsSheet extends ConsumerWidget {
-  const DiscussionDetailsSheet({
+class DiscussionDetailsPage extends ConsumerWidget {
+  const DiscussionDetailsPage({
     required this.discussionAddress,
     super.key,
   });
@@ -37,108 +34,120 @@ class DiscussionDetailsSheet extends ConsumerWidget {
 
     final asyncDiscussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
+
     var index = 0;
-    return TapOutsideUnfocus(
-      child: SafeArea(
-        minimum: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height * 0.035,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            theme.background3Small!,
+          ),
+          fit: BoxFit.fitHeight,
         ),
-        child: asyncDiscussion.maybeMap(
-          orElse: Container.new,
-          data: (discussion) {
-            final discussionDisplayName = ref.watch(
-              MessengerProviders.discussionDisplayName(discussion.value),
-            );
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: <Color>[theme.backgroundDark!, theme.background!],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: asyncDiscussion.maybeMap(
+            data: (data) {
+              final displayName = ref.watch(
+                MessengerProviders.discussionDisplayName(data.value),
+              );
 
-            return Column(
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          settings.activeVibrations,
-                        );
-                    Clipboard.setData(
-                      ClipboardData(
-                        text: discussion.value.address.toUpperCase(),
-                      ),
-                    );
-                    UIUtil.showSnackbar(
-                      localizations.addressCopied,
-                      context,
-                      ref,
-                      theme.text!,
-                      theme.snackBarShadow!,
-                    );
-                  },
-                  child: SheetHeader(
-                    title: discussionDisplayName,
-                  ),
-                ),
-                _SectionTitle(
-                  text: localizations.messengerDiscussionMembersCount(
-                    discussion.value.membersPubKeys.length,
-                  ),
-                ),
-                Expanded(
-                  child: ArchethicScrollbar(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 15,
-                        right: 15,
-                        bottom: bottom + 80,
-                      ),
-                      child: Column(
-                        children: discussion.value.membersPubKeys.map((pubKey) {
-                          index++;
-                          final accessRecipient = ref.watch(
-                            MessengerProviders.accessRecipientWithPublicKey(
-                              pubKey,
-                            ),
-                          );
-
-                          return PublicKeyLine(
-                            discussion: discussion.value,
-                            pubKey: pubKey,
-                            onTap: accessRecipient.maybeMap(
-                              orElse: () => null,
-                              data: (recipient) => recipient.value.map(
-                                contact: (contact) => () {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        settings.activeVibrations,
-                                      );
-
-                                  Sheets.showAppHeightNineSheet(
-                                    context: context,
-                                    ref: ref,
-                                    widget: ContactDetail(
-                                      contact: contact.contact,
-                                    ),
-                                  );
-                                },
-                                publicKey: (_) => null,
-                              ),
-                            ),
-                          )
-                              .animate(delay: (100 * index).ms)
-                              .fadeIn(duration: 900.ms, delay: 200.ms)
-                              .shimmer(
-                                blendMode: BlendMode.srcOver,
-                                color: Colors.white12,
-                              )
-                              .move(
-                                begin: const Offset(-16, 0),
-                                curve: Curves.easeOutQuad,
-                              );
-                        }).toList(),
+              return Text(displayName);
+            },
+            orElse: () => const Text('           ')
+                .animate(
+                  onComplete: (controller) =>
+                      controller.repeat(period: 1.seconds),
+                )
+                .shimmer(),
+          ),
+        ),
+        body: TapOutsideUnfocus(
+          child: SafeArea(
+            minimum: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.035,
+            ),
+            child: asyncDiscussion.maybeMap(
+              orElse: Container.new,
+              data: (discussion) {
+                return Column(
+                  children: <Widget>[
+                    _SectionTitle(
+                      text: localizations.messengerDiscussionMembersCount(
+                        discussion.value.membersPubKeys.length,
                       ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          },
+                    Expanded(
+                      child: ArchethicScrollbar(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 15,
+                            right: 15,
+                            bottom: bottom + 80,
+                          ),
+                          child: Column(
+                            children:
+                                discussion.value.membersPubKeys.map((pubKey) {
+                              index++;
+                              final accessRecipient = ref.watch(
+                                MessengerProviders.accessRecipientWithPublicKey(
+                                  pubKey,
+                                ),
+                              );
+
+                              return PublicKeyLine(
+                                discussion: discussion.value,
+                                pubKey: pubKey,
+                                onTap: accessRecipient.maybeMap(
+                                  orElse: () => null,
+                                  data: (recipient) => recipient.value.map(
+                                    contact: (contact) => () {
+                                      sl.get<HapticUtil>().feedback(
+                                            FeedbackType.light,
+                                            settings.activeVibrations,
+                                          );
+
+                                      Sheets.showAppHeightNineSheet(
+                                        context: context,
+                                        ref: ref,
+                                        widget: ContactDetail(
+                                          contact: contact.contact,
+                                        ),
+                                      );
+                                    },
+                                    publicKey: (_) => null,
+                                  ),
+                                ),
+                              )
+                                  .animate(delay: (100 * index).ms)
+                                  .fadeIn(duration: 900.ms, delay: 200.ms)
+                                  .shimmer(
+                                    blendMode: BlendMode.srcOver,
+                                    color: Colors.white12,
+                                  )
+                                  .move(
+                                    begin: const Offset(-16, 0),
+                                    curve: Curves.easeOutQuad,
+                                  );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
