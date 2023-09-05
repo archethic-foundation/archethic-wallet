@@ -634,7 +634,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: 0,
+              selectedIndexes: const [0],
               onSelected: (value) {
                 Navigator.pop(context, value.value);
               },

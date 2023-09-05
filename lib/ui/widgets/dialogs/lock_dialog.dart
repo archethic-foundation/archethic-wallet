@@ -46,7 +46,7 @@ class LockDialog {
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: curUnlockSetting.setting.index,
+              selectedIndexes: [curUnlockSetting.setting.index],
               onSelected: (value) {
                 final pickedOption = value.value as UnlockOption;
 

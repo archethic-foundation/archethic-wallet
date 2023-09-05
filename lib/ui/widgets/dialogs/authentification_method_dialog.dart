@@ -64,7 +64,7 @@ class AuthentificationMethodDialog {
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: curAuthMethod.method.index,
+              selectedIndexes: [curAuthMethod.method.index],
               onSelected: (value) async {
                 switch (value.value) {
                   case AuthMethod.biometrics:

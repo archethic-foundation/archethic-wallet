@@ -64,7 +64,7 @@ class LockTimeoutDialog {
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: curTimeoutSetting.setting.index,
+              selectedIndexes: [curTimeoutSetting.setting.index],
               onSelected: (value) async {
                 final updatedSettings = await _updateLockTimeout(
                   ref,

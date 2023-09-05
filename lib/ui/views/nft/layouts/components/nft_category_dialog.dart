@@ -73,7 +73,7 @@ class NftCategoryDialog {
               content: SingleChildScrollView(
                 child: PickerWidget(
                   pickerItems: pickerItemsList,
-                  selectedIndex: nftInfosOffChain!.categoryNftIndex ?? 0,
+                  selectedIndexes: [nftInfosOffChain!.categoryNftIndex ?? 0],
                   onSelected: (value) {
                     Navigator.pop(context, value.value);
                   },

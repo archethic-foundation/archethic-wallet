@@ -45,11 +45,14 @@ class ThemeDialog {
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
-              selectedIndex: curThemeSetting.getIndex(),
+              selectedIndexes: [curThemeSetting.getIndex()],
               onSelected: (value) async {
-                final selectedThemeSettings = ThemeSetting(value.value as ThemeOptions);
+                final selectedThemeSettings =
+                    ThemeSetting(value.value as ThemeOptions);
                 if (curThemeSetting != selectedThemeSettings) {
-                  ref.read(SettingsProviders.settings.notifier).selectTheme(selectedThemeSettings.theme);
+                  ref
+                      .read(SettingsProviders.settings.notifier)
+                      .selectTheme(selectedThemeSettings.theme);
                 }
                 Navigator.pop(context, selectedThemeSettings);
               },

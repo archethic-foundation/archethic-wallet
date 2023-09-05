@@ -50,7 +50,7 @@ class LanguageDialog {
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex: selectedLanguage.index,
+            selectedIndexes: [selectedLanguage.index],
             onSelected: (value) {
               ref
                   .read(SettingsProviders.settings.notifier)
