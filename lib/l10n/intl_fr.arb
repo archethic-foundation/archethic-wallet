@@ -545,5 +545,6 @@
 	"contactsHeader": "Contacts",
 	"noContacts": "Vous n'avez aucun contact",
 	"aboutToCreateADiscussion": "Vous êtes sur le point de créer une discussion avec",
-	"discussionInfo": "Info de la discussion"
+	"discussionInfo": "Info de la discussion",
+	"modify": "Modifier"
 }

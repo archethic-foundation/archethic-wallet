@@ -31,6 +31,7 @@ import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/messenger/layouts/discussion_details_page.dart';
 import 'package:aewallet/ui/views/messenger/layouts/messenger_discussion_page.dart';
+import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
@@ -311,6 +312,11 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
               ),
               '/discussion_details': MaterialPageRoute(
                 builder: (_) => DiscussionDetailsPage(
+                  discussionAddress: settings.arguments! as String,
+                ),
+              ),
+              '/update_discussion': MaterialPageRoute(
+                builder: (_) => UpdateDiscussionPage(
                   discussionAddress: settings.arguments! as String,
                 ),
               ),
