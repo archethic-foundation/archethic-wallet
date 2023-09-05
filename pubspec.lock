@@ -868,10 +868,10 @@ packages:
     dependency: "direct main"
     description:
       name: get_it
-      sha256: "5a4ef48148e5111e226aaa8393aa02f09efa9de7939f476b7ad16b4dfa6ce4b5"
+      sha256: f79870884de16d689cf9a7d15eedf31ed61d750e813c538a6efb92660fea83c3
       url: "https://pub.dev"
     source: hosted
-    version: "7.6.3"
+    version: "7.6.4"
   ghost:
     dependency: "direct main"
     description:
