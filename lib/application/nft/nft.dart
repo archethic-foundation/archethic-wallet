@@ -31,12 +31,12 @@ Future<TokenInformations?> _getNFT(
 Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
   _GetNFTListRef ref,
   String address,
-  String name,
+  String nameAccount,
   KeychainSecuredInfos keychainSecuredInfos,
 ) async {
   return ref
       .watch(_nftRepositoryProvider)
-      .getNFTList(address, name, keychainSecuredInfos);
+      .getNFTList(address, nameAccount, keychainSecuredInfos);
 }
 
 class NFTRepository {
@@ -83,7 +83,7 @@ class NFTRepository {
 
   Future<(List<AccountToken>, List<AccountToken>)> getNFTList(
     String address,
-    String name,
+    String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
   ) async {
     final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
@@ -123,7 +123,7 @@ class NFTRepository {
             secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
           token.properties.addAll(
             _tokenPropertiesDecryptedSecret(
-              keypair: keychainSecuredInfos.services[name]!.keyPair!,
+              keypair: keychainSecuredInfos.services[nameAccount]!.keyPair!,
               ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
             ),
           );

@@ -188,7 +188,7 @@ class _GetNFTProviderElement
       (origin as _GetNFTProvider).keychainServiceKeyPair;
 }
 
-String _$getNFTListHash() => r'84e6002875c9f1950d3b7b17eb951a233c9ac317';
+String _$getNFTListHash() => r'3221ef9cab2cda3e080eb3eadded6f202dcb4dbe';
 
 /// See also [_getNFTList].
 @ProviderFor(_getNFTList)
@@ -203,12 +203,12 @@ class _GetNFTListFamily
   /// See also [_getNFTList].
   _GetNFTListProvider call(
     String address,
-    String name,
+    String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
   ) {
     return _GetNFTListProvider(
       address,
-      name,
+      nameAccount,
       keychainSecuredInfos,
     );
   }
@@ -219,7 +219,7 @@ class _GetNFTListFamily
   ) {
     return call(
       provider.address,
-      provider.name,
+      provider.nameAccount,
       provider.keychainSecuredInfos,
     );
   }
@@ -245,13 +245,13 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
   /// See also [_getNFTList].
   _GetNFTListProvider(
     String address,
-    String name,
+    String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
   ) : this._internal(
           (ref) => _getNFTList(
             ref as _GetNFTListRef,
             address,
-            name,
+            nameAccount,
             keychainSecuredInfos,
           ),
           from: _getNFTListProvider,
@@ -264,7 +264,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
           allTransitiveDependencies:
               _GetNFTListFamily._allTransitiveDependencies,
           address: address,
-          name: name,
+          nameAccount: nameAccount,
           keychainSecuredInfos: keychainSecuredInfos,
         );
 
@@ -276,12 +276,12 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.address,
-    required this.name,
+    required this.nameAccount,
     required this.keychainSecuredInfos,
   }) : super.internal();
 
   final String address;
-  final String name;
+  final String nameAccount;
   final KeychainSecuredInfos keychainSecuredInfos;
 
   @override
@@ -300,7 +300,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         address: address,
-        name: name,
+        nameAccount: nameAccount,
         keychainSecuredInfos: keychainSecuredInfos,
       ),
     );
@@ -316,7 +316,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
   bool operator ==(Object other) {
     return other is _GetNFTListProvider &&
         other.address == address &&
-        other.name == name &&
+        other.nameAccount == nameAccount &&
         other.keychainSecuredInfos == keychainSecuredInfos;
   }
 
@@ -324,7 +324,7 @@ class _GetNFTListProvider extends AutoDisposeFutureProvider<
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, address.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, nameAccount.hashCode);
     hash = _SystemHash.combine(hash, keychainSecuredInfos.hashCode);
 
     return _SystemHash.finish(hash);
@@ -336,8 +336,8 @@ mixin _GetNFTListRef
   /// The parameter `address` of this provider.
   String get address;
 
-  /// The parameter `name` of this provider.
-  String get name;
+  /// The parameter `nameAccount` of this provider.
+  String get nameAccount;
 
   /// The parameter `keychainSecuredInfos` of this provider.
   KeychainSecuredInfos get keychainSecuredInfos;
@@ -350,7 +350,7 @@ class _GetNFTListProviderElement extends AutoDisposeFutureProviderElement<
   @override
   String get address => (origin as _GetNFTListProvider).address;
   @override
-  String get name => (origin as _GetNFTListProvider).name;
+  String get nameAccount => (origin as _GetNFTListProvider).nameAccount;
   @override
   KeychainSecuredInfos get keychainSecuredInfos =>
       (origin as _GetNFTListProvider).keychainSecuredInfos;
