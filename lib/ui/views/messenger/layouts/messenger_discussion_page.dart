@@ -8,8 +8,6 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/views/messenger/layouts/discussion_details_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
@@ -56,12 +54,9 @@ class MessengerDiscussionPage extends ConsumerWidget {
             IconButton(
               icon: const Icon(Iconsax.info_circle),
               onPressed: () async {
-                Sheets.showAppHeightNineSheet(
-                  context: context,
-                  ref: ref,
-                  widget: DiscussionDetailsSheet(
-                    discussionAddress: discussionAddress,
-                  ),
+                Navigator.of(context).pushNamed(
+                  '/discussion_details',
+                  arguments: discussionAddress,
                 );
               },
             ),
