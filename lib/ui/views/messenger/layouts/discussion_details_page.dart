@@ -265,8 +265,8 @@ class PublicKeyLine extends ConsumerWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 8),
                   child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 12,
+                    Icons.info_outline,
+                    size: 22,
                   ),
                 ),
             ],
@@ -289,14 +289,15 @@ class _MemberRole extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalizations.of(context)!;
     final isAdmin = discussion.adminsPubKeys.any(
       (adminPubKey) => adminPubKey == memberPubKey,
     );
 
     if (isAdmin) {
       return Text(
-        'Admin',
-        style: theme.textStyleSize12W100Primary,
+        localizations.admin,
+        style: theme.textStyleSize10W600Primary,
       );
     }
 

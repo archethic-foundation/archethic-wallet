@@ -546,5 +546,7 @@
 	"noContacts": "Vous n'avez aucun contact",
 	"aboutToCreateADiscussion": "Vous êtes sur le point de créer une discussion avec",
 	"discussionInfo": "Info de la discussion",
-	"modify": "Modifier"
+	"modify": "Modifier",
+	"discussionModifying": "Modification de la discussion",
+	"admin": "Admin"
 }

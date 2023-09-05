@@ -569,5 +569,7 @@
   "noContacts": "You have no contacts",
   "aboutToCreateADiscussion": "You are about to create a discussion with",
   "discussionInfo": "Discussion info",
-  "modify": "Modify"
+  "modify": "Modify",
+  "discussionModifying": "Discussion modifying",
+  "admin": "Admin"
 }
