@@ -4,6 +4,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
@@ -41,19 +42,18 @@ class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
     this.pickerItems,
     this.onSelected,
     this.onUnselected,
-    selectedIndexes,
+    List<int>? selectedIndexes,
     this.multipleSelectionsAllowed = false,
     this.height,
     this.scrollable = false,
   }) {
-    if (selectedIndexes != null) {
-      this.selectedIndexes.addAll(selectedIndexes);
-    }
+    this.selectedIndexes = selectedIndexes ?? [];
   }
+
   final ValueChanged<PickerItem<T>>? onSelected;
   final ValueChanged<PickerItem<T>>? onUnselected;
   final List<PickerItem<T>>? pickerItems;
-  List<int> selectedIndexes = [];
+  late final List<int> selectedIndexes;
   final bool multipleSelectionsAllowed;
   final double? height;
   final bool scrollable;
@@ -63,12 +63,20 @@ class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
 }
 
 class _PickerWidgetState extends ConsumerState<PickerWidget> {
-  List<int> selectedIndexes = [];
+  late List<int> selectedIndexes;
+
+  @override
+  void didUpdateWidget(covariant PickerWidget<Object> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedIndexes.equals(widget.selectedIndexes)) {
+      selectedIndexes = [...widget.selectedIndexes];
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    selectedIndexes.addAll(widget.selectedIndexes);
+    selectedIndexes = [...widget.selectedIndexes];
   }
 
   @override
