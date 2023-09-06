@@ -549,5 +549,6 @@
 	"modify": "Modifier",
 	"discussionModifying": "Modification de la discussion",
 	"admin": "Admin",
-	"next": "Suivant"
+	"next": "Suivant",
+	"name": "Nom"
 }

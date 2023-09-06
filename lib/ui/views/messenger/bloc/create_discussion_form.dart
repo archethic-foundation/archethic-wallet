@@ -16,10 +16,12 @@ class CreateDiscussionFormState with _$CreateDiscussionFormState {
   }) = _CreateDiscussionFormState;
   const CreateDiscussionFormState._();
 
-  bool get canSubmit => members.isNotEmpty;
+  bool get canSubmit => members.isNotEmpty && name.isNotEmpty;
 
   bool get canGoNext =>
       members.any((member) => PublicKey(member.publicKey).isValid);
+
+  List<Contact> get membersList => members;
 }
 
 class CreateDiscussionFormNotifier
