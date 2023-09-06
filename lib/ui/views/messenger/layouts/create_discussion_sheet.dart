@@ -6,6 +6,7 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -172,7 +173,14 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                           const [0, 0, 0, 0],
                                           key:
                                               const Key('discussionNextButton'),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Sheets.showAppHeightNineSheet(
+                                              context: context,
+                                              ref: ref,
+                                              widget:
+                                                  const CreateDiscussionValidationSheet(),
+                                            );
+                                          },
                                           disabled:
                                               formState.canGoNext == false,
                                         ),
