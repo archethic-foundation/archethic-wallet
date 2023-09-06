@@ -69,7 +69,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
   void didUpdateWidget(covariant PickerWidget<Object> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.selectedIndexes.equals(widget.selectedIndexes)) {
-      selectedIndexes = [...widget.selectedIndexes];
+      selectedIndexes = [...selectedIndexes, ...widget.selectedIndexes];
     }
   }
 
