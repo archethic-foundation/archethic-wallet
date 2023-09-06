@@ -1,5 +1,6 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -153,7 +154,7 @@ class _CreateDiscussionValidationSheetState
                       AppButtonTiny(
                         AppButtonTinyType.primary,
                         localizations.createDiscussion,
-                        const [0, 0, 0, 0],
+                        Dimens.none,
                         key: const Key('addMessengerDiscussion'),
                         icon: Icon(
                           Icons.add,
