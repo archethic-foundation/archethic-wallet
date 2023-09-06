@@ -26,9 +26,24 @@ class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
 
 class _CreateDiscussionValidationSheetState
     extends ConsumerState<CreateDiscussionValidationSheet> {
+  TextEditingController nameController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final formState = ref.read(MessengerProviders.createDiscussionForm);
+      final formNotifier =
+          ref.read(MessengerProviders.createDiscussionForm.notifier);
+
+      // When the users selects only one contact, no need to ask him for the name of the discussion
+      if (formState.membersList.length == 1) {
+        final discussionDefaultName = formState.membersList.first.format;
+        formNotifier.setName(discussionDefaultName);
+        nameController.text = discussionDefaultName;
+      }
+    });
   }
 
   @override
@@ -78,13 +93,17 @@ class _CreateDiscussionValidationSheetState
                   ),
                 ],
               ),
-              AppTextField(
-                leftMargin: 0,
-                rightMargin: 0,
-                labelText: localizations.name,
-                onChanged: (text) {
-                  formNotifier.setName(text);
-                },
+              Visibility(
+                visible: formState.membersList.length > 1,
+                child: AppTextField(
+                  leftMargin: 0,
+                  rightMargin: 0,
+                  labelText: localizations.name,
+                  onChanged: (text) {
+                    formNotifier.setName(text);
+                  },
+                  controller: nameController,
+                ),
               ),
               const SizedBox(
                 height: 30,

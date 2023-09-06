@@ -179,6 +179,9 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                               ref: ref,
                                               widget:
                                                   const CreateDiscussionValidationSheet(),
+                                              onDisposed: () {
+                                                formNotifier.resetValidation();
+                                              },
                                             );
                                           },
                                           disabled:
