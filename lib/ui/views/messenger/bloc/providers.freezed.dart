@@ -15,201 +15,30 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CreateDiscussionContactFormState {
+mixin _$CreateDiscussionFormState {
   String get name => throw _privateConstructorUsedError;
-  List<AccessRecipient> get members => throw _privateConstructorUsedError;
+  List<Contact> get members => throw _privateConstructorUsedError;
+  List<Contact> get admins => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CreateDiscussionContactFormStateCopyWith<CreateDiscussionContactFormState>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CreateDiscussionContactFormStateCopyWith<$Res> {
-  factory $CreateDiscussionContactFormStateCopyWith(
-          CreateDiscussionContactFormState value,
-          $Res Function(CreateDiscussionContactFormState) then) =
-      _$CreateDiscussionContactFormStateCopyWithImpl<$Res,
-          CreateDiscussionContactFormState>;
-  @useResult
-  $Res call({String name, List<AccessRecipient> members});
-}
-
-/// @nodoc
-class _$CreateDiscussionContactFormStateCopyWithImpl<$Res,
-        $Val extends CreateDiscussionContactFormState>
-    implements $CreateDiscussionContactFormStateCopyWith<$Res> {
-  _$CreateDiscussionContactFormStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? name = null,
-    Object? members = null,
-  }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      members: null == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_CreateDiscussionContactFormStateCopyWith<$Res>
-    implements $CreateDiscussionContactFormStateCopyWith<$Res> {
-  factory _$$_CreateDiscussionContactFormStateCopyWith(
-          _$_CreateDiscussionContactFormState value,
-          $Res Function(_$_CreateDiscussionContactFormState) then) =
-      __$$_CreateDiscussionContactFormStateCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String name, List<AccessRecipient> members});
-}
-
-/// @nodoc
-class __$$_CreateDiscussionContactFormStateCopyWithImpl<$Res>
-    extends _$CreateDiscussionContactFormStateCopyWithImpl<$Res,
-        _$_CreateDiscussionContactFormState>
-    implements _$$_CreateDiscussionContactFormStateCopyWith<$Res> {
-  __$$_CreateDiscussionContactFormStateCopyWithImpl(
-      _$_CreateDiscussionContactFormState _value,
-      $Res Function(_$_CreateDiscussionContactFormState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? name = null,
-    Object? members = null,
-  }) {
-    return _then(_$_CreateDiscussionContactFormState(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      members: null == members
-          ? _value._members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_CreateDiscussionContactFormState
-    extends _CreateDiscussionContactFormState {
-  const _$_CreateDiscussionContactFormState(
-      {this.name = '', final List<AccessRecipient> members = const []})
-      : _members = members,
-        super._();
-
-  @override
-  @JsonKey()
-  final String name;
-  final List<AccessRecipient> _members;
-  @override
-  @JsonKey()
-  List<AccessRecipient> get members {
-    if (_members is EqualUnmodifiableListView) return _members;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_members);
-  }
-
-  @override
-  String toString() {
-    return 'CreateDiscussionContactFormState(name: $name, members: $members)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_CreateDiscussionContactFormState &&
-            (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._members, _members));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, name, const DeepCollectionEquality().hash(_members));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_CreateDiscussionContactFormStateCopyWith<
-          _$_CreateDiscussionContactFormState>
-      get copyWith => __$$_CreateDiscussionContactFormStateCopyWithImpl<
-          _$_CreateDiscussionContactFormState>(this, _$identity);
-}
-
-abstract class _CreateDiscussionContactFormState
-    extends CreateDiscussionContactFormState {
-  const factory _CreateDiscussionContactFormState(
-          {final String name, final List<AccessRecipient> members}) =
-      _$_CreateDiscussionContactFormState;
-  const _CreateDiscussionContactFormState._() : super._();
-
-  @override
-  String get name;
-  @override
-  List<AccessRecipient> get members;
-  @override
-  @JsonKey(ignore: true)
-  _$$_CreateDiscussionContactFormStateCopyWith<
-          _$_CreateDiscussionContactFormState>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$CreateDiscussionGroupFormState {
-  String get name => throw _privateConstructorUsedError;
-  AccessRecipient? get memberAddFieldValue =>
+  $CreateDiscussionFormStateCopyWith<CreateDiscussionFormState> get copyWith =>
       throw _privateConstructorUsedError;
-  List<AccessRecipient> get members => throw _privateConstructorUsedError;
-  AccessRecipient? get adminAddFieldValue => throw _privateConstructorUsedError;
-  List<AccessRecipient> get admins => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $CreateDiscussionGroupFormStateCopyWith<CreateDiscussionGroupFormState>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateDiscussionGroupFormStateCopyWith<$Res> {
-  factory $CreateDiscussionGroupFormStateCopyWith(
-          CreateDiscussionGroupFormState value,
-          $Res Function(CreateDiscussionGroupFormState) then) =
-      _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
-          CreateDiscussionGroupFormState>;
+abstract class $CreateDiscussionFormStateCopyWith<$Res> {
+  factory $CreateDiscussionFormStateCopyWith(CreateDiscussionFormState value,
+          $Res Function(CreateDiscussionFormState) then) =
+      _$CreateDiscussionFormStateCopyWithImpl<$Res, CreateDiscussionFormState>;
   @useResult
-  $Res call(
-      {String name,
-      AccessRecipient? memberAddFieldValue,
-      List<AccessRecipient> members,
-      AccessRecipient? adminAddFieldValue,
-      List<AccessRecipient> admins});
-
-  $AccessRecipientCopyWith<$Res>? get memberAddFieldValue;
-  $AccessRecipientCopyWith<$Res>? get adminAddFieldValue;
+  $Res call({String name, List<Contact> members, List<Contact> admins});
 }
 
 /// @nodoc
-class _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
-        $Val extends CreateDiscussionGroupFormState>
-    implements $CreateDiscussionGroupFormStateCopyWith<$Res> {
-  _$CreateDiscussionGroupFormStateCopyWithImpl(this._value, this._then);
+class _$CreateDiscussionFormStateCopyWithImpl<$Res,
+        $Val extends CreateDiscussionFormState>
+    implements $CreateDiscussionFormStateCopyWith<$Res> {
+  _$CreateDiscussionFormStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -220,9 +49,7 @@ class _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? name = null,
-    Object? memberAddFieldValue = freezed,
     Object? members = null,
-    Object? adminAddFieldValue = freezed,
     Object? admins = null,
   }) {
     return _then(_value.copyWith(
@@ -230,126 +57,71 @@ class _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      memberAddFieldValue: freezed == memberAddFieldValue
-          ? _value.memberAddFieldValue
-          : memberAddFieldValue // ignore: cast_nullable_to_non_nullable
-              as AccessRecipient?,
       members: null == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
-      adminAddFieldValue: freezed == adminAddFieldValue
-          ? _value.adminAddFieldValue
-          : adminAddFieldValue // ignore: cast_nullable_to_non_nullable
-              as AccessRecipient?,
+              as List<Contact>,
       admins: null == admins
           ? _value.admins
           : admins // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
+              as List<Contact>,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccessRecipientCopyWith<$Res>? get memberAddFieldValue {
-    if (_value.memberAddFieldValue == null) {
-      return null;
-    }
-
-    return $AccessRecipientCopyWith<$Res>(_value.memberAddFieldValue!, (value) {
-      return _then(_value.copyWith(memberAddFieldValue: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AccessRecipientCopyWith<$Res>? get adminAddFieldValue {
-    if (_value.adminAddFieldValue == null) {
-      return null;
-    }
-
-    return $AccessRecipientCopyWith<$Res>(_value.adminAddFieldValue!, (value) {
-      return _then(_value.copyWith(adminAddFieldValue: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_CreateDiscussionGroupFormStateCopyWith<$Res>
-    implements $CreateDiscussionGroupFormStateCopyWith<$Res> {
-  factory _$$_CreateDiscussionGroupFormStateCopyWith(
-          _$_CreateDiscussionGroupFormState value,
-          $Res Function(_$_CreateDiscussionGroupFormState) then) =
-      __$$_CreateDiscussionGroupFormStateCopyWithImpl<$Res>;
+abstract class _$$_CreateDiscussionFormStateCopyWith<$Res>
+    implements $CreateDiscussionFormStateCopyWith<$Res> {
+  factory _$$_CreateDiscussionFormStateCopyWith(
+          _$_CreateDiscussionFormState value,
+          $Res Function(_$_CreateDiscussionFormState) then) =
+      __$$_CreateDiscussionFormStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      AccessRecipient? memberAddFieldValue,
-      List<AccessRecipient> members,
-      AccessRecipient? adminAddFieldValue,
-      List<AccessRecipient> admins});
-
-  @override
-  $AccessRecipientCopyWith<$Res>? get memberAddFieldValue;
-  @override
-  $AccessRecipientCopyWith<$Res>? get adminAddFieldValue;
+  $Res call({String name, List<Contact> members, List<Contact> admins});
 }
 
 /// @nodoc
-class __$$_CreateDiscussionGroupFormStateCopyWithImpl<$Res>
-    extends _$CreateDiscussionGroupFormStateCopyWithImpl<$Res,
-        _$_CreateDiscussionGroupFormState>
-    implements _$$_CreateDiscussionGroupFormStateCopyWith<$Res> {
-  __$$_CreateDiscussionGroupFormStateCopyWithImpl(
-      _$_CreateDiscussionGroupFormState _value,
-      $Res Function(_$_CreateDiscussionGroupFormState) _then)
+class __$$_CreateDiscussionFormStateCopyWithImpl<$Res>
+    extends _$CreateDiscussionFormStateCopyWithImpl<$Res,
+        _$_CreateDiscussionFormState>
+    implements _$$_CreateDiscussionFormStateCopyWith<$Res> {
+  __$$_CreateDiscussionFormStateCopyWithImpl(
+      _$_CreateDiscussionFormState _value,
+      $Res Function(_$_CreateDiscussionFormState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
-    Object? memberAddFieldValue = freezed,
     Object? members = null,
-    Object? adminAddFieldValue = freezed,
     Object? admins = null,
   }) {
-    return _then(_$_CreateDiscussionGroupFormState(
+    return _then(_$_CreateDiscussionFormState(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      memberAddFieldValue: freezed == memberAddFieldValue
-          ? _value.memberAddFieldValue
-          : memberAddFieldValue // ignore: cast_nullable_to_non_nullable
-              as AccessRecipient?,
       members: null == members
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
-      adminAddFieldValue: freezed == adminAddFieldValue
-          ? _value.adminAddFieldValue
-          : adminAddFieldValue // ignore: cast_nullable_to_non_nullable
-              as AccessRecipient?,
+              as List<Contact>,
       admins: null == admins
           ? _value._admins
           : admins // ignore: cast_nullable_to_non_nullable
-              as List<AccessRecipient>,
+              as List<Contact>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_CreateDiscussionGroupFormState
-    extends _CreateDiscussionGroupFormState {
-  const _$_CreateDiscussionGroupFormState(
+class _$_CreateDiscussionFormState extends _CreateDiscussionFormState {
+  const _$_CreateDiscussionFormState(
       {this.name = '',
-      this.memberAddFieldValue,
-      final List<AccessRecipient> members = const [],
-      this.adminAddFieldValue,
-      final List<AccessRecipient> admins = const []})
+      final List<Contact> members = const [],
+      final List<Contact> admins = const []})
       : _members = members,
         _admins = admins,
         super._();
@@ -357,23 +129,19 @@ class _$_CreateDiscussionGroupFormState
   @override
   @JsonKey()
   final String name;
-  @override
-  final AccessRecipient? memberAddFieldValue;
-  final List<AccessRecipient> _members;
+  final List<Contact> _members;
   @override
   @JsonKey()
-  List<AccessRecipient> get members {
+  List<Contact> get members {
     if (_members is EqualUnmodifiableListView) return _members;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_members);
   }
 
-  @override
-  final AccessRecipient? adminAddFieldValue;
-  final List<AccessRecipient> _admins;
+  final List<Contact> _admins;
   @override
   @JsonKey()
-  List<AccessRecipient> get admins {
+  List<Contact> get admins {
     if (_admins is EqualUnmodifiableListView) return _admins;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_admins);
@@ -381,20 +149,16 @@ class _$_CreateDiscussionGroupFormState
 
   @override
   String toString() {
-    return 'CreateDiscussionGroupFormState(name: $name, memberAddFieldValue: $memberAddFieldValue, members: $members, adminAddFieldValue: $adminAddFieldValue, admins: $admins)';
+    return 'CreateDiscussionFormState(name: $name, members: $members, admins: $admins)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CreateDiscussionGroupFormState &&
+            other is _$_CreateDiscussionFormState &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.memberAddFieldValue, memberAddFieldValue) ||
-                other.memberAddFieldValue == memberAddFieldValue) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
-            (identical(other.adminAddFieldValue, adminAddFieldValue) ||
-                other.adminAddFieldValue == adminAddFieldValue) &&
             const DeepCollectionEquality().equals(other._admins, _admins));
   }
 
@@ -402,42 +166,33 @@ class _$_CreateDiscussionGroupFormState
   int get hashCode => Object.hash(
       runtimeType,
       name,
-      memberAddFieldValue,
       const DeepCollectionEquality().hash(_members),
-      adminAddFieldValue,
       const DeepCollectionEquality().hash(_admins));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CreateDiscussionGroupFormStateCopyWith<_$_CreateDiscussionGroupFormState>
-      get copyWith => __$$_CreateDiscussionGroupFormStateCopyWithImpl<
-          _$_CreateDiscussionGroupFormState>(this, _$identity);
+  _$$_CreateDiscussionFormStateCopyWith<_$_CreateDiscussionFormState>
+      get copyWith => __$$_CreateDiscussionFormStateCopyWithImpl<
+          _$_CreateDiscussionFormState>(this, _$identity);
 }
 
-abstract class _CreateDiscussionGroupFormState
-    extends CreateDiscussionGroupFormState {
-  const factory _CreateDiscussionGroupFormState(
+abstract class _CreateDiscussionFormState extends CreateDiscussionFormState {
+  const factory _CreateDiscussionFormState(
       {final String name,
-      final AccessRecipient? memberAddFieldValue,
-      final List<AccessRecipient> members,
-      final AccessRecipient? adminAddFieldValue,
-      final List<AccessRecipient> admins}) = _$_CreateDiscussionGroupFormState;
-  const _CreateDiscussionGroupFormState._() : super._();
+      final List<Contact> members,
+      final List<Contact> admins}) = _$_CreateDiscussionFormState;
+  const _CreateDiscussionFormState._() : super._();
 
   @override
   String get name;
   @override
-  AccessRecipient? get memberAddFieldValue;
+  List<Contact> get members;
   @override
-  List<AccessRecipient> get members;
-  @override
-  AccessRecipient? get adminAddFieldValue;
-  @override
-  List<AccessRecipient> get admins;
+  List<Contact> get admins;
   @override
   @JsonKey(ignore: true)
-  _$$_CreateDiscussionGroupFormStateCopyWith<_$_CreateDiscussionGroupFormState>
+  _$$_CreateDiscussionFormStateCopyWith<_$_CreateDiscussionFormState>
       get copyWith => throw _privateConstructorUsedError;
 }
 

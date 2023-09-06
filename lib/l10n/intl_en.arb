@@ -571,5 +571,6 @@
   "discussionInfo": "Discussion info",
   "modify": "Modify",
   "discussionModifying": "Discussion modifying",
-  "admin": "Admin"
+  "admin": "Admin",
+  "next": "Next"
 }

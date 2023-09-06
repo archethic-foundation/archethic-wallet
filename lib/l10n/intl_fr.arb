@@ -548,5 +548,6 @@
 	"discussionInfo": "Info de la discussion",
 	"modify": "Modifier",
 	"discussionModifying": "Modification de la discussion",
-	"admin": "Admin"
+	"admin": "Admin",
+	"next": "Suivant"
 }
