@@ -1,30 +1,35 @@
 part of 'providers.dart';
 
-final _createDiscussionContactFormProvider = NotifierProvider.autoDispose<
-    CreateDiscussionContactFormNotifier, CreateDiscussionContactFormState>(
+final _createDiscussionFormProvider = NotifierProvider.autoDispose<
+    CreateDiscussionFormNotifier, CreateDiscussionFormState>(
   () {
-    return CreateDiscussionContactFormNotifier();
+    return CreateDiscussionFormNotifier();
   },
 );
 
 @freezed
-class CreateDiscussionContactFormState with _$CreateDiscussionContactFormState {
-  const factory CreateDiscussionContactFormState({
+class CreateDiscussionFormState with _$CreateDiscussionFormState {
+  const factory CreateDiscussionFormState({
     @Default('') String name,
-    @Default([]) List<AccessRecipient> members,
-  }) = _CreateDiscussionContactFormState;
-  const CreateDiscussionContactFormState._();
+    @Default([]) List<Contact> members,
+    @Default([]) List<Contact> admins,
+  }) = _CreateDiscussionFormState;
+  const CreateDiscussionFormState._();
+
+  bool get canSubmit => members.isNotEmpty;
+
+  bool get canGoNext =>
+      members.any((member) => PublicKey(member.publicKey).isValid);
 }
 
-class CreateDiscussionContactFormNotifier
-    extends AutoDisposeNotifier<CreateDiscussionContactFormState> {
-  CreateDiscussionContactFormNotifier();
+class CreateDiscussionFormNotifier
+    extends AutoDisposeNotifier<CreateDiscussionFormState> {
+  CreateDiscussionFormNotifier();
 
   @override
-  CreateDiscussionContactFormState build() =>
-      const CreateDiscussionContactFormState();
+  CreateDiscussionFormState build() => const CreateDiscussionFormState();
 
-  void addMember(AccessRecipient member) {
+  void addMember(Contact member) {
     if (state.members.contains(member)) return;
     state = state.copyWith(
       members: [
@@ -34,9 +39,25 @@ class CreateDiscussionContactFormNotifier
     );
   }
 
-  void setName(
+  void removeMember(Contact member) {
+    state = state.copyWith(
+      members: state.members.where((element) => element != member).toList(),
+    );
+  }
+
+  void addAdmin(Contact member) {
+    if (state.admins.contains(member)) return;
+    state = state.copyWith(
+      admins: [
+        ...state.admins,
+        member,
+      ],
+    );
+  }
+
+  Future<void> setName(
     String name,
-  ) {
+  ) async {
     state = state.copyWith(
       name: name,
     );
@@ -59,6 +80,7 @@ class CreateDiscussionContactFormNotifier
             .read(MessengerProviders._messengerRepository)
             .createDiscussion(
           adminsPubKeys: [
+            ...state.admins.map((recipient) => recipient.publicKey),
             creator.publicKey,
           ],
           membersPubKeys: [

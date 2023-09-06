@@ -41,37 +41,50 @@ class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
     this.pickerItems,
     this.onSelected,
     this.onUnselected,
-    this.selectedIndexes,
+    selectedIndexes,
     this.multipleSelectionsAllowed = false,
+    this.height,
+    this.scrollable = false,
   }) {
-    // the list cannot have a const value because we will always need (even for mono selection cases) to add/remove elements within it
-    if (this.selectedIndexes == null) {
-      this.selectedIndexes = [];
+    if (selectedIndexes != null) {
+      this.selectedIndexes.addAll(selectedIndexes);
     }
   }
   final ValueChanged<PickerItem<T>>? onSelected;
   final ValueChanged<PickerItem<T>>? onUnselected;
   final List<PickerItem<T>>? pickerItems;
-  List<int>? selectedIndexes;
+  List<int> selectedIndexes = [];
   final bool multipleSelectionsAllowed;
+  final double? height;
+  final bool scrollable;
 
   @override
   ConsumerState<PickerWidget> createState() => _PickerWidgetState();
 }
 
 class _PickerWidgetState extends ConsumerState<PickerWidget> {
+  List<int> selectedIndexes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndexes.addAll(widget.selectedIndexes);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return SizedBox(
       width: double.maxFinite,
+      height: widget.height,
       child: ListView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics:
+            widget.scrollable ? null : const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           final pickerItem = widget.pickerItems![index];
-          final isItemSelected = widget.selectedIndexes!.contains(index);
+          final isItemSelected = selectedIndexes.contains(index);
           if (widget.pickerItems![index].displayed) {
             return InkWell(
               onTap: () {
@@ -81,14 +94,14 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                         preferences.activeVibrations,
                       );
                   if (widget.multipleSelectionsAllowed == false) {
-                    widget.selectedIndexes!.clear();
+                    selectedIndexes.clear();
                   }
                   // If the user taps again on a previous selection, we will unselect it to him
-                  if (widget.selectedIndexes!.contains(index)) {
-                    widget.selectedIndexes!.remove(index);
+                  if (selectedIndexes.contains(index)) {
+                    selectedIndexes.remove(index);
                     widget.onUnselected?.call(widget.pickerItems![index]);
                   } else {
-                    widget.selectedIndexes!.add(index);
+                    selectedIndexes.add(index);
                     widget.onSelected?.call(widget.pickerItems![index]);
                   }
                   setState(() {});

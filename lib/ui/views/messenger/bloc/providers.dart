@@ -10,19 +10,18 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
-import 'package:aewallet/ui/views/messenger/layouts/components/add_public_key_textfield_pk.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'create_discussion_contact_form.dart';
-part 'create_discussion_group_form.dart';
-
+part 'create_discussion_form.dart';
 part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
@@ -239,9 +238,7 @@ abstract class MessengerProviders {
   static const messages = _discussionMessagesProvider;
   static const paginatedMessages = _paginatedDiscussionMessagesNotifierProvider;
 
-  static final discussionContactCreationForm =
-      _createDiscussionContactFormProvider;
-  static final discussionGroupCreationForm = _createDiscussionGroupFormProvider;
+  static final createDiscussionForm = _createDiscussionFormProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
 
@@ -249,8 +246,7 @@ abstract class MessengerProviders {
     await ref.read(_messengerRepository).clear();
     ref
       ..invalidate(_discussionProvider)
-      ..invalidate(_createDiscussionContactFormProvider)
-      ..invalidate(_createDiscussionGroupFormProvider)
+      ..invalidate(_createDiscussionFormProvider)
       ..invalidate(_discussionMessagesProvider);
   }
 }
