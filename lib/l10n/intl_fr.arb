@@ -550,5 +550,6 @@
 	"discussionModifying": "Modification de la discussion",
 	"admin": "Admin",
 	"next": "Suivant",
-	"name": "Nom"
+	"name": "Nom",
+	"discussionNoMessages": "Votre discussion ne dispose pour le moment d'aucun message"
 }
