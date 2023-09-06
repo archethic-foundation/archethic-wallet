@@ -572,5 +572,7 @@
   "modify": "Modify",
   "discussionModifying": "Discussion modifying",
   "admin": "Admin",
+  "next": "Next",
+  "name": "Name",
   "discussionNoMessages": "Your discussion currently has no messages."
 }
