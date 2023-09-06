@@ -19,7 +19,7 @@ class CreateDiscussionFormState with _$CreateDiscussionFormState {
   bool get canSubmit => members.isNotEmpty && name.isNotEmpty;
 
   bool get canGoNext =>
-      members.any((member) => PublicKey(member.publicKey).isValid);
+      members.none((member) => PublicKey(member.publicKey).isValid == false);
 
   List<Contact> get membersList => members;
 }
