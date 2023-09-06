@@ -12,6 +12,7 @@ import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -329,20 +330,46 @@ class _MessageCreationFormFees extends ConsumerWidget {
   }
 }
 
-class _MessagesList extends ConsumerWidget {
+class _MessagesList extends ConsumerStatefulWidget {
   const _MessagesList({
+    super.key,
     required this.discussionAddress,
   });
   final String discussionAddress;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_MessagesList> createState() => _MessagesListState();
+}
+
+class _MessagesListState extends ConsumerState<_MessagesList> {
+  bool hasMessages = false;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
-    final pagingController =
-        ref.watch(MessengerProviders.paginatedMessages(discussionAddress));
+    final pagingController = ref
+        .watch(MessengerProviders.paginatedMessages(widget.discussionAddress));
+    final localizations = AppLocalizations.of(context)!;
 
     if (me == null) return Container();
+
+    final discussion =
+        ref.watch(MessengerProviders.discussion(widget.discussionAddress));
+    setState(() {
+      hasMessages = discussion.valueOrNull?.lastMessage != null;
+    });
+
+    if (hasMessages == false) {
+      return Padding(
+        padding: const EdgeInsets.all(8),
+        child: Center(
+            child: Text(
+          localizations.discussionNoMessages,
+          textAlign: TextAlign.center,
+        )),
+      );
+    }
 
     return PagedListView(
       pagingController: pagingController,
