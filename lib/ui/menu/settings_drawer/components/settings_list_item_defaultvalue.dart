@@ -134,7 +134,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: Responsive.drawerWidth(context) - 70,
+                  width: Responsive.drawerWidth(context) - 80,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
