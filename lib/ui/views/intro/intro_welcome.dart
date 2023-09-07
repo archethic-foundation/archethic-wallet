@@ -12,7 +12,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -124,7 +123,7 @@ class _Language extends ConsumerWidget {
     return IconButton(
       padding: const EdgeInsets.only(bottom: 4),
       icon: Icon(
-        UiIcons.language,
+        Icons.translate_outlined,
         color: theme.iconDrawer,
         size: 25,
       ),
@@ -303,7 +302,7 @@ class _CGU extends ConsumerWidget {
               activeColor: theme.text,
               controlAffinity: ListTileControlAffinity.leading,
               secondary: TextFieldButton(
-                icon: UiIcons.privacy_policy,
+                icon: Icons.policy_outlined,
                 onPressed: () {
                   UIUtil.showWebview(
                     context,

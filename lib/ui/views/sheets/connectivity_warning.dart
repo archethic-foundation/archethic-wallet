@@ -4,7 +4,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -35,7 +34,7 @@ class ConnectivityWarning extends ConsumerWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      const Icon(UiIcons.warning, color: Colors.red),
+                      const Icon(Icons.warning_outlined, color: Colors.red),
                       const SizedBox(width: 10),
                       Text(
                         localizations.connectivityWarningHeader,

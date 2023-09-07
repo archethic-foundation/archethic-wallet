@@ -6,7 +6,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -73,12 +72,8 @@ class _BalanceIndicatorButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     return IconButton(
-      icon: primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat
-          ? const Icon(UiIcons.primary_currency)
-          : const Icon(UiIcons.primary_currency_uco),
+      icon: const Icon(Icons.currency_exchange_outlined),
       alignment: Alignment.centerRight,
       color: theme.textFieldIcon,
       onPressed: () async {

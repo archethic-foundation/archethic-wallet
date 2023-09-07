@@ -6,7 +6,6 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -88,7 +87,7 @@ class TransferFormSheet extends ConsumerWidget {
                       actionButtonTitle ?? localizations.send,
                       Dimens.buttonTopDimens,
                       key: const Key('send'),
-                      icon: UiIcons.send,
+                      icon: Icons.call_made_outlined,
                       onPressed: () async {
                         final transferNotifier = ref
                             .read(TransferFormProvider.transferForm.notifier);

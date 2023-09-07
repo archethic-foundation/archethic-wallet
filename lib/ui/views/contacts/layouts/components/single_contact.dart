@@ -3,7 +3,6 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,18 +49,18 @@ class SingleContact extends ConsumerWidget {
                             if (contact.type ==
                                 ContactType.keychainService.name)
                               Icon(
-                                UiIcons.keychain,
+                                Icons.wallet_outlined,
                                 color: theme.iconDrawer,
-                                size: 30,
+                                size: 25,
                               )
                             else
                               Stack(
                                 alignment: Alignment.topRight,
                                 children: [
                                   Icon(
-                                    UiIcons.main,
+                                    Icons.person_outlined,
                                     color: theme.iconDrawer,
-                                    size: 30,
+                                    size: 25,
                                   ),
                                   if (contact.favorite == true)
                                     Icon(

@@ -185,7 +185,7 @@ class _TransferTextFieldAddressState
                   height: 48,
                   width: 48,
                   child: Icon(
-                    UiIcons.address_book,
+                    Icons.contacts_outlined,
                     size: 20,
                     color: theme.textFieldIcon,
                   ),

@@ -11,7 +11,6 @@ import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -155,7 +154,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   localizations.send,
                   Dimens.buttonTopDimens,
                   key: const Key('sendNFT'),
-                  icon: UiIcons.send,
+                  icon: Icons.call_made_outlined,
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,

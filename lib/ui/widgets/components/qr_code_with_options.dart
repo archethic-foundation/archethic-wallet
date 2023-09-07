@@ -3,7 +3,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +88,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                             width: 20,
                             height: 20,
                             child: Icon(
-                              Icons.share,
+                              Icons.share_outlined,
                               color: theme.background,
                               size: 16,
                             ),
@@ -121,9 +120,9 @@ class QRCodeWithOptions extends ConsumerWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 1),
                             child: Icon(
-                              UiIcons.eye,
+                              Icons.visibility_outlined,
                               color: theme.background,
-                              size: 19,
+                              size: 16,
                             ),
                           ),
                         ),

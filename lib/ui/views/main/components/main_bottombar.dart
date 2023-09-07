@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,8 +37,8 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarAddressBook'),
                 icon: const Icon(
-                  UiIcons.address_book_menu,
-                  size: 30,
+                  Icons.contacts_outlined,
+                  size: 28,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -49,8 +49,8 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarKeyChain'),
                 icon: const Icon(
-                  UiIcons.keychain,
-                  size: 30,
+                  Icons.wallet_outlined,
+                  size: 28,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -61,8 +61,8 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarMain'),
                 icon: const Icon(
-                  UiIcons.main,
-                  size: 30,
+                  Icons.account_circle_outlined,
+                  size: 28,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -72,9 +72,27 @@ class MainBottomBar extends ConsumerWidget {
               ),
               BottomBarItem(
                 key: const Key('bottomBarNFT'),
-                icon: const Icon(
-                  UiIcons.nft,
-                  size: 30,
+                icon: Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: theme.bottomBarActiveTitleColor!,
+                      width: 2.2,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'NFT',
+                        style: theme.textStyleSize10W600Primary,
+                      ),
+                    ],
+                  ),
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -87,7 +105,7 @@ class MainBottomBar extends ConsumerWidget {
                   key: const Key('bottomBarMessenger'),
                   icon: const Icon(
                     Icons.chat_outlined,
-                    size: 30,
+                    size: 28,
                   ),
                   backgroundColorOpacity:
                       theme.bottomBarBackgroundColorOpacity!,

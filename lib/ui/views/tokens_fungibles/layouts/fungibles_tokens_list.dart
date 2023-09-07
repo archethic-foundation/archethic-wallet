@@ -7,7 +7,6 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -54,10 +53,10 @@ class FungiblesTokensListWidget extends ConsumerWidget {
               child: Row(
                 children: [
                   const Icon(
-                    UiIcons.about,
-                    size: 16,
+                    Icons.info_outlined,
+                    size: 18,
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 8),
                   Text(
                     localizations.fungiblesTokensListNoTokenYet,
                     style: theme.textStyleSize12W100Primary,
@@ -241,7 +240,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Icon(
-                          UiIcons.warning,
+                          Icons.warning_outlined,
                           size: 10,
                         ),
                         const SizedBox(width: 5),

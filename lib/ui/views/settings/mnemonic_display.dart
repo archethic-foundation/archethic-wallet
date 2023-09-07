@@ -2,7 +2,6 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -107,7 +106,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Icon(
-                        UiIcons.about,
+                        Icons.info_outlined,
                         color: theme.text,
                         size: 20,
                       ),

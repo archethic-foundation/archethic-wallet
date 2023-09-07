@@ -78,7 +78,7 @@ class AppTextField extends ConsumerStatefulWidget {
   final bool? autocorrect;
   final String? hintText;
   final String? labelText;
-  final TextFieldButton? prefixButton;
+  final Widget? prefixButton;
   final TextFieldButton? suffixButton;
   final bool? fadePrefixOnCondition;
   final bool? prefixShowFirstCondition;

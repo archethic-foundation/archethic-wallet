@@ -11,7 +11,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -105,7 +104,7 @@ class ContactDetail extends ConsumerWidget {
                           );
                         },
                         child: Icon(
-                          UiIcons.trash,
+                          Icons.delete_outlined,
                           size: 24,
                           color: theme.text,
                         ),
@@ -128,7 +127,8 @@ class ContactDetail extends ConsumerWidget {
                   ],
                 ),
               ),
-              if (contact.type == ContactType.keychainService.name || editMode == false)
+              if (contact.type == ContactType.keychainService.name ||
+                  editMode == false)
                 const SizedBox(
                   width: 50,
                   height: 50,

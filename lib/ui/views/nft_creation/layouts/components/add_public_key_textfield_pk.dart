@@ -114,7 +114,7 @@ class _AddPublicKeyTextFieldPkState
       autocorrect: false,
       labelText: AppLocalizations.of(context)!.enterPublicKey,
       prefixButton: TextFieldButton(
-        icon: UiIcons.address_book,
+        icon: Icons.contacts_outlined,
         onPressed: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
