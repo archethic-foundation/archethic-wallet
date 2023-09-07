@@ -1,6 +1,5 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/sheets/connectivity_warning.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -23,7 +22,10 @@ class IconNetworkWarning extends ConsumerWidget {
     return Align(
       alignment: alignment,
       child: IconButton(
-        icon: const Icon(UiIcons.network_warning, color: Colors.red, size: 25),
+        icon: const Icon(
+          Icons.signal_cellular_connected_no_internet_0_bar_outlined,
+          color: Colors.red,
+        ),
         onPressed: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,

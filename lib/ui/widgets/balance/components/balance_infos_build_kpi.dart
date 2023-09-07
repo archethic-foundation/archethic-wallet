@@ -88,7 +88,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                     );
                   },
                   child: Icon(
-                    UiIcons.oracle,
+                    Icons.info_outlined,
                     color: theme.text,
                     size: 15,
                   ),

@@ -15,7 +15,6 @@ import 'package:aewallet/ui/views/contacts/bloc/state.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/add_contact_public_key_recovered.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -125,7 +124,7 @@ class AddContactSheetBody extends ConsumerWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Icon(
-                          UiIcons.about,
+                          Icons.info_outlined,
                           color: theme.text,
                           size: 20,
                         ),

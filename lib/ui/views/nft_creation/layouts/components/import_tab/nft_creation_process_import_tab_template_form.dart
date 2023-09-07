@@ -5,7 +5,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -123,7 +122,7 @@ class _NFTCreationProcessImportTabFormUrlState
                               Padding(
                                 padding: const EdgeInsets.only(top: 2),
                                 child: Icon(
-                                  UiIcons.warning,
+                                  Icons.warning_outlined,
                                   color: theme.warning,
                                   size: 12,
                                 ),

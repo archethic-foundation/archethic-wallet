@@ -8,7 +8,6 @@ import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,7 +67,7 @@ class NFTList extends ConsumerWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Icon(
-                  UiIcons.about,
+                  Icons.info_outlined,
                   color: theme.text,
                   size: 20,
                 ),

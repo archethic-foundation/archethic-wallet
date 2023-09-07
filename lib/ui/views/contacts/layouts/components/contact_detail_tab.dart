@@ -4,7 +4,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -93,7 +92,7 @@ class ContactDetailTab extends ConsumerWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Icon(
-                      UiIcons.about,
+                      Icons.info_outlined,
                       color: theme.text,
                       size: 20,
                     ),

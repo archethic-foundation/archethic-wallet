@@ -111,35 +111,41 @@ class _TransferTextFieldAmountState
                   ? '${localizations.enterAmount} (${transfer.symbol(context)})'
                   : '${AppLocalizations.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
               : '${localizations.enterAmount} (${transfer.symbol(context)})',
-          prefixButton: TextFieldButton(
-            icon: UiIcons.max,
-            onPressed: () async {
-              transferNotifier.setDefineMaxAmountInProgress(
-                defineMaxAmountInProgress: true,
-              );
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    settings.activeVibrations,
+          prefixButton: SizedBox(
+            width: 48,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+              ),
+              child: Text('MAX', style: theme.textStyleSize10W600Primary),
+              onPressed: () async {
+                transferNotifier.setDefineMaxAmountInProgress(
+                  defineMaxAmountInProgress: true,
+                );
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      settings.activeVibrations,
+                    );
+                if (transferNotifier.controlMaxSend(context) == false) {
+                  transferNotifier.setDefineMaxAmountInProgress(
+                    defineMaxAmountInProgress: false,
                   );
-              if (transferNotifier.controlMaxSend(context) == false) {
+                  return;
+                }
+                final selectedCurrencyMarketPrice = await ref.read(
+                  MarketPriceProviders.selectedCurrencyMarketPrice.future,
+                );
+
+                await transferNotifier.setMaxAmount(
+                  context: context,
+                  tokenPrice: selectedCurrencyMarketPrice.amount,
+                );
+                _updateAmountTextController();
                 transferNotifier.setDefineMaxAmountInProgress(
                   defineMaxAmountInProgress: false,
                 );
-                return;
-              }
-              final selectedCurrencyMarketPrice = await ref.read(
-                MarketPriceProviders.selectedCurrencyMarketPrice.future,
-              );
-
-              await transferNotifier.setMaxAmount(
-                context: context,
-                tokenPrice: selectedCurrencyMarketPrice.amount,
-              );
-              _updateAmountTextController();
-              transferNotifier.setDefineMaxAmountInProgress(
-                defineMaxAmountInProgress: false,
-              );
-            },
+              },
+            ),
           ),
           fadePrefixOnCondition: true,
           prefixShowFirstCondition: !transfer.defineMaxAmountInProgress &&

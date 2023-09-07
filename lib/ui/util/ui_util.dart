@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
@@ -233,7 +232,7 @@ class UIUtil {
           child: Row(
             children: [
               const Icon(
-                UiIcons.warning,
+                Icons.warning_outlined,
                 size: 16,
               ),
               const SizedBox(width: 5),
