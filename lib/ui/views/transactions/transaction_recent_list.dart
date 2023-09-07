@@ -4,7 +4,6 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_detail.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -111,10 +110,10 @@ class _TransactionsEmpty extends ConsumerWidget {
             child: Row(
               children: [
                 const Icon(
-                  UiIcons.about,
-                  size: 16,
+                  Icons.info_outlined,
+                  size: 18,
                 ),
-                const SizedBox(width: 5),
+                const SizedBox(width: 8),
                 Text(
                   AppLocalizations.of(context)!
                       .recentTransactionsNoTransactionYet,

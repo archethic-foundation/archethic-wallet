@@ -6,7 +6,6 @@ import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
@@ -96,28 +95,28 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                           text: localizations
                               .nftCreationProcessTabDescriptionHeader,
                           icon: const Icon(
-                            UiIcons.nft_creation_process_description,
+                            Icons.description_outlined,
                           ),
                         ),
                         Tab(
                           text: AppLocalizations.of(context)!
                               .nftCreationProcessTabImportHeader,
                           icon: const Icon(
-                            UiIcons.nft_creation_process_import,
+                            Icons.download_outlined,
                           ),
                         ),
                         Tab(
                           text: localizations
                               .nftCreationProcessTabPropertiesHeader,
                           icon: const Icon(
-                            UiIcons.nft_creation_process_properties,
+                            Icons.settings_outlined,
                           ),
                         ),
                         Tab(
                           text:
                               localizations.nftCreationProcessTabSummaryHeader,
                           icon: const Icon(
-                            UiIcons.nft_creation_process_summary,
+                            Icons.check_circle_outlined,
                           ),
                         ),
                       ],

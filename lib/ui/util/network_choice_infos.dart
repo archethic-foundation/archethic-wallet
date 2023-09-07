@@ -2,7 +2,6 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -30,7 +29,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
                   right: 15,
                 ),
                 child: Icon(
-                  UiIcons.about,
+                  Icons.info_outlined,
                   size: 15,
                 ),
               ),

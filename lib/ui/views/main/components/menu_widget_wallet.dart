@@ -9,7 +9,6 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -57,7 +56,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   _ActionButton(
                     key: const Key('sendUCObutton'),
                     text: localizations.send,
-                    icon: UiIcons.send,
+                    icon: Icons.call_made_outlined,
                     onTap: () async {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
@@ -80,7 +79,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                 else
                   _ActionButton(
                     text: localizations.send,
-                    icon: UiIcons.send,
+                    icon: Icons.call_made_outlined,
                     enabled: false,
                   )
                       .animate()
@@ -90,7 +89,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   _ActionButton(
                     key: const Key('receiveUCObutton'),
                     text: localizations.receive,
-                    icon: UiIcons.receive,
+                    icon: Icons.call_received_outlined,
                     onTap: () async {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
@@ -112,7 +111,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                 else
                   _ActionButton(
                     text: localizations.receive,
-                    icon: UiIcons.receive,
+                    icon: Icons.call_received_outlined,
                     enabled: false,
                   )
                       .animate()
@@ -122,7 +121,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                     ConnectivityStatus.isConnected)
                   _ActionButton(
                     text: localizations.buy,
-                    icon: UiIcons.buy,
+                    icon: Icons.add_outlined,
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
@@ -141,7 +140,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                 else
                   _ActionButton(
                     text: localizations.buy,
-                    icon: UiIcons.buy,
+                    icon: Icons.add_outlined,
                     enabled: false,
                   )
                       .animate()

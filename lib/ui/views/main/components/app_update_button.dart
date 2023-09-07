@@ -5,7 +5,6 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
@@ -63,7 +62,7 @@ class AppUpdateButton extends ConsumerWidget {
                         );
                       },
                       child: const Icon(
-                        UiIcons.warning,
+                        Icons.warning_outlined,
                         size: 25,
                       ),
                     ),
