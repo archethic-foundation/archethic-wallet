@@ -42,7 +42,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
         height: 50,
         child: SheetDetailCard(
           children: [
-            const Icon(Iconsax.gallery, size: 18),
+            const Icon(Icons.photo_library_outlined, size: 18),
             const SizedBox(width: 5),
             Expanded(
               child: Align(

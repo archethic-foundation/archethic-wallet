@@ -8,7 +8,6 @@ import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 
 class MainBottomBar extends ConsumerWidget {
   const MainBottomBar({
@@ -87,7 +86,7 @@ class MainBottomBar extends ConsumerWidget {
                 BottomBarItem(
                   key: const Key('bottomBarMessenger'),
                   icon: const Icon(
-                    Iconsax.messages_2,
+                    Icons.chat_outlined,
                     size: 30,
                   ),
                   backgroundColorOpacity:

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:math' as math;
+
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -10,7 +11,6 @@ import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 class LastArticles extends ConsumerStatefulWidget {
@@ -68,9 +68,9 @@ class LastArticlesState extends ConsumerState<LastArticles> {
                     UIUtil.showWebview(context, blogUrl, '');
                   },
                   child: const IconDataWidget(
-                    icon: Iconsax.export_3,
-                    width: 15,
-                    height: 15,
+                    icon: Icons.open_in_new_outlined,
+                    width: 18,
+                    height: 18,
                   ),
                 ),
               ],

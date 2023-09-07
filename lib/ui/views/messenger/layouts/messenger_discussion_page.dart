@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -53,7 +52,7 @@ class MessengerDiscussionPage extends ConsumerWidget {
           elevation: 0,
           actions: [
             IconButton(
-              icon: const Icon(Iconsax.info_circle),
+              icon: const Icon(Icons.info_outline),
               onPressed: () async {
                 Navigator.of(context).pushNamed(
                   '/discussion_details',

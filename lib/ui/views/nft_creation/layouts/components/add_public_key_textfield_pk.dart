@@ -135,7 +135,7 @@ class _AddPublicKeyTextFieldPkState
       prefixShowFirstCondition: true,
       suffixButton: hasQRCode
           ? TextFieldButton(
-              icon: Iconsax.scan_barcode,
+              icon: Icons.qr_code_scanner_outlined,
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
