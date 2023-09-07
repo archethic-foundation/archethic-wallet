@@ -63,6 +63,7 @@ packages:
       path: "."
       ref: dev
 <<<<<<< HEAD
+<<<<<<< HEAD
       resolved-ref: e98b2d19703f014713e77ec0fa3945cb88556e27
 =======
 <<<<<<< HEAD
@@ -106,6 +107,9 @@ packages:
 =======
 >>>>>>> 027927d6 (fix due rebase)
 >>>>>>> 84210fdc (fix due rebase)
+=======
+      resolved-ref: "38586b6e532491a60b089a0c3cffa4f7d4e4c04a"
+>>>>>>> dab79633 (rebase)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
