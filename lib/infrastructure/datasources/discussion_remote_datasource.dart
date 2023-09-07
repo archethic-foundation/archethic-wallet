@@ -2,7 +2,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
-class DiscussionRemoteDatasource with MessengerMixin {
+class DiscussionRemoteDatasource {
   Future<Discussion> createDiscussion({
     required MessagingService messagingService,
     required ApiService apiService,
