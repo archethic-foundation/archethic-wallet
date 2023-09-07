@@ -8,18 +8,19 @@ class TransactionOutputIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Colors.red),
-          ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.red),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 1),
-          child: Icon(
-            Icons.call_made_outlined,
-            size: 12,
-            color: Colors.red,
-          ),
-        ));
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 1),
+        child: Icon(
+          Icons.call_made_outlined,
+          size: 12,
+          color: Colors.red,
+        ),
+      ),
+    );
   }
 }

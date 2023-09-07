@@ -331,7 +331,6 @@ class _MessageCreationFormFees extends ConsumerWidget {
 
 class _MessagesList extends ConsumerStatefulWidget {
   const _MessagesList({
-    super.key,
     required this.discussionAddress,
   });
   final String discussionAddress;
@@ -363,10 +362,11 @@ class _MessagesListState extends ConsumerState<_MessagesList> {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: Center(
-            child: Text(
-          localizations.discussionNoMessages,
-          textAlign: TextAlign.center,
-        )),
+          child: Text(
+            localizations.discussionNoMessages,
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
 
