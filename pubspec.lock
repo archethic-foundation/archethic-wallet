@@ -62,54 +62,7 @@ packages:
     description:
       path: "."
       ref: dev
-<<<<<<< HEAD
-<<<<<<< HEAD
       resolved-ref: e98b2d19703f014713e77ec0fa3945cb88556e27
-=======
-<<<<<<< HEAD
-      resolved-ref: "38586b6e532491a60b089a0c3cffa4f7d4e4c04a"
-=======
-      resolved-ref: af12635e9e0a9eb507e4979b35f46d019a1f3fe5
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-      ref: "84-add-a-method-for-calling-smart-contract-functions"
-<<<<<<< HEAD
-      resolved-ref: "51a281b264b8d0b53012b776c227257cc268f31e"
-=======
-      ref: dev
-      resolved-ref: "557554a1d38603d7ac00e5c1e8b2ae3a453b4728"
->>>>>>> 4af840ce (Loading NFT - Optimize performance)
->>>>>>> 8d5bbb6a (Loading NFT - Optimize performance)
-<<<<<<< HEAD
->>>>>>> 61c658fb (Loading NFT - Optimize performance)
-<<<<<<< HEAD
->>>>>>> 722abffe (Loading NFT - Optimize performance)
-=======
-=======
-=======
-      ref: "84-add-a-method-for-calling-smart-contract-functions"
-      resolved-ref: "51a281b264b8d0b53012b776c227257cc268f31e"
->>>>>>> cd148814 (update depencies)
-<<<<<<< HEAD
->>>>>>> f1d69e6a (update depencies)
-<<<<<<< HEAD
->>>>>>> d62b984b (update depencies)
-=======
-=======
-=======
-      resolved-ref: "4b5223ff97718012fb29c2961aafb36a928b4bb3"
->>>>>>> 1ecd975a (generate pubspec)
->>>>>>> fd20b477 (generate pubspec)
-<<<<<<< HEAD
->>>>>>> 3c7f6596 (generate pubspec)
-=======
-=======
->>>>>>> 027927d6 (fix due rebase)
->>>>>>> 84210fdc (fix due rebase)
-=======
-      resolved-ref: "38586b6e532491a60b089a0c3cffa4f7d4e4c04a"
->>>>>>> dab79633 (rebase)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"

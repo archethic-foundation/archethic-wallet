@@ -5,7 +5,6 @@ import 'package:aewallet/util/url_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
@@ -58,7 +57,9 @@ class NFTThumbnailIPFS extends ConsumerWidget with UrlUtil {
                   ),
                 );
               },
-              icon: const Icon(Iconsax.export_3),
+              icon: const Icon(
+                Icons.open_in_new_outlined,
+              ),
             ),
           ),
       ],
