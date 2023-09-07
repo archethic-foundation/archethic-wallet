@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationsRepositoryImpl
-    with MessengerMixin, NotificationUtil
+    with NotificationUtil
     implements NotificationsRepository {
   NotificationsRepositoryImpl({required this.networksSetting}) {
     _client = NotificationBackendClient(
