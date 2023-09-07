@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListDetail extends ConsumerWidget {
   const NFTListDetail({
@@ -141,7 +142,7 @@ class NFTCardBottom extends ConsumerWidget {
                             favorite: false);
                   }),
                   child: const Icon(
-                    Icons.verified,
+                    Symbols.verified,
                     color: Colors.blue,
                     size: 20,
                   ),
@@ -163,14 +164,20 @@ class NFTCardBottom extends ConsumerWidget {
                   child: nftInfosOffChain == null ||
                           nftInfosOffChain.favorite == false
                       ? Icon(
-                          Icons.favorite_border,
+                          Symbols.favorite_border,
                           color: theme.favoriteIconColor,
                           size: 18,
+                          weight: 300,
+                          opticalSize: 48,
+                          grade: -25,
                         )
                       : Icon(
-                          Icons.favorite,
+                          Symbols.favorite,
                           color: theme.favoriteIconColor,
                           size: 18,
+                          weight: 300,
+                          opticalSize: 48,
+                          grade: -25,
                         ),
                 ),
               ],

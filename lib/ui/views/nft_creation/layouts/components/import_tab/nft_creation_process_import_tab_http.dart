@@ -34,7 +34,13 @@ class NFTCreationProcessImportTabHTTP extends ConsumerWidget {
         height: 50,
         child: SheetDetailCard(
           children: [
-            const Icon(Icons.link_outlined, size: 18),
+            const Icon(
+              Symbols.link,
+              weight: 300,
+              opticalSize: 48,
+              grade: -25,
+              size: 18,
+            ),
             const SizedBox(width: 5),
             Expanded(
               child: Align(

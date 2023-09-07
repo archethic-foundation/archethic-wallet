@@ -98,7 +98,7 @@ class SecurityMenuView extends ConsumerWidget {
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,
                         headingStyle: theme.textStyleSize16W600EquinoxRed,
-                        icon: Icons.delete_outlined,
+                        icon: Symbols.delete,
                         onPressed: () {
                           final language = ref.read(
                             LanguageProviders.selectedLanguage,
@@ -180,7 +180,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.authMethod,
       defaultMethod: AuthenticationMethod(authenticationMethod),
-      icon: Icons.fingerprint_outlined,
+      icon: Symbols.fingerprint,
       onPressed: asyncHasBiometrics.maybeWhen(
         data: (hasBiometrics) => () async {
           final authMethod = AuthenticationMethod(
@@ -230,7 +230,7 @@ class _LockSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.lockAppSetting,
       defaultMethod: UnlockSetting(lock),
-      icon: Icons.login_outlined,
+      icon: Symbols.login,
       onPressed: () async {
         final unlockSetting = await LockDialog.getDialog(
           context,
@@ -267,7 +267,7 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.autoLockHeader,
       defaultMethod: LockTimeoutSetting(lockTimeout),
-      icon: Icons.lock_outlined,
+      icon: Symbols.lock,
       onPressed: () async {
         final lockTimeoutSetting = await LockTimeoutDialog.getDialog(
           context,
@@ -304,7 +304,7 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
     if (authenticationMethod != AuthMethod.pin) return const SizedBox();
     return _SettingsListItem.withSwitch(
       heading: localizations.pinPadShuffle,
-      icon: Icons.shuffle_outlined,
+      icon: Symbols.shuffle,
       isSwitched: pinPadShuffle,
       onChanged: (bool isSwitched) {
         ref
@@ -328,7 +328,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
     return _SettingsListItem.singleLine(
       heading: localizations.backupSecretPhrase,
       headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-      icon: Icons.key_outlined,
+      icon: Symbols.key,
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);
         final authenticationSettings = ref.read(
@@ -373,7 +373,7 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.singleLineWithInfos(
       heading: localizations.resyncWallet,
       info: localizations.resyncWalletDescription,
-      icon: Icons.sync_outlined,
+      icon: Symbols.sync,
       onPressed: () async {
         AppDialogs.showConfirmDialog(context, ref, localizations.resyncWallet,
             localizations.resyncWalletAreYouSure, localizations.yes, () async {
@@ -409,7 +409,7 @@ class _ActiveServerRPCSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activeRPCServer,
-      icon: Icons.share_outlined,
+      icon: Symbols.share,
       isSwitched: activeRPCServer,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveRPCServer(isSwitched);

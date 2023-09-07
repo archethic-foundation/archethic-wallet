@@ -18,6 +18,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class IntroWelcome extends ConsumerStatefulWidget {
   const IntroWelcome({super.key});
@@ -123,9 +124,12 @@ class _Language extends ConsumerWidget {
     return IconButton(
       padding: const EdgeInsets.only(bottom: 4),
       icon: Icon(
-        Icons.translate_outlined,
+        Symbols.translate,
         color: theme.iconDrawer,
         size: 25,
+        weight: 300,
+        opticalSize: 48,
+        grade: -25,
       ),
       onPressed: () async {
         await LanguageDialog.getDialog(context, ref);
@@ -302,7 +306,7 @@ class _CGU extends ConsumerWidget {
               activeColor: theme.text,
               controlAffinity: ListTileControlAffinity.leading,
               secondary: TextFieldButton(
-                icon: Icons.policy_outlined,
+                icon: Symbols.policy,
                 onPressed: () {
                   UIUtil.showWebview(
                     context,

@@ -21,9 +21,9 @@ class _SettingsListItemSwitch extends _SettingsListItem {
     final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
       (Set<MaterialState> states) {
         if (states.contains(MaterialState.selected)) {
-          return const Icon(Icons.check);
+          return const Icon(Symbols.check);
         }
-        return const Icon(Icons.close);
+        return const Icon(Symbols.close);
       },
     );
     return TextButton(
@@ -47,8 +47,8 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               margin: const EdgeInsetsDirectional.only(end: 13),
               child: IconDataWidget(
                 icon: icon,
-                width: AppFontSizes.size24,
-                height: AppFontSizes.size24,
+                width: AppFontSizes.size28,
+                height: AppFontSizes.size28,
               ),
             ),
             SizedBox(

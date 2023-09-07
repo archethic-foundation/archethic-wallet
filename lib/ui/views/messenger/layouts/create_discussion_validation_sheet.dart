@@ -14,6 +14,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
   const CreateDiscussionValidationSheet({
@@ -138,7 +139,12 @@ class _CreateDiscussionValidationSheetState
                               ),
                             );
                           },
-                          icon: const Icon(Icons.info_outline),
+                          icon: const Icon(
+                            Symbols.info,
+                            weight: 300,
+                            opticalSize: 48,
+                            grade: -25,
+                          ),
                         ),
                       ],
                     );
@@ -157,7 +163,10 @@ class _CreateDiscussionValidationSheetState
                         Dimens.none,
                         key: const Key('addMessengerDiscussion'),
                         icon: Icon(
-                          Icons.add,
+                          Symbols.add,
+                          weight: 300,
+                          opticalSize: 48,
+                          grade: -25,
                           color: formState.canSubmit
                               ? theme.mainButtonLabel
                               : theme

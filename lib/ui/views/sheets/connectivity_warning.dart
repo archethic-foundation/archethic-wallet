@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class ConnectivityWarning extends ConsumerWidget {
   const ConnectivityWarning({super.key});
@@ -34,7 +35,7 @@ class ConnectivityWarning extends ConsumerWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      const Icon(Icons.warning_outlined, color: Colors.red),
+                      const Icon(Symbols.warning, color: Colors.red),
                       const SizedBox(width: 10),
                       Text(
                         localizations.connectivityWarningHeader,

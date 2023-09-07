@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionOutputIcon extends ConsumerWidget {
   const TransactionOutputIcon({super.key});
@@ -16,7 +17,7 @@ class TransactionOutputIcon extends ConsumerWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: 1),
         child: Icon(
-          Icons.call_made_outlined,
+          Symbols.call_made,
           size: 12,
           color: Colors.red,
         ),

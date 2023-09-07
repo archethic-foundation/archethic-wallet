@@ -13,6 +13,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:password_strength/password_strength.dart';
 
 class SetPassword extends ConsumerStatefulWidget {
@@ -164,7 +165,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
                                   prefixButton: TextFieldButton(
-                                    icon: Icons.shuffle_outlined,
+                                    icon: Symbols.shuffle,
                                     onPressed: () {
                                       setPasswordController!.text = '';
                                       final passwordLength =
@@ -192,8 +193,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   ),
                                   suffixButton: TextFieldButton(
                                     icon: setPasswordVisible!
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
+                                        ? Symbols.visibility
+                                        : Symbols.visibility_off,
                                     onPressed: () {
                                       setState(() {
                                         setPasswordVisible =
@@ -285,8 +286,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   style: theme.textStyleSize16W700Primary,
                                   suffixButton: TextFieldButton(
                                     icon: confirmPasswordVisible!
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
+                                        ? Symbols.visibility
+                                        : Symbols.visibility_off,
                                     onPressed: () {
                                       setState(() {
                                         confirmPasswordVisible =
@@ -323,7 +324,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                             Align(
                                               alignment: Alignment.topLeft,
                                               child: Icon(
-                                                Icons.info_outlined,
+                                                Symbols.info,
                                                 color: theme.text,
                                                 size: 20,
                                               ),

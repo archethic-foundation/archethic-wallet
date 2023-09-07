@@ -12,6 +12,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTCreationProcessImportTabTemplateForm extends ConsumerStatefulWidget {
   const NFTCreationProcessImportTabTemplateForm({
@@ -122,9 +123,12 @@ class _NFTCreationProcessImportTabFormUrlState
                               Padding(
                                 padding: const EdgeInsets.only(top: 2),
                                 child: Icon(
-                                  Icons.warning_outlined,
+                                  Symbols.warning,
                                   color: theme.warning,
                                   size: 12,
+                                  weight: 300,
+                                  opticalSize: 48,
+                                  grade: -25,
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -154,7 +158,7 @@ class _NFTCreationProcessImportTabFormUrlState
                         AppButtonTinyType.primary,
                         localizations.confirm,
                         icon: Icon(
-                          Icons.check,
+                          Symbols.check,
                           color: theme.mainButtonLabel,
                           size: 14,
                         ),
@@ -171,7 +175,7 @@ class _NFTCreationProcessImportTabFormUrlState
                         Dimens.buttonBottomDimens,
                         key: const Key('confirm'),
                         icon: Icon(
-                          Icons.check,
+                          Symbols.check,
                           color: theme.mainButtonLabel!.withOpacity(0.3),
                           size: 14,
                         ),

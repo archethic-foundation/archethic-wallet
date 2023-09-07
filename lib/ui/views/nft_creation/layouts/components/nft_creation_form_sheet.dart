@@ -11,6 +11,7 @@ import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NftCreationFormSheet extends ConsumerStatefulWidget {
   const NftCreationFormSheet({
@@ -95,28 +96,40 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                           text: localizations
                               .nftCreationProcessTabDescriptionHeader,
                           icon: const Icon(
-                            Icons.description_outlined,
+                            Symbols.description,
+                            weight: 300,
+                            opticalSize: 48,
+                            grade: -25,
                           ),
                         ),
                         Tab(
                           text: AppLocalizations.of(context)!
                               .nftCreationProcessTabImportHeader,
                           icon: const Icon(
-                            Icons.download_outlined,
+                            Symbols.download,
+                            weight: 300,
+                            opticalSize: 48,
+                            grade: -25,
                           ),
                         ),
                         Tab(
                           text: localizations
                               .nftCreationProcessTabPropertiesHeader,
                           icon: const Icon(
-                            Icons.settings_outlined,
+                            Symbols.settings,
+                            weight: 300,
+                            opticalSize: 48,
+                            grade: -25,
                           ),
                         ),
                         Tab(
                           text:
                               localizations.nftCreationProcessTabSummaryHeader,
                           icon: const Icon(
-                            Icons.check_circle_outlined,
+                            Symbols.check_circle,
+                            weight: 300,
+                            opticalSize: 48,
+                            grade: -25,
                           ),
                         ),
                       ],

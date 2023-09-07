@@ -26,6 +26,7 @@ import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -225,7 +226,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                 AppButtonTinyConnectivity(
                   localizations.createFungibleToken,
                   Dimens.buttonBottomDimens,
-                  icon: Icons.add,
+                  icon: Symbols.add,
                   key: const Key('createTokenFungible'),
                   onPressed: () {
                     Sheets.showAppHeightNineSheet(

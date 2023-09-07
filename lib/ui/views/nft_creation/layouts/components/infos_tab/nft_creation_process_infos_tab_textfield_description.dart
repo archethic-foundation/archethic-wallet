@@ -73,7 +73,7 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
       },
       suffixButton: hasQRCode
           ? TextFieldButton(
-              icon: Icons.qr_code_scanner_outlined,
+              icon: Symbols.qr_code_scanner,
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,

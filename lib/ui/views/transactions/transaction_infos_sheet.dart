@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionInfosSheet extends ConsumerStatefulWidget {
   const TransactionInfosSheet(this.txAddress, {super.key});
@@ -176,7 +177,7 @@ class _TransactionInfos extends ConsumerWidget {
             AppButtonTinyConnectivity(
               localizations.viewExplorer,
               Dimens.buttonBottomDimens,
-              icon: Icons.more_horiz,
+              icon: Symbols.more_horiz,
               key: const Key('viewExplorer'),
               onPressed: () async {
                 UIUtil.showWebview(

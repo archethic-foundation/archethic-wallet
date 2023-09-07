@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListDetailPopup {
   static Future getPopup(
@@ -43,7 +44,7 @@ class NFTListDetailPopup {
           ref,
           label: localizations.nftCategoryChangeCategory,
           value: 'moveCategory',
-          icon: Icons.drive_file_move_outlined,
+          icon: Symbols.drive_file_move,
           tokenInformations: tokenInformations,
         ),
       ],

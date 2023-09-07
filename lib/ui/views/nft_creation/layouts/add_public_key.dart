@@ -27,6 +27,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'components/add_public_key_textfield_pk.dart';
 

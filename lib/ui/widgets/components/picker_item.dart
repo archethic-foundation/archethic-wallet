@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class PickerItem<T extends Object> {
   PickerItem(
@@ -183,7 +184,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                           ),
                           if (isItemSelected)
                             const Icon(
-                              Icons.check_circle,
+                              Symbols.check_circle,
+                              fill: 1,
                               size: 16,
                               color: Colors.green,
                             )

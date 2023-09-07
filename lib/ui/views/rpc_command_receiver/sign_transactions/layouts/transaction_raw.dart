@@ -5,6 +5,7 @@ import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionRaw extends StatefulWidget {
   const TransactionRaw(
@@ -43,9 +44,12 @@ class TransactionRawState extends State<TransactionRaw> {
             children: [
               Icon(
                 isExpanded
-                    ? Icons.keyboard_arrow_down
-                    : Icons.keyboard_arrow_right,
+                    ? Symbols.keyboard_arrow_down
+                    : Symbols.keyboard_arrow_right,
                 size: 16,
+                weight: 300,
+                opticalSize: 48,
+                grade: -25,
               ),
               Text(
                 localizations.signTransactionListTransactionsHeader.replaceAll(

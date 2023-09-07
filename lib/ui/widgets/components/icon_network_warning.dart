@@ -6,6 +6,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class IconNetworkWarning extends ConsumerWidget {
   const IconNetworkWarning({
@@ -23,7 +24,7 @@ class IconNetworkWarning extends ConsumerWidget {
       alignment: alignment,
       child: IconButton(
         icon: const Icon(
-          Icons.signal_cellular_connected_no_internet_0_bar_outlined,
+          Symbols.signal_cellular_connected_no_internet_0_bar,
           color: Colors.red,
         ),
         onPressed: () async {

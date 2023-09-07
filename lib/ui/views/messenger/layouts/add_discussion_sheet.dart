@@ -22,6 +22,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AddDiscussionSheet extends ConsumerWidget {
   const AddDiscussionSheet({
@@ -140,9 +141,12 @@ class AddDiscussionSheet extends ConsumerWidget {
                   Dimens.buttonBottomDimens,
                   key: const Key('addRemoteMessengerGroup'),
                   icon: Icon(
-                    Icons.add,
+                    Symbols.add,
                     color: theme.mainButtonLabel,
                     size: 14,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                   onPressed: () async {
                     await ref
@@ -255,8 +259,11 @@ class PublicKeyLine extends ConsumerWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 8),
                   child: Icon(
-                    Icons.arrow_forward_ios,
+                    Symbols.arrow_forward_ios,
                     size: 12,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                 ),
             ],

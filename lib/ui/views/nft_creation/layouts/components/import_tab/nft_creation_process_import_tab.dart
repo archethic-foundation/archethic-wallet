@@ -55,7 +55,7 @@ class _NFTCreationProcessImportTabState
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: Icon(
-                      Icons.warning_outlined,
+                      Symbols.warning,
                       color: theme.warning,
                       size: 12,
                     ),

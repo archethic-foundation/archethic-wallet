@@ -66,14 +66,14 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: Icons.security_outlined,
+                        icon: Symbols.security,
                         onPressed: showSecurity,
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: Icons.tune_outlined,
+                        icon: Symbols.tune,
                         onPressed: showCustom,
                       ),
                       const _SettingsListItem.spacer(),
@@ -84,7 +84,7 @@ class MainMenuView extends ConsumerWidget {
                         _SettingsListItem.singleLineWithInfos(
                           heading: localizations.aeWebsiteLinkHeader,
                           info: localizations.aeWebsiteLinkDesc,
-                          icon: Icons.language_outlined,
+                          icon: Symbols.language,
                           onPressed: () async {
                             UIUtil.showWebview(
                               context,
@@ -99,7 +99,7 @@ class MainMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
                         headingStyle: theme.textStyleSize16W600EquinoxPrimary,
-                        icon: Icons.info_outline,
+                        icon: Symbols.info,
                         onPressed: showAbout,
                       ),
                       const _SettingsListItem.spacer(),

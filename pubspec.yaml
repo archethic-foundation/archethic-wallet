@@ -175,6 +175,9 @@ dependencies:
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^2.1.6
 
+  # Using Official Material Symbols Icons variable fonts
+  material_symbols_icons: ^4.2668.0
+
   # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
   mime_dart: ^3.0.0
 

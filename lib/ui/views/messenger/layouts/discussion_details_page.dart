@@ -16,6 +16,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class DiscussionDetailsPage extends ConsumerWidget {
   const DiscussionDetailsPage({
@@ -265,8 +266,11 @@ class PublicKeyLine extends ConsumerWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 8),
                   child: Icon(
-                    Icons.info_outline,
+                    Symbols.info,
                     size: 22,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                 ),
             ],

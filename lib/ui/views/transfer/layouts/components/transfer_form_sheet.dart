@@ -14,6 +14,7 @@ import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TransferFormSheet extends ConsumerWidget {
   const TransferFormSheet({
@@ -87,7 +88,7 @@ class TransferFormSheet extends ConsumerWidget {
                       actionButtonTitle ?? localizations.send,
                       Dimens.buttonTopDimens,
                       key: const Key('send'),
-                      icon: Icons.call_made_outlined,
+                      icon: Symbols.call_made,
                       onPressed: () async {
                         final transferNotifier = ref
                             .read(TransferFormProvider.transferForm.notifier);

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class LastArticles extends ConsumerStatefulWidget {
   const LastArticles({super.key});
@@ -68,9 +69,9 @@ class LastArticlesState extends ConsumerState<LastArticles> {
                     UIUtil.showWebview(context, blogUrl, '');
                   },
                   child: const IconDataWidget(
-                    icon: Icons.open_in_new_outlined,
-                    width: 18,
-                    height: 18,
+                    icon: Symbols.open_in_new,
+                    width: AppFontSizes.size20,
+                    height: AppFontSizes.size20,
                   ),
                 ),
               ],

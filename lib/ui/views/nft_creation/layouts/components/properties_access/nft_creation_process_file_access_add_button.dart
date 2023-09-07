@@ -9,6 +9,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
   const NFTCreationProcessFileAccessAddButton({
@@ -42,7 +43,7 @@ class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
         ),
         child: IconButton(
           icon: Icon(
-            Icons.key,
+            Symbols.key,
             color: theme.backgroundDarkest,
             size: 21,
           ),

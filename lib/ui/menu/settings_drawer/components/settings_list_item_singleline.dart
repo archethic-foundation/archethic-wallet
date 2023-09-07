@@ -48,8 +48,8 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                 alignment: Alignment.centerLeft,
                 child: IconDataWidget(
                   icon: icon!,
-                  width: AppFontSizes.size24,
-                  height: AppFontSizes.size24,
+                  width: AppFontSizes.size28,
+                  height: AppFontSizes.size28,
                 ),
               ),
             ),
@@ -79,8 +79,11 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
             ),
             if (displayChevron != null && displayChevron == true)
               Icon(
-                Icons.chevron_right_outlined,
+                Symbols.chevron_right,
                 color: theme.iconDrawer,
+                weight: 300,
+                opticalSize: 48,
+                grade: -25,
               ),
           ],
         ),
@@ -130,8 +133,8 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
               margin: const EdgeInsetsDirectional.only(end: 13),
               child: IconDataWidget(
                 icon: icon,
-                width: AppFontSizes.size24,
-                height: AppFontSizes.size24,
+                width: AppFontSizes.size28,
+                height: AppFontSizes.size28,
               ),
             ),
             SizedBox(
@@ -142,8 +145,11 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
               ),
             ),
             Icon(
-              Icons.chevron_right_outlined,
+              Symbols.chevron_right,
               color: theme.iconDrawer,
+              weight: 300,
+              opticalSize: 48,
+              grade: -25,
             ),
           ],
         ),

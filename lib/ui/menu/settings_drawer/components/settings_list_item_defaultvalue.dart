@@ -45,8 +45,8 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                 margin: const EdgeInsetsDirectional.only(end: 13),
                 child: IconDataWidget(
                   icon: icon,
-                  width: AppFontSizes.size24,
-                  height: AppFontSizes.size24,
+                  width: AppFontSizes.size28,
+                  height: AppFontSizes.size28,
                 ),
               ),
               Column(
@@ -125,8 +125,8 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
               margin: const EdgeInsetsDirectional.only(end: 12),
               child: IconDataWidget(
                 icon: icon,
-                width: AppFontSizes.size24,
-                height: AppFontSizes.size24,
+                width: AppFontSizes.size28,
+                height: AppFontSizes.size28,
               ),
             ),
             Column(

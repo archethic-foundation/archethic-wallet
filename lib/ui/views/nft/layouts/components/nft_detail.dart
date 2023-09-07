@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTDetail extends ConsumerStatefulWidget {
   const NFTDetail({
@@ -74,8 +75,11 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                 padding: const EdgeInsets.only(top: 20, right: 20),
                 child: InkWell(
                   child: const Icon(
-                    Icons.qr_code_scanner_outlined,
+                    Symbols.qr_code_scanner,
                     size: 30,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                   onTap: () {
                     showDialog(
@@ -154,7 +158,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   localizations.send,
                   Dimens.buttonTopDimens,
                   key: const Key('sendNFT'),
-                  icon: Icons.call_made_outlined,
+                  icon: Symbols.call_made,
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
@@ -183,7 +187,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
               AppButtonTinyConnectivity(
                 localizations.viewExplorer,
                 Dimens.buttonBottomDimens,
-                icon: Icons.more_horiz,
+                icon: Symbols.more_horiz,
                 key: const Key('viewExplorer'),
                 onPressed: () async {
                   UIUtil.showWebview(

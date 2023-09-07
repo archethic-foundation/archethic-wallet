@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AddressBookTab extends ConsumerStatefulWidget {
   const AddressBookTab({super.key});
@@ -79,9 +80,12 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         prefixIcon: Icon(
-                          Icons.search,
+                          Symbols.search,
                           color: theme.text,
                           size: 18,
+                          weight: 300,
+                          opticalSize: 48,
+                          grade: -25,
                         ),
                         suffixIcon: const SizedBox(
                           width: 26,
@@ -137,7 +141,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                   localizations.addContact,
                   Dimens.buttonBottomDimens,
                   key: const Key('addContact'),
-                  icon: Icons.add,
+                  icon: Symbols.add,
                   onPressed: () {
                     Sheets.showAppHeightNineSheet(
                       context: context,

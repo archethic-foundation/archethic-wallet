@@ -6,6 +6,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class ItemRemoveButton extends ConsumerWidget {
   const ItemRemoveButton({
@@ -40,7 +41,7 @@ class ItemRemoveButton extends ConsumerWidget {
         ),
         child: IconButton(
           icon: Icon(
-            Icons.close,
+            Symbols.close,
             color: theme.backgroundDarkest,
             size: 21,
           ),

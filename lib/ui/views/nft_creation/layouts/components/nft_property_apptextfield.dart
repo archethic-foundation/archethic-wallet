@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NftPropertyAppTextField extends ConsumerWidget {
   const NftPropertyAppTextField({
@@ -46,7 +47,7 @@ class NftPropertyAppTextField extends ConsumerWidget {
       ],
       suffixButton: hasQRCode
           ? TextFieldButton(
-              icon: Icons.qr_code_scanner_outlined,
+              icon: Symbols.qr_code_scanner,
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,

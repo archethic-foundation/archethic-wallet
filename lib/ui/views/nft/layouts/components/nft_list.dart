@@ -11,6 +11,7 @@ import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTList extends ConsumerWidget {
   const NFTList({super.key, required this.currentNftCategoryIndex});
@@ -67,9 +68,12 @@ class NFTList extends ConsumerWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Icon(
-                  Icons.info_outlined,
+                  Symbols.info,
                   color: theme.text,
                   size: 20,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
               ),
               const SizedBox(

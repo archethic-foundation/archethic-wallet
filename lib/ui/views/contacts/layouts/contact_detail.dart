@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
@@ -110,9 +111,12 @@ class ContactDetail extends ConsumerWidget {
                           );
                         },
                         child: Icon(
-                          Icons.delete_outlined,
+                          Symbols.delete,
                           size: 24,
                           color: theme.text,
+                          weight: 300,
+                          opticalSize: 48,
+                          grade: -25,
                         ),
                       ),
               ),
@@ -170,14 +174,20 @@ class ContactDetail extends ConsumerWidget {
                       data: (data) {
                         return data.favorite == null || data.favorite == false
                             ? Icon(
-                                Icons.favorite_border,
+                                Symbols.favorite_border,
                                 color: theme.favoriteIconColor,
                                 size: 26,
+                                weight: 300,
+                                opticalSize: 48,
+                                grade: -25,
                               )
                             : Icon(
-                                Icons.favorite,
+                                Symbols.favorite,
                                 color: theme.favoriteIconColor,
                                 size: 26,
+                                weight: 300,
+                                opticalSize: 48,
+                                grade: -25,
                               );
                       },
                       loading: () => const SizedBox(),
@@ -238,7 +248,7 @@ class ContactDetail extends ConsumerWidget {
                   AppButtonTinyConnectivity(
                     localizations.viewExplorer,
                     Dimens.buttonBottomDimens,
-                    icon: Icons.more_horiz,
+                    icon: Symbols.more_horiz,
                     key: const Key('viewExplorer'),
                     onPressed: () async {
                       UIUtil.showWebview(

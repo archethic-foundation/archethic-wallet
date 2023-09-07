@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class DiscussionSearchBar extends ConsumerStatefulWidget {
   const DiscussionSearchBar({super.key});
@@ -123,16 +124,22 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.zero,
             prefixIcon: Icon(
-              Icons.search_outlined,
+              Symbols.search,
               color: theme.text,
               size: 18,
+              weight: 300,
+              opticalSize: 48,
+              grade: -25,
             ),
             suffixIcon: hasQRCode
                 ? InkWell(
                     child: Icon(
-                      Icons.qr_code_scanner_outlined,
+                      Symbols.qr_code_scanner,
                       color: theme.text,
                       size: 24,
+                      weight: 300,
+                      opticalSize: 48,
+                      grade: -25,
                     ),
                     onTap: () async {
                       sl.get<HapticUtil>().feedback(

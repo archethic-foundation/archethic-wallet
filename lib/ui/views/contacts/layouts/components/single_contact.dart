@@ -6,6 +6,7 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class SingleContact extends ConsumerWidget {
   const SingleContact({super.key, required this.contact});
@@ -54,24 +55,33 @@ class SingleContact extends ConsumerWidget {
                             if (contact.type ==
                                 ContactType.keychainService.name)
                               Icon(
-                                Icons.wallet_outlined,
+                                Symbols.account_balance_wallet,
                                 color: theme.iconDrawer,
                                 size: 25,
+                                weight: 300,
+                                opticalSize: 48,
+                                grade: -25,
                               )
                             else
                               Stack(
                                 alignment: Alignment.topRight,
                                 children: [
                                   Icon(
-                                    Icons.person_outlined,
+                                    Symbols.person,
                                     color: theme.iconDrawer,
                                     size: 25,
+                                    weight: 300,
+                                    opticalSize: 48,
+                                    grade: -25,
                                   ),
                                   if (contact.favorite == true)
                                     Icon(
-                                      Icons.favorite,
+                                      Symbols.favorite,
                                       color: theme.favoriteIconColor,
                                       size: 12,
+                                      weight: 300,
+                                      opticalSize: 48,
+                                      grade: -25,
                                     ),
                                 ],
                               ),
