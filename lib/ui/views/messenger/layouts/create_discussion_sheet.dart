@@ -153,7 +153,8 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                       },
                                       onUnselected: (member) {
                                         formNotifier.removeMember(
-                                            member.value as Contact);
+                                          member.value as Contact,
+                                        );
                                       },
                                       height:
                                           1, // fake height within an expanded widget, only way to make it work for our usage
