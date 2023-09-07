@@ -17,6 +17,11 @@ class SingleContact extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(),
+        ),
+      ),
       onPressed: () {
         Sheets.showAppHeightNineSheet(
           context: context,

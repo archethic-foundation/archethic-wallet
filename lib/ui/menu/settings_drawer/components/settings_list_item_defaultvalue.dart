@@ -24,6 +24,11 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
     return IgnorePointer(
       ignoring: disabled,
       child: TextButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            const RoundedRectangleBorder(),
+          ),
+        ),
         onPressed: () {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
@@ -32,7 +37,7 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
           onPressed();
         },
         child: Container(
-          height: 55,
+          height: 65,
           margin: const EdgeInsetsDirectional.only(start: 10),
           child: Row(
             children: <Widget>[
@@ -99,6 +104,11 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(),
+        ),
+      ),
       onPressed: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -107,12 +117,12 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
         onPressed();
       },
       child: Container(
-        height: 65,
+        height: 75,
         margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13),
+              margin: const EdgeInsetsDirectional.only(end: 12),
               child: IconDataWidget(
                 icon: icon,
                 width: AppFontSizes.size24,

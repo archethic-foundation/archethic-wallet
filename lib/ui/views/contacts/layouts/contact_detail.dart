@@ -62,6 +62,12 @@ class ContactDetail extends ConsumerWidget {
                         editMode == false
                     ? const SizedBox()
                     : TextButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            const RoundedRectangleBorder(),
+                          ),
+                        ),
                         onPressed: () {
                           sl.get<HapticUtil>().feedback(
                                 FeedbackType.light,

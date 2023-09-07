@@ -24,6 +24,11 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(),
+        ),
+      ),
       onPressed: () {
         if (onPressed == null) return;
         sl.get<HapticUtil>().feedback(
@@ -33,7 +38,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
         onPressed?.call();
       },
       child: Container(
-        height: 90,
+        height: 100,
         margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
@@ -102,6 +107,11 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
     final preferences = ref.watch(SettingsProviders.settings);
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(),
+        ),
+      ),
       onPressed: () {
         if (onPressed == null) return;
 

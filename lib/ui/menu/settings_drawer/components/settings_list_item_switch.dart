@@ -18,8 +18,20 @@ class _SettingsListItemSwitch extends _SettingsListItem {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-
+    final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
+      (Set<MaterialState> states) {
+        if (states.contains(MaterialState.selected)) {
+          return const Icon(Icons.check);
+        }
+        return const Icon(Icons.close);
+      },
+    );
     return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(),
+        ),
+      ),
       onPressed: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -46,19 +58,27 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                 style: theme.textStyleSize16W600EquinoxPrimary,
               ),
             ),
-            Switch(
-              value: isSwitched,
-              onChanged: (bool value) {
-                if (onChanged == null) return;
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                onChanged?.call(value);
-              },
-              inactiveTrackColor: theme.inactiveTrackColorSwitch,
-              activeTrackColor: theme.activeTrackColorSwitch,
-              activeColor: theme.activeColorSwitch,
+            Container(
+              padding: const EdgeInsets.only(left: 2),
+              height: 30,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Switch(
+                  value: isSwitched,
+                  thumbIcon: thumbIcon,
+                  onChanged: (bool value) {
+                    if (onChanged == null) return;
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    onChanged?.call(value);
+                  },
+                  inactiveTrackColor: theme.inactiveTrackColorSwitch,
+                  activeTrackColor: theme.activeTrackColorSwitch,
+                  activeColor: theme.activeColorSwitch,
+                ),
+              ),
             ),
           ],
         ),
