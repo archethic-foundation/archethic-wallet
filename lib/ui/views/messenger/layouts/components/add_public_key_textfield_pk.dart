@@ -23,7 +23,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:iconsax/iconsax.dart';
 
 part 'add_public_key_textfield_pk.freezed.dart';
 
@@ -222,7 +221,7 @@ class _AddPublicKeyTextFieldPkState
       prefixShowFirstCondition: true,
       suffixButton: hasQRCode
           ? TextFieldButton(
-              icon: Iconsax.scan_barcode,
+              icon: Icons.qr_code_scanner_outlined,
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,

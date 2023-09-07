@@ -75,10 +75,7 @@ class CustomizationMenuView extends ConsumerWidget {
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
                         defaultMethod: primaryCurrency,
-                        icon: primaryCurrency.primaryCurrency ==
-                                AvailablePrimaryCurrencyEnum.fiat
-                            ? UiIcons.primary_currency
-                            : UiIcons.primary_currency_uco,
+                        icon: Icons.currency_exchange_outlined,
                         onPressed: () =>
                             PrimaryCurrencyDialog.getDialog(context, ref),
                       ),
@@ -153,7 +150,7 @@ class _CurrencySettingsListItem extends ConsumerWidget {
       info: localizations.changeCurrencyDesc
           .replaceAll('%1', AccountBalance.cryptoCurrencyLabel),
       defaultMethod: AvailableCurrency(currency),
-      icon: UiIcons.currency,
+      icon: Icons.euro_outlined,
       onPressed: () => CurrencyDialog.getDialog(context, ref),
       disabled: false,
     );
@@ -171,7 +168,7 @@ class _LanguageSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.language,
       defaultMethod: LanguageSetting(language),
-      icon: UiIcons.language,
+      icon: Icons.translate_outlined,
       onPressed: () => LanguageDialog.getDialog(context, ref),
     );
   }
@@ -190,7 +187,7 @@ class _ThemeSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withDefaultValue(
       heading: localizations.themeHeader,
       defaultMethod: ThemeSetting(themeOption),
-      icon: UiIcons.theme,
+      icon: Icons.palette_outlined,
       onPressed: () async {
         final pickedTheme = await ThemeDialog.getDialog(
           context,
@@ -219,7 +216,7 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
     final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
     return _SettingsListItem.withSwitch(
       heading: localizations.showBalances,
-      icon: UiIcons.show_balance,
+      icon: Icons.account_balance_wallet_outlined,
       isSwitched: showBalancesSetting,
       onChanged: (showBalances) async {
         await preferencesNotifier.setShowBalances(showBalances);
@@ -242,7 +239,7 @@ class _ShowBlogSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showBlog,
-      icon: UiIcons.show_blog,
+      icon: Icons.article_outlined,
       isSwitched: showBlogSetting,
       onChanged: (showBlog) async {
         await preferencesNotifier.setShowBlog(showBlog);
@@ -265,7 +262,7 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.showPriceChart,
-      icon: UiIcons.show_chart,
+      icon: Icons.show_chart_outlined,
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
         await preferencesNotifier.setShowPriceChart(showPriceChart);
@@ -289,7 +286,7 @@ class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateNotifications,
-      icon: UiIcons.notification,
+      icon: Icons.notifications_outlined,
       isSwitched: activeNotifications,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveNotifications(isSwitched);
@@ -313,7 +310,7 @@ class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withSwitch(
       heading: localizations.activateVibrations,
-      icon: UiIcons.vibration,
+      icon: Icons.vibration_outlined,
       isSwitched: activeVibrations,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveVibrations(isSwitched);

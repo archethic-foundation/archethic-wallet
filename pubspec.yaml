@@ -154,9 +154,6 @@ dependencies:
   # Convert all *.svg icons from dir to icon-font (.ttf) and generates flutter compatible dart class
   icon_font_generator: ^3.2.0
 
-  # Iconsax for flutter (1000+ icons 6 diferent styles, total 6000+ icons).
-  iconsax: ^0.0.8
-
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
   image_picker: ^1.0.2
 

@@ -13,7 +13,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -24,7 +23,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:iconsax/iconsax.dart';
 
 class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
@@ -62,13 +60,13 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 : SystemUiOverlayStyle.light,
             automaticallyImplyLeading: false,
             leading: IconButton(
-              icon: const Icon(UiIcons.menu),
+              icon: const Icon(Icons.menu_outlined),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             actions: [
               if (preferences.mainScreenCurrentPage == 3)
                 IconButton(
-                  icon: const Icon(UiIcons.settings),
+                  icon: const Icon(Icons.settings_outlined),
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
@@ -85,7 +83,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 ),
               if (preferences.mainScreenCurrentPage == 4)
                 IconButton(
-                  icon: const Icon(Iconsax.edit),
+                  icon: const Icon(Icons.chat_bubble_outline),
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
@@ -201,7 +199,7 @@ class MainAppBarIconBalanceShowed extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return IconButton(
-      icon: const Icon(Iconsax.eye),
+      icon: const Icon(Icons.visibility_outlined),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -223,7 +221,7 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return IconButton(
-      icon: const Icon(Iconsax.eye_slash),
+      icon: const Icon(Icons.visibility_off_outlined),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -244,7 +242,7 @@ class MainAppBarIconNotificationEnabled extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
-      icon: const Icon(UiIcons.notification_enabled),
+      icon: const Icon(Icons.notifications_outlined),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -266,7 +264,7 @@ class MainAppBarIconNotificationDisabled extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
-      icon: const Icon(UiIcons.notification_disabled),
+      icon: const Icon(Icons.notifications_off_outlined),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,

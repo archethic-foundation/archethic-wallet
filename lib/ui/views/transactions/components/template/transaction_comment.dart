@@ -4,7 +4,6 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 
 class TransactionComment extends ConsumerWidget {
   const TransactionComment({super.key, required this.transaction});
@@ -29,7 +28,7 @@ class TransactionComment extends ConsumerWidget {
         alignment: Alignment.centerRight,
         width: 60,
         child: Icon(
-          Iconsax.message_text,
+          Icons.chat_outlined,
           size: 18,
           color: theme.text,
         ),

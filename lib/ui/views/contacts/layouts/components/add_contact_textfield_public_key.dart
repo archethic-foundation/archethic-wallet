@@ -59,7 +59,7 @@ class _AddContactTextFieldPublicKeyState
       labelText: localizations.publicKeyHint,
       prefixButton: hasQRCode
           ? TextFieldButton(
-              icon: Iconsax.scan_barcode,
+              icon: Icons.qr_code_scanner_outlined,
               onPressed: () async {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,

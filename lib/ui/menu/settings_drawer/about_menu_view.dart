@@ -116,7 +116,7 @@ class AboutMenuView extends ConsumerWidget {
                         _SettingsListItem.singleLine(
                           heading: localizations.aboutPrivacyPolicy,
                           headingStyle: theme.textStyleSize16W600Primary,
-                          icon: UiIcons.privacy_policy,
+                          icon: Icons.policy_outlined,
                           onPressed: () async {
                             UIUtil.showWebview(
                               context,

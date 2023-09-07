@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:iconsax/iconsax.dart';
 
 enum PinOverlayType { newPin, enterPin }
 
@@ -407,7 +406,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                             ...List.generate(
                               displayedPin.length,
                               (index) => Icon(
-                                Iconsax.record_circle1,
+                                Icons.circle,
                                 color: theme.text,
                                 size: 15,
                               ),
@@ -415,7 +414,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                             ...List.generate(
                               max(_pinLength - displayedPin.length, 0),
                               (index) => Icon(
-                                Iconsax.minus,
+                                Icons.remove_outlined,
                                 color: theme.text,
                                 size: 15,
                               ),
@@ -571,7 +570,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                   ),
                                   alignment: AlignmentDirectional.center,
                                   child: Icon(
-                                    Iconsax.previous,
+                                    Icons.backspace_outlined,
                                     color: theme.text,
                                     size: 20,
                                   ),

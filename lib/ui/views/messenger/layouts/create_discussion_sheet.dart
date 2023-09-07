@@ -16,7 +16,6 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 
 class CreateDiscussionSheet extends ConsumerStatefulWidget {
   const CreateDiscussionSheet({super.key});
@@ -108,7 +107,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                   child: Row(
                                     children: [
                                       Icon(
-                                        Iconsax.user_add,
+                                        Icons.person_add_outlined,
                                         color: theme.text,
                                       ),
                                       const SizedBox(

@@ -45,10 +45,10 @@ packages:
     dependency: "direct main"
     description:
       name: animate_do
-      sha256: "9aeacc1a7238f971c039bdf45d13c628be554a242e0251c4ddda09d19a1a923f"
+      sha256: e36b15e9a423c05484da3f1c247c16503ea5132f5f7278cbd40f3a2d079393c3
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.1"
   app_version_update:
     dependency: "direct main"
     description:
@@ -62,7 +62,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: af12635e9e0a9eb507e4979b35f46d019a1f3fe5
+      resolved-ref: "38586b6e532491a60b089a0c3cffa4f7d4e4c04a"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -1057,14 +1057,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  iconsax:
-    dependency: "direct main"
-    description:
-      name: iconsax
-      sha256: fb0144c61f41f3f8a385fadc27783ea9f5359670be885ed7f35cef32565d5228
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.8"
   image:
     dependency: transitive
     description:

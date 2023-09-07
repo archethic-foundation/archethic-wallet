@@ -23,7 +23,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:iconsax/iconsax.dart';
 
 class NFTSearchBar extends ConsumerStatefulWidget {
   const NFTSearchBar({super.key});
@@ -117,7 +116,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
             prefixIcon: hasQRCode
                 ? InkWell(
                     child: Icon(
-                      Iconsax.scan_barcode,
+                      Icons.qr_code_scanner_outlined,
                       color: theme.text,
                       size: 24,
                     ),

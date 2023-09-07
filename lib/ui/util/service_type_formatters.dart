@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ServiceTypeFormatters {
   const ServiceTypeFormatters(this._serviceType);
@@ -27,12 +26,12 @@ class ServiceTypeFormatters {
   IconData getIcon() {
     switch (_serviceType) {
       case 'aeweb':
-        return Iconsax.global;
+        return Icons.language_outlined;
       case 'archethicWallet':
-        return Iconsax.empty_wallet;
+        return Icons.wallet_outlined;
       case 'other':
       default:
-        return Iconsax.search_normal;
+        return Icons.search_outlined;
     }
   }
 }

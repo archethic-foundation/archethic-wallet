@@ -81,7 +81,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                         prefixIcon: Icon(
                           Icons.search,
                           color: theme.text,
-                          size: 26,
+                          size: 18,
                         ),
                         suffixIcon: const SizedBox(
                           width: 26,
