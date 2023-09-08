@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
@@ -14,6 +15,7 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -39,6 +41,26 @@ class ContactDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+    final settings = ref.watch(SettingsProviders.settings);
+
+    final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
+    final account = accounts
+        ?.where(
+          (element) => element.lastAddress == contact.address,
+        )
+        .firstOrNull;
+    final asyncFiatAmount = ref.watch(
+      MarketPriceProviders.convertedToSelectedCurrency(
+        nativeAmount: account?.balance?.nativeTokenValue ?? 0,
+      ),
+    );
+    final fiatAmountString = asyncFiatAmount.maybeWhen(
+      data: (fiatAmount) => CurrencyUtil.format(
+        settings.currency.name,
+        fiatAmount,
+      ),
+      orElse: () => '--',
+    );
 
     return SafeArea(
       child: Column(
@@ -50,11 +72,10 @@ class ContactDetail extends ConsumerWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 25, bottom: 15),
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width - 140,
-                  ),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
+                      const Expanded(child: SizedBox()),
                       AutoSizeText(
                         contact.format,
                         style: theme.textStyleSize24W700EquinoxPrimary,
@@ -62,6 +83,45 @@ class ContactDetail extends ConsumerWidget {
                         maxLines: 1,
                         stepGranularity: 0.1,
                       ),
+                      if (account != null) ...[
+                        if (settings.showBalances)
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                AutoSizeText(
+                                  '${account.balance!.nativeTokenValueToString()} ${account!.balance!.nativeTokenName}',
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                                AutoSizeText(
+                                  fiatAmountString,
+                                  textAlign: TextAlign.end,
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                AutoSizeText(
+                                  '···········',
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                                AutoSizeText(
+                                  '···········',
+                                  textAlign: TextAlign.end,
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                              ],
+                            ),
+                          ),
+                      ] else
+                        const Expanded(child: SizedBox()),
                     ],
                   ),
                 ),

@@ -35,8 +35,10 @@ class ContactList extends ConsumerWidget {
               return SingleContact(
                 contact: contactsList[index],
                 account: accounts
-                    ?.where((element) =>
-                        element.lastAddress == contactsList[index].address)
+                    ?.where(
+                      (element) =>
+                          element.lastAddress == contactsList[index].address,
+                    )
                     .firstOrNull,
               )
                   .animate(delay: (100 * index).ms)
