@@ -94,7 +94,12 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 ),
               if (preferences.mainScreenCurrentPage == 4)
                 IconButton(
-                  icon: const Icon(Symbols.edit_square),
+                  icon: const Icon(
+                    Symbols.edit_square,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
+                  ),
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
