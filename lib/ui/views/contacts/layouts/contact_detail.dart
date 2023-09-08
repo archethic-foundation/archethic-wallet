@@ -188,6 +188,7 @@ class ContactDetail extends ConsumerWidget {
                                 weight: 300,
                                 opticalSize: 48,
                                 grade: -25,
+                                fill: 1,
                               );
                       },
                       loading: () => const SizedBox(),

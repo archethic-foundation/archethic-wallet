@@ -82,6 +82,7 @@ class SingleContact extends ConsumerWidget {
                                       weight: 300,
                                       opticalSize: 48,
                                       grade: -25,
+                                      fill: 1,
                                     ),
                                 ],
                               ),

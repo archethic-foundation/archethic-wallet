@@ -82,7 +82,7 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarNFT'),
                 icon: const Icon(
-                  Symbols.filter,
+                  Symbols.photo_library,
                   size: 28,
                   weight: 300,
                   opticalSize: 48,

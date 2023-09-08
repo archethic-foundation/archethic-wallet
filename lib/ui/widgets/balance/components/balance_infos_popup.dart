@@ -108,7 +108,7 @@ class BalanceInfosPopup {
           Row(
             children: [
               Icon(
-                Symbols.copy_all,
+                Symbols.content_copy,
                 size: 20,
                 color: theme.text,
                 weight: 300,
