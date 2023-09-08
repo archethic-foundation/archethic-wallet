@@ -76,12 +76,14 @@ class ContactDetail extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       const Expanded(child: SizedBox()),
-                      AutoSizeText(
-                        contact.format,
-                        style: theme.textStyleSize24W700EquinoxPrimary,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        stepGranularity: 0.1,
+                      Flexible(
+                        child: AutoSizeText(
+                          contact.format,
+                          style: theme.textStyleSize24W700EquinoxPrimary,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
+                        ),
                       ),
                       if (account != null) ...[
                         if (settings.showBalances)
@@ -90,7 +92,7 @@ class ContactDetail extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 AutoSizeText(
-                                  '${account.balance!.nativeTokenValueToString()} ${account!.balance!.nativeTokenName}',
+                                  '${account.balance!.nativeTokenValueToString(digits: 2)} ${account!.balance!.nativeTokenName}',
                                   style: theme.textStyleSize12W400Primary,
                                   textAlign: TextAlign.end,
                                 ),

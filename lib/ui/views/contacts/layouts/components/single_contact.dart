@@ -113,7 +113,7 @@ class SingleContact extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           AutoSizeText(
-                            '${account!.balance!.nativeTokenValueToString()} ${account!.balance!.nativeTokenName}',
+                            '${account!.balance!.nativeTokenValueToString(digits: 2)} ${account!.balance!.nativeTokenName}',
                             style: theme.textStyleSize12W400Primary,
                             textAlign: TextAlign.end,
                           ),
