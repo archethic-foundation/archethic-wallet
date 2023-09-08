@@ -8,7 +8,6 @@ import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:collection/collection.dart';
 import 'package:hive/hive.dart';
 
 part 'account.g.dart';
@@ -155,6 +154,8 @@ class Account extends HiveObject with KeychainServiceMixin {
     List<AccountToken>? accountNFT,
     List<AccountToken>? accountNFTCollections,
   ) async {
+    this.accountNFT = accountNFT;
+    this.accountNFTCollections = accountNFTCollections;
     var nftInfosOffChainExist = false;
     if (accountNFT != null) {
       for (final accountToken in accountNFT) {
@@ -353,60 +354,6 @@ class Account extends HiveObject with KeychainServiceMixin {
       );
     }
     await updateAccount();
-  }
-
-  List<AccountToken> getAccountNFTFiltered(
-    int categoryNftIndex, {
-    bool? favorite,
-  }) {
-    final accountNFTFiltered = <AccountToken>[];
-    if (accountNFT == null && accountNFTCollections == null) {
-      return accountNFTFiltered;
-    } else {
-      if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
-        return accountNFT!;
-      } else {
-        for (final accountToken in accountNFT!) {
-          final nftInfosOffChain = nftInfosOffChainList!
-              .where(
-                (element) => element.id == accountToken.tokenInformations!.id,
-              )
-              .firstOrNull;
-          if (nftInfosOffChain != null &&
-              nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
-            if (favorite == null) {
-              accountNFTFiltered.add(accountToken);
-            } else {
-              if (nftInfosOffChain.favorite == favorite) {
-                accountNFTFiltered.add(accountToken);
-              }
-            }
-          }
-        }
-        if (accountNFTCollections != null) {
-          for (final accountNFTCollection in accountNFTCollections!) {
-            final nftInfosOffChain = nftInfosOffChainList!
-                .where(
-                  (element) =>
-                      element.id == accountNFTCollection.tokenInformations!.id,
-                )
-                .firstOrNull;
-            if (nftInfosOffChain != null &&
-                nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
-              if (favorite == null) {
-                accountNFTFiltered.add(accountNFTCollection);
-              } else {
-                if (nftInfosOffChain.favorite == favorite) {
-                  accountNFTFiltered.add(accountNFTCollection);
-                }
-              }
-            }
-          }
-        }
-
-        return accountNFTFiltered;
-      }
-    }
   }
 
   Future<void> clearRecentTransactionsFromCache() async {
