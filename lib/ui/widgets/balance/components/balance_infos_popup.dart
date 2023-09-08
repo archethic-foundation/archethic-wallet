@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class BalanceInfosPopup {
   static Future getPopup(
@@ -107,9 +108,12 @@ class BalanceInfosPopup {
           Row(
             children: [
               Icon(
-                Icons.copy,
+                Symbols.content_copy,
                 size: 20,
                 color: theme.text,
+                weight: 300,
+                opticalSize: 48,
+                grade: -25,
               ),
               const SizedBox(
                 width: 5,

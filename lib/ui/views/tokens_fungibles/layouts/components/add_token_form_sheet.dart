@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'add_token_textfield_initial_supply.dart';
 part 'add_token_textfield_name.dart';
@@ -99,7 +100,7 @@ class AddTokenFormSheet extends ConsumerWidget {
                   children: <Widget>[
                     AppButtonTinyConnectivity(
                       localizations.createToken,
-                      icon: Icons.add,
+                      icon: Symbols.add,
                       Dimens.buttonBottomDimens,
                       key: const Key('createToken'),
                       onPressed: () async {

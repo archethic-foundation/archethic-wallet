@@ -130,7 +130,7 @@ class AccountListItem extends ConsumerWidget {
               ? theme.backgroundAccountsListCardSelected
               : Colors.transparent,
           child: Container(
-            height: account.serviceType != 'aeweb' ? 85 : 55,
+            height: account.serviceType != 'aeweb' ? 90 : 60,
             color: account.selected!
                 ? theme.backgroundAccountsListCardSelected
                 : theme.backgroundAccountsListCard,

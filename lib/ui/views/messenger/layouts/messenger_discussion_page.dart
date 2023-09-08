@@ -16,6 +16,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class MessengerDiscussionPage extends ConsumerWidget {
   const MessengerDiscussionPage({
@@ -52,7 +53,12 @@ class MessengerDiscussionPage extends ConsumerWidget {
           elevation: 0,
           actions: [
             IconButton(
-              icon: const Icon(Icons.info_outline),
+              icon: const Icon(
+                Symbols.info,
+                weight: 300,
+                opticalSize: 48,
+                grade: -25,
+              ),
               onPressed: () async {
                 Navigator.of(context).pushNamed(
                   '/discussion_details',
@@ -199,8 +205,11 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                               .text;
                         },
                   icon: Icon(
-                    Icons.send,
+                    Symbols.send,
                     color: theme.text,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                   label: Container(),
                 ),

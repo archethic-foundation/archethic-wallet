@@ -53,7 +53,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                   Dimens.buttonBottomDimens,
                   key: const Key('addNFTProperty'),
                   icon: Icon(
-                    Icons.add,
+                    Symbols.add,
                     color: theme.mainButtonLabel,
                     size: 14,
                   ),

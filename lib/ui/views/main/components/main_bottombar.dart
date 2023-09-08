@@ -4,10 +4,10 @@ import 'dart:ui';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class MainBottomBar extends ConsumerWidget {
   const MainBottomBar({
@@ -37,8 +37,11 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarAddressBook'),
                 icon: const Icon(
-                  Icons.contacts_outlined,
+                  Symbols.contacts,
                   size: 28,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -49,8 +52,11 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarKeyChain'),
                 icon: const Icon(
-                  Icons.wallet_outlined,
+                  Symbols.account_balance_wallet,
                   size: 28,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -61,8 +67,11 @@ class MainBottomBar extends ConsumerWidget {
               BottomBarItem(
                 key: const Key('bottomBarMain'),
                 icon: const Icon(
-                  Icons.account_circle_outlined,
+                  Symbols.account_box,
                   size: 28,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -72,27 +81,12 @@ class MainBottomBar extends ConsumerWidget {
               ),
               BottomBarItem(
                 key: const Key('bottomBarNFT'),
-                icon: Container(
-                  width: 34,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: theme.bottomBarActiveTitleColor!,
-                      width: 2.2,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'NFT',
-                        style: theme.textStyleSize10W600Primary,
-                      ),
-                    ],
-                  ),
+                icon: const Icon(
+                  Symbols.photo_library,
+                  size: 28,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -104,8 +98,11 @@ class MainBottomBar extends ConsumerWidget {
                 BottomBarItem(
                   key: const Key('bottomBarMessenger'),
                   icon: const Icon(
-                    Icons.chat_outlined,
+                    Symbols.chat,
                     size: 28,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                   backgroundColorOpacity:
                       theme.bottomBarBackgroundColorOpacity!,

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -88,7 +89,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                             width: 20,
                             height: 20,
                             child: Icon(
-                              Icons.share_outlined,
+                              Symbols.share,
                               color: theme.background,
                               size: 16,
                             ),
@@ -120,7 +121,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 1),
                             child: Icon(
-                              Icons.visibility_outlined,
+                              Symbols.visibility,
                               color: theme.background,
                               size: 16,
                             ),
@@ -154,7 +155,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                           width: 20,
                           height: 20,
                           child: Icon(
-                            Icons.content_paste_outlined,
+                            Symbols.content_paste,
                             color: theme.background,
                             size: 14,
                           ),

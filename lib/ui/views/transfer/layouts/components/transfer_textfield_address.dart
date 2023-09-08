@@ -95,7 +95,7 @@ class _TransferTextFieldAddressState
           labelText: AppLocalizations.of(context)!.enterAddress,
           prefixButton: hasQRCode
               ? TextFieldButton(
-                  icon: Icons.qr_code_scanner_outlined,
+                  icon: Symbols.qr_code_scanner,
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
@@ -185,9 +185,12 @@ class _TransferTextFieldAddressState
                   height: 48,
                   width: 48,
                   child: Icon(
-                    Icons.contacts_outlined,
+                    Symbols.contacts,
                     size: 20,
                     color: theme.textFieldIcon,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                 ),
                 Text(

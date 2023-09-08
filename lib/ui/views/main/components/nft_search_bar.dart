@@ -23,6 +23,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTSearchBar extends ConsumerStatefulWidget {
   const NFTSearchBar({super.key});
@@ -116,9 +117,12 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
             prefixIcon: hasQRCode
                 ? InkWell(
                     child: Icon(
-                      Icons.qr_code_scanner_outlined,
+                      Symbols.qr_code_scanner,
                       color: theme.text,
                       size: 24,
+                      weight: 300,
+                      opticalSize: 48,
+                      grade: -25,
                     ),
                     onTap: () async {
                       sl.get<HapticUtil>().feedback(
@@ -198,9 +202,12 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                   Dimens.buttonTopDimens,
                   key: const Key('search'),
                   icon: Icon(
-                    Icons.search,
+                    Symbols.search,
                     color: theme.text30,
                     size: 14,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                   showProgressIndicator: true,
                   onPressed: () {},
@@ -213,9 +220,12 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       Dimens.buttonTopDimens,
                       key: const Key('search'),
                       icon: Icon(
-                        Icons.search,
+                        Symbols.search,
                         color: theme.text,
                         size: 14,
+                        weight: 300,
+                        opticalSize: 48,
+                        grade: -25,
                       ),
                       showProgressIndicator: nftSearchBar.loading,
                       onPressed: () async {
@@ -241,9 +251,12 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       Dimens.buttonTopDimens,
                       key: const Key('search'),
                       icon: Icon(
-                        Icons.search,
+                        Symbols.search,
                         color: theme.text30,
                         size: 14,
+                        weight: 300,
+                        opticalSize: 48,
+                        grade: -25,
                       ),
                       onPressed: () {},
                     ),

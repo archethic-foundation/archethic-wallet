@@ -30,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class IntroImportSeedPage extends ConsumerStatefulWidget {
@@ -263,7 +264,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                     child: TextButton.icon(
                                       label: const Text(''),
                                       icon: Icon(
-                                        Icons.content_paste_outlined,
+                                        Symbols.content_paste,
+                                        weight: 300,
+                                        opticalSize: 48,
+                                        grade: -25,
                                         color: theme
                                             .textStyleSize16W600Primary.color,
                                       ),

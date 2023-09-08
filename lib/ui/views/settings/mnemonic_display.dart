@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends ConsumerStatefulWidget {
@@ -106,9 +107,12 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Icon(
-                        Icons.info_outlined,
+                        Symbols.info,
                         color: theme.text,
                         size: 20,
+                        weight: 300,
+                        opticalSize: 48,
+                        grade: -25,
                       ),
                     ),
                     const SizedBox(

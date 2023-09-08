@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class ContactDetailTab extends ConsumerWidget {
   const ContactDetailTab({
@@ -92,9 +93,12 @@ class ContactDetailTab extends ConsumerWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Icon(
-                      Icons.info_outlined,
+                      Symbols.info,
                       color: theme.text,
                       size: 20,
+                      weight: 300,
+                      opticalSize: 48,
+                      grade: -25,
                     ),
                   ),
                   const SizedBox(

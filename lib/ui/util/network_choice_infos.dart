@@ -6,6 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NetworkChoiceInfos extends ConsumerWidget {
   const NetworkChoiceInfos({super.key, required this.onTap});
@@ -29,8 +30,11 @@ class NetworkChoiceInfos extends ConsumerWidget {
                   right: 15,
                 ),
                 child: Icon(
-                  Icons.info_outlined,
+                  Symbols.info,
                   size: 15,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
               ),
               Expanded(

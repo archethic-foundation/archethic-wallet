@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TxList extends ConsumerWidget {
   const TxList({super.key});
@@ -110,8 +111,11 @@ class _TransactionsEmpty extends ConsumerWidget {
             child: Row(
               children: [
                 const Icon(
-                  Icons.info_outlined,
+                  Symbols.info,
                   size: 18,
+                  weight: 300,
+                  opticalSize: 48,
+                  grade: -25,
                 ),
                 const SizedBox(width: 8),
                 Text(

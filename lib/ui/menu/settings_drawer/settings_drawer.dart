@@ -48,6 +48,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'about_menu_view.dart';
 part 'components/settings_list_item.dart';

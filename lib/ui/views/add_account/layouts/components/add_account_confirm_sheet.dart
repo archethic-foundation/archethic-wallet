@@ -25,6 +25,7 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AddAccountConfirmSheet extends ConsumerStatefulWidget {
   const AddAccountConfirmSheet({
@@ -193,7 +194,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                       Dimens.buttonTopDimens,
                       key: const Key('confirm'),
                       icon: Icon(
-                        Icons.check,
+                        Symbols.check,
                         color: theme.mainButtonLabel,
                         size: 14,
                       ),
@@ -229,7 +230,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                       Dimens.buttonBottomDimens,
                       key: const Key('cancel'),
                       icon: Icon(
-                        Icons.arrow_back_ios,
+                        Symbols.arrow_back_ios,
                         color: theme.mainButtonLabel,
                         size: 14,
                       ),

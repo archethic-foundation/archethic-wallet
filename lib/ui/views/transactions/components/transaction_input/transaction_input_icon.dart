@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionInputIcon extends ConsumerWidget {
   const TransactionInputIcon({super.key});
@@ -16,7 +17,7 @@ class TransactionInputIcon extends ConsumerWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: 1),
         child: Icon(
-          Icons.call_received_outlined,
+          Symbols.call_received,
           size: 12,
           color: Colors.green,
         ),

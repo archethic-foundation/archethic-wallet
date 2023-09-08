@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class ChartSheet extends ConsumerWidget {
   const ChartSheet({
@@ -172,7 +173,7 @@ class _ChartLoadFailed extends ConsumerWidget {
     final priceChartInterval = ref.watch(PriceHistoryProviders.scaleOption);
     return Center(
       child: TextButton(
-        child: Icon(Icons.replay_outlined, color: theme.text, size: 30),
+        child: Icon(Symbols.replay, color: theme.text, size: 30),
         onPressed: () {
           ref.invalidate(
             PriceHistoryProviders.chartData(

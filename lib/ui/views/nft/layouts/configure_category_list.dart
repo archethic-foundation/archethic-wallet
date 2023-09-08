@@ -13,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class ConfigureCategoryList extends ConsumerStatefulWidget {
   const ConfigureCategoryList({super.key});
@@ -140,7 +141,10 @@ class ReorderableWidget extends ConsumerWidget {
                           ),
                           leading: nftCategory.id != 0
                               ? IconButton(
-                                  icon: const Icon(Icons.remove_circle),
+                                  icon: const Icon(
+                                    Symbols.remove_circle,
+                                    fill: 1,
+                                  ),
                                   hoverColor: theme.text,
                                   onPressed: () {
                                     nftCategoryToSort.removeWhere(
@@ -163,7 +167,12 @@ class ReorderableWidget extends ConsumerWidget {
                                   (Platform.isAndroid || Platform.isIOS))
                               ? ReorderableDragStartListener(
                                   index: nftCategoryToSort.indexOf(nftCategory),
-                                  child: const Icon(Icons.drag_handle),
+                                  child: const Icon(
+                                    Symbols.drag_handle,
+                                    weight: 300,
+                                    opticalSize: 48,
+                                    grade: -25,
+                                  ),
                                 )
                               : null,
                         ),
@@ -198,7 +207,10 @@ class ReorderableWidget extends ConsumerWidget {
                               style: theme.textStyleSize12W400Primary,
                             ),
                             leading: IconButton(
-                              icon: const Icon(Icons.add_circle),
+                              icon: const Icon(
+                                Symbols.add_circle,
+                                fill: 1,
+                              ),
                               onPressed: () {
                                 nftCategoryToHidden.removeWhere(
                                   (element) => element.id == nftCategory.id,

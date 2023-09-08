@@ -27,6 +27,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'components/add_contact_textfield_address.dart';
 part 'components/add_contact_textfield_name.dart';
@@ -124,9 +125,12 @@ class AddContactSheetBody extends ConsumerWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Icon(
-                          Icons.info_outlined,
+                          Symbols.info,
                           color: theme.text,
                           size: 20,
+                          weight: 300,
+                          opticalSize: 48,
+                          grade: -25,
                         ),
                       ),
                       const SizedBox(
@@ -149,7 +153,7 @@ class AddContactSheetBody extends ConsumerWidget {
                       localizations.addContact,
                       Dimens.buttonBottomDimens,
                       key: const Key('addContact'),
-                      icon: Icons.add,
+                      icon: Symbols.add,
                       onPressed: () async {
                         final isNameOk =
                             await contactCreationNotifier.controlName(

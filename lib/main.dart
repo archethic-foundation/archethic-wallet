@@ -222,6 +222,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
             primaryColor: theme.text,
             fontFamily: theme.secondaryFont,
             brightness: theme.brightness,
+            useMaterial3: true,
           ),
           localizationsDelegates: const [
             AppLocalizations.delegate,

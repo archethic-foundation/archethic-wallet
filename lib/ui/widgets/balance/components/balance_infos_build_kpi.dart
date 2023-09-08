@@ -88,7 +88,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                     );
                   },
                   child: Icon(
-                    Icons.info_outlined,
+                    Symbols.info,
                     color: theme.text,
                     size: 15,
                   ),
@@ -132,13 +132,13 @@ class _PriceEvolutionIndicator extends ConsumerWidget {
               const SizedBox(width: 5),
               if (priceEvolution >= 0)
                 Icon(
-                  Icons.arrow_upward_outlined,
+                  Symbols.arrow_upward,
                   color: theme.positiveValue,
                   size: 14,
                 )
               else
                 Icon(
-                  Icons.arrow_downward_outlined,
+                  Symbols.arrow_downward,
                   color: theme.negativeValue,
                   size: 14,
                 ),

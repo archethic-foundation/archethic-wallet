@@ -16,6 +16,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class FungiblesTokensListWidget extends ConsumerWidget {
   const FungiblesTokensListWidget({super.key});
@@ -53,7 +54,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
               child: Row(
                 children: [
                   const Icon(
-                    Icons.info_outlined,
+                    Symbols.info,
                     size: 18,
                   ),
                   const SizedBox(width: 8),
@@ -158,7 +159,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             ),
                             child: IconButton(
                               icon: Icon(
-                                Icons.arrow_circle_up_outlined,
+                                Symbols.arrow_circle_up,
                                 color: theme.backgroundDarkest,
                                 size: 21,
                               ),
@@ -240,7 +241,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Icon(
-                          Icons.warning_outlined,
+                          Symbols.warning,
                           size: 10,
                         ),
                         const SizedBox(width: 5),

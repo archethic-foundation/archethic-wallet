@@ -111,7 +111,14 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
       ),
       alignment: AlignmentDirectional.center,
       child: SizedBox(
-        child: Icon(icon, color: theme.iconDrawer, size: width),
+        child: Icon(
+          icon,
+          color: theme.iconDrawer,
+          size: width,
+          weight: 300,
+          opticalSize: 48,
+          grade: -25,
+        ),
       ),
     );
   }
@@ -140,6 +147,7 @@ class _IconDataWidgetDisabled extends ConsumerWidget {
           icon,
           color: theme.text!.withOpacity(0.3),
           size: width,
+          weight: 200,
         ),
       ),
     );

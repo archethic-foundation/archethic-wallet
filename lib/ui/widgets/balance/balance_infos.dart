@@ -14,7 +14,6 @@ import 'package:aewallet/ui/widgets/balance/components/balance_infos_popup.dart'
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
-import 'package:aewallet/ui/widgets/components/icons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -25,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'components/balance_infos_build_chart.dart';
 part 'components/balance_infos_build_kpi.dart';

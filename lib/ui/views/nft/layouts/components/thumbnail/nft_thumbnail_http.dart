@@ -8,6 +8,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NFTThumbnailHTTP extends ConsumerWidget {
   const NFTThumbnailHTTP({
@@ -65,9 +66,12 @@ class NFTThumbnailHTTP extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 2),
                   child: Icon(
-                    Icons.warning_outlined,
+                    Symbols.warning,
                     color: theme.warning,
                     size: 12,
+                    weight: 300,
+                    opticalSize: 48,
+                    grade: -25,
                   ),
                 ),
                 const SizedBox(width: 8),

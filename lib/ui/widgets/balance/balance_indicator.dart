@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class BalanceIndicatorWidget extends ConsumerWidget {
   const BalanceIndicatorWidget({
@@ -73,7 +74,7 @@ class _BalanceIndicatorButton extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
-      icon: const Icon(Icons.currency_exchange_outlined),
+      icon: const Icon(Symbols.currency_exchange),
       alignment: Alignment.centerRight,
       color: theme.textFieldIcon,
       onPressed: () async {

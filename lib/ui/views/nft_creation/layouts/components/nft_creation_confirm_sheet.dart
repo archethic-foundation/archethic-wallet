@@ -25,6 +25,7 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class NftCreationConfirmSheet extends ConsumerStatefulWidget {
   const NftCreationConfirmSheet({
@@ -244,7 +245,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             localizations.confirm,
                             Dimens.buttonTopDimens,
                             key: const Key('confirm'),
-                            icon: Icons.check,
+                            icon: Symbols.check,
                             onPressed: () async {
                               // Authenticate
                               final authMethod = AuthenticationMethod(
@@ -280,7 +281,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             Dimens.buttonBottomDimens,
                             key: const Key('cancel'),
                             icon: Icon(
-                              Icons.arrow_back_ios,
+                              Symbols.arrow_back_ios,
                               color: theme.mainButtonLabel,
                               size: 14,
                             ),
