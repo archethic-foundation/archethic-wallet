@@ -127,9 +127,9 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
               Symbols.search,
               color: theme.text,
               size: 18,
-              weight: 300,
-              opticalSize: 48,
-              grade: -25,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
             ),
             suffixIcon: hasQRCode
                 ? InkWell(
@@ -137,9 +137,9 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                       Symbols.qr_code_scanner,
                       color: theme.text,
                       size: 24,
-                      weight: 300,
-                      opticalSize: 48,
-                      grade: -25,
+                      weight: IconSize.weightM,
+                      opticalSize: IconSize.opticalSizeM,
+                      grade: IconSize.gradeM,
                     ),
                     onTap: () async {
                       sl.get<HapticUtil>().feedback(

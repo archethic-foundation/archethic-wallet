@@ -97,9 +97,9 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                               .nftCreationProcessTabDescriptionHeader,
                           icon: const Icon(
                             Symbols.description,
-                            weight: 300,
-                            opticalSize: 48,
-                            grade: -25,
+                            weight: IconSize.weightM,
+                            opticalSize: IconSize.opticalSizeM,
+                            grade: IconSize.gradeM,
                           ),
                         ),
                         Tab(
@@ -107,9 +107,9 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                               .nftCreationProcessTabImportHeader,
                           icon: const Icon(
                             Symbols.download,
-                            weight: 300,
-                            opticalSize: 48,
-                            grade: -25,
+                            weight: IconSize.weightM,
+                            opticalSize: IconSize.opticalSizeM,
+                            grade: IconSize.gradeM,
                           ),
                         ),
                         Tab(
@@ -117,9 +117,9 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                               .nftCreationProcessTabPropertiesHeader,
                           icon: const Icon(
                             Symbols.settings,
-                            weight: 300,
-                            opticalSize: 48,
-                            grade: -25,
+                            weight: IconSize.weightM,
+                            opticalSize: IconSize.opticalSizeM,
+                            grade: IconSize.gradeM,
                           ),
                         ),
                         Tab(
@@ -127,9 +127,9 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                               localizations.nftCreationProcessTabSummaryHeader,
                           icon: const Icon(
                             Symbols.check_circle,
-                            weight: 300,
-                            opticalSize: 48,
-                            grade: -25,
+                            weight: IconSize.weightM,
+                            opticalSize: IconSize.opticalSizeM,
+                            grade: IconSize.gradeM,
                           ),
                         ),
                       ],

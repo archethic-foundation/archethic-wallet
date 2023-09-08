@@ -144,9 +144,9 @@ class AddDiscussionSheet extends ConsumerWidget {
                     Symbols.add,
                     color: theme.mainButtonLabel,
                     size: 14,
-                    weight: 300,
-                    opticalSize: 48,
-                    grade: -25,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
                   onPressed: () async {
                     await ref
@@ -261,9 +261,9 @@ class PublicKeyLine extends ConsumerWidget {
                   child: Icon(
                     Symbols.arrow_forward_ios,
                     size: 12,
-                    weight: 300,
-                    opticalSize: 48,
-                    grade: -25,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
                 ),
             ],

@@ -45,9 +45,9 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
             const Icon(
               Symbols.photo_library,
               size: 18,
-              weight: 300,
-              opticalSize: 48,
-              grade: -25,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
             ),
             const SizedBox(width: 5),
             Expanded(

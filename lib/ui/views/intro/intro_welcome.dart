@@ -127,9 +127,9 @@ class _Language extends ConsumerWidget {
         Symbols.translate,
         color: theme.iconDrawer,
         size: 25,
-        weight: 300,
-        opticalSize: 48,
-        grade: -25,
+        weight: IconSize.weightM,
+        opticalSize: IconSize.opticalSizeM,
+        grade: IconSize.gradeM,
       ),
       onPressed: () async {
         await LanguageDialog.getDialog(context, ref);

@@ -141,9 +141,9 @@ class _CreateDiscussionValidationSheetState
                           },
                           icon: const Icon(
                             Symbols.info,
-                            weight: 300,
-                            opticalSize: 48,
-                            grade: -25,
+                            weight: IconSize.weightM,
+                            opticalSize: IconSize.opticalSizeM,
+                            grade: IconSize.gradeM,
                           ),
                         ),
                       ],
@@ -164,9 +164,9 @@ class _CreateDiscussionValidationSheetState
                         key: const Key('addMessengerDiscussion'),
                         icon: Icon(
                           Symbols.add,
-                          weight: 300,
-                          opticalSize: 48,
-                          grade: -25,
+                          weight: IconSize.weightM,
+                          opticalSize: IconSize.opticalSizeM,
+                          grade: IconSize.gradeM,
                           color: formState.canSubmit
                               ? theme.mainButtonLabel
                               : theme

@@ -47,9 +47,9 @@ class TransactionRawState extends State<TransactionRaw> {
                     ? Symbols.keyboard_arrow_down
                     : Symbols.keyboard_arrow_right,
                 size: 16,
-                weight: 300,
-                opticalSize: 48,
-                grade: -25,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
               ),
               Text(
                 localizations.signTransactionListTransactionsHeader.replaceAll(

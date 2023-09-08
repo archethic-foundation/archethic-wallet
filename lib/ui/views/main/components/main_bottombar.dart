@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,9 +40,9 @@ class MainBottomBar extends ConsumerWidget {
                 icon: const Icon(
                   Symbols.contacts,
                   size: 28,
-                  weight: 300,
-                  opticalSize: 48,
-                  grade: -25,
+                  weight: IconSize.weightM,
+                  opticalSize: IconSize.opticalSizeM,
+                  grade: IconSize.gradeM,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -54,9 +55,9 @@ class MainBottomBar extends ConsumerWidget {
                 icon: const Icon(
                   Symbols.account_balance_wallet,
                   size: 28,
-                  weight: 300,
-                  opticalSize: 48,
-                  grade: -25,
+                  weight: IconSize.weightM,
+                  opticalSize: IconSize.opticalSizeM,
+                  grade: IconSize.gradeM,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -69,9 +70,9 @@ class MainBottomBar extends ConsumerWidget {
                 icon: const Icon(
                   Symbols.account_box,
                   size: 28,
-                  weight: 300,
-                  opticalSize: 48,
-                  grade: -25,
+                  weight: IconSize.weightM,
+                  opticalSize: IconSize.opticalSizeM,
+                  grade: IconSize.gradeM,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -84,9 +85,9 @@ class MainBottomBar extends ConsumerWidget {
                 icon: const Icon(
                   Symbols.photo_library,
                   size: 28,
-                  weight: 300,
-                  opticalSize: 48,
-                  grade: -25,
+                  weight: IconSize.weightM,
+                  opticalSize: IconSize.opticalSizeM,
+                  grade: IconSize.gradeM,
                 ),
                 backgroundColorOpacity: theme.bottomBarBackgroundColorOpacity!,
                 activeIconColor: theme.bottomBarActiveIconColor,
@@ -100,9 +101,9 @@ class MainBottomBar extends ConsumerWidget {
                   icon: const Icon(
                     Symbols.chat,
                     size: 28,
-                    weight: 300,
-                    opticalSize: 48,
-                    grade: -25,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
                   backgroundColorOpacity:
                       theme.bottomBarBackgroundColorOpacity!,

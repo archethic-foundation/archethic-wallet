@@ -111,9 +111,9 @@ class BalanceInfosPopup {
                 Symbols.content_copy,
                 size: 20,
                 color: theme.text,
-                weight: 300,
-                opticalSize: 48,
-                grade: -25,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
               ),
               const SizedBox(
                 width: 5,
