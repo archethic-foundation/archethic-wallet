@@ -17,9 +17,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
-  const CreateDiscussionValidationSheet({
+  CreateDiscussionValidationSheet({
     super.key,
+    this.discussionCreationSuccess,
   });
+
+  Function? discussionCreationSuccess;
 
   @override
   ConsumerState<CreateDiscussionValidationSheet> createState() =>
@@ -190,6 +193,7 @@ class _CreateDiscussionValidationSheetState
                                   .pop(); // create discussion validation sheet
                               Navigator.of(context)
                                   .pop(); // create discussion sheet
+                              widget.discussionCreationSuccess?.call();
                             },
                             failure: (failure) {
                               UIUtil.showSnackbar(

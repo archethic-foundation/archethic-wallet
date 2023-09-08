@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -241,8 +242,8 @@ class _ContactDetailActions extends ConsumerWidget {
                       Symbols.favorite,
                       color: theme.favoriteIconColor,
                       fill: data.favorite == null || data.favorite == false
-                          ? 1
-                          : 0,
+                          ? 0
+                          : 1,
                     );
                   },
                   orElse: () => Icon(
@@ -259,6 +260,9 @@ class _ContactDetailActions extends ConsumerWidget {
           ),
         if (FeatureFlags.messagingActive &&
                 readOnly == false &&
+                PublicKey(contact.publicKey)
+                    .isValid // we can create discussion only with contact with valid public keys
+                &&
                 contact.format.toUpperCase() !=
                     selectedAccount?.nameDisplayed
                         .toUpperCase() // we will not create a discussion with ourselves
@@ -273,7 +277,13 @@ class _ContactDetailActions extends ConsumerWidget {
               Sheets.showAppHeightNineSheet(
                 context: context,
                 ref: ref,
-                widget: const CreateDiscussionValidationSheet(),
+                widget: CreateDiscussionValidationSheet(
+                  discussionCreationSuccess: () {
+                    ref
+                        .read(SettingsProviders.settings.notifier)
+                        .setMainScreenCurrentPage(4);
+                  },
+                ),
                 onDisposed: () {
                   ref
                       .watch(MessengerProviders.createDiscussionForm.notifier)
@@ -293,7 +303,13 @@ class _ContactDetailActions extends ConsumerWidget {
           ),
         IconButton(
           key: const Key('viewExplorer'),
-          onPressed: () {},
+          onPressed: () {
+            UIUtil.showWebview(
+              context,
+              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
+              '',
+            );
+          },
           icon: Column(
             children: [
               const Icon(Symbols.open_in_new),
