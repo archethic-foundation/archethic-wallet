@@ -135,7 +135,7 @@ class _CreateDiscussionValidationSheetState
                               ref: ref,
                               widget: ContactDetail(
                                 contact: formState.membersList[index],
-                                editMode: false,
+                                readOnly: true,
                               ),
                             );
                           },

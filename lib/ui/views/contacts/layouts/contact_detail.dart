@@ -3,13 +3,12 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -24,186 +23,53 @@ import 'package:material_symbols_icons/symbols.dart';
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
     required this.contact,
-    this.editMode = true,
+    this.readOnly = false,
     super.key,
   });
 
   final Contact contact;
-  final bool editMode;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
-    final _contact = ref.watch(
-      ContactProviders.getContactWithName(
-        contact.format,
-      ),
-    );
 
     return SafeArea(
-      minimum: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height * 0.035,
-      ),
       child: Column(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: 50,
-                height: 50,
-                margin: const EdgeInsetsDirectional.only(
-                  top: 10,
-                  start: 10,
-                ),
-                child: contact.type == ContactType.keychainService.name ||
-                        editMode == false
-                    ? const SizedBox()
-                    : TextButton(
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            const RoundedRectangleBorder(),
-                          ),
-                        ),
-                        onPressed: () {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          AppDialogs.showConfirmDialog(
-                            context,
-                            ref,
-                            localizations.removeContact,
-                            localizations.removeContactConfirmation.replaceAll(
-                              '%1',
-                              contact.format,
-                            ),
-                            localizations.yes,
-                            () {
-                              ref.read(
-                                ContactProviders.deleteContact(
-                                  contact: contact,
-                                ),
-                              );
-
-                              ref
-                                  .read(
-                                    AccountProviders.selectedAccount.notifier,
-                                  )
-                                  .refreshRecentTransactions();
-                              UIUtil.showSnackbar(
-                                localizations.contactRemoved.replaceAll(
-                                  '%1',
-                                  contact.format,
-                                ),
-                                context,
-                                ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
-                              );
-                              Navigator.of(context).pop();
-                            },
-                            cancelText: localizations.no,
-                          );
-                        },
-                        child: Icon(
-                          Symbols.delete,
-                          size: 24,
-                          color: theme.text,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                        ),
-                      ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 25),
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width - 140,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    AutoSizeText(
-                      contact.format,
-                      style: theme.textStyleSize24W700EquinoxPrimary,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      stepGranularity: 0.1,
-                    ),
-                  ],
-                ),
-              ),
-              if (contact.type == ContactType.keychainService.name ||
-                  editMode == false)
-                const SizedBox(
-                  width: 50,
-                  height: 50,
-                )
-              else
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
                 Container(
-                  width: 50,
-                  height: 50,
-                  margin: const EdgeInsetsDirectional.only(
-                    top: 10,
-                    end: 10,
+                  margin: const EdgeInsets.only(top: 25, bottom: 15),
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width - 140,
                   ),
-                  child: InkWell(
-                    onTap: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      final updatedContact = contact;
-                      if (contact.favorite == null) {
-                        updatedContact.favorite = true;
-                      } else {
-                        updatedContact.favorite = !contact.favorite!;
-                      }
-
-                      ref.read(
-                        ContactProviders.saveContact(
-                          contact: updatedContact,
-                        ),
-                      );
-                    },
-                    child: _contact.maybeWhen(
-                      data: (data) {
-                        return data.favorite == null || data.favorite == false
-                            ? Icon(
-                                Symbols.favorite_border,
-                                color: theme.favoriteIconColor,
-                                size: 26,
-                                weight: IconSize.weightM,
-                                opticalSize: IconSize.opticalSizeM,
-                                grade: IconSize.gradeM,
-                              )
-                            : Icon(
-                                Symbols.favorite,
-                                color: theme.favoriteIconColor,
-                                size: 26,
-                                weight: IconSize.weightM,
-                                opticalSize: IconSize.opticalSizeM,
-                                grade: IconSize.gradeM,
-                                fill: 1,
-                              );
-                      },
-                      loading: () => const SizedBox(),
-                      orElse: () => const SizedBox(),
-                    ),
+                  child: Column(
+                    children: <Widget>[
+                      AutoSizeText(
+                        contact.format,
+                        style: theme.textStyleSize24W700EquinoxPrimary,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        stepGranularity: 0.1,
+                      ),
+                    ],
                   ),
                 ),
-            ],
+                _ContactDetailActions(contact: contact, readOnly: readOnly),
+              ],
+            ),
           ),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
               color: Colors.transparent,
               width: MediaQuery.of(context).size.width,
-              height: 200,
               child: ContainedTabBarView(
                 tabBarProperties: TabBarProperties(
                   indicatorColor: theme.backgroundDarkest,
@@ -242,29 +108,179 @@ class ContactDetail extends ConsumerWidget {
               ),
             ),
           ),
-          Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  AppButtonTinyConnectivity(
-                    localizations.viewExplorer,
-                    Dimens.buttonBottomDimens,
-                    icon: Symbols.more_horiz,
-                    key: const Key('viewExplorer'),
-                    onPressed: () async {
-                      UIUtil.showWebview(
-                        context,
-                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
-                        '',
-                      );
-                    },
+          Visibility(
+            visible: contact.type != ContactType.keychainService.name &&
+                readOnly == false,
+            child: Column(
+              children: [
+                TextButton(
+                  key: const Key('removeContact'),
+                  onPressed: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    AppDialogs.showConfirmDialog(
+                      context,
+                      ref,
+                      localizations.removeContact,
+                      localizations.removeContactConfirmation.replaceAll(
+                        '%1',
+                        contact.format,
+                      ),
+                      localizations.yes,
+                      () {
+                        ref.read(
+                          ContactProviders.deleteContact(
+                            contact: contact,
+                          ),
+                        );
+
+                        ref
+                            .read(
+                              AccountProviders.selectedAccount.notifier,
+                            )
+                            .refreshRecentTransactions();
+                        UIUtil.showSnackbar(
+                          localizations.contactRemoved.replaceAll(
+                            '%1',
+                            contact.format,
+                          ),
+                          context,
+                          ref,
+                          theme.text!,
+                          theme.snackBarShadow!,
+                        );
+                        Navigator.of(context).pop();
+                      },
+                      cancelText: localizations.no,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Symbols.delete,
+                        color: theme.textStyleSize14W600EquinoxPrimaryRed.color,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        localizations.deleteContact,
+                        style: theme.textStyleSize14W600EquinoxPrimaryRed,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ContactDetailActions extends ConsumerWidget {
+  const _ContactDetailActions({
+    required this.contact,
+    this.readOnly = false,
+    super.key,
+  });
+
+  final Contact contact;
+  final bool readOnly;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final preferences = ref.watch(SettingsProviders.settings);
+    final _contact = ref.watch(
+      ContactProviders.getContactWithName(
+        contact.format,
+      ),
+    );
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        if (contact.type != ContactType.keychainService.name &&
+            readOnly == false) ...[
+          IconButton(
+            key: const Key('favorite'),
+            onPressed: () {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              final updatedContact = contact;
+              if (contact.favorite == null) {
+                updatedContact.favorite = true;
+              } else {
+                updatedContact.favorite = !contact.favorite!;
+              }
+
+              ref.read(
+                ContactProviders.saveContact(
+                  contact: updatedContact,
+                ),
+              );
+            },
+            icon: Column(
+              children: [
+                _contact.maybeWhen(
+                  data: (data) {
+                    return Icon(
+                      Symbols.favorite,
+                      color: theme.favoriteIconColor,
+                      fill: data.favorite == null || data.favorite == false
+                          ? 1
+                          : 0,
+                    );
+                  },
+                  orElse: () => Icon(
+                    Symbols.favorite,
+                    color: theme.favoriteIconColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(localizations.favorites),
+              ],
+            ),
+          ),
+          if (FeatureFlags.messagingActive)
+            IconButton(
+              key: const Key('newDiscussion'),
+              onPressed: () {},
+              icon: Column(
+                children: [
+                  const Icon(Symbols.edit_square),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(localizations.discussion),
+                ],
+              ),
+            ),
+        ],
+        IconButton(
+          key: const Key('viewExplorer'),
+          onPressed: () {},
+          icon: Column(
+            children: [
+              const Icon(Symbols.open_in_new),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(localizations.explorer),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

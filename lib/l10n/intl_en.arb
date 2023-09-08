@@ -574,5 +574,9 @@
   "admin": "Admin",
   "next": "Next",
   "name": "Name",
-  "discussionNoMessages": "Your discussion currently has no messages."
+  "discussionNoMessages": "Your discussion currently has no messages.",
+  "deleteContact": "Delete the contact",
+  "discussion": "Discussion",
+  "favorites": "Favorites",
+  "explorer": "Explorer"
 }
