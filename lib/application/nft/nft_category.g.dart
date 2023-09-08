@@ -330,7 +330,7 @@ class _FetchNftCategoryProviderElement
 }
 
 String _$getNbNFTInCategoryHash() =>
-    r'ef4fef4957211431653e9c0cebad8a2af50d0c5b';
+    r'b837412ef858acd4ac65516a9b0cbf1aec0e67b4';
 
 /// See also [_getNbNFTInCategory].
 @ProviderFor(_getNbNFTInCategory)
