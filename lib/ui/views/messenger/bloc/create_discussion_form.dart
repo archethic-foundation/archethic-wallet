@@ -48,6 +48,12 @@ class CreateDiscussionFormNotifier
     );
   }
 
+  void removeAllMembers() {
+    state = state.copyWith(
+      members: [],
+    );
+  }
+
   void addAdmin(Contact member) {
     if (state.admins.contains(member)) return;
     state = state.copyWith(

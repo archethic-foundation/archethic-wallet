@@ -9,7 +9,10 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -202,12 +205,14 @@ class _ContactDetailActions extends ConsumerWidget {
       ),
     );
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final selectedAccount =
+        ref.read(AccountProviders.selectedAccount).valueOrNull;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         if (contact.type != ContactType.keychainService.name &&
-            readOnly == false) ...[
+            readOnly == false)
           IconButton(
             key: const Key('favorite'),
             onPressed: () {
@@ -252,21 +257,40 @@ class _ContactDetailActions extends ConsumerWidget {
               ],
             ),
           ),
-          if (FeatureFlags.messagingActive)
-            IconButton(
-              key: const Key('newDiscussion'),
-              onPressed: () {},
-              icon: Column(
-                children: [
-                  const Icon(Symbols.edit_square),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(localizations.discussion),
-                ],
-              ),
+        if (FeatureFlags.messagingActive &&
+                readOnly == false &&
+                contact.format.toUpperCase() !=
+                    selectedAccount?.nameDisplayed
+                        .toUpperCase() // we will not create a discussion with ourselves
+            )
+          IconButton(
+            key: const Key('newDiscussion'),
+            onPressed: () {
+              ref
+                  .watch(MessengerProviders.createDiscussionForm.notifier)
+                  .addMember(contact);
+
+              Sheets.showAppHeightNineSheet(
+                context: context,
+                ref: ref,
+                widget: const CreateDiscussionValidationSheet(),
+                onDisposed: () {
+                  ref
+                      .watch(MessengerProviders.createDiscussionForm.notifier)
+                      .removeAllMembers();
+                },
+              );
+            },
+            icon: Column(
+              children: [
+                const Icon(Symbols.edit_square),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(localizations.discussion),
+              ],
             ),
-        ],
+          ),
         IconButton(
           key: const Key('viewExplorer'),
           onPressed: () {},
