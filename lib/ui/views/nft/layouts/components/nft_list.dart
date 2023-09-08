@@ -40,8 +40,9 @@ class NFTList extends ConsumerWidget {
         )
         .first;
 
-    final accountTokenList =
-        accountSelected?.getAccountNFTFiltered(nftCategory.id) ?? [];
+    final accountTokenList = ref.watch(
+      AccountProviders.getAccountNFTFiltered(accountSelected!, nftCategory.id),
+    );
 
     if (accountTokenList.isEmpty) {
       return SingleChildScrollView(
