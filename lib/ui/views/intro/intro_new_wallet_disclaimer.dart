@@ -78,9 +78,9 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                                   Symbols.warning_amber,
                                   color: Colors.red,
                                   size: 24,
-                                  weight: 300,
-                                  opticalSize: 48,
-                                  grade: -25,
+                                  weight: IconSize.weightM,
+                                  opticalSize: IconSize.opticalSizeM,
+                                  grade: IconSize.gradeM,
                                 ),
                                 const SizedBox(width: 8),
                                 AutoSizeText(

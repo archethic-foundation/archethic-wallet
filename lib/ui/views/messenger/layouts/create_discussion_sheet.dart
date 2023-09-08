@@ -110,9 +110,9 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                       Icon(
                                         Symbols.person_add,
                                         color: theme.text,
-                                        weight: 300,
-                                        opticalSize: 48,
-                                        grade: -25,
+                                        weight: IconSize.weightM,
+                                        opticalSize: IconSize.opticalSizeM,
+                                        grade: IconSize.gradeM,
                                       ),
                                       const SizedBox(
                                         width: 8,

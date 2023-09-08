@@ -77,9 +77,9 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   child: const Icon(
                     Symbols.qr_code_scanner,
                     size: 30,
-                    weight: 300,
-                    opticalSize: 48,
-                    grade: -25,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
                   onTap: () {
                     showDialog(

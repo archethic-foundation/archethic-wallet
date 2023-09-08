@@ -63,9 +63,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             leading: IconButton(
               icon: const Icon(
                 Symbols.menu,
-                weight: 300,
-                opticalSize: 48,
-                grade: -25,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
               ),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
@@ -74,9 +74,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 IconButton(
                   icon: const Icon(
                     Symbols.settings,
-                    weight: 300,
-                    opticalSize: 48,
-                    grade: -25,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
                   onPressed: () async {
                     sl.get<HapticUtil>().feedback(
@@ -212,9 +212,9 @@ class MainAppBarIconBalanceShowed extends ConsumerWidget {
     return IconButton(
       icon: const Icon(
         Symbols.visibility,
-        weight: 300,
-        opticalSize: 48,
-        grade: -25,
+        weight: IconSize.weightM,
+        opticalSize: IconSize.opticalSizeM,
+        grade: IconSize.gradeM,
       ),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
@@ -239,9 +239,9 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
     return IconButton(
       icon: const Icon(
         Symbols.visibility_off,
-        weight: 300,
-        opticalSize: 48,
-        grade: -25,
+        weight: IconSize.weightM,
+        opticalSize: IconSize.opticalSizeM,
+        grade: IconSize.gradeM,
       ),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
@@ -265,9 +265,9 @@ class MainAppBarIconNotificationEnabled extends ConsumerWidget {
     return IconButton(
       icon: const Icon(
         Symbols.notifications,
-        weight: 300,
-        opticalSize: 48,
-        grade: -25,
+        weight: IconSize.weightM,
+        opticalSize: IconSize.opticalSizeM,
+        grade: IconSize.gradeM,
       ),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
@@ -292,9 +292,9 @@ class MainAppBarIconNotificationDisabled extends ConsumerWidget {
     return IconButton(
       icon: const Icon(
         Symbols.notifications_off,
-        weight: 300,
-        opticalSize: 48,
-        grade: -25,
+        weight: IconSize.weightM,
+        opticalSize: IconSize.opticalSizeM,
+        grade: IconSize.gradeM,
       ),
       onPressed: () async {
         sl.get<HapticUtil>().feedback(

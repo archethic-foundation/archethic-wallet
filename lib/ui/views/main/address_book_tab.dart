@@ -83,9 +83,9 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                           Symbols.search,
                           color: theme.text,
                           size: 18,
-                          weight: 300,
-                          opticalSize: 48,
-                          grade: -25,
+                          weight: IconSize.weightM,
+                          opticalSize: IconSize.opticalSizeM,
+                          grade: IconSize.gradeM,
                         ),
                         suffixIcon: const SizedBox(
                           width: 26,

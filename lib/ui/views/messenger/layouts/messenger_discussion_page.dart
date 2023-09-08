@@ -55,9 +55,9 @@ class MessengerDiscussionPage extends ConsumerWidget {
             IconButton(
               icon: const Icon(
                 Symbols.info,
-                weight: 300,
-                opticalSize: 48,
-                grade: -25,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
               ),
               onPressed: () async {
                 Navigator.of(context).pushNamed(
@@ -207,9 +207,9 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                   icon: Icon(
                     Symbols.send,
                     color: theme.text,
-                    weight: 300,
-                    opticalSize: 48,
-                    grade: -25,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
                   label: Container(),
                 ),

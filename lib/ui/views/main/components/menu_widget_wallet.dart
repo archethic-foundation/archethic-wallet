@@ -187,8 +187,8 @@ class _ActionButton extends ConsumerWidget {
                       child: Icon(
                         icon,
                         weight: 800,
-                        opticalSize: 48,
-                        grade: -25,
+                        opticalSize: IconSize.opticalSizeM,
+                        grade: IconSize.gradeM,
                         color: enabled
                             ? Colors.white
                             : theme.text!.withOpacity(0.3),

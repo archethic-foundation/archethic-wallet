@@ -169,9 +169,9 @@ class ReorderableWidget extends ConsumerWidget {
                                   index: nftCategoryToSort.indexOf(nftCategory),
                                   child: const Icon(
                                     Symbols.drag_handle,
-                                    weight: 300,
-                                    opticalSize: 48,
-                                    grade: -25,
+                                    weight: IconSize.weightM,
+                                    opticalSize: IconSize.opticalSizeM,
+                                    grade: IconSize.gradeM,
                                   ),
                                 )
                               : null,

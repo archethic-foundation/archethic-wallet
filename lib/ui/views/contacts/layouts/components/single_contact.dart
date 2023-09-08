@@ -58,9 +58,9 @@ class SingleContact extends ConsumerWidget {
                                 Symbols.account_balance_wallet,
                                 color: theme.iconDrawer,
                                 size: 25,
-                                weight: 300,
-                                opticalSize: 48,
-                                grade: -25,
+                                weight: IconSize.weightM,
+                                opticalSize: IconSize.opticalSizeM,
+                                grade: IconSize.gradeM,
                               )
                             else
                               Stack(
@@ -70,18 +70,18 @@ class SingleContact extends ConsumerWidget {
                                     Symbols.person,
                                     color: theme.iconDrawer,
                                     size: 25,
-                                    weight: 300,
-                                    opticalSize: 48,
-                                    grade: -25,
+                                    weight: IconSize.weightM,
+                                    opticalSize: IconSize.opticalSizeM,
+                                    grade: IconSize.gradeM,
                                   ),
                                   if (contact.favorite == true)
                                     Icon(
                                       Symbols.favorite,
                                       color: theme.favoriteIconColor,
                                       size: 12,
-                                      weight: 300,
-                                      opticalSize: 48,
-                                      grade: -25,
+                                      weight: IconSize.weightM,
+                                      opticalSize: IconSize.opticalSizeM,
+                                      grade: IconSize.gradeM,
                                       fill: 1,
                                     ),
                                 ],

@@ -265,9 +265,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                       label: const Text(''),
                                       icon: Icon(
                                         Symbols.content_paste,
-                                        weight: 300,
-                                        opticalSize: 48,
-                                        grade: -25,
+                                        weight: IconSize.weightM,
+                                        opticalSize: IconSize.opticalSizeM,
+                                        grade: IconSize.gradeM,
                                         color: theme
                                             .textStyleSize16W600Primary.color,
                                       ),

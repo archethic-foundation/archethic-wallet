@@ -110,9 +110,9 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                         Symbols.info,
                         color: theme.text,
                         size: 20,
-                        weight: 300,
-                        opticalSize: 48,
-                        grade: -25,
+                        weight: IconSize.weightM,
+                        opticalSize: IconSize.opticalSizeM,
+                        grade: IconSize.gradeM,
                       ),
                     ),
                     const SizedBox(

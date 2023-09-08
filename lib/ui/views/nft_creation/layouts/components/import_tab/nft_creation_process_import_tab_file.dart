@@ -55,9 +55,9 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
           children: [
             const Icon(
               Symbols.description,
-              weight: 300,
-              opticalSize: 48,
-              grade: -25,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
               size: 18,
             ),
             const SizedBox(width: 7),

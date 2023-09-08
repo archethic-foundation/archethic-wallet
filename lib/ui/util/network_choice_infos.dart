@@ -32,9 +32,9 @@ class NetworkChoiceInfos extends ConsumerWidget {
                 child: Icon(
                   Symbols.info,
                   size: 15,
-                  weight: 300,
-                  opticalSize: 48,
-                  grade: -25,
+                  weight: IconSize.weightM,
+                  opticalSize: IconSize.opticalSizeM,
+                  grade: IconSize.gradeM,
                 ),
               ),
               Expanded(

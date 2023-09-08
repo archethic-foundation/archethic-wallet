@@ -26,9 +26,9 @@ class TextFieldButton extends ConsumerWidget {
           icon,
           size: 20,
           color: theme.textFieldIcon,
-          weight: 300,
-          opticalSize: 48,
-          grade: -25,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
         ),
       ),
     );
