@@ -336,7 +336,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                               children: <Widget>[
                                 GridView.count(
                                   physics: const NeverScrollableScrollPhysics(),
-                                  childAspectRatio: 1 / 0.6,
+                                  childAspectRatio: 1 / 0.62,
                                   shrinkWrap: true,
                                   crossAxisCount: 4,
                                   children: List.generate(24, (index) {
@@ -447,6 +447,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                           ],
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
