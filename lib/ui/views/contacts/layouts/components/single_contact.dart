@@ -107,22 +107,40 @@ class SingleContact extends ConsumerWidget {
                       style: theme.textStyleSize14W600Primary,
                     ),
                   ),
-                  if (account != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        AutoSizeText(
-                          '${account!.balance!.nativeTokenValueToString()} ${account!.balance!.nativeTokenName}',
-                          style: theme.textStyleSize12W400Primary,
-                          textAlign: TextAlign.end,
-                        ),
-                        AutoSizeText(
-                          fiatAmountString,
-                          textAlign: TextAlign.end,
-                          style: theme.textStyleSize12W400Primary,
-                        ),
-                      ],
-                    )
+                  if (account != null) ...[
+                    if (settings.showBalances)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          AutoSizeText(
+                            '${account!.balance!.nativeTokenValueToString()} ${account!.balance!.nativeTokenName}',
+                            style: theme.textStyleSize12W400Primary,
+                            textAlign: TextAlign.end,
+                          ),
+                          AutoSizeText(
+                            fiatAmountString,
+                            textAlign: TextAlign.end,
+                            style: theme.textStyleSize12W400Primary,
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          AutoSizeText(
+                            '···········',
+                            style: theme.textStyleSize12W400Primary,
+                            textAlign: TextAlign.end,
+                          ),
+                          AutoSizeText(
+                            '···········',
+                            textAlign: TextAlign.end,
+                            style: theme.textStyleSize12W400Primary,
+                          ),
+                        ],
+                      ),
+                  ],
                 ],
               ),
             ],
