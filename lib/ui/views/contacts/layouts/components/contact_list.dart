@@ -1,3 +1,5 @@
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +13,17 @@ class ContactList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Expanded(
       child: Stack(
         children: <Widget>[
-          ListView.builder(
+          ListView.separated(
+            separatorBuilder: (context, index) => Divider(
+              height: 2,
+              color: theme.text15,
+            ),
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.only(
               top: 15,
@@ -25,6 +34,10 @@ class ContactList extends ConsumerWidget {
               // Build contact
               return SingleContact(
                 contact: contactsList[index],
+                account: accounts
+                    ?.where((element) =>
+                        element.lastAddress == contactsList[index].address)
+                    .firstOrNull,
               )
                   .animate(delay: (100 * index).ms)
                   .fadeIn(duration: 900.ms, delay: 200.ms)
