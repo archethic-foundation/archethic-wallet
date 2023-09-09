@@ -309,6 +309,7 @@ flutter:
     - assets/themes/fire_red_flat/
     - assets/themes/pearl_grey/
     - assets/themes/pearl_grey_flat/
+    - assets/themes/purple/
 
   fonts:
     - family: Montserrat
@@ -350,6 +351,24 @@ flutter:
     - family: UiIcons
       fonts:
         - asset: assets/fonts/ui_icons.ttf
+    - family: Telegraf
+      fonts:
+        - asset: assets/fonts/Telegraf-Black.woff
+        - asset: assets/fonts/Telegraf-Black.woff2
+        - asset: assets/fonts/Telegraf-Bold.woff
+        - asset: assets/fonts/Telegraf-Bold.woff2
+        - asset: assets/fonts/Telegraf-Light.woff
+        - asset: assets/fonts/Telegraf-Light.woff2
+        - asset: assets/fonts/Telegraf-Medium.woff
+        - asset: assets/fonts/Telegraf-Medium.woff2
+        - asset: assets/fonts/Telegraf-Regular.woff
+        - asset: assets/fonts/Telegraf-Regular.woff2
+        - asset: assets/fonts/Telegraf-SemiBold.woff
+        - asset: assets/fonts/Telegraf-SemiBold.woff2
+        - asset: assets/fonts/Telegraf-UltraBold.woff
+        - asset: assets/fonts/Telegraf-UltraBold.woff2
+        - asset: assets/fonts/Telegraf-UltraLight.woff
+        - asset: assets/fonts/Telegraf-UltraLight.woff2
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
