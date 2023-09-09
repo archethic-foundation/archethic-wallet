@@ -42,51 +42,65 @@ class AppDialogs {
               color: theme.text45!,
             ),
           ),
-          content: RichText(
-            text: TextSpan(
-              text: '',
-              children: <InlineSpan>[
-                TextSpan(
-                  text: content,
-                  style: theme.textStyleSize12W100Primary,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RichText(
+                text: TextSpan(
+                  text: '',
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: content,
+                      style: theme.textStyleSize12W100Primary,
+                    ),
+                    if (additionalContent != null)
+                      TextSpan(
+                        text: '\n\n$additionalContent',
+                        style: additionalContentStyle ??
+                            theme.textStyleSize12W100Primary,
+                      ),
+                  ],
                 ),
-                if (additionalContent != null)
-                  TextSpan(
-                    text: '\n\n$additionalContent',
-                    style: additionalContentStyle ??
-                        theme.textStyleSize12W100Primary,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _AppDialogsButton(
+                    key: const Key('cancelButton'),
+                    textButton: cancelText!,
+                    onPressed: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      Navigator.of(context).pop();
+                      if (cancelAction != null) {
+                        cancelAction();
+                      }
+                    },
                   ),
-              ],
-            ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  _AppDialogsButton(
+                    key: const Key('yesButton'),
+                    textButton: buttonText,
+                    onPressed: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      Navigator.of(context).pop();
+                      onPressed();
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
-          actions: <Widget>[
-            _AppDialogsButton(
-              key: const Key('cancelButton'),
-              textButton: cancelText!,
-              onPressed: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                Navigator.of(context).pop();
-                if (cancelAction != null) {
-                  cancelAction();
-                }
-              },
-            ),
-            _AppDialogsButton(
-              key: const Key('yesButton'),
-              textButton: buttonText,
-              onPressed: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                Navigator.of(context).pop();
-                onPressed();
-              },
-            ),
-          ],
         );
       },
     );
@@ -162,9 +176,10 @@ class _AppDialogsButton extends ConsumerWidget {
     return TextButton(
       onPressed: onPressed,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 100),
+        constraints: const BoxConstraints(maxWidth: 90),
         child: Text(
           textButton,
+          textAlign: TextAlign.center,
           style: theme.textStyleSize12W400Primary,
         ),
       ),
