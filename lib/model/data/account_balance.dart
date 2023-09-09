@@ -32,11 +32,11 @@ class AccountBalance extends HiveObject {
   @HiveField(6, defaultValue: 0)
   int nftNb;
 
-  String nativeTokenValueToString({int digits = -1}) {
+  String nativeTokenValueToString({int? digits}) {
     if (nativeTokenValue > 1000000) {
       return NumberUtil.formatThousands(nativeTokenValue.round());
     } else {
-      if (digits < 0 || nativeTokenValue == 0) {
+      if (digits == null || nativeTokenValue == 0) {
         return NumberUtil.formatThousands(nativeTokenValue);
       }
       return nativeTokenValue.toStringAsFixed(digits);
