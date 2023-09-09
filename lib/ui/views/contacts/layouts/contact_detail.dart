@@ -252,7 +252,6 @@ class _ContactDetailActions extends ConsumerWidget {
   const _ContactDetailActions({
     required this.contact,
     this.readOnly = false,
-    super.key,
   });
 
   final Contact contact;

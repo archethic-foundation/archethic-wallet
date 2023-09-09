@@ -1,8 +1,10 @@
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -27,6 +29,8 @@ class SingleContact extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     final asyncFiatAmount = ref.watch(
       MarketPriceProviders.convertedToSelectedCurrency(
@@ -109,21 +113,38 @@ class SingleContact extends ConsumerWidget {
                   ),
                   if (account != null) ...[
                     if (settings.showBalances)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          AutoSizeText(
-                            '${account!.balance!.nativeTokenValueToString(digits: 2)} ${account!.balance!.nativeTokenName}',
-                            style: theme.textStyleSize12W400Primary,
-                            textAlign: TextAlign.end,
-                          ),
-                          AutoSizeText(
-                            fiatAmountString,
-                            textAlign: TextAlign.end,
-                            style: theme.textStyleSize12W400Primary,
-                          ),
-                        ],
-                      )
+                      primaryCurrency.primaryCurrency ==
+                              AvailablePrimaryCurrencyEnum.native
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                AutoSizeText(
+                                  '${account!.balance!.nativeTokenValueToString(digits: 2)} ${account!.balance!.nativeTokenName}',
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                                AutoSizeText(
+                                  fiatAmountString,
+                                  textAlign: TextAlign.end,
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                AutoSizeText(
+                                  fiatAmountString,
+                                  textAlign: TextAlign.end,
+                                  style: theme.textStyleSize12W400Primary,
+                                ),
+                                AutoSizeText(
+                                  '${account!.balance!.nativeTokenValueToString(digits: 2)} ${account!.balance!.nativeTokenName}',
+                                  style: theme.textStyleSize12W400Primary,
+                                  textAlign: TextAlign.end,
+                                ),
+                              ],
+                            )
                     else
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
