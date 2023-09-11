@@ -3,12 +3,12 @@
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 
-part 'token_informations.g.dart';
+part 'token_information.g.dart';
 
 /// Next field available : 15
-@HiveType(typeId: HiveTypeIds.tokenInformations)
-class TokenInformations extends HiveObject {
-  TokenInformations({
+@HiveType(typeId: HiveTypeIds.tokenInformation)
+class TokenInformation extends HiveObject {
+  TokenInformation({
     this.address,
     this.name,
     this.id,

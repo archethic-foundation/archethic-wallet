@@ -19,8 +19,7 @@ mixin _$NftSearchBarState {
   String get searchCriteria => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
-  TokenInformations? get tokenInformations =>
-      throw _privateConstructorUsedError;
+  TokenInformation? get tokenInformation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NftSearchBarStateCopyWith<NftSearchBarState> get copyWith =>
@@ -37,7 +36,7 @@ abstract class $NftSearchBarStateCopyWith<$Res> {
       {String searchCriteria,
       bool loading,
       String error,
-      TokenInformations? tokenInformations});
+      TokenInformation? tokenInformation});
 }
 
 /// @nodoc
@@ -56,7 +55,7 @@ class _$NftSearchBarStateCopyWithImpl<$Res, $Val extends NftSearchBarState>
     Object? searchCriteria = null,
     Object? loading = null,
     Object? error = null,
-    Object? tokenInformations = freezed,
+    Object? tokenInformation = freezed,
   }) {
     return _then(_value.copyWith(
       searchCriteria: null == searchCriteria
@@ -71,10 +70,10 @@ class _$NftSearchBarStateCopyWithImpl<$Res, $Val extends NftSearchBarState>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenInformations: freezed == tokenInformations
-          ? _value.tokenInformations
-          : tokenInformations // ignore: cast_nullable_to_non_nullable
-              as TokenInformations?,
+      tokenInformation: freezed == tokenInformation
+          ? _value.tokenInformation
+          : tokenInformation // ignore: cast_nullable_to_non_nullable
+              as TokenInformation?,
     ) as $Val);
   }
 }
@@ -91,7 +90,7 @@ abstract class _$$_NftSearchBarStateCopyWith<$Res>
       {String searchCriteria,
       bool loading,
       String error,
-      TokenInformations? tokenInformations});
+      TokenInformation? tokenInformation});
 }
 
 /// @nodoc
@@ -108,7 +107,7 @@ class __$$_NftSearchBarStateCopyWithImpl<$Res>
     Object? searchCriteria = null,
     Object? loading = null,
     Object? error = null,
-    Object? tokenInformations = freezed,
+    Object? tokenInformation = freezed,
   }) {
     return _then(_$_NftSearchBarState(
       searchCriteria: null == searchCriteria
@@ -123,10 +122,10 @@ class __$$_NftSearchBarStateCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenInformations: freezed == tokenInformations
-          ? _value.tokenInformations
-          : tokenInformations // ignore: cast_nullable_to_non_nullable
-              as TokenInformations?,
+      tokenInformation: freezed == tokenInformation
+          ? _value.tokenInformation
+          : tokenInformation // ignore: cast_nullable_to_non_nullable
+              as TokenInformation?,
     ));
   }
 }
@@ -138,7 +137,7 @@ class _$_NftSearchBarState extends _NftSearchBarState {
       {this.searchCriteria = '',
       this.loading = false,
       this.error = '',
-      this.tokenInformations})
+      this.tokenInformation})
       : super._();
 
   @override
@@ -151,11 +150,11 @@ class _$_NftSearchBarState extends _NftSearchBarState {
   @JsonKey()
   final String error;
   @override
-  final TokenInformations? tokenInformations;
+  final TokenInformation? tokenInformation;
 
   @override
   String toString() {
-    return 'NftSearchBarState(searchCriteria: $searchCriteria, loading: $loading, error: $error, tokenInformations: $tokenInformations)';
+    return 'NftSearchBarState(searchCriteria: $searchCriteria, loading: $loading, error: $error, tokenInformation: $tokenInformation)';
   }
 
   @override
@@ -167,13 +166,13 @@ class _$_NftSearchBarState extends _NftSearchBarState {
                 other.searchCriteria == searchCriteria) &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.tokenInformations, tokenInformations) ||
-                other.tokenInformations == tokenInformations));
+            (identical(other.tokenInformation, tokenInformation) ||
+                other.tokenInformation == tokenInformation));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, searchCriteria, loading, error, tokenInformations);
+      runtimeType, searchCriteria, loading, error, tokenInformation);
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +187,7 @@ abstract class _NftSearchBarState extends NftSearchBarState {
       {final String searchCriteria,
       final bool loading,
       final String error,
-      final TokenInformations? tokenInformations}) = _$_NftSearchBarState;
+      final TokenInformation? tokenInformation}) = _$_NftSearchBarState;
   const _NftSearchBarState._() : super._();
 
   @override
@@ -198,7 +197,7 @@ abstract class _NftSearchBarState extends NftSearchBarState {
   @override
   String get error;
   @override
-  TokenInformations? get tokenInformations;
+  TokenInformation? get tokenInformation;
   @override
   @JsonKey(ignore: true)
   _$$_NftSearchBarStateCopyWith<_$_NftSearchBarState> get copyWith =>

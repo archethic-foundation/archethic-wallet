@@ -83,7 +83,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                     AppDialogs.showInfoDialog(
                       context,
                       ref,
-                      localizations.informations,
+                      localizations.information,
                       localizations.currencyOracleInfo,
                     );
                   },

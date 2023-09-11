@@ -146,7 +146,7 @@
   "backupSecretPhrase": "Secret Recovery Phrase",
   "ok": "Ok",
   "addressInfos": "My public address to receive funds",
-  "informations": "Informations",
+  "information": "Informations",
   "updateAvailableTitle": "App Update",
   "updateAvailableDesc": "A new version (%1) is available.\n\nPlease update the app.",
   "nodesHeader": "Nodes",

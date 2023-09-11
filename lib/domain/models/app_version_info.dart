@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_version_info.freezed.dart';
 
-/// Represents the app stores informations
+/// Represents the app stores Information
 @freezed
 class AppVersionInfo with _$AppVersionInfo {
   const factory AppVersionInfo({

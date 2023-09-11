@@ -3,7 +3,7 @@ import 'dart:developer' as dev;
 import 'dart:typed_data';
 
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -17,14 +17,14 @@ part 'nft.g.dart';
 NFTRepository _nftRepository(_NftRepositoryRef ref) => NFTRepository();
 
 @riverpod
-Future<TokenInformations?> _getNFT(
-  _GetNFTRef ref,
+Future<TokenInformation?> _getNFTInfo(
+  _GetNFTInfoRef ref,
   String address,
   KeychainServiceKeyPair keychainServiceKeyPair,
 ) async {
   return ref
       .watch(_nftRepositoryProvider)
-      .getNFT(address, keychainServiceKeyPair);
+      .getNFTInfo(address, keychainServiceKeyPair);
 }
 
 @riverpod
@@ -40,7 +40,7 @@ Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
 }
 
 class NFTRepository {
-  Future<TokenInformations?> getNFT(
+  Future<TokenInformation?> getNFTInfo(
     String address,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
@@ -67,7 +67,7 @@ class NFTRepository {
         ),
       );
     }
-    final tokenInformations = TokenInformations(
+    final tokenInformation = TokenInformation(
       address: address,
       name: token.name,
       id: token.id,
@@ -78,7 +78,7 @@ class NFTRepository {
       tokenProperties: tokenWithoutFile,
       tokenCollection: token.collection,
     );
-    return tokenInformations;
+    return tokenInformation;
   }
 
   Future<(List<AccountToken>, List<AccountToken>)> getNFTList(
@@ -140,7 +140,7 @@ class NFTRepository {
         collectionWithTokenId.add(collection);
       }
 
-      final tokenInformations = TokenInformations(
+      final tokenInformation = TokenInformation(
         address: tokenBalance.address,
         name: token.name,
         id: token.id,
@@ -154,24 +154,22 @@ class NFTRepository {
       );
 
       final accountToken = AccountToken(
-        tokenInformations: tokenInformations,
+        tokenInformation: tokenInformation,
         amount: fromBigInt(tokenBalance.amount).toDouble(),
       );
 
-      if (tokenInformations.tokenCollection != null &&
-          tokenInformations.tokenCollection!.isNotEmpty) {
+      if (tokenInformation.tokenCollection != null &&
+          tokenInformation.tokenCollection!.isNotEmpty) {
         nftCollectionList.add(accountToken);
       } else {
         nftList.add(accountToken);
       }
     }
     nftList.sort(
-      (a, b) =>
-          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
+      (a, b) => a.tokenInformation!.name!.compareTo(b.tokenInformation!.name!),
     );
     nftCollectionList.sort(
-      (a, b) =>
-          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
+      (a, b) => a.tokenInformation!.name!.compareTo(b.tokenInformation!.name!),
     );
     return (nftList, nftCollectionList);
   }
@@ -206,6 +204,6 @@ class NFTRepository {
 }
 
 abstract class NFTProviders {
-  static const getNFT = _getNFTProvider;
+  static const getNFTInfo = _getNFTInfoProvider;
   static const getNFTList = _getNFTListProvider;
 }

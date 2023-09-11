@@ -83,7 +83,7 @@ List<NftInfosOffChain> _filterNTFInCategory(
   for (final accountToken in accountTokens) {
     final nftInfoOffChain = account.nftInfosOffChainList!.where(
       (nftInfoOff) =>
-          nftInfoOff.id == accountToken.tokenInformations!.id &&
+          nftInfoOff.id == accountToken.tokenInformation!.id &&
           nftInfoOff.categoryNftIndex == categoryNftIndex,
     );
     listFilteredNFT.addAll(nftInfoOffChain);

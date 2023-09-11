@@ -2,7 +2,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
@@ -118,7 +118,7 @@ class NFTListDetail extends ConsumerWidget {
           ),
           // TODO(reddwarf03): Implement this feature (3)
           /* NFTCardBottom(
-          tokenInformations: tokenInformations,
+          tokenInformation: tokenInformation,
         ),*/
         ],
       ),
@@ -129,10 +129,10 @@ class NFTListDetail extends ConsumerWidget {
 class NFTCardBottom extends ConsumerWidget {
   const NFTCardBottom({
     super.key,
-    required this.tokenInformations,
+    required this.tokenInformation,
   });
 
-  final TokenInformations tokenInformations;
+  final TokenInformation tokenInformation;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -141,7 +141,7 @@ class NFTCardBottom extends ConsumerWidget {
         ref.watch(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
       // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
-      tokenInformations.id,
+      tokenInformation.id,
     );
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
@@ -159,7 +159,7 @@ class NFTCardBottom extends ConsumerWidget {
                         StateContainer.of(context).activeVibrations);
                     await accountSelected
                         .updateNftInfosOffChain(
-                            tokenAddress: widget.tokenInformations.address,
+                            tokenAddress: widget.tokenInformation.address,
                             favorite: false);
                   }),
                   child: const Icon(
@@ -179,7 +179,7 @@ class NFTCardBottom extends ConsumerWidget {
                         );
 
                     await selectedAccount.updateNftInfosOffChainFavorite(
-                      tokenInformations.id,
+                      tokenInformation.id,
                     );
                   },
                   child: nftInfosOffChain == null ||

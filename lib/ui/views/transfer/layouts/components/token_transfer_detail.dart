@@ -78,7 +78,7 @@ class TokenTransferDetail extends ConsumerWidget {
                 Text(
                   AmountFormatters.standard(
                     transfer.amount,
-                    'NFT "${transfer.accountToken!.tokenInformations!.name!}"',
+                    'NFT "${transfer.accountToken!.tokenInformation!.name!}"',
                   ),
                   style: theme.textStyleSize12W400Primary,
                 ),
@@ -117,7 +117,7 @@ class TokenTransferDetail extends ConsumerWidget {
                 Text(
                   AmountFormatters.standard(
                     transfer.accountToken!.amount! - transfer.amount,
-                    'NFT "${transfer.accountToken!.tokenInformations!.name!}"',
+                    'NFT "${transfer.accountToken!.tokenInformation!.name!}"',
                   ),
                   style: theme.textStyleSize12W400Primary,
                 ),

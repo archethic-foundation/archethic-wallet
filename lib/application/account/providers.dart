@@ -74,7 +74,7 @@ class AccountRepository {
     for (final accountToken in accountTokens) {
       final nftInfoOffChain = account.nftInfosOffChainList!.firstWhereOrNull(
         (nftInfoOff) =>
-            nftInfoOff.id == accountToken.tokenInformations!.id &&
+            nftInfoOff.id == accountToken.tokenInformation!.id &&
             nftInfoOff.categoryNftIndex == categoryNftIndex,
       );
       if (nftInfoOffChain == null) {

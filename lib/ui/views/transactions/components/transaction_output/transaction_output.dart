@@ -36,7 +36,7 @@ class TransactionOuput extends ConsumerWidget {
       borderColor: theme.backgroundRecentTxListCardTokenCreation!,
       backgroundColor: theme.backgroundRecentTxListCardTokenCreation!,
       onLongPress: () {
-        if (transaction.contactInformations == null &&
+        if (transaction.contactInformation == null &&
             transaction.recipient != null) {
           Sheets.showAppHeightNineSheet(
             context: context,
