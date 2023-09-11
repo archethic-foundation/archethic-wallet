@@ -174,12 +174,12 @@ class Account extends HiveObject with KeychainServiceMixin {
         NftInfosOffChain(
           categoryNftIndex: 0,
           favorite: false,
-          id: accountToken.tokenInformations!.id,
+          id: accountToken.tokenInformation!.id,
         ),
       );
 
       final nftInfoOffChainExists = nftInfosOffChainList!.any(
-        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformations!.id,
+        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
       );
 
       if (nftInfoOffChainExists == false) {
@@ -189,7 +189,7 @@ class Account extends HiveObject with KeychainServiceMixin {
         NftInfosOffChain(
           categoryNftIndex: 0,
           favorite: false,
-          id: accountToken.tokenInformations!.id,
+          id: accountToken.tokenInformation!.id,
         ),
       );
     }

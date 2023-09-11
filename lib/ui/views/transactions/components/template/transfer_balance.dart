@@ -39,7 +39,7 @@ class TransfertBalance extends ConsumerWidget {
             child
           else
             const TransactionHiddenValue(),
-        if (transaction.tokenInformations == null && transaction.amount != null)
+        if (transaction.tokenInformation == null && transaction.amount != null)
           if (settings.showBalances == true)
             Text(
               CurrencyUtil.convertAmountFormated(

@@ -1,4 +1,4 @@
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -83,13 +83,13 @@ class RecentTransaction extends HiveObject {
   @HiveField(10)
   String? type;
 
-  /// Token informations
+  /// Token Information
   @HiveField(11)
-  TokenInformations? tokenInformations;
+  TokenInformation? tokenInformation;
 
-  /// Contact informations
+  /// Contact Information
   @HiveField(12)
-  Contact? contactInformations;
+  Contact? contactInformation;
 
   /// Decrypted Secret
   @HiveField(14)

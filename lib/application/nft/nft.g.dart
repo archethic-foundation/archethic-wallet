@@ -21,7 +21,7 @@ final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>.internal(
 );
 
 typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
-String _$getNFTHash() => r'bd8af3a8e0ab3eace21cb12d4b5fc266453014a6';
+String _$getNFTInfoHash() => r'a59335fcff6d092a022ed269a6c906de7cd90cf5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -44,29 +44,29 @@ class _SystemHash {
   }
 }
 
-/// See also [_getNFT].
-@ProviderFor(_getNFT)
-const _getNFTProvider = _GetNFTFamily();
+/// See also [_getNFTInfo].
+@ProviderFor(_getNFTInfo)
+const _getNFTInfoProvider = _GetNFTInfoFamily();
 
-/// See also [_getNFT].
-class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
-  /// See also [_getNFT].
-  const _GetNFTFamily();
+/// See also [_getNFTInfo].
+class _GetNFTInfoFamily extends Family<AsyncValue<TokenInformation?>> {
+  /// See also [_getNFTInfo].
+  const _GetNFTInfoFamily();
 
-  /// See also [_getNFT].
-  _GetNFTProvider call(
+  /// See also [_getNFTInfo].
+  _GetNFTInfoProvider call(
     String address,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) {
-    return _GetNFTProvider(
+    return _GetNFTInfoProvider(
       address,
       keychainServiceKeyPair,
     );
   }
 
   @override
-  _GetNFTProvider getProviderOverride(
-    covariant _GetNFTProvider provider,
+  _GetNFTInfoProvider getProviderOverride(
+    covariant _GetNFTInfoProvider provider,
   ) {
     return call(
       provider.address,
@@ -86,34 +86,35 @@ class _GetNFTFamily extends Family<AsyncValue<TokenInformations?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getNFTProvider';
+  String? get name => r'_getNFTInfoProvider';
 }
 
-/// See also [_getNFT].
-class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
-  /// See also [_getNFT].
-  _GetNFTProvider(
+/// See also [_getNFTInfo].
+class _GetNFTInfoProvider extends AutoDisposeFutureProvider<TokenInformation?> {
+  /// See also [_getNFTInfo].
+  _GetNFTInfoProvider(
     String address,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) : this._internal(
-          (ref) => _getNFT(
-            ref as _GetNFTRef,
+          (ref) => _getNFTInfo(
+            ref as _GetNFTInfoRef,
             address,
             keychainServiceKeyPair,
           ),
-          from: _getNFTProvider,
-          name: r'_getNFTProvider',
+          from: _getNFTInfoProvider,
+          name: r'_getNFTInfoProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getNFTHash,
-          dependencies: _GetNFTFamily._dependencies,
-          allTransitiveDependencies: _GetNFTFamily._allTransitiveDependencies,
+                  : _$getNFTInfoHash,
+          dependencies: _GetNFTInfoFamily._dependencies,
+          allTransitiveDependencies:
+              _GetNFTInfoFamily._allTransitiveDependencies,
           address: address,
           keychainServiceKeyPair: keychainServiceKeyPair,
         );
 
-  _GetNFTProvider._internal(
+  _GetNFTInfoProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -129,12 +130,12 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
 
   @override
   Override overrideWith(
-    FutureOr<TokenInformations?> Function(_GetNFTRef provider) create,
+    FutureOr<TokenInformation?> Function(_GetNFTInfoRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetNFTProvider._internal(
-        (ref) => create(ref as _GetNFTRef),
+      override: _GetNFTInfoProvider._internal(
+        (ref) => create(ref as _GetNFTInfoRef),
         from: from,
         name: null,
         dependencies: null,
@@ -147,13 +148,13 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<TokenInformations?> createElement() {
-    return _GetNFTProviderElement(this);
+  AutoDisposeFutureProviderElement<TokenInformation?> createElement() {
+    return _GetNFTInfoProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _GetNFTProvider &&
+    return other is _GetNFTInfoProvider &&
         other.address == address &&
         other.keychainServiceKeyPair == keychainServiceKeyPair;
   }
@@ -168,7 +169,7 @@ class _GetNFTProvider extends AutoDisposeFutureProvider<TokenInformations?> {
   }
 }
 
-mixin _GetNFTRef on AutoDisposeFutureProviderRef<TokenInformations?> {
+mixin _GetNFTInfoRef on AutoDisposeFutureProviderRef<TokenInformation?> {
   /// The parameter `address` of this provider.
   String get address;
 
@@ -176,16 +177,16 @@ mixin _GetNFTRef on AutoDisposeFutureProviderRef<TokenInformations?> {
   KeychainServiceKeyPair get keychainServiceKeyPair;
 }
 
-class _GetNFTProviderElement
-    extends AutoDisposeFutureProviderElement<TokenInformations?>
-    with _GetNFTRef {
-  _GetNFTProviderElement(super.provider);
+class _GetNFTInfoProviderElement
+    extends AutoDisposeFutureProviderElement<TokenInformation?>
+    with _GetNFTInfoRef {
+  _GetNFTInfoProviderElement(super.provider);
 
   @override
-  String get address => (origin as _GetNFTProvider).address;
+  String get address => (origin as _GetNFTInfoProvider).address;
   @override
   KeychainServiceKeyPair get keychainServiceKeyPair =>
-      (origin as _GetNFTProvider).keychainServiceKeyPair;
+      (origin as _GetNFTInfoProvider).keychainServiceKeyPair;
 }
 
 String _$getNFTListHash() => r'3221ef9cab2cda3e080eb3eadded6f202dcb4dbe';

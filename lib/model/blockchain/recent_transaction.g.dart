@@ -28,8 +28,8 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       type: fields[10] as String?,
       decryptedSecret: (fields[14] as List?)?.cast<String>(),
     )
-      ..tokenInformations = fields[11] as TokenInformations?
-      ..contactInformations = fields[12] as Contact?;
+      ..tokenInformation = fields[11] as TokenInformation?
+      ..contactInformation = fields[12] as Contact?;
   }
 
   @override
@@ -55,9 +55,9 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       ..writeByte(10)
       ..write(obj.type)
       ..writeByte(11)
-      ..write(obj.tokenInformations)
+      ..write(obj.tokenInformation)
       ..writeByte(12)
-      ..write(obj.contactInformations)
+      ..write(obj.contactInformation)
       ..writeByte(14)
       ..write(obj.decryptedSecret);
   }

@@ -18,7 +18,7 @@ final _nftSearchBarProvider =
     return NftSearchBarNotifier();
   },
   dependencies: [
-    NFTProviders.getNFT,
+    NFTProviders.getNFTInfo,
     NftSearchBarProvider.initialNftSearchBar,
   ],
 );
@@ -51,7 +51,7 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
   void reset() {
     state = state.copyWith(
       loading: false,
-      tokenInformations: null,
+      tokenInformation: null,
       error: '',
     );
   }
@@ -76,23 +76,23 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
 
     state = state.copyWith(
       loading: true,
-      tokenInformations: null,
+      tokenInformation: null,
     );
 
-    final tokenInformations = await ref.read(
-      NFTProviders.getNFT(
+    final tokenInformation = await ref.read(
+      NFTProviders.getNFTInfo(
         searchCriteria,
         keychainServiceKeyPair,
       ).future,
     );
 
-    if (tokenInformations == null) {
+    if (tokenInformation == null) {
       state =
           state.copyWith(error: localizations!.invalidAddress, loading: false);
       return;
     }
     state = state.copyWith(
-      tokenInformations: tokenInformations,
+      tokenInformation: tokenInformation,
       searchCriteria: '',
       error: '',
       loading: false,

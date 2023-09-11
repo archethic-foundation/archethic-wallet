@@ -19,9 +19,9 @@ class TransactionOutputInformation extends ConsumerWidget {
     return TransactionInformation(
       isEmpty: transaction.recipient == null,
       message: '${localizations.txListTo} ${AddressFormatters(
-        transaction.contactInformations == null
+        transaction.contactInformation == null
             ? transaction.recipient!
-            : transaction.contactInformations!.format,
+            : transaction.contactInformation!.format,
       ).getShortString4()}',
     );
   }

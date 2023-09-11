@@ -35,7 +35,7 @@ class TransactionInput extends ConsumerWidget {
       borderColor: theme.backgroundRecentTxListCardTransferInput!,
       backgroundColor: theme.backgroundRecentTxListCardTransferInput!,
       onLongPress: () {
-        if (transaction.contactInformations == null &&
+        if (transaction.contactInformation == null &&
             transaction.from != null) {
           Sheets.showAppHeightNineSheet(
             context: context,

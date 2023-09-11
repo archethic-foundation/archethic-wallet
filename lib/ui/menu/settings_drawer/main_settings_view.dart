@@ -77,7 +77,7 @@ class MainMenuView extends ConsumerWidget {
                         onPressed: showCustom,
                       ),
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.title(text: localizations.informations),
+                      _SettingsListItem.title(text: localizations.information),
                       const _SettingsListItem.spacer(),
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected)

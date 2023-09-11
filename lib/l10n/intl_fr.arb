@@ -146,7 +146,7 @@
 	"backupSecretPhrase": "Phrase secrète de récupération",
 	"ok": "Ok",
 	"addressInfos": "Mon adresse publique pour recevoir des fonds",
-	"informations": "Informations",
+	"information": "Informations",
 	"updateAvailableTitle": "Mise à jour de l'application",
 	"updateAvailableDesc": "Une nouvelle version (%1) est disponible.\n\nVeuillez mettre à jour l'application.",
 	"nodesHeader": "Noeuds",

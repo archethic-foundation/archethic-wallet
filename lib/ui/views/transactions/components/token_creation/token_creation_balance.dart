@@ -20,11 +20,11 @@ class TokenCreationBalance extends ConsumerWidget {
     final settings = ref.watch(SettingsProviders.settings);
 
     final currency =
-        NumberUtil.formatThousands(transaction.tokenInformations!.supply!);
+        NumberUtil.formatThousands(transaction.tokenInformation!.supply!);
 
-    final symbol = transaction.tokenInformations!.symbol! == ''
+    final symbol = transaction.tokenInformation!.symbol! == ''
         ? 'NFT'
-        : transaction.tokenInformations!.symbol!;
+        : transaction.tokenInformation!.symbol!;
 
     return settings.showBalances
         ? AutoSizeText(

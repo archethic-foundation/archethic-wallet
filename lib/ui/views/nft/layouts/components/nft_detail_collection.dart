@@ -58,13 +58,13 @@ class NFTDetailCollection extends ConsumerWidget {
           shrinkWrap: true,
           itemCount: collection.length,
           builder: (context, index) {
-            final tokenInformations = collection[index];
+            final tokenInformation = collection[index];
 
             return ArchethicScrollbar(
               child: Column(
                 children: [
                   Text(
-                    '${tokenInformations['name']}',
+                    '${tokenInformation['name']}',
                     style: theme.textStyleSize10W100Primary,
                   ),
                   const SizedBox(
@@ -82,18 +82,18 @@ class NFTDetailCollection extends ConsumerWidget {
                         widget: NFTDetail(
                           address: address,
                           name: name,
-                          nameInCollection: tokenInformations['name'],
-                          properties: tokenInformations,
+                          nameInCollection: tokenInformation['name'],
+                          properties: tokenInformation,
                           collection: const [],
                           symbol: symbol,
-                          tokenId: tokenInformations['id'],
+                          tokenId: tokenInformation['id'],
                           detailCollection: true,
                         ),
                       );
                     },
                     child: NFTThumbnail(
                       address: address,
-                      properties: tokenInformations,
+                      properties: tokenInformation,
                       roundBorder: true,
                     ),
                   ),

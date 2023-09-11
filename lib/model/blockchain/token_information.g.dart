@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'token_informations.dart';
+part of 'token_information.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
+class TokenInformationAdapter extends TypeAdapter<TokenInformation> {
   @override
   final int typeId = 9;
 
   @override
-  TokenInformations read(BinaryReader reader) {
+  TokenInformation read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TokenInformations(
+    return TokenInformation(
       address: fields[0] as String?,
       name: fields[1] as String?,
       id: fields[10] as String?,
@@ -33,7 +33,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
   }
 
   @override
-  void write(BinaryWriter writer, TokenInformations obj) {
+  void write(BinaryWriter writer, TokenInformation obj) {
     writer
       ..writeByte(10)
       ..writeByte(0)
@@ -64,7 +64,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TokenInformationsAdapter &&
+      other is TokenInformationAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

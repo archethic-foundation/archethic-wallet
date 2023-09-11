@@ -199,7 +199,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                     if (widget.detailCollection == false) {
                       accountToken = accountSelected.accountNFT!.firstWhere(
                         (element) =>
-                            element.tokenInformations!.id == widget.tokenId,
+                            element.tokenInformation!.id == widget.tokenId,
                       );
                     } else {
                       accountToken = accountSelected.accountNFTCollections![0];

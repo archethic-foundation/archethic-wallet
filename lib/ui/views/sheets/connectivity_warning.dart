@@ -27,7 +27,7 @@ class ConnectivityWarning extends ConsumerWidget {
       ),
       child: Column(
         children: <Widget>[
-          SheetHeader(title: localizations.informations),
+          SheetHeader(title: localizations.information),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
