@@ -16,6 +16,7 @@ import 'package:aewallet/ui/themes/theme_navy_blue.dart';
 import 'package:aewallet/ui/themes/theme_navy_blue_flat.dart';
 import 'package:aewallet/ui/themes/theme_pearl_grey.dart';
 import 'package:aewallet/ui/themes/theme_pearl_grey_flat.dart';
+import 'package:aewallet/ui/themes/theme_purple.dart';
 import 'package:aewallet/ui/themes/theme_sapphire_blue.dart';
 import 'package:aewallet/ui/themes/theme_sapphire_blue_flat.dart';
 import 'package:aewallet/ui/themes/theme_sea_green.dart';
@@ -42,7 +43,8 @@ enum ThemeOptions {
   sapphireBlue(false),
   sapphireBlueFlat(true),
   seaGreen(false),
-  seaGreenFlat(true);
+  seaGreenFlat(true),
+  purple(false);
 
   const ThemeOptions(this.isFlat);
   final bool isFlat;
@@ -96,6 +98,8 @@ class ThemeSetting extends SettingSelectionItem {
         return 'Sapphire Blue Flat';
       case ThemeOptions.seaGreenFlat:
         return 'Sea Green Flat';
+      case ThemeOptions.purple:
+        return 'Purple';
     }
   }
 
@@ -139,6 +143,8 @@ class ThemeSetting extends SettingSelectionItem {
         return SapphireBlueFlatTheme();
       case ThemeOptions.seaGreenFlat:
         return SeaGreenFlatTheme();
+      case ThemeOptions.purple:
+        return PurpleTheme();
     }
   }
 
