@@ -112,7 +112,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     );
                   },
                 )
-              else if (preferences.mainScreenCurrentPage == 1 ||
+              else if (preferences.mainScreenCurrentPage == 0 ||
+                  preferences.mainScreenCurrentPage == 1 ||
                   preferences.mainScreenCurrentPage == 2)
                 preferences.showBalances
                     ? const MainAppBarIconBalanceShowed()

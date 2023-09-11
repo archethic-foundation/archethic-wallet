@@ -182,7 +182,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                               context: context,
                                               ref: ref,
                                               widget:
-                                                  const CreateDiscussionValidationSheet(),
+                                                  CreateDiscussionValidationSheet(),
                                               onDisposed: () {
                                                 formNotifier.resetValidation();
                                               },
