@@ -1,5 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +33,25 @@ class ContactList extends ConsumerWidget {
             ),
             itemCount: contactsList.length,
             itemBuilder: (BuildContext context, int index) {
-              // Build contact
-              return SingleContact(
-                contact: contactsList[index],
-                account: accounts
+              AsyncValue<AccountBalance> asyncAccountBalance;
+              final contact = contactsList[index];
+              if (contact.type == ContactType.keychainService.name) {
+                final account = accounts
                     ?.where(
                       (element) =>
                           element.lastAddress == contactsList[index].address,
                     )
-                    .firstOrNull,
+                    .firstOrNull;
+                asyncAccountBalance = AsyncValue.data(account!.balance!);
+              } else {
+                asyncAccountBalance = ref.watch(
+                    ContactProviders.getBalance(address: contact.address));
+              }
+
+              // Build contact
+              return SingleContact(
+                contact: contactsList[index],
+                accountBalance: asyncAccountBalance,
               )
                   .animate(delay: (100 * index).ms)
                   .fadeIn(duration: 900.ms, delay: 200.ms)

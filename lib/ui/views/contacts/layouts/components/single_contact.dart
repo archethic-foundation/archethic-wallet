@@ -1,6 +1,4 @@
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -16,23 +14,16 @@ class SingleContact extends ConsumerWidget {
   const SingleContact({
     super.key,
     required this.contact,
-    required this.account,
+    required this.accountBalance,
   });
 
   final Contact contact;
-  final Account? account;
+  final AsyncValue<AccountBalance> accountBalance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    AsyncValue<AccountBalance> asyncAccountBalance;
-    if (contact.type == ContactType.keychainService.name) {
-      asyncAccountBalance = AsyncValue.data(account!.balance!);
-    } else {
-      asyncAccountBalance =
-          ref.watch(ContactProviders.getBalance(address: contact.address));
-    }
     return TextButton(
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -98,7 +89,7 @@ class SingleContact extends ConsumerWidget {
                     style: theme.textStyleSize14W600Primary,
                   ),
                 ),
-                SingleContactBalance(accountBalance: asyncAccountBalance),
+                SingleContactBalance(accountBalance: accountBalance),
               ],
             ),
           ],
