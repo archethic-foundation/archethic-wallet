@@ -156,69 +156,43 @@ class Account extends HiveObject with KeychainServiceMixin {
   ) async {
     this.accountNFT = accountNFT;
     this.accountNFTCollections = accountNFTCollections;
-    var nftInfosOffChainExist = false;
-    if (accountNFT != null) {
-      for (final accountToken in accountNFT) {
-        if (nftInfosOffChainList == null) {
-          nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
-          nftInfosOffChainList!.add(
-            NftInfosOffChain(
-              categoryNftIndex: 0,
-              favorite: false,
-              id: accountToken.tokenInformations!.id,
-            ),
-          );
-        }
-        for (final nftInfosOffChain in nftInfosOffChainList!) {
-          nftInfosOffChainExist = false;
-          if (accountToken.tokenInformations!.id == nftInfosOffChain.id) {
-            nftInfosOffChainExist = true;
-          }
-        }
-        if (nftInfosOffChainExist == false) {
-          nftInfosOffChainList!.add(
-            NftInfosOffChain(
-              categoryNftIndex: 0,
-              favorite: false,
-              id: accountToken.tokenInformations!.id,
-            ),
-          );
-        }
-      }
-    }
 
-    if (accountNFTCollections != null) {
-      for (final accountNFTCollection in accountNFTCollections) {
-        if (nftInfosOffChainList == null) {
-          nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
-          nftInfosOffChainList!.add(
-            NftInfosOffChain(
-              categoryNftIndex: 0,
-              favorite: false,
-              id: accountNFTCollection.tokenInformations!.id,
-            ),
-          );
-        }
-        for (final nftInfosOffChain in nftInfosOffChainList!) {
-          nftInfosOffChainExist = false;
-          if (accountNFTCollection.tokenInformations!.id ==
-              nftInfosOffChain.id) {
-            nftInfosOffChainExist = true;
-          }
-        }
-        if (nftInfosOffChainExist == false) {
-          nftInfosOffChainList!.add(
-            NftInfosOffChain(
-              categoryNftIndex: 0,
-              favorite: false,
-              id: accountNFTCollection.tokenInformations!.id,
-            ),
-          );
-        }
-      }
-    }
+    _addToken(accountNFT);
+    _addToken(accountNFTCollections);
 
     await updateAccount();
+  }
+
+  void _addToken(List<AccountToken>? accountTokens) {
+    if (accountTokens == null) {
+      return;
+    }
+
+    for (final accountToken in accountTokens) {
+      nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
+      nftInfosOffChainList!.add(
+        NftInfosOffChain(
+          categoryNftIndex: 0,
+          favorite: false,
+          id: accountToken.tokenInformations!.id,
+        ),
+      );
+
+      final nftInfoOffChainExists = nftInfosOffChainList!.any(
+        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformations!.id,
+      );
+
+      if (nftInfoOffChainExists == false) {
+        continue;
+      }
+      nftInfosOffChainList!.add(
+        NftInfosOffChain(
+          categoryNftIndex: 0,
+          favorite: false,
+          id: accountToken.tokenInformations!.id,
+        ),
+      );
+    }
   }
 
   Future<void> updateBalance() async {
