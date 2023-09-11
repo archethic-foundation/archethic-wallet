@@ -1,8 +1,10 @@
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -13,15 +15,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SingleContactBalance extends ConsumerWidget {
   const SingleContactBalance({
     super.key,
+    required this.contact,
     required this.accountBalance,
   });
 
+  final Contact contact;
   final AsyncValue<AccountBalance> accountBalance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return accountBalance.when(
       data: (accountBalance) {
+        ContactProviders.saveContact(
+          contact: contact,
+        );
+
         final theme = ref.watch(ThemeProviders.selectedTheme);
         final settings = ref.watch(SettingsProviders.settings);
         final primaryCurrency =

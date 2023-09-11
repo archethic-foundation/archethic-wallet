@@ -86,6 +86,7 @@ class ContactDetail extends ConsumerWidget {
                       Expanded(
                         flex: 2,
                         child: SingleContactBalance(
+                          contact: contact,
                           accountBalance: asyncAccountBalance,
                         ),
                       ),

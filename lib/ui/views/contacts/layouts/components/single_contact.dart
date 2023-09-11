@@ -89,7 +89,10 @@ class SingleContact extends ConsumerWidget {
                     style: theme.textStyleSize14W600Primary,
                   ),
                 ),
-                SingleContactBalance(accountBalance: accountBalance),
+                SingleContactBalance(
+                  contact: contact,
+                  accountBalance: accountBalance,
+                ),
               ],
             ),
           ],
