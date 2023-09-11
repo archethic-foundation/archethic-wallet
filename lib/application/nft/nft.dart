@@ -93,7 +93,7 @@ class NFTRepository {
 
     final tokenAddressList = <String>[];
     if (balance == null) {
-      return (<AccountToken>[], <AccountToken>[]);
+      return (nftList, nftCollectionList);
     }
 
     for (final tokenBalance in balance.token) {
@@ -114,66 +114,61 @@ class NFTRepository {
               'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
         );
 
-    final nftCollectionMap = <String, dynamic>{};
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
-      if (token != null && token.type == 'non-fungible') {
-        if (secretMap[tokenBalance.address] != null &&
-            secretMap[tokenBalance.address]!.data != null &&
-            secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
-          token.properties.addAll(
-            _tokenPropertiesDecryptedSecret(
-              keypair: keychainSecuredInfos.services[nameAccount]!.keyPair!,
-              ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
-            ),
-          );
-        }
 
-        final collectionWithTokenId = <Map<String, dynamic>>[];
-        var numTokenId = 1;
-        for (final collection in token.collection) {
-          collection['id'] = numTokenId.toString();
-          numTokenId++;
-          collectionWithTokenId.add(collection);
-        }
+      if (token == null || token.type != 'non-fungible') {
+        continue;
+      }
 
-        final tokenInformations = TokenInformations(
-          address: tokenBalance.address,
-          name: token.name,
-          id: token.id,
-          aeip: token.aeip,
-          type: token.type,
-          supply: fromBigInt(token.supply).toDouble(),
-          symbol: token.symbol,
-          decimals: token.decimals,
-          tokenCollection: collectionWithTokenId,
-          tokenProperties: token.properties,
+      if (secretMap[tokenBalance.address] != null &&
+          secretMap[tokenBalance.address]!.data != null &&
+          secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
+        token.properties.addAll(
+          _tokenPropertiesDecryptedSecret(
+            keypair: keychainSecuredInfos.services[nameAccount]!.keyPair!,
+            ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
+          ),
         );
+      }
 
-        if (tokenInformations.tokenCollection != null &&
-            tokenInformations.tokenCollection!.isNotEmpty) {
-          final accountNFT = AccountToken(
-            tokenInformations: tokenInformations,
-            amount: fromBigInt(tokenBalance.amount).toDouble(),
-          );
-          nftCollectionMap[tokenInformations.address!] = accountNFT;
-        } else {
-          final accountNFTCollection = AccountToken(
-            tokenInformations: tokenInformations,
-            amount: fromBigInt(tokenBalance.amount).toDouble(),
-          );
-          nftList.add(accountNFTCollection);
-        }
+      final collectionWithTokenId = <Map<String, dynamic>>[];
+      var numTokenId = 1;
+      for (final collection in token.collection) {
+        collection['id'] = numTokenId.toString();
+        numTokenId++;
+        collectionWithTokenId.add(collection);
+      }
+
+      final tokenInformations = TokenInformations(
+        address: tokenBalance.address,
+        name: token.name,
+        id: token.id,
+        aeip: token.aeip,
+        type: token.type,
+        supply: fromBigInt(token.supply).toDouble(),
+        symbol: token.symbol,
+        decimals: token.decimals,
+        tokenCollection: collectionWithTokenId,
+        tokenProperties: token.properties,
+      );
+
+      final accountToken = AccountToken(
+        tokenInformations: tokenInformations,
+        amount: fromBigInt(tokenBalance.amount).toDouble(),
+      );
+
+      if (tokenInformations.tokenCollection != null &&
+          tokenInformations.tokenCollection!.isNotEmpty) {
+        nftCollectionList.add(accountToken);
+      } else {
+        nftList.add(accountToken);
       }
     }
     nftList.sort(
       (a, b) =>
           a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
     );
-    nftCollectionMap.forEach((key, value) {
-      nftCollectionList.add(value);
-    });
-
     nftCollectionList.sort(
       (a, b) =>
           a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),

@@ -8,6 +8,7 @@ import 'package:aewallet/domain/repositories/account.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -52,55 +53,43 @@ class AccountRepository {
     int categoryNftIndex, {
     bool? favorite,
   }) {
-    final accountNFTFiltered = <AccountToken>[];
-    if (account.accountNFT == null && account.accountNFTCollections == null) {
-      return accountNFTFiltered;
-    } else {
-      if (account.nftInfosOffChainList == null ||
-          account.nftInfosOffChainList!.isEmpty) {
-        return account.accountNFT!;
-      } else {
-        for (final accountToken in account.accountNFT!) {
-          final nftInfosOffChain = account.nftInfosOffChainList!
-              .where(
-                (element) => element.id == accountToken.tokenInformations!.id,
-              )
-              .firstOrNull;
-          if (nftInfosOffChain != null &&
-              nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
-            if (favorite == null) {
-              accountNFTFiltered.add(accountToken);
-            } else {
-              if (nftInfosOffChain.favorite == favorite) {
-                accountNFTFiltered.add(accountToken);
-              }
-            }
-          }
-        }
-        if (account.accountNFTCollections != null) {
-          for (final accountNFTCollection in account.accountNFTCollections!) {
-            final nftInfosOffChain = account.nftInfosOffChainList!
-                .where(
-                  (element) =>
-                      element.id == accountNFTCollection.tokenInformations!.id,
-                )
-                .firstOrNull;
-            if (nftInfosOffChain != null &&
-                nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
-              if (favorite == null) {
-                accountNFTFiltered.add(accountNFTCollection);
-              } else {
-                if (nftInfosOffChain.favorite == favorite) {
-                  accountNFTFiltered.add(accountNFTCollection);
-                }
-              }
-            }
-          }
-        }
+    final accountNFTFiltered = <AccountToken>[
+      ...filterTokens(account, account.accountNFT, categoryNftIndex),
+      ...filterTokens(account, account.accountNFTCollections, categoryNftIndex),
+    ];
+    return accountNFTFiltered;
+  }
 
-        return accountNFTFiltered;
+  List<AccountToken> filterTokens(
+    Account account,
+    List<AccountToken>? accountTokens,
+    int categoryNftIndex, {
+    bool? favorite,
+  }) {
+    final listTokens = <AccountToken>[];
+    if (accountTokens == null) {
+      return listTokens;
+    }
+
+    for (final accountToken in accountTokens) {
+      final nftInfoOffChain = account.nftInfosOffChainList!.firstWhereOrNull(
+        (nftInfoOff) =>
+            nftInfoOff.id == accountToken.tokenInformations!.id &&
+            nftInfoOff.categoryNftIndex == categoryNftIndex,
+      );
+      if (nftInfoOffChain == null) {
+        continue;
+      }
+      if (favorite == null) {
+        listTokens.add(accountToken);
+      } else {
+        if (nftInfoOffChain.favorite == favorite) {
+          listTokens.add(accountToken);
+        }
       }
     }
+
+    return listTokens;
   }
 }
 
