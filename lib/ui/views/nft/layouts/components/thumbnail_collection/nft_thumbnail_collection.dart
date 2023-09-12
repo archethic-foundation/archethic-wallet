@@ -1,8 +1,5 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTThumbnailCollection extends ConsumerWidget {
@@ -23,9 +20,6 @@ class NFTThumbnailCollection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     if (collection.isEmpty) {
       return Container();
     }
