@@ -16,6 +16,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'thumbnail_collection/nft_thumbnail_collection.dart';
+
 class NFTListDetail extends ConsumerWidget {
   const NFTListDetail({
     super.key,
@@ -108,7 +110,11 @@ class NFTListDetail extends ConsumerWidget {
                 side: const BorderSide(color: Colors.white10),
               ),
               child: collection.isNotEmpty
-                  ? const Text('Collection')
+                  ? NFTThumbnailCollection(
+                      address: address,
+                      collection: collection,
+                      roundBorder: roundBorder,
+                    )
                   : NFTThumbnail(
                       address: address,
                       properties: properties,

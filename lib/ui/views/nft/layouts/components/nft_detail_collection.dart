@@ -55,6 +55,7 @@ class NFTDetailCollection extends ConsumerWidget {
                   ? 3
                   : 2,
           crossAxisSpacing: 20,
+          mainAxisSpacing: 30,
           shrinkWrap: true,
           itemCount: collection.length,
           builder: (context, index) {

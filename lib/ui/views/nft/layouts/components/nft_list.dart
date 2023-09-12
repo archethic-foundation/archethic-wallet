@@ -105,6 +105,7 @@ class NFTList extends ConsumerWidget {
                   ? 3
                   : 2,
           crossAxisSpacing: 20,
+          mainAxisSpacing: 40,
           shrinkWrap: true,
           itemCount: accountTokenList.length,
           builder: (context, index) {
