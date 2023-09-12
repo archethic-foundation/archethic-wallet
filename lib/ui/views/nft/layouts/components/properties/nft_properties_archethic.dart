@@ -8,14 +8,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class NFTPropertiesArchethic extends ConsumerWidget {
   const NFTPropertiesArchethic({
     super.key,
-    required this.properties,
+    required this.property,
   });
 
-  final Map<String, dynamic> properties;
+  final Map<String, dynamic> property;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    if (property.entries.first.value is String == false) {
+      return const SizedBox();
+    }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -46,7 +50,7 @@ class NFTPropertiesArchethic extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                properties.entries.first.key,
+                                property.entries.first.key,
                                 style: theme.textStyleSize12W600Primary,
                               ),
                             ),
@@ -54,7 +58,7 @@ class NFTPropertiesArchethic extends ConsumerWidget {
                               width: 200,
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                properties.entries.first.value,
+                                property.entries.first.value,
                                 style: theme.textStyleSize12W400Primary,
                               ),
                             ),

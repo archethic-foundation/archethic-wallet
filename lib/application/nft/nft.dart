@@ -121,10 +121,12 @@ class NFTRepository {
         continue;
       }
 
+      final newProperties = {...token.properties};
+
       if (secretMap[tokenBalance.address] != null &&
           secretMap[tokenBalance.address]!.data != null &&
           secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
-        token.properties.addAll(
+        newProperties.addAll(
           _tokenPropertiesDecryptedSecret(
             keypair: keychainSecuredInfos.services[nameAccount]!.keyPair!,
             ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
@@ -150,7 +152,7 @@ class NFTRepository {
         symbol: token.symbol,
         decimals: token.decimals,
         tokenCollection: collectionWithTokenId,
-        tokenProperties: token.properties,
+        tokenProperties: newProperties,
       );
 
       final accountToken = AccountToken(

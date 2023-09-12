@@ -9,22 +9,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class NFTPropertiesOpensea extends ConsumerWidget {
   const NFTPropertiesOpensea({
     super.key,
-    required this.properties,
+    required this.property,
   });
 
-  final Map<String, dynamic> properties;
+  final Map<String, dynamic> property;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final propertyWidgets = <Widget>[];
-    final propertyValueList = properties.values.first as List<dynamic>;
+    final propertyValueList = property.values.first as List<dynamic>;
 
     for (final Map<dynamic, dynamic> propertyValue in propertyValueList) {
       propertyWidgets.add(
         NFTPropertiesArchethic(
-          properties: {propertyValue['trait_type']: propertyValue['value']},
+          property: {propertyValue['trait_type']: propertyValue['value']},
         ),
       );
     }

@@ -88,7 +88,7 @@ class NFTDetailProperties extends ConsumerWidget {
     final openseaValidationResult = openseaSchema.validate(property);
     if (openseaValidationResult.isValid) {
       return NFTPropertiesOpensea(
-        properties: properties,
+        property: property,
       );
     }
 
@@ -99,7 +99,7 @@ class NFTDetailProperties extends ConsumerWidget {
     final archethicValidationResult = archethicSchema.validate(property);
     if (archethicValidationResult.isValid) {
       return NFTPropertiesArchethic(
-        properties: properties,
+        property: property,
       );
     }
 
