@@ -1,9 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -144,6 +147,17 @@ Future<bool> _isContactExistsWithAddress(
       .isContactExistsWithAddress(address);
 }
 
+@riverpod
+Future<AccountBalance> _getBalance(
+  _GetBalanceRef ref, {
+  String? address,
+}) async {
+  if (address == null) {
+    throw Exception('Address is null');
+  }
+  return ref.watch(_contactRepositoryProvider).getBalance(address);
+}
+
 class ContactRepository {
   Future<List<Contact>> getAllContacts() async {
     return sl.get<DBHelper>().getContacts();
@@ -157,6 +171,34 @@ class ContactRepository {
               contact.format.toLowerCase().contains(search.toLowerCase()),
         )
         .toList();
+  }
+
+  Future<AccountBalance> getBalance(String addressContact) async {
+    final balanceGetResponseMap =
+        await sl.get<AppService>().getBalanceGetResponse([addressContact]);
+
+    if (balanceGetResponseMap[addressContact] == null) {
+      return AccountBalance(
+        nativeTokenName: AccountBalance.cryptoCurrencyLabel,
+        nativeTokenValue: 0,
+      );
+    }
+    final balanceGetResponse = balanceGetResponseMap[addressContact]!;
+    final accountBalance = AccountBalance(
+      nativeTokenName: AccountBalance.cryptoCurrencyLabel,
+      nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),
+    );
+
+    for (final token in balanceGetResponse.token) {
+      if (token.tokenId != null) {
+        if (token.tokenId == 0) {
+          accountBalance.tokensFungiblesNb++;
+        } else {
+          accountBalance.nftNb++;
+        }
+      }
+    }
+    return accountBalance;
   }
 
   Future<void> saveContact(Contact newContact) async {
@@ -210,6 +252,7 @@ abstract class ContactProviders {
   static const getContactWithGenesisPublicKey =
       _getContactWithGenesisPublicKeyProvider;
   static final getSelectedContact = _getSelectedContactProvider;
+  static const getBalance = _getBalanceProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_contactRepositoryProvider).clear();
@@ -221,6 +264,7 @@ abstract class ContactProviders {
       ..invalidate(getContactWithAddress)
       ..invalidate(getContactWithPublicKey)
       ..invalidate(getContactWithGenesisPublicKey)
-      ..invalidate(getSelectedContact);
+      ..invalidate(getSelectedContact)
+      ..invalidate(getBalance);
   }
 }

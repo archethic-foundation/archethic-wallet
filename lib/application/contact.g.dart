@@ -1240,5 +1240,134 @@ class _IsContactExistsWithAddressProviderElement
   String? get address =>
       (origin as _IsContactExistsWithAddressProvider).address;
 }
+
+String _$getBalanceHash() => r'6db260cee3bd0bcbe6222c6da8836d88feba18db';
+
+/// See also [_getBalance].
+@ProviderFor(_getBalance)
+const _getBalanceProvider = _GetBalanceFamily();
+
+/// See also [_getBalance].
+class _GetBalanceFamily extends Family<AsyncValue<AccountBalance>> {
+  /// See also [_getBalance].
+  const _GetBalanceFamily();
+
+  /// See also [_getBalance].
+  _GetBalanceProvider call({
+    String? address,
+  }) {
+    return _GetBalanceProvider(
+      address: address,
+    );
+  }
+
+  @override
+  _GetBalanceProvider getProviderOverride(
+    covariant _GetBalanceProvider provider,
+  ) {
+    return call(
+      address: provider.address,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getBalanceProvider';
+}
+
+/// See also [_getBalance].
+class _GetBalanceProvider extends AutoDisposeFutureProvider<AccountBalance> {
+  /// See also [_getBalance].
+  _GetBalanceProvider({
+    String? address,
+  }) : this._internal(
+          (ref) => _getBalance(
+            ref as _GetBalanceRef,
+            address: address,
+          ),
+          from: _getBalanceProvider,
+          name: r'_getBalanceProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getBalanceHash,
+          dependencies: _GetBalanceFamily._dependencies,
+          allTransitiveDependencies:
+              _GetBalanceFamily._allTransitiveDependencies,
+          address: address,
+        );
+
+  _GetBalanceProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.address,
+  }) : super.internal();
+
+  final String? address;
+
+  @override
+  Override overrideWith(
+    FutureOr<AccountBalance> Function(_GetBalanceRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetBalanceProvider._internal(
+        (ref) => create(ref as _GetBalanceRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        address: address,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<AccountBalance> createElement() {
+    return _GetBalanceProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetBalanceProvider && other.address == address;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin _GetBalanceRef on AutoDisposeFutureProviderRef<AccountBalance> {
+  /// The parameter `address` of this provider.
+  String? get address;
+}
+
+class _GetBalanceProviderElement
+    extends AutoDisposeFutureProviderElement<AccountBalance>
+    with _GetBalanceRef {
+  _GetBalanceProviderElement(super.provider);
+
+  @override
+  String? get address => (origin as _GetBalanceProvider).address;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

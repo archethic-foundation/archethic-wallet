@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/model/data/account_balance.dart';
 // Package imports:
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
@@ -8,7 +9,7 @@ part 'contact.g.dart';
 
 enum ContactType { keychainService, externalContact }
 
-/// Next field available : 7
+/// Next field available : 8
 @HiveType(typeId: HiveTypeIds.contact)
 class Contact extends HiveObject {
   Contact({
@@ -16,6 +17,7 @@ class Contact extends HiveObject {
     required this.address,
     required this.type,
     required this.publicKey,
+    this.balance,
     this.favorite,
   });
 
@@ -38,4 +40,8 @@ class Contact extends HiveObject {
   /// Favorite
   @HiveField(6)
   bool? favorite;
+
+  /// Balance
+  @HiveField(7)
+  AccountBalance? balance;
 }

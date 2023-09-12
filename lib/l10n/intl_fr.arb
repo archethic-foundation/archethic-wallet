@@ -552,6 +552,10 @@
 	"next": "Suivant",
 	"name": "Nom",
 	"discussionNoMessages": "Votre discussion ne dispose pour le moment d'aucun message",
+	"deleteContact": "Supprimer le contact",
+	"discussion": "Discussion",
+	"favorites": "Favoris",
+	"explorer": "Explorateur",
 	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea",
 	"nftPropertieUnknownStructure": "Structure des propriétés inconnue"
 }

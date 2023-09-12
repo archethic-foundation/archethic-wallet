@@ -16,10 +16,14 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+// ignore: must_be_immutable
 class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
-  const CreateDiscussionValidationSheet({
+  CreateDiscussionValidationSheet({
     super.key,
+    this.discussionCreationSuccess,
   });
+
+  Function? discussionCreationSuccess;
 
   @override
   ConsumerState<CreateDiscussionValidationSheet> createState() =>
@@ -135,7 +139,7 @@ class _CreateDiscussionValidationSheetState
                               ref: ref,
                               widget: ContactDetail(
                                 contact: formState.membersList[index],
-                                editMode: false,
+                                readOnly: true,
                               ),
                             );
                           },
@@ -190,6 +194,7 @@ class _CreateDiscussionValidationSheetState
                                   .pop(); // create discussion validation sheet
                               Navigator.of(context)
                                   .pop(); // create discussion sheet
+                              widget.discussionCreationSuccess?.call();
                             },
                             failure: (failure) {
                               UIUtil.showSnackbar(
