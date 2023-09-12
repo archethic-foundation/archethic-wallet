@@ -54,13 +54,16 @@ class AccountRepository {
     bool? favorite,
   }) {
     final accountNFTFiltered = <AccountToken>[
-      ...filterTokens(account, account.accountNFT, categoryNftIndex),
-      ...filterTokens(account, account.accountNFTCollections, categoryNftIndex),
+      ..._filterTokens(account, account.accountNFT, categoryNftIndex),
+      // A collection of NFT has the same address for all the sub NFT, we only want to display one NFT in that case
+      ..._getUniqueTokens(
+        _filterTokens(account, account.accountNFTCollections, categoryNftIndex),
+      ),
     ];
     return accountNFTFiltered;
   }
 
-  List<AccountToken> filterTokens(
+  List<AccountToken> _filterTokens(
     Account account,
     List<AccountToken>? accountTokens,
     int categoryNftIndex, {
@@ -90,6 +93,13 @@ class AccountRepository {
     }
 
     return listTokens;
+  }
+
+  List<AccountToken> _getUniqueTokens(List<AccountToken> accountTokens) {
+    final set = <String>{};
+    return accountTokens
+        .where((e) => set.add(e.tokenInformation?.address ?? ''))
+        .toList();
   }
 }
 

@@ -81,12 +81,16 @@ List<NftInfosOffChain> _filterNTFInCategory(
   }
 
   for (final accountToken in accountTokens) {
-    final nftInfoOffChain = account.nftInfosOffChainList!.where(
-      (nftInfoOff) =>
-          nftInfoOff.id == accountToken.tokenInformation!.id &&
-          nftInfoOff.categoryNftIndex == categoryNftIndex,
-    );
-    listFilteredNFT.addAll(nftInfoOffChain);
+    final nftInfoOffChain = account.nftInfosOffChainList!
+        .where(
+          (nftInfoOff) =>
+              nftInfoOff.id == accountToken.tokenInformation!.id &&
+              nftInfoOff.categoryNftIndex == categoryNftIndex,
+        )
+        .firstOrNull;
+    if (nftInfoOffChain != null) {
+      listFilteredNFT.add(nftInfoOffChain);
+    }
   }
 
   return listFilteredNFT;

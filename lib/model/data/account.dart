@@ -182,7 +182,7 @@ class Account extends HiveObject with KeychainServiceMixin {
         (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
       );
 
-      if (nftInfoOffChainExists == false) {
+      if (nftInfoOffChainExists == true) {
         continue;
       }
       nftInfosOffChainList!.add(
