@@ -19,7 +19,6 @@ import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/string_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -186,8 +185,7 @@ class DBHelper {
 
     for (final contact in contactsList) {
       // decode : hive encode stored strings, we need to decode it
-      if (contact.name.decode().toLowerCase() ==
-          nameWithAt.decode().toLowerCase()) {
+      if (contact.format.toLowerCase() == nameWithAt.toLowerCase()) {
         contactSelected = contact;
       }
     }
