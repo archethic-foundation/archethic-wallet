@@ -168,20 +168,11 @@ class Account extends HiveObject with KeychainServiceMixin {
       return;
     }
 
+    nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
     for (final accountToken in accountTokens) {
-      nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
-      nftInfosOffChainList!.add(
-        NftInfosOffChain(
-          categoryNftIndex: 0,
-          favorite: false,
-          id: accountToken.tokenInformation!.id,
-        ),
-      );
-
       final nftInfoOffChainExists = nftInfosOffChainList!.any(
         (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
       );
-
       if (nftInfoOffChainExists == true) {
         continue;
       }
