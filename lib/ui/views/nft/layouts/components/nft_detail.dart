@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -195,15 +196,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
-                    late AccountToken accountToken;
-                    if (widget.detailCollection == false) {
-                      accountToken = accountSelected.accountNFT!.firstWhere(
-                        (element) =>
-                            element.tokenInformation!.id == widget.tokenId,
-                      );
-                    } else {
-                      accountToken = accountSelected.accountNFTCollections![0];
-                    }
+                    final accountToken = getAccountToken(accountSelected);
 
                     await TransferSheet(
                       transferType: TransferType.nft,
@@ -211,6 +204,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                       recipient: const TransferRecipient.address(
                         address: Address(address: ''),
                       ),
+                      tokenId: widget.tokenId,
                     ).show(
                       context: context,
                       ref: ref,
@@ -239,5 +233,32 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
         ],
       ),
     );
+  }
+
+  AccountToken getAccountToken(Account accountSelected) {
+    // Single token selected
+    if (accountSelected.accountNFT!.any(
+      (element) => element.tokenInformation!.id == widget.tokenId,
+    )) {
+      return accountSelected.accountNFT!.firstWhere(
+        (element) => element.tokenInformation!.id == widget.tokenId,
+      );
+      // Collection token selected
+    } else if (accountSelected.accountNFTCollections!.any(
+      (element) => element.tokenInformation!.id == widget.tokenId,
+    )) {
+      return accountSelected.accountNFTCollections!.firstWhere(
+        (element) => element.tokenInformation!.id == widget.tokenId,
+      );
+      // Single token from a collection selected
+    } else {
+      return accountSelected.accountNFTCollections!.firstWhere(
+        (element) =>
+            element.tokenInformation!.address == widget.address &&
+            element.tokenInformation!.tokenCollection!.any(
+              (element) => element['id'] == widget.tokenId,
+            ),
+      );
+    }
   }
 }

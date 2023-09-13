@@ -33,9 +33,11 @@ class TransferConfirmSheet extends ConsumerStatefulWidget {
   const TransferConfirmSheet({
     super.key,
     this.title,
+    this.tokenId,
   });
 
   final String? title;
+  final String? tokenId;
 
   @override
   ConsumerState<TransferConfirmSheet> createState() =>
@@ -211,7 +213,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                         ? const UCOTransferDetail()
                         : transfer.transferType == TransferType.token ||
                                 transfer.transferType == TransferType.nft
-                            ? const TokenTransferDetail()
+                            ? TokenTransferDetail(
+                                tokenId: widget.tokenId,
+                              )
                             : const SizedBox(),
                   ),
                 ],
