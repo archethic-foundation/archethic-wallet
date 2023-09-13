@@ -137,9 +137,14 @@ class NFTRepository {
       final collectionWithTokenId = <Map<String, dynamic>>[];
       var numTokenId = 1;
       for (final collection in token.collection) {
-        collection['id'] = numTokenId.toString();
+        final nftCollection = balance.token
+            .where((element) => element.address == tokenBalance.address);
+        if (nftCollection.any((element) => element.tokenId == numTokenId)) {
+          collection['id'] = numTokenId.toString();
+          collectionWithTokenId.add(collection);
+        }
+
         numTokenId++;
-        collectionWithTokenId.add(collection);
       }
 
       final tokenInformation = TokenInformation(

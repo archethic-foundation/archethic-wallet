@@ -180,12 +180,13 @@ class DBHelper {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     Contact? contactSelected;
-    final nameWithAt = contactName.startsWith('@')
+    final nameWithoutAt = contactName.startsWith('@')
         ? contactName.replaceFirst('@', '')
         : contactName;
 
     for (final contact in contactsList) {
-      if (contact.format.toLowerCase() == nameWithAt.toLowerCase()) {
+      if (contact.format.toLowerCase() ==
+          Uri.decodeFull(nameWithoutAt).toLowerCase()) {
         contactSelected = contact;
       }
     }
