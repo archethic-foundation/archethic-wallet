@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 // Project imports:
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
@@ -10,13 +10,13 @@ part 'account_token.g.dart';
 @HiveType(typeId: HiveTypeIds.accountToken)
 class AccountToken extends HiveObject {
   AccountToken({
-    this.tokenInformations,
+    this.tokenInformation,
     this.amount,
   });
 
-  /// Token informations
+  /// Token Information
   @HiveField(7)
-  TokenInformations? tokenInformations;
+  TokenInformation? tokenInformation;
 
   /// Amount
   @HiveField(8)

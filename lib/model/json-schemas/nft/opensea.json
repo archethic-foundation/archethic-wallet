@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "attributes": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "trait_type": {
+                        "type": "string"
+                    },
+                    "value": {},
+                    "display_type": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "trait_type",
+                    "value"
+                ]
+            }
+        }
+    },
+    "required": [
+        "attributes"
+    ]
+}

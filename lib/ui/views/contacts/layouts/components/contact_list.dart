@@ -34,7 +34,6 @@ class ContactList extends ConsumerWidget {
             ),
             itemCount: contactsList.length,
             itemBuilder: (BuildContext context, int index) {
-              AsyncValue<AccountBalance> asyncAccountBalance;
               // Build contact
               return SingleContact(
                 contact: contactsList[index],
@@ -56,7 +55,10 @@ class ContactList extends ConsumerWidget {
   }
 
   AsyncValue<AccountBalance> getAsyncAccountBalance(
-      Contact contact, List<Account>? accounts, WidgetRef ref) {
+    Contact contact,
+    List<Account>? accounts,
+    WidgetRef ref,
+  ) {
     final account = accounts
         ?.where(
           (element) => element.lastAddress == contact.address,

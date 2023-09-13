@@ -8,14 +8,13 @@ import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:collection/collection.dart';
 import 'package:hive/hive.dart';
 
 part 'account.g.dart';
 
 @HiveType(typeId: HiveTypeIds.account)
 
-/// Next field available : 14
+/// Next field available : 15
 class Account extends HiveObject with KeychainServiceMixin {
   Account({
     required this.name,
@@ -27,6 +26,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     this.recentTransactions,
     this.accountTokens,
     this.accountNFT,
+    this.accountNFTCollections,
     this.nftInfosOffChainList,
     this.nftCategoryList,
     this.serviceType,
@@ -59,6 +59,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     List<RecentTransaction>? recentTransactions,
     List<AccountToken>? accountTokens,
     List<AccountToken>? accountNFT,
+    List<AccountToken>? accountNFTCollections,
     List<NftInfosOffChain>? nftInfosOffChainList,
     List<int>? nftCategoryList,
   }) =>
@@ -74,6 +75,8 @@ class Account extends HiveObject with KeychainServiceMixin {
         recentTransactions: recentTransactions ?? this.recentTransactions,
         accountTokens: accountTokens ?? this.accountTokens,
         accountNFT: accountNFT ?? this.accountNFT,
+        accountNFTCollections:
+            accountNFTCollections ?? this.accountNFTCollections,
         nftInfosOffChainList: nftInfosOffChainList ?? this.nftInfosOffChainList,
         nftCategoryList: nftCategoryList ?? this.nftCategoryList,
       );
@@ -126,6 +129,10 @@ class Account extends HiveObject with KeychainServiceMixin {
   @HiveField(13)
   String? serviceType;
 
+  /// NFT Collections
+  @HiveField(14)
+  List<AccountToken>? accountNFTCollections;
+
   Future<void> updateLastAddress() async {
     final lastAddressFromAddressMap =
         await sl.get<AddressService>().lastAddressFromAddress([genesisAddress]);
@@ -144,43 +151,39 @@ class Account extends HiveObject with KeychainServiceMixin {
 
   Future<void> updateNFT(
     KeychainSecuredInfos keychainSecuredInfos,
+    List<AccountToken>? accountNFT,
+    List<AccountToken>? accountNFTCollections,
   ) async {
-    accountNFT = await sl
-        .get<AppService>()
-        .getNFTList(lastAddress!, name, keychainSecuredInfos);
+    this.accountNFT = accountNFT;
+    this.accountNFTCollections = accountNFTCollections;
 
-    var nftInfosOffChainExist = false;
-    if (accountNFT != null) {
-      for (final accountToken in accountNFT!) {
-        if (nftInfosOffChainList == null) {
-          nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
-          nftInfosOffChainList!.add(
-            NftInfosOffChain(
-              categoryNftIndex: 0,
-              favorite: false,
-              id: accountToken.tokenInformations!.id,
-            ),
-          );
-        }
-        for (final nftInfosOffChain in nftInfosOffChainList!) {
-          nftInfosOffChainExist = false;
-          if (accountToken.tokenInformations!.id == nftInfosOffChain.id) {
-            nftInfosOffChainExist = true;
-          }
-        }
-        if (nftInfosOffChainExist == false) {
-          nftInfosOffChainList!.add(
-            NftInfosOffChain(
-              categoryNftIndex: 0,
-              favorite: false,
-              id: accountToken.tokenInformations!.id,
-            ),
-          );
-        }
-      }
-    }
+    _addToken(accountNFT);
+    _addToken(accountNFTCollections);
 
     await updateAccount();
+  }
+
+  void _addToken(List<AccountToken>? accountTokens) {
+    if (accountTokens == null) {
+      return;
+    }
+
+    nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
+    for (final accountToken in accountTokens) {
+      final nftInfoOffChainExists = nftInfosOffChainList!.any(
+        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
+      );
+      if (nftInfoOffChainExists == true) {
+        continue;
+      }
+      nftInfosOffChainList!.add(
+        NftInfosOffChain(
+          categoryNftIndex: 0,
+          favorite: false,
+          id: accountToken.tokenInformation!.id,
+        ),
+      );
+    }
   }
 
   Future<void> updateBalance() async {
@@ -316,39 +319,6 @@ class Account extends HiveObject with KeychainServiceMixin {
       );
     }
     await updateAccount();
-  }
-
-  List<AccountToken> getAccountNFTFiltered(
-    int categoryNftIndex, {
-    bool? favorite,
-  }) {
-    final accountNFTFiltered = List<AccountToken>.empty(growable: true);
-    if (accountNFT == null) {
-      return accountNFTFiltered;
-    } else {
-      if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
-        return accountNFT!;
-      } else {
-        for (final accountToken in accountNFT!) {
-          final nftInfosOffChain = nftInfosOffChainList!
-              .where(
-                (element) => element.id == accountToken.tokenInformations!.id,
-              )
-              .firstOrNull;
-          if (nftInfosOffChain != null &&
-              nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
-            if (favorite == null) {
-              accountNFTFiltered.add(accountToken);
-            } else {
-              if (nftInfosOffChain.favorite == favorite) {
-                accountNFTFiltered.add(accountToken);
-              }
-            }
-          }
-        }
-        return accountNFTFiltered;
-      }
-    }
   }
 
   Future<void> clearRecentTransactionsFromCache() async {

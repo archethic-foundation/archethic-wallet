@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/nft_category.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,24 +57,43 @@ int _getNbNFTInCategory(
   required Account account,
   required int categoryNftIndex,
 }) {
-  var count = 0;
-  if (account.nftInfosOffChainList == null ||
-      account.nftInfosOffChainList!.isEmpty ||
-      account.accountNFT == null) {
-    return count;
+  return _filterNTFInCategory(
+        account,
+        account.accountNFT,
+        categoryNftIndex,
+      ).length +
+      _filterNTFInCategory(
+        account,
+        account.accountNFTCollections,
+        categoryNftIndex,
+      ).length;
+}
+
+List<NftInfosOffChain> _filterNTFInCategory(
+  Account account,
+  List<AccountToken>? accountTokens,
+  int categoryNftIndex,
+) {
+  final listFilteredNFT = <NftInfosOffChain>[];
+
+  if (account.nftInfosOffChainList == null || accountTokens == null) {
+    return listFilteredNFT;
   }
 
-  for (final accountToken in account.accountNFT!) {
-    final nftInfosOffChain = account.nftInfosOffChainList!
+  for (final accountToken in accountTokens) {
+    final nftInfoOffChain = account.nftInfosOffChainList!
         .where(
-          (element) => element.id == accountToken.tokenInformations!.id,
+          (nftInfoOff) =>
+              nftInfoOff.id == accountToken.tokenInformation!.id &&
+              nftInfoOff.categoryNftIndex == categoryNftIndex,
         )
         .firstOrNull;
-    if (nftInfosOffChain!.categoryNftIndex == categoryNftIndex) {
-      count++;
+    if (nftInfoOffChain != null) {
+      listFilteredNFT.add(nftInfoOffChain);
     }
   }
-  return count;
+
+  return listFilteredNFT;
 }
 
 @riverpod

@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'token_informations.dart';
+part of 'token_information.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
+class TokenInformationAdapter extends TypeAdapter<TokenInformation> {
   @override
   final int typeId = 9;
 
   @override
-  TokenInformations read(BinaryReader reader) {
+  TokenInformation read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TokenInformations(
+    return TokenInformation(
       address: fields[0] as String?,
       name: fields[1] as String?,
       id: fields[10] as String?,
@@ -24,14 +24,18 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       type: fields[3] as String?,
       symbol: fields[4] as String?,
       tokenProperties: (fields[12] as Map?)?.cast<String, dynamic>(),
+      tokenCollection: (fields[14] as List?)
+          ?.map((dynamic e) => (e as Map).cast<String, dynamic>())
+          ?.toList(),
       aeip: (fields[13] as List?)?.cast<int>(),
+      decimals: fields[15] as int?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, TokenInformations obj) {
+  void write(BinaryWriter writer, TokenInformation obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -47,7 +51,11 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..writeByte(12)
       ..write(obj.tokenProperties)
       ..writeByte(13)
-      ..write(obj.aeip);
+      ..write(obj.aeip)
+      ..writeByte(14)
+      ..write(obj.tokenCollection)
+      ..writeByte(15)
+      ..write(obj.decimals);
   }
 
   @override
@@ -56,7 +64,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TokenInformationsAdapter &&
+      other is TokenInformationAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

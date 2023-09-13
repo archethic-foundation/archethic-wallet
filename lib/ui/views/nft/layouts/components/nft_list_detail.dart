@@ -2,11 +2,12 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/thumbnail_collection/nft_thumbnail_collection.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -19,12 +20,22 @@ import 'package:material_symbols_icons/symbols.dart';
 class NFTListDetail extends ConsumerWidget {
   const NFTListDetail({
     super.key,
-    required this.tokenInformations,
+    required this.name,
+    required this.address,
+    required this.properties,
+    required this.tokenId,
     required this.index,
+    required this.symbol,
+    required this.collection,
     this.roundBorder = false,
   });
 
-  final TokenInformations tokenInformations;
+  final String name;
+  final String address;
+  final String tokenId;
+  final String symbol;
+  final Map<String, dynamic> properties;
+  final List<Map<String, dynamic>> collection;
   final int index;
   final bool roundBorder;
 
@@ -35,23 +46,22 @@ class NFTListDetail extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     var propertiesToCount = 0;
-    if (tokenInformations.tokenProperties != null) {
-      tokenInformations.tokenProperties!.forEach((key, value) {
-        if (key != 'name' &&
-            key != 'content' &&
-            key != 'type_mime' &&
-            key != 'description') {
-          propertiesToCount++;
-        }
-      });
-    }
+
+    properties.forEach((key, value) {
+      if (key != 'name' &&
+          key != 'content' &&
+          key != 'type_mime' &&
+          key != 'description') {
+        propertiesToCount++;
+      }
+    });
 
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: <Widget>[
           Text(
-            tokenInformations.name!,
+            name,
             style: theme.textStyleSize12W600Primary,
           ),
 
@@ -69,7 +79,15 @@ class NFTListDetail extends ConsumerWidget {
               Sheets.showAppHeightNineSheet(
                 context: context,
                 ref: ref,
-                widget: NFTDetail(tokenInformations: tokenInformations),
+                widget: NFTDetail(
+                  address: address,
+                  name: name,
+                  properties: properties,
+                  collection: collection,
+                  symbol: symbol,
+                  tokenId: tokenId,
+                  detailCollection: collection.isNotEmpty,
+                ),
               );
             },
             onLongPressEnd: (details) {
@@ -77,7 +95,8 @@ class NFTListDetail extends ConsumerWidget {
                 context,
                 ref,
                 details,
-                tokenInformations,
+                address,
+                tokenId,
               );
             },
             child: Card(
@@ -89,15 +108,22 @@ class NFTListDetail extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(25),
                 side: const BorderSide(color: Colors.white10),
               ),
-              child: NFTThumbnail(
-                tokenInformations: tokenInformations,
-                roundBorder: roundBorder,
-              ),
+              child: collection.isNotEmpty
+                  ? NFTThumbnailCollection(
+                      address: address,
+                      collection: collection,
+                      roundBorder: roundBorder,
+                    )
+                  : NFTThumbnail(
+                      address: address,
+                      properties: properties,
+                      roundBorder: roundBorder,
+                    ),
             ),
           ),
           // TODO(reddwarf03): Implement this feature (3)
           /* NFTCardBottom(
-          tokenInformations: tokenInformations,
+          tokenInformation: tokenInformation,
         ),*/
         ],
       ),
@@ -108,10 +134,10 @@ class NFTListDetail extends ConsumerWidget {
 class NFTCardBottom extends ConsumerWidget {
   const NFTCardBottom({
     super.key,
-    required this.tokenInformations,
+    required this.tokenInformation,
   });
 
-  final TokenInformations tokenInformations;
+  final TokenInformation tokenInformation;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -120,7 +146,7 @@ class NFTCardBottom extends ConsumerWidget {
         ref.watch(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
       // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
-      tokenInformations.id,
+      tokenInformation.id,
     );
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
@@ -138,7 +164,7 @@ class NFTCardBottom extends ConsumerWidget {
                         StateContainer.of(context).activeVibrations);
                     await accountSelected
                         .updateNftInfosOffChain(
-                            tokenAddress: widget.tokenInformations.address,
+                            tokenAddress: widget.tokenInformation.address,
                             favorite: false);
                   }),
                   child: const Icon(
@@ -158,7 +184,7 @@ class NFTCardBottom extends ConsumerWidget {
                         );
 
                     await selectedAccount.updateNftInfosOffChainFavorite(
-                      tokenInformations.id,
+                      tokenInformation.id,
                     );
                   },
                   child: nftInfosOffChain == null ||

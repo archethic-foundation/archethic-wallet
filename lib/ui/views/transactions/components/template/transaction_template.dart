@@ -38,12 +38,12 @@ class TransactionTemplate extends ConsumerWidget {
     final settings = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
 
-    final hasWarning = transaction.tokenInformations != null &&
+    final hasWarning = transaction.tokenInformation != null &&
         (kTokenFordiddenName.contains(
-              transaction.tokenInformations!.name!.toUpperCase(),
+              transaction.tokenInformation!.name!.toUpperCase(),
             ) ||
             kTokenFordiddenName.contains(
-              transaction.tokenInformations!.symbol!.toUpperCase(),
+              transaction.tokenInformation!.symbol!.toUpperCase(),
             ));
 
     return GestureDetector(

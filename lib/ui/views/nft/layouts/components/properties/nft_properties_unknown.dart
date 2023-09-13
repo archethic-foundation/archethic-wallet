@@ -1,34 +1,28 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTThumbnailError extends ConsumerWidget {
-  const NFTThumbnailError({
+class NFTPropertiesUnknown extends ConsumerWidget {
+  const NFTPropertiesUnknown({
     super.key,
-    required this.message,
+    required this.properties,
   });
 
-  final String message;
+  final Map<String, dynamic> properties;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return SizedBox(
-      width: 200,
-      height: 130,
-      child: SizedBox(
-        height: 78,
-        child: Center(
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-            style: theme.textStyleSize12W100Primary,
-          ),
-        ),
+    return SelectableText(
+      const JsonEncoder.withIndent('  ').convert(
+        properties,
       ),
+      style: theme.textStyleSize10W100Primary,
     );
   }
 }

@@ -15,8 +15,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TokenTransferDetail extends ConsumerWidget {
   const TokenTransferDetail({
+    this.tokenId,
     super.key,
   });
+
+  final String? tokenId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,6 +31,19 @@ class TokenTransferDetail extends ConsumerWidget {
           AccountProviders.selectedAccount,
         )
         .valueOrNull;
+
+    var nftName = '';
+
+    // Single token from a collection selected
+    if (transfer.accountToken!.tokenInformation!.tokenCollection!
+        .any((element) => element['id'] == tokenId)) {
+      nftName = transfer.accountToken!.tokenInformation!.tokenCollection!
+          .firstWhere((element) => element['id'] == tokenId)['name'];
+    }
+    // Other token (single or collection token)
+    else {
+      nftName = transfer.accountToken!.tokenInformation!.name!;
+    }
 
     if (accountSelected == null) return const SizedBox();
 
@@ -78,7 +94,7 @@ class TokenTransferDetail extends ConsumerWidget {
                 Text(
                   AmountFormatters.standard(
                     transfer.amount,
-                    'NFT "${transfer.accountToken!.tokenInformations!.name!}"',
+                    'NFT "$nftName"',
                   ),
                   style: theme.textStyleSize12W400Primary,
                 ),
@@ -117,7 +133,7 @@ class TokenTransferDetail extends ConsumerWidget {
                 Text(
                   AmountFormatters.standard(
                     transfer.accountToken!.amount! - transfer.amount,
-                    'NFT "${transfer.accountToken!.tokenInformations!.name!}"',
+                    'NFT "$nftName"',
                   ),
                   style: theme.textStyleSize12W400Primary,
                 ),

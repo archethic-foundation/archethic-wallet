@@ -40,8 +40,9 @@ class NFTList extends ConsumerWidget {
         )
         .first;
 
-    final accountTokenList =
-        accountSelected?.getAccountNFTFiltered(nftCategory.id) ?? [];
+    final accountTokenList = ref.watch(
+      AccountProviders.getAccountNFTFiltered(accountSelected!, nftCategory.id),
+    );
 
     if (accountTokenList.isEmpty) {
       return SingleChildScrollView(
@@ -104,13 +105,18 @@ class NFTList extends ConsumerWidget {
                   ? 3
                   : 2,
           crossAxisSpacing: 20,
+          mainAxisSpacing: 40,
           shrinkWrap: true,
           itemCount: accountTokenList.length,
           builder: (context, index) {
-            final tokenInformations =
-                accountTokenList[index].tokenInformations!;
+            final tokenInformation = accountTokenList[index].tokenInformation!;
             return NFTListDetail(
-              tokenInformations: tokenInformations,
+              address: tokenInformation.address ?? '',
+              name: tokenInformation.name ?? '',
+              properties: tokenInformation.tokenProperties ?? {},
+              symbol: tokenInformation.symbol ?? '',
+              tokenId: tokenInformation.id ?? '',
+              collection: tokenInformation.tokenCollection ?? [],
               index: index,
               roundBorder: true,
             );

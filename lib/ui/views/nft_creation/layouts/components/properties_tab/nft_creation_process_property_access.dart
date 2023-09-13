@@ -9,6 +9,7 @@ import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/item_remove_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/string_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -91,9 +92,14 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.only(left: 20),
-                        child: AutoSizeText(
-                          propertyValue,
-                          style: theme.textStyleSize12W400Primary,
+                        child: Expanded(
+                          child: AutoSizeText(
+                            propertyValue.toString().breakText(20),
+                            maxLines: 10,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: theme.textStyleSize12W400Primary,
+                          ),
                         ),
                       ),
                     ],

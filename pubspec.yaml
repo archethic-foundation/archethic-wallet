@@ -166,6 +166,9 @@ dependencies:
   # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
 
+  # JSON Schema implementation in Dart
+  json_schema: ^5.1.2
+
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
 
@@ -310,6 +313,8 @@ flutter:
     - assets/themes/pearl_grey/
     - assets/themes/pearl_grey_flat/
     - assets/themes/purple/
+    - lib/model/json-schemas/nft/opensea.json
+    - lib/model/json-schemas/nft/archethic.json
 
   fonts:
     - family: Montserrat

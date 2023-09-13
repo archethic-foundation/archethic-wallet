@@ -19,17 +19,17 @@ class TokenCreationInformation extends ConsumerWidget {
 
     return Row(
       children: [
-        if (transaction.tokenInformations!.type == 'fungible')
+        if (transaction.tokenInformation!.type == 'fungible')
           Expanded(
             child: AutoSizeText(
-              '${localizations.tokenCreated} ${transaction.tokenInformations!.name}',
+              '${localizations.tokenCreated} ${transaction.tokenInformation!.name}',
               style: theme.textStyleSize12W400Primary,
             ),
           )
         else
           Expanded(
             child: AutoSizeText(
-              '${localizations.nftCreated} ${transaction.tokenInformations!.name}',
+              '${localizations.nftCreated} ${transaction.tokenInformation!.name}',
               style: theme.textStyleSize12W400Primary,
             ),
           ),

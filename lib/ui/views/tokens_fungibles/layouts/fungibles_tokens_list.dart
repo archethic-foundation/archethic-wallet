@@ -186,7 +186,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                           ),
                           Expanded(
                             child: Text(
-                              accountFungibleToken.tokenInformations!.name!,
+                              accountFungibleToken.tokenInformation!.name!,
                               style: theme.textStyleSize12W600Primary,
                             ),
                           ),
@@ -205,7 +205,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             style: theme.textStyleSize12W400Primary,
                           ),
                           Text(
-                            accountFungibleToken.tokenInformations!.symbol!,
+                            accountFungibleToken.tokenInformation!.symbol!,
                             style: theme.textStyleSize12W600Primary,
                           ),
                         ],
@@ -220,7 +220,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             style: theme.textStyleSize12W600Primary60,
                           ),
                           Text(
-                            accountFungibleToken.tokenInformations!.symbol!,
+                            accountFungibleToken.tokenInformation!.symbol!,
                             style: theme.textStyleSize12W600Primary,
                           ),
                         ],
@@ -228,11 +228,11 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                   ],
                 ),
                 if (kTokenFordiddenName.contains(
-                      accountFungibleToken.tokenInformations!.name!
+                      accountFungibleToken.tokenInformation!.name!
                           .toUpperCase(),
                     ) ||
                     kTokenFordiddenName.contains(
-                      accountFungibleToken.tokenInformations!.symbol!
+                      accountFungibleToken.tokenInformation!.symbol!
                           .toUpperCase(),
                     ))
                   Padding(

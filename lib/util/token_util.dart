@@ -26,24 +26,24 @@ class TokenUtil {
     return tokenMap[address];
   }
 
-  static bool isTokenFile(Token token) {
-    return token.properties['content'] != null &&
-        token.properties['content']['raw'] != null;
+  static bool isTokenFile(Map<String, dynamic> properties) {
+    return properties['content'] != null &&
+        properties['content']['raw'] != null;
   }
 
-  static bool isTokenIPFS(Token token) {
-    return token.properties['content'] != null &&
-        token.properties['content']['ipfs'] != null;
+  static bool isTokenIPFS(Map<String, dynamic> properties) {
+    return properties['content'] != null &&
+        properties['content']['ipfs'] != null;
   }
 
-  static bool isTokenHTTP(Token token) {
-    return token.properties['content'] != null &&
-        token.properties['content']['http'] != null;
+  static bool isTokenHTTP(Map<String, dynamic> properties) {
+    return properties['content'] != null &&
+        properties['content']['http'] != null;
   }
 
-  static bool isTokenAEWEB(Token token) {
-    return token.properties['content'] != null &&
-        token.properties['content']['aeweb'] != null;
+  static bool isTokenAEWEB(Map<String, dynamic> properties) {
+    return properties['content'] != null &&
+        properties['content']['aeweb'] != null;
   }
 
   static Future<Uint8List?> getImageDecodedForPdf(
@@ -70,57 +70,57 @@ class TokenUtil {
   }
 
   static Future<Uint8List?> getImageFromToken(
-    Token token,
-    String typeMime,
+    Map<String, dynamic> properties,
   ) async {
     Uint8List? valueFileDecoded;
     Uint8List? imageDecoded;
-    if (token.properties.isNotEmpty) {
-      valueFileDecoded = base64Decode(token.properties['content']['raw']);
+    if (properties.isNotEmpty) {
+      valueFileDecoded = base64Decode(properties['content']['raw']);
     }
 
     if (valueFileDecoded == null) {
       return imageDecoded;
     }
 
-    return getImageDecoded(valueFileDecoded, typeMime);
+    return getImageDecoded(valueFileDecoded, properties['type_mime']);
   }
 
   static Future<Uint8List?> getImageFromTokenAddress(
     String address,
     String typeMime,
+    Map<String, dynamic> properties,
   ) async {
     final token = await getTokenByAddress(address);
     if (token == null) {
       return Uint8List.fromList([]);
     }
 
-    return getImageFromToken(token, typeMime);
+    return getImageFromToken(properties);
   }
 
-  static String? getIPFSUrlFromToken(Token token) {
+  static String? getIPFSUrlFromToken(Map<String, dynamic> properties) {
     String? imageDecoded;
 
-    if (token.properties.isNotEmpty) {
-      imageDecoded = token.properties['content']['ipfs'];
+    if (properties.isNotEmpty) {
+      imageDecoded = properties['content']['ipfs'];
     }
     return imageDecoded;
   }
 
-  static String? getHTTPUrlFromToken(Token token) {
+  static String? getHTTPUrlFromToken(Map<String, dynamic> properties) {
     String? imageDecoded;
 
-    if (token.properties.isNotEmpty) {
-      imageDecoded = token.properties['content']['http'];
+    if (properties.isNotEmpty) {
+      imageDecoded = properties['content']['http'];
     }
     return imageDecoded;
   }
 
-  static String? getAEWebUrlFromToken(Token token) {
+  static String? getAEWebUrlFromToken(Map<String, dynamic> properties) {
     String? imageDecoded;
 
-    if (token.properties.isNotEmpty) {
-      imageDecoded = token.properties['content']['aeweb'];
+    if (properties.isNotEmpty) {
+      imageDecoded = properties['content']['aeweb'];
     }
     return imageDecoded;
   }

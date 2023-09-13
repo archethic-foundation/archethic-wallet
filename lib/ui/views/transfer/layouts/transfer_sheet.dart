@@ -47,6 +47,7 @@ class TransferSheet extends ConsumerWidget {
     required this.recipient,
     this.actionButtonTitle,
     this.accountToken,
+    this.tokenId,
     super.key,
   });
 
@@ -54,6 +55,7 @@ class TransferSheet extends ConsumerWidget {
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final TransferType transferType;
+  final String? tokenId;
 
   Future<void> show({
     required BuildContext context,
@@ -92,6 +94,7 @@ class TransferSheet extends ConsumerWidget {
       ],
       child: TransferSheetBody(
         actionButtonTitle: actionButtonTitle,
+        tokenId: tokenId,
       ),
     );
   }
@@ -100,10 +103,12 @@ class TransferSheet extends ConsumerWidget {
 class TransferSheetBody extends ConsumerWidget {
   const TransferSheetBody({
     this.actionButtonTitle,
+    this.tokenId,
     super.key,
   });
 
   final String? actionButtonTitle;
+  final String? tokenId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -154,7 +159,7 @@ class TransferSheetBody extends ConsumerWidget {
         case TransferType.token:
           return localizations.transferTokens.replaceAll(
             '%1',
-            transfer.accountToken!.tokenInformations!.symbol!,
+            transfer.accountToken!.tokenInformation!.symbol!,
           );
         case TransferType.nft:
           return localizations.transferNFT;
@@ -169,6 +174,7 @@ class TransferSheetBody extends ConsumerWidget {
     } else {
       return TransferConfirmSheet(
         title: title(),
+        tokenId: tokenId,
       );
     }
   }

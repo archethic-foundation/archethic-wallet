@@ -3,7 +3,6 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -79,9 +78,14 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
             context: context,
             ref: ref,
             widget: NFTDetail(
-              tokenInformations:
-                  nftSearchBar.tokenInformations ?? TokenInformations(),
+              address: nftSearchBar.tokenInformation!.address ?? '',
+              name: nftSearchBar.tokenInformation!.name ?? '',
+              properties: nftSearchBar.tokenInformation!.tokenProperties ?? {},
+              symbol: nftSearchBar.tokenInformation!.symbol ?? '',
+              tokenId: nftSearchBar.tokenInformation!.id ?? '',
+              collection: nftSearchBar.tokenInformation!.tokenCollection ?? [],
               displaySendButton: false,
+              detailCollection: false,
             ),
           );
 

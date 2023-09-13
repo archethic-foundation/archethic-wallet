@@ -5,7 +5,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,12 +13,12 @@ import 'package:material_symbols_icons/symbols.dart';
 class NFTThumbnailAEWEB extends ConsumerWidget {
   const NFTThumbnailAEWEB({
     super.key,
-    required this.token,
+    required this.properties,
     this.roundBorder = false,
     this.withContentInfo = false,
   });
 
-  final Token token;
+  final Map<String, dynamic> properties;
   final bool roundBorder;
   final bool withContentInfo;
 
@@ -29,7 +28,7 @@ class NFTThumbnailAEWEB extends ConsumerWidget {
 
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final raw = TokenUtil.getAEWebUrlFromToken(
-      token,
+      properties,
     );
     final networkSettings = ref.watch(
       SettingsProviders.settings.select((settings) => settings.network),

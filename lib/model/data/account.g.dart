@@ -26,6 +26,7 @@ class AccountAdapter extends TypeAdapter<Account> {
       recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
       accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
       accountNFT: (fields[8] as List?)?.cast<AccountToken>(),
+      accountNFTCollections: (fields[14] as List?)?.cast<AccountToken>(),
       nftInfosOffChainList: (fields[10] as List?)?.cast<NftInfosOffChain>(),
       nftCategoryList: (fields[11] as List?)?.cast<int>(),
       serviceType: fields[13] as String?,
@@ -35,7 +36,7 @@ class AccountAdapter extends TypeAdapter<Account> {
   @override
   void write(BinaryWriter writer, Account obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -59,7 +60,9 @@ class AccountAdapter extends TypeAdapter<Account> {
       ..writeByte(11)
       ..write(obj.nftCategoryList)
       ..writeByte(13)
-      ..write(obj.serviceType);
+      ..write(obj.serviceType)
+      ..writeByte(14)
+      ..write(obj.accountNFTCollections);
   }
 
   @override

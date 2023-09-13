@@ -359,14 +359,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             recipientAddress: recipientAddress,
             keychainSecuredInfos: keychainSecuredInfos,
             transactionLastAddress: selectedAccount.lastAddress!,
-            tokenAddress: formState.accountToken?.tokenInformations!.address!
+            tokenAddress: formState.accountToken?.tokenInformation!.address!
                 .toUpperCase(),
             type: 'fungible',
             aeip: [2, 9],
             tokenId: 0,
             properties:
-                formState.accountToken?.tokenInformations!.tokenProperties ??
-                    {},
+                formState.accountToken?.tokenInformation!.tokenProperties ?? {},
           ),
         );
         break;
@@ -391,14 +390,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             recipientAddress: recipientAddress,
             keychainSecuredInfos: keychainSecuredInfos,
             transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
-            tokenAddress: formState.accountToken?.tokenInformations!.address!
+            tokenAddress: formState.accountToken?.tokenInformation!.address!
                 .toUpperCase(),
             type: 'non-fungible',
             aeip: [2, 9],
             tokenId: 1,
             properties:
-                formState.accountToken?.tokenInformations!.tokenProperties ??
-                    {},
+                formState.accountToken?.tokenInformation!.tokenProperties ?? {},
           ),
         );
         break;
@@ -716,12 +714,12 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             keychainSecuredInfos: keychainSecuredInfos,
             transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
             tokenAddress:
-                state.accountToken?.tokenInformations!.address!.toUpperCase(),
+                state.accountToken?.tokenInformation!.address!.toUpperCase(),
             type: 'fungible',
             tokenId: 0,
             aeip: [2, 9],
             properties:
-                state.accountToken?.tokenInformations!.tokenProperties ?? {},
+                state.accountToken?.tokenInformation!.tokenProperties ?? {},
           ),
         );
         break;
@@ -747,12 +745,12 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             keychainSecuredInfos: keychainSecuredInfos,
             transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
             tokenAddress:
-                state.accountToken?.tokenInformations!.address!.toUpperCase(),
+                state.accountToken?.tokenInformation!.address!.toUpperCase(),
             type: 'non-fungible',
             tokenId: 1,
             aeip: [2, 9],
             properties:
-                state.accountToken?.tokenInformations!.tokenProperties ?? {},
+                state.accountToken?.tokenInformation!.tokenProperties ?? {},
           ),
         );
         break;

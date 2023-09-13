@@ -17,7 +17,7 @@ class AccountTokenAdapter extends TypeAdapter<AccountToken> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AccountToken(
-      tokenInformations: fields[7] as TokenInformations?,
+      tokenInformation: fields[7] as TokenInformation?,
       amount: fields[8] as double?,
     );
   }
@@ -27,7 +27,7 @@ class AccountTokenAdapter extends TypeAdapter<AccountToken> {
     writer
       ..writeByte(2)
       ..writeByte(7)
-      ..write(obj.tokenInformations)
+      ..write(obj.tokenInformation)
       ..writeByte(8)
       ..write(obj.amount);
   }

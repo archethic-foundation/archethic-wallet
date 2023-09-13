@@ -7,7 +7,7 @@ import 'dart:typed_data';
 
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -37,7 +37,7 @@ class AppService {
   Future<Map<String, Token>> getToken(
     List<String> addresses, {
     String request =
-        'genesis, name, id, supply, symbol, type, properties, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
+        'genesis, name, id, supply, symbol, type, decimals, properties, collection, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
   }) async {
     final tokenMap = <String, Token>{};
     var antiSpam = 0;
@@ -390,20 +390,20 @@ class AppService {
     final recentTransactionLastAddresses = <String>[];
     final ownershipsAddresses = <String>[];
 
-    // Search token informations
+    // Search token Information
     final tokensAddressMap = await sl.get<AppService>().getToken(
           tokensAddresses.toSet().toList(),
           request: 'genesis, name, id, supply, symbol, type',
         );
 
     for (final recentTransaction in recentTransactions) {
-      // Get token informations
+      // Get token Information
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty &&
           recentTransaction.timestamp! > mostRecentTimestamp) {
         final token = tokensAddressMap[recentTransaction.tokenAddress];
         if (token != null) {
-          recentTransaction.tokenInformations = TokenInformations(
+          recentTransaction.tokenInformation = TokenInformation(
             address: token.address,
             name: token.name,
             supply: fromBigInt(token.supply).toDouble(),
@@ -580,7 +580,7 @@ class AppService {
                         .address !=
                     null) {
               try {
-                recentTransaction.contactInformations = contactsList
+                recentTransaction.contactInformation = contactsList
                     .where(
                       (contact) =>
                           lastAddressesMap[
@@ -592,10 +592,10 @@ class AppService {
                     )
                     .first;
               } catch (e) {
-                recentTransaction.contactInformations = null;
+                recentTransaction.contactInformation = null;
               }
             } else {
-              recentTransaction.contactInformations = null;
+              recentTransaction.contactInformation = null;
             }
           }
           break;
@@ -607,7 +607,7 @@ class AppService {
                         .address !=
                     null) {
               try {
-                recentTransaction.contactInformations = contactsList
+                recentTransaction.contactInformation = contactsList
                     .where(
                       (contact) =>
                           lastAddressesMap[
@@ -619,10 +619,10 @@ class AppService {
                     )
                     .first;
               } catch (e) {
-                recentTransaction.contactInformations = null;
+                recentTransaction.contactInformation = null;
               }
             } else {
-              recentTransaction.contactInformations = null;
+              recentTransaction.contactInformation = null;
             }
           }
           break;
@@ -679,7 +679,7 @@ class AppService {
       }
     }
 
-    // Search token informations
+    // Search token Information
     final tokenMap = await sl.get<AppService>().getToken(
           tokenAddressList.toSet().toList(),
           request: 'genesis, name, id, supply, symbol, type',
@@ -688,7 +688,7 @@ class AppService {
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
       if (token != null && token.type == 'fungible') {
-        final tokenInformations = TokenInformations(
+        final tokenInformation = TokenInformation(
           address: tokenBalance.address,
           aeip: token.aeip,
           name: token.name,
@@ -698,15 +698,14 @@ class AppService {
           symbol: token.symbol,
         );
         final accountFungibleToken = AccountToken(
-          tokenInformations: tokenInformations,
+          tokenInformation: tokenInformation,
           amount: fromBigInt(tokenBalance.amount).toDouble(),
         );
         fungiblesTokensList.add(accountFungibleToken);
       }
     }
     fungiblesTokensList.sort(
-      (a, b) =>
-          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
+      (a, b) => a.tokenInformation!.name!.compareTo(b.tokenInformation!.name!),
     );
 
     dev.log(
@@ -714,108 +713,6 @@ class AppService {
     );
 
     return fungiblesTokensList;
-  }
-
-  Future<List<AccountToken>> getNFTList(
-    String address,
-    String name,
-    KeychainSecuredInfos keychainSecuredInfos,
-  ) async {
-    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
-    final balance = balanceMap[address];
-    final nftList = List<AccountToken>.empty(growable: true);
-
-    final tokenAddressList = <String>[];
-    if (balance == null) {
-      return [];
-    }
-
-    for (final tokenBalance in balance.token) {
-      if (tokenBalance.address != null) {
-        tokenAddressList.add(tokenBalance.address!);
-      }
-    }
-
-    final tokenMap = await sl.get<ApiService>().getToken(
-          tokenAddressList.toSet().toList(),
-        );
-
-    // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
-
-    final secretMap = await sl.get<ApiService>().getTransaction(
-          tokenAddressList.toSet().toList(),
-          request:
-              'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
-        );
-
-    for (final tokenBalance in balance.token) {
-      final token = tokenMap[tokenBalance.address];
-      if (token != null && token.type == 'non-fungible') {
-        final tokenWithoutFile = {...token.properties}
-          ..removeWhere((key, value) => key == 'content');
-
-        if (secretMap[tokenBalance.address] != null &&
-            secretMap[tokenBalance.address]!.data != null &&
-            secretMap[tokenBalance.address]!.data!.ownerships.isNotEmpty) {
-          tokenWithoutFile.addAll(
-            _tokenPropertiesDecryptedSecret(
-              keypair: keychainSecuredInfos.services[name]!.keyPair!,
-              ownerships: secretMap[tokenBalance.address]!.data!.ownerships,
-            ),
-          );
-        }
-
-        final tokenInformations = TokenInformations(
-          address: tokenBalance.address,
-          name: token.name,
-          id: token.id,
-          aeip: token.aeip,
-          type: token.type,
-          supply: fromBigInt(token.supply).toDouble(),
-          symbol: token.symbol,
-          tokenProperties: tokenWithoutFile,
-        );
-        final accountNFT = AccountToken(
-          tokenInformations: tokenInformations,
-          amount: fromBigInt(tokenBalance.amount).toDouble(),
-        );
-        nftList.add(accountNFT);
-      }
-    }
-    nftList.sort(
-      (a, b) =>
-          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!),
-    );
-
-    return nftList;
-  }
-
-  Map<String, dynamic> _tokenPropertiesDecryptedSecret({
-    required KeychainServiceKeyPair keypair,
-    required List<Ownership> ownerships,
-  }) {
-    final propertiesDecrypted = <String, dynamic>{};
-    for (final ownership in ownerships) {
-      final authorizedPublicKey = ownership.authorizedPublicKeys.firstWhere(
-        (AuthorizedKey authKey) =>
-            authKey.publicKey!.toUpperCase() ==
-            uint8ListToHex(Uint8List.fromList(keypair.publicKey)).toUpperCase(),
-        orElse: AuthorizedKey.new,
-      );
-      if (authorizedPublicKey.encryptedSecretKey != null) {
-        final aesKey = ecDecrypt(
-          authorizedPublicKey.encryptedSecretKey,
-          Uint8List.fromList(keypair.privateKey),
-        );
-        final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
-        try {
-          propertiesDecrypted.addAll(json.decode(utf8.decode(decryptedSecret)));
-        } catch (e) {
-          dev.log('Decryption error $e');
-        }
-      }
-    }
-    return propertiesDecrypted;
   }
 
   Future<Map<String, Balance>> getBalanceGetResponse(
@@ -827,7 +724,7 @@ class AppService {
               ),
         );
 
-    // Search token informations
+    // Search token Information
     final balanceMap = await OperationQueue.run<Balance>(tasks);
 
     final balancesToReturn = <String, Balance>{};
@@ -1162,53 +1059,5 @@ class AppService {
       dev.log('Failed to get transaction fees', error: e, stackTrace: stack);
     }
     return fromBigInt(transactionFee.fee).toDouble();
-  }
-
-  Future<TokenInformations?> getNFT(
-    String address,
-    KeychainServiceKeyPair keychainServiceKeyPair,
-  ) async {
-    final tokenMap = await sl.get<AppService>().getToken(
-      [address],
-    );
-
-    if (tokenMap.isEmpty ||
-        tokenMap[address] == null ||
-        tokenMap[address]!.type != 'non-fungible') {
-      return null;
-    }
-
-    // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
-    final secretMap = await sl.get<ApiService>().getTransaction(
-      [address],
-      request:
-          'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
-    );
-
-    final token = tokenMap[address]!;
-
-    final tokenWithoutFile = {...token.properties}
-      ..removeWhere((key, value) => key == 'content');
-
-    if (secretMap[address] != null &&
-        secretMap[address]!.data != null &&
-        secretMap[address]!.data!.ownerships.isNotEmpty) {
-      tokenWithoutFile.addAll(
-        _tokenPropertiesDecryptedSecret(
-          keypair: keychainServiceKeyPair,
-          ownerships: secretMap[address]!.data!.ownerships,
-        ),
-      );
-    }
-    final tokenInformations = TokenInformations(
-      address: address,
-      name: token.name,
-      id: token.id,
-      type: token.type,
-      supply: fromBigInt(token.supply).toDouble(),
-      symbol: token.symbol,
-      tokenProperties: tokenWithoutFile,
-    );
-    return tokenInformations;
   }
 }

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/model/blockchain/token_informations.dart';
+import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -33,15 +33,15 @@ class HiveTypeIds {
   static const recentTransactions = 6;
   static const price = 7;
   static const accountToken = 8;
-  static const tokenInformations = 9;
+  static const tokenInformation = 9;
   static const nftInfosOffChain = 11;
   static const discussion = 12;
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
   static const discussionMessage = 15;
-
   static const notificationsSetup = 16;
   static const cacheItem = 17;
+  static const tokenCollection = 18;
 }
 
 class DBHelper {
@@ -66,7 +66,7 @@ class DBHelper {
       ..registerAdapter(RecentTransactionAdapter())
       ..registerAdapter(PriceAdapter())
       ..registerAdapter(AccountTokenAdapter())
-      ..registerAdapter(TokenInformationsAdapter())
+      ..registerAdapter(TokenInformationAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
       ..registerAdapter(DiscussionAdapter())
       ..registerAdapter(DiscussionMessageAdapter())
@@ -180,11 +180,13 @@ class DBHelper {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     Contact? contactSelected;
-    final nameWithAt =
-        contactName.startsWith('@') ? contactName : '@$contactName';
+    final nameWithoutAt = contactName.startsWith('@')
+        ? contactName.replaceFirst('@', '')
+        : contactName;
 
     for (final contact in contactsList) {
-      if (contact.name.toLowerCase() == nameWithAt.toLowerCase()) {
+      if (contact.format.toLowerCase() ==
+          Uri.decodeFull(nameWithoutAt).toLowerCase()) {
         contactSelected = contact;
       }
     }
