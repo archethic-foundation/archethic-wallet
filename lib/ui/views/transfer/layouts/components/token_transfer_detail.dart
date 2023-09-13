@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TokenTransferDetail extends ConsumerWidget {
+class TokenTransferDetail extends ConsumerStatefulWidget {
   const TokenTransferDetail({
     this.tokenId,
     super.key,
@@ -22,7 +22,23 @@ class TokenTransferDetail extends ConsumerWidget {
   final String? tokenId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TokenTransferDetail> createState() =>
+      _TokenTransferDetailState();
+}
+
+class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(TransferFormProvider.transferForm.notifier)
+          .setTokenId(tokenId: widget.tokenId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
@@ -36,9 +52,9 @@ class TokenTransferDetail extends ConsumerWidget {
 
     // Single token from a collection selected
     if (transfer.accountToken!.tokenInformation!.tokenCollection!
-        .any((element) => element['id'] == tokenId)) {
+        .any((element) => element['id'] == widget.tokenId)) {
       nftName = transfer.accountToken!.tokenInformation!.tokenCollection!
-          .firstWhere((element) => element['id'] == tokenId)['name'];
+          .firstWhere((element) => element['id'] == widget.tokenId)['name'];
     }
     // Other token (single or collection token)
     else {

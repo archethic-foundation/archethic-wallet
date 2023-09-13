@@ -201,6 +201,14 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     );
   }
 
+  void setTokenId({
+    String? tokenId,
+  }) {
+    state = state.copyWith(
+      tokenId: tokenId ?? '',
+    );
+  }
+
   void _setRecipient({
     required TransferRecipient recipient,
   }) {
@@ -747,7 +755,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             tokenAddress:
                 state.accountToken?.tokenInformation!.address!.toUpperCase(),
             type: 'non-fungible',
-            tokenId: 1,
+            tokenId: int.tryParse(state.tokenId) ?? 1,
             aeip: [2, 9],
             properties:
                 state.accountToken?.tokenInformation!.tokenProperties ?? {},

@@ -29,6 +29,7 @@ mixin _$TransferFormState {
   AccountBalance get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
   AccountToken? get accountToken => throw _privateConstructorUsedError;
+  String get tokenId => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   String get errorAddressText => throw _privateConstructorUsedError;
   String get errorAmountText => throw _privateConstructorUsedError;
@@ -55,6 +56,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       AccountBalance accountBalance,
       TransferRecipient recipient,
       AccountToken? accountToken,
+      String tokenId,
       String message,
       String errorAddressText,
       String errorAmountText,
@@ -85,6 +87,7 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     Object? accountBalance = null,
     Object? recipient = null,
     Object? accountToken = freezed,
+    Object? tokenId = null,
     Object? message = null,
     Object? errorAddressText = null,
     Object? errorAmountText = null,
@@ -127,6 +130,10 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
           ? _value.accountToken
           : accountToken // ignore: cast_nullable_to_non_nullable
               as AccountToken?,
+      tokenId: null == tokenId
+          ? _value.tokenId
+          : tokenId // ignore: cast_nullable_to_non_nullable
+              as String,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -173,6 +180,7 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
       AccountBalance accountBalance,
       TransferRecipient recipient,
       AccountToken? accountToken,
+      String tokenId,
       String message,
       String errorAddressText,
       String errorAmountText,
@@ -202,6 +210,7 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
     Object? accountBalance = null,
     Object? recipient = null,
     Object? accountToken = freezed,
+    Object? tokenId = null,
     Object? message = null,
     Object? errorAddressText = null,
     Object? errorAmountText = null,
@@ -244,6 +253,10 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
           ? _value.accountToken
           : accountToken // ignore: cast_nullable_to_non_nullable
               as AccountToken?,
+      tokenId: null == tokenId
+          ? _value.tokenId
+          : tokenId // ignore: cast_nullable_to_non_nullable
+              as String,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -277,6 +290,7 @@ class _$_TransferFormState extends _TransferFormState {
       required this.accountBalance,
       required this.recipient,
       this.accountToken,
+      this.tokenId = '',
       this.message = '',
       this.errorAddressText = '',
       this.errorAmountText = '',
@@ -312,6 +326,9 @@ class _$_TransferFormState extends _TransferFormState {
   final AccountToken? accountToken;
   @override
   @JsonKey()
+  final String tokenId;
+  @override
+  @JsonKey()
   final String message;
   @override
   @JsonKey()
@@ -325,7 +342,7 @@ class _$_TransferFormState extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -351,6 +368,7 @@ class _$_TransferFormState extends _TransferFormState {
                 other.recipient == recipient) &&
             (identical(other.accountToken, accountToken) ||
                 other.accountToken == accountToken) &&
+            (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.errorAddressText, errorAddressText) ||
                 other.errorAddressText == errorAddressText) &&
@@ -372,6 +390,7 @@ class _$_TransferFormState extends _TransferFormState {
       accountBalance,
       recipient,
       accountToken,
+      tokenId,
       message,
       errorAddressText,
       errorAmountText,
@@ -396,6 +415,7 @@ abstract class _TransferFormState extends TransferFormState {
       required final AccountBalance accountBalance,
       required final TransferRecipient recipient,
       final AccountToken? accountToken,
+      final String tokenId,
       final String message,
       final String errorAddressText,
       final String errorAmountText,
@@ -423,6 +443,8 @@ abstract class _TransferFormState extends TransferFormState {
   TransferRecipient get recipient;
   @override
   AccountToken? get accountToken;
+  @override
+  String get tokenId;
   @override
   String get message;
   @override
