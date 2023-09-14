@@ -11,8 +11,6 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -46,58 +44,59 @@ class MessengerDiscussionPage extends ConsumerWidget {
           colors: <Color>[theme.backgroundDark!, theme.background!],
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Symbols.info,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-              ),
-              onPressed: () async {
-                Navigator.of(context).pushNamed(
-                  '/discussion_details',
-                  arguments: discussionAddress,
-                );
-              },
-            ),
-          ],
-          title: discussion.maybeMap(
-            data: (data) {
-              final displayName = ref.watch(
-                MessengerProviders.discussionDisplayName(data.value),
-              );
-
-              return Text(displayName);
-            },
-            orElse: () => const Text('           ')
-                .animate(
-                  onComplete: (controller) =>
-                      controller.repeat(period: 1.seconds),
-                )
-                .shimmer(),
-          ),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: _MessagesList(
-                discussionAddress: discussionAddress,
+      child: discussion.maybeMap(
+        data: (data) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Symbols.info,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).pushNamed(
+                      '/discussion_details',
+                      arguments: data.value,
+                    );
+                  },
                 ),
+              ],
+              title: Text(
+                ref.watch(
+                  MessengerProviders.discussionDisplayName(data.value),
+                ),
+              ),
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: _MessagesList(
+                    discussionAddress: discussionAddress,
+                  ),
                 ),
                 _MessageSendForm(
                   discussionAddress: discussionAddress,
                 ),
               ],
             ),
-          ),);
-        }
+          );
+        },
+        orElse: () => Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _MessageSendForm extends ConsumerStatefulWidget {
@@ -204,11 +203,8 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                               .text;
                         },
                   icon: Icon(
-                    Symbols.send,
+                    Icons.send,
                     color: theme.text,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
                   ),
                   label: Container(),
                 ),
@@ -337,46 +333,20 @@ class _MessageCreationFormFees extends ConsumerWidget {
   }
 }
 
-class _MessagesList extends ConsumerStatefulWidget {
+class _MessagesList extends ConsumerWidget {
   const _MessagesList({
     required this.discussionAddress,
   });
   final String discussionAddress;
 
   @override
-  ConsumerState<_MessagesList> createState() => _MessagesListState();
-}
-
-class _MessagesListState extends ConsumerState<_MessagesList> {
-  bool hasMessages = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
-    final pagingController = ref
-        .watch(MessengerProviders.paginatedMessages(widget.discussionAddress));
-    final localizations = AppLocalizations.of(context)!;
+    final pagingController =
+        ref.watch(MessengerProviders.paginatedMessages(discussionAddress));
 
     if (me == null) return Container();
-
-    final discussion =
-        ref.watch(MessengerProviders.discussion(widget.discussionAddress));
-    setState(() {
-      hasMessages = discussion.valueOrNull?.lastMessage != null;
-    });
-
-    if (hasMessages == false) {
-      return Padding(
-        padding: const EdgeInsets.all(8),
-        child: Center(
-          child: Text(
-            localizations.discussionNoMessages,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
-    }
 
     return PagedListView(
       pagingController: pagingController,
