@@ -550,6 +550,7 @@
   "messengerDiscussionAccessDescription": "Add or remove public keys that can access this discussion group.",
   "messengerDiscussionAddAccess": "Add access",
   "addMessengerDiscussionFailure": "Creation failed",
+  "updateDiscussionFailure": "Update failed",
   "messengerDiscussionMembersCount": "{membersCount} members",
   "@messengerDiscussionMembersCount": {
     "placeholders": {

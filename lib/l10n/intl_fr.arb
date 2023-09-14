@@ -527,6 +527,7 @@
 	"messengerDiscussionAccessDescription": "Ajoutez ou supprimez des clés publiques pouvant accéder à cette conversation.",
 	"messengerDiscussionAddAccess": "Ajouter un accès",
 	"addMessengerDiscussionFailure": "La création a échoué",
+	"updateDiscussionFailure": "La modification a échoué",
 	"messengerDiscussionMembersCount": "{membersCount} membres",
 	"@messengerDiscussionMembersCount": {
 		"placeholders": {

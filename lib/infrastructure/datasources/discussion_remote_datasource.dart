@@ -67,6 +67,7 @@ class DiscussionRemoteDatasource {
     required String adminAddress,
     required String serviceName,
     required Keychain keychain,
+    required KeyPair adminKeyPair,
   }) async {
     final transaction = await messagingService.updateDiscussion(
       keychain: keychain,
@@ -77,6 +78,7 @@ class DiscussionRemoteDatasource {
       adminsPubKey: adminsPubKeys,
       adminAddress: adminAddress,
       serviceName: serviceName,
+      adminKeyPair: adminKeyPair,
     );
 
     return Discussion(

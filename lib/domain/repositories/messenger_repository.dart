@@ -4,6 +4,7 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 abstract class MessengerRepositoryInterface {
   Future<Result<List<String>, Failure>> getDiscussionAddresses({
@@ -77,5 +78,7 @@ abstract class MessengerRepositoryInterface {
     required String adminAddress,
     required String serviceName,
     required LoggedInSession session,
+    required KeyPair adminKeyPair,
+    required Account owner,
   });
 }

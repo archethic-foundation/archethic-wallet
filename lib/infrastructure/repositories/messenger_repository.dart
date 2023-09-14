@@ -103,6 +103,8 @@ class MessengerRepository
     required String adminAddress,
     required String serviceName,
     required LoggedInSession session,
+    required KeyPair adminKeyPair,
+    required Account owner,
   }) async =>
       Result.guard(() async {
         final updatedDiscussion = await _remoteDatasource.updateDiscussion(
@@ -115,6 +117,13 @@ class MessengerRepository
           adminsPubKeys: adminsPubKeys,
           adminAddress: adminAddress,
           serviceName: serviceName,
+          adminKeyPair: adminKeyPair,
+        );
+
+        await (await _localDatasource).updateDiscussion(
+          ownerAddress: owner.genesisAddress,
+          discussion: updatedDiscussion,
+          discussionPreviousAddress: discussionSCAddress,
         );
 
         return updatedDiscussion;

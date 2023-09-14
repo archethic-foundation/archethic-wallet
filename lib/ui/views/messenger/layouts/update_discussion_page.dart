@@ -1,9 +1,11 @@
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -87,7 +89,32 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                     localizations.modify,
                     Dimens.buttonBottomDimens,
                     key: const Key('modifyDiscussion'),
-                    onPressed: formNotifier.updateDiscussion,
+                    onPressed: () async {
+                      ShowSendingAnimation.build(
+                        context,
+                        theme,
+                      );
+                      final result = await formNotifier.updateDiscussion();
+
+                      Navigator.of(context).pop(); // wait popup
+
+                      result.map(
+                        success: (success) {
+                          Navigator.of(context)
+                              .pop(); // Going back to discussion details
+                        },
+                        failure: (failure) {
+                          UIUtil.showSnackbar(
+                            localizations.updateDiscussionFailure,
+                            context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
+                            duration: const Duration(seconds: 5),
+                          );
+                        },
+                      );
+                    },
                     disabled: formState.canSubmit == false,
                   ),
                 ],

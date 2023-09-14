@@ -99,6 +99,9 @@ class UpdateDiscussionFormNotifier
             await ref.read(AccountProviders.selectedAccount.future);
         if (selectedAccount == null) throw const Failure.loggedOut();
 
+        final keyPair = session.wallet.keychainSecuredInfos
+            .services[selectedAccount.name]!.keyPair!.toKeyPair;
+
         await ref
             .read(MessengerProviders._messengerRepository)
             .updateDiscussion(
@@ -109,6 +112,8 @@ class UpdateDiscussionFormNotifier
               adminAddress: selectedAccount.lastAddress!,
               serviceName: selectedAccount.name,
               session: session,
+              adminKeyPair: keyPair,
+              owner: selectedAccount,
             )
             .valueOrThrow;
 

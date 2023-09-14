@@ -189,21 +189,19 @@ Future<List<Discussion>> _sortedDiscussions(_SortedDiscussionsRef ref) async {
 
 void _subscribeNotificationsWorker(WidgetRef ref) {
   ref.listen(_discussionsProvider, (previous, next) {
-    final previousDiscussionsAdresses = previous?.value
+    final previousDiscussionsAddress = previous?.value
             ?.map((discussion) => discussion.address.toLowerCase())
             .toSet() ??
         {};
-    final nextDiscussionsAdresses = next.value
+    final nextDiscussionsAddress = next.value
             ?.map((discussion) => discussion.address.toLowerCase())
             .toSet() ??
         {};
 
-    final discussionsToUnsubscribe = previousDiscussionsAdresses
-        .difference(nextDiscussionsAdresses)
-        .toList();
-    final discussionsToSubscribe = nextDiscussionsAdresses
-        .difference(previousDiscussionsAdresses)
-        .toList();
+    final discussionsToUnsubscribe =
+        previousDiscussionsAddress.difference(nextDiscussionsAddress).toList();
+    final discussionsToSubscribe =
+        nextDiscussionsAddress.difference(previousDiscussionsAddress).toList();
 
     if (discussionsToUnsubscribe.isNotEmpty) {
       ref
