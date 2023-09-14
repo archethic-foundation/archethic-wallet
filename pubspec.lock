@@ -61,8 +61,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: Fix-isEnoughConfirmations-method
-      resolved-ref: "7688afc9c4f4e21c625aa75b859fe8ec11deb8fd"
+      ref: dev
+      resolved-ref: "3043bb69094a3c6865697cff99ed968348eb3624"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
