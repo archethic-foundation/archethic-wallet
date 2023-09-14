@@ -73,11 +73,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
         return;
       }
 
-      if (event.response == 'ok' &&
-          TransactionConfirmation.isEnoughConfirmations(
-            event.nbConfirmations!,
-            event.maxConfirmations!,
-          )) {
+      if (event.response == 'ok') {
         await _showSendSucceed(event, theme);
         return;
       }

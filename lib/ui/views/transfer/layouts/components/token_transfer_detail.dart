@@ -49,16 +49,17 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
         .valueOrNull;
 
     var nftName = '';
-
-    // Single token from a collection selected
-    if (transfer.accountToken!.tokenInformation!.tokenCollection!
-        .any((element) => element['id'] == widget.tokenId)) {
-      nftName = transfer.accountToken!.tokenInformation!.tokenCollection!
-          .firstWhere((element) => element['id'] == widget.tokenId)['name'];
-    }
-    // Other token (single or collection token)
-    else {
-      nftName = transfer.accountToken!.tokenInformation!.name!;
+    if (transfer.transferType == TransferType.nft) {
+      // Single token from a collection selected
+      if (transfer.accountToken!.tokenInformation!.tokenCollection!
+          .any((element) => element['id'] == widget.tokenId)) {
+        nftName = transfer.accountToken!.tokenInformation!.tokenCollection!
+            .firstWhere((element) => element['id'] == widget.tokenId)['name'];
+      }
+      // Other token (single or collection token)
+      else {
+        nftName = transfer.accountToken!.tokenInformation!.name!;
+      }
     }
 
     if (accountSelected == null) return const SizedBox();

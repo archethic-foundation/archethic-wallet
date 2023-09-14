@@ -21,7 +21,7 @@ dependencies:
   archethic_lib_dart:
     git:
       url: https://github.com/archethic-foundation/libdart.git
-      ref: dev
+      ref: Fix-isEnoughConfirmations-method
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0

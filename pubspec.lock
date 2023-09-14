@@ -61,8 +61,13 @@ packages:
     dependency: "direct main"
     description:
       path: "."
+<<<<<<< HEAD
       ref: dev
       resolved-ref: "65c827afdbdcf292beb34d6677b26624c5c9f852"
+=======
+      ref: Fix-isEnoughConfirmations-method
+      resolved-ref: "7688afc9c4f4e21c625aa75b859fe8ec11deb8fd"
+>>>>>>> bf4bdb19 (Fix multiples refresh when many confirmations)
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"

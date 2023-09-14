@@ -79,11 +79,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         return;
       }
 
-      if (event.response != 'ok' ||
-          !TransactionConfirmation.isEnoughConfirmations(
-            event.nbConfirmations!,
-            event.maxConfirmations!,
-          )) {
+      if (event.response != 'ok') {
         UIUtil.showSnackbar(
           localizations.notEnoughConfirmations,
           context,
@@ -94,6 +90,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         Navigator.of(context).pop();
         return;
       }
+      print('coucoucoucocucouc');
 
       switch (event.transactionType!) {
         case TransactionSendEventType.keychain:
