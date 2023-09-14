@@ -20,11 +20,11 @@ import 'package:material_symbols_icons/symbols.dart';
 
 class DiscussionDetailsPage extends ConsumerWidget {
   const DiscussionDetailsPage({
-    required this.discussion,
+    required this.discussionAddress,
     super.key,
   });
 
-  final Discussion discussion;
+  final String discussionAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,126 +33,143 @@ class DiscussionDetailsPage extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
 
+    final discussion =
+        ref.watch(MessengerProviders.discussion(discussionAddress));
+
     var index = 0;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            theme.background3Small!,
+    return discussion.maybeMap(
+      data: (data) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                theme.background3Small!,
+              ),
+              fit: BoxFit.fitHeight,
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[theme.backgroundDark!, theme.background!],
+            ),
           ),
-          fit: BoxFit.fitHeight,
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[theme.backgroundDark!, theme.background!],
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text(localizations.discussionInfo),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pushNamed(
-                '/update_discussion',
-                arguments: discussion,
-              ),
-              child: Text(
-                localizations.modify,
-                style: theme.textStyleSize12W400Primary,
-              ),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: Text(localizations.discussionInfo),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    '/update_discussion',
+                    arguments: data.value,
+                  ),
+                  child: Text(
+                    localizations.modify,
+                    style: theme.textStyleSize12W400Primary,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        body: TapOutsideUnfocus(
-          child: SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 15,
-                right: 15,
-                bottom: bottom + 80,
-              ),
-              child: ArchethicScrollbar(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      ref.watch(
-                        MessengerProviders.discussionDisplayName(discussion),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: theme.textStyleSize28W700Primary,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        _SectionTitle(
-                          text: localizations.messengerDiscussionMembersCount(
-                            discussion.membersPubKeys.length,
+            body: TapOutsideUnfocus(
+              child: SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    bottom: bottom + 80,
+                  ),
+                  child: ArchethicScrollbar(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          ref.watch(
+                            MessengerProviders.discussionDisplayName(
+                              data.value,
+                            ),
                           ),
+                          textAlign: TextAlign.center,
+                          style: theme.textStyleSize28W700Primary,
+                        ),
+                        const SizedBox(
+                          height: 8,
                         ),
                         Column(
-                          children: discussion.membersPubKeys.map((pubKey) {
-                            index++;
-                            final accessRecipient = ref.watch(
-                              MessengerProviders.accessRecipientWithPublicKey(
-                                pubKey,
+                          children: <Widget>[
+                            _SectionTitle(
+                              text:
+                                  localizations.messengerDiscussionMembersCount(
+                                data.value.membersPubKeys.length,
                               ),
-                            );
-
-                            return PublicKeyLine(
-                              discussion: discussion,
-                              pubKey: pubKey,
-                              onTap: accessRecipient.maybeMap(
-                                orElse: () => null,
-                                data: (recipient) => recipient.value.map(
-                                  contact: (contact) => () {
-                                    sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          settings.activeVibrations,
-                                        );
-
-                                    Sheets.showAppHeightNineSheet(
-                                      context: context,
-                                      ref: ref,
-                                      widget: ContactDetail(
-                                        contact: contact.contact,
-                                      ),
-                                    );
-                                  },
-                                  publicKey: (_) => null,
-                                ),
-                              ),
-                            )
-                                .animate(delay: (100 * index).ms)
-                                .fadeIn(duration: 900.ms, delay: 200.ms)
-                                .shimmer(
-                                  blendMode: BlendMode.srcOver,
-                                  color: Colors.white12,
-                                )
-                                .move(
-                                  begin: const Offset(-16, 0),
-                                  curve: Curves.easeOutQuad,
+                            ),
+                            Column(
+                              children: data.value.membersPubKeys.map((pubKey) {
+                                index++;
+                                final accessRecipient = ref.watch(
+                                  MessengerProviders
+                                      .accessRecipientWithPublicKey(
+                                    pubKey,
+                                  ),
                                 );
-                          }).toList(),
+
+                                return PublicKeyLine(
+                                  discussion: data.value,
+                                  pubKey: pubKey,
+                                  onTap: accessRecipient.maybeMap(
+                                    orElse: () => null,
+                                    data: (recipient) => recipient.value.map(
+                                      contact: (contact) => () {
+                                        sl.get<HapticUtil>().feedback(
+                                              FeedbackType.light,
+                                              settings.activeVibrations,
+                                            );
+
+                                        Sheets.showAppHeightNineSheet(
+                                          context: context,
+                                          ref: ref,
+                                          widget: ContactDetail(
+                                            contact: contact.contact,
+                                          ),
+                                        );
+                                      },
+                                      publicKey: (_) => null,
+                                    ),
+                                  ),
+                                )
+                                    .animate(delay: (100 * index).ms)
+                                    .fadeIn(duration: 900.ms, delay: 200.ms)
+                                    .shimmer(
+                                      blendMode: BlendMode.srcOver,
+                                      color: Colors.white12,
+                                    )
+                                    .move(
+                                      begin: const Offset(-16, 0),
+                                      curve: Curves.easeOutQuad,
+                                    );
+                              }).toList(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
+        );
+      },
+      orElse: () => Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
         ),
       ),
     );

@@ -117,6 +117,6 @@ class UpdateDiscussionFormNotifier
             )
             .valueOrThrow;
 
-        ref.invalidate(_discussionsProvider);
+        ref.invalidate(_discussionProvider);
       });
 }

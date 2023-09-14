@@ -54,18 +54,20 @@ class HiveDiscussionDatasource with SecuredHiveMixin {
     );
   }
 
-  // TODO(ownerAddress): see how to get rid of the genesis address
-  Future<void> updateDiscussion({
+  Future updateDiscussion({
     required Discussion discussion,
-    required String discussionPreviousAddress,
     required String ownerAddress,
+    required String discussionName,
   }) async {
-    // New key is going to be used, we will need to delete the previous one and add the current one
-    await removeDiscussion(
-      ownerAddress: ownerAddress,
-      discussionAddress: discussionPreviousAddress,
+    await _discussionBox.put(
+      _discussionKey(
+        ownerAddress: ownerAddress,
+        discussionAddress: discussion.address,
+      ),
+      discussion.copyWith(
+        name: discussionName,
+      ),
     );
-    await addDiscussion(ownerAddress: ownerAddress, discussion: discussion);
   }
 
   Future<void> clear() async {

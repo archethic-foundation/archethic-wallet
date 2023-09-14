@@ -27,7 +27,7 @@ abstract class MessengerRepositoryInterface {
   Future<Result<List<DiscussionMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     int limit = 0,
     int pagingOffset = 0,
   });
@@ -35,7 +35,7 @@ abstract class MessengerRepositoryInterface {
   Future<Result<Discussion, Failure>> getRemoteDiscussion({
     required Account currentAccount,
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
   });
 
   Future<Result<Discussion, Failure>> addRemoteDiscussion({
@@ -50,7 +50,7 @@ abstract class MessengerRepositoryInterface {
 
   Future<Result<DiscussionMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     required Account creator,
     required String content,
   });
@@ -63,7 +63,7 @@ abstract class MessengerRepositoryInterface {
 
   Future<Result<double, Failure>> calculateFees({
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     required Account creator,
     required String content,
   });

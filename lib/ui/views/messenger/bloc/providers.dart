@@ -176,7 +176,7 @@ Future<Discussion> _remoteDiscussion(
       .getRemoteDiscussion(
         currentAccount: selectedAccount,
         session: session,
-        discussionAddress: address,
+        discussionGenesisAddress: address,
       )
       .valueOrThrow;
 }

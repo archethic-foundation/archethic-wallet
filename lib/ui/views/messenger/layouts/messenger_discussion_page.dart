@@ -62,7 +62,7 @@ class MessengerDiscussionPage extends ConsumerWidget {
                   onPressed: () async {
                     Navigator.of(context).pushNamed(
                       '/discussion_details',
-                      arguments: data.value,
+                      arguments: discussionAddress,
                     );
                   },
                 ),

@@ -314,7 +314,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
               ),
               '/discussion_details': MaterialPageRoute(
                 builder: (_) => DiscussionDetailsPage(
-                  discussion: settings.arguments! as Discussion,
+                  discussionAddress: settings.arguments! as String,
                 ),
               ),
               '/update_discussion': MaterialPageRoute(

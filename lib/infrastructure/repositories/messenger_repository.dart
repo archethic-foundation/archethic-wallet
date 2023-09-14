@@ -120,10 +120,12 @@ class MessengerRepository
           adminKeyPair: adminKeyPair,
         );
 
-        await (await _localDatasource).updateDiscussion(
+        final localDatasource = await _localDatasource;
+
+        await localDatasource.updateDiscussion(
           ownerAddress: owner.genesisAddress,
           discussion: updatedDiscussion,
-          discussionPreviousAddress: discussionSCAddress,
+          discussionName: discussionName,
         );
 
         return updatedDiscussion;
@@ -163,7 +165,7 @@ class MessengerRepository
   Future<Result<List<DiscussionMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     int limit = 0,
     int pagingOffset = 0,
   }) async =>
@@ -172,9 +174,14 @@ class MessengerRepository
           final keyPair = session
               .wallet.keychainSecuredInfos.services[reader.name]!.keyPair!;
 
+          final lastAddressForDiscussion = await sl
+              .get<AddressService>()
+              .lastAddressFromAddress([discussionGenesisAddress]);
+
           final aeMessages = await messagingService.readMessages(
             apiService: sl.get<ApiService>(),
-            discussionSCAddress: discussionAddress,
+            discussionSCAddress:
+                lastAddressForDiscussion[discussionGenesisAddress]!,
             readerKeyPair: keyPair.toKeyPair,
             limit: limit,
             pagingOffset: pagingOffset,
@@ -201,16 +208,21 @@ class MessengerRepository
   Future<Result<Discussion, Failure>> getRemoteDiscussion({
     required Account currentAccount,
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
   }) async =>
       Result.guard(
         () async {
           final keyPair = session.wallet.keychainSecuredInfos
               .services[currentAccount.name]!.keyPair!;
 
+          final lastAddressForDiscussion = await sl
+              .get<AddressService>()
+              .lastAddressFromAddress([discussionGenesisAddress]);
+
           final aeGroupMessage = await messagingService.getDiscussion(
             apiService: sl.get<ApiService>(),
-            discussionSCAddress: discussionAddress,
+            discussionSCAddress:
+                lastAddressForDiscussion[discussionGenesisAddress]!,
             keyPair: keyPair.toKeyPair,
           );
 
@@ -232,19 +244,23 @@ class MessengerRepository
   @override
   Future<Result<double, Failure>> calculateFees({
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     required Account creator,
     required String content,
   }) async =>
       Result.guard(
-        () {
+        () async {
           final keyPair = session
               .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
+
+          final lastAddressForDiscussion = await sl
+              .get<AddressService>()
+              .lastAddressFromAddress([discussionGenesisAddress]);
 
           return _remoteDatasource.calculateMessageSendFees(
             messagingService: messagingService,
             apiService: sl.get<ApiService>(),
-            scAddress: discussionAddress,
+            scAddress: lastAddressForDiscussion[discussionGenesisAddress]!,
             messageContent: content,
             keychain: session.wallet.keychainSecuredInfos.toKeychain(),
             senderAddress: creator.lastAddress!,
@@ -257,16 +273,22 @@ class MessengerRepository
   @override
   Future<Result<DiscussionMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     required Account creator,
     required String content,
   }) =>
       Result.guard(() async {
         final keyPair = session
             .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
+
+        final lastAddressForDiscussion = await sl
+            .get<AddressService>()
+            .lastAddressFromAddress([discussionGenesisAddress]);
+
         final sendMessageResult = await messagingService.sendMessage(
           apiService: sl.get<ApiService>(),
-          discussionSCAddress: discussionAddress,
+          discussionSCAddress:
+              lastAddressForDiscussion[discussionGenesisAddress]!,
           messageContent: content,
           keychain: session.wallet.keychainSecuredInfos.toKeychain(),
           senderAddress: creator.lastAddress!,
@@ -296,7 +318,8 @@ class MessengerRepository
         await sendTransactionNotification(
           notification: TransactionNotification(
             txAddress: txAddress.address!,
-            txChainGenesisAddress: discussionAddress,
+            txChainGenesisAddress:
+                lastAddressForDiscussion[discussionGenesisAddress]!,
           ),
           pushNotification: {
             'en': const PushNotification(
@@ -322,7 +345,8 @@ class MessengerRepository
     required Account creator,
     required DiscussionMessage message,
   }) async {
-    await (await _localDatasource).setDiscussionLastMessage(
+    final localDatasource = await _localDatasource;
+    await localDatasource.setDiscussionLastMessage(
       ownerAddress: creator.genesisAddress,
       discussionAddress: discussionAddress,
       message: message,
@@ -331,6 +355,7 @@ class MessengerRepository
 
   @override
   Future<void> clear() async {
-    await (await _localDatasource).clear();
+    final localDatasource = await _localDatasource;
+    await localDatasource.clear();
   }
 }
