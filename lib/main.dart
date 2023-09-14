@@ -152,7 +152,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   }
 
   Future didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
-    debugPrint('Lifecycle State : $state');
+    dev.log('Lifecycle State : $state');
     var isDeviceSecured = false;
 
     // Account for user changing locale when leaving the app

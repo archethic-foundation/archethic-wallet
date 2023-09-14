@@ -7,6 +7,7 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
+import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -198,6 +199,14 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       errorAddressText: errorAddressText ?? '',
       errorMessageText: errorMessageText ?? '',
       errorAmountText: errorAmountText ?? '',
+    );
+  }
+
+  void setTokenId({
+    String? tokenId,
+  }) {
+    state = state.copyWith(
+      tokenId: tokenId ?? '',
     );
   }
 
@@ -747,7 +756,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             tokenAddress:
                 state.accountToken?.tokenInformation!.address!.toUpperCase(),
             type: 'non-fungible',
-            tokenId: 1,
+            tokenId: int.tryParse(state.tokenId) ?? 1,
             aeip: [2, 9],
             properties:
                 state.accountToken?.tokenInformation!.tokenProperties ?? {},
@@ -759,15 +768,22 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     transferRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
-        EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(
-            transactionType: TransactionSendEventType.transfer,
-            response: 'ok',
-            nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: confirmation.transactionAddress,
-            maxConfirmations: confirmation.maxConfirmations,
-          ),
-        );
+        if (archethic.TransactionConfirmation.isEnoughConfirmations(
+          confirmation.nbConfirmations,
+          confirmation.maxConfirmations,
+          TransactionValidationRatios.transfer,
+        )) {
+          transferRepository.close();
+          EventTaxiImpl.singleton().fire(
+            TransactionSendEvent(
+              transactionType: TransactionSendEventType.transfer,
+              response: 'ok',
+              nbConfirmations: confirmation.nbConfirmations,
+              transactionAddress: confirmation.transactionAddress,
+              maxConfirmations: confirmation.maxConfirmations,
+            ),
+          );
+        }
       },
       onError: (error) async {
         error.maybeMap(

@@ -10,17 +10,14 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
   ArchethicOracleUCOMarketRepository();
 
-  archethic.OracleService? _archethicOracleApi;
-  archethic.OracleService get archethicOracleApi =>
-      _archethicOracleApi ??= sl.get<archethic.OracleService>();
-
   @override
   bool canHandleCurrency(AvailableCurrencyEnum currency) =>
       currency == AvailableCurrencyEnum.eur ||
       currency == AvailableCurrencyEnum.usd;
 
   Future<double> _getConversionRatio(AvailableCurrencyEnum currency) async {
-    final oracleUcoPrice = await archethicOracleApi.getOracleData();
+    final oracleUcoPrice =
+        await sl.get<archethic.OracleService>().getOracleData();
     final eurConversionRate = oracleUcoPrice.uco?.eur;
     final usdConversionRate = oracleUcoPrice.uco?.usd;
     if (eurConversionRate == null ||

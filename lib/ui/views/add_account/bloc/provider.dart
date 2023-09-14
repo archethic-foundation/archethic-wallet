@@ -5,9 +5,11 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
+import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -109,15 +111,22 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
-        EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(
-            transactionType: TransactionSendEventType.keychain,
-            response: 'ok',
-            nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: confirmation.transactionAddress,
-            maxConfirmations: confirmation.maxConfirmations,
-          ),
-        );
+        if (archethic.TransactionConfirmation.isEnoughConfirmations(
+          confirmation.nbConfirmations,
+          confirmation.maxConfirmations,
+          TransactionValidationRatios.addAccount,
+        )) {
+          transactionRepository.close();
+          EventTaxiImpl.singleton().fire(
+            TransactionSendEvent(
+              transactionType: TransactionSendEventType.keychain,
+              response: 'ok',
+              nbConfirmations: confirmation.nbConfirmations,
+              transactionAddress: confirmation.transactionAddress,
+              maxConfirmations: confirmation.maxConfirmations,
+            ),
+          );
+        }
       },
       onError: (error) async {
         error.maybeMap(

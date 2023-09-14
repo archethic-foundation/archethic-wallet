@@ -79,11 +79,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         return;
       }
 
-      if (event.response != 'ok' ||
-          !TransactionConfirmation.isEnoughConfirmations(
-            event.nbConfirmations!,
-            event.maxConfirmations!,
-          )) {
+      if (event.response != 'ok') {
         UIUtil.showSnackbar(
           localizations.notEnoughConfirmations,
           context,

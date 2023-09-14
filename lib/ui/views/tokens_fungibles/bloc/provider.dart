@@ -6,16 +6,20 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
+import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+const addTokenBCValidationRatio = 0.5;
 
 final _initialAddTokenFormProvider = Provider<AddTokenFormState>(
   (ref) {
@@ -312,20 +316,22 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
-        if (confirmation.isFullyConfirmed) {
-          ref
-              .read(AccountProviders.selectedAccount.notifier)
-              .refreshFungibleTokens();
+        if (archethic.TransactionConfirmation.isEnoughConfirmations(
+          confirmation.nbConfirmations,
+          confirmation.maxConfirmations,
+          TransactionValidationRatios.addFungibleToken,
+        )) {
+          transactionRepository.close();
+          EventTaxiImpl.singleton().fire(
+            TransactionSendEvent(
+              transactionType: TransactionSendEventType.token,
+              response: 'ok',
+              nbConfirmations: confirmation.nbConfirmations,
+              transactionAddress: confirmation.transactionAddress,
+              maxConfirmations: confirmation.maxConfirmations,
+            ),
+          );
         }
-        EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(
-            transactionType: TransactionSendEventType.token,
-            response: 'ok',
-            nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: confirmation.transactionAddress,
-            maxConfirmations: confirmation.maxConfirmations,
-          ),
-        );
       },
       onError: (error) async {
         error.maybeMap(

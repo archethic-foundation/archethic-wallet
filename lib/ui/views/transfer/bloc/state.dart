@@ -30,6 +30,7 @@ class TransferFormState with _$TransferFormState {
     required AccountBalance accountBalance,
     required TransferRecipient recipient,
     AccountToken? accountToken,
+    @Default('') String tokenId,
     @Default('') String message,
     @Default('') String errorAddressText,
     @Default('') String errorAmountText,

@@ -34,4 +34,6 @@ abstract class TransactionRemoteRepositoryInterface {
     required Account account,
     required KeychainSecuredInfos keychainSecuredInfos,
   });
+
+  Future<void> close();
 }

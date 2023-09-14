@@ -9,6 +9,7 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
+import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -18,6 +19,7 @@ import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -719,15 +721,22 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
-        EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(
-            transactionType: TransactionSendEventType.token,
-            response: 'ok',
-            nbConfirmations: confirmation.nbConfirmations,
-            transactionAddress: confirmation.transactionAddress,
-            maxConfirmations: confirmation.maxConfirmations,
-          ),
-        );
+        if (archethic.TransactionConfirmation.isEnoughConfirmations(
+          confirmation.nbConfirmations,
+          confirmation.maxConfirmations,
+          TransactionValidationRatios.addNFT,
+        )) {
+          transactionRepository.close();
+          EventTaxiImpl.singleton().fire(
+            TransactionSendEvent(
+              transactionType: TransactionSendEventType.token,
+              response: 'ok',
+              nbConfirmations: confirmation.nbConfirmations,
+              transactionAddress: confirmation.transactionAddress,
+              maxConfirmations: confirmation.maxConfirmations,
+            ),
+          );
+        }
       },
       onError: (error) async {
         error.maybeMap(

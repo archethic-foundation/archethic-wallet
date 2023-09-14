@@ -20,7 +20,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_d
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -73,11 +72,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         return;
       }
 
-      if (event.response == 'ok' &&
-          TransactionConfirmation.isEnoughConfirmations(
-            event.nbConfirmations!,
-            event.maxConfirmations!,
-          )) {
+      if (event.response == 'ok') {
         final nftCreation = ref.read(
           NftCreationFormProvider.nftCreationForm(
             ref.read(

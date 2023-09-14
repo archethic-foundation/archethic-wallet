@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos_service.dart';
@@ -45,15 +46,22 @@ class KeychainUtil with KeychainServiceMixin {
     transactionSender.send(
       transaction: accessKeychainTx,
       onConfirmation: (event) async {
-        onConfirmation(
-          event,
-          transactionSender,
-          TransactionSendEventType.keychainAccess,
-          params: <String, Object>{
-            'keychainAddress': keychainAddress,
-            'keychain': keychain,
-          },
-        );
+        if (TransactionConfirmation.isEnoughConfirmations(
+          event.nbConfirmations,
+          event.maxConfirmations,
+          TransactionValidationRatios.createKeychainAccess,
+        )) {
+          transactionSender.close();
+          onConfirmation(
+            event,
+            transactionSender,
+            TransactionSendEventType.keychainAccess,
+            params: <String, Object>{
+              'keychainAddress': keychainAddress,
+              'keychain': keychain,
+            },
+          );
+        }
       },
       onError: (error) async {
         onError(
@@ -110,17 +118,24 @@ class KeychainUtil with KeychainServiceMixin {
     transactionSender.send(
       transaction: keychainTransaction,
       onConfirmation: (event) async {
-        onConfirmation(
-          event,
-          transactionSender,
-          TransactionSendEventType.keychain,
-          params: <String, Object>{
-            'keychainAddress':
-                keychainTransaction.address!.address!.toUpperCase(),
-            'originPrivateKey': originPrivateKey,
-            'keychain': keychain,
-          },
-        );
+        if (TransactionConfirmation.isEnoughConfirmations(
+          event.nbConfirmations,
+          event.maxConfirmations,
+          TransactionValidationRatios.createKeychain,
+        )) {
+          transactionSender.close();
+          onConfirmation(
+            event,
+            transactionSender,
+            TransactionSendEventType.keychain,
+            params: <String, Object>{
+              'keychainAddress':
+                  keychainTransaction.address!.address!.toUpperCase(),
+              'originPrivateKey': originPrivateKey,
+              'keychain': keychain,
+            },
+          );
+        }
       },
       onError: (error) async {
         onError(

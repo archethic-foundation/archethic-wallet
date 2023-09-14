@@ -96,9 +96,13 @@ extension ThemePickerItemExt on PickerItem {
       themeOption,
       true,
       decorationImageItem: DecorationImage(
-        image: AssetImage(
-          '${themeSetting.getTheme().assetsFolder}v0${Random().nextInt(4) + 1}-waves.jpg',
-        ),
+        image: themeOption == ThemeOptions.purple
+            ? AssetImage(
+                '${themeSetting.getTheme().assetsFolder}sheet-background.png',
+              )
+            : AssetImage(
+                '${themeSetting.getTheme().assetsFolder}v0${Random().nextInt(4) + 1}-waves.jpg',
+              ),
         opacity: 0.5,
         fit: BoxFit.fitWidth,
       ),
