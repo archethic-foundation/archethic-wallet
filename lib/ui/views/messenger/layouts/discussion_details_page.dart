@@ -1,5 +1,7 @@
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -35,7 +37,8 @@ class DiscussionDetailsPage extends ConsumerWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
     final preferences = ref.watch(SettingsProviders.settings);
-
+    final selectedContact =
+        ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final discussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
 
@@ -63,16 +66,21 @@ class DiscussionDetailsPage extends ConsumerWidget {
               elevation: 0,
               title: Text(localizations.discussionInfo),
               actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pushNamed(
-                    '/update_discussion',
-                    arguments: data.value,
+                if (selectedContact != null &&
+                    data.value.adminsPubKeys.contains(
+                      AccessRecipient.contact(contact: selectedContact)
+                          .publicKey,
+                    ))
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      '/update_discussion',
+                      arguments: data.value,
+                    ),
+                    child: Text(
+                      localizations.modify,
+                      style: theme.textStyleSize12W400Primary,
+                    ),
                   ),
-                  child: Text(
-                    localizations.modify,
-                    style: theme.textStyleSize12W400Primary,
-                  ),
-                ),
               ],
             ),
             body: TapOutsideUnfocus(
