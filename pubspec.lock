@@ -875,11 +875,10 @@ packages:
   ghost:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: f1ec9ace475bdc29f313c1e4251cf46bebe7baed
-      url: "https://github.com/redDwarf03/dart_ghost.git"
-    source: git
+      name: ghost
+      sha256: "205cba406caf531b6afe59ffa2ed96975718d85bf15720eee103c6c9d2e8e922"
+      url: "https://pub.dev"
+    source: hosted
     version: "2.0.3"
   glob:
     dependency: transitive
