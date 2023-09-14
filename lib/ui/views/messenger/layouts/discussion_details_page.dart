@@ -3,6 +3,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -12,6 +13,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +34,7 @@ class DiscussionDetailsPage extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
+    final preferences = ref.watch(SettingsProviders.settings);
 
     final discussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
@@ -97,6 +100,37 @@ class DiscussionDetailsPage extends ConsumerWidget {
                           ),
                           textAlign: TextAlign.center,
                           style: theme.textStyleSize28W700Primary,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        IconButton(
+                          key: const Key('viewExplorer'),
+                          onPressed: () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            Clipboard.setData(
+                              ClipboardData(text: discussionAddress),
+                            );
+                            UIUtil.showSnackbar(
+                              localizations.addressCopied,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                            );
+                          },
+                          icon: Column(
+                            children: [
+                              const Icon(Symbols.content_copy),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(localizations.addressCopy),
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 8,

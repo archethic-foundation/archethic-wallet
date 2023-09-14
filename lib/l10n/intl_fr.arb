@@ -558,5 +558,6 @@
 	"favorites": "Favoris",
 	"explorer": "Explorateur",
 	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea",
-	"nftPropertieUnknownStructure": "Structure des propriétés inconnue"
+	"nftPropertieUnknownStructure": "Structure des propriétés inconnue",
+	"addressCopy": "Copier l'adresse"
 }
