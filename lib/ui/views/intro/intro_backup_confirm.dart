@@ -90,7 +90,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         Navigator.of(context).pop();
         return;
       }
-      print('coucoucoucocucouc');
 
       switch (event.transactionType!) {
         case TransactionSendEventType.keychain:

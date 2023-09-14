@@ -65,7 +65,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       }
 
       if (event.response == 'ok') {
-        print('coucou');
         await _showSendSucceed(event, theme);
         return;
       }
