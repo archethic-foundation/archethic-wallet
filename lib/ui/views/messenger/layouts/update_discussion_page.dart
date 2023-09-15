@@ -226,7 +226,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                         children: [
                                                           const Icon(
                                                             Symbols
-                                                                .shield_person,
+                                                                .add_moderator,
                                                           ),
                                                           const SizedBox(
                                                             width: 12,
@@ -252,7 +252,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                       icon: Row(
                                                         children: [
                                                           const Icon(
-                                                            Symbols.remove,
+                                                            Symbols
+                                                                .remove_moderator,
                                                           ),
                                                           const SizedBox(
                                                             width: 12,
@@ -279,7 +280,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                     icon: Row(
                                                       children: [
                                                         const Icon(
-                                                          Symbols.unsubscribe,
+                                                          Symbols.person_remove,
                                                         ),
                                                         const SizedBox(
                                                           width: 12,

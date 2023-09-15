@@ -583,7 +583,7 @@
   "explorer": "Explorer",
   "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
   "nftPropertieUnknownStructure": "Unknown properties format",
-  "addressCopy": "Address copy",
+  "addressCopy": "Discussion address copy",
   "addMembers": "Add members",
   "addAdmin": "Become an administrator",
   "removeAdmin": "Remove administration",
