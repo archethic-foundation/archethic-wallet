@@ -113,7 +113,7 @@ class DiscussionDetailsPage extends ConsumerWidget {
                           height: 8,
                         ),
                         IconButton(
-                          key: const Key('viewExplorer'),
+                          key: const Key('copyAddress'),
                           onPressed: () {
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
