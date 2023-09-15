@@ -587,5 +587,8 @@
   "addMember": "Add a member",
   "addAdmin": "Become an administrator",
   "removeAdmin": "Remove administration",
-  "removeDiscussion": "Remove from discussion"
+  "removeDiscussion": "Remove from discussion",
+  "discussionNameMandatory": "Discussion name is required",
+  "discussionAtLeastTwoMembers": "A discussion must have at least two members",
+  "discussionAtLeastOneAdmin": "A discussion must have at least one administrator"
 }

@@ -564,5 +564,8 @@
 	"addMember": "Ajouter un membre",
 	"addAdmin": "Passer administrateur",
 	"removeAdmin": "Retirer l'administration",
-	"removeDiscussion": "Retirer de la discussion"
+	"removeDiscussion": "Retirer de la discussion",
+	"discussionNameMandatory": "Le nom de la discussion est obligatoire",
+	"discussionAtLeastTwoMembers": "Une discussion doit avoir au moins deux membres",
+	"discussionAtLeastOneAdmin": "Une discussion doit avoir au moins un administrateur"
 }

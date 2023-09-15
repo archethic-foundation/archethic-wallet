@@ -45,6 +45,9 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .watch(MessengerProviders.updateDiscussionForm.notifier)
+          .localizations = AppLocalizations.of(context)!;
+      ref
+          .watch(MessengerProviders.updateDiscussionForm.notifier)
           .init(widget.discussion);
     });
   }
@@ -337,6 +340,17 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
 
                       result.map(
                         success: (success) {
+                          if (success != null) {
+                            UIUtil.showSnackbar(
+                              success,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                            );
+                            return;
+                          }
+
                           Navigator.of(context)
                               .pop(); // Going back to discussion details
                         },
@@ -352,7 +366,6 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                         },
                       );
                     },
-                    disabled: formState.canSubmit == false,
                   ),
                 ],
               ),

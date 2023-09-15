@@ -17,8 +17,6 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
   }) = _UpdateDiscussionFormState;
   const UpdateDiscussionFormState._();
 
-  bool get canSubmit =>
-      name.isNotEmpty && members.isNotEmpty && admins.isNotEmpty;
   int get numberOfMembers => members.length;
   List<String> get listMembers => members;
   List<String> get listAdmins => admins;
@@ -27,6 +25,8 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
 class UpdateDiscussionFormNotifier
     extends AutoDisposeNotifier<UpdateDiscussionFormState> {
   UpdateDiscussionFormNotifier();
+
+  late AppLocalizations localizations;
 
   @override
   UpdateDiscussionFormState build() => const UpdateDiscussionFormState();
@@ -100,7 +100,24 @@ class UpdateDiscussionFormNotifier
     return;
   }
 
-  Future<Result<void, Failure>> updateDiscussion() => Result.guard(() async {
+  String? validator() {
+    if (state.name.isEmpty) {
+      return localizations.discussionNameMandatory;
+    }
+    if (state.members.length < 2) {
+      return localizations.discussionAtLeastTwoMembers;
+    }
+    if (state.admins.isEmpty) {
+      return localizations.discussionAtLeastOneAdmin;
+    }
+    return null;
+  }
+
+  Future<Result<String?, Failure>> updateDiscussion() => Result.guard(() async {
+        final errorMessage = validator();
+        if (errorMessage != null) {
+          return errorMessage;
+        }
         final session = ref.read(SessionProviders.session).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
@@ -127,5 +144,7 @@ class UpdateDiscussionFormNotifier
             .valueOrThrow;
 
         ref.invalidate(_discussionProvider);
+
+        return null;
       });
 }
