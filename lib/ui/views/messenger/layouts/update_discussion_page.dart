@@ -9,6 +9,7 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dart';
+import 'package:aewallet/ui/views/messenger/layouts/update_discussion_add_members.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -107,11 +108,37 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                       ),
                       Divider(color: theme.text),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final updateDiscussionAddMembers =
+                              UpdateDiscussionAddMembers(
+                            listMembers: formState.listMembers,
+                          );
+                          if (await updateDiscussionAddMembers
+                                  .canAddNewMembers(ref) ==
+                              false) {
+                            UIUtil.showSnackbar(
+                              localizations.noContactsToAdd,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                            );
+                            return;
+                          }
+
+                          Sheets.showAppHeightNineSheet(
+                            onDisposed: () {
+                              formNotifier.removeAllMembersToAdd();
+                            },
+                            context: context,
+                            ref: ref,
+                            widget: updateDiscussionAddMembers,
+                          );
+                        },
                         child: Row(
                           children: [
                             Icon(
-                              Symbols.person_add,
+                              Symbols.group_add,
                               color: theme.text,
                               weight: IconSize.weightM,
                               opticalSize: IconSize.opticalSizeM,
@@ -121,7 +148,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                               width: 8,
                             ),
                             Text(
-                              localizations.addMember,
+                              localizations.addMembers,
                               style: theme.textStyleSize14W700Primary,
                             ),
                           ],
@@ -339,10 +366,10 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                       Navigator.of(context).pop(); // wait popup
 
                       result.map(
-                        success: (success) {
-                          if (success != null) {
+                        success: (errorMessage) {
+                          if (errorMessage != null) {
                             UIUtil.showSnackbar(
-                              success,
+                              errorMessage,
                               context,
                               ref,
                               theme.text!,

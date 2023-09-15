@@ -423,7 +423,7 @@ class _AccessRecipientWithPublicKeyProviderElement
   String get pubKey => (origin as _AccessRecipientWithPublicKeyProvider).pubKey;
 }
 
-String _$remoteDiscussionHash() => r'5056733923772dafac677ce03b1d44a0a6c6641a';
+String _$remoteDiscussionHash() => r'b17b7a641980daa35fb8e14a6d16102687c1cfb5';
 
 /// See also [_remoteDiscussion].
 @ProviderFor(_remoteDiscussion)
@@ -569,7 +569,7 @@ final _sortedDiscussionsProvider =
 
 typedef _SortedDiscussionsRef = AutoDisposeFutureProviderRef<List<Discussion>>;
 String _$messageCreationFeesHash() =>
-    r'14066f54193174c09c21deab27541e86e8313d13';
+    r'b35136b58e04fa26d7effcac5e911feae596b05a';
 
 /// See also [_messageCreationFees].
 @ProviderFor(_messageCreationFees)
@@ -717,7 +717,7 @@ class _MessageCreationFeesProviderElement
 }
 
 String _$discussionMessagesHash() =>
-    r'f763b9aebd9ea109e10ff48fee6af884fd3d7285';
+    r'637b3909fda4728a20f21d15b3bce7d74e6d4512';
 
 /// See also [_discussionMessages].
 @ProviderFor(_discussionMessages)
@@ -900,7 +900,7 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
 String _$messageCreationFormNotifierHash() =>
-    r'42b1621bec3ea0305815a14983caa726cff76cd0';
+    r'6c05b1ed92f37e363ceecf30767e2af17b82ac9e';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {

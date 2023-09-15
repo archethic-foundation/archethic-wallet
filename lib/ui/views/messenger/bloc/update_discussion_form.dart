@@ -13,6 +13,7 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
     @Default('') String name,
     @Default('') String discussionAddress,
     @Default([]) List<String> members,
+    @Default([]) List<String> membersToAdd,
     @Default([]) List<String> admins,
   }) = _UpdateDiscussionFormState;
   const UpdateDiscussionFormState._();
@@ -20,6 +21,7 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
   int get numberOfMembers => members.length;
   List<String> get listMembers => members;
   List<String> get listAdmins => admins;
+  bool get canAddMembers => membersToAdd.isNotEmpty;
 }
 
 class UpdateDiscussionFormNotifier
@@ -64,6 +66,38 @@ class UpdateDiscussionFormNotifier
     state = state.copyWith(
       members: state.members.where((element) => element != member).toList(),
     );
+    // If the members was an admin, bye-bye
+    removeAdmin(member);
+  }
+
+  void addMemberToAdd(String member) {
+    if (state.membersToAdd.contains(member)) return;
+    state = state.copyWith(
+      membersToAdd: [
+        ...state.membersToAdd,
+        member,
+      ],
+    );
+  }
+
+  void removeMemberToAdd(String member) {
+    state = state.copyWith(
+      membersToAdd:
+          state.membersToAdd.where((element) => element != member).toList(),
+    );
+  }
+
+  void removeAllMembersToAdd() {
+    state = state.copyWith(
+      membersToAdd: [],
+    );
+  }
+
+  void addAllMembersToAdd() {
+    for (final member in state.membersToAdd) {
+      addMember(member);
+    }
+    removeAllMembersToAdd();
   }
 
   void addAdmin(String admin) {

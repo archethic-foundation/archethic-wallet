@@ -584,11 +584,12 @@
   "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
   "nftPropertieUnknownStructure": "Unknown properties format",
   "addressCopy": "Address copy",
-  "addMember": "Add a member",
+  "addMembers": "Add members",
   "addAdmin": "Become an administrator",
   "removeAdmin": "Remove administration",
   "removeDiscussion": "Remove from discussion",
   "discussionNameMandatory": "Discussion name is required",
   "discussionAtLeastTwoMembers": "A discussion must have at least two members",
-  "discussionAtLeastOneAdmin": "A discussion must have at least one administrator"
+  "discussionAtLeastOneAdmin": "A discussion must have at least one administrator",
+  "noContactsToAdd": "There are no more contacts to add"
 }

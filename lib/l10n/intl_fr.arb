@@ -561,11 +561,12 @@
 	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea",
 	"nftPropertieUnknownStructure": "Structure des propriétés inconnue",
 	"addressCopy": "Copier l'adresse",
-	"addMember": "Ajouter un membre",
+	"addMembers": "Ajouter des membres",
 	"addAdmin": "Passer administrateur",
 	"removeAdmin": "Retirer l'administration",
 	"removeDiscussion": "Retirer de la discussion",
 	"discussionNameMandatory": "Le nom de la discussion est obligatoire",
 	"discussionAtLeastTwoMembers": "Une discussion doit avoir au moins deux membres",
-	"discussionAtLeastOneAdmin": "Une discussion doit avoir au moins un administrateur"
+	"discussionAtLeastOneAdmin": "Une discussion doit avoir au moins un administrateur",
+	"noContactsToAdd": "Il n'y a plus de contact à ajouter"
 }
