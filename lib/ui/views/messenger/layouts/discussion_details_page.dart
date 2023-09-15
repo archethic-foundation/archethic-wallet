@@ -110,10 +110,9 @@ class DiscussionDetailsPage extends ConsumerWidget {
                           style: theme.textStyleSize28W700Primary,
                         ),
                         const SizedBox(
-                          height: 8,
+                          height: 15,
                         ),
-                        IconButton(
-                          key: const Key('copyAddress'),
+                        TextButton(
                           onPressed: () {
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
@@ -130,19 +129,26 @@ class DiscussionDetailsPage extends ConsumerWidget {
                               theme.snackBarShadow!,
                             );
                           },
-                          icon: Column(
+                          child: Row(
                             children: [
-                              const Icon(Symbols.content_copy),
-                              const SizedBox(
-                                height: 4,
+                              Icon(
+                                Symbols.content_copy,
+                                color: theme.text,
+                                weight: IconSize.weightM,
+                                opticalSize: IconSize.opticalSizeM,
+                                grade: IconSize.gradeM,
                               ),
-                              Text(localizations.addressCopy),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                localizations.addressCopy,
+                                style: theme.textStyleSize14W700Primary,
+                              ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 8,
-                        ),
+                        Divider(color: theme.text),
                         Column(
                           children: <Widget>[
                             _SectionTitle(
@@ -233,9 +239,9 @@ class _SectionTitle extends ConsumerWidget {
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.only(
-          left: 24,
-          bottom: 6,
-          top: 24,
+          left: 8,
+          bottom: 8,
+          top: 8,
         ),
         child: Text(
           text,
