@@ -54,6 +54,22 @@ class HiveDiscussionDatasource with SecuredHiveMixin {
     );
   }
 
+  Future updateDiscussion({
+    required Discussion discussion,
+    required String ownerAddress,
+    required String discussionName,
+  }) async {
+    await _discussionBox.put(
+      _discussionKey(
+        ownerAddress: ownerAddress,
+        discussionAddress: discussion.address,
+      ),
+      discussion.copyWith(
+        name: discussionName,
+      ),
+    );
+  }
+
   Future<void> clear() async {
     await _discussionBox.clear();
   }

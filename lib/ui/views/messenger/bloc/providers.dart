@@ -25,6 +25,7 @@ part 'create_discussion_form.dart';
 part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
+part 'update_discussion_form.dart';
 
 @riverpod
 class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
@@ -175,7 +176,7 @@ Future<Discussion> _remoteDiscussion(
       .getRemoteDiscussion(
         currentAccount: selectedAccount,
         session: session,
-        discussionAddress: address,
+        discussionGenesisAddress: address,
       )
       .valueOrThrow;
 }
@@ -188,21 +189,19 @@ Future<List<Discussion>> _sortedDiscussions(_SortedDiscussionsRef ref) async {
 
 void _subscribeNotificationsWorker(WidgetRef ref) {
   ref.listen(_discussionsProvider, (previous, next) {
-    final previousDiscussionsAdresses = previous?.value
+    final previousDiscussionsAddress = previous?.value
             ?.map((discussion) => discussion.address.toLowerCase())
             .toSet() ??
         {};
-    final nextDiscussionsAdresses = next.value
+    final nextDiscussionsAddress = next.value
             ?.map((discussion) => discussion.address.toLowerCase())
             .toSet() ??
         {};
 
-    final discussionsToUnsubscribe = previousDiscussionsAdresses
-        .difference(nextDiscussionsAdresses)
-        .toList();
-    final discussionsToSubscribe = nextDiscussionsAdresses
-        .difference(previousDiscussionsAdresses)
-        .toList();
+    final discussionsToUnsubscribe =
+        previousDiscussionsAddress.difference(nextDiscussionsAddress).toList();
+    final discussionsToSubscribe =
+        nextDiscussionsAddress.difference(previousDiscussionsAddress).toList();
 
     if (discussionsToUnsubscribe.isNotEmpty) {
       ref
@@ -241,6 +240,7 @@ abstract class MessengerProviders {
   static final createDiscussionForm = _createDiscussionFormProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
+  static final updateDiscussionForm = _updateDiscussionFormProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_messengerRepository).clear();

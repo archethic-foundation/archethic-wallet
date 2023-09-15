@@ -545,11 +545,12 @@
   "newGroup": "New group",
   "addRemoteMessengerGroup": "Add this messaging group",
   "createGroup": "Create a group",
-  "addMessengerGroupNameLabel": "Group name ...",
+  "discussionName": "Discussion name",
   "introNewMessengerDiscussion": "Choose a group name, and select people to invite",
   "messengerDiscussionAccessDescription": "Add or remove public keys that can access this discussion group.",
   "messengerDiscussionAddAccess": "Add access",
   "addMessengerDiscussionFailure": "Creation failed",
+  "updateDiscussionFailure": "Update failed",
   "messengerDiscussionMembersCount": "{membersCount} members",
   "@messengerDiscussionMembersCount": {
     "placeholders": {
@@ -580,5 +581,6 @@
   "favorites": "Favorites",
   "explorer": "Explorer",
   "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
-  "nftPropertieUnknownStructure": "Unknown properties format"
+  "nftPropertieUnknownStructure": "Unknown properties format",
+  "addressCopy": "Address copy"
 }

@@ -4,6 +4,7 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 abstract class MessengerRepositoryInterface {
   Future<Result<List<String>, Failure>> getDiscussionAddresses({
@@ -26,7 +27,7 @@ abstract class MessengerRepositoryInterface {
   Future<Result<List<DiscussionMessage>, Failure>> getMessages({
     required Account reader,
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     int limit = 0,
     int pagingOffset = 0,
   });
@@ -34,7 +35,7 @@ abstract class MessengerRepositoryInterface {
   Future<Result<Discussion, Failure>> getRemoteDiscussion({
     required Account currentAccount,
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
   });
 
   Future<Result<Discussion, Failure>> addRemoteDiscussion({
@@ -49,7 +50,7 @@ abstract class MessengerRepositoryInterface {
 
   Future<Result<DiscussionMessage, Failure>> sendMessage({
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     required Account creator,
     required String content,
   });
@@ -62,10 +63,22 @@ abstract class MessengerRepositoryInterface {
 
   Future<Result<double, Failure>> calculateFees({
     required LoggedInSession session,
-    required String discussionAddress,
+    required String discussionGenesisAddress,
     required Account creator,
     required String content,
   });
 
   Future<void> clear();
+
+  Future<Result<Discussion, Failure>> updateDiscussion({
+    required String discussionSCAddress,
+    required List<String> membersPubKeys,
+    required String discussionName,
+    required List<String> adminsPubKeys,
+    required String adminAddress,
+    required String serviceName,
+    required LoggedInSession session,
+    required KeyPair adminKeyPair,
+    required Account owner,
+  });
 }

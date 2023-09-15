@@ -17,6 +17,7 @@ import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -318,7 +319,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
               ),
               '/update_discussion': MaterialPageRoute(
                 builder: (_) => UpdateDiscussionPage(
-                  discussionAddress: settings.arguments! as String,
+                  discussion: settings.arguments! as Discussion,
                 ),
               ),
             };

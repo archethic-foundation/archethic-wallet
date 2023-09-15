@@ -1,8 +1,11 @@
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -12,6 +15,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,92 +36,129 @@ class DiscussionDetailsPage extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
-
-    final asyncDiscussion =
+    final preferences = ref.watch(SettingsProviders.settings);
+    final selectedContact =
+        ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final discussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
 
     var index = 0;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            theme.background3Small!,
+    return discussion.maybeMap(
+      data: (data) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                theme.background3Small!,
+              ),
+              fit: BoxFit.fitHeight,
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[theme.backgroundDark!, theme.background!],
+            ),
           ),
-          fit: BoxFit.fitHeight,
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[theme.backgroundDark!, theme.background!],
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text(localizations.discussionInfo),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pushNamed(
-                '/update_discussion',
-                arguments: discussionAddress,
-              ),
-              child: Text(
-                localizations.modify,
-                style: theme.textStyleSize12W400Primary,
-              ),
-            ),
-          ],
-        ),
-        body: TapOutsideUnfocus(
-          child: SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 15,
-                right: 15,
-                bottom: bottom + 80,
-              ),
-              child: ArchethicScrollbar(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 15,
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: Text(localizations.discussionInfo),
+              actions: [
+                if (selectedContact != null &&
+                    data.value.adminsPubKeys.contains(
+                      AccessRecipient.contact(contact: selectedContact)
+                          .publicKey,
+                    ))
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      '/update_discussion',
+                      arguments: data.value,
                     ),
-                    asyncDiscussion.maybeMap(
-                      data: (data) {
-                        final displayName = ref.watch(
-                          MessengerProviders.discussionDisplayName(data.value),
-                        );
-
-                        return Text(
-                          displayName,
+                    child: Text(
+                      localizations.modify,
+                      style: theme.textStyleSize12W400Primary,
+                    ),
+                  ),
+              ],
+            ),
+            body: TapOutsideUnfocus(
+              child: SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    bottom: bottom + 80,
+                  ),
+                  child: ArchethicScrollbar(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          ref.watch(
+                            MessengerProviders.discussionDisplayName(
+                              data.value,
+                            ),
+                          ),
                           textAlign: TextAlign.center,
                           style: theme.textStyleSize28W700Primary,
-                        );
-                      },
-                      orElse: () => const SizedBox(),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    asyncDiscussion.maybeMap(
-                      orElse: Container.new,
-                      data: (discussion) {
-                        return Column(
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            Clipboard.setData(
+                              ClipboardData(text: discussionAddress),
+                            );
+                            UIUtil.showSnackbar(
+                              localizations.addressCopied,
+                              context,
+                              ref,
+                              theme.text!,
+                              theme.snackBarShadow!,
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Symbols.content_copy,
+                                color: theme.text,
+                                weight: IconSize.weightM,
+                                opticalSize: IconSize.opticalSizeM,
+                                grade: IconSize.gradeM,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                localizations.addressCopy,
+                                style: theme.textStyleSize14W700Primary,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(color: theme.text),
+                        Column(
                           children: <Widget>[
                             _SectionTitle(
                               text:
                                   localizations.messengerDiscussionMembersCount(
-                                discussion.value.membersPubKeys.length,
+                                data.value.membersPubKeys.length,
                               ),
                             ),
                             Column(
-                              children:
-                                  discussion.value.membersPubKeys.map((pubKey) {
+                              children: data.value.membersPubKeys.map((pubKey) {
                                 index++;
                                 final accessRecipient = ref.watch(
                                   MessengerProviders
@@ -127,7 +168,7 @@ class DiscussionDetailsPage extends ConsumerWidget {
                                 );
 
                                 return PublicKeyLine(
-                                  discussion: discussion.value,
+                                  discussion: data.value,
                                   pubKey: pubKey,
                                   onTap: accessRecipient.maybeMap(
                                     orElse: () => null,
@@ -163,14 +204,20 @@ class DiscussionDetailsPage extends ConsumerWidget {
                               }).toList(),
                             ),
                           ],
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
+        );
+      },
+      orElse: () => Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
         ),
       ),
     );
@@ -192,9 +239,9 @@ class _SectionTitle extends ConsumerWidget {
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.only(
-          left: 24,
-          bottom: 6,
-          top: 24,
+          left: 8,
+          bottom: 8,
+          top: 8,
         ),
         child: Text(
           text,

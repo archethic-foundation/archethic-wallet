@@ -41,7 +41,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
       state = state.copyWith(isCreating: true);
       final messageCreated = await repository
           .sendMessage(
-            discussionAddress: discussionAddress,
+            discussionGenesisAddress: discussionAddress,
             content: content,
             creator: selectedAccount,
             session: session,
@@ -88,7 +88,7 @@ Future<double> _messageCreationFees(
           .calculateFees(
             creator: selectedAccount,
             session: session,
-            discussionAddress: discussionAddress,
+            discussionGenesisAddress: discussionAddress,
             content: content,
           )
           .valueOrThrow;
@@ -228,7 +228,7 @@ Future<List<DiscussionMessage>> _discussionMessages(
       .getMessages(
         reader: account!,
         session: ref.watch(SessionProviders.session).loggedIn!,
-        discussionAddress: discussionAddress,
+        discussionGenesisAddress: discussionAddress,
         pagingOffset: offset,
         limit: pageSize,
       )
