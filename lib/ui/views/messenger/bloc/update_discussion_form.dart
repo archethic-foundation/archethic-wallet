@@ -19,6 +19,9 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
 
   bool get canSubmit =>
       name.isNotEmpty && members.isNotEmpty && admins.isNotEmpty;
+  int get numberOfMembers => members.length;
+  List<String> get listMembers => members;
+  List<String> get listAdmins => admins;
 }
 
 class UpdateDiscussionFormNotifier
@@ -57,6 +60,12 @@ class UpdateDiscussionFormNotifier
     );
   }
 
+  void removeMember(String member) {
+    state = state.copyWith(
+      members: state.members.where((element) => element != member).toList(),
+    );
+  }
+
   void addAdmin(String admin) {
     if (state.admins.contains(admin)) return;
     state = state.copyWith(
@@ -67,9 +76,9 @@ class UpdateDiscussionFormNotifier
     );
   }
 
-  void removeMember(String member) {
+  void removeAdmin(String admin) {
     state = state.copyWith(
-      members: state.members.where((element) => element != member).toList(),
+      admins: state.admins.where((element) => element != admin).toList(),
     );
   }
 

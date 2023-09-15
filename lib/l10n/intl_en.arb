@@ -570,6 +570,7 @@
   "noContacts": "You have no contacts",
   "aboutToCreateADiscussion": "You are about to create a discussion with",
   "discussionInfo": "Discussion info",
+  "save": "Save",
   "modify": "Modify",
   "discussionModifying": "Discussion modifying",
   "admin": "Admin",
@@ -582,5 +583,9 @@
   "explorer": "Explorer",
   "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
   "nftPropertieUnknownStructure": "Unknown properties format",
-  "addressCopy": "Address copy"
+  "addressCopy": "Address copy",
+  "addMember": "Add a member",
+  "addAdmin": "Become an administrator",
+  "removeAdmin": "Remove administration",
+  "removeDiscussion": "Remove from discussion"
 }
