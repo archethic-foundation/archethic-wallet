@@ -62,7 +62,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: "1fed582d0459e038415d705eca4906265e7735e1"
+      resolved-ref: "4839788190f5e35d330c63c36c5bf2fe95e33a6e"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -398,10 +398,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "1efa911ca7086affd35f463ca2fc1799584fb6aa89883cf0af8e3664d6a02d55"
+      sha256: abd7625e16f51f554ea244d090292945ec4d4be7bfbaf2ec8cccea568919d334
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   dbus:
     dependency: transitive
     description:
@@ -1329,10 +1329,10 @@ packages:
     dependency: "direct dev"
     description:
       name: msix
-      sha256: "76c87b8207323803169626a55afd78bbb8413c984df349a76598b9fbf9224677"
+      sha256: "114d2f280b2b985f0cc11db982cdc648a1311a80340908a1a1130f42411088cd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.16.1"
+    version: "3.16.2"
   nfc_manager:
     dependency: "direct main"
     description:
@@ -1489,10 +1489,10 @@ packages:
     dependency: "direct dev"
     description:
       name: patrol
-      sha256: "4b244396a82f5c30b8af9bd39466fc5d2465cd53f0db44db2cd1750ac574fc52"
+      sha256: fa6550d33785ad9b8f497c81d3d74a25fd0f4c6491ab967d3cd9081c318a4da2
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   patrol_finders:
     dependency: transitive
     description:
