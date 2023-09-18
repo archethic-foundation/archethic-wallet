@@ -1,27 +1,31 @@
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
+import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class DiscussionDetailsPage extends ConsumerWidget {
+class DiscussionDetailsPage extends ConsumerStatefulWidget {
   const DiscussionDetailsPage({
     required this.discussionAddress,
     super.key,
@@ -30,18 +34,38 @@ class DiscussionDetailsPage extends ConsumerWidget {
   final String discussionAddress;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DiscussionDetailsPageState();
+}
+
+class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final discussion = await ref
+          .read(MessengerProviders.discussion(widget.discussionAddress).future);
+      ref
+          .watch(MessengerProviders.discussionDetailsForm.notifier)
+          .init(discussion);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
     final preferences = ref.watch(SettingsProviders.settings);
     final selectedContact =
         ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final discussion =
-        ref.watch(MessengerProviders.discussion(discussionAddress));
+        ref.watch(MessengerProviders.discussion(widget.discussionAddress));
 
-    var index = 0;
+    final formNotifier =
+        ref.watch(MessengerProviders.discussionDetailsForm.notifier);
+
     return discussion.maybeMap(
       data: (data) {
         return DecoratedBox(
@@ -84,14 +108,9 @@ class DiscussionDetailsPage extends ConsumerWidget {
             ),
             body: TapOutsideUnfocus(
               child: SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                ),
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 15,
-                    right: 15,
-                    bottom: bottom + 80,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
                   ),
                   child: ArchethicScrollbar(
                     child: Column(
@@ -118,7 +137,7 @@ class DiscussionDetailsPage extends ConsumerWidget {
                                   preferences.activeVibrations,
                                 );
                             Clipboard.setData(
-                              ClipboardData(text: discussionAddress),
+                              ClipboardData(text: widget.discussionAddress),
                             );
                             UIUtil.showSnackbar(
                               localizations.addressCopied,
@@ -147,18 +166,15 @@ class DiscussionDetailsPage extends ConsumerWidget {
                             ],
                           ),
                         ),
-                        Divider(color: theme.text),
-                        Column(
-                          children: <Widget>[
-                            SectionTitle(
-                              text:
-                                  localizations.messengerDiscussionMembersCount(
-                                data.value.membersPubKeys.length,
-                              ),
+                        ExpansionTile(
+                          title: SectionTitle(
+                            text: localizations.messengerDiscussionMembersCount(
+                              data.value.membersPubKeys.length,
                             ),
+                          ),
+                          children: [
                             Column(
                               children: data.value.membersPubKeys.map((pubKey) {
-                                index++;
                                 final accessRecipient = ref.watch(
                                   MessengerProviders
                                       .accessRecipientWithPublicKey(
@@ -189,20 +205,59 @@ class DiscussionDetailsPage extends ConsumerWidget {
                                       publicKey: (_) => null,
                                     ),
                                   ),
-                                )
-                                    .animate(delay: (100 * index).ms)
-                                    .fadeIn(duration: 900.ms, delay: 200.ms)
-                                    .shimmer(
-                                      blendMode: BlendMode.srcOver,
-                                      color: Colors.white12,
-                                    )
-                                    .move(
-                                      begin: const Offset(-16, 0),
-                                      curve: Curves.easeOutQuad,
-                                    );
+                                );
                               }).toList(),
                             ),
                           ],
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            final language = ref.read(
+                              LanguageProviders.selectedLanguage,
+                            );
+
+                            AppDialogs.showConfirmDialog(
+                              context,
+                              ref,
+                              CaseChange.toUpperCase(
+                                localizations.leaveDiscussion,
+                                language.getLocaleString(),
+                              ),
+                              localizations.areYouSureLeaveDiscussion,
+                              localizations.yes,
+                              () async {
+                                final auth = await AuthFactory.authenticate(
+                                  context,
+                                  ref,
+                                  activeVibrations: ref
+                                      .read(SettingsProviders.settings)
+                                      .activeVibrations,
+                                );
+                                if (auth == false) {
+                                  return;
+                                }
+                                await formNotifier.leaveDiscussion();
+                              },
+                              cancelText: localizations.no,
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Symbols.logout,
+                                color: theme
+                                    .textStyleSize14W600EquinoxPrimaryRed.color,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                localizations.leaveDiscussion,
+                                style:
+                                    theme.textStyleSize14W600EquinoxPrimaryRed,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

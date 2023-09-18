@@ -597,5 +597,7 @@
   "bottomMainMenuMain": "Main",
   "bottomMainMenuNFT": "NFT",
   "bottomMainMenuMessenger": "Messenger",
-  "youHaveBeenAddedTOADiscussion": "You have been added to a discussion"
+  "youHaveBeenAddedTOADiscussion": "You have been added to a discussion",
+  "leaveDiscussion": "Leave the discussion",
+  "areYouSureLeaveDiscussion": "Are you sure you want to leave the discussion?"
 }

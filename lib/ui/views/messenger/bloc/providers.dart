@@ -26,6 +26,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'create_discussion_form.dart';
+part 'discussion_details_form.dart';
 part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
@@ -275,6 +276,7 @@ abstract class MessengerProviders {
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
   static final updateDiscussionForm = _updateDiscussionFormProvider;
+  static final discussionDetailsForm = _discussionDetailsFormProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(messengerRepository).clear();
