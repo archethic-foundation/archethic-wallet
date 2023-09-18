@@ -15,6 +15,7 @@ import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
@@ -78,12 +79,11 @@ class AccountTab extends ConsumerWidget {
                             image: AssetImage(
                               theme.background2Small!,
                             ),
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.fill,
                             opacity: 0.7,
                           ),
                         ),
-                        child: SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
+                        child: ArchethicScrollbar(
                           child: Padding(
                             padding: EdgeInsets.only(
                               top: MediaQuery.of(context).padding.top + 10,

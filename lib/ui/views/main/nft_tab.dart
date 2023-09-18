@@ -83,7 +83,7 @@ class NFTTabBody extends ConsumerWidget {
                         image: AssetImage(
                           theme.background3Small!,
                         ),
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.fill,
                         opacity: 0.7,
                       ),
                     ),

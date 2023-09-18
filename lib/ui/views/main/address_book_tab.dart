@@ -53,7 +53,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
           image: AssetImage(
             theme.background4Small!,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fill,
           opacity: 0.7,
         ),
       ),

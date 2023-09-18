@@ -32,7 +32,7 @@ class MessengerBody extends ConsumerWidget {
           image: AssetImage(
             theme.background1Small!,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fill,
           opacity: 0.7,
         ),
       ),
