@@ -483,7 +483,7 @@ class _MessageItem extends ConsumerWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                message.date.format(context),
+                message.date.formatLong(context),
                 style: theme.textStyleSize10W100Primary,
               ),
             ),

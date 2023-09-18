@@ -1,13 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -194,18 +192,9 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                         size: 14,
                       ),
                       onPressed: () async {
-                        // Authenticate
-                        final authMethod = AuthenticationMethod(
-                          ref.read(
-                            AuthenticationProviders.settings.select(
-                              (settings) => settings.authenticationMethod,
-                            ),
-                          ),
-                        );
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,
-                          authMethod: authMethod,
                           activeVibrations: ref
                               .read(SettingsProviders.settings)
                               .activeVibrations,

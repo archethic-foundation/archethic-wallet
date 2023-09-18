@@ -5,6 +5,7 @@ import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
@@ -358,6 +359,17 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                     Dimens.buttonBottomDimens,
                     key: const Key('modifyDiscussion'),
                     onPressed: () async {
+                      final auth = await AuthFactory.authenticate(
+                        context,
+                        ref,
+                        activeVibrations: ref
+                            .read(SettingsProviders.settings)
+                            .activeVibrations,
+                      );
+                      if (auth == false) {
+                        return;
+                      }
+
                       ShowSendingAnimation.build(
                         context,
                         theme,

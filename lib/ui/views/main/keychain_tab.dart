@@ -33,8 +33,6 @@ class KeychainTab extends ConsumerWidget {
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 10,
           bottom: 80,
-          left: 15,
-          right: 15,
         ),
         child: Column(
           children: [
@@ -47,13 +45,19 @@ class KeychainTab extends ConsumerWidget {
                     PointerDeviceKind.trackpad,
                   },
                 ),
-                child: Column(
-                  children: <Widget>[
-                    AccountsListWidget(
-                      currencyName: settings.currency.name,
-                      accountsList: accountsList,
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      AccountsListWidget(
+                        currencyName: settings.currency.name,
+                        accountsList: accountsList,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -125,7 +125,7 @@ class _LoadedDiscussionListItem extends DiscussionListItem {
                     width: 8,
                   ),
                   Text(
-                    discussion.updateDate.format(context),
+                    discussion.updateDate.formatShort(context),
                     style: theme.textStyleSize12W100Primary,
                   ),
                 ],

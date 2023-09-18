@@ -1,3 +1,4 @@
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/views/authenticate/password_screen.dart';
@@ -39,12 +40,21 @@ class AuthFactory {
   static Future<bool> authenticate(
     BuildContext context,
     WidgetRef ref, {
-    required AuthenticationMethod authMethod,
+    AuthenticationMethod? authMethod,
     bool canCancel = true,
     bool transitions = false,
     bool activeVibrations = false,
   }) async {
     var auth = false;
+
+    authMethod ??= AuthenticationMethod(
+      ref.read(
+        AuthenticationProviders.settings.select(
+          (settings) => settings.authenticationMethod,
+        ),
+      ),
+    );
+
     switch (authMethod.method) {
       case AuthMethod.yubikeyWithYubicloud:
         auth = await _authenticateWithYubikey(

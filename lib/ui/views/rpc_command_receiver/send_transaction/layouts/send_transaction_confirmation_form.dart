@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
@@ -172,18 +170,9 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                       localizations.confirm,
                       Dimens.buttonBottomDimens,
                       onPressed: () async {
-                        // Authenticate
-                        final authMethod = AuthenticationMethod(
-                          ref.read(
-                            AuthenticationProviders.settings.select(
-                              (settings) => settings.authenticationMethod,
-                            ),
-                          ),
-                        );
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,
-                          authMethod: authMethod,
                           activeVibrations: ref
                               .read(SettingsProviders.settings)
                               .activeVibrations,
