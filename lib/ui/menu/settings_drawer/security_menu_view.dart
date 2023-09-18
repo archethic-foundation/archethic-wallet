@@ -121,19 +121,9 @@ class SecurityMenuView extends ConsumerWidget {
                               localizations.removeWalletReassurance,
                               localizations.yes,
                               () async {
-                                // Authenticate
-                                final authMethod = AuthenticationMethod(
-                                  ref.read(
-                                    AuthenticationProviders.settings.select(
-                                      (settings) =>
-                                          settings.authenticationMethod,
-                                    ),
-                                  ),
-                                );
                                 final auth = await AuthFactory.authenticate(
                                   context,
                                   ref,
-                                  authMethod: authMethod,
                                   activeVibrations: ref
                                       .read(SettingsProviders.settings)
                                       .activeVibrations,
@@ -183,17 +173,9 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
       icon: Symbols.fingerprint,
       onPressed: asyncHasBiometrics.maybeWhen(
         data: (hasBiometrics) => () async {
-          final authMethod = AuthenticationMethod(
-            ref.read(
-              AuthenticationProviders.settings.select(
-                (settings) => settings.authenticationMethod,
-              ),
-            ),
-          );
           final auth = await AuthFactory.authenticate(
             context,
             ref,
-            authMethod: authMethod,
             activeVibrations:
                 ref.read(SettingsProviders.settings).activeVibrations,
           );
@@ -331,16 +313,10 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       icon: Symbols.key,
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);
-        final authenticationSettings = ref.read(
-          AuthenticationProviders.settings,
-        );
 
         final auth = await AuthFactory.authenticate(
           context,
           ref,
-          authMethod: AuthenticationMethod(
-            authenticationSettings.authenticationMethod,
-          ),
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {

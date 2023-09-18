@@ -206,6 +206,9 @@ All information about internationalization with Flutter is available in the [off
 
 - To start the code generator, run the following command: ``run build_runner watch``. See [Riverpod generator documentation](https://pub.dev/packages/riverpod_generator)
 
-### Icon generator
+### Icons
 
-- To convert all svg icons from ``assets/fonts`` folder, run the following commande: ``icon_font_generator --from=assets/icons/menu --class-name=UiIcons --out-font=assets/fonts/ui_icons.ttf --out-flutter=lib/ui/widgets/components/icons.dart``. See [Icon Font Generator documentation](https://pub.dev/packages/icon_font_generator) 
+We are using the icons from google, material icons : https://fonts.google.com/icons
+
+#### Icons generator
+- To convert all svg icons from ``assets/fonts`` folder, run the following command : ``icon_font_generator --from=assets/icons/menu --class-name=UiIcons --out-font=assets/fonts/ui_icons.ttf --out-flutter=lib/ui/widgets/components/icons.dart``. See [Icon Font Generator documentation](https://pub.dev/packages/icon_font_generator)

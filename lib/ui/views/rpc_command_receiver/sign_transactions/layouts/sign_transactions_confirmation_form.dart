@@ -1,10 +1,8 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
@@ -128,18 +126,9 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                       localizations.confirm,
                       Dimens.buttonBottomDimens,
                       onPressed: () async {
-                        // Authenticate
-                        final authMethod = AuthenticationMethod(
-                          ref.read(
-                            AuthenticationProviders.settings.select(
-                              (settings) => settings.authenticationMethod,
-                            ),
-                          ),
-                        );
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,
-                          authMethod: authMethod,
                           activeVibrations: ref
                               .read(SettingsProviders.settings)
                               .activeVibrations,

@@ -3,12 +3,10 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
@@ -230,17 +228,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                       key: const Key('confirm'),
                       icon: Symbols.check,
                       onPressed: () async {
-                        final authMethod = AuthenticationMethod(
-                          ref.read(
-                            AuthenticationProviders.settings.select(
-                              (settings) => settings.authenticationMethod,
-                            ),
-                          ),
-                        );
                         final auth = await AuthFactory.authenticate(
                           context,
                           ref,
-                          authMethod: authMethod,
                           activeVibrations: ref
                               .read(SettingsProviders.settings)
                               .activeVibrations,

@@ -570,6 +570,7 @@
   "noContacts": "You have no contacts",
   "aboutToCreateADiscussion": "You are about to create a discussion with",
   "discussionInfo": "Discussion info",
+  "save": "Save",
   "modify": "Modify",
   "discussionModifying": "Discussion modifying",
   "admin": "Admin",
@@ -582,5 +583,13 @@
   "explorer": "Explorer",
   "nftPropertiesOpenseaStructure": "Properties format modeled after Opensea's structure",
   "nftPropertieUnknownStructure": "Unknown properties format",
-  "addressCopy": "Address copy"
+  "addressCopy": "Discussion address copy",
+  "addMembers": "Add members",
+  "addAdmin": "Become an administrator",
+  "removeAdmin": "Remove administration",
+  "removeDiscussion": "Remove from discussion",
+  "discussionNameMandatory": "Discussion name is required",
+  "discussionAtLeastTwoMembers": "A discussion must have at least two members",
+  "discussionAtLeastOneAdmin": "A discussion must have at least one administrator",
+  "noContactsToAdd": "There are no more contacts to add"
 }

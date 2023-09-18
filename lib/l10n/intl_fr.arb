@@ -547,6 +547,7 @@
 	"noContacts": "Vous n'avez aucun contact",
 	"aboutToCreateADiscussion": "Vous êtes sur le point de créer une discussion avec",
 	"discussionInfo": "Info de la discussion",
+	"save": "Sauvegarder",
 	"modify": "Modifier",
 	"discussionModifying": "Modification de la discussion",
 	"admin": "Admin",
@@ -559,5 +560,13 @@
 	"explorer": "Explorateur",
 	"nftPropertiesOpenseaStructure": "Structure des propriétés basée sur le modèle d'Opensea",
 	"nftPropertieUnknownStructure": "Structure des propriétés inconnue",
-	"addressCopy": "Copier l'adresse"
+	"addressCopy": "Copier l'adresse de la discussion",
+	"addMembers": "Ajouter des membres",
+	"addAdmin": "Passer administrateur",
+	"removeAdmin": "Retirer l'administration",
+	"removeDiscussion": "Retirer de la discussion",
+	"discussionNameMandatory": "Le nom de la discussion est obligatoire",
+	"discussionAtLeastTwoMembers": "Une discussion doit avoir au moins deux membres",
+	"discussionAtLeastOneAdmin": "Une discussion doit avoir au moins un administrateur",
+	"noContactsToAdd": "Il n'y a plus de contact à ajouter"
 }

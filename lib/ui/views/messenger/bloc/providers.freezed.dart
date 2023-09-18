@@ -365,6 +365,7 @@ mixin _$UpdateDiscussionFormState {
   String get name => throw _privateConstructorUsedError;
   String get discussionAddress => throw _privateConstructorUsedError;
   List<String> get members => throw _privateConstructorUsedError;
+  List<String> get membersToAdd => throw _privateConstructorUsedError;
   List<String> get admins => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -382,6 +383,7 @@ abstract class $UpdateDiscussionFormStateCopyWith<$Res> {
       {String name,
       String discussionAddress,
       List<String> members,
+      List<String> membersToAdd,
       List<String> admins});
 }
 
@@ -402,6 +404,7 @@ class _$UpdateDiscussionFormStateCopyWithImpl<$Res,
     Object? name = null,
     Object? discussionAddress = null,
     Object? members = null,
+    Object? membersToAdd = null,
     Object? admins = null,
   }) {
     return _then(_value.copyWith(
@@ -416,6 +419,10 @@ class _$UpdateDiscussionFormStateCopyWithImpl<$Res,
       members: null == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      membersToAdd: null == membersToAdd
+          ? _value.membersToAdd
+          : membersToAdd // ignore: cast_nullable_to_non_nullable
               as List<String>,
       admins: null == admins
           ? _value.admins
@@ -438,6 +445,7 @@ abstract class _$$_UpdateDiscussionFormStateCopyWith<$Res>
       {String name,
       String discussionAddress,
       List<String> members,
+      List<String> membersToAdd,
       List<String> admins});
 }
 
@@ -457,6 +465,7 @@ class __$$_UpdateDiscussionFormStateCopyWithImpl<$Res>
     Object? name = null,
     Object? discussionAddress = null,
     Object? members = null,
+    Object? membersToAdd = null,
     Object? admins = null,
   }) {
     return _then(_$_UpdateDiscussionFormState(
@@ -471,6 +480,10 @@ class __$$_UpdateDiscussionFormStateCopyWithImpl<$Res>
       members: null == members
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      membersToAdd: null == membersToAdd
+          ? _value._membersToAdd
+          : membersToAdd // ignore: cast_nullable_to_non_nullable
               as List<String>,
       admins: null == admins
           ? _value._admins
@@ -487,8 +500,10 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
       {this.name = '',
       this.discussionAddress = '',
       final List<String> members = const [],
+      final List<String> membersToAdd = const [],
       final List<String> admins = const []})
       : _members = members,
+        _membersToAdd = membersToAdd,
         _admins = admins,
         super._();
 
@@ -507,6 +522,15 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
     return EqualUnmodifiableListView(_members);
   }
 
+  final List<String> _membersToAdd;
+  @override
+  @JsonKey()
+  List<String> get membersToAdd {
+    if (_membersToAdd is EqualUnmodifiableListView) return _membersToAdd;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_membersToAdd);
+  }
+
   final List<String> _admins;
   @override
   @JsonKey()
@@ -518,7 +542,7 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
 
   @override
   String toString() {
-    return 'UpdateDiscussionFormState(name: $name, discussionAddress: $discussionAddress, members: $members, admins: $admins)';
+    return 'UpdateDiscussionFormState(name: $name, discussionAddress: $discussionAddress, members: $members, membersToAdd: $membersToAdd, admins: $admins)';
   }
 
   @override
@@ -530,6 +554,8 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
             (identical(other.discussionAddress, discussionAddress) ||
                 other.discussionAddress == discussionAddress) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
+            const DeepCollectionEquality()
+                .equals(other._membersToAdd, _membersToAdd) &&
             const DeepCollectionEquality().equals(other._admins, _admins));
   }
 
@@ -539,6 +565,7 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
       name,
       discussionAddress,
       const DeepCollectionEquality().hash(_members),
+      const DeepCollectionEquality().hash(_membersToAdd),
       const DeepCollectionEquality().hash(_admins));
 
   @JsonKey(ignore: true)
@@ -554,6 +581,7 @@ abstract class _UpdateDiscussionFormState extends UpdateDiscussionFormState {
       {final String name,
       final String discussionAddress,
       final List<String> members,
+      final List<String> membersToAdd,
       final List<String> admins}) = _$_UpdateDiscussionFormState;
   const _UpdateDiscussionFormState._() : super._();
 
@@ -563,6 +591,8 @@ abstract class _UpdateDiscussionFormState extends UpdateDiscussionFormState {
   String get discussionAddress;
   @override
   List<String> get members;
+  @override
+  List<String> get membersToAdd;
   @override
   List<String> get admins;
   @override

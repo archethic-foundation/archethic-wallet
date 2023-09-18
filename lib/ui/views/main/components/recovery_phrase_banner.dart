@@ -4,7 +4,6 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/info_banner.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
@@ -29,16 +28,10 @@ class RecoveryPhraseBanner extends ConsumerWidget {
               child: InkWell(
                 onTap: () async {
                   final preferences = ref.read(SettingsProviders.settings);
-                  final authenticationSettings = ref.read(
-                    AuthenticationProviders.settings,
-                  );
 
                   final auth = await AuthFactory.authenticate(
                     context,
                     ref,
-                    authMethod: AuthenticationMethod(
-                      authenticationSettings.authenticationMethod,
-                    ),
                     activeVibrations: preferences.activeVibrations,
                   );
                   if (auth) {

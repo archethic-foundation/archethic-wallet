@@ -13,17 +13,22 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
     @Default('') String name,
     @Default('') String discussionAddress,
     @Default([]) List<String> members,
+    @Default([]) List<String> membersToAdd,
     @Default([]) List<String> admins,
   }) = _UpdateDiscussionFormState;
   const UpdateDiscussionFormState._();
 
-  bool get canSubmit =>
-      name.isNotEmpty && members.isNotEmpty && admins.isNotEmpty;
+  int get numberOfMembers => members.length;
+  List<String> get listMembers => members;
+  List<String> get listAdmins => admins;
+  bool get canAddMembers => membersToAdd.isNotEmpty;
 }
 
 class UpdateDiscussionFormNotifier
     extends AutoDisposeNotifier<UpdateDiscussionFormState> {
   UpdateDiscussionFormNotifier();
+
+  late AppLocalizations localizations;
 
   @override
   UpdateDiscussionFormState build() => const UpdateDiscussionFormState();
@@ -57,6 +62,44 @@ class UpdateDiscussionFormNotifier
     );
   }
 
+  void removeMember(String member) {
+    state = state.copyWith(
+      members: state.members.where((element) => element != member).toList(),
+    );
+    // If the members was an admin, bye-bye
+    removeAdmin(member);
+  }
+
+  void addMemberToAdd(String member) {
+    if (state.membersToAdd.contains(member)) return;
+    state = state.copyWith(
+      membersToAdd: [
+        ...state.membersToAdd,
+        member,
+      ],
+    );
+  }
+
+  void removeMemberToAdd(String member) {
+    state = state.copyWith(
+      membersToAdd:
+          state.membersToAdd.where((element) => element != member).toList(),
+    );
+  }
+
+  void removeAllMembersToAdd() {
+    state = state.copyWith(
+      membersToAdd: [],
+    );
+  }
+
+  void addAllMembersToAdd() {
+    for (final member in state.membersToAdd) {
+      addMember(member);
+    }
+    removeAllMembersToAdd();
+  }
+
   void addAdmin(String admin) {
     if (state.admins.contains(admin)) return;
     state = state.copyWith(
@@ -67,9 +110,9 @@ class UpdateDiscussionFormNotifier
     );
   }
 
-  void removeMember(String member) {
+  void removeAdmin(String admin) {
     state = state.copyWith(
-      members: state.members.where((element) => element != member).toList(),
+      admins: state.admins.where((element) => element != admin).toList(),
     );
   }
 
@@ -91,7 +134,24 @@ class UpdateDiscussionFormNotifier
     return;
   }
 
-  Future<Result<void, Failure>> updateDiscussion() => Result.guard(() async {
+  String? validator() {
+    if (state.name.isEmpty) {
+      return localizations.discussionNameMandatory;
+    }
+    if (state.members.length < 2) {
+      return localizations.discussionAtLeastTwoMembers;
+    }
+    if (state.admins.isEmpty) {
+      return localizations.discussionAtLeastOneAdmin;
+    }
+    return null;
+  }
+
+  Future<Result<String?, Failure>> updateDiscussion() => Result.guard(() async {
+        final errorMessage = validator();
+        if (errorMessage != null) {
+          return errorMessage;
+        }
         final session = ref.read(SessionProviders.session).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
@@ -118,5 +178,7 @@ class UpdateDiscussionFormNotifier
             .valueOrThrow;
 
         ref.invalidate(_discussionProvider);
+
+        return null;
       });
 }

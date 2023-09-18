@@ -83,18 +83,20 @@ class MessengerDiscussionPage extends ConsumerWidget {
                 .shimmer(),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: _MessagesList(
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: _MessagesList(
+                  discussionAddress: discussionAddress,
+                ),
+              ),
+              _MessageSendForm(
                 discussionAddress: discussionAddress,
               ),
-            ),
-            _MessageSendForm(
-              discussionAddress: discussionAddress,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -321,7 +323,6 @@ class _MessageCreationFormFees extends ConsumerWidget {
         .name;
 
     return SizedBox(
-      height: 12,
       child: Text(
         '+ ${AmountFormatters.standardSmallValue(
           nativeFeeEstimation,
@@ -482,7 +483,7 @@ class _MessageItem extends ConsumerWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                message.date.format(context),
+                message.date.formatLong(context),
                 style: theme.textStyleSize10W100Primary,
               ),
             ),
