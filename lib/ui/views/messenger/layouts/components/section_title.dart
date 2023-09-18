@@ -17,17 +17,10 @@ class SectionTitle extends ConsumerWidget {
 
     return Align(
       alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 8,
-          bottom: 8,
-          top: 8,
-        ),
-        child: Text(
-          text,
-          textAlign: TextAlign.start,
-          style: theme.textStyleSize14W600Primary,
-        ),
+      child: Text(
+        text,
+        textAlign: TextAlign.start,
+        style: theme.textStyleSize14W600Primary,
       ),
     );
   }

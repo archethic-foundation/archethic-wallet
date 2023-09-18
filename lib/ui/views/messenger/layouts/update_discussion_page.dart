@@ -19,7 +19,6 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -332,17 +331,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                 publicKey: (_) => null,
                               ),
                             ),
-                          )
-                              .animate(delay: (100 * index).ms)
-                              .fadeIn(duration: 900.ms, delay: 200.ms)
-                              .shimmer(
-                                blendMode: BlendMode.srcOver,
-                                color: Colors.white12,
-                              )
-                              .move(
-                                begin: const Offset(-16, 0),
-                                curve: Curves.easeOutQuad,
-                              );
+                          );
                         }).toList(),
                       ),
                     ],
