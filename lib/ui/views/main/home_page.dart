@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -18,9 +17,9 @@ import 'package:aewallet/ui/views/main/keychain_tab.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
-import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +37,35 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin {
   final GlobalKey<ContainedTabBarViewState> _key = GlobalKey();
+  int tabCount = 4;
+  late TabController tabController;
 
   @override
   void initState() {
     super.initState();
     NotificationsUtil.init();
+
+    if (FeatureFlags.messagingActive) {
+      tabCount++;
+    }
+
+    tabController = TabController(
+      length: tabCount,
+      vsync: this,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      tabController.animateTo(
+        ref.read(SettingsProviders.settings).mainScreenCurrentPage,
+        duration: Duration.zero,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,8 +73,6 @@ class _HomePageState extends ConsumerState<HomePage>
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
       appBar: const MainAppBar(),
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
@@ -62,110 +83,64 @@ class _HomePageState extends ConsumerState<HomePage>
           child: SettingsSheetWallet(),
         ),
       ),
-      body: IncomingTransactionsNotifier(
-        child: PreferredSize(
-          preferredSize: Size(MediaQuery.of(context).size.width, 22),
-          child: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: ContainedTabBarView(
-                key: _key,
-                initialIndex:
-                    ref.read(SettingsProviders.settings).mainScreenCurrentPage,
-                tabBarViewProperties: const TabBarViewProperties(
-                  physics: NeverScrollableScrollPhysics(),
-                ),
-                tabBarProperties: TabBarProperties(
-                  position: TabBarPosition.bottom,
-                  labelColor: theme.text,
-                  labelStyle: theme.textStyleSize10W100Primary,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: theme.text,
-                ),
-                tabs: [
-                  Tab(
-                    key: const Key('bottomBarAddressBook'),
-                    text:
-                        AppLocalizations.of(context)!.bottomMainMenuAddressBook,
-                    icon: const Icon(
-                      Symbols.contacts,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                    ),
-                  ),
-                  Tab(
-                    key: const Key('bottomBarKeyChain'),
-                    text: AppLocalizations.of(context)!.bottomMainMenuKeychain,
-                    icon: const Icon(
-                      Symbols.account_balance_wallet,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                    ),
-                  ),
-                  Tab(
-                    key: const Key('bottomBarMain'),
-                    text: AppLocalizations.of(context)!.bottomMainMenuMain,
-                    icon: const Icon(
-                      Symbols.account_box,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                    ),
-                  ),
-                  Tab(
-                    key: const Key('bottomBarNFT'),
-                    text: AppLocalizations.of(context)!.bottomMainMenuNFT,
-                    icon: const Icon(
-                      Symbols.photo_library,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                    ),
-                  ),
-                  if (FeatureFlags.messagingActive)
-                    Tab(
-                      key: const Key('bottomBarMessenger'),
-                      text:
-                          AppLocalizations.of(context)!.bottomMainMenuMessenger,
-                      icon: const Icon(
-                        Symbols.chat,
-                        weight: IconSize.weightM,
-                        opticalSize: IconSize.opticalSizeM,
-                        grade: IconSize.gradeM,
-                      ),
-                    ),
-                ],
-                views: const [
-                  AddressBookTab(),
-                  KeychainTab(),
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      AccountTab(),
-                      RecoveryPhraseBanner(),
-                    ],
-                  ),
-                  NFTTab(
-                    key: Key('bottomBarAddressNFTlink'),
-                  ),
-                  if (FeatureFlags.messagingActive) MessengerTab(),
-                ],
-                onChange: (page) {
-                  ref
-                      .read(SettingsProviders.settings.notifier)
-                      .setMainScreenCurrentPage(page);
-                  if (page == 3) {
-                    ref
-                        .read(AccountProviders.selectedAccount.notifier)
-                        .refreshNFTs();
-                  }
-                },
-              ),
-            ),
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: tabController,
+        children: const [
+          AddressBookTab(),
+          KeychainTab(),
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              AccountTab(),
+              RecoveryPhraseBanner(),
+            ],
           ),
-        ),
+          NFTTab(
+            key: Key('bottomBarAddressNFTlink'),
+          ),
+          if (FeatureFlags.messagingActive) MessengerTab(),
+        ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: TabBar(
+            controller: tabController,
+            labelColor: theme.text,
+            indicatorColor: theme.text,
+            labelPadding: EdgeInsets.zero,
+            onTap: (selectedIndex) {
+              ref
+                  .read(SettingsProviders.settings.notifier)
+                  .setMainScreenCurrentPage(selectedIndex);
+              if (selectedIndex == 3) {
+                ref
+                    .read(AccountProviders.selectedAccount.notifier)
+                    .refreshNFTs();
+              }
+            },
+            tabs: [
+              TabItem(
+                icon: Symbols.contacts,
+                label: AppLocalizations.of(context)!.bottomMainMenuAddressBook,
+              ),
+              TabItem(
+                icon: Symbols.account_balance_wallet,
+                label: AppLocalizations.of(context)!.bottomMainMenuKeychain,
+              ),
+              TabItem(
+                icon: Symbols.account_box,
+                label: AppLocalizations.of(context)!.bottomMainMenuMain,
+              ),
+              TabItem(
+                icon: Symbols.photo_library,
+                label: AppLocalizations.of(context)!.bottomMainMenuNFT,
+              ),
+              if (FeatureFlags.messagingActive)
+                TabItem(
+                  icon: Symbols.chat,
+                  label: AppLocalizations.of(context)!.bottomMainMenuMessenger,
+                ),
+            ]),
       ),
     );
   }

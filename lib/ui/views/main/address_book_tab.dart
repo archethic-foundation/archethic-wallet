@@ -60,7 +60,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 20,
-          bottom: 80,
+          bottom: 15,
         ),
         child: Column(
           children: [

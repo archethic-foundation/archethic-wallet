@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:async';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -45,86 +43,64 @@ class NFTTabBody extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
-    return Column(
-      children: [
-        Expanded(
-          child: ArchethicRefreshIndicator(
-            onRefresh: () => Future<void>.sync(() async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
+    return ArchethicRefreshIndicator(
+      onRefresh: () => Future<void>.sync(() async {
+        sl.get<HapticUtil>().feedback(
+              FeedbackType.light,
+              preferences.activeVibrations,
+            );
 
-              final connectivityStatusProvider =
-                  ref.read(connectivityStatusProviders);
-              if (connectivityStatusProvider ==
-                  ConnectivityStatus.isDisconnected) {
-                return;
-              }
+        final connectivityStatusProvider =
+            ref.read(connectivityStatusProviders);
+        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+          return;
+        }
 
-              await ref
-                  .read(AccountProviders.selectedAccount.notifier)
-                  .refreshNFTs();
-            }),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                dragDevices: {
-                  PointerDeviceKind.touch,
-                  PointerDeviceKind.mouse,
-                  PointerDeviceKind.trackpad,
-                },
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          theme.background3Small!,
-                        ),
-                        fit: BoxFit.fill,
-                        opacity: 0.7,
-                      ),
+        await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+      }),
+      child: SingleChildScrollView(
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+            },
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10,
+                  left: 20,
+                  right: 20,
+                  bottom: 10,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.nftTabDescriptionHeader,
+                      style: theme.textStyleSize12W400Primary,
+                      textAlign: TextAlign.justify,
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 10,
-                        left: 20,
-                        right: 20,
-                        bottom: 10,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!
-                                .nftTabDescriptionHeader,
-                            style: theme.textStyleSize12W400Primary,
-                            textAlign: TextAlign.justify,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const NFTSearchBar(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Expanded(
-                            child: NftCategoryMenu(),
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                ],
+                    const NFTSearchBar(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const NftCategoryMenu(),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

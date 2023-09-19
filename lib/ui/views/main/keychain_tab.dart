@@ -31,7 +31,7 @@ class KeychainTab extends ConsumerWidget {
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 10,
-          bottom: 80,
+          bottom: 15,
         ),
         child: Column(
           children: [
