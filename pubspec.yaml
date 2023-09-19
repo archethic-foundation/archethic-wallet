@@ -232,7 +232,7 @@ dependencies:
   unorm_dart: ^0.2.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.12
+  url_launcher: ^6.1.14
 
   # RFC4122 (v1, v4, v5) UUID Generator and Parser for all Dart platforms (Web, VM, Flutter)
   uuid: ^3.0.7
