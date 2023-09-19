@@ -8,7 +8,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_shee
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,11 +24,8 @@ class NftCreationFormSheet extends ConsumerStatefulWidget {
 }
 
 class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
-  final GlobalKey<ContainedTabBarViewState> _key = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(

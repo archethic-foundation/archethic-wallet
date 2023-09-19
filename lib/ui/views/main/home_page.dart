@@ -21,7 +21,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:aewallet/util/notifications_util.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +35,6 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin {
-  final GlobalKey<ContainedTabBarViewState> _key = GlobalKey();
   int tabCount = 4;
   late TabController tabController;
 
@@ -201,83 +199,78 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
         .valueOrNull;
     if (session == null) return const SizedBox();
 
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          height: 80,
-          child: ContainedTabBarView(
-            tabBarProperties: TabBarProperties(
-              indicatorColor: theme.backgroundDarkest,
-            ),
-            tabs: [
-              Text(
-                localizations.recentTransactionsHeader,
-                style: theme.textStyleSize14W600EquinoxPrimary,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                key: const Key('fungibleTokenTab'),
-                localizations.tokensHeader,
-                style: theme.textStyleSize14W600EquinoxPrimary,
-                textAlign: TextAlign.center,
-              ),
-            ],
-            views: const [
-              SizedBox(
-                height: 0,
-              ),
-              SizedBox(
-                height: 0,
-              ),
-            ],
-            onChange: (index) {
-              _pageController!.jumpToPage(index);
-            },
-          ),
-        ),
-        TweenAnimationBuilder<double>(
-          curve: Curves.easeInOutCubic,
-          duration: const Duration(milliseconds: 100),
-          tween: Tween<double>(begin: _heights[0], end: _currentHeight),
-          builder: (context, value, child) =>
-              SizedBox(height: value, child: child),
-          child: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: _sizeReportingChildren
-                .asMap() //
-                .map(MapEntry.new)
-                .values
-                .toList(),
-          ),
-        ),
-        if (_currentPage == 1)
-          Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            child: Row(
-              children: <Widget>[
-                AppButtonTinyConnectivity(
-                  localizations.createFungibleToken,
-                  Dimens.buttonBottomDimens,
-                  icon: Symbols.add,
-                  key: const Key('createTokenFungible'),
-                  onPressed: () {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const AddTokenSheet(),
-                    );
-                  },
-                  disabled:
-                      !accountSelected!.balance!.isNativeTokenValuePositive(),
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.transparent,
+            width: MediaQuery.of(context).size.width,
+            height: 80,
+            child: TabBar(
+              labelColor: theme.text,
+              indicatorColor: theme.text,
+              labelPadding: EdgeInsets.zero,
+              tabs: [
+                Text(
+                  localizations.recentTransactionsHeader,
+                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  key: const Key('fungibleTokenTab'),
+                  localizations.tokensHeader,
+                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  textAlign: TextAlign.center,
                 ),
               ],
+              onTap: (index) {
+                _pageController!.jumpToPage(index);
+              },
             ),
           ),
-      ],
+          TweenAnimationBuilder<double>(
+            curve: Curves.easeInOutCubic,
+            duration: const Duration(milliseconds: 100),
+            tween: Tween<double>(begin: _heights[0], end: _currentHeight),
+            builder: (context, value, child) =>
+                SizedBox(height: value, child: child),
+            child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              children: _sizeReportingChildren
+                  .asMap() //
+                  .map(MapEntry.new)
+                  .values
+                  .toList(),
+            ),
+          ),
+          if (_currentPage == 1)
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  AppButtonTinyConnectivity(
+                    localizations.createFungibleToken,
+                    Dimens.buttonBottomDimens,
+                    icon: Symbols.add,
+                    key: const Key('createTokenFungible'),
+                    onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: const AddTokenSheet(),
+                      );
+                    },
+                    disabled:
+                        !accountSelected!.balance!.isNativeTokenValuePositive(),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 
