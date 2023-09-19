@@ -178,7 +178,7 @@ class AccountListItem extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               AutoSizeText(
-                                '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
+                                '${account.balance!.nativeTokenValueToString(digits: 2)} ${account.balance!.nativeTokenName}',
                                 style: theme.textStyleSize12W400Primary,
                                 textAlign: TextAlign.end,
                               ),
@@ -199,7 +199,7 @@ class AccountListItem extends ConsumerWidget {
                                 style: theme.textStyleSize12W400Primary,
                               ),
                               AutoSizeText(
-                                '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName}',
+                                '${account.balance!.nativeTokenValueToString(digits: 2)} ${account.balance!.nativeTokenName}',
                                 style: theme.textStyleSize12W400Primary,
                                 textAlign: TextAlign.end,
                               ),
