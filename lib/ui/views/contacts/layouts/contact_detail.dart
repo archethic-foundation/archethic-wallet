@@ -19,7 +19,6 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,68 +56,73 @@ class ContactDetail extends ConsumerWidget {
     }
 
     return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 25, bottom: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      const Expanded(
-                        flex: 2,
-                        child: SizedBox(),
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: AutoSizeText(
-                          contact.format,
-                          style: theme.textStyleSize24W700EquinoxPrimary,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
+      child: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 25, bottom: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        const Expanded(
+                          flex: 2,
+                          child: SizedBox(),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: SingleContactBalance(
-                          contact: contact,
-                          accountBalance: asyncAccountBalance,
+                        Flexible(
+                          flex: 2,
+                          child: AutoSizeText(
+                            contact.format,
+                            style: theme.textStyleSize24W700EquinoxPrimary,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            stepGranularity: 0.1,
+                          ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          flex: 2,
+                          child: SingleContactBalance(
+                            contact: contact,
+                            accountBalance: asyncAccountBalance,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                _ContactDetailActions(contact: contact, readOnly: readOnly),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-              color: Colors.transparent,
-              width: MediaQuery.of(context).size.width,
-              child: ContainedTabBarView(
-                tabBarProperties: TabBarProperties(
-                  indicatorColor: theme.backgroundDarkest,
-                ),
-                tabs: [
-                  Text(
-                    localizations.contactAddressTabHeader,
-                    style: theme.textStyleSize14W600EquinoxPrimary,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    localizations.contactPublicKeyTabHeader,
-                    style: theme.textStyleSize14W600EquinoxPrimary,
-                    textAlign: TextAlign.center,
-                  ),
+                  _ContactDetailActions(contact: contact, readOnly: readOnly),
                 ],
-                views: [
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: SizedBox(
+                height: 40,
+                child: TabBar(
+                  labelColor: theme.text,
+                  indicatorColor: theme.text,
+                  tabs: [
+                    Text(
+                      localizations.contactAddressTabHeader,
+                      style: theme.textStyleSize14W600EquinoxPrimary,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      localizations.contactPublicKeyTabHeader,
+                      style: theme.textStyleSize14W600EquinoxPrimary,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
                   ContactDetailTab(
                     infoQRCode: contact.address.toUpperCase(),
                     description:
@@ -139,76 +143,77 @@ class ContactDetail extends ConsumerWidget {
                 ],
               ),
             ),
-          ),
-          Visibility(
-            visible: contact.type != ContactType.keychainService.name &&
-                readOnly == false,
-            child: Column(
-              children: [
-                TextButton(
-                  key: const Key('removeContact'),
-                  onPressed: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    AppDialogs.showConfirmDialog(
-                      context,
-                      ref,
-                      localizations.removeContact,
-                      localizations.removeContactConfirmation.replaceAll(
-                        '%1',
-                        contact.format,
-                      ),
-                      localizations.yes,
-                      () {
-                        ref.read(
-                          ContactProviders.deleteContact(
-                            contact: contact,
-                          ),
-                        );
+            Visibility(
+              visible: contact.type != ContactType.keychainService.name &&
+                  readOnly == false,
+              child: Column(
+                children: [
+                  TextButton(
+                    key: const Key('removeContact'),
+                    onPressed: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      AppDialogs.showConfirmDialog(
+                        context,
+                        ref,
+                        localizations.removeContact,
+                        localizations.removeContactConfirmation.replaceAll(
+                          '%1',
+                          contact.format,
+                        ),
+                        localizations.yes,
+                        () {
+                          ref.read(
+                            ContactProviders.deleteContact(
+                              contact: contact,
+                            ),
+                          );
 
-                        ref
-                            .read(
-                              AccountProviders.selectedAccount.notifier,
-                            )
-                            .refreshRecentTransactions();
-                        UIUtil.showSnackbar(
-                          localizations.contactRemoved.replaceAll(
-                            '%1',
-                            contact.format,
-                          ),
-                          context,
-                          ref,
-                          theme.text!,
-                          theme.snackBarShadow!,
-                        );
-                        Navigator.of(context).pop();
-                      },
-                      cancelText: localizations.no,
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Symbols.delete,
-                        color: theme.textStyleSize14W600EquinoxPrimaryRed.color,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        localizations.deleteContact,
-                        style: theme.textStyleSize14W600EquinoxPrimaryRed,
-                      ),
-                    ],
+                          ref
+                              .read(
+                                AccountProviders.selectedAccount.notifier,
+                              )
+                              .refreshRecentTransactions();
+                          UIUtil.showSnackbar(
+                            localizations.contactRemoved.replaceAll(
+                              '%1',
+                              contact.format,
+                            ),
+                            context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
+                          );
+                          Navigator.of(context).pop();
+                        },
+                        cancelText: localizations.no,
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Symbols.delete,
+                          color:
+                              theme.textStyleSize14W600EquinoxPrimaryRed.color,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          localizations.deleteContact,
+                          style: theme.textStyleSize14W600EquinoxPrimaryRed,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

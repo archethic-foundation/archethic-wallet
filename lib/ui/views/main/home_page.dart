@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -12,7 +13,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
-import 'package:aewallet/ui/views/main/components/main_bottombar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
@@ -21,8 +21,8 @@ import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart'
 import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:aewallet/util/notifications_util.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,42 +37,45 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin {
-  PageController? _bottomBarPageController;
-  PageController get bottomBarPageController =>
-      _bottomBarPageController ??= PageController(
-        initialPage: ref.read(SettingsProviders.settings).mainScreenCurrentPage,
-      );
+  int tabCount = 4;
+  late TabController tabController;
 
   @override
   void initState() {
     super.initState();
     NotificationsUtil.init();
+
+    if (FeatureFlags.messagingActive) {
+      tabCount++;
+    }
+
+    tabController = TabController(
+      length: tabCount,
+      vsync: this,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      tabController.animateTo(
+        ref.read(SettingsProviders.settings).mainScreenCurrentPage,
+        duration: Duration.zero,
+      );
+    });
   }
 
   @override
   void dispose() {
-    _bottomBarPageController?.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    ref.listen(
-      SettingsProviders.settings
-          .select((settings) => settings.mainScreenCurrentPage),
-      (previous, next) {
-        if (previous == next) return;
-
-        bottomBarPageController.jumpToPage(next);
-      },
-    );
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: const MainAppBar(),
-      bottomNavigationBar: const MainBottomBar(),
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.background,
@@ -83,17 +86,9 @@ class _HomePageState extends ConsumerState<HomePage>
         ),
       ),
       body: IncomingTransactionsNotifier(
-        child: PageView(
+        child: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
-          controller: bottomBarPageController,
-          onPageChanged: (int page) {
-            ref
-                .read(SettingsProviders.settings.notifier)
-                .setMainScreenCurrentPage(page);
-            if (page == 3) {
-              ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
-            }
-          },
+          controller: tabController,
           children: const [
             AddressBookTab(),
             KeychainTab(),
@@ -109,6 +104,57 @@ class _HomePageState extends ConsumerState<HomePage>
             ),
             if (FeatureFlags.messagingActive) MessengerTab(),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: TabBar(
+                controller: tabController,
+                labelColor: theme.text,
+                indicatorColor: theme.text,
+                labelPadding: EdgeInsets.zero,
+                onTap: (selectedIndex) {
+                  ref
+                      .read(SettingsProviders.settings.notifier)
+                      .setMainScreenCurrentPage(selectedIndex);
+                  if (selectedIndex == 3) {
+                    ref
+                        .read(AccountProviders.selectedAccount.notifier)
+                        .refreshNFTs();
+                  }
+                },
+                tabs: [
+                  TabItem(
+                    icon: Symbols.contacts,
+                    label:
+                        AppLocalizations.of(context)!.bottomMainMenuAddressBook,
+                  ),
+                  TabItem(
+                    icon: Symbols.account_balance_wallet,
+                    label: AppLocalizations.of(context)!.bottomMainMenuKeychain,
+                  ),
+                  TabItem(
+                    icon: Symbols.account_box,
+                    label: AppLocalizations.of(context)!.bottomMainMenuMain,
+                  ),
+                  TabItem(
+                    icon: Symbols.photo_library,
+                    label: AppLocalizations.of(context)!.bottomMainMenuNFT,
+                  ),
+                  if (FeatureFlags.messagingActive)
+                    TabItem(
+                      icon: Symbols.chat,
+                      label:
+                          AppLocalizations.of(context)!.bottomMainMenuMessenger,
+                    ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -165,83 +211,78 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
         .valueOrNull;
     if (session == null) return const SizedBox();
 
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          height: 80,
-          child: ContainedTabBarView(
-            tabBarProperties: TabBarProperties(
-              indicatorColor: theme.backgroundDarkest,
-            ),
-            tabs: [
-              Text(
-                localizations.recentTransactionsHeader,
-                style: theme.textStyleSize14W600EquinoxPrimary,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                key: const Key('fungibleTokenTab'),
-                localizations.tokensHeader,
-                style: theme.textStyleSize14W600EquinoxPrimary,
-                textAlign: TextAlign.center,
-              ),
-            ],
-            views: const [
-              SizedBox(
-                height: 0,
-              ),
-              SizedBox(
-                height: 0,
-              ),
-            ],
-            onChange: (index) {
-              _pageController!.jumpToPage(index);
-            },
-          ),
-        ),
-        TweenAnimationBuilder<double>(
-          curve: Curves.easeInOutCubic,
-          duration: const Duration(milliseconds: 100),
-          tween: Tween<double>(begin: _heights[0], end: _currentHeight),
-          builder: (context, value, child) =>
-              SizedBox(height: value, child: child),
-          child: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: _sizeReportingChildren
-                .asMap() //
-                .map(MapEntry.new)
-                .values
-                .toList(),
-          ),
-        ),
-        if (_currentPage == 1)
-          Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            child: Row(
-              children: <Widget>[
-                AppButtonTinyConnectivity(
-                  localizations.createFungibleToken,
-                  Dimens.buttonBottomDimens,
-                  icon: Symbols.add,
-                  key: const Key('createTokenFungible'),
-                  onPressed: () {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const AddTokenSheet(),
-                    );
-                  },
-                  disabled:
-                      !accountSelected!.balance!.isNativeTokenValuePositive(),
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.transparent,
+            width: MediaQuery.of(context).size.width,
+            height: 80,
+            child: TabBar(
+              labelColor: theme.text,
+              indicatorColor: theme.text,
+              labelPadding: EdgeInsets.zero,
+              tabs: [
+                Text(
+                  localizations.recentTransactionsHeader,
+                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  key: const Key('fungibleTokenTab'),
+                  localizations.tokensHeader,
+                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  textAlign: TextAlign.center,
                 ),
               ],
+              onTap: (index) {
+                _pageController!.jumpToPage(index);
+              },
             ),
           ),
-      ],
+          TweenAnimationBuilder<double>(
+            curve: Curves.easeInOutCubic,
+            duration: const Duration(milliseconds: 100),
+            tween: Tween<double>(begin: _heights[0], end: _currentHeight),
+            builder: (context, value, child) =>
+                SizedBox(height: value, child: child),
+            child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              children: _sizeReportingChildren
+                  .asMap() //
+                  .map(MapEntry.new)
+                  .values
+                  .toList(),
+            ),
+          ),
+          if (_currentPage == 1)
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Row(
+                children: <Widget>[
+                  AppButtonTinyConnectivity(
+                    localizations.createFungibleToken,
+                    Dimens.buttonBottomDimens,
+                    icon: Symbols.add,
+                    key: const Key('createTokenFungible'),
+                    onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: const AddTokenSheet(),
+                      );
+                    },
+                    disabled:
+                        !accountSelected!.balance!.isNativeTokenValuePositive(),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 

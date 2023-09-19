@@ -53,14 +53,14 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
           image: AssetImage(
             theme.background4Small!,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fill,
           opacity: 0.7,
         ),
       ),
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 20,
-          bottom: 80,
+          bottom: 65,
         ),
         child: Column(
           children: [

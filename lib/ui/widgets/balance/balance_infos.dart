@@ -138,7 +138,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
-          accountSelectedBalance.nativeTokenValueToString(),
+          accountSelectedBalance.nativeTokenValueToString(digits: 2),
           style: theme.textStyleSize25W900EquinoxPrimary,
         ),
         AutoSizeText(
@@ -190,7 +190,7 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
           style: theme.textStyleSize25W900EquinoxPrimary,
         ),
         AutoSizeText(
-          '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName}',
+          '${accountSelectedBalance.nativeTokenValueToString(digits: 2)} ${accountSelectedBalance.nativeTokenName}',
           style: theme.textStyleSize12W600Primary,
         ),
       ],

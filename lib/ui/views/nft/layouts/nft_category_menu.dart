@@ -36,87 +36,85 @@ class NftCategoryMenu extends ConsumerWidget {
       return const SizedBox();
     }
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: GridView.builder(
-        shrinkWrap: true,
-        padding: const EdgeInsets.only(
-          left: 10,
-          right: 10,
-        ),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount:
-              Responsive.isDesktop(context) || Responsive.isTablet(context)
-                  ? 3
-                  : 2,
-          crossAxisSpacing: 20,
-          childAspectRatio: 0.8,
-        ),
-        itemCount: nftCategories.length,
-        itemBuilder: (context, index) {
-          var count = 0;
-          count = ref.read(
-            NftCategoryProviders.getNbNFTInCategory(
-              account: selectedAccount,
-              categoryNftIndex: nftCategories[index].id,
-            ),
-          );
-          return InkWell(
-            key: Key('nftCategory$index'),
-            onTap: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              Navigator.of(context).pushNamed(
-                '/nft_list_per_category',
-                arguments: nftCategories[index].id,
-              );
-            },
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Hero(
-                      tag: 'nftCategory${nftCategories[index].name!}',
-                      child: CardCategory(
-                        background: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset(
-                            nftCategories[index].image,
-                            fit: BoxFit.fitWidth,
-                          ),
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount:
+            Responsive.isDesktop(context) || Responsive.isTablet(context)
+                ? 3
+                : 2,
+        crossAxisSpacing: 20,
+        childAspectRatio: 0.8,
+      ),
+      itemCount: nftCategories.length,
+      itemBuilder: (context, index) {
+        var count = 0;
+        count = ref.read(
+          NftCategoryProviders.getNbNFTInCategory(
+            account: selectedAccount,
+            categoryNftIndex: nftCategories[index].id,
+          ),
+        );
+        return InkWell(
+          key: Key('nftCategory$index'),
+          onTap: () {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
+            Navigator.of(context).pushNamed(
+              '/nft_list_per_category',
+              arguments: nftCategories[index].id,
+            );
+          },
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Hero(
+                    tag: 'nftCategory${nftCategories[index].name!}',
+                    child: CardCategory(
+                      background: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.asset(
+                          nftCategories[index].image,
+                          fit: BoxFit.fitWidth,
                         ),
                       ),
                     ),
-                    if (count > 0)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12, top: 12),
-                        child: badge.Badge(
-                          badgeAnimation: const badge.BadgeAnimation.slide(
-                            toAnimate: false,
-                          ),
-                          badgeContent: Text(
-                            count.toString(),
-                            style: theme.textStyleSize10W100Primary,
-                          ),
+                  ),
+                  if (count > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12, top: 12),
+                      child: badge.Badge(
+                        badgeAnimation: const badge.BadgeAnimation.slide(
+                          toAnimate: false,
+                        ),
+                        badgeContent: Text(
+                          count.toString(),
+                          style: theme.textStyleSize10W100Primary,
                         ),
                       ),
-                  ],
-                ),
-                Text(
-                  nftCategories[index].name!,
-                  textAlign: TextAlign.center,
-                  style: theme.textStyleSize12W400Primary,
-                ),
-              ],
-            ),
-          )
-              .animate()
-              .fade(duration: Duration(milliseconds: 300 + (index * 50)))
-              .scale(duration: Duration(milliseconds: 300 + (index * 50)));
-        },
-      ),
+                    ),
+                ],
+              ),
+              Text(
+                nftCategories[index].name!,
+                textAlign: TextAlign.center,
+                style: theme.textStyleSize12W400Primary,
+              ),
+            ],
+          ),
+        )
+            .animate()
+            .fade(duration: Duration(milliseconds: 300 + (index * 50)))
+            .scale(duration: Duration(milliseconds: 300 + (index * 50)));
+      },
     );
   }
 }

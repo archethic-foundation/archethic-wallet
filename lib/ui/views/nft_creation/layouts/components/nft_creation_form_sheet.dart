@@ -7,7 +7,7 @@ import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,11 +24,8 @@ class NftCreationFormSheet extends ConsumerStatefulWidget {
 }
 
 class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
-  final GlobalKey<ContainedTabBarViewState> _key = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
@@ -37,28 +34,26 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
         ),
       ),
     );
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              theme.background4Small!,
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        body: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                theme.background4Small!,
+              ),
+              fit: BoxFit.fitHeight,
             ),
-            fit: BoxFit.fitHeight,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[theme.backgroundDark!, theme.background!],
+            ),
           ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
-          ),
-        ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
+          child: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              children: [
                 NFTHeader(
                   currentNftCategoryIndex: nftCreation.currentNftCategoryIndex,
                   onPressBack: () async {
@@ -75,121 +70,96 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                   height: 2,
                   color: theme.text15,
                 ),
-                Expanded(
-                  child: Container(
-                    constraints: const BoxConstraints.expand(height: 150),
-                    child: ContainedTabBarView(
-                      key: _key,
-                      initialIndex: nftCreation.indexTab,
-                      tabBarViewProperties: const TabBarViewProperties(
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
-                      tabBarProperties: TabBarProperties(
-                        position: TabBarPosition.bottom,
-                        labelColor: theme.text,
-                        labelStyle: theme.textStyleSize10W100Primary,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicatorColor: theme.text,
-                      ),
-                      tabs: [
-                        Tab(
-                          text: localizations
-                              .nftCreationProcessTabDescriptionHeader,
-                          icon: const Icon(
-                            Symbols.description,
-                            weight: IconSize.weightM,
-                            opticalSize: IconSize.opticalSizeM,
-                            grade: IconSize.gradeM,
-                          ),
-                        ),
-                        Tab(
-                          text: AppLocalizations.of(context)!
-                              .nftCreationProcessTabImportHeader,
-                          icon: const Icon(
-                            Symbols.download,
-                            weight: IconSize.weightM,
-                            opticalSize: IconSize.opticalSizeM,
-                            grade: IconSize.gradeM,
-                          ),
-                        ),
-                        Tab(
-                          text: localizations
-                              .nftCreationProcessTabPropertiesHeader,
-                          icon: const Icon(
-                            Symbols.settings,
-                            weight: IconSize.weightM,
-                            opticalSize: IconSize.opticalSizeM,
-                            grade: IconSize.gradeM,
-                          ),
-                        ),
-                        Tab(
-                          text:
-                              localizations.nftCreationProcessTabSummaryHeader,
-                          icon: const Icon(
-                            Symbols.check_circle,
-                            weight: IconSize.weightM,
-                            opticalSize: IconSize.opticalSizeM,
-                            grade: IconSize.gradeM,
-                          ),
-                        ),
-                      ],
-                      views: const [
-                        NFTCreationProcessInfosTab(),
-                        NFTCreationProcessImportTab(),
-                        NFTCreationProcessPropertiesTab(),
-                        NFTCreationProcessSummaryTab(),
-                      ],
-                      onChange: (index) {
-                        final nftCreationArgs = ref.read(
-                          NftCreationFormProvider.nftCreationFormArgs,
-                        );
-                        ref
-                            .read(
-                              NftCreationFormProvider.nftCreationForm(
-                                nftCreationArgs,
-                              ).notifier,
-                            )
-                            .setIndexTab(index);
-                        if (index == NftCreationTab.summary.index) {
-                          if (nftCreation.name.isEmpty ||
-                              (nftCreation.fileDecodedForPreview == null &&
-                                  nftCreation.isFileImportFile())) {
-                            ref.read(
-                              NftCreationFormProvider.nftCreationForm(
-                                nftCreationArgs,
-                              ).notifier,
-                            )
-                              ..controlFile(context)
-                              ..controlName(context);
-                          }
-                          if (nftCreation.name.isEmpty ||
-                              (nftCreation.fileDecodedForPreview == null &&
-                                  nftCreation.isFileImportUrl())) {
-                            ref.read(
-                              NftCreationFormProvider.nftCreationForm(
-                                nftCreationArgs,
-                              ).notifier,
-                            )
-                              ..controlURL(context)
-                              ..controlName(context);
-                          }
-                          ref
-                              .read(
-                                NftCreationFormProvider.nftCreationForm(
-                                  nftCreationArgs,
-                                ).notifier,
-                              )
-                              .setFees(
-                                context,
-                              );
-
-                          return;
-                        }
-                      },
-                    ),
+                const Expanded(
+                  child: TabBarView(
+                    children: [
+                      NFTCreationProcessInfosTab(),
+                      NFTCreationProcessImportTab(),
+                      NFTCreationProcessPropertiesTab(),
+                      NFTCreationProcessSummaryTab(),
+                    ],
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: TabBar(
+              labelColor: theme.text,
+              indicatorColor: theme.text,
+              labelPadding: EdgeInsets.zero,
+              tabs: [
+                TabItem(
+                  icon: Symbols.description,
+                  label: AppLocalizations.of(context)!
+                      .nftCreationProcessTabDescriptionHeader,
+                ),
+                TabItem(
+                  icon: Symbols.download,
+                  label: AppLocalizations.of(context)!
+                      .nftCreationProcessTabImportHeader,
+                ),
+                TabItem(
+                  icon: Symbols.settings,
+                  label: AppLocalizations.of(context)!
+                      .nftCreationProcessTabPropertiesHeader,
+                ),
+                TabItem(
+                  icon: Symbols.check_circle,
+                  label: AppLocalizations.of(context)!
+                      .nftCreationProcessTabSummaryHeader,
+                ),
+              ],
+              onTap: (selectedIndex) {
+                final nftCreationArgs = ref.read(
+                  NftCreationFormProvider.nftCreationFormArgs,
+                );
+                ref
+                    .read(
+                      NftCreationFormProvider.nftCreationForm(
+                        nftCreationArgs,
+                      ).notifier,
+                    )
+                    .setIndexTab(selectedIndex);
+                if (selectedIndex == NftCreationTab.summary.index) {
+                  if (nftCreation.name.isEmpty ||
+                      (nftCreation.fileDecodedForPreview == null &&
+                          nftCreation.isFileImportFile())) {
+                    ref.read(
+                      NftCreationFormProvider.nftCreationForm(
+                        nftCreationArgs,
+                      ).notifier,
+                    )
+                      ..controlFile(context)
+                      ..controlName(context);
+                  }
+                  if (nftCreation.name.isEmpty ||
+                      (nftCreation.fileDecodedForPreview == null &&
+                          nftCreation.isFileImportUrl())) {
+                    ref.read(
+                      NftCreationFormProvider.nftCreationForm(
+                        nftCreationArgs,
+                      ).notifier,
+                    )
+                      ..controlURL(context)
+                      ..controlName(context);
+                  }
+                  ref
+                      .read(
+                        NftCreationFormProvider.nftCreationForm(
+                          nftCreationArgs,
+                        ).notifier,
+                      )
+                      .setFees(
+                        context,
+                      );
+
+                  return;
+                }
+              },
             ),
           ),
         ),

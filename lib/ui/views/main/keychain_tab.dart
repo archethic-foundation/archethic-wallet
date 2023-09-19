@@ -18,21 +18,20 @@ class KeychainTab extends ConsumerWidget {
         ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
 
     return Container(
-      padding: const EdgeInsets.only(left: 15, right: 15),
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
             theme.background1Small!,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fill,
           opacity: 0.7,
         ),
       ),
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 10,
-          bottom: 80,
+          bottom: 65,
         ),
         child: Column(
           children: [

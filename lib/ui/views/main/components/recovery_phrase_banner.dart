@@ -24,7 +24,7 @@ class RecoveryPhraseBanner extends ConsumerWidget {
     return recoveryPhraseSavedAsync.map(
       data: (data) => data.value == false
           ? Padding(
-              padding: const EdgeInsets.only(bottom: 80),
+              padding: const EdgeInsets.only(bottom: 50),
               child: InkWell(
                 onTap: () async {
                   final preferences = ref.read(SettingsProviders.settings);

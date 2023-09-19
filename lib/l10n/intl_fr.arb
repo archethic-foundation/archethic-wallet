@@ -568,5 +568,10 @@
 	"discussionNameMandatory": "Le nom de la discussion est obligatoire",
 	"discussionAtLeastTwoMembers": "Une discussion doit avoir au moins deux membres",
 	"discussionAtLeastOneAdmin": "Une discussion doit avoir au moins un administrateur",
-	"noContactsToAdd": "Il n'y a plus de contact à ajouter"
+	"noContactsToAdd": "Il n'y a plus de contact à ajouter",
+	"bottomMainMenuAddressBook": "Contacts",
+	"bottomMainMenuKeychain": "Porte-clés",
+	"bottomMainMenuMain": "Accueil",
+	"bottomMainMenuNFT": "NFT",
+	"bottomMainMenuMessenger": "Discussions"
 }

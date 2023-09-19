@@ -50,160 +50,153 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         .valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return PreferredSize(
-      preferredSize: Size(MediaQuery.of(context).size.width, 50),
-      child: ClipRRect(
+    return AppBar(
+      flexibleSpace: ClipRRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: AppBar(
-            systemOverlayStyle: theme.brightness == Brightness.light
-                ? SystemUiOverlayStyle.dark
-                : SystemUiOverlayStyle.light,
-            automaticallyImplyLeading: false,
-            leading: IconButton(
-              icon: const Icon(
-                Symbols.menu,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-              ),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
-            actions: [
-              if (preferences.mainScreenCurrentPage == 3)
-                IconButton(
-                  icon: const Icon(
-                    Symbols.settings,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const ConfigureCategoryList(),
-                      onDisposed: () => ref
-                          .invalidate(NftCategoryProviders.fetchNftCategories),
-                    );
-                  },
-                ),
-              if (preferences.mainScreenCurrentPage == 4)
-                IconButton(
-                  icon: const Icon(
-                    Symbols.edit_square,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: const CreateDiscussionSheet(),
-                    );
-                  },
-                )
-              else if (preferences.mainScreenCurrentPage == 0 ||
-                  preferences.mainScreenCurrentPage == 1 ||
-                  preferences.mainScreenCurrentPage == 2)
-                preferences.showBalances
-                    ? const MainAppBarIconBalanceShowed()
-                    : const MainAppBarIconBalanceNotShowed(),
-              if (connectivityStatusProvider ==
-                  ConnectivityStatus.isDisconnected)
-                const IconNetworkWarning()
-              else if (hasNotifications)
-                preferences.activeNotifications
-                    ? const MainAppBarIconNotificationEnabled()
-                    : const MainAppBarIconNotificationDisabled(),
-            ],
-            title: preferences.mainScreenCurrentPage == 1
-                ? InkWell(
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      Clipboard.setData(
-                        ClipboardData(
-                          text: keychain?.address.toUpperCase() ?? '',
-                        ),
-                      );
-                      UIUtil.showSnackbar(
-                        localizations.addressCopied,
-                        context,
-                        ref,
-                        theme.text!,
-                        theme.snackBarShadow!,
-                      );
-                    },
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AutoSizeText(
-                        localizations.keychainHeader,
-                        style: theme.textStyleSize24W700EquinoxPrimary,
-                      ),
-                    )
-                        .animate()
-                        .fade(duration: const Duration(milliseconds: 300)),
-                  )
-                : preferences.mainScreenCurrentPage == 2
-                    ? FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          selectedAccount?.nameDisplayed ?? ' ',
-                          style: theme.textStyleSize24W700EquinoxPrimary,
-                        ),
-                      )
-                        .animate()
-                        .fade(duration: const Duration(milliseconds: 300))
-                    : preferences.mainScreenCurrentPage == 3
-                        ? FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: AutoSizeText(
-                              'NFT',
-                              style: theme.textStyleSize24W700EquinoxPrimary,
-                            ),
-                          )
-                            .animate()
-                            .fade(duration: const Duration(milliseconds: 300))
-                        : preferences.mainScreenCurrentPage == 4
-                            ? FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: AutoSizeText(
-                                  localizations.messengerHeader,
-                                  style:
-                                      theme.textStyleSize24W700EquinoxPrimary,
-                                ),
-                              ).animate().fade(
-                                  duration: const Duration(milliseconds: 300),
-                                )
-                            : FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: AutoSizeText(
-                                  localizations.addressBookHeader,
-                                  style:
-                                      theme.textStyleSize24W700EquinoxPrimary,
-                                ),
-                              ).animate().fade(
-                                  duration: const Duration(milliseconds: 300),
-                                ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            centerTitle: true,
-            iconTheme: IconThemeData(color: theme.text),
+          child: Container(
+            color: Colors.transparent,
           ),
         ),
       ),
+      systemOverlayStyle: theme.brightness == Brightness.light
+          ? SystemUiOverlayStyle.dark
+          : SystemUiOverlayStyle.light,
+      automaticallyImplyLeading: false,
+      leading: IconButton(
+        icon: const Icon(
+          Symbols.menu,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
+        ),
+        onPressed: () => Scaffold.of(context).openDrawer(),
+      ),
+      actions: [
+        if (preferences.mainScreenCurrentPage == 3)
+          IconButton(
+            icon: const Icon(
+              Symbols.settings,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
+            ),
+            onPressed: () async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              Sheets.showAppHeightNineSheet(
+                context: context,
+                ref: ref,
+                widget: const ConfigureCategoryList(),
+                onDisposed: () =>
+                    ref.invalidate(NftCategoryProviders.fetchNftCategories),
+              );
+            },
+          ),
+        if (preferences.mainScreenCurrentPage == 4)
+          IconButton(
+            icon: const Icon(
+              Symbols.edit_square,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
+            ),
+            onPressed: () async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              Sheets.showAppHeightNineSheet(
+                context: context,
+                ref: ref,
+                widget: const CreateDiscussionSheet(),
+              );
+            },
+          )
+        else if (preferences.mainScreenCurrentPage == 0 ||
+            preferences.mainScreenCurrentPage == 1 ||
+            preferences.mainScreenCurrentPage == 2)
+          preferences.showBalances
+              ? const MainAppBarIconBalanceShowed()
+              : const MainAppBarIconBalanceNotShowed(),
+        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
+          const IconNetworkWarning()
+        else if (hasNotifications)
+          preferences.activeNotifications
+              ? const MainAppBarIconNotificationEnabled()
+              : const MainAppBarIconNotificationDisabled(),
+      ],
+      title: preferences.mainScreenCurrentPage == 1
+          ? InkWell(
+              onTap: () {
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      preferences.activeVibrations,
+                    );
+                Clipboard.setData(
+                  ClipboardData(
+                    text: keychain?.address.toUpperCase() ?? '',
+                  ),
+                );
+                UIUtil.showSnackbar(
+                  localizations.addressCopied,
+                  context,
+                  ref,
+                  theme.text!,
+                  theme.snackBarShadow!,
+                );
+              },
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: AutoSizeText(
+                  localizations.keychainHeader,
+                  style: theme.textStyleSize24W700EquinoxPrimary,
+                ),
+              ).animate().fade(duration: const Duration(milliseconds: 300)),
+            )
+          : preferences.mainScreenCurrentPage == 2
+              ? FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    selectedAccount?.nameDisplayed ?? ' ',
+                    style: theme.textStyleSize24W700EquinoxPrimary,
+                  ),
+                ).animate().fade(duration: const Duration(milliseconds: 300))
+              : preferences.mainScreenCurrentPage == 3
+                  ? FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: AutoSizeText(
+                        'NFT',
+                        style: theme.textStyleSize24W700EquinoxPrimary,
+                      ),
+                    )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 300))
+                  : preferences.mainScreenCurrentPage == 4
+                      ? FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: AutoSizeText(
+                            localizations.messengerHeader,
+                            style: theme.textStyleSize24W700EquinoxPrimary,
+                          ),
+                        ).animate().fade(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                      : FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: AutoSizeText(
+                            localizations.addressBookHeader,
+                            style: theme.textStyleSize24W700EquinoxPrimary,
+                          ),
+                        ).animate().fade(
+                            duration: const Duration(milliseconds: 300),
+                          ),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: true,
+      iconTheme: IconThemeData(color: theme.text),
     );
   }
 }
