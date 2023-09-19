@@ -103,44 +103,49 @@ class _HomePageState extends ConsumerState<HomePage>
         ],
       ),
       bottomNavigationBar: SafeArea(
-        child: TabBar(
-            controller: tabController,
-            labelColor: theme.text,
-            indicatorColor: theme.text,
-            labelPadding: EdgeInsets.zero,
-            onTap: (selectedIndex) {
-              ref
-                  .read(SettingsProviders.settings.notifier)
-                  .setMainScreenCurrentPage(selectedIndex);
-              if (selectedIndex == 3) {
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: TabBar(
+              controller: tabController,
+              labelColor: theme.text,
+              indicatorColor: theme.text,
+              labelPadding: EdgeInsets.zero,
+              onTap: (selectedIndex) {
                 ref
-                    .read(AccountProviders.selectedAccount.notifier)
-                    .refreshNFTs();
-              }
-            },
-            tabs: [
-              TabItem(
-                icon: Symbols.contacts,
-                label: AppLocalizations.of(context)!.bottomMainMenuAddressBook,
-              ),
-              TabItem(
-                icon: Symbols.account_balance_wallet,
-                label: AppLocalizations.of(context)!.bottomMainMenuKeychain,
-              ),
-              TabItem(
-                icon: Symbols.account_box,
-                label: AppLocalizations.of(context)!.bottomMainMenuMain,
-              ),
-              TabItem(
-                icon: Symbols.photo_library,
-                label: AppLocalizations.of(context)!.bottomMainMenuNFT,
-              ),
-              if (FeatureFlags.messagingActive)
+                    .read(SettingsProviders.settings.notifier)
+                    .setMainScreenCurrentPage(selectedIndex);
+                if (selectedIndex == 3) {
+                  ref
+                      .read(AccountProviders.selectedAccount.notifier)
+                      .refreshNFTs();
+                }
+              },
+              tabs: [
                 TabItem(
-                  icon: Symbols.chat,
-                  label: AppLocalizations.of(context)!.bottomMainMenuMessenger,
+                  icon: Symbols.contacts,
+                  label:
+                      AppLocalizations.of(context)!.bottomMainMenuAddressBook,
                 ),
-            ]),
+                TabItem(
+                  icon: Symbols.account_balance_wallet,
+                  label: AppLocalizations.of(context)!.bottomMainMenuKeychain,
+                ),
+                TabItem(
+                  icon: Symbols.account_box,
+                  label: AppLocalizations.of(context)!.bottomMainMenuMain,
+                ),
+                TabItem(
+                  icon: Symbols.photo_library,
+                  label: AppLocalizations.of(context)!.bottomMainMenuNFT,
+                ),
+                if (FeatureFlags.messagingActive)
+                  TabItem(
+                    icon: Symbols.chat,
+                    label:
+                        AppLocalizations.of(context)!.bottomMainMenuMessenger,
+                  ),
+              ]),
+        ),
       ),
     );
   }
