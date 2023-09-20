@@ -235,7 +235,7 @@ class MessengerRepository
             adminsPubKeys: aeGroupMessage.adminPublicKey,
             membersPubKeys: aeGroupMessage.usersPubKey,
             creationDate: DateTime.fromMillisecondsSinceEpoch(
-              aeGroupMessage.timestampLastUpdate,
+              aeGroupMessage.timestampLastUpdate * 1000,
             ),
           );
         },
