@@ -106,13 +106,14 @@ class _HomePageState extends ConsumerState<HomePage>
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: SafeArea(
               child: TabBar(
+                dividerColor: Colors.transparent,
                 controller: tabController,
                 labelColor: theme.text,
                 indicatorColor: theme.text,

@@ -23,40 +23,42 @@ class RecoveryPhraseBanner extends ConsumerWidget {
 
     return recoveryPhraseSavedAsync.map(
       data: (data) => data.value == false
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 50),
-              child: InkWell(
-                onTap: () async {
-                  final preferences = ref.read(SettingsProviders.settings);
+          ? SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: InkWell(
+                  onTap: () async {
+                    final preferences = ref.read(SettingsProviders.settings);
 
-                  final auth = await AuthFactory.authenticate(
-                    context,
-                    ref,
-                    activeVibrations: preferences.activeVibrations,
-                  );
-                  if (auth) {
-                    await ref.ensuresAutolockMaskHidden();
-
-                    final seed = ref
-                        .read(SessionProviders.session)
-                        .loggedIn
-                        ?.wallet
-                        .seed;
-                    final mnemonic = AppMnemomics.seedToMnemonic(
-                      seed!,
-                      languageCode: preferences.languageSeed,
+                    final auth = await AuthFactory.authenticate(
+                      context,
+                      ref,
+                      activeVibrations: preferences.activeVibrations,
                     );
+                    if (auth) {
+                      await ref.ensuresAutolockMaskHidden();
 
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      ref: ref,
-                      widget: AppSeedBackupSheet(mnemonic),
-                    );
-                  }
-                },
-                child: InfoBanner(
-                  AppLocalizations.of(context)!.recoveryPhraseBackupRequired,
-                  fontSize: 10,
+                      final seed = ref
+                          .read(SessionProviders.session)
+                          .loggedIn
+                          ?.wallet
+                          .seed;
+                      final mnemonic = AppMnemomics.seedToMnemonic(
+                        seed!,
+                        languageCode: preferences.languageSeed,
+                      );
+
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        ref: ref,
+                        widget: AppSeedBackupSheet(mnemonic),
+                      );
+                    }
+                  },
+                  child: InfoBanner(
+                    AppLocalizations.of(context)!.recoveryPhraseBackupRequired,
+                    fontSize: 10,
+                  ),
                 ),
               ),
             )

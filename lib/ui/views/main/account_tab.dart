@@ -82,7 +82,7 @@ class AccountTab extends ConsumerWidget {
                       child: Padding(
                         padding: EdgeInsets.only(
                           top: MediaQuery.of(context).padding.top + 10,
-                          bottom: 50,
+                          bottom: 80,
                         ),
                         child: Column(
                           children: <Widget>[
