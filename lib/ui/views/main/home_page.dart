@@ -12,6 +12,7 @@ import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
@@ -38,7 +39,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin {
   int tabCount = 4;
-  late TabController tabController;
 
   @override
   void initState() {
@@ -49,28 +49,28 @@ class _HomePageState extends ConsumerState<HomePage>
       tabCount++;
     }
 
-    tabController = TabController(
-      length: tabCount,
-      vsync: this,
-    );
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      tabController.animateTo(
-        ref.read(SettingsProviders.settings).mainScreenCurrentPage,
-        duration: Duration.zero,
+      ref.read(mainTabControllerProvider.notifier).provider = TabController(
+        length: tabCount,
+        vsync: this,
       );
-    });
-  }
 
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
+      ref.read(mainTabControllerProvider)!.animateTo(
+            ref.read(SettingsProviders.settings).mainScreenCurrentPage,
+            duration: Duration.zero,
+          );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    final tabController = ref.watch(mainTabControllerProvider);
+
+    if (tabController == null) {
+      return Container();
+    }
 
     return Scaffold(
       extendBodyBehindAppBar: true,
