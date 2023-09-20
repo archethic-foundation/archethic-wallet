@@ -350,8 +350,6 @@ class _MessagesList extends ConsumerStatefulWidget {
 }
 
 class _MessagesListState extends ConsumerState<_MessagesList> {
-  bool hasMessages = false;
-
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
@@ -362,29 +360,17 @@ class _MessagesListState extends ConsumerState<_MessagesList> {
 
     if (me == null) return Container();
 
-    final discussion =
-        ref.watch(MessengerProviders.discussion(widget.discussionAddress));
-    setState(() {
-      hasMessages = discussion.valueOrNull?.lastMessage != null;
-    });
-
-    if (hasMessages == false) {
-      return Padding(
-        padding: const EdgeInsets.all(8),
-        child: Center(
+    return PagedListView(
+      pagingController: pagingController,
+      shrinkWrap: pagingController.itemList?.isNotEmpty ?? false,
+      reverse: true,
+      builderDelegate: PagedChildBuilderDelegate<DiscussionMessage>(
+        noItemsFoundIndicatorBuilder: (context) => Center(
           child: Text(
             localizations.discussionNoMessages,
             textAlign: TextAlign.center,
           ),
         ),
-      );
-    }
-
-    return PagedListView(
-      pagingController: pagingController,
-      shrinkWrap: true,
-      reverse: true,
-      builderDelegate: PagedChildBuilderDelegate<DiscussionMessage>(
         itemBuilder: (context, message, index) {
           final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
 
