@@ -156,7 +156,7 @@ class _DiscussionProviderElement
 }
 
 String _$discussionDisplayNameHash() =>
-    r'ca1955ae1b91e4f54d33e98816e2f359534806b0';
+    r'5c65d094a29d76864a5e57d0f383da99df9ed664';
 
 /// See also [_discussionDisplayName].
 @ProviderFor(_discussionDisplayName)

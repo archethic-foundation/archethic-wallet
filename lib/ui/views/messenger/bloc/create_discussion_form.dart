@@ -86,7 +86,8 @@ class CreateDiscussionFormNotifier
         if (selectedAccount == null) throw const Failure.loggedOut();
 
         final creator = AccessRecipient.contact(
-          contact: await ref.read(ContactProviders.getSelectedContact.future),
+          contact:
+              (await ref.read(ContactProviders.getSelectedContact.future))!,
         );
 
         await ref

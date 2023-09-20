@@ -290,7 +290,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       final contact = await sl.get<DBHelper>().getContactWithName(text);
       _setPropertyAccessRecipient(
         recipient: PropertyAccessRecipient.contact(
-          contact: contact,
+          contact: contact!,
         ),
       );
     } catch (e) {
