@@ -50,10 +50,7 @@ class _HomePageState extends ConsumerState<HomePage>
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ref.read(mainTabControllerProvider.notifier).provider = TabController(
-        length: tabCount,
-        vsync: this,
-      );
+      ref.read(mainTabControllerProvider.notifier).initState(this);
 
       ref.read(mainTabControllerProvider)!.animateTo(
             ref.read(SettingsProviders.settings).mainScreenCurrentPage,
