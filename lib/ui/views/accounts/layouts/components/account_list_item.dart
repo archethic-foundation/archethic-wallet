@@ -13,6 +13,7 @@ import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -89,10 +90,14 @@ class AccountListItem extends ConsumerWidget {
                   .refreshRecentTransactions();
             }
 
-            ref
+            await ref
                 .read(SettingsProviders.settings.notifier)
                 .resetMainScreenCurrentPage();
             Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+            ref.read(mainTabControllerProvider)!.animateTo(
+                  ref.read(SettingsProviders.settings).mainScreenCurrentPage,
+                  duration: Duration.zero,
+                );
           }
         },
         onLongPress: () {
