@@ -71,10 +71,10 @@ class HivePreferencesDatasource {
   bool getHasSeenRootWarning() =>
       _getValue(hasShownRootWarning, defaultValue: false);
 
-  Future<void> setCurrentVersion(String version) =>
+  Future<void> setCurrentDataVersion(int version) =>
       _setValue(currentVersion, version);
 
-  String getCurrentVersion() => _getValue(currentVersion, defaultValue: '');
+  int getCurrentDataVersion() => _getValue(currentVersion, defaultValue: 0);
 
   Future<void> setAuthMethod(AuthenticationMethod method) =>
       _setValue(authMethod, method.getIndex());
