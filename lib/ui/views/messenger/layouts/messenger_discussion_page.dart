@@ -362,12 +362,14 @@ class _MessagesListState extends ConsumerState<_MessagesList> {
 
     return PagedListView(
       pagingController: pagingController,
-      shrinkWrap: true,
+      shrinkWrap: pagingController.itemList?.isNotEmpty ?? false,
       reverse: true,
       builderDelegate: PagedChildBuilderDelegate<DiscussionMessage>(
-        noItemsFoundIndicatorBuilder: (context) => Text(
-          localizations.discussionNoMessages,
-          textAlign: TextAlign.center,
+        noItemsFoundIndicatorBuilder: (context) => Center(
+          child: Text(
+            localizations.discussionNoMessages,
+            textAlign: TextAlign.center,
+          ),
         ),
         itemBuilder: (context, message, index) {
           final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
