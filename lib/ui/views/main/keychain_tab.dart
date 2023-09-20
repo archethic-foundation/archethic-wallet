@@ -17,54 +17,57 @@ class KeychainTab extends ConsumerWidget {
     final accountsList =
         ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            theme.background1Small!,
+    return SafeArea(
+      top: false,
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background1Small!,
+            ),
+            fit: BoxFit.fill,
+            opacity: 0.7,
           ),
-          fit: BoxFit.fill,
-          opacity: 0.7,
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 10,
-          bottom: 65,
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  dragDevices: {
-                    PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse,
-                    PointerDeviceKind.trackpad,
-                  },
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 10,
+            bottom: 10,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(
+                    dragDevices: {
+                      PointerDeviceKind.touch,
+                      PointerDeviceKind.mouse,
+                      PointerDeviceKind.trackpad,
+                    },
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      AccountsListWidget(
-                        currencyName: settings.currency.name,
-                        accountsList: accountsList,
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        AccountsListWidget(
+                          currencyName: settings.currency.name,
+                          accountsList: accountsList,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            const Row(
-              children: [
-                AddAccountButton(),
-              ],
-            ),
-          ],
+              const Row(
+                children: [
+                  AddAccountButton(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
