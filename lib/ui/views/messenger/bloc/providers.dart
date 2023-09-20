@@ -128,7 +128,7 @@ String _discussionDisplayName(
               final memberToDisplayPubKey =
                   discussion.membersPubKeys.firstWhereOrNull(
                 (memberPublicKey) =>
-                    memberPublicKey != contactData.value.publicKey,
+                    memberPublicKey != contactData.value!.publicKey,
               );
               if (memberToDisplayPubKey == null) return null;
 

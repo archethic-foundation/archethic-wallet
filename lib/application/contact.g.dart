@@ -173,11 +173,12 @@ class _FetchContactsProviderElement
 }
 
 String _$getSelectedContactHash() =>
-    r'b76abfb987991770f9866447bd0d5b025705d7d9';
+    r'c58ac8b4086a82e2cad80f52ee48cbc3c6e2d415';
 
 /// See also [_getSelectedContact].
 @ProviderFor(_getSelectedContact)
-final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>.internal(
+final _getSelectedContactProvider =
+    AutoDisposeFutureProvider<Contact?>.internal(
   _getSelectedContact,
   name: r'_getSelectedContactProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -187,16 +188,16 @@ final _getSelectedContactProvider = AutoDisposeFutureProvider<Contact>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact>;
+typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact?>;
 String _$getContactWithNameHash() =>
-    r'02013ceec0ce5f5617e7684f2a0f4bd80116843e';
+    r'e42c9606f79b6b6396b453ee26e7af18ae358470';
 
 /// See also [_getContactWithName].
 @ProviderFor(_getContactWithName)
 const _getContactWithNameProvider = _GetContactWithNameFamily();
 
 /// See also [_getContactWithName].
-class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
+class _GetContactWithNameFamily extends Family<AsyncValue<Contact?>> {
   /// See also [_getContactWithName].
   const _GetContactWithNameFamily();
 
@@ -234,7 +235,7 @@ class _GetContactWithNameFamily extends Family<AsyncValue<Contact>> {
 }
 
 /// See also [_getContactWithName].
-class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
+class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact?> {
   /// See also [_getContactWithName].
   _GetContactWithNameProvider(
     String contactName,
@@ -269,7 +270,7 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
 
   @override
   Override overrideWith(
-    FutureOr<Contact> Function(_GetContactWithNameRef provider) create,
+    FutureOr<Contact?> Function(_GetContactWithNameRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -286,7 +287,7 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<Contact> createElement() {
+  AutoDisposeFutureProviderElement<Contact?> createElement() {
     return _GetContactWithNameProviderElement(this);
   }
 
@@ -305,13 +306,13 @@ class _GetContactWithNameProvider extends AutoDisposeFutureProvider<Contact> {
   }
 }
 
-mixin _GetContactWithNameRef on AutoDisposeFutureProviderRef<Contact> {
+mixin _GetContactWithNameRef on AutoDisposeFutureProviderRef<Contact?> {
   /// The parameter `contactName` of this provider.
   String get contactName;
 }
 
 class _GetContactWithNameProviderElement
-    extends AutoDisposeFutureProviderElement<Contact>
+    extends AutoDisposeFutureProviderElement<Contact?>
     with _GetContactWithNameRef {
   _GetContactWithNameProviderElement(super.provider);
 

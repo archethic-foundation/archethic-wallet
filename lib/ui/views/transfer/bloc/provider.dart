@@ -286,7 +286,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       final contact = await sl.get<DBHelper>().getContactWithName(text);
       _setRecipient(
         recipient: TransferRecipient.contact(
-          contact: contact,
+          contact: contact!,
         ),
       );
     } catch (e) {

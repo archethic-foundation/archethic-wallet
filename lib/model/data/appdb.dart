@@ -176,7 +176,7 @@ class DBHelper {
     }
   }
 
-  Future<Contact> getContactWithName(String contactName) async {
+  Future<Contact?> getContactWithName(String contactName) async {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     Contact? contactSelected;
@@ -190,11 +190,7 @@ class DBHelper {
         contactSelected = contact;
       }
     }
-    if (contactSelected == null) {
-      throw Exception();
-    } else {
-      return contactSelected;
-    }
+    return contactSelected;
   }
 
   Future<bool> contactExistsWithName(String contactName) async {

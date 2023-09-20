@@ -37,7 +37,7 @@ class AccountListItem extends ConsumerWidget {
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
-    AsyncValue<Contact>? contact;
+    AsyncValue<Contact?>? contact;
     if (account.serviceType == 'archethicWallet') {
       contact = ref.watch(
         ContactProviders.getContactWithName(
@@ -108,7 +108,7 @@ class AccountListItem extends ConsumerWidget {
                   context: context,
                   ref: ref,
                   widget: ContactDetail(
-                    contact: data.value,
+                    contact: data.value!,
                   ),
                 );
               },

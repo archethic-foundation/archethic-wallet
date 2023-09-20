@@ -31,10 +31,12 @@ Future<List<Contact>> _fetchContacts(
 }
 
 @riverpod
-Future<Contact> _getSelectedContact(_GetSelectedContactRef ref) async {
+Future<Contact?> _getSelectedContact(_GetSelectedContactRef ref) async {
   final selectedAccount =
       await ref.watch(AccountProviders.selectedAccount.future);
-  if (selectedAccount == null) throw Exception();
+  if (selectedAccount == null) {
+    return null;
+  }
 
   return ref.watch(
     _getContactWithNameProvider(
@@ -44,7 +46,7 @@ Future<Contact> _getSelectedContact(_GetSelectedContactRef ref) async {
 }
 
 @riverpod
-Future<Contact> _getContactWithName(
+Future<Contact?> _getContactWithName(
   _GetContactWithNameRef ref,
   String contactName,
 ) async {
@@ -213,7 +215,7 @@ class ContactRepository {
     return sl.get<DBHelper>().contactExistsWithName(contactName);
   }
 
-  Future<Contact> getContactWithName(String contactName) async {
+  Future<Contact?> getContactWithName(String contactName) async {
     return sl.get<DBHelper>().getContactWithName(contactName);
   }
 
