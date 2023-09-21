@@ -10,11 +10,13 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -189,30 +191,49 @@ Future<List<Discussion>> _sortedDiscussions(_SortedDiscussionsRef ref) async {
 }
 
 void _subscribeNotificationsWorker(WidgetRef ref) {
-  ref.listen(_discussionsProvider, (previous, next) {
-    final previousDiscussionsAddress = previous?.value
-            ?.map((discussion) => discussion.address.toLowerCase())
-            .toSet() ??
-        {};
-    final nextDiscussionsAddress = next.value
-            ?.map((discussion) => discussion.address.toLowerCase())
-            .toSet() ??
-        {};
-
-    final discussionsToUnsubscribe =
-        previousDiscussionsAddress.difference(nextDiscussionsAddress).toList();
-    final discussionsToSubscribe =
-        nextDiscussionsAddress.difference(previousDiscussionsAddress).toList();
-
-    if (discussionsToUnsubscribe.isNotEmpty) {
-      ref
-          .read(NotificationProviders.repository)
-          .unsubscribe(discussionsToUnsubscribe);
+  ref.listen(AccountProviders.accounts, (previous, next) async {
+    final previousContactPublicKeys = <String>[];
+    if (previous != null && previous.value != null) {
+      for (final account in previous.value!) {
+        final contact = await sl
+            .get<DBHelper>()
+            .getContactWithAddress(account.lastAddress!);
+        if (contact != null) {
+          previousContactPublicKeys.add(contact.publicKey);
+        }
+      }
     }
-    if (discussionsToSubscribe.isNotEmpty) {
+
+    final nextContactPublicKeys = <String>[];
+    if (next.value != null) {
+      for (final account in next.value!) {
+        final contact = await sl
+            .get<DBHelper>()
+            .getContactWithAddress(account.lastAddress!);
+        if (contact != null) {
+          nextContactPublicKeys.add(contact.publicKey);
+        }
+      }
+    }
+
+    final publicKeysToUnsubscribe = previousContactPublicKeys
+        .toSet()
+        .difference(nextContactPublicKeys.toSet())
+        .toList();
+    final publicKeysToSubscribe = nextContactPublicKeys
+        .toSet()
+        .difference(previousContactPublicKeys.toSet())
+        .toList();
+
+    if (publicKeysToUnsubscribe.isNotEmpty) {
       ref
           .read(NotificationProviders.repository)
-          .subscribe(discussionsToSubscribe);
+          .unsubscribe(publicKeysToUnsubscribe);
+    }
+    if (publicKeysToSubscribe.isNotEmpty) {
+      ref
+          .read(NotificationProviders.repository)
+          .subscribe(publicKeysToSubscribe);
     }
   });
 }

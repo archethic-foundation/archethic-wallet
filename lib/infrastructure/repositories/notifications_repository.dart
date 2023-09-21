@@ -68,6 +68,12 @@ class NotificationsRepositoryImpl
     await (await _localSetup).removeListenedAddresses(listenAddresses);
   }
 
+  @override
+  Future<void> unsubscribeAll() async {
+    final listenedAddresses = await (await _localSetup).getListenedAddresses();
+    await unsubscribe(listenedAddresses);
+  }
+
   Future<void> _onConnect() async {
     final token = await FirebaseMessaging.instance.getToken();
     if (token != null) {

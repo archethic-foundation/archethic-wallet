@@ -22,7 +22,6 @@ class MessengerBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    MessengerProviders.subscribeNotificationsWorker(ref);
     final asyncDiscussions = ref.watch(MessengerProviders.sortedDiscussions);
     final theme = ref.watch(ThemeProviders.selectedTheme);
 

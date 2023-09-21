@@ -9,8 +9,7 @@ class TxSentEvent with _$TxSentEvent {
   const factory TxSentEvent({
     // https://github.com/rrousselGit/freezed/issues/488
     // ignore: invalid_annotation_target
-    @JsonKey(name: 'txAddress')
-    required String notificationRecipientAddress,
+    @JsonKey(name: 'txAddress') required String notificationRecipientAddress,
     // => https://github.com/rrousselGit/freezed/issues/488
     // ignore: invalid_annotation_target
     @JsonKey(name: 'txChainGenesisAddress') required String listenAddress,
@@ -60,6 +59,9 @@ abstract class NotificationsRepository {
 
   /// Stops listening to a TransactionChain updates.
   Future<void> unsubscribe(List<String> listenAddresses);
+
+  /// Stops listening to all TransactionChain updates
+  Future<void> unsubscribeAll();
 
   /// Received websocket notifications.
   Stream<TxSentEvent> get events;
