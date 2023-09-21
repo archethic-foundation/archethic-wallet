@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$NotificationsSetup {
   @HiveField(0, defaultValue: [])
-  List<String> get listenedTxChains => throw _privateConstructorUsedError;
+  List<String> get listenedAddresses => throw _privateConstructorUsedError;
   @HiveField(1)
   String? get lastFcmToken => throw _privateConstructorUsedError;
 
@@ -33,7 +33,7 @@ abstract class $NotificationsSetupCopyWith<$Res> {
       _$NotificationsSetupCopyWithImpl<$Res, NotificationsSetup>;
   @useResult
   $Res call(
-      {@HiveField(0, defaultValue: []) List<String> listenedTxChains,
+      {@HiveField(0, defaultValue: []) List<String> listenedAddresses,
       @HiveField(1) String? lastFcmToken});
 }
 
@@ -50,13 +50,13 @@ class _$NotificationsSetupCopyWithImpl<$Res, $Val extends NotificationsSetup>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? listenedTxChains = null,
+    Object? listenedAddresses = null,
     Object? lastFcmToken = freezed,
   }) {
     return _then(_value.copyWith(
-      listenedTxChains: null == listenedTxChains
-          ? _value.listenedTxChains
-          : listenedTxChains // ignore: cast_nullable_to_non_nullable
+      listenedAddresses: null == listenedAddresses
+          ? _value.listenedAddresses
+          : listenedAddresses // ignore: cast_nullable_to_non_nullable
               as List<String>,
       lastFcmToken: freezed == lastFcmToken
           ? _value.lastFcmToken
@@ -75,7 +75,7 @@ abstract class _$$_NotificationsSetupCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@HiveField(0, defaultValue: []) List<String> listenedTxChains,
+      {@HiveField(0, defaultValue: []) List<String> listenedAddresses,
       @HiveField(1) String? lastFcmToken});
 }
 
@@ -90,13 +90,13 @@ class __$$_NotificationsSetupCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? listenedTxChains = null,
+    Object? listenedAddresses = null,
     Object? lastFcmToken = freezed,
   }) {
     return _then(_$_NotificationsSetup(
-      listenedTxChains: null == listenedTxChains
-          ? _value._listenedTxChains
-          : listenedTxChains // ignore: cast_nullable_to_non_nullable
+      listenedAddresses: null == listenedAddresses
+          ? _value._listenedAddresses
+          : listenedAddresses // ignore: cast_nullable_to_non_nullable
               as List<String>,
       lastFcmToken: freezed == lastFcmToken
           ? _value.lastFcmToken
@@ -112,19 +112,19 @@ class __$$_NotificationsSetupCopyWithImpl<$Res>
 class _$_NotificationsSetup extends _NotificationsSetup {
   const _$_NotificationsSetup(
       {@HiveField(0, defaultValue: [])
-      required final List<String> listenedTxChains,
+      required final List<String> listenedAddresses,
       @HiveField(1) this.lastFcmToken})
-      : _listenedTxChains = listenedTxChains,
+      : _listenedAddresses = listenedAddresses,
         super._();
 
-  final List<String> _listenedTxChains;
+  final List<String> _listenedAddresses;
   @override
   @HiveField(0, defaultValue: [])
-  List<String> get listenedTxChains {
-    if (_listenedTxChains is EqualUnmodifiableListView)
-      return _listenedTxChains;
+  List<String> get listenedAddresses {
+    if (_listenedAddresses is EqualUnmodifiableListView)
+      return _listenedAddresses;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listenedTxChains);
+    return EqualUnmodifiableListView(_listenedAddresses);
   }
 
   @override
@@ -133,7 +133,7 @@ class _$_NotificationsSetup extends _NotificationsSetup {
 
   @override
   String toString() {
-    return 'NotificationsSetup(listenedTxChains: $listenedTxChains, lastFcmToken: $lastFcmToken)';
+    return 'NotificationsSetup(listenedAddresses: $listenedAddresses, lastFcmToken: $lastFcmToken)';
   }
 
   @override
@@ -142,14 +142,14 @@ class _$_NotificationsSetup extends _NotificationsSetup {
         (other.runtimeType == runtimeType &&
             other is _$_NotificationsSetup &&
             const DeepCollectionEquality()
-                .equals(other._listenedTxChains, _listenedTxChains) &&
+                .equals(other._listenedAddresses, _listenedAddresses) &&
             (identical(other.lastFcmToken, lastFcmToken) ||
                 other.lastFcmToken == lastFcmToken));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_listenedTxChains), lastFcmToken);
+      const DeepCollectionEquality().hash(_listenedAddresses), lastFcmToken);
 
   @JsonKey(ignore: true)
   @override
@@ -162,13 +162,13 @@ class _$_NotificationsSetup extends _NotificationsSetup {
 abstract class _NotificationsSetup extends NotificationsSetup {
   const factory _NotificationsSetup(
       {@HiveField(0, defaultValue: [])
-      required final List<String> listenedTxChains,
+      required final List<String> listenedAddresses,
       @HiveField(1) final String? lastFcmToken}) = _$_NotificationsSetup;
   const _NotificationsSetup._() : super._();
 
   @override
   @HiveField(0, defaultValue: [])
-  List<String> get listenedTxChains;
+  List<String> get listenedAddresses;
   @override
   @HiveField(1)
   String? get lastFcmToken;

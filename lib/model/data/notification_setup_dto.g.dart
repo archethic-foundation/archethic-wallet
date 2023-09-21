@@ -17,7 +17,7 @@ class NotificationsSetupAdapter extends TypeAdapter<_$_NotificationsSetup> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$_NotificationsSetup(
-      listenedTxChains:
+      listenedAddresses:
           fields[0] == null ? [] : (fields[0] as List).cast<String>(),
       lastFcmToken: fields[1] as String?,
     );
@@ -30,7 +30,7 @@ class NotificationsSetupAdapter extends TypeAdapter<_$_NotificationsSetup> {
       ..writeByte(1)
       ..write(obj.lastFcmToken)
       ..writeByte(0)
-      ..write(obj.listenedTxChains);
+      ..write(obj.listenedAddresses);
   }
 
   @override
