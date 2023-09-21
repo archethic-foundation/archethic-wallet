@@ -317,9 +317,8 @@ class MessengerRepository
                 );
         await sendTransactionNotification(
           notification: TransactionNotification(
-            txAddress: txAddress.address!,
-            txChainGenesisAddress:
-                lastAddressForDiscussion[discussionGenesisAddress]!,
+            notificationRecipientAddress: txAddress.address!,
+            listenAddress: lastAddressForDiscussion[discussionGenesisAddress]!,
           ),
           pushNotification: {
             'en': const PushNotification(
