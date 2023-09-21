@@ -9,7 +9,8 @@ part of 'transaction_input_with_tx_address.dart';
 _$_TransactionInputWithTxAddress _$$_TransactionInputWithTxAddressFromJson(
         Map<String, dynamic> json) =>
     _$_TransactionInputWithTxAddress(
-      txAddress: json['txAddress'] as String? ?? '',
+      notificationRecipientAddress:
+          json['notificationRecipientAddress'] as String? ?? '',
       amount: json['amount'] as int? ?? 0,
       from: json['from'] as String? ?? '',
       tokenAddress: json['tokenAddress'] as String?,
@@ -22,7 +23,7 @@ _$_TransactionInputWithTxAddress _$$_TransactionInputWithTxAddressFromJson(
 Map<String, dynamic> _$$_TransactionInputWithTxAddressToJson(
         _$_TransactionInputWithTxAddress instance) =>
     <String, dynamic>{
-      'txAddress': instance.txAddress,
+      'notificationRecipientAddress': instance.notificationRecipientAddress,
       'amount': instance.amount,
       'from': instance.from,
       'tokenAddress': instance.tokenAddress,

@@ -22,7 +22,7 @@ TransactionInputWithTxAddress _$TransactionInputWithTxAddressFromJson(
 /// @nodoc
 mixin _$TransactionInputWithTxAddress {
   /// Transaction address
-  String get txAddress => throw _privateConstructorUsedError;
+  String get notificationRecipientAddress => throw _privateConstructorUsedError;
 
   /// Amount: asset amount
   int get amount => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $TransactionInputWithTxAddressCopyWith<$Res> {
           TransactionInputWithTxAddress>;
   @useResult
   $Res call(
-      {String txAddress,
+      {String notificationRecipientAddress,
       int amount,
       String from,
       String? tokenAddress,
@@ -84,7 +84,7 @@ class _$TransactionInputWithTxAddressCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? txAddress = null,
+    Object? notificationRecipientAddress = null,
     Object? amount = null,
     Object? from = null,
     Object? tokenAddress = freezed,
@@ -94,9 +94,9 @@ class _$TransactionInputWithTxAddressCopyWithImpl<$Res,
     Object? tokenId = freezed,
   }) {
     return _then(_value.copyWith(
-      txAddress: null == txAddress
-          ? _value.txAddress
-          : txAddress // ignore: cast_nullable_to_non_nullable
+      notificationRecipientAddress: null == notificationRecipientAddress
+          ? _value.notificationRecipientAddress
+          : notificationRecipientAddress // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
@@ -140,7 +140,7 @@ abstract class _$$_TransactionInputWithTxAddressCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String txAddress,
+      {String notificationRecipientAddress,
       int amount,
       String from,
       String? tokenAddress,
@@ -163,7 +163,7 @@ class __$$_TransactionInputWithTxAddressCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? txAddress = null,
+    Object? notificationRecipientAddress = null,
     Object? amount = null,
     Object? from = null,
     Object? tokenAddress = freezed,
@@ -173,9 +173,9 @@ class __$$_TransactionInputWithTxAddressCopyWithImpl<$Res>
     Object? tokenId = freezed,
   }) {
     return _then(_$_TransactionInputWithTxAddress(
-      txAddress: null == txAddress
-          ? _value.txAddress
-          : txAddress // ignore: cast_nullable_to_non_nullable
+      notificationRecipientAddress: null == notificationRecipientAddress
+          ? _value.notificationRecipientAddress
+          : notificationRecipientAddress // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
@@ -213,7 +213,7 @@ class __$$_TransactionInputWithTxAddressCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TransactionInputWithTxAddress extends _TransactionInputWithTxAddress {
   const _$_TransactionInputWithTxAddress(
-      {this.txAddress = '',
+      {this.notificationRecipientAddress = '',
       this.amount = 0,
       this.from = '',
       this.tokenAddress,
@@ -230,7 +230,7 @@ class _$_TransactionInputWithTxAddress extends _TransactionInputWithTxAddress {
   /// Transaction address
   @override
   @JsonKey()
-  final String txAddress;
+  final String notificationRecipientAddress;
 
   /// Amount: asset amount
   @override
@@ -266,7 +266,7 @@ class _$_TransactionInputWithTxAddress extends _TransactionInputWithTxAddress {
 
   @override
   String toString() {
-    return 'TransactionInputWithTxAddress(txAddress: $txAddress, amount: $amount, from: $from, tokenAddress: $tokenAddress, spent: $spent, timestamp: $timestamp, type: $type, tokenId: $tokenId)';
+    return 'TransactionInputWithTxAddress(notificationRecipientAddress: $notificationRecipientAddress, amount: $amount, from: $from, tokenAddress: $tokenAddress, spent: $spent, timestamp: $timestamp, type: $type, tokenId: $tokenId)';
   }
 
   @override
@@ -274,8 +274,10 @@ class _$_TransactionInputWithTxAddress extends _TransactionInputWithTxAddress {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionInputWithTxAddress &&
-            (identical(other.txAddress, txAddress) ||
-                other.txAddress == txAddress) &&
+            (identical(other.notificationRecipientAddress,
+                    notificationRecipientAddress) ||
+                other.notificationRecipientAddress ==
+                    notificationRecipientAddress) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.tokenAddress, tokenAddress) ||
@@ -289,8 +291,8 @@ class _$_TransactionInputWithTxAddress extends _TransactionInputWithTxAddress {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, txAddress, amount, from,
-      tokenAddress, spent, timestamp, type, tokenId);
+  int get hashCode => Object.hash(runtimeType, notificationRecipientAddress,
+      amount, from, tokenAddress, spent, timestamp, type, tokenId);
 
   @JsonKey(ignore: true)
   @override
@@ -310,7 +312,7 @@ class _$_TransactionInputWithTxAddress extends _TransactionInputWithTxAddress {
 abstract class _TransactionInputWithTxAddress
     extends TransactionInputWithTxAddress {
   const factory _TransactionInputWithTxAddress(
-      {final String txAddress,
+      {final String notificationRecipientAddress,
       final int amount,
       final String from,
       final String? tokenAddress,
@@ -326,7 +328,7 @@ abstract class _TransactionInputWithTxAddress
   @override
 
   /// Transaction address
-  String get txAddress;
+  String get notificationRecipientAddress;
   @override
 
   /// Amount: asset amount

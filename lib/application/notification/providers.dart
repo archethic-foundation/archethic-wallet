@@ -20,12 +20,11 @@ NotificationsRepository _notificationRepository(
 @riverpod
 Stream<TxSentEvent> _txSentEvents(
   _TxSentEventsRef ref,
-  String txChainGenesisAddress,
+  String listenAddress,
 ) =>
     ref.watch(_notificationRepositoryProvider).events.where(
           (event) =>
-              event.listenAddress.toUpperCase() ==
-              txChainGenesisAddress.toUpperCase(),
+              event.listenAddress.toUpperCase() == listenAddress.toUpperCase(),
         );
 
 Future<void> _keepPushSettingsUpToDateWorker(

@@ -27,12 +27,12 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
     return HiveNotificationLocalDatasource._(encryptedBox);
   }
 
-  Future<void> addListenedTxChain(List<String> txChainGenesisAddresses) async {
+  Future<void> addListenedTxChain(List<String> listenAddresses) async {
     final notificationsSetup = await _getSetup();
     await _setSetup(
       notificationsSetup.copyWith(
         listenedTxChains: {
-          ...txChainGenesisAddresses,
+          ...listenAddresses,
           ...notificationsSetup.listenedTxChains,
         }.toList(),
       ),
@@ -40,15 +40,14 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
   }
 
   Future<void> removeListenedTxChains(
-    List<String> txChainGenesisAddresses,
+    List<String> listenAddresses,
   ) async {
     final notificationsSetup = await _getSetup();
     await _setSetup(
       notificationsSetup.copyWith(
         listenedTxChains: notificationsSetup.listenedTxChains
             .where(
-              (txChainAddress) =>
-                  txChainGenesisAddresses.contains(txChainAddress),
+              (txChainAddress) => listenAddresses.contains(txChainAddress),
             )
             .toList(),
       ),

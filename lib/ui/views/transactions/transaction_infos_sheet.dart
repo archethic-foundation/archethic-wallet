@@ -21,9 +21,9 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionInfosSheet extends ConsumerStatefulWidget {
-  const TransactionInfosSheet(this.txAddress, {super.key});
+  const TransactionInfosSheet(this.notificationRecipientAddress, {super.key});
 
-  final String txAddress;
+  final String notificationRecipientAddress;
 
   @override
   ConsumerState<TransactionInfosSheet> createState() =>
@@ -59,7 +59,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: FutureBuilder<List<TransactionInfos>>(
         future: sl.get<AppService>().getTransactionAllInfos(
-              widget.txAddress,
+              widget.notificationRecipientAddress,
               DateFormat.yMEd(Localizations.localeOf(context).languageCode),
               AccountBalance.cryptoCurrencyLabel,
               context,
@@ -89,7 +89,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                               ? _TransactionInfos(
                                   list: list,
                                   scrollController: scrollController,
-                                  txAddress: widget.txAddress,
+                                  notificationRecipientAddress: widget.notificationRecipientAddress,
                                 )
                               : _TransactionLoading(),
                         ),
@@ -124,12 +124,12 @@ class _TransactionInfos extends ConsumerWidget {
   const _TransactionInfos({
     required this.list,
     required this.scrollController,
-    required this.txAddress,
+    required this.notificationRecipientAddress,
   });
 
   final AsyncSnapshot<List<TransactionInfos>> list;
   final ScrollController scrollController;
-  final String txAddress;
+  final String notificationRecipientAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -182,7 +182,7 @@ class _TransactionInfos extends ConsumerWidget {
               onPressed: () async {
                 UIUtil.showWebview(
                   context,
-                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$txAddress',
+                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$notificationRecipientAddress',
                   '',
                 );
               },

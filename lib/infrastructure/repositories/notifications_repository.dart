@@ -42,30 +42,30 @@ class NotificationsRepositoryImpl
   }
 
   @override
-  Future<void> subscribe(List<String> txChainGenesisAddresses) async {
+  Future<void> subscribe(List<String> listenAddresses) async {
     final fcmToken = await cachedFcmToken;
     if (fcmToken == null) return;
 
     await _client.subscribePushNotifs(
       token: fcmToken,
-      txChainGenesisAddresses: txChainGenesisAddresses,
+      listenAddresses: listenAddresses,
     );
 
-    await _client.subscribeWebsocketNotifs(txChainGenesisAddresses);
-    await (await _localSetup).addListenedTxChain(txChainGenesisAddresses);
+    await _client.subscribeWebsocketNotifs(listenAddresses);
+    await (await _localSetup).addListenedTxChain(listenAddresses);
   }
 
   @override
-  Future<void> unsubscribe(List<String> txChainGenesisAddresses) async {
+  Future<void> unsubscribe(List<String> listenAddresses) async {
     final fcmToken = await cachedFcmToken;
     if (fcmToken == null) return;
     await _client.unsubscribePushNotifs(
       token: fcmToken,
-      txChainGenesisAddresses: txChainGenesisAddresses,
+      listenAddresses: listenAddresses,
     );
-    await _client.unsubscribeWebsocketNotifs(txChainGenesisAddresses);
+    await _client.unsubscribeWebsocketNotifs(listenAddresses);
 
-    await (await _localSetup).removeListenedTxChains(txChainGenesisAddresses);
+    await (await _localSetup).removeListenedTxChains(listenAddresses);
   }
 
   Future<void> _onConnect() async {
@@ -109,12 +109,12 @@ class NotificationsRepositoryImpl
     if (previousToken != null) {
       await _client.unsubscribePushNotifs(
         token: previousToken,
-        txChainGenesisAddresses: txChainAddresses,
+        listenAddresses: txChainAddresses,
       );
     }
     await _client.subscribePushNotifs(
       token: newToken,
-      txChainGenesisAddresses: txChainAddresses,
+      listenAddresses: txChainAddresses,
     );
   }
 

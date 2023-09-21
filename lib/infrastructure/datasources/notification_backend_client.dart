@@ -70,13 +70,13 @@ class NotificationBackendClient {
 
   Future<void> unsubscribePushNotifs({
     required String token,
-    required Iterable<String> txChainGenesisAddresses,
+    required Iterable<String> listenAddresses,
   }) async {
     await http.post(
       Uri.parse('$notificationBackendUrl/unsubscribePush'),
       headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
       body: jsonEncode({
-        'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
+        'txChainGenesisAddresses': listenAddresses.toList(),
         'pushToken': token,
       }),
     );
@@ -84,36 +84,36 @@ class NotificationBackendClient {
 
   Future<void> subscribePushNotifs({
     required String token,
-    required Iterable<String> txChainGenesisAddresses,
+    required Iterable<String> listenAddresses,
   }) async {
     await http.post(
       Uri.parse('$notificationBackendUrl/subscribePush'),
       headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType},
       body: jsonEncode(<String, dynamic>{
-        'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
+        'txChainGenesisAddresses': listenAddresses.toList(),
         'pushToken': token,
       }),
     );
   }
 
   Future<void> subscribeWebsocketNotifs(
-    Iterable<String> txChainGenesisAddresses,
+    Iterable<String> listenAddresses,
   ) async {
     socket.emit(
       'subscribe',
       {
-        'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
+        'txChainGenesisAddresses': listenAddresses.toList(),
       },
     );
   }
 
   Future<void> unsubscribeWebsocketNotifs(
-    Iterable<String> txChainGenesisAddresses,
+    Iterable<String> listenAddresses,
   ) async {
     socket.emit(
       'unsubscribe',
       jsonEncode({
-        'txChainGenesisAddresses': txChainGenesisAddresses.toList(),
+        'txChainGenesisAddresses': listenAddresses.toList(),
       }),
     );
   }
