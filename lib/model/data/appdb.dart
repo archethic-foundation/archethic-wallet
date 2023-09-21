@@ -194,12 +194,7 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithName(String contactName) async {
-    try {
-      await getContactWithName(contactName);
-      return true;
-    } catch (_) {
-      return false;
-    }
+    return await getContactWithName(contactName) != null;
   }
 
   Future<bool> contactExistsWithAddress(String address) async {

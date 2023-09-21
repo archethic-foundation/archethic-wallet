@@ -48,8 +48,8 @@ class ContactDetail extends ConsumerWidget {
         )
         .firstOrNull;
     AsyncValue<AccountBalance> asyncAccountBalance;
-    if (contact.type == ContactType.keychainService.name) {
-      asyncAccountBalance = AsyncValue.data(account!.balance!);
+    if (contact.type == ContactType.keychainService.name && account != null) {
+      asyncAccountBalance = AsyncValue.data(account.balance!);
     } else {
       asyncAccountBalance =
           ref.watch(ContactProviders.getBalance(address: contact.address));
