@@ -24,7 +24,7 @@ Stream<TxSentEvent> _txSentEvents(
 ) =>
     ref.watch(_notificationRepositoryProvider).events.where(
           (event) =>
-              event.txChainGenesisAddress.toUpperCase() ==
+              event.listenAddress.toUpperCase() ==
               txChainGenesisAddress.toUpperCase(),
         );
 
