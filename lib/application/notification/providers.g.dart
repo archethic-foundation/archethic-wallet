@@ -23,7 +23,7 @@ final _notificationRepositoryProvider =
 );
 
 typedef _NotificationRepositoryRef = ProviderRef<NotificationsRepository>;
-String _$txSentEventsHash() => r'46953e605fc0f8a5aca52fe9012905762baf1421';
+String _$txSentEventsHash() => r'71714c2335498d8a55124574c77db4da80d097bf';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -57,10 +57,10 @@ class _TxSentEventsFamily extends Family<AsyncValue<TxSentEvent>> {
 
   /// See also [_txSentEvents].
   _TxSentEventsProvider call(
-    String txChainGenesisAddress,
+    String listenAddress,
   ) {
     return _TxSentEventsProvider(
-      txChainGenesisAddress,
+      listenAddress,
     );
   }
 
@@ -69,7 +69,7 @@ class _TxSentEventsFamily extends Family<AsyncValue<TxSentEvent>> {
     covariant _TxSentEventsProvider provider,
   ) {
     return call(
-      provider.txChainGenesisAddress,
+      provider.listenAddress,
     );
   }
 
@@ -92,11 +92,11 @@ class _TxSentEventsFamily extends Family<AsyncValue<TxSentEvent>> {
 class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
   /// See also [_txSentEvents].
   _TxSentEventsProvider(
-    String txChainGenesisAddress,
+    String listenAddress,
   ) : this._internal(
           (ref) => _txSentEvents(
             ref as _TxSentEventsRef,
-            txChainGenesisAddress,
+            listenAddress,
           ),
           from: _txSentEventsProvider,
           name: r'_txSentEventsProvider',
@@ -107,7 +107,7 @@ class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
           dependencies: _TxSentEventsFamily._dependencies,
           allTransitiveDependencies:
               _TxSentEventsFamily._allTransitiveDependencies,
-          txChainGenesisAddress: txChainGenesisAddress,
+          listenAddress: listenAddress,
         );
 
   _TxSentEventsProvider._internal(
@@ -117,10 +117,10 @@ class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.txChainGenesisAddress,
+    required this.listenAddress,
   }) : super.internal();
 
-  final String txChainGenesisAddress;
+  final String listenAddress;
 
   @override
   Override overrideWith(
@@ -135,7 +135,7 @@ class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        txChainGenesisAddress: txChainGenesisAddress,
+        listenAddress: listenAddress,
       ),
     );
   }
@@ -148,21 +148,21 @@ class _TxSentEventsProvider extends AutoDisposeStreamProvider<TxSentEvent> {
   @override
   bool operator ==(Object other) {
     return other is _TxSentEventsProvider &&
-        other.txChainGenesisAddress == txChainGenesisAddress;
+        other.listenAddress == listenAddress;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, txChainGenesisAddress.hashCode);
+    hash = _SystemHash.combine(hash, listenAddress.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin _TxSentEventsRef on AutoDisposeStreamProviderRef<TxSentEvent> {
-  /// The parameter `txChainGenesisAddress` of this provider.
-  String get txChainGenesisAddress;
+  /// The parameter `listenAddress` of this provider.
+  String get listenAddress;
 }
 
 class _TxSentEventsProviderElement
@@ -171,8 +171,7 @@ class _TxSentEventsProviderElement
   _TxSentEventsProviderElement(super.provider);
 
   @override
-  String get txChainGenesisAddress =>
-      (origin as _TxSentEventsProvider).txChainGenesisAddress;
+  String get listenAddress => (origin as _TxSentEventsProvider).listenAddress;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

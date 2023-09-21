@@ -296,10 +296,11 @@ class MessengerRepository
           senderKeyPair: keyPair.toKeyPair,
         );
 
-        final txAddress = sendMessageResult.transactionAddress;
+        final notificationRecipientAddress =
+            sendMessageResult.transactionAddress;
 
         final message = DiscussionMessage(
-          address: txAddress.address!,
+          address: notificationRecipientAddress.address!,
           content: content,
           date: DateTime.now(),
           senderGenesisPublicKey:
@@ -317,7 +318,7 @@ class MessengerRepository
                 );
         await sendTransactionNotification(
           notification: TransactionNotification(
-            notificationRecipientAddress: txAddress.address!,
+            notificationRecipientAddress: notificationRecipientAddress.address!,
             listenAddress: lastAddressForDiscussion[discussionGenesisAddress]!,
           ),
           pushNotification: {

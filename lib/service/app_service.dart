@@ -137,13 +137,14 @@ class AppService {
 
   List<RecentTransaction> _populateRecentTransactionsFromTransactionInputs(
     List<TransactionInput> transactionInputs,
-    String txAddress,
+    String notificationRecipientAddress,
     int mostRecentTimestamp,
     int transactionTimestamp,
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transactionInput in transactionInputs) {
-      if (transactionInput.from!.toUpperCase() != txAddress.toUpperCase() &&
+      if (transactionInput.from!.toUpperCase() !=
+              notificationRecipientAddress.toUpperCase() &&
           transactionInput.timestamp! > mostRecentTimestamp &&
           transactionInput.timestamp! >= transactionTimestamp) {
         final recentTransaction = RecentTransaction()
@@ -151,7 +152,7 @@ class AppService {
           ..amount = fromBigInt(transactionInput.amount).toDouble()
           ..typeTx = RecentTransaction.transferInput
           ..from = transactionInput.from
-          ..recipient = txAddress
+          ..recipient = notificationRecipientAddress
           ..timestamp = transactionInput.timestamp
           ..fee = 0
           ..tokenAddress = transactionInput.tokenAddress;
