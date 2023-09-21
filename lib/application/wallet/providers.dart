@@ -75,6 +75,7 @@ class _SessionNotifier extends Notifier<Session> {
   }
 
   Future<void> logout() async {
+    await ref.read(NotificationProviders.repository).unsubscribeAll();
     await ref.read(SettingsProviders.settings.notifier).reset();
     await AuthenticationProviders.reset(ref);
     await ContactProviders.reset(ref);
