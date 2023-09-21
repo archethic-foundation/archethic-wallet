@@ -3,7 +3,6 @@ name: Build and Package Desktop apps
 on:
   push:
     branches:
-      - 807-packageinfo-lib-doesnt-provide-correctly-the-apps-version-on-windows-platform
       - testnet
       - mainnet
 
