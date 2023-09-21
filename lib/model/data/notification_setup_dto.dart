@@ -9,7 +9,7 @@ part 'notification_setup_dto.g.dart';
 class NotificationsSetup with _$NotificationsSetup {
   @HiveType(typeId: HiveTypeIds.notificationsSetup)
   const factory NotificationsSetup({
-    @HiveField(0, defaultValue: []) required List<String> listenedTxChains,
+    @HiveField(0, defaultValue: []) required List<String> listenedAddresses,
     @HiveField(1) String? lastFcmToken,
   }) = _NotificationsSetup;
   const NotificationsSetup._();

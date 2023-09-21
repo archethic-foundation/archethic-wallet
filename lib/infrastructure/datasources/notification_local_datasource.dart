@@ -12,7 +12,7 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
   Future<NotificationsSetup> _getSetup() async =>
       (await _notificationsSetupBox.get(_key)) ??
       const NotificationsSetup(
-        listenedTxChains: [],
+        listenedAddresses: [],
       );
 
   Future<void> _setSetup(NotificationsSetup setup) =>
@@ -27,36 +27,36 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
     return HiveNotificationLocalDatasource._(encryptedBox);
   }
 
-  Future<void> addListenedTxChain(List<String> listenAddresses) async {
+  Future<void> addListenedAddresses(List<String> listenAddresses) async {
     final notificationsSetup = await _getSetup();
     await _setSetup(
       notificationsSetup.copyWith(
-        listenedTxChains: {
+        listenedAddresses: {
           ...listenAddresses,
-          ...notificationsSetup.listenedTxChains,
+          ...notificationsSetup.listenedAddresses,
         }.toList(),
       ),
     );
   }
 
-  Future<void> removeListenedTxChains(
+  Future<void> removeListenedAddresses(
     List<String> listenAddresses,
   ) async {
     final notificationsSetup = await _getSetup();
     await _setSetup(
       notificationsSetup.copyWith(
-        listenedTxChains: notificationsSetup.listenedTxChains
+        listenedAddresses: notificationsSetup.listenedAddresses
             .where(
-              (txChainAddress) => listenAddresses.contains(txChainAddress),
+              (listenAddress) => listenAddresses.contains(listenAddress),
             )
             .toList(),
       ),
     );
   }
 
-  Future<List<String>> getListenedTxChains() async {
+  Future<List<String>> getListenedAddresses() async {
     final notificationsSetup = await _getSetup();
-    return notificationsSetup.listenedTxChains;
+    return notificationsSetup.listenedAddresses;
   }
 
   Future<String?> getLastFcmToken() async {

@@ -52,7 +52,7 @@ class NotificationsRepositoryImpl
     );
 
     await _client.subscribeWebsocketNotifs(listenAddresses);
-    await (await _localSetup).addListenedTxChain(listenAddresses);
+    await (await _localSetup).addListenedAddresses(listenAddresses);
   }
 
   @override
@@ -65,7 +65,7 @@ class NotificationsRepositoryImpl
     );
     await _client.unsubscribeWebsocketNotifs(listenAddresses);
 
-    await (await _localSetup).removeListenedTxChains(listenAddresses);
+    await (await _localSetup).removeListenedAddresses(listenAddresses);
   }
 
   Future<void> _onConnect() async {
@@ -104,23 +104,23 @@ class NotificationsRepositoryImpl
     required String? previousToken,
   }) async {
     final localSetup = await _localSetup;
-    final txChainAddresses = await localSetup.getListenedTxChains();
+    final listenAddresses = await localSetup.getListenedAddresses();
 
     if (previousToken != null) {
       await _client.unsubscribePushNotifs(
         token: previousToken,
-        listenAddresses: txChainAddresses,
+        listenAddresses: listenAddresses,
       );
     }
     await _client.subscribePushNotifs(
       token: newToken,
-      listenAddresses: txChainAddresses,
+      listenAddresses: listenAddresses,
     );
   }
 
   Future<void> _restoreWebsocketSubscriptions() async {
-    final txChainAddresses = await (await _localSetup).getListenedTxChains();
+    final listenAddresses = await (await _localSetup).getListenedAddresses();
 
-    await _client.subscribeWebsocketNotifs(txChainAddresses);
+    await _client.subscribeWebsocketNotifs(listenAddresses);
   }
 }
