@@ -7,8 +7,12 @@ part 'notifications_repository.g.dart';
 @freezed
 class TxSentEvent with _$TxSentEvent {
   const factory TxSentEvent({
-    required String txAddress,
-    required String txChainGenesisAddress,
+    // https://github.com/rrousselGit/freezed/issues/488
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'txAddress') required String notificationRecipientAddress,
+    // => https://github.com/rrousselGit/freezed/issues/488
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'txChainGenesisAddress') required String listenAddress,
   }) = _TxSentEvent;
   const TxSentEvent._();
 

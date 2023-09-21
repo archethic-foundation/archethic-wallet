@@ -273,7 +273,7 @@ class _ContactDetailActions extends ConsumerWidget {
                     return Icon(
                       Symbols.favorite,
                       color: theme.favoriteIconColor,
-                      fill: data!.favorite == null || data.favorite == false
+                      fill: data?.favorite == null || data!.favorite == false
                           ? 0
                           : 1,
                     );

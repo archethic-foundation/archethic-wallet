@@ -126,7 +126,11 @@ class _PaginatedDiscussionMessagesNotifier
         final txEvent = event.valueOrNull;
         if (txEvent == null) return;
 
-        if (_alreadyHasMessageWithAddress(txEvent.txAddress)) return;
+        if (_alreadyHasMessageWithAddress(
+          txEvent.notificationRecipientAddress,
+        )) {
+          return;
+        }
 
         final newMessage = (await ref.read(
           MessengerProviders.messages(

@@ -8,12 +8,12 @@ part of 'notifications_repository.dart';
 
 _$_TxSentEvent _$$_TxSentEventFromJson(Map<String, dynamic> json) =>
     _$_TxSentEvent(
-      txAddress: json['txAddress'] as String,
-      txChainGenesisAddress: json['txChainGenesisAddress'] as String,
+      notificationRecipientAddress: json['txAddress'] as String,
+      listenAddress: json['txChainGenesisAddress'] as String,
     );
 
 Map<String, dynamic> _$$_TxSentEventToJson(_$_TxSentEvent instance) =>
     <String, dynamic>{
-      'txAddress': instance.txAddress,
-      'txChainGenesisAddress': instance.txChainGenesisAddress,
+      'txAddress': instance.notificationRecipientAddress,
+      'txChainGenesisAddress': instance.listenAddress,
     };
