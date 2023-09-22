@@ -45,7 +45,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
             content: content,
             creator: selectedAccount,
             session: session,
-            membersPublicKeys: discussion.membersPubKeys,
+            membersPublicKeysForNotifications: discussion.membersPubKeys,
           )
           .valueOrThrow;
 

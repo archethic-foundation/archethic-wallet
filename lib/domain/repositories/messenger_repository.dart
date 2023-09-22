@@ -53,7 +53,7 @@ abstract class MessengerRepositoryInterface {
     required String discussionGenesisAddress,
     required Account creator,
     required String content,
-    required List<String> membersPublicKeys,
+    required List<String> membersPublicKeysForNotifications,
   });
 
   Future<void> updateDiscussionLastMessage({
