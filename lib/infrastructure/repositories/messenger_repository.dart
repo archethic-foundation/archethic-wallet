@@ -88,16 +88,15 @@ class MessengerRepository
         );
         await localDatasource.addDiscussion(
           ownerAddress: creator.genesisAddress,
-          discussion: newDiscussion,
+          discussion: newDiscussion.discussion,
         );
 
-        final keyPair = session.wallet.keychainSecuredInfos
-            .services[creator.name]!.keyPair!.toKeyPair;
-        await sendTransactionNotification(
-          notification: TransactionNotification(
-            notificationRecipientAddress: newDiscussion.address,
-            listenAddresses: membersPubKeys,
-          ),
+        await _sendTransactionNotification(
+          notificationRecipientAddress: newDiscussion.discussion.address,
+          listenAddresses: membersPubKeys,
+          creator: creator,
+          session: session,
+          transactionIndex: newDiscussion.transactionIndex,
           pushNotification: {
             'en': const PushNotification(
               title: 'AEWallet',
@@ -108,12 +107,9 @@ class MessengerRepository
               body: 'Une nouvelle discussion a été créée',
             ),
           },
-          txIndex: 0,
-          senderKeyPair: keyPair,
-          notifBackendBaseUrl: networksSetting.notificationBackendUrl,
         );
 
-        return newDiscussion;
+        return newDiscussion.discussion;
       });
 
   @override
@@ -146,11 +142,11 @@ class MessengerRepository
 
         await localDatasource.updateDiscussion(
           ownerAddress: owner.genesisAddress,
-          discussion: updatedDiscussion,
+          discussion: updatedDiscussion.discussion,
           discussionName: discussionName,
         );
 
-        return updatedDiscussion;
+        return updatedDiscussion.discussion;
       });
 
   @override
@@ -331,19 +327,12 @@ class MessengerRepository
                   .toUpperCase(),
         );
 
-        final previousKeyPair =
-            session.wallet.keychainSecuredInfos.toKeychain().deriveKeypair(
-                  creator.name,
-                  index: max(
-                    0,
-                    sendMessageResult.transactionIndex - 1,
-                  ),
-                );
-        await sendTransactionNotification(
-          notification: TransactionNotification(
-            notificationRecipientAddress: notificationRecipientAddress.address!,
-            listenAddresses: membersPublicKeys,
-          ),
+        await _sendTransactionNotification(
+          notificationRecipientAddress: notificationRecipientAddress.address!,
+          listenAddresses: membersPublicKeys,
+          creator: creator,
+          session: session,
+          transactionIndex: sendMessageResult.transactionIndex,
           pushNotification: {
             'en': const PushNotification(
               title: 'AEWallet',
@@ -354,13 +343,39 @@ class MessengerRepository
               body: 'Vous avez reçu un nouveau AEMessage',
             ),
           },
-          txIndex: sendMessageResult.transactionIndex,
-          senderKeyPair: previousKeyPair,
-          notifBackendBaseUrl: networksSetting.notificationBackendUrl,
         );
 
         return message;
       });
+
+  Future<void> _sendTransactionNotification({
+    required LoggedInSession session,
+    required String notificationRecipientAddress,
+    required List<String> listenAddresses,
+    required Account creator,
+    required Map<String, PushNotification> pushNotification,
+    required int transactionIndex,
+  }) async {
+    final previousKeyPair =
+        session.wallet.keychainSecuredInfos.toKeychain().deriveKeypair(
+              creator.name,
+              index: max(
+                0,
+                transactionIndex - 1,
+              ),
+            );
+
+    await sendTransactionNotification(
+      notification: TransactionNotification(
+        notificationRecipientAddress: notificationRecipientAddress,
+        listenAddresses: listenAddresses,
+      ),
+      pushNotification: pushNotification,
+      txIndex: transactionIndex,
+      senderKeyPair: previousKeyPair,
+      notifBackendBaseUrl: networksSetting.notificationBackendUrl,
+    );
+  }
 
   @override
   Future<void> updateDiscussionLastMessage({
