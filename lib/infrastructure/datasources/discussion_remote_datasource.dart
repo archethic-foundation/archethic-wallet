@@ -4,7 +4,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class DiscussionRemoteDatasource {
-  Future<Discussion> createDiscussion({
+  Future<({Discussion discussion, int transactionIndex})> createDiscussion({
     required MessagingService messagingService,
     required ApiService apiService,
     required List<String> membersPubKey,
@@ -14,7 +14,7 @@ class DiscussionRemoteDatasource {
     required String serviceName,
     required Keychain keychain,
   }) async {
-    final transaction = await messagingService.createDiscussion(
+    final discussion = await messagingService.createDiscussion(
       keychain: keychain,
       apiService: apiService,
       membersPubKey: membersPubKey.map((e) => e).whereType<String>().toList(),
@@ -24,12 +24,15 @@ class DiscussionRemoteDatasource {
       serviceName: serviceName,
     );
 
-    return Discussion(
-      creationDate: DateTime.now(),
-      address: transaction.address!.address!,
-      name: discussionName,
-      membersPubKeys: membersPubKey,
-      adminsPubKeys: adminsPubKeys,
+    return (
+      transactionIndex: discussion.transactionIndex,
+      discussion: Discussion(
+        creationDate: DateTime.now(),
+        address: discussion.transaction.address!.address!,
+        name: discussionName,
+        membersPubKeys: membersPubKey,
+        adminsPubKeys: adminsPubKeys,
+      )
     );
   }
 
@@ -58,7 +61,7 @@ class DiscussionRemoteDatasource {
     return fromBigInt(fee.fee).toDouble();
   }
 
-  Future<Discussion> updateDiscussion({
+  Future<({Discussion discussion, int transactionIndex})> updateDiscussion({
     required MessagingService messagingService,
     required ApiService apiService,
     required String discussionSCAddress,
@@ -74,7 +77,7 @@ class DiscussionRemoteDatasource {
         .get<AddressService>()
         .lastAddressFromAddress([discussionSCAddress]);
 
-    await messagingService.updateDiscussion(
+    final discussion = await messagingService.updateDiscussion(
       keychain: keychain,
       apiService: apiService,
       discussionSCAddress: lastAddressForDiscussion[discussionSCAddress]!,
@@ -86,12 +89,15 @@ class DiscussionRemoteDatasource {
       adminKeyPair: adminKeyPair,
     );
 
-    return Discussion(
-      creationDate: DateTime.now(),
-      address: discussionSCAddress,
-      name: discussionName,
-      membersPubKeys: membersPubKey,
-      adminsPubKeys: adminsPubKeys,
+    return (
+      transactionIndex: discussion.transactionIndex,
+      discussion: Discussion(
+        creationDate: DateTime.now(),
+        address: discussionSCAddress,
+        name: discussionName,
+        membersPubKeys: membersPubKey,
+        adminsPubKeys: adminsPubKeys,
+      )
     );
   }
 }
