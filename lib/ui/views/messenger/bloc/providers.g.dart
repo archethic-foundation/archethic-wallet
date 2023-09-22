@@ -900,14 +900,14 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
 String _$messageCreationFormNotifierHash() =>
-    r'6c05b1ed92f37e363ceecf30767e2af17b82ac9e';
+    r'83967072977423e68c265e026b173d0559aa167e';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {
-  late final String discussionAddress;
+  late final Discussion discussion;
 
   MessageCreationFormState build(
-    String discussionAddress,
+    Discussion discussion,
   );
 }
 
@@ -924,10 +924,10 @@ class _MessageCreationFormNotifierFamily
 
   /// See also [_MessageCreationFormNotifier].
   _MessageCreationFormNotifierProvider call(
-    String discussionAddress,
+    Discussion discussion,
   ) {
     return _MessageCreationFormNotifierProvider(
-      discussionAddress,
+      discussion,
     );
   }
 
@@ -936,7 +936,7 @@ class _MessageCreationFormNotifierFamily
     covariant _MessageCreationFormNotifierProvider provider,
   ) {
     return call(
-      provider.discussionAddress,
+      provider.discussion,
     );
   }
 
@@ -961,10 +961,9 @@ class _MessageCreationFormNotifierProvider
         MessageCreationFormState> {
   /// See also [_MessageCreationFormNotifier].
   _MessageCreationFormNotifierProvider(
-    String discussionAddress,
+    Discussion discussion,
   ) : this._internal(
-          () => _MessageCreationFormNotifier()
-            ..discussionAddress = discussionAddress,
+          () => _MessageCreationFormNotifier()..discussion = discussion,
           from: _messageCreationFormNotifierProvider,
           name: r'_messageCreationFormNotifierProvider',
           debugGetCreateSourceHash:
@@ -974,7 +973,7 @@ class _MessageCreationFormNotifierProvider
           dependencies: _MessageCreationFormNotifierFamily._dependencies,
           allTransitiveDependencies:
               _MessageCreationFormNotifierFamily._allTransitiveDependencies,
-          discussionAddress: discussionAddress,
+          discussion: discussion,
         );
 
   _MessageCreationFormNotifierProvider._internal(
@@ -984,17 +983,17 @@ class _MessageCreationFormNotifierProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.discussionAddress,
+    required this.discussion,
   }) : super.internal();
 
-  final String discussionAddress;
+  final Discussion discussion;
 
   @override
   MessageCreationFormState runNotifierBuild(
     covariant _MessageCreationFormNotifier notifier,
   ) {
     return notifier.build(
-      discussionAddress,
+      discussion,
     );
   }
 
@@ -1003,13 +1002,13 @@ class _MessageCreationFormNotifierProvider
     return ProviderOverride(
       origin: this,
       override: _MessageCreationFormNotifierProvider._internal(
-        () => create()..discussionAddress = discussionAddress,
+        () => create()..discussion = discussion,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        discussionAddress: discussionAddress,
+        discussion: discussion,
       ),
     );
   }
@@ -1023,13 +1022,13 @@ class _MessageCreationFormNotifierProvider
   @override
   bool operator ==(Object other) {
     return other is _MessageCreationFormNotifierProvider &&
-        other.discussionAddress == discussionAddress;
+        other.discussion == discussion;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, discussionAddress.hashCode);
+    hash = _SystemHash.combine(hash, discussion.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -1037,8 +1036,8 @@ class _MessageCreationFormNotifierProvider
 
 mixin _MessageCreationFormNotifierRef
     on AutoDisposeNotifierProviderRef<MessageCreationFormState> {
-  /// The parameter `discussionAddress` of this provider.
-  String get discussionAddress;
+  /// The parameter `discussion` of this provider.
+  Discussion get discussion;
 }
 
 class _MessageCreationFormNotifierProviderElement
@@ -1047,8 +1046,8 @@ class _MessageCreationFormNotifierProviderElement
   _MessageCreationFormNotifierProviderElement(super.provider);
 
   @override
-  String get discussionAddress =>
-      (origin as _MessageCreationFormNotifierProvider).discussionAddress;
+  Discussion get discussion =>
+      (origin as _MessageCreationFormNotifierProvider).discussion;
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>

@@ -3,6 +3,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -140,100 +141,110 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    final isCreating = ref.watch(
-      MessengerProviders.messageCreationForm(widget.discussionAddress)
-          .select((value) => value.isCreating),
-    );
+    final discussion =
+        ref.watch(MessengerProviders.discussion(widget.discussionAddress));
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, bottom: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return discussion.maybeMap(
+      data: (data) {
+        final theme = ref.watch(ThemeProviders.selectedTheme);
+        final isCreating = ref.watch(
+          MessengerProviders.messageCreationForm(data.value)
+              .select((value) => value.isCreating),
+        );
+
+        return Padding(
+          padding: const EdgeInsets.only(left: 16, bottom: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 120),
-                  child: _MessageTextField(
-                    discussionAddress: widget.discussionAddress,
-                    textEditingController: textEditingController,
-                    focusNode: messageFocusNode,
-                  ),
-                ),
-              ),
-              if (isCreating)
-                SizedBox(
-                  width: 55,
-                  height: 20,
-                  child: Center(
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: theme.text,
+              Row(
+                children: [
+                  Expanded(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 120),
+                      child: _MessageTextField(
+                        discussion: data.value,
+                        textEditingController: textEditingController,
+                        focusNode: messageFocusNode,
                       ),
                     ),
                   ),
-                )
-              else
-                TextButton.icon(
-                  onPressed: ref
-                          .watch(
-                            MessengerProviders.messageCreationForm(
-                              widget.discussionAddress,
-                            ),
-                          )
-                          .text
-                          .isEmpty
-                      ? null
-                      : () async {
-                          await ref
-                              .read(
+                  if (isCreating)
+                    SizedBox(
+                      width: 55,
+                      height: 20,
+                      child: Center(
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: theme.text,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    TextButton.icon(
+                      onPressed: ref
+                              .watch(
                                 MessengerProviders.messageCreationForm(
-                                  widget.discussionAddress,
-                                ).notifier,
-                              )
-                              .createMessage();
-
-                          textEditingController.text = ref
-                              .read(
-                                MessengerProviders.messageCreationForm(
-                                  widget.discussionAddress,
+                                  data.value,
                                 ),
                               )
-                              .text;
-                        },
-                  icon: Icon(
-                    Symbols.send,
-                    color: theme.text,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
-                  label: Container(),
-                ),
+                              .text
+                              .isEmpty
+                          ? null
+                          : () async {
+                              await ref
+                                  .read(
+                                    MessengerProviders.messageCreationForm(
+                                      data.value,
+                                    ).notifier,
+                                  )
+                                  .createMessage();
+
+                              textEditingController.text = ref
+                                  .read(
+                                    MessengerProviders.messageCreationForm(
+                                      data.value,
+                                    ),
+                                  )
+                                  .text;
+                            },
+                      icon: Icon(
+                        Symbols.send,
+                        color: theme.text,
+                        weight: IconSize.weightM,
+                        opticalSize: IconSize.opticalSizeM,
+                        grade: IconSize.gradeM,
+                      ),
+                      label: Container(),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              _MessageCreationFormFees(
+                discussion: data.value,
+              ),
             ],
           ),
-          const SizedBox(height: 6),
-          _MessageCreationFormFees(discussionAddress: widget.discussionAddress),
-        ],
-      ),
+        );
+      },
+      orElse: Container.new,
     );
   }
 }
 
 class _MessageTextField extends ConsumerWidget {
   const _MessageTextField({
-    required this.discussionAddress,
+    required this.discussion,
     required this.textEditingController,
     required this.focusNode,
   });
 
   final TextEditingController textEditingController;
-  final String discussionAddress;
+  final Discussion discussion;
   final FocusNode focusNode;
 
   @override
@@ -249,7 +260,7 @@ class _MessageTextField extends ConsumerWidget {
           onChanged: (value) => ref
               .read(
                 MessengerProviders.messageCreationForm(
-                  discussionAddress,
+                  discussion,
                 ).notifier,
               )
               .setText(value),
@@ -271,24 +282,23 @@ class _MessageTextField extends ConsumerWidget {
 
 class _MessageCreationFormFees extends ConsumerWidget {
   const _MessageCreationFormFees({
-    required this.discussionAddress,
+    required this.discussion,
   });
 
-  final String discussionAddress;
+  final Discussion discussion;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
-    final text = ref
-        .watch(MessengerProviders.messageCreationForm(discussionAddress))
-        .text;
+    final text =
+        ref.watch(MessengerProviders.messageCreationForm(discussion)).text;
 
     if (text.isEmpty) return const SizedBox(height: 12);
 
     final nativeFeeEstimation = ref
         .watch(
           MessengerProviders.messageCreationFees(
-            discussionAddress,
+            discussion.address,
             text,
           ),
         )

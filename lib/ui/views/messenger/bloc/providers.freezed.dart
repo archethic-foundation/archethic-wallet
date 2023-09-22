@@ -198,7 +198,7 @@ abstract class _CreateDiscussionFormState extends CreateDiscussionFormState {
 
 /// @nodoc
 mixin _$MessageCreationFormState {
-  String get discussionAddress => throw _privateConstructorUsedError;
+  Discussion get discussion => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get isCreating => throw _privateConstructorUsedError;
 
@@ -213,7 +213,9 @@ abstract class $MessageCreationFormStateCopyWith<$Res> {
           $Res Function(MessageCreationFormState) then) =
       _$MessageCreationFormStateCopyWithImpl<$Res, MessageCreationFormState>;
   @useResult
-  $Res call({String discussionAddress, String text, bool isCreating});
+  $Res call({Discussion discussion, String text, bool isCreating});
+
+  $DiscussionCopyWith<$Res> get discussion;
 }
 
 /// @nodoc
@@ -230,15 +232,15 @@ class _$MessageCreationFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? discussionAddress = null,
+    Object? discussion = null,
     Object? text = null,
     Object? isCreating = null,
   }) {
     return _then(_value.copyWith(
-      discussionAddress: null == discussionAddress
-          ? _value.discussionAddress
-          : discussionAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+      discussion: null == discussion
+          ? _value.discussion
+          : discussion // ignore: cast_nullable_to_non_nullable
+              as Discussion,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -248,6 +250,14 @@ class _$MessageCreationFormStateCopyWithImpl<$Res,
           : isCreating // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DiscussionCopyWith<$Res> get discussion {
+    return $DiscussionCopyWith<$Res>(_value.discussion, (value) {
+      return _then(_value.copyWith(discussion: value) as $Val);
+    });
   }
 }
 
@@ -260,7 +270,10 @@ abstract class _$$_MessageCreationFormStateCopyWith<$Res>
       __$$_MessageCreationFormStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String discussionAddress, String text, bool isCreating});
+  $Res call({Discussion discussion, String text, bool isCreating});
+
+  @override
+  $DiscussionCopyWith<$Res> get discussion;
 }
 
 /// @nodoc
@@ -275,15 +288,15 @@ class __$$_MessageCreationFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? discussionAddress = null,
+    Object? discussion = null,
     Object? text = null,
     Object? isCreating = null,
   }) {
     return _then(_$_MessageCreationFormState(
-      discussionAddress: null == discussionAddress
-          ? _value.discussionAddress
-          : discussionAddress // ignore: cast_nullable_to_non_nullable
-              as String,
+      discussion: null == discussion
+          ? _value.discussion
+          : discussion // ignore: cast_nullable_to_non_nullable
+              as Discussion,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -300,13 +313,11 @@ class __$$_MessageCreationFormStateCopyWithImpl<$Res>
 
 class _$_MessageCreationFormState extends _MessageCreationFormState {
   const _$_MessageCreationFormState(
-      {required this.discussionAddress,
-      required this.text,
-      required this.isCreating})
+      {required this.discussion, required this.text, required this.isCreating})
       : super._();
 
   @override
-  final String discussionAddress;
+  final Discussion discussion;
   @override
   final String text;
   @override
@@ -314,7 +325,7 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
 
   @override
   String toString() {
-    return 'MessageCreationFormState(discussionAddress: $discussionAddress, text: $text, isCreating: $isCreating)';
+    return 'MessageCreationFormState(discussion: $discussion, text: $text, isCreating: $isCreating)';
   }
 
   @override
@@ -322,16 +333,15 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MessageCreationFormState &&
-            (identical(other.discussionAddress, discussionAddress) ||
-                other.discussionAddress == discussionAddress) &&
+            (identical(other.discussion, discussion) ||
+                other.discussion == discussion) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.isCreating, isCreating) ||
                 other.isCreating == isCreating));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, discussionAddress, text, isCreating);
+  int get hashCode => Object.hash(runtimeType, discussion, text, isCreating);
 
   @JsonKey(ignore: true)
   @override
@@ -343,13 +353,13 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
 
 abstract class _MessageCreationFormState extends MessageCreationFormState {
   const factory _MessageCreationFormState(
-      {required final String discussionAddress,
+      {required final Discussion discussion,
       required final String text,
       required final bool isCreating}) = _$_MessageCreationFormState;
   const _MessageCreationFormState._() : super._();
 
   @override
-  String get discussionAddress;
+  Discussion get discussion;
   @override
   String get text;
   @override
