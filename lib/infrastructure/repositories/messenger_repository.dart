@@ -91,6 +91,28 @@ class MessengerRepository
           discussion: newDiscussion,
         );
 
+        final keyPair = session.wallet.keychainSecuredInfos
+            .services[creator.name]!.keyPair!.toKeyPair;
+        await sendTransactionNotification(
+          notification: TransactionNotification(
+            notificationRecipientAddress: newDiscussion.address,
+            listenAddresses: membersPubKeys,
+          ),
+          pushNotification: {
+            'en': const PushNotification(
+              title: 'AEWallet',
+              body: 'A new discussion has been created',
+            ),
+            'fr': const PushNotification(
+              title: 'AEWallet',
+              body: 'Une nouvelle discussion a été créée',
+            ),
+          },
+          txIndex: 0,
+          senderKeyPair: keyPair,
+          notifBackendBaseUrl: networksSetting.notificationBackendUrl,
+        );
+
         return newDiscussion;
       });
 
@@ -276,6 +298,7 @@ class MessengerRepository
     required String discussionGenesisAddress,
     required Account creator,
     required String content,
+    required List<String> membersPublicKeys,
   }) =>
       Result.guard(() async {
         final keyPair = session
@@ -319,7 +342,7 @@ class MessengerRepository
         await sendTransactionNotification(
           notification: TransactionNotification(
             notificationRecipientAddress: notificationRecipientAddress.address!,
-            listenAddress: lastAddressForDiscussion[discussionGenesisAddress]!,
+            listenAddresses: membersPublicKeys,
           ),
           pushNotification: {
             'en': const PushNotification(

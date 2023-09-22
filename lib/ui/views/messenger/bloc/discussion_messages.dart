@@ -3,7 +3,7 @@ part of 'providers.dart';
 @freezed
 class MessageCreationFormState with _$MessageCreationFormState {
   const factory MessageCreationFormState({
-    required String discussionAddress,
+    required Discussion discussion,
     required String text,
     required bool isCreating,
   }) = _MessageCreationFormState;
@@ -13,9 +13,9 @@ class MessageCreationFormState with _$MessageCreationFormState {
 @riverpod
 class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
   @override
-  MessageCreationFormState build(String discussionAddress) =>
+  MessageCreationFormState build(Discussion discussion) =>
       MessageCreationFormState(
-        discussionAddress: discussionAddress,
+        discussion: discussion,
         text: '',
         isCreating: false,
       );
@@ -41,16 +41,17 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
       state = state.copyWith(isCreating: true);
       final messageCreated = await repository
           .sendMessage(
-            discussionGenesisAddress: discussionAddress,
+            discussionGenesisAddress: discussion.address,
             content: content,
             creator: selectedAccount,
             session: session,
+            membersPublicKeys: discussion.membersPubKeys,
           )
           .valueOrThrow;
 
       ref
           .read(
-            _paginatedDiscussionMessagesNotifierProvider(discussionAddress)
+            _paginatedDiscussionMessagesNotifierProvider(discussion.address)
                 .notifier,
           )
           .addMessage(messageCreated);
