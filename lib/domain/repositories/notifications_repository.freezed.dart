@@ -28,6 +28,7 @@ mixin _$TxSentEvent {
 // ignore: invalid_annotation_target
   @JsonKey(name: 'txChainGenesisAddress')
   String get listenAddress => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $TxSentEventCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'txAddress') String notificationRecipientAddress,
-      @JsonKey(name: 'txChainGenesisAddress') String listenAddress});
+      @JsonKey(name: 'txChainGenesisAddress') String listenAddress,
+      String type});
 }
 
 /// @nodoc
@@ -61,6 +63,7 @@ class _$TxSentEventCopyWithImpl<$Res, $Val extends TxSentEvent>
   $Res call({
     Object? notificationRecipientAddress = null,
     Object? listenAddress = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       notificationRecipientAddress: null == notificationRecipientAddress
@@ -70,6 +73,10 @@ class _$TxSentEventCopyWithImpl<$Res, $Val extends TxSentEvent>
       listenAddress: null == listenAddress
           ? _value.listenAddress
           : listenAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -85,7 +92,8 @@ abstract class _$$_TxSentEventCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'txAddress') String notificationRecipientAddress,
-      @JsonKey(name: 'txChainGenesisAddress') String listenAddress});
+      @JsonKey(name: 'txChainGenesisAddress') String listenAddress,
+      String type});
 }
 
 /// @nodoc
@@ -101,6 +109,7 @@ class __$$_TxSentEventCopyWithImpl<$Res>
   $Res call({
     Object? notificationRecipientAddress = null,
     Object? listenAddress = null,
+    Object? type = null,
   }) {
     return _then(_$_TxSentEvent(
       notificationRecipientAddress: null == notificationRecipientAddress
@@ -111,6 +120,10 @@ class __$$_TxSentEventCopyWithImpl<$Res>
           ? _value.listenAddress
           : listenAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -120,7 +133,8 @@ class __$$_TxSentEventCopyWithImpl<$Res>
 class _$_TxSentEvent extends _TxSentEvent {
   const _$_TxSentEvent(
       {@JsonKey(name: 'txAddress') required this.notificationRecipientAddress,
-      @JsonKey(name: 'txChainGenesisAddress') required this.listenAddress})
+      @JsonKey(name: 'txChainGenesisAddress') required this.listenAddress,
+      required this.type})
       : super._();
 
   factory _$_TxSentEvent.fromJson(Map<String, dynamic> json) =>
@@ -136,10 +150,12 @@ class _$_TxSentEvent extends _TxSentEvent {
   @override
   @JsonKey(name: 'txChainGenesisAddress')
   final String listenAddress;
+  @override
+  final String type;
 
   @override
   String toString() {
-    return 'TxSentEvent(notificationRecipientAddress: $notificationRecipientAddress, listenAddress: $listenAddress)';
+    return 'TxSentEvent(notificationRecipientAddress: $notificationRecipientAddress, listenAddress: $listenAddress, type: $type)';
   }
 
   @override
@@ -152,13 +168,14 @@ class _$_TxSentEvent extends _TxSentEvent {
                 other.notificationRecipientAddress ==
                     notificationRecipientAddress) &&
             (identical(other.listenAddress, listenAddress) ||
-                other.listenAddress == listenAddress));
+                other.listenAddress == listenAddress) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, notificationRecipientAddress, listenAddress);
+  int get hashCode => Object.hash(
+      runtimeType, notificationRecipientAddress, listenAddress, type);
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +196,8 @@ abstract class _TxSentEvent extends TxSentEvent {
       {@JsonKey(name: 'txAddress')
       required final String notificationRecipientAddress,
       @JsonKey(name: 'txChainGenesisAddress')
-      required final String listenAddress}) = _$_TxSentEvent;
+      required final String listenAddress,
+      required final String type}) = _$_TxSentEvent;
   const _TxSentEvent._() : super._();
 
   factory _TxSentEvent.fromJson(Map<String, dynamic> json) =
@@ -193,6 +211,8 @@ abstract class _TxSentEvent extends TxSentEvent {
 // ignore: invalid_annotation_target
   @JsonKey(name: 'txChainGenesisAddress')
   String get listenAddress;
+  @override
+  String get type;
   @override
   @JsonKey(ignore: true)
   _$$_TxSentEventCopyWith<_$_TxSentEvent> get copyWith =>

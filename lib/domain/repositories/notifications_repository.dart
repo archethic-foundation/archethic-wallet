@@ -13,6 +13,7 @@ class TxSentEvent with _$TxSentEvent {
     // => https://github.com/rrousselGit/freezed/issues/488
     // ignore: invalid_annotation_target
     @JsonKey(name: 'txChainGenesisAddress') required String listenAddress,
+    required String type,
   }) = _TxSentEvent;
   const TxSentEvent._();
 

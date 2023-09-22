@@ -10,10 +10,12 @@ _$_TxSentEvent _$$_TxSentEventFromJson(Map<String, dynamic> json) =>
     _$_TxSentEvent(
       notificationRecipientAddress: json['txAddress'] as String,
       listenAddress: json['txChainGenesisAddress'] as String,
+      type: json['type'] as String,
     );
 
 Map<String, dynamic> _$$_TxSentEventToJson(_$_TxSentEvent instance) =>
     <String, dynamic>{
       'txAddress': instance.notificationRecipientAddress,
       'txChainGenesisAddress': instance.listenAddress,
+      'type': instance.type,
     };
