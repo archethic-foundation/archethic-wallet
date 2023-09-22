@@ -43,6 +43,7 @@ abstract class NotificationsRepository {
     required int txIndex,
     required String notifBackendBaseUrl,
     required Map<String, PushNotification> pushNotification,
+    required String transactionType,
   });
 
   /// Updates settings about the notifications
