@@ -16,6 +16,7 @@ import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -226,14 +227,20 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
         .toList();
 
     if (publicKeysToUnsubscribe.isNotEmpty) {
-      ref
+      await ref
           .read(NotificationProviders.repository)
           .unsubscribe(publicKeysToUnsubscribe);
+      ref
+          .read(listenAddressesProvider.notifier)
+          .removeListenAddresses(publicKeysToUnsubscribe);
     }
     if (publicKeysToSubscribe.isNotEmpty) {
-      ref
+      await ref
           .read(NotificationProviders.repository)
           .subscribe(publicKeysToSubscribe);
+      ref
+          .read(listenAddressesProvider.notifier)
+          .addListenAddresses(publicKeysToSubscribe);
     }
   });
 }

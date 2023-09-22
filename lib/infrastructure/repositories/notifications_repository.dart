@@ -64,7 +64,6 @@ class NotificationsRepositoryImpl
       listenAddresses: listenAddresses,
     );
     await _client.unsubscribeWebsocketNotifs(listenAddresses);
-
     await (await _localSetup).removeListenedAddresses(listenAddresses);
   }
 
