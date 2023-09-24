@@ -90,9 +90,7 @@ class CreateDiscussionFormNotifier
               (await ref.read(ContactProviders.getSelectedContact.future))!,
         );
 
-        await ref
-            .read(MessengerProviders._messengerRepository)
-            .createDiscussion(
+        await ref.read(MessengerProviders.messengerRepository).createDiscussion(
           adminsPubKeys: [
             ...state.admins.map((recipient) => recipient.publicKey),
             creator.publicKey,

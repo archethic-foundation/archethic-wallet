@@ -30,7 +30,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
     try {
       final content = state.text;
 
-      final repository = ref.watch(MessengerProviders._messengerRepository);
+      final repository = ref.watch(MessengerProviders.messengerRepository);
       final session = ref.watch(SessionProviders.session).loggedIn;
       if (session == null) throw const Failure.loggedOut();
 
@@ -84,7 +84,7 @@ Future<double> _messageCreationFees(
           await ref.watch(AccountProviders.selectedAccount.future);
       if (selectedAccount == null) throw const Failure.loggedOut();
 
-      final repository = ref.watch(MessengerProviders._messengerRepository);
+      final repository = ref.watch(MessengerProviders.messengerRepository);
       return repository
           .calculateFees(
             creator: selectedAccount,
@@ -121,31 +121,50 @@ class _PaginatedDiscussionMessagesNotifier
   }
 
   void _addIncomingMessagesListener() {
+    final selectedContact = ref.watch(ContactProviders.getSelectedContact);
+
+    if (selectedContact.valueOrNull == null) {
+      return;
+    }
+
     ref.listen(
-      NotificationProviders.txSentEvents(discussionAddress),
+      NotificationProviders.txSentEvents(selectedContact.value!.publicKey),
       (_, event) async {
         final txEvent = event.valueOrNull;
         if (txEvent == null) return;
 
-        if (_alreadyHasMessageWithAddress(
-          txEvent.notificationRecipientAddress,
-        )) {
-          return;
-        }
+        if (txEvent.type == Constants.notificationTypeNewMessage) {
+          final transaction = await sl.get<ApiService>().getTransaction(
+            [txEvent.notificationRecipientAddress],
+          );
+          final discussionGenesisAddress =
+              transaction.values.first.data?.recipients.first;
 
-        final newMessage = (await ref.read(
-          MessengerProviders.messages(
-            discussionAddress,
-            0,
-            1,
-          ).future,
-        ))
-            .last;
+          if (discussionGenesisAddress == null ||
+              discussionGenesisAddress != discussionAddress) {
+            return;
+          }
 
-        if (_alreadyHasMessageWithAddress(newMessage.address)) {
-          return;
+          if (_alreadyHasMessageWithAddress(
+            txEvent.notificationRecipientAddress,
+          )) {
+            return;
+          }
+
+          final newMessage = (await ref.read(
+            MessengerProviders.messages(
+              discussionAddress,
+              0,
+              1,
+            ).future,
+          ))
+              .last;
+
+          if (_alreadyHasMessageWithAddress(newMessage.address)) {
+            return;
+          }
+          addMessage(newMessage);
         }
-        addMessage(newMessage);
       },
     );
   }
@@ -194,7 +213,7 @@ class _PaginatedDiscussionMessagesNotifier
 
   Future<void> _updateDiscussionLastMessage(DiscussionMessage message) async {
     await ref
-        .read(MessengerProviders._messengerRepository)
+        .read(MessengerProviders.messengerRepository)
         .updateDiscussionLastMessage(
           discussionAddress: discussionAddress,
           creator: (await ref.read(AccountProviders.selectedAccount.future))!,
@@ -225,7 +244,7 @@ Future<List<DiscussionMessage>> _discussionMessages(
   int offset,
   int pageSize,
 ) async {
-  final repository = ref.watch(MessengerProviders._messengerRepository);
+  final repository = ref.watch(MessengerProviders.messengerRepository);
 
   final account = await ref.watch(AccountProviders.selectedAccount.future);
 
