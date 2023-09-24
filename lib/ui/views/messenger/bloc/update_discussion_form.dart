@@ -163,7 +163,7 @@ class UpdateDiscussionFormNotifier
             .services[selectedAccount.name]!.keyPair!.toKeyPair;
 
         await ref
-            .read(MessengerProviders._messengerRepository)
+            .read(MessengerProviders.messengerRepository)
             .updateDiscussion(
               discussionSCAddress: state.discussionAddress,
               adminsPubKeys: state.admins,

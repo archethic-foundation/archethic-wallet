@@ -8,6 +8,7 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -17,7 +18,9 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
+import 'package:aewallet/util/constants.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +43,7 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
     );
     if (selectedAccount == null) throw const Failure.loggedOut();
 
-    final repository = ref.watch(MessengerProviders._messengerRepository);
+    final repository = ref.watch(MessengerProviders.messengerRepository);
 
     final discussionAddresses = await repository
         .getDiscussionAddresses(
@@ -66,7 +69,7 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
     if (selectedAccount == null) throw const Failure.loggedOut();
 
     final createdDiscussion = await ref
-        .read(MessengerProviders._messengerRepository)
+        .read(MessengerProviders.messengerRepository)
         .addRemoteDiscussion(
           creator: selectedAccount,
           discussion: discussion,
@@ -87,7 +90,7 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
     if (selectedAccount == null) throw const Failure.loggedOut();
 
     await ref
-        .read(MessengerProviders._messengerRepository)
+        .read(MessengerProviders.messengerRepository)
         .removeDiscussion(
           owner: selectedAccount,
           discussion: discussion,
@@ -106,7 +109,7 @@ Future<Discussion> _discussion(_DiscussionRef ref, String address) async {
   if (selectedAccount == null) throw const Failure.loggedOut();
 
   return ref
-      .watch(MessengerProviders._messengerRepository)
+      .watch(MessengerProviders.messengerRepository)
       .getDiscussion(
         owner: selectedAccount,
         discussionAddress: address,
@@ -176,7 +179,7 @@ Future<Discussion> _remoteDiscussion(
   if (session == null) throw const Failure.loggedOut();
 
   return ref
-      .watch(MessengerProviders._messengerRepository)
+      .watch(MessengerProviders.messengerRepository)
       .getRemoteDiscussion(
         currentAccount: selectedAccount,
         session: session,
@@ -246,7 +249,7 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
 }
 
 abstract class MessengerProviders {
-  static final _messengerRepository = Provider<MessengerRepositoryInterface>(
+  static final messengerRepository = Provider<MessengerRepositoryInterface>(
     (ref) => MessengerRepository(
       networksSetting: ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
@@ -272,7 +275,7 @@ abstract class MessengerProviders {
   static final updateDiscussionForm = _updateDiscussionFormProvider;
 
   static Future<void> reset(Ref ref) async {
-    await ref.read(_messengerRepository).clear();
+    await ref.read(messengerRepository).clear();
     ref
       ..invalidate(_discussionProvider)
       ..invalidate(_createDiscussionFormProvider)

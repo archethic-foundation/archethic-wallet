@@ -2,10 +2,12 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
@@ -24,7 +26,10 @@ import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.da
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
+import 'package:aewallet/util/constants.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +67,7 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    MessengerProviders.subscribeNotificationsWorker(ref);
+    _manageNotifications();
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final tabController = ref.watch(mainTabControllerProvider);
 
@@ -156,6 +161,60 @@ class _HomePageState extends ConsumerState<HomePage>
           ),
         ),
       ),
+    );
+  }
+
+  void _manageNotifications() {
+    MessengerProviders.subscribeNotificationsWorker(ref);
+
+    final listenAddresses = ref.watch(listenAddressesProvider);
+    for (final listenAddress in listenAddresses) {
+      ref.listen(
+        NotificationProviders.txSentEvents(listenAddress),
+        (_, event) async {
+          final txEvent = event.valueOrNull;
+          if (txEvent == null) return;
+
+          debugPrint('Event type : ${txEvent.type}');
+
+          if (txEvent.type == Constants.notificationTypeNewMessage) {
+            manageMessageNotification(txEvent);
+          }
+        },
+      );
+    }
+  }
+
+  Future manageMessageNotification(TxSentEvent event) async {
+    final transaction = await sl.get<ApiService>().getTransaction(
+      [event.notificationRecipientAddress],
+    );
+    final discussionGenesisAddress =
+        transaction.values.first.data?.recipients.first;
+
+    if (discussionGenesisAddress == null) {
+      return;
+    }
+
+    final newMessage = (await ref.read(
+      MessengerProviders.messages(
+        discussionGenesisAddress,
+        0,
+        1,
+      ).future,
+    ))
+        .last;
+
+    await ref
+        .read(MessengerProviders.messengerRepository)
+        .updateDiscussionLastMessage(
+          discussionAddress: discussionGenesisAddress,
+          creator: (await ref.read(AccountProviders.selectedAccount.future))!,
+          message: newMessage,
+        );
+
+    ref.invalidate(
+      MessengerProviders.discussion(discussionGenesisAddress),
     );
   }
 }
