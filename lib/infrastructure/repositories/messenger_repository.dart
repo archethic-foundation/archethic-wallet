@@ -11,7 +11,7 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
-import 'package:aewallet/util/constants.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -108,7 +108,7 @@ class MessengerRepository
               body: 'Une nouvelle discussion a été créée',
             ),
           },
-          transactionType: Constants.notificationTypeNewDiscussion,
+          transactionType: MessengerConstants.notificationTypeNewDiscussion,
         );
 
         return newDiscussion.discussion;
@@ -345,7 +345,7 @@ class MessengerRepository
               body: 'Vous avez reçu un nouveau AEMessage',
             ),
           },
-          transactionType: Constants.notificationTypeNewMessage,
+          transactionType: MessengerConstants.notificationTypeNewMessage,
         );
 
         return message;
