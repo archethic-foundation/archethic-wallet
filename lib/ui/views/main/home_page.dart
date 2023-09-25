@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -9,9 +10,11 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
@@ -186,6 +189,8 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   Future manageMessageNotification(TxSentEvent event) async {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final transaction = await sl.get<ApiService>().getTransaction(
       [event.notificationRecipientAddress],
     );
@@ -212,6 +217,26 @@ class _HomePageState extends ConsumerState<HomePage>
           creator: (await ref.read(AccountProviders.selectedAccount.future))!,
           message: newMessage,
         );
+
+    final contactName = ref
+        .watch(
+          ContactProviders.getContactWithGenesisPublicKey(
+            newMessage.senderGenesisPublicKey,
+          ),
+        )
+        .maybeMap(
+          orElse: () => newMessage.senderGenesisPublicKey,
+          data: (contact) => contact.value?.format,
+        );
+
+    UIUtil.showSnackbar(
+      '$contactName : ${newMessage.content}',
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+      showWarningIcon: false,
+    );
 
     ref.invalidate(
       MessengerProviders.discussion(discussionGenesisAddress),

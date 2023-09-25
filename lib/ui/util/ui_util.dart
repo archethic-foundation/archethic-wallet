@@ -206,6 +206,7 @@ class UIUtil {
     Color boxDecorationColor,
     Color boxShadowColor, {
     Duration duration = const Duration(milliseconds: 3500),
+    bool showWarningIcon = true,
   }) {
     final theme = ref.read(ThemeProviders.selectedTheme);
     showToastWidget(
@@ -232,14 +233,19 @@ class UIUtil {
           ),
           child: Row(
             children: [
-              const Icon(
-                Symbols.warning,
-                size: 16,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-              ),
-              const SizedBox(width: 5),
+              if (showWarningIcon)
+                const Row(
+                  children: [
+                    Icon(
+                      Symbols.warning,
+                      size: 16,
+                      weight: IconSize.weightM,
+                      opticalSize: IconSize.opticalSizeM,
+                      grade: IconSize.gradeM,
+                    ),
+                    SizedBox(width: 5),
+                  ],
+                ),
               Expanded(
                 child: Text(
                   content,
