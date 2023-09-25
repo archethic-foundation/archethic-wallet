@@ -573,5 +573,6 @@
 	"bottomMainMenuKeychain": "Porte-clés",
 	"bottomMainMenuMain": "Accueil",
 	"bottomMainMenuNFT": "NFT",
-	"bottomMainMenuMessenger": "Discussions"
+	"bottomMainMenuMessenger": "Discussions",
+	"youHaveBeenAddedTOADiscussion": "Vous avez été ajouté à une discussion"
 }

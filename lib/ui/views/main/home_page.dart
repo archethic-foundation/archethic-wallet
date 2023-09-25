@@ -8,9 +8,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/domain/repositories/notifications_repository.dart';
-import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
-import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/domain/repositories/notifications_repository'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -181,14 +179,41 @@ class _HomePageState extends ConsumerState<HomePage>
           debugPrint('Event type : ${txEvent.type}');
 
           if (txEvent.type == Constants.notificationTypeNewMessage) {
-            manageMessageNotification(txEvent);
+            manageNewMessageNotification(txEvent);
+          }
+          if (txEvent.type == Constants.notificationTypeNewDiscussion) {
+            manageNewDiscussionNotification(txEvent);
           }
         },
       );
     }
   }
 
-  Future manageMessageNotification(TxSentEvent event) async {
+  Future manageNewDiscussionNotification(TxSentEvent event) async {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalizations.of(context)!;
+
+    final discussion = await ref.read(
+      MessengerProviders.remoteDiscussion(
+        event.notificationRecipientAddress,
+      ).future,
+    );
+
+    await ref
+        .read(MessengerProviders.discussions.notifier)
+        .addRemoteDiscussion(discussion);
+
+    UIUtil.showSnackbar(
+      localizations.youHaveBeenAddedTOADiscussion,
+      context,
+      ref,
+      theme.text!,
+      theme.snackBarShadow!,
+      icon: Symbols.chat,
+    );
+  }
+
+  Future manageNewMessageNotification(TxSentEvent event) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final transaction = await sl.get<ApiService>().getTransaction(
@@ -235,7 +260,7 @@ class _HomePageState extends ConsumerState<HomePage>
       ref,
       theme.text!,
       theme.snackBarShadow!,
-      showWarningIcon: false,
+      icon: Symbols.chat,
     );
 
     ref.invalidate(

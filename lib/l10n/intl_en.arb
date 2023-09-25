@@ -596,5 +596,6 @@
   "bottomMainMenuKeychain": "Keychain",
   "bottomMainMenuMain": "Main",
   "bottomMainMenuNFT": "NFT",
-  "bottomMainMenuMessenger": "Messenger"
+  "bottomMainMenuMessenger": "Messenger",
+  "youHaveBeenAddedTOADiscussion": "You have been added to a discussion"
 }
