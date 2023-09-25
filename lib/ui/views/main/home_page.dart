@@ -8,7 +8,9 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/domain/repositories/notifications_repository'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
+import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -166,6 +168,10 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   void _manageNotifications() {
+    if (FeatureFlags.messagingActive == false) {
+      return;
+    }
+
     MessengerProviders.subscribeNotificationsWorker(ref);
 
     final listenAddresses = ref.watch(listenAddressesProvider);
