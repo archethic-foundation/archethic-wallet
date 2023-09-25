@@ -29,7 +29,6 @@ import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.da
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
-import 'package:aewallet/util/constants.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -184,10 +183,11 @@ class _HomePageState extends ConsumerState<HomePage>
 
           debugPrint('Event type : ${txEvent.type}');
 
-          if (txEvent.type == Constants.notificationTypeNewMessage) {
+          if (txEvent.type == MessengerConstants.notificationTypeNewMessage) {
             manageNewMessageNotification(txEvent);
           }
-          if (txEvent.type == Constants.notificationTypeNewDiscussion) {
+          if (txEvent.type ==
+              MessengerConstants.notificationTypeNewDiscussion) {
             manageNewDiscussionNotification(txEvent);
           }
         },

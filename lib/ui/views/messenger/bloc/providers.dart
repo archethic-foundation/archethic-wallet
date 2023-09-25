@@ -8,7 +8,6 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
-import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -18,7 +17,6 @@ import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
-import 'package:aewallet/util/constants.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
@@ -33,6 +31,11 @@ part 'discussion_messages.dart';
 part 'providers.freezed.dart';
 part 'providers.g.dart';
 part 'update_discussion_form.dart';
+
+class MessengerConstants {
+  static const String notificationTypeNewDiscussion = 'newDiscussion';
+  static const String notificationTypeNewMessage = 'newMessage';
+}
 
 @riverpod
 class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {

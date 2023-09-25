@@ -133,7 +133,7 @@ class _PaginatedDiscussionMessagesNotifier
         final txEvent = event.valueOrNull;
         if (txEvent == null) return;
 
-        if (txEvent.type == Constants.notificationTypeNewMessage) {
+        if (txEvent.type == MessengerConstants.notificationTypeNewMessage) {
           final transaction = await sl.get<ApiService>().getTransaction(
             [txEvent.notificationRecipientAddress],
           );
