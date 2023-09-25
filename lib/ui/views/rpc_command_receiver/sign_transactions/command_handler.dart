@@ -67,6 +67,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
               final transaction = archethic.Transaction(
                 type: rpcSignTransactionCommandData.type,
                 data: rpcSignTransactionCommandData.data,
+                version: rpcSignTransactionCommandData.version,
               );
 
               final signedTransaction = keychain
