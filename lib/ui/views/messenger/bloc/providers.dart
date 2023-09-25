@@ -10,7 +10,6 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
@@ -202,9 +201,9 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
     final previousContactPublicKeys = <String>[];
     if (previous != null && previous.value != null) {
       for (final account in previous.value!) {
-        final contact = await sl
-            .get<DBHelper>()
-            .getContactWithAddress(account.lastAddress!);
+        final contact = ref
+            .read(ContactProviders.getContactWithAddress(account.lastAddress!))
+            .valueOrNull;
         if (contact != null) {
           previousContactPublicKeys.add(contact.publicKey);
         }
@@ -214,9 +213,9 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
     final nextContactPublicKeys = <String>[];
     if (next.value != null) {
       for (final account in next.value!) {
-        final contact = await sl
-            .get<DBHelper>()
-            .getContactWithAddress(account.lastAddress!);
+        final contact = ref
+            .read(ContactProviders.getContactWithAddress(account.lastAddress!))
+            .valueOrNull;
         if (contact != null) {
           nextContactPublicKeys.add(contact.publicKey);
         }

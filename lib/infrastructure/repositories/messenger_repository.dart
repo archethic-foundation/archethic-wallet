@@ -100,11 +100,11 @@ class MessengerRepository
           transactionIndex: newDiscussion.transactionIndex,
           pushNotification: {
             'en': const PushNotification(
-              title: 'AEWallet',
+              title: 'Archethic',
               body: 'A new discussion has been created',
             ),
             'fr': const PushNotification(
-              title: 'AEWallet',
+              title: 'Archethic',
               body: 'Une nouvelle discussion a été créée',
             ),
           },
@@ -337,12 +337,12 @@ class MessengerRepository
           transactionIndex: sendMessageResult.transactionIndex,
           pushNotification: {
             'en': const PushNotification(
-              title: 'AEWallet',
-              body: 'You received a new AEMessage',
+              title: 'Archethic',
+              body: 'You have received a new message',
             ),
             'fr': const PushNotification(
-              title: 'AEWallet',
-              body: 'Vous avez reçu un nouveau AEMessage',
+              title: 'Archethic',
+              body: 'Vous avez reçu un nouveau message',
             ),
           },
           transactionType: MessengerConstants.notificationTypeNewMessage,
