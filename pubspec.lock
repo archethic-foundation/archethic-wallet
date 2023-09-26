@@ -61,11 +61,20 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: dev
-      resolved-ref: dc34ebb598e84e514e519c5b2dc283c7bc3ed906
+      ref: "107-externalise-to-a-specific-lib-the-messaging-feature"
+      resolved-ref: "5e0c314912598410d4da04c63fd214cbe7a7027c"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
+  archethic_messaging_lib_dart:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: deea48506e77aefaec3e3ac090a5b1b786bbf5d6
+      url: "https://github.com/archethic-foundation/messaging_backend.git"
+    source: git
+    version: "1.0.0"
   archive:
     dependency: transitive
     description:

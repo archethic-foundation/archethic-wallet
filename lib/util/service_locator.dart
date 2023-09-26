@@ -12,7 +12,8 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show AddressService, ApiService, MessagingService, OracleService;
+    show AddressService, ApiService, OracleService;
+import 'package:archethic_messaging_lib_dart/archethic_messaging_lib_dart.dart';
 import 'package:coingecko_api/coingecko_api.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 

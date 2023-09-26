@@ -15,6 +15,7 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_messaging_lib_dart/archethic_messaging_lib_dart.dart';
 
 class MessengerRepository
     with NotificationUtil

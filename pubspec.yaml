@@ -21,7 +21,12 @@ dependencies:
   archethic_lib_dart:
     git:
       url: https://github.com/archethic-foundation/libdart.git
-      ref: dev
+      ref: 107-externalise-to-a-specific-lib-the-messaging-feature
+
+  archethic_messaging_lib_dart:
+    git:
+      url: https://github.com/archethic-foundation/messaging_backend.git
+      def: fix/messenger_create_discussion
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0

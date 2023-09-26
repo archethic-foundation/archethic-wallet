@@ -2,6 +2,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_messaging_lib_dart/archethic_messaging_lib_dart.dart';
 
 class DiscussionRemoteDatasource {
   Future<({Discussion discussion, int transactionIndex})> createDiscussion({
