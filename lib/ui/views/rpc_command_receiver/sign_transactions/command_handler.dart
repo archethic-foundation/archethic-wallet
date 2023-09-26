@@ -77,6 +77,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
                     index,
                     pathSuffix: pathSuffix,
                   )
+                  .transaction
                   .originSign(originPrivateKey);
 
               final rpcSignTransactionResultDetailData =

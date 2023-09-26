@@ -41,7 +41,6 @@ abstract class NotificationsRepository {
   Future<void> sendTransactionNotification({
     required TransactionNotification notification,
     required KeyPair senderKeyPair,
-    required int txIndex,
     required String notifBackendBaseUrl,
     required Map<String, PushNotification> pushNotification,
     required String transactionType,

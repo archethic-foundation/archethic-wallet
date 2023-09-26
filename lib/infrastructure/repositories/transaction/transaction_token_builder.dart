@@ -103,6 +103,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
           serviceName,
           index,
         )
+        .transaction
         .originSign(originPrivateKey);
   }
 }

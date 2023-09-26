@@ -2,9 +2,10 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_messaging_lib_dart/archethic_messaging_lib_dart.dart';
 
 class DiscussionRemoteDatasource {
-  Future<({Discussion discussion, int transactionIndex})> createDiscussion({
+  Future<({Discussion discussion, KeyPair previousKeyPair})> createDiscussion({
     required MessagingService messagingService,
     required ApiService apiService,
     required List<String> membersPubKey,
@@ -25,7 +26,7 @@ class DiscussionRemoteDatasource {
     );
 
     return (
-      transactionIndex: discussion.transactionIndex,
+      previousKeyPair: discussion.previousKeyPair,
       discussion: Discussion(
         creationDate: DateTime.now(),
         address: discussion.transaction.address!.address!,
@@ -61,7 +62,7 @@ class DiscussionRemoteDatasource {
     return fromBigInt(fee.fee).toDouble();
   }
 
-  Future<({Discussion discussion, int transactionIndex})> updateDiscussion({
+  Future<({Discussion discussion, KeyPair previousKeyPair})> updateDiscussion({
     required MessagingService messagingService,
     required ApiService apiService,
     required String discussionSCAddress,
@@ -90,7 +91,7 @@ class DiscussionRemoteDatasource {
     );
 
     return (
-      transactionIndex: discussion.transactionIndex,
+      previousKeyPair: discussion.previousKeyPair,
       discussion: Discussion(
         creationDate: DateTime.now(),
         address: discussionSCAddress,

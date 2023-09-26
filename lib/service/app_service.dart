@@ -1052,6 +1052,7 @@ class AppService {
     final lastTransaction = lastTransactionMap[address];
     transaction
         .build(seed, lastTransaction!.chainLength ?? 0)
+        .transaction
         .originSign(originPrivateKey);
     try {
       transactionFee =

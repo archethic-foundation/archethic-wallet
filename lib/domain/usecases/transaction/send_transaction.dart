@@ -69,6 +69,7 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
                 uint8ListToHex(keychain.seed!),
                 accountIndex,
               )
+              .transaction
               .originSign(originPrivateKey);
           break;
         case 'transfer':
@@ -79,6 +80,7 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
                 senderAccount.name,
                 accountIndex,
               )
+              .transaction
               .originSign(originPrivateKey);
           break;
         default:
