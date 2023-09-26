@@ -30,6 +30,8 @@ class MessengerDiscussionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
+    final selectedContact =
+        ref.watch(ContactProviders.getSelectedContact).valueOrNull;
 
     final discussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
@@ -93,9 +95,13 @@ class MessengerDiscussionPage extends ConsumerWidget {
                   discussionAddress: discussionAddress,
                 ),
               ),
-              _MessageSendForm(
-                discussionAddress: discussionAddress,
-              ),
+              if (discussion.value != null &&
+                  discussion.value!.membersPubKeys.any(
+                    (element) => element == selectedContact?.publicKey,
+                  )) // User can only send a message when he is still is the discussion
+                _MessageSendForm(
+                  discussionAddress: discussionAddress,
+                ),
             ],
           ),
         ),

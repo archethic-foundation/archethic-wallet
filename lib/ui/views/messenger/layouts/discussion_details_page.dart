@@ -14,6 +14,7 @@ import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dar
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -219,54 +220,90 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                       const SizedBox(
                         height: 8,
                       ),
-                      TextButton(
-                        onPressed: () {
-                          final language = ref.read(
-                            LanguageProviders.selectedLanguage,
-                          );
+                      if (discussion.value != null &&
+                          discussion.value!.membersPubKeys.any(
+                            (element) => element == selectedContact?.publicKey,
+                          ))
+                        TextButton(
+                          onPressed: () {
+                            final language = ref.read(
+                              LanguageProviders.selectedLanguage,
+                            );
 
-                          AppDialogs.showConfirmDialog(
-                            context,
-                            ref,
-                            CaseChange.toUpperCase(
-                              localizations.leaveDiscussion,
-                              language.getLocaleString(),
-                            ),
-                            localizations.areYouSureLeaveDiscussion,
-                            localizations.yes,
-                            () async {
-                              final auth = await AuthFactory.authenticate(
-                                context,
-                                ref,
-                                activeVibrations: ref
-                                    .read(SettingsProviders.settings)
-                                    .activeVibrations,
-                              );
-                              if (auth == false) {
-                                return;
-                              }
-                              await formNotifier.leaveDiscussion();
-                            },
-                            cancelText: localizations.no,
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Symbols.logout,
-                              color: theme
-                                  .textStyleSize14W600EquinoxPrimaryRed.color,
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              localizations.leaveDiscussion,
-                              style: theme.textStyleSize14W600EquinoxPrimaryRed,
-                            ),
-                          ],
+                            AppDialogs.showConfirmDialog(
+                              context,
+                              ref,
+                              CaseChange.toUpperCase(
+                                localizations.leaveDiscussion,
+                                language.getLocaleString(),
+                              ),
+                              localizations.areYouSureLeaveDiscussion,
+                              localizations.yes,
+                              () async {
+                                final auth = await AuthFactory.authenticate(
+                                  context,
+                                  ref,
+                                  activeVibrations: ref
+                                      .read(SettingsProviders.settings)
+                                      .activeVibrations,
+                                );
+                                if (auth == false) {
+                                  return;
+                                }
+
+                                ShowSendingAnimation.build(
+                                  context,
+                                  theme,
+                                );
+                                final result =
+                                    await formNotifier.leaveDiscussion();
+
+                                Navigator.of(context).pop(); // wait popup
+
+                                result.map(
+                                  success: (_) {
+                                    Navigator.of(context)
+                                        .pop(); // Going back to discussion page
+                                  },
+                                  failure: (failure) {
+                                    UIUtil.showSnackbar(
+                                      localizations.updateDiscussionFailure,
+                                      context,
+                                      ref,
+                                      theme.text!,
+                                      theme.snackBarShadow!,
+                                      duration: const Duration(seconds: 5),
+                                    );
+                                  },
+                                );
+                              },
+                              cancelText: localizations.no,
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Symbols.logout,
+                                color: theme
+                                    .textStyleSize14W600EquinoxPrimaryRed.color,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                localizations.leaveDiscussion,
+                                style:
+                                    theme.textStyleSize14W600EquinoxPrimaryRed,
+                              ),
+                            ],
+                          ),
+                        )
+                      else
+                        Text(
+                          localizations.youAreNoLongPartOfDiscussion,
+                          textAlign: TextAlign.center,
+                          style: theme.textStyleSize14W200Primary,
                         ),
-                      ),
                     ],
                   ),
                 ),

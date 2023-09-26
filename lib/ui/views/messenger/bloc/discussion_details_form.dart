@@ -115,6 +115,8 @@ class DiscussionDetailsFormNotifier
               session: session,
               adminKeyPair: keyPair,
               owner: selectedAccount,
+              updateSCAESKey:
+                  true, // the user is not going to read the next messages
             )
             .valueOrThrow;
 

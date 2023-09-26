@@ -125,6 +125,7 @@ class MessengerRepository
     required LoggedInSession session,
     required KeyPair adminKeyPair,
     required Account owner,
+    bool updateSCAESKey = false,
   }) async =>
       Result.guard(() async {
         final updatedDiscussion = await _remoteDatasource.updateDiscussion(
@@ -138,6 +139,7 @@ class MessengerRepository
           adminAddress: adminAddress,
           serviceName: serviceName,
           adminKeyPair: adminKeyPair,
+          updateSCAESKey: updateSCAESKey,
         );
 
         final localDatasource = await _localDatasource;

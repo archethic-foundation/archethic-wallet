@@ -73,6 +73,7 @@ class DiscussionRemoteDatasource {
     required String serviceName,
     required Keychain keychain,
     required KeyPair adminKeyPair,
+    bool updateSCAESKey = false,
   }) async {
     final lastAddressForDiscussion = await sl
         .get<AddressService>()
@@ -88,6 +89,7 @@ class DiscussionRemoteDatasource {
       adminAddress: adminAddress,
       serviceName: serviceName,
       adminKeyPair: adminKeyPair,
+      updateSCAESKey: updateSCAESKey,
     );
 
     return (
