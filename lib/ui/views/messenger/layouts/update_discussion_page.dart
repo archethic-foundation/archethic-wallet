@@ -86,7 +86,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
           title: Text(localizations.discussionModifying),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
+          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
           child: Column(
             children: [
               AppTextField(
@@ -339,7 +339,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 8,
               ),
               Row(
                 children: [

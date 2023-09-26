@@ -109,158 +109,165 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
             body: TapOutsideUnfocus(
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                  ),
-                  child: ArchethicScrollbar(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          ref.watch(
-                            MessengerProviders.discussionDisplayName(
-                              data.value,
-                            ),
-                          ),
-                          textAlign: TextAlign.center,
-                          style: theme.textStyleSize28W700Primary,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            Clipboard.setData(
-                              ClipboardData(text: widget.discussionAddress),
-                            );
-                            UIUtil.showSnackbar(
-                              localizations.addressCopied,
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                Symbols.content_copy,
-                                color: theme.text,
-                                weight: IconSize.weightM,
-                                opticalSize: IconSize.opticalSizeM,
-                                grade: IconSize.gradeM,
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                localizations.addressCopy,
-                                style: theme.textStyleSize14W700Primary,
-                              ),
-                            ],
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 8),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        ref.watch(
+                          MessengerProviders.discussionDisplayName(
+                            data.value,
                           ),
                         ),
-                        ExpansionTile(
-                          title: SectionTitle(
-                            text: localizations.messengerDiscussionMembersCount(
-                              data.value.membersPubKeys.length,
-                            ),
-                          ),
+                        textAlign: TextAlign.center,
+                        style: theme.textStyleSize28W700Primary,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                preferences.activeVibrations,
+                              );
+                          Clipboard.setData(
+                            ClipboardData(text: widget.discussionAddress),
+                          );
+                          UIUtil.showSnackbar(
+                            localizations.addressCopied,
+                            context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
+                          );
+                        },
+                        child: Row(
                           children: [
-                            Column(
-                              children: data.value.membersPubKeys.map((pubKey) {
-                                final accessRecipient = ref.watch(
-                                  MessengerProviders
-                                      .accessRecipientWithPublicKey(
-                                    pubKey,
-                                  ),
-                                );
-
-                                return PublicKeyLine(
-                                  listAdmins: data.value.adminsPubKeys,
-                                  pubKey: pubKey,
-                                  onInfoTap: accessRecipient.maybeMap(
-                                    orElse: () => null,
-                                    data: (recipient) => recipient.value.map(
-                                      contact: (contact) => () {
-                                        sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              settings.activeVibrations,
-                                            );
-
-                                        Sheets.showAppHeightNineSheet(
-                                          context: context,
-                                          ref: ref,
-                                          widget: ContactDetail(
-                                            contact: contact.contact,
-                                          ),
-                                        );
-                                      },
-                                      publicKey: (_) => null,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
+                            Icon(
+                              Symbols.content_copy,
+                              color: theme.text,
+                              weight: IconSize.weightM,
+                              opticalSize: IconSize.opticalSizeM,
+                              grade: IconSize.gradeM,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              localizations.addressCopy,
+                              style: theme.textStyleSize14W700Primary,
                             ),
                           ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            final language = ref.read(
-                              LanguageProviders.selectedLanguage,
-                            );
-
-                            AppDialogs.showConfirmDialog(
-                              context,
-                              ref,
-                              CaseChange.toUpperCase(
-                                localizations.leaveDiscussion,
-                                language.getLocaleString(),
+                      ),
+                      Expanded(
+                        child: ArchethicScrollbar(
+                          child: ExpansionTile(
+                            shape: const Border(),
+                            initiallyExpanded: true,
+                            title: SectionTitle(
+                              text:
+                                  localizations.messengerDiscussionMembersCount(
+                                data.value.membersPubKeys.length,
                               ),
-                              localizations.areYouSureLeaveDiscussion,
-                              localizations.yes,
-                              () async {
-                                final auth = await AuthFactory.authenticate(
-                                  context,
-                                  ref,
-                                  activeVibrations: ref
-                                      .read(SettingsProviders.settings)
-                                      .activeVibrations,
-                                );
-                                if (auth == false) {
-                                  return;
-                                }
-                                await formNotifier.leaveDiscussion();
-                              },
-                              cancelText: localizations.no,
-                            );
-                          },
-                          child: Row(
+                            ),
                             children: [
-                              Icon(
-                                Symbols.logout,
-                                color: theme
-                                    .textStyleSize14W600EquinoxPrimaryRed.color,
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                localizations.leaveDiscussion,
-                                style:
-                                    theme.textStyleSize14W600EquinoxPrimaryRed,
+                              Column(
+                                children:
+                                    data.value.membersPubKeys.map((pubKey) {
+                                  final accessRecipient = ref.watch(
+                                    MessengerProviders
+                                        .accessRecipientWithPublicKey(
+                                      pubKey,
+                                    ),
+                                  );
+
+                                  return PublicKeyLine(
+                                    listAdmins: data.value.adminsPubKeys,
+                                    pubKey: pubKey,
+                                    onInfoTap: accessRecipient.maybeMap(
+                                      orElse: () => null,
+                                      data: (recipient) => recipient.value.map(
+                                        contact: (contact) => () {
+                                          sl.get<HapticUtil>().feedback(
+                                                FeedbackType.light,
+                                                settings.activeVibrations,
+                                              );
+
+                                          Sheets.showAppHeightNineSheet(
+                                            context: context,
+                                            ref: ref,
+                                            widget: ContactDetail(
+                                              contact: contact.contact,
+                                            ),
+                                          );
+                                        },
+                                        publicKey: (_) => null,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          final language = ref.read(
+                            LanguageProviders.selectedLanguage,
+                          );
+
+                          AppDialogs.showConfirmDialog(
+                            context,
+                            ref,
+                            CaseChange.toUpperCase(
+                              localizations.leaveDiscussion,
+                              language.getLocaleString(),
+                            ),
+                            localizations.areYouSureLeaveDiscussion,
+                            localizations.yes,
+                            () async {
+                              final auth = await AuthFactory.authenticate(
+                                context,
+                                ref,
+                                activeVibrations: ref
+                                    .read(SettingsProviders.settings)
+                                    .activeVibrations,
+                              );
+                              if (auth == false) {
+                                return;
+                              }
+                              await formNotifier.leaveDiscussion();
+                            },
+                            cancelText: localizations.no,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Symbols.logout,
+                              color: theme
+                                  .textStyleSize14W600EquinoxPrimaryRed.color,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              localizations.leaveDiscussion,
+                              style: theme.textStyleSize14W600EquinoxPrimaryRed,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
