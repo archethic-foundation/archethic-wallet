@@ -1051,7 +1051,7 @@ class _MessageCreationFormNotifierProviderElement
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>
-    r'1880a993a72f3e9926119b8855448da158b8b051';
+    r'0c809e9183663eb92a68bf5771aeb6881f4770b8';
 
 abstract class _$PaginatedDiscussionMessagesNotifier
     extends BuildlessAutoDisposeNotifier<

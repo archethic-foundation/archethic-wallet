@@ -576,5 +576,6 @@
 	"bottomMainMenuMessenger": "Discussions",
 	"youHaveBeenAddedTOADiscussion": "Vous avez été ajouté à une discussion",
 	"leaveDiscussion": "Quitter la discussion",
-	"areYouSureLeaveDiscussion": "Êtes-vous sûr de vouloir quitter la discussion ?"
+	"areYouSureLeaveDiscussion": "Êtes-vous sûr de vouloir quitter la discussion ?",
+	"youAreNoLongPartOfDiscussion": "Vous ne faites plus partie de la discussion, vous ne pouvez donc plus poster de messages"
 }

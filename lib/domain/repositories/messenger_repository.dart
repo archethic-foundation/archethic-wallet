@@ -81,5 +81,6 @@ abstract class MessengerRepositoryInterface {
     required LoggedInSession session,
     required KeyPair adminKeyPair,
     required Account owner,
+    bool updateSCAESKey = false,
   });
 }
