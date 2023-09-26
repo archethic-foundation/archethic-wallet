@@ -61,8 +61,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "107-externalise-to-a-specific-lib-the-messaging-feature"
-      resolved-ref: "5e0c314912598410d4da04c63fd214cbe7a7027c"
+      ref: "feature/signTx_returnsKeypair"
+      resolved-ref: ffbfaf2cf3f48314e16303b0432cdfdc74f8d123
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -70,9 +70,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: deea48506e77aefaec3e3ac090a5b1b786bbf5d6
-      url: "https://github.com/archethic-foundation/messaging_backend.git"
+      ref: "fix/messenger_create_discussion"
+      resolved-ref: "8d243ba0fd4e13c6856e6182121be5e87a120294"
+      url: "https://github.com/Chralu/messaging_backend"
     source: git
     version: "1.0.0"
   archive:

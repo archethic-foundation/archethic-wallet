@@ -60,6 +60,7 @@ extension KeychainTransactionBuilder on archethic.Transaction {
           archethic.uint8ListToHex(keychain.seed!),
           lastTransactionKeychainMap[genesisAddressKeychain]!.chainLength!,
         )
+        .transaction
         .originSign(originPrivateKey);
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -98,7 +97,7 @@ class MessengerRepository
           listenAddresses: membersPubKeys,
           creator: creator,
           session: session,
-          transactionIndex: newDiscussion.transactionIndex,
+          previousKeyPair: newDiscussion.previousKeyPair,
           pushNotification: {
             'en': const PushNotification(
               title: 'Archethic',
@@ -335,7 +334,7 @@ class MessengerRepository
           listenAddresses: membersPublicKeysForNotifications,
           creator: creator,
           session: session,
-          transactionIndex: sendMessageResult.transactionIndex,
+          previousKeyPair: sendMessageResult.previousKeyPair,
           pushNotification: {
             'en': const PushNotification(
               title: 'Archethic',
@@ -358,25 +357,15 @@ class MessengerRepository
     required List<String> listenAddresses,
     required Account creator,
     required Map<String, PushNotification> pushNotification,
-    required int transactionIndex,
+    required KeyPair previousKeyPair,
     required String transactionType,
   }) async {
-    final previousKeyPair =
-        session.wallet.keychainSecuredInfos.toKeychain().deriveKeypair(
-              creator.name,
-              index: max(
-                0,
-                transactionIndex - 1,
-              ),
-            );
-
     await sendTransactionNotification(
       notification: TransactionNotification(
         notificationRecipientAddress: notificationRecipientAddress,
         listenAddresses: listenAddresses,
       ),
       pushNotification: pushNotification,
-      txIndex: transactionIndex,
       senderKeyPair: previousKeyPair,
       notifBackendBaseUrl: networksSetting.notificationBackendUrl,
       transactionType: transactionType,

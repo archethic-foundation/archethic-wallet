@@ -102,6 +102,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
           serviceName,
           index,
         )
+        .transaction
         .originSign(originPrivateKey);
   }
 }

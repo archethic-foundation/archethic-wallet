@@ -203,6 +203,7 @@ class _SignTransactionButton extends StatelessWidget {
               transactionChainSeed!,
               lastTransactionMap[selectedAccount.lastAddress!]!.chainLength!,
             )
+            .transaction
             .originSign(originPrivateKey);
         final onChainWalletData = walletEncoder(originPubKey);
 
