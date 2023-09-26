@@ -120,15 +120,16 @@ class _PaginatedDiscussionMessagesNotifier
     return pagingController;
   }
 
-  void _addIncomingMessagesListener() {
-    final selectedContact = ref.watch(ContactProviders.getSelectedContact);
+  Future _addIncomingMessagesListener() async {
+    final selectedContact =
+        await ref.read(ContactProviders.getSelectedContact.future);
 
-    if (selectedContact.valueOrNull == null) {
+    if (selectedContact == null) {
       return;
     }
 
     ref.listen(
-      NotificationProviders.txSentEvents(selectedContact.value!.publicKey),
+      NotificationProviders.txSentEvents(selectedContact.publicKey),
       (_, event) async {
         final txEvent = event.valueOrNull;
         if (txEvent == null) return;
