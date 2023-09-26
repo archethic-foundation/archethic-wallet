@@ -226,7 +226,7 @@ class _HomePageState extends ConsumerState<HomePage>
       [event.notificationRecipientAddress],
     );
     final discussionGenesisAddress =
-        transaction.values.first.data?.recipients.first;
+        transaction.values.first.data?.recipients.first.address;
 
     if (discussionGenesisAddress == null) {
       return;
