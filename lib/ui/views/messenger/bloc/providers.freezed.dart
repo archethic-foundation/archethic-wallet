@@ -70,25 +70,25 @@ class _$CreateDiscussionFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CreateDiscussionFormStateCopyWith<$Res>
+abstract class _$$CreateDiscussionFormStateImplCopyWith<$Res>
     implements $CreateDiscussionFormStateCopyWith<$Res> {
-  factory _$$_CreateDiscussionFormStateCopyWith(
-          _$_CreateDiscussionFormState value,
-          $Res Function(_$_CreateDiscussionFormState) then) =
-      __$$_CreateDiscussionFormStateCopyWithImpl<$Res>;
+  factory _$$CreateDiscussionFormStateImplCopyWith(
+          _$CreateDiscussionFormStateImpl value,
+          $Res Function(_$CreateDiscussionFormStateImpl) then) =
+      __$$CreateDiscussionFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, List<Contact> members, List<Contact> admins});
 }
 
 /// @nodoc
-class __$$_CreateDiscussionFormStateCopyWithImpl<$Res>
+class __$$CreateDiscussionFormStateImplCopyWithImpl<$Res>
     extends _$CreateDiscussionFormStateCopyWithImpl<$Res,
-        _$_CreateDiscussionFormState>
-    implements _$$_CreateDiscussionFormStateCopyWith<$Res> {
-  __$$_CreateDiscussionFormStateCopyWithImpl(
-      _$_CreateDiscussionFormState _value,
-      $Res Function(_$_CreateDiscussionFormState) _then)
+        _$CreateDiscussionFormStateImpl>
+    implements _$$CreateDiscussionFormStateImplCopyWith<$Res> {
+  __$$CreateDiscussionFormStateImplCopyWithImpl(
+      _$CreateDiscussionFormStateImpl _value,
+      $Res Function(_$CreateDiscussionFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -98,7 +98,7 @@ class __$$_CreateDiscussionFormStateCopyWithImpl<$Res>
     Object? members = null,
     Object? admins = null,
   }) {
-    return _then(_$_CreateDiscussionFormState(
+    return _then(_$CreateDiscussionFormStateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -117,8 +117,8 @@ class __$$_CreateDiscussionFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CreateDiscussionFormState extends _CreateDiscussionFormState {
-  const _$_CreateDiscussionFormState(
+class _$CreateDiscussionFormStateImpl extends _CreateDiscussionFormState {
+  const _$CreateDiscussionFormStateImpl(
       {this.name = '',
       final List<Contact> members = const [],
       final List<Contact> admins = const []})
@@ -156,7 +156,7 @@ class _$_CreateDiscussionFormState extends _CreateDiscussionFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CreateDiscussionFormState &&
+            other is _$CreateDiscussionFormStateImpl &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
             const DeepCollectionEquality().equals(other._admins, _admins));
@@ -172,16 +172,16 @@ class _$_CreateDiscussionFormState extends _CreateDiscussionFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CreateDiscussionFormStateCopyWith<_$_CreateDiscussionFormState>
-      get copyWith => __$$_CreateDiscussionFormStateCopyWithImpl<
-          _$_CreateDiscussionFormState>(this, _$identity);
+  _$$CreateDiscussionFormStateImplCopyWith<_$CreateDiscussionFormStateImpl>
+      get copyWith => __$$CreateDiscussionFormStateImplCopyWithImpl<
+          _$CreateDiscussionFormStateImpl>(this, _$identity);
 }
 
 abstract class _CreateDiscussionFormState extends CreateDiscussionFormState {
   const factory _CreateDiscussionFormState(
       {final String name,
       final List<Contact> members,
-      final List<Contact> admins}) = _$_CreateDiscussionFormState;
+      final List<Contact> admins}) = _$CreateDiscussionFormStateImpl;
   const _CreateDiscussionFormState._() : super._();
 
   @override
@@ -192,7 +192,7 @@ abstract class _CreateDiscussionFormState extends CreateDiscussionFormState {
   List<Contact> get admins;
   @override
   @JsonKey(ignore: true)
-  _$$_CreateDiscussionFormStateCopyWith<_$_CreateDiscussionFormState>
+  _$$CreateDiscussionFormStateImplCopyWith<_$CreateDiscussionFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -263,12 +263,12 @@ class _$DiscussionDetailsFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_DiscussionDetailsFormStateCopyWith<$Res>
+abstract class _$$DiscussionDetailsFormStateImplCopyWith<$Res>
     implements $DiscussionDetailsFormStateCopyWith<$Res> {
-  factory _$$_DiscussionDetailsFormStateCopyWith(
-          _$_DiscussionDetailsFormState value,
-          $Res Function(_$_DiscussionDetailsFormState) then) =
-      __$$_DiscussionDetailsFormStateCopyWithImpl<$Res>;
+  factory _$$DiscussionDetailsFormStateImplCopyWith(
+          _$DiscussionDetailsFormStateImpl value,
+          $Res Function(_$DiscussionDetailsFormStateImpl) then) =
+      __$$DiscussionDetailsFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -279,13 +279,13 @@ abstract class _$$_DiscussionDetailsFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DiscussionDetailsFormStateCopyWithImpl<$Res>
+class __$$DiscussionDetailsFormStateImplCopyWithImpl<$Res>
     extends _$DiscussionDetailsFormStateCopyWithImpl<$Res,
-        _$_DiscussionDetailsFormState>
-    implements _$$_DiscussionDetailsFormStateCopyWith<$Res> {
-  __$$_DiscussionDetailsFormStateCopyWithImpl(
-      _$_DiscussionDetailsFormState _value,
-      $Res Function(_$_DiscussionDetailsFormState) _then)
+        _$DiscussionDetailsFormStateImpl>
+    implements _$$DiscussionDetailsFormStateImplCopyWith<$Res> {
+  __$$DiscussionDetailsFormStateImplCopyWithImpl(
+      _$DiscussionDetailsFormStateImpl _value,
+      $Res Function(_$DiscussionDetailsFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -296,7 +296,7 @@ class __$$_DiscussionDetailsFormStateCopyWithImpl<$Res>
     Object? members = null,
     Object? admins = null,
   }) {
-    return _then(_$_DiscussionDetailsFormState(
+    return _then(_$DiscussionDetailsFormStateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -319,8 +319,8 @@ class __$$_DiscussionDetailsFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DiscussionDetailsFormState extends _DiscussionDetailsFormState {
-  const _$_DiscussionDetailsFormState(
+class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
+  const _$DiscussionDetailsFormStateImpl(
       {this.name = '',
       this.discussionAddress = '',
       final List<String> members = const [],
@@ -362,7 +362,7 @@ class _$_DiscussionDetailsFormState extends _DiscussionDetailsFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DiscussionDetailsFormState &&
+            other is _$DiscussionDetailsFormStateImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.discussionAddress, discussionAddress) ||
                 other.discussionAddress == discussionAddress) &&
@@ -381,9 +381,9 @@ class _$_DiscussionDetailsFormState extends _DiscussionDetailsFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DiscussionDetailsFormStateCopyWith<_$_DiscussionDetailsFormState>
-      get copyWith => __$$_DiscussionDetailsFormStateCopyWithImpl<
-          _$_DiscussionDetailsFormState>(this, _$identity);
+  _$$DiscussionDetailsFormStateImplCopyWith<_$DiscussionDetailsFormStateImpl>
+      get copyWith => __$$DiscussionDetailsFormStateImplCopyWithImpl<
+          _$DiscussionDetailsFormStateImpl>(this, _$identity);
 }
 
 abstract class _DiscussionDetailsFormState extends DiscussionDetailsFormState {
@@ -391,7 +391,7 @@ abstract class _DiscussionDetailsFormState extends DiscussionDetailsFormState {
       {final String name,
       final String discussionAddress,
       final List<String> members,
-      final List<String> admins}) = _$_DiscussionDetailsFormState;
+      final List<String> admins}) = _$DiscussionDetailsFormStateImpl;
   const _DiscussionDetailsFormState._() : super._();
 
   @override
@@ -404,7 +404,7 @@ abstract class _DiscussionDetailsFormState extends DiscussionDetailsFormState {
   List<String> get admins;
   @override
   @JsonKey(ignore: true)
-  _$$_DiscussionDetailsFormStateCopyWith<_$_DiscussionDetailsFormState>
+  _$$DiscussionDetailsFormStateImplCopyWith<_$DiscussionDetailsFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -474,12 +474,12 @@ class _$MessageCreationFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_MessageCreationFormStateCopyWith<$Res>
+abstract class _$$MessageCreationFormStateImplCopyWith<$Res>
     implements $MessageCreationFormStateCopyWith<$Res> {
-  factory _$$_MessageCreationFormStateCopyWith(
-          _$_MessageCreationFormState value,
-          $Res Function(_$_MessageCreationFormState) then) =
-      __$$_MessageCreationFormStateCopyWithImpl<$Res>;
+  factory _$$MessageCreationFormStateImplCopyWith(
+          _$MessageCreationFormStateImpl value,
+          $Res Function(_$MessageCreationFormStateImpl) then) =
+      __$$MessageCreationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Discussion discussion, String text, bool isCreating});
@@ -489,12 +489,13 @@ abstract class _$$_MessageCreationFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MessageCreationFormStateCopyWithImpl<$Res>
+class __$$MessageCreationFormStateImplCopyWithImpl<$Res>
     extends _$MessageCreationFormStateCopyWithImpl<$Res,
-        _$_MessageCreationFormState>
-    implements _$$_MessageCreationFormStateCopyWith<$Res> {
-  __$$_MessageCreationFormStateCopyWithImpl(_$_MessageCreationFormState _value,
-      $Res Function(_$_MessageCreationFormState) _then)
+        _$MessageCreationFormStateImpl>
+    implements _$$MessageCreationFormStateImplCopyWith<$Res> {
+  __$$MessageCreationFormStateImplCopyWithImpl(
+      _$MessageCreationFormStateImpl _value,
+      $Res Function(_$MessageCreationFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -504,7 +505,7 @@ class __$$_MessageCreationFormStateCopyWithImpl<$Res>
     Object? text = null,
     Object? isCreating = null,
   }) {
-    return _then(_$_MessageCreationFormState(
+    return _then(_$MessageCreationFormStateImpl(
       discussion: null == discussion
           ? _value.discussion
           : discussion // ignore: cast_nullable_to_non_nullable
@@ -523,8 +524,8 @@ class __$$_MessageCreationFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MessageCreationFormState extends _MessageCreationFormState {
-  const _$_MessageCreationFormState(
+class _$MessageCreationFormStateImpl extends _MessageCreationFormState {
+  const _$MessageCreationFormStateImpl(
       {required this.discussion, required this.text, required this.isCreating})
       : super._();
 
@@ -544,7 +545,7 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MessageCreationFormState &&
+            other is _$MessageCreationFormStateImpl &&
             (identical(other.discussion, discussion) ||
                 other.discussion == discussion) &&
             (identical(other.text, text) || other.text == text) &&
@@ -558,16 +559,16 @@ class _$_MessageCreationFormState extends _MessageCreationFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MessageCreationFormStateCopyWith<_$_MessageCreationFormState>
-      get copyWith => __$$_MessageCreationFormStateCopyWithImpl<
-          _$_MessageCreationFormState>(this, _$identity);
+  _$$MessageCreationFormStateImplCopyWith<_$MessageCreationFormStateImpl>
+      get copyWith => __$$MessageCreationFormStateImplCopyWithImpl<
+          _$MessageCreationFormStateImpl>(this, _$identity);
 }
 
 abstract class _MessageCreationFormState extends MessageCreationFormState {
   const factory _MessageCreationFormState(
       {required final Discussion discussion,
       required final String text,
-      required final bool isCreating}) = _$_MessageCreationFormState;
+      required final bool isCreating}) = _$MessageCreationFormStateImpl;
   const _MessageCreationFormState._() : super._();
 
   @override
@@ -578,7 +579,7 @@ abstract class _MessageCreationFormState extends MessageCreationFormState {
   bool get isCreating;
   @override
   @JsonKey(ignore: true)
-  _$$_MessageCreationFormStateCopyWith<_$_MessageCreationFormState>
+  _$$MessageCreationFormStateImplCopyWith<_$MessageCreationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -589,6 +590,8 @@ mixin _$UpdateDiscussionFormState {
   List<String> get members => throw _privateConstructorUsedError;
   List<String> get membersToAdd => throw _privateConstructorUsedError;
   List<String> get admins => throw _privateConstructorUsedError;
+  List<String> get initialMembers => throw _privateConstructorUsedError;
+  List<String> get initialAdmins => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UpdateDiscussionFormStateCopyWith<UpdateDiscussionFormState> get copyWith =>
@@ -606,7 +609,9 @@ abstract class $UpdateDiscussionFormStateCopyWith<$Res> {
       String discussionAddress,
       List<String> members,
       List<String> membersToAdd,
-      List<String> admins});
+      List<String> admins,
+      List<String> initialMembers,
+      List<String> initialAdmins});
 }
 
 /// @nodoc
@@ -628,6 +633,8 @@ class _$UpdateDiscussionFormStateCopyWithImpl<$Res,
     Object? members = null,
     Object? membersToAdd = null,
     Object? admins = null,
+    Object? initialMembers = null,
+    Object? initialAdmins = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -650,17 +657,25 @@ class _$UpdateDiscussionFormStateCopyWithImpl<$Res,
           ? _value.admins
           : admins // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      initialMembers: null == initialMembers
+          ? _value.initialMembers
+          : initialMembers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      initialAdmins: null == initialAdmins
+          ? _value.initialAdmins
+          : initialAdmins // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_UpdateDiscussionFormStateCopyWith<$Res>
+abstract class _$$UpdateDiscussionFormStateImplCopyWith<$Res>
     implements $UpdateDiscussionFormStateCopyWith<$Res> {
-  factory _$$_UpdateDiscussionFormStateCopyWith(
-          _$_UpdateDiscussionFormState value,
-          $Res Function(_$_UpdateDiscussionFormState) then) =
-      __$$_UpdateDiscussionFormStateCopyWithImpl<$Res>;
+  factory _$$UpdateDiscussionFormStateImplCopyWith(
+          _$UpdateDiscussionFormStateImpl value,
+          $Res Function(_$UpdateDiscussionFormStateImpl) then) =
+      __$$UpdateDiscussionFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -668,17 +683,19 @@ abstract class _$$_UpdateDiscussionFormStateCopyWith<$Res>
       String discussionAddress,
       List<String> members,
       List<String> membersToAdd,
-      List<String> admins});
+      List<String> admins,
+      List<String> initialMembers,
+      List<String> initialAdmins});
 }
 
 /// @nodoc
-class __$$_UpdateDiscussionFormStateCopyWithImpl<$Res>
+class __$$UpdateDiscussionFormStateImplCopyWithImpl<$Res>
     extends _$UpdateDiscussionFormStateCopyWithImpl<$Res,
-        _$_UpdateDiscussionFormState>
-    implements _$$_UpdateDiscussionFormStateCopyWith<$Res> {
-  __$$_UpdateDiscussionFormStateCopyWithImpl(
-      _$_UpdateDiscussionFormState _value,
-      $Res Function(_$_UpdateDiscussionFormState) _then)
+        _$UpdateDiscussionFormStateImpl>
+    implements _$$UpdateDiscussionFormStateImplCopyWith<$Res> {
+  __$$UpdateDiscussionFormStateImplCopyWithImpl(
+      _$UpdateDiscussionFormStateImpl _value,
+      $Res Function(_$UpdateDiscussionFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -689,8 +706,10 @@ class __$$_UpdateDiscussionFormStateCopyWithImpl<$Res>
     Object? members = null,
     Object? membersToAdd = null,
     Object? admins = null,
+    Object? initialMembers = null,
+    Object? initialAdmins = null,
   }) {
-    return _then(_$_UpdateDiscussionFormState(
+    return _then(_$UpdateDiscussionFormStateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -711,22 +730,34 @@ class __$$_UpdateDiscussionFormStateCopyWithImpl<$Res>
           ? _value._admins
           : admins // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      initialMembers: null == initialMembers
+          ? _value._initialMembers
+          : initialMembers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      initialAdmins: null == initialAdmins
+          ? _value._initialAdmins
+          : initialAdmins // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
-  const _$_UpdateDiscussionFormState(
+class _$UpdateDiscussionFormStateImpl extends _UpdateDiscussionFormState {
+  const _$UpdateDiscussionFormStateImpl(
       {this.name = '',
       this.discussionAddress = '',
       final List<String> members = const [],
       final List<String> membersToAdd = const [],
-      final List<String> admins = const []})
+      final List<String> admins = const [],
+      final List<String> initialMembers = const [],
+      final List<String> initialAdmins = const []})
       : _members = members,
         _membersToAdd = membersToAdd,
         _admins = admins,
+        _initialMembers = initialMembers,
+        _initialAdmins = initialAdmins,
         super._();
 
   @override
@@ -762,23 +793,45 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
     return EqualUnmodifiableListView(_admins);
   }
 
+  final List<String> _initialMembers;
+  @override
+  @JsonKey()
+  List<String> get initialMembers {
+    if (_initialMembers is EqualUnmodifiableListView) return _initialMembers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_initialMembers);
+  }
+
+  final List<String> _initialAdmins;
+  @override
+  @JsonKey()
+  List<String> get initialAdmins {
+    if (_initialAdmins is EqualUnmodifiableListView) return _initialAdmins;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_initialAdmins);
+  }
+
   @override
   String toString() {
-    return 'UpdateDiscussionFormState(name: $name, discussionAddress: $discussionAddress, members: $members, membersToAdd: $membersToAdd, admins: $admins)';
+    return 'UpdateDiscussionFormState(name: $name, discussionAddress: $discussionAddress, members: $members, membersToAdd: $membersToAdd, admins: $admins, initialMembers: $initialMembers, initialAdmins: $initialAdmins)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateDiscussionFormState &&
+            other is _$UpdateDiscussionFormStateImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.discussionAddress, discussionAddress) ||
                 other.discussionAddress == discussionAddress) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
             const DeepCollectionEquality()
                 .equals(other._membersToAdd, _membersToAdd) &&
-            const DeepCollectionEquality().equals(other._admins, _admins));
+            const DeepCollectionEquality().equals(other._admins, _admins) &&
+            const DeepCollectionEquality()
+                .equals(other._initialMembers, _initialMembers) &&
+            const DeepCollectionEquality()
+                .equals(other._initialAdmins, _initialAdmins));
   }
 
   @override
@@ -788,14 +841,16 @@ class _$_UpdateDiscussionFormState extends _UpdateDiscussionFormState {
       discussionAddress,
       const DeepCollectionEquality().hash(_members),
       const DeepCollectionEquality().hash(_membersToAdd),
-      const DeepCollectionEquality().hash(_admins));
+      const DeepCollectionEquality().hash(_admins),
+      const DeepCollectionEquality().hash(_initialMembers),
+      const DeepCollectionEquality().hash(_initialAdmins));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpdateDiscussionFormStateCopyWith<_$_UpdateDiscussionFormState>
-      get copyWith => __$$_UpdateDiscussionFormStateCopyWithImpl<
-          _$_UpdateDiscussionFormState>(this, _$identity);
+  _$$UpdateDiscussionFormStateImplCopyWith<_$UpdateDiscussionFormStateImpl>
+      get copyWith => __$$UpdateDiscussionFormStateImplCopyWithImpl<
+          _$UpdateDiscussionFormStateImpl>(this, _$identity);
 }
 
 abstract class _UpdateDiscussionFormState extends UpdateDiscussionFormState {
@@ -804,7 +859,9 @@ abstract class _UpdateDiscussionFormState extends UpdateDiscussionFormState {
       final String discussionAddress,
       final List<String> members,
       final List<String> membersToAdd,
-      final List<String> admins}) = _$_UpdateDiscussionFormState;
+      final List<String> admins,
+      final List<String> initialMembers,
+      final List<String> initialAdmins}) = _$UpdateDiscussionFormStateImpl;
   const _UpdateDiscussionFormState._() : super._();
 
   @override
@@ -818,7 +875,11 @@ abstract class _UpdateDiscussionFormState extends UpdateDiscussionFormState {
   @override
   List<String> get admins;
   @override
+  List<String> get initialMembers;
+  @override
+  List<String> get initialAdmins;
+  @override
   @JsonKey(ignore: true)
-  _$$_UpdateDiscussionFormStateCopyWith<_$_UpdateDiscussionFormState>
+  _$$UpdateDiscussionFormStateImplCopyWith<_$UpdateDiscussionFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

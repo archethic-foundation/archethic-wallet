@@ -11,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AppDialogs {
-  static void showConfirmDialog(
+  static Future showConfirmDialog(
     BuildContext context,
     WidgetRef ref,
     String title,
@@ -23,11 +23,11 @@ class AppDialogs {
     TextStyle? titleStyle,
     String? additionalContent,
     TextStyle? additionalContentStyle,
-  }) {
+  }) async {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     cancelText ??= AppLocalizations.of(context)!.cancel;
-    showDialog(
+    await showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {

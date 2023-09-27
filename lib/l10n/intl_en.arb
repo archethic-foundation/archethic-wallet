@@ -600,5 +600,6 @@
   "youHaveBeenAddedTOADiscussion": "You have been added to a discussion",
   "leaveDiscussion": "Leave the discussion",
   "areYouSureLeaveDiscussion": "Are you sure you want to leave the discussion?",
-  "youAreNoLongPartOfDiscussion": "You are no longer part of the discussion, so you can no longer post messages"
+  "youAreNoLongPartOfDiscussion": "You are no longer part of the discussion, so you can no longer post messages",
+  "doYouWantNewUsersReadOldMessages": "Allow the new members to see the previous messages?"
 }
