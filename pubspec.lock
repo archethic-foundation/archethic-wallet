@@ -62,7 +62,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: a6b5fbe3061f4e3e5934d32ee47f4e59fccb2057
+      resolved-ref: bbf1d2c4bb9db8e6abe5f124283a6c16cedf94e1
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -71,8 +71,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: a277f5edba87b682b7f09cc8bbe09061c8d63116
-      url: "https://github.com/archethic-foundation/messaging_backend.git"
+      resolved-ref: "03a6ca9baffbcc20f83de8a156cde50a19d99626"
+      url: "https://github.com/archethic-foundation/messaging_dart_sdk.git"
     source: git
     version: "1.0.0"
   archive:
@@ -487,10 +487,10 @@ packages:
     dependency: "direct main"
     description:
       name: exif
-      sha256: c154e074234eb6ac4a09831072b4783b55f5f9e84c4b344a472a6d6aa83a9982
+      sha256: f65714272f9dbe66487a1594f0e82fb07d419fdbaef0f0cc57a457d2781ed1a4
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.4"
+    version: "3.2.1"
   extension:
     dependency: transitive
     description:
