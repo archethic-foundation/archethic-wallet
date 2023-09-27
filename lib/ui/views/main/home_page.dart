@@ -9,6 +9,7 @@ import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -190,6 +191,10 @@ class _HomePageState extends ConsumerState<HomePage>
               MessengerConstants.notificationTypeNewDiscussion) {
             manageNewDiscussionNotification(txEvent);
           }
+          if (txEvent.type ==
+              MessengerConstants.notificationTypeDiscussionUpdated) {
+            manageNewDiscussionUpdatedNotification(txEvent);
+          }
         },
       );
     }
@@ -210,7 +215,7 @@ class _HomePageState extends ConsumerState<HomePage>
         .addRemoteDiscussion(discussion);
 
     UIUtil.showSnackbar(
-      localizations.youHaveBeenAddedTOADiscussion,
+      localizations.youHaveBeenAddedToADiscussion,
       context,
       ref,
       theme.text!,
@@ -226,7 +231,7 @@ class _HomePageState extends ConsumerState<HomePage>
       [event.notificationRecipientAddress],
     );
     final discussionGenesisAddress =
-        transaction.values.first.data?.recipients.first.address;
+        transaction.values.first.data?.recipients.first;
 
     if (discussionGenesisAddress == null) {
       return;
@@ -272,6 +277,85 @@ class _HomePageState extends ConsumerState<HomePage>
     ref.invalidate(
       MessengerProviders.discussion(discussionGenesisAddress),
     );
+  }
+
+  Future manageNewDiscussionUpdatedNotification(TxSentEvent event) async {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    final localizations = AppLocalizations.of(context)!;
+
+    if (event.extra == null) {
+      return;
+    }
+
+    final extra = event.extra as Map<String, dynamic>;
+
+    if (extra.containsKey("membersAddedToNotify")) {
+      final listMembersAdded = extra["membersAddedToNotify"];
+      if (listMembersAdded!.isNotEmpty) {
+        for (final memberPubKey in listMembersAdded) {
+          final contact = await ref.read(
+            ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
+                .future,
+          );
+          // Contact does not exist or contact is not an internal one
+          if (contact == null ||
+              contact.type != ContactType.keychainService.name) {
+            continue;
+          }
+
+          final transaction = await sl.get<ApiService>().getTransaction(
+            [event.notificationRecipientAddress],
+          );
+          final discussionGenesisAddress =
+              transaction.values.first.data!.recipients.first;
+
+          final discussion = await ref.read(
+            MessengerProviders.remoteDiscussion(
+              discussionGenesisAddress,
+            ).future,
+          );
+
+          await ref
+              .read(MessengerProviders.discussions.notifier)
+              .addRemoteDiscussion(discussion);
+
+          UIUtil.showSnackbar(
+            localizations.youHaveBeenAddedToADiscussion,
+            context,
+            ref,
+            theme.text!,
+            theme.snackBarShadow!,
+            icon: Symbols.chat,
+          );
+        }
+      }
+    }
+
+    if (extra.containsKey("membersDeletedToNotify")) {
+      final listMembersDeleted = extra["membersDeletedToNotify"];
+      if (listMembersDeleted!.isNotEmpty) {
+        for (final memberPubKey in listMembersDeleted) {
+          final contact = await ref.read(
+            ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
+                .future,
+          );
+          // Contact does not exist or contact is not an internal one
+          if (contact == null ||
+              contact.type != ContactType.keychainService.name) {
+            continue;
+          }
+
+          UIUtil.showSnackbar(
+            localizations.youHaveBeenDeletedFromADiscussion,
+            context,
+            ref,
+            theme.text!,
+            theme.snackBarShadow!,
+            icon: Symbols.comments_disabled,
+          );
+        }
+      }
+    }
   }
 }
 

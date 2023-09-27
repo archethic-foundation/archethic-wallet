@@ -6,16 +6,18 @@ part of 'notifications_repository.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TxSentEvent _$$_TxSentEventFromJson(Map<String, dynamic> json) =>
-    _$_TxSentEvent(
+_$TxSentEventImpl _$$TxSentEventImplFromJson(Map<String, dynamic> json) =>
+    _$TxSentEventImpl(
       notificationRecipientAddress: json['txAddress'] as String,
       listenAddress: json['txChainGenesisAddress'] as String,
       type: json['type'] as String,
+      extra: json['extra'],
     );
 
-Map<String, dynamic> _$$_TxSentEventToJson(_$_TxSentEvent instance) =>
+Map<String, dynamic> _$$TxSentEventImplToJson(_$TxSentEventImpl instance) =>
     <String, dynamic>{
       'txAddress': instance.notificationRecipientAddress,
       'txChainGenesisAddress': instance.listenAddress,
       'type': instance.type,
+      'extra': instance.extra,
     };
