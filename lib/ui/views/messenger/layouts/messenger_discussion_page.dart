@@ -98,7 +98,7 @@ class MessengerDiscussionPage extends ConsumerWidget {
               if (discussion.value != null &&
                   discussion.value!.membersPubKeys.any(
                     (element) => element == selectedContact?.publicKey,
-                  )) // User can only send a message when he is still is the discussion
+                  )) // User can only send a message when he is still in the discussion
                 _MessageSendForm(
                   discussionAddress: discussionAddress,
                 ),

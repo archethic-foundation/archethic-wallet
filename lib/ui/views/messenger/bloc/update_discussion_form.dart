@@ -15,6 +15,8 @@ class UpdateDiscussionFormState with _$UpdateDiscussionFormState {
     @Default([]) List<String> members,
     @Default([]) List<String> membersToAdd,
     @Default([]) List<String> admins,
+    @Default([]) List<String> initialMembers,
+    @Default([]) List<String> initialAdmins,
   }) = _UpdateDiscussionFormState;
   const UpdateDiscussionFormState._();
 
@@ -36,20 +38,28 @@ class UpdateDiscussionFormNotifier
   void init(Discussion discussion) {
     setName(discussion.name ?? '');
     setAddress(discussion.address);
-    _initMembers(discussion.membersPubKeys);
-    _initAdmins(discussion.adminsPubKeys);
+    _initializeMembers(discussion.membersPubKeys);
+    _initializeAdmins(discussion.adminsPubKeys);
+    _setInitialMembersAndAdmins();
   }
 
-  void _initMembers(List<String> members) {
+  void _initializeMembers(List<String> members) {
     for (final member in members) {
       addMember(member);
     }
   }
 
-  void _initAdmins(List<String> admins) {
+  void _initializeAdmins(List<String> admins) {
     for (final admin in admins) {
       addAdmin(admin);
     }
+  }
+
+  void _setInitialMembersAndAdmins() {
+    state = state.copyWith(
+      initialAdmins: state.admins.toList(),
+      initialMembers: state.members.toList(),
+    );
   }
 
   void addMember(String member) {
@@ -147,7 +157,9 @@ class UpdateDiscussionFormNotifier
     return null;
   }
 
-  Future<Result<String?, Failure>> updateDiscussion() => Result.guard(() async {
+  Future<Result<String?, Failure>> updateDiscussion(
+          WidgetRef ref, BuildContext context) =>
+      Result.guard(() async {
         final errorMessage = validator();
         if (errorMessage != null) {
           return errorMessage;
@@ -162,6 +174,42 @@ class UpdateDiscussionFormNotifier
         final keyPair = session.wallet.keychainSecuredInfos
             .services[selectedAccount.name]!.keyPair!.toKeyPair;
 
+        final atLeastOneMemberDeletedFromDiscussion = state.initialMembers.any(
+          (initMember) =>
+              state.listMembers.any((member) => initMember == member) == false,
+        );
+
+        var updateAESKey = false;
+
+        // When there is at least one member that has been deleted from the discussion
+        // we are going to renew the AES key to not let the previous users
+        // (the one that are going to be deleted) read the next messages
+        if (atLeastOneMemberDeletedFromDiscussion) {
+          updateAESKey = true;
+        } else {
+          final atLeastOneMemberHasBeenAdded = state.listMembers.any(
+            (initMember) =>
+                state.initialMembers.any((member) => member == initMember) ==
+                false,
+          );
+
+          // When there is at least one new member in the discussion, we will ask the
+          // user to choose if he wants to let the new user read the previous messages
+          if (atLeastOneMemberHasBeenAdded) {
+            await AppDialogs.showConfirmDialog(
+              context,
+              ref,
+              localizations.information,
+              localizations.doYouWantNewUsersReadOldMessages,
+              localizations.yes,
+              () {
+                updateAESKey = true;
+              },
+              cancelText: localizations.no,
+            );
+          }
+        }
+
         await ref
             .read(MessengerProviders.messengerRepository)
             .updateDiscussion(
@@ -174,6 +222,7 @@ class UpdateDiscussionFormNotifier
               session: session,
               adminKeyPair: keyPair,
               owner: selectedAccount,
+              updateSCAESKey: updateAESKey,
             )
             .valueOrThrow;
 

@@ -63,7 +63,6 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
         ref.watch(MessengerProviders.updateDiscussionForm.notifier);
     final formState = ref.watch(MessengerProviders.updateDiscussionForm);
 
-    var index = 0;
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -85,155 +84,211 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
           elevation: 0,
           title: Text(localizations.discussionModifying),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
-          child: Column(
-            children: [
-              AppTextField(
-                labelText: localizations.name,
-                onChanged: (text) {
-                  formNotifier.setName(text);
-                },
-                controller: nameController,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Expanded(
-                child: ArchethicScrollbar(
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Divider(color: theme.text),
-                      TextButton(
-                        onPressed: () async {
-                          final updateDiscussionAddMembers =
-                              UpdateDiscussionAddMembers(
-                            listMembers: formState.listMembers,
-                          );
-                          if (await updateDiscussionAddMembers
-                                  .canAddNewMembers(ref) ==
-                              false) {
-                            UIUtil.showSnackbar(
-                              localizations.noContactsToAdd,
-                              context,
-                              ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
+            child: Column(
+              children: [
+                AppTextField(
+                  labelText: localizations.name,
+                  onChanged: (text) {
+                    formNotifier.setName(text);
+                  },
+                  controller: nameController,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Expanded(
+                  child: ArchethicScrollbar(
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Divider(color: theme.text),
+                        TextButton(
+                          onPressed: () async {
+                            final updateDiscussionAddMembers =
+                                UpdateDiscussionAddMembers(
+                              listMembers: formState.listMembers,
                             );
-                            return;
-                          }
+                            if (await updateDiscussionAddMembers
+                                    .canAddNewMembers(ref) ==
+                                false) {
+                              UIUtil.showSnackbar(
+                                localizations.noContactsToAdd,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                              return;
+                            }
 
-                          Sheets.showAppHeightNineSheet(
-                            onDisposed: () {
-                              formNotifier.removeAllMembersToAdd();
-                            },
-                            context: context,
-                            ref: ref,
-                            widget: updateDiscussionAddMembers,
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Symbols.group_add,
-                              color: theme.text,
-                              weight: IconSize.weightM,
-                              opticalSize: IconSize.opticalSizeM,
-                              grade: IconSize.gradeM,
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              localizations.addMembers,
-                              style: theme.textStyleSize14W700Primary,
-                            ),
-                          ],
+                            Sheets.showAppHeightNineSheet(
+                              onDisposed: () {
+                                formNotifier.removeAllMembersToAdd();
+                              },
+                              context: context,
+                              ref: ref,
+                              widget: updateDiscussionAddMembers,
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Symbols.group_add,
+                                color: theme.text,
+                                weight: IconSize.weightM,
+                                opticalSize: IconSize.opticalSizeM,
+                                grade: IconSize.gradeM,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                localizations.addMembers,
+                                style: theme.textStyleSize14W700Primary,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SectionTitle(
-                        text: localizations.messengerDiscussionMembersCount(
-                          formState.numberOfMembers,
+                        SectionTitle(
+                          text: localizations.messengerDiscussionMembersCount(
+                            formState.numberOfMembers,
+                          ),
                         ),
-                      ),
-                      Column(
-                        children: formState.listMembers.map((pubKey) {
-                          index++;
-                          final accessRecipient = ref.watch(
-                            MessengerProviders.accessRecipientWithPublicKey(
-                              pubKey,
-                            ),
-                          );
+                        Column(
+                          children: formState.listMembers.map((pubKey) {
+                            final accessRecipient = ref.watch(
+                              MessengerProviders.accessRecipientWithPublicKey(
+                                pubKey,
+                              ),
+                            );
 
-                          final addAdminAvailable = formState.listAdmins.any(
-                                (adminPubKey) => adminPubKey == pubKey,
-                              ) ==
-                              false;
+                            final addAdminAvailable = formState.listAdmins.any(
+                                  (adminPubKey) => adminPubKey == pubKey,
+                                ) ==
+                                false;
 
-                          return PublicKeyLine(
-                            listAdmins: formState.listAdmins,
-                            pubKey: pubKey,
-                            onTap: () {
-                              showModalBottomSheet<void>(
-                                showDragHandle: true,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  final accessRecipient = ref.watch(
-                                    MessengerProviders
-                                        .accessRecipientWithPublicKey(
-                                      pubKey,
-                                    ),
-                                  );
+                            return PublicKeyLine(
+                              listAdmins: formState.listAdmins,
+                              pubKey: pubKey,
+                              onTap: () {
+                                showModalBottomSheet<void>(
+                                  showDragHandle: true,
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    final accessRecipient = ref.watch(
+                                      MessengerProviders
+                                          .accessRecipientWithPublicKey(
+                                        pubKey,
+                                      ),
+                                    );
 
-                                  return Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: SizedBox(
-                                      height: 160,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                accessRecipient.maybeMap(
-                                                  data: (data) => data.value
-                                                      .format(localizations),
-                                                  orElse: () => '...',
+                                    return Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: SizedBox(
+                                        height: 160,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  accessRecipient.maybeMap(
+                                                    data: (data) => data.value
+                                                        .format(localizations),
+                                                    orElse: () => '...',
+                                                  ),
+                                                  style: theme
+                                                      .textStyleSize16W700Primary,
                                                 ),
-                                                style: theme
-                                                    .textStyleSize16W700Primary,
-                                              ),
-                                              Divider(
-                                                color: theme.text,
-                                                thickness: 0.5,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  if (addAdminAvailable)
+                                                Divider(
+                                                  color: theme.text,
+                                                  thickness: 0.5,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  children: [
+                                                    if (addAdminAvailable)
+                                                      IconButton(
+                                                        icon: Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Symbols
+                                                                  .add_moderator,
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 12,
+                                                            ),
+                                                            Text(
+                                                              localizations
+                                                                  .addAdmin,
+                                                              style: theme
+                                                                  .textStyleSize14W700Primary,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        onPressed: () {
+                                                          formNotifier
+                                                              .addAdmin(pubKey);
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
+                                                      )
+                                                    else
+                                                      IconButton(
+                                                        icon: Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Symbols
+                                                                  .remove_moderator,
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 12,
+                                                            ),
+                                                            Text(
+                                                              localizations
+                                                                  .removeAdmin,
+                                                              style: theme
+                                                                  .textStyleSize14W700Primary,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        onPressed: () {
+                                                          formNotifier
+                                                              .removeAdmin(
+                                                            pubKey,
+                                                          );
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
+                                                      ),
                                                     IconButton(
                                                       icon: Row(
                                                         children: [
                                                           const Icon(
                                                             Symbols
-                                                                .add_moderator,
+                                                                .person_remove,
                                                           ),
                                                           const SizedBox(
                                                             width: 12,
                                                           ),
                                                           Text(
                                                             localizations
-                                                                .addAdmin,
+                                                                .removeDiscussion,
                                                             style: theme
                                                                 .textStyleSize14W700Primary,
                                                           ),
@@ -241,164 +296,113 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                       ),
                                                       onPressed: () {
                                                         formNotifier
-                                                            .addAdmin(pubKey);
-                                                        Navigator.pop(
-                                                          context,
-                                                        );
-                                                      },
-                                                    )
-                                                  else
-                                                    IconButton(
-                                                      icon: Row(
-                                                        children: [
-                                                          const Icon(
-                                                            Symbols
-                                                                .remove_moderator,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 12,
-                                                          ),
-                                                          Text(
-                                                            localizations
-                                                                .removeAdmin,
-                                                            style: theme
-                                                                .textStyleSize14W700Primary,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      onPressed: () {
-                                                        formNotifier
-                                                            .removeAdmin(
+                                                            .removeMember(
                                                           pubKey,
                                                         );
-                                                        Navigator.pop(
-                                                          context,
-                                                        );
+                                                        Navigator.pop(context);
                                                       },
                                                     ),
-                                                  IconButton(
-                                                    icon: Row(
-                                                      children: [
-                                                        const Icon(
-                                                          Symbols.person_remove,
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 12,
-                                                        ),
-                                                        Text(
-                                                          localizations
-                                                              .removeDiscussion,
-                                                          style: theme
-                                                              .textStyleSize14W700Primary,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    onPressed: () {
-                                                      formNotifier.removeMember(
-                                                        pubKey,
-                                                      );
-                                                      Navigator.pop(context);
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            onInfoTap: accessRecipient.maybeMap(
-                              orElse: () => null,
-                              data: (recipient) => recipient.value.map(
-                                contact: (contact) => () {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        settings.activeVibrations,
-                                      );
+                                    );
+                                  },
+                                );
+                              },
+                              onInfoTap: accessRecipient.maybeMap(
+                                orElse: () => null,
+                                data: (recipient) => recipient.value.map(
+                                  contact: (contact) => () {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          settings.activeVibrations,
+                                        );
 
-                                  Sheets.showAppHeightNineSheet(
-                                    context: context,
-                                    ref: ref,
-                                    widget: ContactDetail(
-                                      contact: contact.contact,
-                                    ),
-                                  );
-                                },
-                                publicKey: (_) => null,
+                                    Sheets.showAppHeightNineSheet(
+                                      context: context,
+                                      ref: ref,
+                                      widget: ContactDetail(
+                                        contact: contact.contact,
+                                      ),
+                                    );
+                                  },
+                                  publicKey: (_) => null,
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  AppButtonTinyConnectivity(
-                    localizations.save,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('modifyDiscussion'),
-                    onPressed: () async {
-                      final auth = await AuthFactory.authenticate(
-                        context,
-                        ref,
-                        activeVibrations: ref
-                            .read(SettingsProviders.settings)
-                            .activeVibrations,
-                      );
-                      if (auth == false) {
-                        return;
-                      }
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    AppButtonTinyConnectivity(
+                      localizations.save,
+                      Dimens.buttonBottomDimens,
+                      key: const Key('modifyDiscussion'),
+                      onPressed: () async {
+                        final auth = await AuthFactory.authenticate(
+                          context,
+                          ref,
+                          activeVibrations: ref
+                              .read(SettingsProviders.settings)
+                              .activeVibrations,
+                        );
+                        if (auth == false) {
+                          return;
+                        }
 
-                      ShowSendingAnimation.build(
-                        context,
-                        theme,
-                      );
-                      final result = await formNotifier.updateDiscussion();
+                        ShowSendingAnimation.build(
+                          context,
+                          theme,
+                        );
+                        final result =
+                            await formNotifier.updateDiscussion(ref, context);
 
-                      Navigator.of(context).pop(); // wait popup
+                        Navigator.of(context).pop(); // wait popup
 
-                      result.map(
-                        success: (errorMessage) {
-                          if (errorMessage != null) {
+                        result.map(
+                          success: (errorMessage) {
+                            if (errorMessage != null) {
+                              UIUtil.showSnackbar(
+                                errorMessage,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                              return;
+                            }
+
+                            Navigator.of(context)
+                                .pop(); // Going back to discussion details
+                          },
+                          failure: (failure) {
                             UIUtil.showSnackbar(
-                              errorMessage,
+                              localizations.updateDiscussionFailure,
                               context,
                               ref,
                               theme.text!,
                               theme.snackBarShadow!,
+                              duration: const Duration(seconds: 5),
                             );
-                            return;
-                          }
-
-                          Navigator.of(context)
-                              .pop(); // Going back to discussion details
-                        },
-                        failure: (failure) {
-                          UIUtil.showSnackbar(
-                            localizations.updateDiscussionFailure,
-                            context,
-                            ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
-                            duration: const Duration(seconds: 5),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
