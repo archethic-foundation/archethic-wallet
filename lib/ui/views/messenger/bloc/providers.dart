@@ -214,9 +214,9 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
     final nextContactPublicKeys = <String>[];
     if (next.value != null) {
       for (final account in next.value!) {
-        final contact = ref
-            .read(ContactProviders.getContactWithAddress(account.lastAddress!))
-            .valueOrNull;
+        final contact = await ref.read(
+          ContactProviders.getContactWithAddress(account.lastAddress!).future,
+        );
         if (contact != null) {
           nextContactPublicKeys.add(contact.publicKey);
         }
