@@ -125,9 +125,9 @@ class MessengerRepository
     required LoggedInSession session,
     required KeyPair adminKeyPair,
     required Account owner,
-    List<String>? membersAddedToNotify,
-    List<String>? membersDeletedToNotify,
     bool updateSCAESKey = false,
+    List<String> membersAddedToNotify = const [],
+    List<String> membersDeletedToNotify = const [],
   }) async =>
       Result.guard(() async {
         final updatedDiscussion = await _remoteDatasource.updateDiscussion(
@@ -155,50 +155,37 @@ class MessengerRepository
           discussionName: discussionName,
         );
 
-        if (membersAddedToNotify != null && membersAddedToNotify.isNotEmpty) {
-          await _sendTransactionNotification(
-            notificationRecipientAddress: updatedDiscussion.discussion.address,
-            listenAddresses: membersPubKeys,
-            creator: owner,
-            session: session,
-            previousKeyPair: updatedDiscussion.previousKeyPair,
-            pushNotification: {
-              'en': const PushNotification(
-                title: 'Archethic',
-                body: 'You have been added to a discussion',
-              ),
-              'fr': const PushNotification(
-                title: 'Archethic',
-                body: 'Vous avez été ajouté à une discussion',
-              ),
-            },
-            transactionType:
-                MessengerConstants.notificationTypeNewDiscussionAdding,
-          );
+        var listenAddresses = membersPubKeys;
+        // If there are users added or deleted, we will notify only them. Otherwise (like a name changed), we will notify everybody.
+        if (membersAddedToNotify.isNotEmpty ||
+            membersDeletedToNotify.isNotEmpty) {
+          // https://stackoverflow.com/questions/21826342/how-do-i-combine-two-lists-in-dart with If you want to merge two lists and remove duplicates
+          listenAddresses =
+              {...membersAddedToNotify, ...membersDeletedToNotify}.toList();
         }
 
-        if (membersDeletedToNotify != null &&
-            membersDeletedToNotify.isNotEmpty) {
-          await _sendTransactionNotification(
-            notificationRecipientAddress: updatedDiscussion.discussion.address,
-            listenAddresses: membersPubKeys,
-            creator: owner,
-            session: session,
-            previousKeyPair: updatedDiscussion.previousKeyPair,
-            pushNotification: {
-              'en': const PushNotification(
-                title: 'Archethic',
-                body: 'You have been removed from a discussion',
-              ),
-              'fr': const PushNotification(
-                title: 'Archethic',
-                body: "Vous avez été supprimé d'une discussion",
-              ),
-            },
-            transactionType:
-                MessengerConstants.notificationTypeNewDiscussionDeletion,
-          );
-        }
+        await _sendTransactionNotification(
+          notificationRecipientAddress: updatedDiscussion.discussion.address,
+          listenAddresses: listenAddresses,
+          creator: owner,
+          session: session,
+          previousKeyPair: updatedDiscussion.previousKeyPair,
+          pushNotification: {
+            'en': const PushNotification(
+              title: 'Archethic',
+              body: 'A discussion has been updated',
+            ),
+            'fr': const PushNotification(
+              title: 'Archethic',
+              body: 'Une discussion a été mise à jour',
+            ),
+          },
+          transactionType: MessengerConstants.notificationTypeDiscussionUpdated,
+          extra: {
+            'membersAddedToNotify': membersAddedToNotify,
+            'membersDeletedToNotify': membersDeletedToNotify,
+          },
+        );
 
         return updatedDiscussion.discussion;
       });
@@ -411,6 +398,7 @@ class MessengerRepository
     required Map<String, PushNotification> pushNotification,
     required KeyPair previousKeyPair,
     required String transactionType,
+    dynamic extra,
   }) async {
     await sendTransactionNotification(
       notification: TransactionNotification(
@@ -421,6 +409,7 @@ class MessengerRepository
       senderKeyPair: previousKeyPair,
       notifBackendBaseUrl: networksSetting.notificationBackendUrl,
       transactionType: transactionType,
+      extra: extra,
     );
   }
 

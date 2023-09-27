@@ -14,6 +14,7 @@ class TxSentEvent with _$TxSentEvent {
     // ignore: invalid_annotation_target
     @JsonKey(name: 'txChainGenesisAddress') required String listenAddress,
     required String type,
+    required dynamic extra,
   }) = _TxSentEvent;
   const TxSentEvent._();
 
