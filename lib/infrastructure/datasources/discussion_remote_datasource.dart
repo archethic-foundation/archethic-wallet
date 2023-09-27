@@ -96,7 +96,7 @@ class DiscussionRemoteDatasource {
       previousKeyPair: discussion.previousKeyPair,
       discussion: Discussion(
         creationDate: DateTime.now(),
-        address: discussionSCAddress,
+        address: discussion.transaction.address?.address ?? '',
         name: discussionName,
         membersPubKeys: membersPubKey,
         adminsPubKeys: adminsPubKeys,

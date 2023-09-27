@@ -125,6 +125,8 @@ class MessengerRepository
     required LoggedInSession session,
     required KeyPair adminKeyPair,
     required Account owner,
+    List<String>? membersAddedToNotify,
+    List<String>? membersDeletedToNotify,
     bool updateSCAESKey = false,
   }) async =>
       Result.guard(() async {
@@ -146,9 +148,57 @@ class MessengerRepository
 
         await localDatasource.updateDiscussion(
           ownerAddress: owner.genesisAddress,
-          discussion: updatedDiscussion.discussion,
+          discussion: updatedDiscussion.discussion.copyWith(
+            address:
+                discussionSCAddress, // we are always saving in DB the genesis address of the discussion
+          ),
           discussionName: discussionName,
         );
+
+        if (membersAddedToNotify != null && membersAddedToNotify.isNotEmpty) {
+          await _sendTransactionNotification(
+            notificationRecipientAddress: updatedDiscussion.discussion.address,
+            listenAddresses: membersPubKeys,
+            creator: owner,
+            session: session,
+            previousKeyPair: updatedDiscussion.previousKeyPair,
+            pushNotification: {
+              'en': const PushNotification(
+                title: 'Archethic',
+                body: 'You have been added to a discussion',
+              ),
+              'fr': const PushNotification(
+                title: 'Archethic',
+                body: 'Vous avez été ajouté à une discussion',
+              ),
+            },
+            transactionType:
+                MessengerConstants.notificationTypeNewDiscussionAdding,
+          );
+        }
+
+        if (membersDeletedToNotify != null &&
+            membersDeletedToNotify.isNotEmpty) {
+          await _sendTransactionNotification(
+            notificationRecipientAddress: updatedDiscussion.discussion.address,
+            listenAddresses: membersPubKeys,
+            creator: owner,
+            session: session,
+            previousKeyPair: updatedDiscussion.previousKeyPair,
+            pushNotification: {
+              'en': const PushNotification(
+                title: 'Archethic',
+                body: 'You have been removed from a discussion',
+              ),
+              'fr': const PushNotification(
+                title: 'Archethic',
+                body: "Vous avez été supprimé d'une discussion",
+              ),
+            },
+            transactionType:
+                MessengerConstants.notificationTypeNewDiscussionDeletion,
+          );
+        }
 
         return updatedDiscussion.discussion;
       });
