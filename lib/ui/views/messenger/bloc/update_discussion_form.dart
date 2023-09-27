@@ -174,28 +174,22 @@ class UpdateDiscussionFormNotifier
         final keyPair = session.wallet.keychainSecuredInfos
             .services[selectedAccount.name]!.keyPair!.toKeyPair;
 
-        final atLeastOneMemberDeletedFromDiscussion = state.initialMembers.any(
-          (initMember) =>
-              state.listMembers.any((member) => initMember == member) == false,
-        );
+        final membersDeleted = Set.from(state.initialMembers)
+            .difference(Set.from(state.listMembers));
+        final membersAdded = Set.from(state.listMembers)
+            .difference(Set.from(state.initialMembers));
 
         var updateAESKey = false;
 
         // When there is at least one member that has been deleted from the discussion
         // we are going to renew the AES key to not let the previous users
         // (the one that are going to be deleted) read the next messages
-        if (atLeastOneMemberDeletedFromDiscussion) {
+        if (membersDeleted.isNotEmpty) {
           updateAESKey = true;
         } else {
-          final atLeastOneMemberHasBeenAdded = state.listMembers.any(
-            (initMember) =>
-                state.initialMembers.any((member) => member == initMember) ==
-                false,
-          );
-
           // When there is at least one new member in the discussion, we will ask the
           // user to choose if he wants to let the new user read the previous messages
-          if (atLeastOneMemberHasBeenAdded) {
+          if (membersAdded.isNotEmpty) {
             await AppDialogs.showConfirmDialog(
               context,
               ref,
@@ -223,6 +217,9 @@ class UpdateDiscussionFormNotifier
               adminKeyPair: keyPair,
               owner: selectedAccount,
               updateSCAESKey: updateAESKey,
+              membersDeletedToNotify:
+                  List<String>.from(membersDeleted.toList()),
+              membersAddedToNotify: List<String>.from(membersAdded.toList()),
             )
             .valueOrThrow;
 

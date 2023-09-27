@@ -37,6 +37,10 @@ part 'update_discussion_form.dart';
 class MessengerConstants {
   static const String notificationTypeNewDiscussion = 'newDiscussion';
   static const String notificationTypeNewMessage = 'newMessage';
+  static const String notificationTypeNewDiscussionAdding =
+      'newDiscussionAdding';
+  static const String notificationTypeNewDiscussionDeletion =
+      'newDiscussionDeletion';
 }
 
 @riverpod

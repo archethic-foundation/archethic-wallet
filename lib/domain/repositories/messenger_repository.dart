@@ -82,5 +82,7 @@ abstract class MessengerRepositoryInterface {
     required KeyPair adminKeyPair,
     required Account owner,
     bool updateSCAESKey = false,
+    List<String>? membersAddedToNotify,
+    List<String>? membersDeletedToNotify,
   });
 }
