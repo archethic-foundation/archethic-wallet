@@ -163,11 +163,11 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
 }
 
 /// @nodoc
-abstract class _$$_TransferFormStateCopyWith<$Res>
+abstract class _$$TransferFormStateImplCopyWith<$Res>
     implements $TransferFormStateCopyWith<$Res> {
-  factory _$$_TransferFormStateCopyWith(_$_TransferFormState value,
-          $Res Function(_$_TransferFormState) then) =
-      __$$_TransferFormStateCopyWithImpl<$Res>;
+  factory _$$TransferFormStateImplCopyWith(_$TransferFormStateImpl value,
+          $Res Function(_$TransferFormStateImpl) then) =
+      __$$TransferFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -191,11 +191,11 @@ abstract class _$$_TransferFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransferFormStateCopyWithImpl<$Res>
-    extends _$TransferFormStateCopyWithImpl<$Res, _$_TransferFormState>
-    implements _$$_TransferFormStateCopyWith<$Res> {
-  __$$_TransferFormStateCopyWithImpl(
-      _$_TransferFormState _value, $Res Function(_$_TransferFormState) _then)
+class __$$TransferFormStateImplCopyWithImpl<$Res>
+    extends _$TransferFormStateCopyWithImpl<$Res, _$TransferFormStateImpl>
+    implements _$$TransferFormStateImplCopyWith<$Res> {
+  __$$TransferFormStateImplCopyWithImpl(_$TransferFormStateImpl _value,
+      $Res Function(_$TransferFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -216,7 +216,7 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
     Object? errorAmountText = null,
     Object? errorMessageText = null,
   }) {
-    return _then(_$_TransferFormState(
+    return _then(_$TransferFormStateImpl(
       transferType: null == transferType
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
@@ -279,8 +279,8 @@ class __$$_TransferFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferFormState extends _TransferFormState {
-  const _$_TransferFormState(
+class _$TransferFormStateImpl extends _TransferFormState {
+  const _$TransferFormStateImpl(
       {this.transferType = TransferType.uco,
       this.transferProcessStep = TransferProcessStep.form,
       required this.feeEstimation,
@@ -349,7 +349,7 @@ class _$_TransferFormState extends _TransferFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferFormState &&
+            other is _$TransferFormStateImpl &&
             (identical(other.transferType, transferType) ||
                 other.transferType == transferType) &&
             (identical(other.transferProcessStep, transferProcessStep) ||
@@ -399,8 +399,8 @@ class _$_TransferFormState extends _TransferFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferFormStateCopyWith<_$_TransferFormState> get copyWith =>
-      __$$_TransferFormStateCopyWithImpl<_$_TransferFormState>(
+  _$$TransferFormStateImplCopyWith<_$TransferFormStateImpl> get copyWith =>
+      __$$TransferFormStateImplCopyWithImpl<_$TransferFormStateImpl>(
           this, _$identity);
 }
 
@@ -419,7 +419,7 @@ abstract class _TransferFormState extends TransferFormState {
       final String message,
       final String errorAddressText,
       final String errorAmountText,
-      final String errorMessageText}) = _$_TransferFormState;
+      final String errorMessageText}) = _$TransferFormStateImpl;
   const _TransferFormState._() : super._();
 
   @override
@@ -455,7 +455,7 @@ abstract class _TransferFormState extends TransferFormState {
   String get errorMessageText;
   @override
   @JsonKey(ignore: true)
-  _$$_TransferFormStateCopyWith<_$_TransferFormState> get copyWith =>
+  _$$TransferFormStateImplCopyWith<_$TransferFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -527,11 +527,11 @@ class _$TransferRecipientCopyWithImpl<$Res, $Val extends TransferRecipient>
 }
 
 /// @nodoc
-abstract class _$$_TransferDestinationAddressCopyWith<$Res> {
-  factory _$$_TransferDestinationAddressCopyWith(
-          _$_TransferDestinationAddress value,
-          $Res Function(_$_TransferDestinationAddress) then) =
-      __$$_TransferDestinationAddressCopyWithImpl<$Res>;
+abstract class _$$TransferDestinationAddressImplCopyWith<$Res> {
+  factory _$$TransferDestinationAddressImplCopyWith(
+          _$TransferDestinationAddressImpl value,
+          $Res Function(_$TransferDestinationAddressImpl) then) =
+      __$$TransferDestinationAddressImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Address address});
 
@@ -539,12 +539,13 @@ abstract class _$$_TransferDestinationAddressCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TransferDestinationAddressCopyWithImpl<$Res>
-    extends _$TransferRecipientCopyWithImpl<$Res, _$_TransferDestinationAddress>
-    implements _$$_TransferDestinationAddressCopyWith<$Res> {
-  __$$_TransferDestinationAddressCopyWithImpl(
-      _$_TransferDestinationAddress _value,
-      $Res Function(_$_TransferDestinationAddress) _then)
+class __$$TransferDestinationAddressImplCopyWithImpl<$Res>
+    extends _$TransferRecipientCopyWithImpl<$Res,
+        _$TransferDestinationAddressImpl>
+    implements _$$TransferDestinationAddressImplCopyWith<$Res> {
+  __$$TransferDestinationAddressImplCopyWithImpl(
+      _$TransferDestinationAddressImpl _value,
+      $Res Function(_$TransferDestinationAddressImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -552,7 +553,7 @@ class __$$_TransferDestinationAddressCopyWithImpl<$Res>
   $Res call({
     Object? address = null,
   }) {
-    return _then(_$_TransferDestinationAddress(
+    return _then(_$TransferDestinationAddressImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -571,8 +572,8 @@ class __$$_TransferDestinationAddressCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferDestinationAddress extends _TransferDestinationAddress {
-  const _$_TransferDestinationAddress({required this.address}) : super._();
+class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
+  const _$TransferDestinationAddressImpl({required this.address}) : super._();
 
   @override
   final Address address;
@@ -586,7 +587,7 @@ class _$_TransferDestinationAddress extends _TransferDestinationAddress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferDestinationAddress &&
+            other is _$TransferDestinationAddressImpl &&
             (identical(other.address, address) || other.address == address));
   }
 
@@ -596,9 +597,9 @@ class _$_TransferDestinationAddress extends _TransferDestinationAddress {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferDestinationAddressCopyWith<_$_TransferDestinationAddress>
-      get copyWith => __$$_TransferDestinationAddressCopyWithImpl<
-          _$_TransferDestinationAddress>(this, _$identity);
+  _$$TransferDestinationAddressImplCopyWith<_$TransferDestinationAddressImpl>
+      get copyWith => __$$TransferDestinationAddressImplCopyWithImpl<
+          _$TransferDestinationAddressImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -672,32 +673,33 @@ class _$_TransferDestinationAddress extends _TransferDestinationAddress {
 
 abstract class _TransferDestinationAddress extends TransferRecipient {
   const factory _TransferDestinationAddress({required final Address address}) =
-      _$_TransferDestinationAddress;
+      _$TransferDestinationAddressImpl;
   const _TransferDestinationAddress._() : super._();
 
   Address get address;
   @JsonKey(ignore: true)
-  _$$_TransferDestinationAddressCopyWith<_$_TransferDestinationAddress>
+  _$$TransferDestinationAddressImplCopyWith<_$TransferDestinationAddressImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TransferDestinationContactCopyWith<$Res> {
-  factory _$$_TransferDestinationContactCopyWith(
-          _$_TransferDestinationContact value,
-          $Res Function(_$_TransferDestinationContact) then) =
-      __$$_TransferDestinationContactCopyWithImpl<$Res>;
+abstract class _$$TransferDestinationContactImplCopyWith<$Res> {
+  factory _$$TransferDestinationContactImplCopyWith(
+          _$TransferDestinationContactImpl value,
+          $Res Function(_$TransferDestinationContactImpl) then) =
+      __$$TransferDestinationContactImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Contact contact});
 }
 
 /// @nodoc
-class __$$_TransferDestinationContactCopyWithImpl<$Res>
-    extends _$TransferRecipientCopyWithImpl<$Res, _$_TransferDestinationContact>
-    implements _$$_TransferDestinationContactCopyWith<$Res> {
-  __$$_TransferDestinationContactCopyWithImpl(
-      _$_TransferDestinationContact _value,
-      $Res Function(_$_TransferDestinationContact) _then)
+class __$$TransferDestinationContactImplCopyWithImpl<$Res>
+    extends _$TransferRecipientCopyWithImpl<$Res,
+        _$TransferDestinationContactImpl>
+    implements _$$TransferDestinationContactImplCopyWith<$Res> {
+  __$$TransferDestinationContactImplCopyWithImpl(
+      _$TransferDestinationContactImpl _value,
+      $Res Function(_$TransferDestinationContactImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -705,7 +707,7 @@ class __$$_TransferDestinationContactCopyWithImpl<$Res>
   $Res call({
     Object? contact = null,
   }) {
-    return _then(_$_TransferDestinationContact(
+    return _then(_$TransferDestinationContactImpl(
       contact: null == contact
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
@@ -716,8 +718,8 @@ class __$$_TransferDestinationContactCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferDestinationContact extends _TransferDestinationContact {
-  const _$_TransferDestinationContact({required this.contact}) : super._();
+class _$TransferDestinationContactImpl extends _TransferDestinationContact {
+  const _$TransferDestinationContactImpl({required this.contact}) : super._();
 
   @override
   final Contact contact;
@@ -731,7 +733,7 @@ class _$_TransferDestinationContact extends _TransferDestinationContact {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferDestinationContact &&
+            other is _$TransferDestinationContactImpl &&
             (identical(other.contact, contact) || other.contact == contact));
   }
 
@@ -741,9 +743,9 @@ class _$_TransferDestinationContact extends _TransferDestinationContact {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferDestinationContactCopyWith<_$_TransferDestinationContact>
-      get copyWith => __$$_TransferDestinationContactCopyWithImpl<
-          _$_TransferDestinationContact>(this, _$identity);
+  _$$TransferDestinationContactImplCopyWith<_$TransferDestinationContactImpl>
+      get copyWith => __$$TransferDestinationContactImplCopyWithImpl<
+          _$TransferDestinationContactImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -817,33 +819,33 @@ class _$_TransferDestinationContact extends _TransferDestinationContact {
 
 abstract class _TransferDestinationContact extends TransferRecipient {
   const factory _TransferDestinationContact({required final Contact contact}) =
-      _$_TransferDestinationContact;
+      _$TransferDestinationContactImpl;
   const _TransferDestinationContact._() : super._();
 
   Contact get contact;
   @JsonKey(ignore: true)
-  _$$_TransferDestinationContactCopyWith<_$_TransferDestinationContact>
+  _$$TransferDestinationContactImplCopyWith<_$TransferDestinationContactImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TransferDestinationUnknownContactCopyWith<$Res> {
-  factory _$$_TransferDestinationUnknownContactCopyWith(
-          _$_TransferDestinationUnknownContact value,
-          $Res Function(_$_TransferDestinationUnknownContact) then) =
-      __$$_TransferDestinationUnknownContactCopyWithImpl<$Res>;
+abstract class _$$TransferDestinationUnknownContactImplCopyWith<$Res> {
+  factory _$$TransferDestinationUnknownContactImplCopyWith(
+          _$TransferDestinationUnknownContactImpl value,
+          $Res Function(_$TransferDestinationUnknownContactImpl) then) =
+      __$$TransferDestinationUnknownContactImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class __$$_TransferDestinationUnknownContactCopyWithImpl<$Res>
+class __$$TransferDestinationUnknownContactImplCopyWithImpl<$Res>
     extends _$TransferRecipientCopyWithImpl<$Res,
-        _$_TransferDestinationUnknownContact>
-    implements _$$_TransferDestinationUnknownContactCopyWith<$Res> {
-  __$$_TransferDestinationUnknownContactCopyWithImpl(
-      _$_TransferDestinationUnknownContact _value,
-      $Res Function(_$_TransferDestinationUnknownContact) _then)
+        _$TransferDestinationUnknownContactImpl>
+    implements _$$TransferDestinationUnknownContactImplCopyWith<$Res> {
+  __$$TransferDestinationUnknownContactImplCopyWithImpl(
+      _$TransferDestinationUnknownContactImpl _value,
+      $Res Function(_$TransferDestinationUnknownContactImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -851,7 +853,7 @@ class __$$_TransferDestinationUnknownContactCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
   }) {
-    return _then(_$_TransferDestinationUnknownContact(
+    return _then(_$TransferDestinationUnknownContactImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -862,9 +864,10 @@ class __$$_TransferDestinationUnknownContactCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferDestinationUnknownContact
+class _$TransferDestinationUnknownContactImpl
     extends _TransferDestinationUnknownContact {
-  const _$_TransferDestinationUnknownContact({required this.name}) : super._();
+  const _$TransferDestinationUnknownContactImpl({required this.name})
+      : super._();
 
   @override
   final String name;
@@ -878,7 +881,7 @@ class _$_TransferDestinationUnknownContact
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferDestinationUnknownContact &&
+            other is _$TransferDestinationUnknownContactImpl &&
             (identical(other.name, name) || other.name == name));
   }
 
@@ -888,10 +891,10 @@ class _$_TransferDestinationUnknownContact
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferDestinationUnknownContactCopyWith<
-          _$_TransferDestinationUnknownContact>
-      get copyWith => __$$_TransferDestinationUnknownContactCopyWithImpl<
-          _$_TransferDestinationUnknownContact>(this, _$identity);
+  _$$TransferDestinationUnknownContactImplCopyWith<
+          _$TransferDestinationUnknownContactImpl>
+      get copyWith => __$$TransferDestinationUnknownContactImplCopyWithImpl<
+          _$TransferDestinationUnknownContactImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -965,12 +968,12 @@ class _$_TransferDestinationUnknownContact
 
 abstract class _TransferDestinationUnknownContact extends TransferRecipient {
   const factory _TransferDestinationUnknownContact(
-      {required final String name}) = _$_TransferDestinationUnknownContact;
+      {required final String name}) = _$TransferDestinationUnknownContactImpl;
   const _TransferDestinationUnknownContact._() : super._();
 
   String get name;
   @JsonKey(ignore: true)
-  _$$_TransferDestinationUnknownContactCopyWith<
-          _$_TransferDestinationUnknownContact>
+  _$$TransferDestinationUnknownContactImplCopyWith<
+          _$TransferDestinationUnknownContactImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

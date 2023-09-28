@@ -63,22 +63,22 @@ class _$UseCaseProgressCopyWithImpl<$Res, $Val extends UseCaseProgress>
 }
 
 /// @nodoc
-abstract class _$$_UseCaseProgressCopyWith<$Res>
+abstract class _$$UseCaseProgressImplCopyWith<$Res>
     implements $UseCaseProgressCopyWith<$Res> {
-  factory _$$_UseCaseProgressCopyWith(
-          _$_UseCaseProgress value, $Res Function(_$_UseCaseProgress) then) =
-      __$$_UseCaseProgressCopyWithImpl<$Res>;
+  factory _$$UseCaseProgressImplCopyWith(_$UseCaseProgressImpl value,
+          $Res Function(_$UseCaseProgressImpl) then) =
+      __$$UseCaseProgressImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int progress, int total});
 }
 
 /// @nodoc
-class __$$_UseCaseProgressCopyWithImpl<$Res>
-    extends _$UseCaseProgressCopyWithImpl<$Res, _$_UseCaseProgress>
-    implements _$$_UseCaseProgressCopyWith<$Res> {
-  __$$_UseCaseProgressCopyWithImpl(
-      _$_UseCaseProgress _value, $Res Function(_$_UseCaseProgress) _then)
+class __$$UseCaseProgressImplCopyWithImpl<$Res>
+    extends _$UseCaseProgressCopyWithImpl<$Res, _$UseCaseProgressImpl>
+    implements _$$UseCaseProgressImplCopyWith<$Res> {
+  __$$UseCaseProgressImplCopyWithImpl(
+      _$UseCaseProgressImpl _value, $Res Function(_$UseCaseProgressImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_UseCaseProgressCopyWithImpl<$Res>
     Object? progress = null,
     Object? total = null,
   }) {
-    return _then(_$_UseCaseProgress(
+    return _then(_$UseCaseProgressImpl(
       progress: null == progress
           ? _value.progress
           : progress // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_UseCaseProgressCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UseCaseProgress extends _UseCaseProgress {
-  const _$_UseCaseProgress({required this.progress, required this.total})
+class _$UseCaseProgressImpl extends _UseCaseProgress {
+  const _$UseCaseProgressImpl({required this.progress, required this.total})
       : super._();
 
   @override
@@ -120,7 +120,7 @@ class _$_UseCaseProgress extends _UseCaseProgress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UseCaseProgress &&
+            other is _$UseCaseProgressImpl &&
             (identical(other.progress, progress) ||
                 other.progress == progress) &&
             (identical(other.total, total) || other.total == total));
@@ -132,14 +132,15 @@ class _$_UseCaseProgress extends _UseCaseProgress {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UseCaseProgressCopyWith<_$_UseCaseProgress> get copyWith =>
-      __$$_UseCaseProgressCopyWithImpl<_$_UseCaseProgress>(this, _$identity);
+  _$$UseCaseProgressImplCopyWith<_$UseCaseProgressImpl> get copyWith =>
+      __$$UseCaseProgressImplCopyWithImpl<_$UseCaseProgressImpl>(
+          this, _$identity);
 }
 
 abstract class _UseCaseProgress extends UseCaseProgress {
   const factory _UseCaseProgress(
       {required final int progress,
-      required final int total}) = _$_UseCaseProgress;
+      required final int total}) = _$UseCaseProgressImpl;
   const _UseCaseProgress._() : super._();
 
   @override
@@ -148,6 +149,6 @@ abstract class _UseCaseProgress extends UseCaseProgress {
   int get total;
   @override
   @JsonKey(ignore: true)
-  _$$_UseCaseProgressCopyWith<_$_UseCaseProgress> get copyWith =>
+  _$$UseCaseProgressImplCopyWith<_$UseCaseProgressImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

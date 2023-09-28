@@ -83,11 +83,11 @@ class _$DiscussionMessageCopyWithImpl<$Res, $Val extends DiscussionMessage>
 }
 
 /// @nodoc
-abstract class _$$_DiscussionMessageCopyWith<$Res>
+abstract class _$$DiscussionMessageImplCopyWith<$Res>
     implements $DiscussionMessageCopyWith<$Res> {
-  factory _$$_DiscussionMessageCopyWith(_$_DiscussionMessage value,
-          $Res Function(_$_DiscussionMessage) then) =
-      __$$_DiscussionMessageCopyWithImpl<$Res>;
+  factory _$$DiscussionMessageImplCopyWith(_$DiscussionMessageImpl value,
+          $Res Function(_$DiscussionMessageImpl) then) =
+      __$$DiscussionMessageImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -98,11 +98,11 @@ abstract class _$$_DiscussionMessageCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DiscussionMessageCopyWithImpl<$Res>
-    extends _$DiscussionMessageCopyWithImpl<$Res, _$_DiscussionMessage>
-    implements _$$_DiscussionMessageCopyWith<$Res> {
-  __$$_DiscussionMessageCopyWithImpl(
-      _$_DiscussionMessage _value, $Res Function(_$_DiscussionMessage) _then)
+class __$$DiscussionMessageImplCopyWithImpl<$Res>
+    extends _$DiscussionMessageCopyWithImpl<$Res, _$DiscussionMessageImpl>
+    implements _$$DiscussionMessageImplCopyWith<$Res> {
+  __$$DiscussionMessageImplCopyWithImpl(_$DiscussionMessageImpl _value,
+      $Res Function(_$DiscussionMessageImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -113,7 +113,7 @@ class __$$_DiscussionMessageCopyWithImpl<$Res>
     Object? date = null,
     Object? address = null,
   }) {
-    return _then(_$_DiscussionMessage(
+    return _then(_$DiscussionMessageImpl(
       senderGenesisPublicKey: null == senderGenesisPublicKey
           ? _value.senderGenesisPublicKey
           : senderGenesisPublicKey // ignore: cast_nullable_to_non_nullable
@@ -137,8 +137,8 @@ class __$$_DiscussionMessageCopyWithImpl<$Res>
 /// @nodoc
 
 @HiveType(typeId: HiveTypeIds.discussionMessage)
-class _$_DiscussionMessage extends _DiscussionMessage {
-  const _$_DiscussionMessage(
+class _$DiscussionMessageImpl extends _DiscussionMessage {
+  const _$DiscussionMessageImpl(
       {@HiveField(0) required this.senderGenesisPublicKey,
       @HiveField(1) required this.content,
       @HiveField(2) required this.date,
@@ -167,7 +167,7 @@ class _$_DiscussionMessage extends _DiscussionMessage {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DiscussionMessage &&
+            other is _$DiscussionMessageImpl &&
             (identical(other.senderGenesisPublicKey, senderGenesisPublicKey) ||
                 other.senderGenesisPublicKey == senderGenesisPublicKey) &&
             (identical(other.content, content) || other.content == content) &&
@@ -182,8 +182,8 @@ class _$_DiscussionMessage extends _DiscussionMessage {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DiscussionMessageCopyWith<_$_DiscussionMessage> get copyWith =>
-      __$$_DiscussionMessageCopyWithImpl<_$_DiscussionMessage>(
+  _$$DiscussionMessageImplCopyWith<_$DiscussionMessageImpl> get copyWith =>
+      __$$DiscussionMessageImplCopyWithImpl<_$DiscussionMessageImpl>(
           this, _$identity);
 }
 
@@ -192,7 +192,7 @@ abstract class _DiscussionMessage extends DiscussionMessage {
       {@HiveField(0) required final String senderGenesisPublicKey,
       @HiveField(1) required final String content,
       @HiveField(2) required final DateTime date,
-      @HiveField(3) required final String address}) = _$_DiscussionMessage;
+      @HiveField(3) required final String address}) = _$DiscussionMessageImpl;
   const _DiscussionMessage._() : super._();
 
   @override
@@ -209,6 +209,6 @@ abstract class _DiscussionMessage extends DiscussionMessage {
   String get address;
   @override
   @JsonKey(ignore: true)
-  _$$_DiscussionMessageCopyWith<_$_DiscussionMessage> get copyWith =>
+  _$$DiscussionMessageImplCopyWith<_$DiscussionMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

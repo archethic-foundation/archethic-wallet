@@ -78,25 +78,25 @@ class _$RPCKeychainDeriveKeypairCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCKeychainDeriveKeypairCommandDataCopyWith<$Res>
+abstract class _$$RPCKeychainDeriveKeypairCommandDataImplCopyWith<$Res>
     implements $RPCKeychainDeriveKeypairCommandDataCopyWith<$Res> {
-  factory _$$_RPCKeychainDeriveKeypairCommandDataCopyWith(
-          _$_RPCKeychainDeriveKeypairCommandData value,
-          $Res Function(_$_RPCKeychainDeriveKeypairCommandData) then) =
-      __$$_RPCKeychainDeriveKeypairCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCKeychainDeriveKeypairCommandDataImplCopyWith(
+          _$RPCKeychainDeriveKeypairCommandDataImpl value,
+          $Res Function(_$RPCKeychainDeriveKeypairCommandDataImpl) then) =
+      __$$RPCKeychainDeriveKeypairCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String serviceName, int? index, String? pathSuffix});
 }
 
 /// @nodoc
-class __$$_RPCKeychainDeriveKeypairCommandDataCopyWithImpl<$Res>
+class __$$RPCKeychainDeriveKeypairCommandDataImplCopyWithImpl<$Res>
     extends _$RPCKeychainDeriveKeypairCommandDataCopyWithImpl<$Res,
-        _$_RPCKeychainDeriveKeypairCommandData>
-    implements _$$_RPCKeychainDeriveKeypairCommandDataCopyWith<$Res> {
-  __$$_RPCKeychainDeriveKeypairCommandDataCopyWithImpl(
-      _$_RPCKeychainDeriveKeypairCommandData _value,
-      $Res Function(_$_RPCKeychainDeriveKeypairCommandData) _then)
+        _$RPCKeychainDeriveKeypairCommandDataImpl>
+    implements _$$RPCKeychainDeriveKeypairCommandDataImplCopyWith<$Res> {
+  __$$RPCKeychainDeriveKeypairCommandDataImplCopyWithImpl(
+      _$RPCKeychainDeriveKeypairCommandDataImpl _value,
+      $Res Function(_$RPCKeychainDeriveKeypairCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_RPCKeychainDeriveKeypairCommandDataCopyWithImpl<$Res>
     Object? index = freezed,
     Object? pathSuffix = freezed,
   }) {
-    return _then(_$_RPCKeychainDeriveKeypairCommandData(
+    return _then(_$RPCKeychainDeriveKeypairCommandDataImpl(
       serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
@@ -125,9 +125,9 @@ class __$$_RPCKeychainDeriveKeypairCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCKeychainDeriveKeypairCommandData
+class _$RPCKeychainDeriveKeypairCommandDataImpl
     extends _RPCKeychainDeriveKeypairCommandData {
-  const _$_RPCKeychainDeriveKeypairCommandData(
+  const _$RPCKeychainDeriveKeypairCommandDataImpl(
       {required this.serviceName, this.index, this.pathSuffix})
       : super._();
 
@@ -152,7 +152,7 @@ class _$_RPCKeychainDeriveKeypairCommandData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCKeychainDeriveKeypairCommandData &&
+            other is _$RPCKeychainDeriveKeypairCommandDataImpl &&
             (identical(other.serviceName, serviceName) ||
                 other.serviceName == serviceName) &&
             (identical(other.index, index) || other.index == index) &&
@@ -166,10 +166,10 @@ class _$_RPCKeychainDeriveKeypairCommandData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCKeychainDeriveKeypairCommandDataCopyWith<
-          _$_RPCKeychainDeriveKeypairCommandData>
-      get copyWith => __$$_RPCKeychainDeriveKeypairCommandDataCopyWithImpl<
-          _$_RPCKeychainDeriveKeypairCommandData>(this, _$identity);
+  _$$RPCKeychainDeriveKeypairCommandDataImplCopyWith<
+          _$RPCKeychainDeriveKeypairCommandDataImpl>
+      get copyWith => __$$RPCKeychainDeriveKeypairCommandDataImplCopyWithImpl<
+          _$RPCKeychainDeriveKeypairCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCKeychainDeriveKeypairCommandData
@@ -177,7 +177,7 @@ abstract class _RPCKeychainDeriveKeypairCommandData
   const factory _RPCKeychainDeriveKeypairCommandData(
       {required final String serviceName,
       final int? index,
-      final String? pathSuffix}) = _$_RPCKeychainDeriveKeypairCommandData;
+      final String? pathSuffix}) = _$RPCKeychainDeriveKeypairCommandDataImpl;
   const _RPCKeychainDeriveKeypairCommandData._() : super._();
 
   @override
@@ -194,8 +194,8 @@ abstract class _RPCKeychainDeriveKeypairCommandData
   String? get pathSuffix;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCKeychainDeriveKeypairCommandDataCopyWith<
-          _$_RPCKeychainDeriveKeypairCommandData>
+  _$$RPCKeychainDeriveKeypairCommandDataImplCopyWith<
+          _$RPCKeychainDeriveKeypairCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -246,25 +246,25 @@ class _$RPCKeychainDeriveKeypairResultDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCKeychainDeriveKeypairResultDataCopyWith<$Res>
+abstract class _$$RPCKeychainDeriveKeypairResultDataImplCopyWith<$Res>
     implements $RPCKeychainDeriveKeypairResultDataCopyWith<$Res> {
-  factory _$$_RPCKeychainDeriveKeypairResultDataCopyWith(
-          _$_RPCKeychainDeriveKeypairResultData value,
-          $Res Function(_$_RPCKeychainDeriveKeypairResultData) then) =
-      __$$_RPCKeychainDeriveKeypairResultDataCopyWithImpl<$Res>;
+  factory _$$RPCKeychainDeriveKeypairResultDataImplCopyWith(
+          _$RPCKeychainDeriveKeypairResultDataImpl value,
+          $Res Function(_$RPCKeychainDeriveKeypairResultDataImpl) then) =
+      __$$RPCKeychainDeriveKeypairResultDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String publicKey});
 }
 
 /// @nodoc
-class __$$_RPCKeychainDeriveKeypairResultDataCopyWithImpl<$Res>
+class __$$RPCKeychainDeriveKeypairResultDataImplCopyWithImpl<$Res>
     extends _$RPCKeychainDeriveKeypairResultDataCopyWithImpl<$Res,
-        _$_RPCKeychainDeriveKeypairResultData>
-    implements _$$_RPCKeychainDeriveKeypairResultDataCopyWith<$Res> {
-  __$$_RPCKeychainDeriveKeypairResultDataCopyWithImpl(
-      _$_RPCKeychainDeriveKeypairResultData _value,
-      $Res Function(_$_RPCKeychainDeriveKeypairResultData) _then)
+        _$RPCKeychainDeriveKeypairResultDataImpl>
+    implements _$$RPCKeychainDeriveKeypairResultDataImplCopyWith<$Res> {
+  __$$RPCKeychainDeriveKeypairResultDataImplCopyWithImpl(
+      _$RPCKeychainDeriveKeypairResultDataImpl _value,
+      $Res Function(_$RPCKeychainDeriveKeypairResultDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -272,7 +272,7 @@ class __$$_RPCKeychainDeriveKeypairResultDataCopyWithImpl<$Res>
   $Res call({
     Object? publicKey = null,
   }) {
-    return _then(_$_RPCKeychainDeriveKeypairResultData(
+    return _then(_$RPCKeychainDeriveKeypairResultDataImpl(
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
@@ -283,9 +283,9 @@ class __$$_RPCKeychainDeriveKeypairResultDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCKeychainDeriveKeypairResultData
+class _$RPCKeychainDeriveKeypairResultDataImpl
     extends _RPCKeychainDeriveKeypairResultData {
-  const _$_RPCKeychainDeriveKeypairResultData({required this.publicKey})
+  const _$RPCKeychainDeriveKeypairResultDataImpl({required this.publicKey})
       : super._();
 
   @override
@@ -300,7 +300,7 @@ class _$_RPCKeychainDeriveKeypairResultData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCKeychainDeriveKeypairResultData &&
+            other is _$RPCKeychainDeriveKeypairResultDataImpl &&
             (identical(other.publicKey, publicKey) ||
                 other.publicKey == publicKey));
   }
@@ -311,24 +311,24 @@ class _$_RPCKeychainDeriveKeypairResultData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCKeychainDeriveKeypairResultDataCopyWith<
-          _$_RPCKeychainDeriveKeypairResultData>
-      get copyWith => __$$_RPCKeychainDeriveKeypairResultDataCopyWithImpl<
-          _$_RPCKeychainDeriveKeypairResultData>(this, _$identity);
+  _$$RPCKeychainDeriveKeypairResultDataImplCopyWith<
+          _$RPCKeychainDeriveKeypairResultDataImpl>
+      get copyWith => __$$RPCKeychainDeriveKeypairResultDataImplCopyWithImpl<
+          _$RPCKeychainDeriveKeypairResultDataImpl>(this, _$identity);
 }
 
 abstract class _RPCKeychainDeriveKeypairResultData
     extends RPCKeychainDeriveKeypairResultData {
   const factory _RPCKeychainDeriveKeypairResultData(
           {required final String publicKey}) =
-      _$_RPCKeychainDeriveKeypairResultData;
+      _$RPCKeychainDeriveKeypairResultDataImpl;
   const _RPCKeychainDeriveKeypairResultData._() : super._();
 
   @override
   String get publicKey;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCKeychainDeriveKeypairResultDataCopyWith<
-          _$_RPCKeychainDeriveKeypairResultData>
+  _$$RPCKeychainDeriveKeypairResultDataImplCopyWith<
+          _$RPCKeychainDeriveKeypairResultDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

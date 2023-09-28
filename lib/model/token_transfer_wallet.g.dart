@@ -6,9 +6,9 @@ part of 'token_transfer_wallet.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TokenTransferWallet _$$_TokenTransferWalletFromJson(
+_$TokenTransferWalletImpl _$$TokenTransferWalletImplFromJson(
         Map<String, dynamic> json) =>
-    _$_TokenTransferWallet(
+    _$TokenTransferWalletImpl(
       amount: json['amount'] as int?,
       to: json['to'] as String?,
       tokenAddress: json['tokenAddress'] as String?,
@@ -16,8 +16,8 @@ _$_TokenTransferWallet _$$_TokenTransferWalletFromJson(
       toContactName: json['toContactName'] as String?,
     );
 
-Map<String, dynamic> _$$_TokenTransferWalletToJson(
-        _$_TokenTransferWallet instance) =>
+Map<String, dynamic> _$$TokenTransferWalletImplToJson(
+        _$TokenTransferWalletImpl instance) =>
     <String, dynamic>{
       'amount': instance.amount,
       'to': instance.to,

@@ -89,25 +89,25 @@ class _$AuthenticationResultCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AuthenticationResultCopyWith<$Res> {
-  factory _$$_AuthenticationResultCopyWith(_$_AuthenticationResult value,
-          $Res Function(_$_AuthenticationResult) then) =
-      __$$_AuthenticationResultCopyWithImpl<$Res>;
+abstract class _$$AuthenticationResultImplCopyWith<$Res> {
+  factory _$$AuthenticationResultImplCopyWith(_$AuthenticationResultImpl value,
+          $Res Function(_$AuthenticationResultImpl) then) =
+      __$$AuthenticationResultImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AuthenticationResultCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res, _$_AuthenticationResult>
-    implements _$$_AuthenticationResultCopyWith<$Res> {
-  __$$_AuthenticationResultCopyWithImpl(_$_AuthenticationResult _value,
-      $Res Function(_$_AuthenticationResult) _then)
+class __$$AuthenticationResultImplCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res, _$AuthenticationResultImpl>
+    implements _$$AuthenticationResultImplCopyWith<$Res> {
+  __$$AuthenticationResultImplCopyWithImpl(_$AuthenticationResultImpl _value,
+      $Res Function(_$AuthenticationResultImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AuthenticationResult extends _AuthenticationResult {
-  const _$_AuthenticationResult() : super._();
+class _$AuthenticationResultImpl extends _AuthenticationResult {
+  const _$AuthenticationResultImpl() : super._();
 
   @override
   String toString() {
@@ -117,7 +117,8 @@ class _$_AuthenticationResult extends _AuthenticationResult {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_AuthenticationResult);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthenticationResultImpl);
   }
 
   @override
@@ -200,30 +201,32 @@ class _$_AuthenticationResult extends _AuthenticationResult {
 }
 
 abstract class _AuthenticationResult extends AuthenticationResult {
-  const factory _AuthenticationResult() = _$_AuthenticationResult;
+  const factory _AuthenticationResult() = _$AuthenticationResultImpl;
   const _AuthenticationResult._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_AuthenticationFailureCopyWith<$Res> {
-  factory _$$_AuthenticationFailureCopyWith(_$_AuthenticationFailure value,
-          $Res Function(_$_AuthenticationFailure) then) =
-      __$$_AuthenticationFailureCopyWithImpl<$Res>;
+abstract class _$$AuthenticationFailureImplCopyWith<$Res> {
+  factory _$$AuthenticationFailureImplCopyWith(
+          _$AuthenticationFailureImpl value,
+          $Res Function(_$AuthenticationFailureImpl) then) =
+      __$$AuthenticationFailureImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AuthenticationFailureCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res, _$_AuthenticationFailure>
-    implements _$$_AuthenticationFailureCopyWith<$Res> {
-  __$$_AuthenticationFailureCopyWithImpl(_$_AuthenticationFailure _value,
-      $Res Function(_$_AuthenticationFailure) _then)
+class __$$AuthenticationFailureImplCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res,
+        _$AuthenticationFailureImpl>
+    implements _$$AuthenticationFailureImplCopyWith<$Res> {
+  __$$AuthenticationFailureImplCopyWithImpl(_$AuthenticationFailureImpl _value,
+      $Res Function(_$AuthenticationFailureImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AuthenticationFailure extends _AuthenticationFailure {
-  const _$_AuthenticationFailure() : super._();
+class _$AuthenticationFailureImpl extends _AuthenticationFailure {
+  const _$AuthenticationFailureImpl() : super._();
 
   @override
   String toString() {
@@ -233,7 +236,8 @@ class _$_AuthenticationFailure extends _AuthenticationFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_AuthenticationFailure);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthenticationFailureImpl);
   }
 
   @override
@@ -316,30 +320,33 @@ class _$_AuthenticationFailure extends _AuthenticationFailure {
 }
 
 abstract class _AuthenticationFailure extends AuthenticationResult {
-  const factory _AuthenticationFailure() = _$_AuthenticationFailure;
+  const factory _AuthenticationFailure() = _$AuthenticationFailureImpl;
   const _AuthenticationFailure._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_AuthenticationNotSetupCopyWith<$Res> {
-  factory _$$_AuthenticationNotSetupCopyWith(_$_AuthenticationNotSetup value,
-          $Res Function(_$_AuthenticationNotSetup) then) =
-      __$$_AuthenticationNotSetupCopyWithImpl<$Res>;
+abstract class _$$AuthenticationNotSetupImplCopyWith<$Res> {
+  factory _$$AuthenticationNotSetupImplCopyWith(
+          _$AuthenticationNotSetupImpl value,
+          $Res Function(_$AuthenticationNotSetupImpl) then) =
+      __$$AuthenticationNotSetupImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AuthenticationNotSetupCopyWithImpl<$Res>
-    extends _$AuthenticationResultCopyWithImpl<$Res, _$_AuthenticationNotSetup>
-    implements _$$_AuthenticationNotSetupCopyWith<$Res> {
-  __$$_AuthenticationNotSetupCopyWithImpl(_$_AuthenticationNotSetup _value,
-      $Res Function(_$_AuthenticationNotSetup) _then)
+class __$$AuthenticationNotSetupImplCopyWithImpl<$Res>
+    extends _$AuthenticationResultCopyWithImpl<$Res,
+        _$AuthenticationNotSetupImpl>
+    implements _$$AuthenticationNotSetupImplCopyWith<$Res> {
+  __$$AuthenticationNotSetupImplCopyWithImpl(
+      _$AuthenticationNotSetupImpl _value,
+      $Res Function(_$AuthenticationNotSetupImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AuthenticationNotSetup extends _AuthenticationNotSetup {
-  const _$_AuthenticationNotSetup() : super._();
+class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup {
+  const _$AuthenticationNotSetupImpl() : super._();
 
   @override
   String toString() {
@@ -350,7 +357,7 @@ class _$_AuthenticationNotSetup extends _AuthenticationNotSetup {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthenticationNotSetup);
+            other is _$AuthenticationNotSetupImpl);
   }
 
   @override
@@ -433,33 +440,34 @@ class _$_AuthenticationNotSetup extends _AuthenticationNotSetup {
 }
 
 abstract class _AuthenticationNotSetup extends AuthenticationResult {
-  const factory _AuthenticationNotSetup() = _$_AuthenticationNotSetup;
+  const factory _AuthenticationNotSetup() = _$AuthenticationNotSetupImpl;
   const _AuthenticationNotSetup._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_AuthenticationTooMuchAttemptsCopyWith<$Res> {
-  factory _$$_AuthenticationTooMuchAttemptsCopyWith(
-          _$_AuthenticationTooMuchAttempts value,
-          $Res Function(_$_AuthenticationTooMuchAttempts) then) =
-      __$$_AuthenticationTooMuchAttemptsCopyWithImpl<$Res>;
+abstract class _$$AuthenticationTooMuchAttemptsImplCopyWith<$Res> {
+  factory _$$AuthenticationTooMuchAttemptsImplCopyWith(
+          _$AuthenticationTooMuchAttemptsImpl value,
+          $Res Function(_$AuthenticationTooMuchAttemptsImpl) then) =
+      __$$AuthenticationTooMuchAttemptsImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AuthenticationTooMuchAttemptsCopyWithImpl<$Res>
+class __$$AuthenticationTooMuchAttemptsImplCopyWithImpl<$Res>
     extends _$AuthenticationResultCopyWithImpl<$Res,
-        _$_AuthenticationTooMuchAttempts>
-    implements _$$_AuthenticationTooMuchAttemptsCopyWith<$Res> {
-  __$$_AuthenticationTooMuchAttemptsCopyWithImpl(
-      _$_AuthenticationTooMuchAttempts _value,
-      $Res Function(_$_AuthenticationTooMuchAttempts) _then)
+        _$AuthenticationTooMuchAttemptsImpl>
+    implements _$$AuthenticationTooMuchAttemptsImplCopyWith<$Res> {
+  __$$AuthenticationTooMuchAttemptsImplCopyWithImpl(
+      _$AuthenticationTooMuchAttemptsImpl _value,
+      $Res Function(_$AuthenticationTooMuchAttemptsImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AuthenticationTooMuchAttempts extends _AuthenticationTooMuchAttempts {
-  const _$_AuthenticationTooMuchAttempts() : super._();
+class _$AuthenticationTooMuchAttemptsImpl
+    extends _AuthenticationTooMuchAttempts {
+  const _$AuthenticationTooMuchAttemptsImpl() : super._();
 
   @override
   String toString() {
@@ -470,7 +478,7 @@ class _$_AuthenticationTooMuchAttempts extends _AuthenticationTooMuchAttempts {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthenticationTooMuchAttempts);
+            other is _$AuthenticationTooMuchAttemptsImpl);
   }
 
   @override
@@ -554,7 +562,7 @@ class _$_AuthenticationTooMuchAttempts extends _AuthenticationTooMuchAttempts {
 
 abstract class _AuthenticationTooMuchAttempts extends AuthenticationResult {
   const factory _AuthenticationTooMuchAttempts() =
-      _$_AuthenticationTooMuchAttempts;
+      _$AuthenticationTooMuchAttemptsImpl;
   const _AuthenticationTooMuchAttempts._() : super._();
 }
 
@@ -619,25 +627,25 @@ class _$UpdatePinResultCopyWithImpl<$Res, $Val extends UpdatePinResult>
 }
 
 /// @nodoc
-abstract class _$$_UpdatePinSuccessCopyWith<$Res> {
-  factory _$$_UpdatePinSuccessCopyWith(
-          _$_UpdatePinSuccess value, $Res Function(_$_UpdatePinSuccess) then) =
-      __$$_UpdatePinSuccessCopyWithImpl<$Res>;
+abstract class _$$UpdatePinSuccessImplCopyWith<$Res> {
+  factory _$$UpdatePinSuccessImplCopyWith(_$UpdatePinSuccessImpl value,
+          $Res Function(_$UpdatePinSuccessImpl) then) =
+      __$$UpdatePinSuccessImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_UpdatePinSuccessCopyWithImpl<$Res>
-    extends _$UpdatePinResultCopyWithImpl<$Res, _$_UpdatePinSuccess>
-    implements _$$_UpdatePinSuccessCopyWith<$Res> {
-  __$$_UpdatePinSuccessCopyWithImpl(
-      _$_UpdatePinSuccess _value, $Res Function(_$_UpdatePinSuccess) _then)
+class __$$UpdatePinSuccessImplCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res, _$UpdatePinSuccessImpl>
+    implements _$$UpdatePinSuccessImplCopyWith<$Res> {
+  __$$UpdatePinSuccessImplCopyWithImpl(_$UpdatePinSuccessImpl _value,
+      $Res Function(_$UpdatePinSuccessImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_UpdatePinSuccess extends _UpdatePinSuccess {
-  const _$_UpdatePinSuccess() : super._();
+class _$UpdatePinSuccessImpl extends _UpdatePinSuccess {
+  const _$UpdatePinSuccessImpl() : super._();
 
   @override
   String toString() {
@@ -647,7 +655,7 @@ class _$_UpdatePinSuccess extends _UpdatePinSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UpdatePinSuccess);
+        (other.runtimeType == runtimeType && other is _$UpdatePinSuccessImpl);
   }
 
   @override
@@ -717,30 +725,30 @@ class _$_UpdatePinSuccess extends _UpdatePinSuccess {
 }
 
 abstract class _UpdatePinSuccess extends UpdatePinResult {
-  const factory _UpdatePinSuccess() = _$_UpdatePinSuccess;
+  const factory _UpdatePinSuccess() = _$UpdatePinSuccessImpl;
   const _UpdatePinSuccess._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_UpdatePinsDoNotMatchCopyWith<$Res> {
-  factory _$$_UpdatePinsDoNotMatchCopyWith(_$_UpdatePinsDoNotMatch value,
-          $Res Function(_$_UpdatePinsDoNotMatch) then) =
-      __$$_UpdatePinsDoNotMatchCopyWithImpl<$Res>;
+abstract class _$$UpdatePinsDoNotMatchImplCopyWith<$Res> {
+  factory _$$UpdatePinsDoNotMatchImplCopyWith(_$UpdatePinsDoNotMatchImpl value,
+          $Res Function(_$UpdatePinsDoNotMatchImpl) then) =
+      __$$UpdatePinsDoNotMatchImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_UpdatePinsDoNotMatchCopyWithImpl<$Res>
-    extends _$UpdatePinResultCopyWithImpl<$Res, _$_UpdatePinsDoNotMatch>
-    implements _$$_UpdatePinsDoNotMatchCopyWith<$Res> {
-  __$$_UpdatePinsDoNotMatchCopyWithImpl(_$_UpdatePinsDoNotMatch _value,
-      $Res Function(_$_UpdatePinsDoNotMatch) _then)
+class __$$UpdatePinsDoNotMatchImplCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res, _$UpdatePinsDoNotMatchImpl>
+    implements _$$UpdatePinsDoNotMatchImplCopyWith<$Res> {
+  __$$UpdatePinsDoNotMatchImplCopyWithImpl(_$UpdatePinsDoNotMatchImpl _value,
+      $Res Function(_$UpdatePinsDoNotMatchImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_UpdatePinsDoNotMatch extends _UpdatePinsDoNotMatch {
-  const _$_UpdatePinsDoNotMatch() : super._();
+class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch {
+  const _$UpdatePinsDoNotMatchImpl() : super._();
 
   @override
   String toString() {
@@ -750,7 +758,8 @@ class _$_UpdatePinsDoNotMatch extends _UpdatePinsDoNotMatch {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UpdatePinsDoNotMatch);
+        (other.runtimeType == runtimeType &&
+            other is _$UpdatePinsDoNotMatchImpl);
   }
 
   @override
@@ -820,6 +829,6 @@ class _$_UpdatePinsDoNotMatch extends _UpdatePinsDoNotMatch {
 }
 
 abstract class _UpdatePinsDoNotMatch extends UpdatePinResult {
-  const factory _UpdatePinsDoNotMatch() = _$_UpdatePinsDoNotMatch;
+  const factory _UpdatePinsDoNotMatch() = _$UpdatePinsDoNotMatchImpl;
   const _UpdatePinsDoNotMatch._() : super._();
 }

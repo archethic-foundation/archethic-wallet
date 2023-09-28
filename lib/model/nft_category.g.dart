@@ -6,14 +6,14 @@ part of 'nft_category.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_NftCategory _$$_NftCategoryFromJson(Map<String, dynamic> json) =>
-    _$_NftCategory(
+_$NftCategoryImpl _$$NftCategoryImplFromJson(Map<String, dynamic> json) =>
+    _$NftCategoryImpl(
       id: json['id'] as int? ?? 0,
       name: json['name'] ?? '',
       image: json['image'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$_NftCategoryToJson(_$_NftCategory instance) =>
+Map<String, dynamic> _$$NftCategoryImplToJson(_$NftCategoryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

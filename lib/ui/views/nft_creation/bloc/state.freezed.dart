@@ -247,11 +247,11 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_NftCreationFormStateCopyWith<$Res>
+abstract class _$$NftCreationFormStateImplCopyWith<$Res>
     implements $NftCreationFormStateCopyWith<$Res> {
-  factory _$$_NftCreationFormStateCopyWith(_$_NftCreationFormState value,
-          $Res Function(_$_NftCreationFormState) then) =
-      __$$_NftCreationFormStateCopyWithImpl<$Res>;
+  factory _$$NftCreationFormStateImplCopyWith(_$NftCreationFormStateImpl value,
+          $Res Function(_$NftCreationFormStateImpl) then) =
+      __$$NftCreationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -287,11 +287,11 @@ abstract class _$$_NftCreationFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NftCreationFormStateCopyWithImpl<$Res>
-    extends _$NftCreationFormStateCopyWithImpl<$Res, _$_NftCreationFormState>
-    implements _$$_NftCreationFormStateCopyWith<$Res> {
-  __$$_NftCreationFormStateCopyWithImpl(_$_NftCreationFormState _value,
-      $Res Function(_$_NftCreationFormState) _then)
+class __$$NftCreationFormStateImplCopyWithImpl<$Res>
+    extends _$NftCreationFormStateCopyWithImpl<$Res, _$NftCreationFormStateImpl>
+    implements _$$NftCreationFormStateImplCopyWith<$Res> {
+  __$$NftCreationFormStateImplCopyWithImpl(_$NftCreationFormStateImpl _value,
+      $Res Function(_$NftCreationFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -322,7 +322,7 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
     Object? checkPreventUserPublicInfo = null,
     Object? transaction = freezed,
   }) {
-    return _then(_$_NftCreationFormState(
+    return _then(_$NftCreationFormStateImpl(
       nftCreationProcessStep: null == nftCreationProcessStep
           ? _value.nftCreationProcessStep
           : nftCreationProcessStep // ignore: cast_nullable_to_non_nullable
@@ -425,8 +425,8 @@ class __$$_NftCreationFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NftCreationFormState extends _NftCreationFormState {
-  const _$_NftCreationFormState(
+class _$NftCreationFormStateImpl extends _NftCreationFormState {
+  const _$NftCreationFormStateImpl(
       {this.nftCreationProcessStep = NftCreationProcessStep.form,
       this.currentNftCategoryIndex = 0,
       this.indexTab = 0,
@@ -542,7 +542,7 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NftCreationFormState &&
+            other is _$NftCreationFormStateImpl &&
             (identical(other.nftCreationProcessStep, nftCreationProcessStep) ||
                 other.nftCreationProcessStep == nftCreationProcessStep) &&
             (identical(
@@ -624,9 +624,10 @@ class _$_NftCreationFormState extends _NftCreationFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NftCreationFormStateCopyWith<_$_NftCreationFormState> get copyWith =>
-      __$$_NftCreationFormStateCopyWithImpl<_$_NftCreationFormState>(
-          this, _$identity);
+  _$$NftCreationFormStateImplCopyWith<_$NftCreationFormStateImpl>
+      get copyWith =>
+          __$$NftCreationFormStateImplCopyWithImpl<_$NftCreationFormStateImpl>(
+              this, _$identity);
 }
 
 abstract class _NftCreationFormState extends NftCreationFormState {
@@ -654,7 +655,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
       final String symbol,
       final int initialSupply,
       final bool checkPreventUserPublicInfo,
-      final Transaction? transaction}) = _$_NftCreationFormState;
+      final Transaction? transaction}) = _$NftCreationFormStateImpl;
   const _NftCreationFormState._() : super._();
 
   @override
@@ -707,8 +708,8 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   Transaction? get transaction;
   @override
   @JsonKey(ignore: true)
-  _$$_NftCreationFormStateCopyWith<_$_NftCreationFormState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$NftCreationFormStateImplCopyWith<_$NftCreationFormStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -773,12 +774,12 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_NftCreationFormStatePropertyCopyWith<$Res>
+abstract class _$$NftCreationFormStatePropertyImplCopyWith<$Res>
     implements $NftCreationFormStatePropertyCopyWith<$Res> {
-  factory _$$_NftCreationFormStatePropertyCopyWith(
-          _$_NftCreationFormStateProperty value,
-          $Res Function(_$_NftCreationFormStateProperty) then) =
-      __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>;
+  factory _$$NftCreationFormStatePropertyImplCopyWith(
+          _$NftCreationFormStatePropertyImpl value,
+          $Res Function(_$NftCreationFormStatePropertyImpl) then) =
+      __$$NftCreationFormStatePropertyImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -788,13 +789,13 @@ abstract class _$$_NftCreationFormStatePropertyCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
+class __$$NftCreationFormStatePropertyImplCopyWithImpl<$Res>
     extends _$NftCreationFormStatePropertyCopyWithImpl<$Res,
-        _$_NftCreationFormStateProperty>
-    implements _$$_NftCreationFormStatePropertyCopyWith<$Res> {
-  __$$_NftCreationFormStatePropertyCopyWithImpl(
-      _$_NftCreationFormStateProperty _value,
-      $Res Function(_$_NftCreationFormStateProperty) _then)
+        _$NftCreationFormStatePropertyImpl>
+    implements _$$NftCreationFormStatePropertyImplCopyWith<$Res> {
+  __$$NftCreationFormStatePropertyImplCopyWithImpl(
+      _$NftCreationFormStatePropertyImpl _value,
+      $Res Function(_$NftCreationFormStatePropertyImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -804,7 +805,7 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
     Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
-    return _then(_$_NftCreationFormStateProperty(
+    return _then(_$NftCreationFormStatePropertyImpl(
       propertyName: null == propertyName
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
@@ -823,8 +824,8 @@ class __$$_NftCreationFormStatePropertyCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
-  const _$_NftCreationFormStateProperty(
+class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
+  const _$NftCreationFormStatePropertyImpl(
       {this.propertyName = '',
       this.propertyValue,
       final List<PropertyAccessRecipient> publicKeys = const []})
@@ -854,7 +855,7 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NftCreationFormStateProperty &&
+            other is _$NftCreationFormStatePropertyImpl &&
             (identical(other.propertyName, propertyName) ||
                 other.propertyName == propertyName) &&
             const DeepCollectionEquality()
@@ -873,9 +874,10 @@ class _$_NftCreationFormStateProperty extends _NftCreationFormStateProperty {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NftCreationFormStatePropertyCopyWith<_$_NftCreationFormStateProperty>
-      get copyWith => __$$_NftCreationFormStatePropertyCopyWithImpl<
-          _$_NftCreationFormStateProperty>(this, _$identity);
+  _$$NftCreationFormStatePropertyImplCopyWith<
+          _$NftCreationFormStatePropertyImpl>
+      get copyWith => __$$NftCreationFormStatePropertyImplCopyWithImpl<
+          _$NftCreationFormStatePropertyImpl>(this, _$identity);
 }
 
 abstract class _NftCreationFormStateProperty
@@ -884,7 +886,7 @@ abstract class _NftCreationFormStateProperty
           {final String propertyName,
           final dynamic propertyValue,
           final List<PropertyAccessRecipient> publicKeys}) =
-      _$_NftCreationFormStateProperty;
+      _$NftCreationFormStatePropertyImpl;
   const _NftCreationFormStateProperty._() : super._();
 
   @override
@@ -895,7 +897,8 @@ abstract class _NftCreationFormStateProperty
   List<PropertyAccessRecipient> get publicKeys;
   @override
   @JsonKey(ignore: true)
-  _$$_NftCreationFormStatePropertyCopyWith<_$_NftCreationFormStateProperty>
+  _$$NftCreationFormStatePropertyImplCopyWith<
+          _$NftCreationFormStatePropertyImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -968,21 +971,23 @@ class _$PropertyAccessRecipientCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_PropertyAccessPublicKeyCopyWith<$Res> {
-  factory _$$_PropertyAccessPublicKeyCopyWith(_$_PropertyAccessPublicKey value,
-          $Res Function(_$_PropertyAccessPublicKey) then) =
-      __$$_PropertyAccessPublicKeyCopyWithImpl<$Res>;
+abstract class _$$PropertyAccessPublicKeyImplCopyWith<$Res> {
+  factory _$$PropertyAccessPublicKeyImplCopyWith(
+          _$PropertyAccessPublicKeyImpl value,
+          $Res Function(_$PropertyAccessPublicKeyImpl) then) =
+      __$$PropertyAccessPublicKeyImplCopyWithImpl<$Res>;
   @useResult
   $Res call({PublicKey publicKey});
 }
 
 /// @nodoc
-class __$$_PropertyAccessPublicKeyCopyWithImpl<$Res>
+class __$$PropertyAccessPublicKeyImplCopyWithImpl<$Res>
     extends _$PropertyAccessRecipientCopyWithImpl<$Res,
-        _$_PropertyAccessPublicKey>
-    implements _$$_PropertyAccessPublicKeyCopyWith<$Res> {
-  __$$_PropertyAccessPublicKeyCopyWithImpl(_$_PropertyAccessPublicKey _value,
-      $Res Function(_$_PropertyAccessPublicKey) _then)
+        _$PropertyAccessPublicKeyImpl>
+    implements _$$PropertyAccessPublicKeyImplCopyWith<$Res> {
+  __$$PropertyAccessPublicKeyImplCopyWithImpl(
+      _$PropertyAccessPublicKeyImpl _value,
+      $Res Function(_$PropertyAccessPublicKeyImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -990,7 +995,7 @@ class __$$_PropertyAccessPublicKeyCopyWithImpl<$Res>
   $Res call({
     Object? publicKey = null,
   }) {
-    return _then(_$_PropertyAccessPublicKey(
+    return _then(_$PropertyAccessPublicKeyImpl(
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
@@ -1001,8 +1006,8 @@ class __$$_PropertyAccessPublicKeyCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PropertyAccessPublicKey extends _PropertyAccessPublicKey {
-  const _$_PropertyAccessPublicKey({required this.publicKey}) : super._();
+class _$PropertyAccessPublicKeyImpl extends _PropertyAccessPublicKey {
+  const _$PropertyAccessPublicKeyImpl({required this.publicKey}) : super._();
 
   @override
   final PublicKey publicKey;
@@ -1016,7 +1021,7 @@ class _$_PropertyAccessPublicKey extends _PropertyAccessPublicKey {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PropertyAccessPublicKey &&
+            other is _$PropertyAccessPublicKeyImpl &&
             (identical(other.publicKey, publicKey) ||
                 other.publicKey == publicKey));
   }
@@ -1027,10 +1032,9 @@ class _$_PropertyAccessPublicKey extends _PropertyAccessPublicKey {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PropertyAccessPublicKeyCopyWith<_$_PropertyAccessPublicKey>
-      get copyWith =>
-          __$$_PropertyAccessPublicKeyCopyWithImpl<_$_PropertyAccessPublicKey>(
-              this, _$identity);
+  _$$PropertyAccessPublicKeyImplCopyWith<_$PropertyAccessPublicKeyImpl>
+      get copyWith => __$$PropertyAccessPublicKeyImplCopyWithImpl<
+          _$PropertyAccessPublicKeyImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1104,31 +1108,32 @@ class _$_PropertyAccessPublicKey extends _PropertyAccessPublicKey {
 
 abstract class _PropertyAccessPublicKey extends PropertyAccessRecipient {
   const factory _PropertyAccessPublicKey({required final PublicKey publicKey}) =
-      _$_PropertyAccessPublicKey;
+      _$PropertyAccessPublicKeyImpl;
   const _PropertyAccessPublicKey._() : super._();
 
   PublicKey get publicKey;
   @JsonKey(ignore: true)
-  _$$_PropertyAccessPublicKeyCopyWith<_$_PropertyAccessPublicKey>
+  _$$PropertyAccessPublicKeyImplCopyWith<_$PropertyAccessPublicKeyImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_PropertyAccessContactCopyWith<$Res> {
-  factory _$$_PropertyAccessContactCopyWith(_$_PropertyAccessContact value,
-          $Res Function(_$_PropertyAccessContact) then) =
-      __$$_PropertyAccessContactCopyWithImpl<$Res>;
+abstract class _$$PropertyAccessContactImplCopyWith<$Res> {
+  factory _$$PropertyAccessContactImplCopyWith(
+          _$PropertyAccessContactImpl value,
+          $Res Function(_$PropertyAccessContactImpl) then) =
+      __$$PropertyAccessContactImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Contact contact});
 }
 
 /// @nodoc
-class __$$_PropertyAccessContactCopyWithImpl<$Res>
+class __$$PropertyAccessContactImplCopyWithImpl<$Res>
     extends _$PropertyAccessRecipientCopyWithImpl<$Res,
-        _$_PropertyAccessContact>
-    implements _$$_PropertyAccessContactCopyWith<$Res> {
-  __$$_PropertyAccessContactCopyWithImpl(_$_PropertyAccessContact _value,
-      $Res Function(_$_PropertyAccessContact) _then)
+        _$PropertyAccessContactImpl>
+    implements _$$PropertyAccessContactImplCopyWith<$Res> {
+  __$$PropertyAccessContactImplCopyWithImpl(_$PropertyAccessContactImpl _value,
+      $Res Function(_$PropertyAccessContactImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1136,7 +1141,7 @@ class __$$_PropertyAccessContactCopyWithImpl<$Res>
   $Res call({
     Object? contact = null,
   }) {
-    return _then(_$_PropertyAccessContact(
+    return _then(_$PropertyAccessContactImpl(
       contact: null == contact
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
@@ -1147,8 +1152,8 @@ class __$$_PropertyAccessContactCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PropertyAccessContact extends _PropertyAccessContact {
-  const _$_PropertyAccessContact({required this.contact}) : super._();
+class _$PropertyAccessContactImpl extends _PropertyAccessContact {
+  const _$PropertyAccessContactImpl({required this.contact}) : super._();
 
   @override
   final Contact contact;
@@ -1162,7 +1167,7 @@ class _$_PropertyAccessContact extends _PropertyAccessContact {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PropertyAccessContact &&
+            other is _$PropertyAccessContactImpl &&
             (identical(other.contact, contact) || other.contact == contact));
   }
 
@@ -1172,9 +1177,9 @@ class _$_PropertyAccessContact extends _PropertyAccessContact {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PropertyAccessContactCopyWith<_$_PropertyAccessContact> get copyWith =>
-      __$$_PropertyAccessContactCopyWithImpl<_$_PropertyAccessContact>(
-          this, _$identity);
+  _$$PropertyAccessContactImplCopyWith<_$PropertyAccessContactImpl>
+      get copyWith => __$$PropertyAccessContactImplCopyWithImpl<
+          _$PropertyAccessContactImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1248,33 +1253,33 @@ class _$_PropertyAccessContact extends _PropertyAccessContact {
 
 abstract class _PropertyAccessContact extends PropertyAccessRecipient {
   const factory _PropertyAccessContact({required final Contact contact}) =
-      _$_PropertyAccessContact;
+      _$PropertyAccessContactImpl;
   const _PropertyAccessContact._() : super._();
 
   Contact get contact;
   @JsonKey(ignore: true)
-  _$$_PropertyAccessContactCopyWith<_$_PropertyAccessContact> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PropertyAccessContactImplCopyWith<_$PropertyAccessContactImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_PropertyAccessUnknownContactCopyWith<$Res> {
-  factory _$$_PropertyAccessUnknownContactCopyWith(
-          _$_PropertyAccessUnknownContact value,
-          $Res Function(_$_PropertyAccessUnknownContact) then) =
-      __$$_PropertyAccessUnknownContactCopyWithImpl<$Res>;
+abstract class _$$PropertyAccessUnknownContactImplCopyWith<$Res> {
+  factory _$$PropertyAccessUnknownContactImplCopyWith(
+          _$PropertyAccessUnknownContactImpl value,
+          $Res Function(_$PropertyAccessUnknownContactImpl) then) =
+      __$$PropertyAccessUnknownContactImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class __$$_PropertyAccessUnknownContactCopyWithImpl<$Res>
+class __$$PropertyAccessUnknownContactImplCopyWithImpl<$Res>
     extends _$PropertyAccessRecipientCopyWithImpl<$Res,
-        _$_PropertyAccessUnknownContact>
-    implements _$$_PropertyAccessUnknownContactCopyWith<$Res> {
-  __$$_PropertyAccessUnknownContactCopyWithImpl(
-      _$_PropertyAccessUnknownContact _value,
-      $Res Function(_$_PropertyAccessUnknownContact) _then)
+        _$PropertyAccessUnknownContactImpl>
+    implements _$$PropertyAccessUnknownContactImplCopyWith<$Res> {
+  __$$PropertyAccessUnknownContactImplCopyWithImpl(
+      _$PropertyAccessUnknownContactImpl _value,
+      $Res Function(_$PropertyAccessUnknownContactImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1282,7 +1287,7 @@ class __$$_PropertyAccessUnknownContactCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
   }) {
-    return _then(_$_PropertyAccessUnknownContact(
+    return _then(_$PropertyAccessUnknownContactImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -1293,8 +1298,8 @@ class __$$_PropertyAccessUnknownContactCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PropertyAccessUnknownContact extends _PropertyAccessUnknownContact {
-  const _$_PropertyAccessUnknownContact({required this.name}) : super._();
+class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
+  const _$PropertyAccessUnknownContactImpl({required this.name}) : super._();
 
   @override
   final String name;
@@ -1308,7 +1313,7 @@ class _$_PropertyAccessUnknownContact extends _PropertyAccessUnknownContact {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PropertyAccessUnknownContact &&
+            other is _$PropertyAccessUnknownContactImpl &&
             (identical(other.name, name) || other.name == name));
   }
 
@@ -1318,9 +1323,10 @@ class _$_PropertyAccessUnknownContact extends _PropertyAccessUnknownContact {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PropertyAccessUnknownContactCopyWith<_$_PropertyAccessUnknownContact>
-      get copyWith => __$$_PropertyAccessUnknownContactCopyWithImpl<
-          _$_PropertyAccessUnknownContact>(this, _$identity);
+  _$$PropertyAccessUnknownContactImplCopyWith<
+          _$PropertyAccessUnknownContactImpl>
+      get copyWith => __$$PropertyAccessUnknownContactImplCopyWithImpl<
+          _$PropertyAccessUnknownContactImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1394,11 +1400,12 @@ class _$_PropertyAccessUnknownContact extends _PropertyAccessUnknownContact {
 
 abstract class _PropertyAccessUnknownContact extends PropertyAccessRecipient {
   const factory _PropertyAccessUnknownContact({required final String name}) =
-      _$_PropertyAccessUnknownContact;
+      _$PropertyAccessUnknownContactImpl;
   const _PropertyAccessUnknownContact._() : super._();
 
   String get name;
   @JsonKey(ignore: true)
-  _$$_PropertyAccessUnknownContactCopyWith<_$_PropertyAccessUnknownContact>
+  _$$PropertyAccessUnknownContactImplCopyWith<
+          _$PropertyAccessUnknownContactImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

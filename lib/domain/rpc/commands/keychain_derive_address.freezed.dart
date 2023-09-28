@@ -78,25 +78,25 @@ class _$RPCKeychainDeriveAddressCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCKeychainDeriveAddressCommandDataCopyWith<$Res>
+abstract class _$$RPCKeychainDeriveAddressCommandDataImplCopyWith<$Res>
     implements $RPCKeychainDeriveAddressCommandDataCopyWith<$Res> {
-  factory _$$_RPCKeychainDeriveAddressCommandDataCopyWith(
-          _$_RPCKeychainDeriveAddressCommandData value,
-          $Res Function(_$_RPCKeychainDeriveAddressCommandData) then) =
-      __$$_RPCKeychainDeriveAddressCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCKeychainDeriveAddressCommandDataImplCopyWith(
+          _$RPCKeychainDeriveAddressCommandDataImpl value,
+          $Res Function(_$RPCKeychainDeriveAddressCommandDataImpl) then) =
+      __$$RPCKeychainDeriveAddressCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String serviceName, int? index, String? pathSuffix});
 }
 
 /// @nodoc
-class __$$_RPCKeychainDeriveAddressCommandDataCopyWithImpl<$Res>
+class __$$RPCKeychainDeriveAddressCommandDataImplCopyWithImpl<$Res>
     extends _$RPCKeychainDeriveAddressCommandDataCopyWithImpl<$Res,
-        _$_RPCKeychainDeriveAddressCommandData>
-    implements _$$_RPCKeychainDeriveAddressCommandDataCopyWith<$Res> {
-  __$$_RPCKeychainDeriveAddressCommandDataCopyWithImpl(
-      _$_RPCKeychainDeriveAddressCommandData _value,
-      $Res Function(_$_RPCKeychainDeriveAddressCommandData) _then)
+        _$RPCKeychainDeriveAddressCommandDataImpl>
+    implements _$$RPCKeychainDeriveAddressCommandDataImplCopyWith<$Res> {
+  __$$RPCKeychainDeriveAddressCommandDataImplCopyWithImpl(
+      _$RPCKeychainDeriveAddressCommandDataImpl _value,
+      $Res Function(_$RPCKeychainDeriveAddressCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_RPCKeychainDeriveAddressCommandDataCopyWithImpl<$Res>
     Object? index = freezed,
     Object? pathSuffix = freezed,
   }) {
-    return _then(_$_RPCKeychainDeriveAddressCommandData(
+    return _then(_$RPCKeychainDeriveAddressCommandDataImpl(
       serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
@@ -125,9 +125,9 @@ class __$$_RPCKeychainDeriveAddressCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCKeychainDeriveAddressCommandData
+class _$RPCKeychainDeriveAddressCommandDataImpl
     extends _RPCKeychainDeriveAddressCommandData {
-  const _$_RPCKeychainDeriveAddressCommandData(
+  const _$RPCKeychainDeriveAddressCommandDataImpl(
       {required this.serviceName, this.index, this.pathSuffix})
       : super._();
 
@@ -152,7 +152,7 @@ class _$_RPCKeychainDeriveAddressCommandData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCKeychainDeriveAddressCommandData &&
+            other is _$RPCKeychainDeriveAddressCommandDataImpl &&
             (identical(other.serviceName, serviceName) ||
                 other.serviceName == serviceName) &&
             (identical(other.index, index) || other.index == index) &&
@@ -166,10 +166,10 @@ class _$_RPCKeychainDeriveAddressCommandData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCKeychainDeriveAddressCommandDataCopyWith<
-          _$_RPCKeychainDeriveAddressCommandData>
-      get copyWith => __$$_RPCKeychainDeriveAddressCommandDataCopyWithImpl<
-          _$_RPCKeychainDeriveAddressCommandData>(this, _$identity);
+  _$$RPCKeychainDeriveAddressCommandDataImplCopyWith<
+          _$RPCKeychainDeriveAddressCommandDataImpl>
+      get copyWith => __$$RPCKeychainDeriveAddressCommandDataImplCopyWithImpl<
+          _$RPCKeychainDeriveAddressCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCKeychainDeriveAddressCommandData
@@ -177,7 +177,7 @@ abstract class _RPCKeychainDeriveAddressCommandData
   const factory _RPCKeychainDeriveAddressCommandData(
       {required final String serviceName,
       final int? index,
-      final String? pathSuffix}) = _$_RPCKeychainDeriveAddressCommandData;
+      final String? pathSuffix}) = _$RPCKeychainDeriveAddressCommandDataImpl;
   const _RPCKeychainDeriveAddressCommandData._() : super._();
 
   @override
@@ -194,8 +194,8 @@ abstract class _RPCKeychainDeriveAddressCommandData
   String? get pathSuffix;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCKeychainDeriveAddressCommandDataCopyWith<
-          _$_RPCKeychainDeriveAddressCommandData>
+  _$$RPCKeychainDeriveAddressCommandDataImplCopyWith<
+          _$RPCKeychainDeriveAddressCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -246,25 +246,25 @@ class _$RPCKeychainDeriveAddressResultDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCKeychainDeriveAddressResultDataCopyWith<$Res>
+abstract class _$$RPCKeychainDeriveAddressResultDataImplCopyWith<$Res>
     implements $RPCKeychainDeriveAddressResultDataCopyWith<$Res> {
-  factory _$$_RPCKeychainDeriveAddressResultDataCopyWith(
-          _$_RPCKeychainDeriveAddressResultData value,
-          $Res Function(_$_RPCKeychainDeriveAddressResultData) then) =
-      __$$_RPCKeychainDeriveAddressResultDataCopyWithImpl<$Res>;
+  factory _$$RPCKeychainDeriveAddressResultDataImplCopyWith(
+          _$RPCKeychainDeriveAddressResultDataImpl value,
+          $Res Function(_$RPCKeychainDeriveAddressResultDataImpl) then) =
+      __$$RPCKeychainDeriveAddressResultDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String address});
 }
 
 /// @nodoc
-class __$$_RPCKeychainDeriveAddressResultDataCopyWithImpl<$Res>
+class __$$RPCKeychainDeriveAddressResultDataImplCopyWithImpl<$Res>
     extends _$RPCKeychainDeriveAddressResultDataCopyWithImpl<$Res,
-        _$_RPCKeychainDeriveAddressResultData>
-    implements _$$_RPCKeychainDeriveAddressResultDataCopyWith<$Res> {
-  __$$_RPCKeychainDeriveAddressResultDataCopyWithImpl(
-      _$_RPCKeychainDeriveAddressResultData _value,
-      $Res Function(_$_RPCKeychainDeriveAddressResultData) _then)
+        _$RPCKeychainDeriveAddressResultDataImpl>
+    implements _$$RPCKeychainDeriveAddressResultDataImplCopyWith<$Res> {
+  __$$RPCKeychainDeriveAddressResultDataImplCopyWithImpl(
+      _$RPCKeychainDeriveAddressResultDataImpl _value,
+      $Res Function(_$RPCKeychainDeriveAddressResultDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -272,7 +272,7 @@ class __$$_RPCKeychainDeriveAddressResultDataCopyWithImpl<$Res>
   $Res call({
     Object? address = null,
   }) {
-    return _then(_$_RPCKeychainDeriveAddressResultData(
+    return _then(_$RPCKeychainDeriveAddressResultDataImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -283,9 +283,9 @@ class __$$_RPCKeychainDeriveAddressResultDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCKeychainDeriveAddressResultData
+class _$RPCKeychainDeriveAddressResultDataImpl
     extends _RPCKeychainDeriveAddressResultData {
-  const _$_RPCKeychainDeriveAddressResultData({required this.address})
+  const _$RPCKeychainDeriveAddressResultDataImpl({required this.address})
       : super._();
 
   @override
@@ -300,7 +300,7 @@ class _$_RPCKeychainDeriveAddressResultData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCKeychainDeriveAddressResultData &&
+            other is _$RPCKeychainDeriveAddressResultDataImpl &&
             (identical(other.address, address) || other.address == address));
   }
 
@@ -310,23 +310,24 @@ class _$_RPCKeychainDeriveAddressResultData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCKeychainDeriveAddressResultDataCopyWith<
-          _$_RPCKeychainDeriveAddressResultData>
-      get copyWith => __$$_RPCKeychainDeriveAddressResultDataCopyWithImpl<
-          _$_RPCKeychainDeriveAddressResultData>(this, _$identity);
+  _$$RPCKeychainDeriveAddressResultDataImplCopyWith<
+          _$RPCKeychainDeriveAddressResultDataImpl>
+      get copyWith => __$$RPCKeychainDeriveAddressResultDataImplCopyWithImpl<
+          _$RPCKeychainDeriveAddressResultDataImpl>(this, _$identity);
 }
 
 abstract class _RPCKeychainDeriveAddressResultData
     extends RPCKeychainDeriveAddressResultData {
   const factory _RPCKeychainDeriveAddressResultData(
-      {required final String address}) = _$_RPCKeychainDeriveAddressResultData;
+          {required final String address}) =
+      _$RPCKeychainDeriveAddressResultDataImpl;
   const _RPCKeychainDeriveAddressResultData._() : super._();
 
   @override
   String get address;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCKeychainDeriveAddressResultDataCopyWith<
-          _$_RPCKeychainDeriveAddressResultData>
+  _$$RPCKeychainDeriveAddressResultDataImplCopyWith<
+          _$RPCKeychainDeriveAddressResultDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

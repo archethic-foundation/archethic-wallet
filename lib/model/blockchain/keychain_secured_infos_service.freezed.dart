@@ -109,12 +109,12 @@ class _$KeychainSecuredInfosServiceCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_KeychainSecuredInfosServiceCopyWith<$Res>
+abstract class _$$KeychainSecuredInfosServiceImplCopyWith<$Res>
     implements $KeychainSecuredInfosServiceCopyWith<$Res> {
-  factory _$$_KeychainSecuredInfosServiceCopyWith(
-          _$_KeychainSecuredInfosService value,
-          $Res Function(_$_KeychainSecuredInfosService) then) =
-      __$$_KeychainSecuredInfosServiceCopyWithImpl<$Res>;
+  factory _$$KeychainSecuredInfosServiceImplCopyWith(
+          _$KeychainSecuredInfosServiceImpl value,
+          $Res Function(_$KeychainSecuredInfosServiceImpl) then) =
+      __$$KeychainSecuredInfosServiceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -129,13 +129,13 @@ abstract class _$$_KeychainSecuredInfosServiceCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_KeychainSecuredInfosServiceCopyWithImpl<$Res>
+class __$$KeychainSecuredInfosServiceImplCopyWithImpl<$Res>
     extends _$KeychainSecuredInfosServiceCopyWithImpl<$Res,
-        _$_KeychainSecuredInfosService>
-    implements _$$_KeychainSecuredInfosServiceCopyWith<$Res> {
-  __$$_KeychainSecuredInfosServiceCopyWithImpl(
-      _$_KeychainSecuredInfosService _value,
-      $Res Function(_$_KeychainSecuredInfosService) _then)
+        _$KeychainSecuredInfosServiceImpl>
+    implements _$$KeychainSecuredInfosServiceImplCopyWith<$Res> {
+  __$$KeychainSecuredInfosServiceImplCopyWithImpl(
+      _$KeychainSecuredInfosServiceImpl _value,
+      $Res Function(_$KeychainSecuredInfosServiceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -147,7 +147,7 @@ class __$$_KeychainSecuredInfosServiceCopyWithImpl<$Res>
     Object? curve = null,
     Object? hashAlgo = null,
   }) {
-    return _then(_$_KeychainSecuredInfosService(
+    return _then(_$KeychainSecuredInfosServiceImpl(
       derivationPath: null == derivationPath
           ? _value.derivationPath
           : derivationPath // ignore: cast_nullable_to_non_nullable
@@ -174,8 +174,8 @@ class __$$_KeychainSecuredInfosServiceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_KeychainSecuredInfosService extends _KeychainSecuredInfosService {
-  const _$_KeychainSecuredInfosService(
+class _$KeychainSecuredInfosServiceImpl extends _KeychainSecuredInfosService {
+  const _$KeychainSecuredInfosServiceImpl(
       {required this.derivationPath,
       required this.name,
       this.keyPair,
@@ -183,8 +183,9 @@ class _$_KeychainSecuredInfosService extends _KeychainSecuredInfosService {
       required this.hashAlgo})
       : super._();
 
-  factory _$_KeychainSecuredInfosService.fromJson(Map<String, dynamic> json) =>
-      _$$_KeychainSecuredInfosServiceFromJson(json);
+  factory _$KeychainSecuredInfosServiceImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$KeychainSecuredInfosServiceImplFromJson(json);
 
   @override
   final String derivationPath;
@@ -206,7 +207,7 @@ class _$_KeychainSecuredInfosService extends _KeychainSecuredInfosService {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_KeychainSecuredInfosService &&
+            other is _$KeychainSecuredInfosServiceImpl &&
             (identical(other.derivationPath, derivationPath) ||
                 other.derivationPath == derivationPath) &&
             (identical(other.name, name) || other.name == name) &&
@@ -224,13 +225,13 @@ class _$_KeychainSecuredInfosService extends _KeychainSecuredInfosService {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KeychainSecuredInfosServiceCopyWith<_$_KeychainSecuredInfosService>
-      get copyWith => __$$_KeychainSecuredInfosServiceCopyWithImpl<
-          _$_KeychainSecuredInfosService>(this, _$identity);
+  _$$KeychainSecuredInfosServiceImplCopyWith<_$KeychainSecuredInfosServiceImpl>
+      get copyWith => __$$KeychainSecuredInfosServiceImplCopyWithImpl<
+          _$KeychainSecuredInfosServiceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KeychainSecuredInfosServiceToJson(
+    return _$$KeychainSecuredInfosServiceImplToJson(
       this,
     );
   }
@@ -243,11 +244,11 @@ abstract class _KeychainSecuredInfosService
       required final String name,
       final KeychainServiceKeyPair? keyPair,
       required final String curve,
-      required final String hashAlgo}) = _$_KeychainSecuredInfosService;
+      required final String hashAlgo}) = _$KeychainSecuredInfosServiceImpl;
   const _KeychainSecuredInfosService._() : super._();
 
   factory _KeychainSecuredInfosService.fromJson(Map<String, dynamic> json) =
-      _$_KeychainSecuredInfosService.fromJson;
+      _$KeychainSecuredInfosServiceImpl.fromJson;
 
   @override
   String get derivationPath;
@@ -261,6 +262,6 @@ abstract class _KeychainSecuredInfosService
   String get hashAlgo;
   @override
   @JsonKey(ignore: true)
-  _$$_KeychainSecuredInfosServiceCopyWith<_$_KeychainSecuredInfosService>
+  _$$KeychainSecuredInfosServiceImplCopyWith<_$KeychainSecuredInfosServiceImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

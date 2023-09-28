@@ -83,12 +83,12 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SignTransactionConfirmationFormStateCopyWith<$Res>
+abstract class _$$SignTransactionConfirmationFormStateImplCopyWith<$Res>
     implements $SignTransactionConfirmationFormStateCopyWith<$Res> {
-  factory _$$_SignTransactionConfirmationFormStateCopyWith(
-          _$_SignTransactionConfirmationFormState value,
-          $Res Function(_$_SignTransactionConfirmationFormState) then) =
-      __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>;
+  factory _$$SignTransactionConfirmationFormStateImplCopyWith(
+          _$SignTransactionConfirmationFormStateImpl value,
+          $Res Function(_$SignTransactionConfirmationFormStateImpl) then) =
+      __$$SignTransactionConfirmationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -101,13 +101,13 @@ abstract class _$$_SignTransactionConfirmationFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>
+class __$$SignTransactionConfirmationFormStateImplCopyWithImpl<$Res>
     extends _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
-        _$_SignTransactionConfirmationFormState>
-    implements _$$_SignTransactionConfirmationFormStateCopyWith<$Res> {
-  __$$_SignTransactionConfirmationFormStateCopyWithImpl(
-      _$_SignTransactionConfirmationFormState _value,
-      $Res Function(_$_SignTransactionConfirmationFormState) _then)
+        _$SignTransactionConfirmationFormStateImpl>
+    implements _$$SignTransactionConfirmationFormStateImplCopyWith<$Res> {
+  __$$SignTransactionConfirmationFormStateImplCopyWithImpl(
+      _$SignTransactionConfirmationFormStateImpl _value,
+      $Res Function(_$SignTransactionConfirmationFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +116,7 @@ class __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>
     Object? signTransactionCommand = null,
     Object? feesEstimation = null,
   }) {
-    return _then(_$_SignTransactionConfirmationFormState(
+    return _then(_$SignTransactionConfirmationFormStateImpl(
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
@@ -131,9 +131,9 @@ class __$$_SignTransactionConfirmationFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SignTransactionConfirmationFormState
+class _$SignTransactionConfirmationFormStateImpl
     extends _SignTransactionConfirmationFormState {
-  const _$_SignTransactionConfirmationFormState(
+  const _$SignTransactionConfirmationFormStateImpl(
       {required this.signTransactionCommand, required this.feesEstimation})
       : super._();
 
@@ -151,7 +151,7 @@ class _$_SignTransactionConfirmationFormState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SignTransactionConfirmationFormState &&
+            other is _$SignTransactionConfirmationFormStateImpl &&
             (identical(other.signTransactionCommand, signTransactionCommand) ||
                 other.signTransactionCommand == signTransactionCommand) &&
             (identical(other.feesEstimation, feesEstimation) ||
@@ -165,10 +165,10 @@ class _$_SignTransactionConfirmationFormState
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SignTransactionConfirmationFormStateCopyWith<
-          _$_SignTransactionConfirmationFormState>
-      get copyWith => __$$_SignTransactionConfirmationFormStateCopyWithImpl<
-          _$_SignTransactionConfirmationFormState>(this, _$identity);
+  _$$SignTransactionConfirmationFormStateImplCopyWith<
+          _$SignTransactionConfirmationFormStateImpl>
+      get copyWith => __$$SignTransactionConfirmationFormStateImplCopyWithImpl<
+          _$SignTransactionConfirmationFormStateImpl>(this, _$identity);
 }
 
 abstract class _SignTransactionConfirmationFormState
@@ -177,7 +177,7 @@ abstract class _SignTransactionConfirmationFormState
           {required final RPCCommand<RPCSendTransactionCommandData>
               signTransactionCommand,
           required final double feesEstimation}) =
-      _$_SignTransactionConfirmationFormState;
+      _$SignTransactionConfirmationFormStateImpl;
   const _SignTransactionConfirmationFormState._() : super._();
 
   @override
@@ -186,7 +186,7 @@ abstract class _SignTransactionConfirmationFormState
   double get feesEstimation;
   @override
   @JsonKey(ignore: true)
-  _$$_SignTransactionConfirmationFormStateCopyWith<
-          _$_SignTransactionConfirmationFormState>
+  _$$SignTransactionConfirmationFormStateImplCopyWith<
+          _$SignTransactionConfirmationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

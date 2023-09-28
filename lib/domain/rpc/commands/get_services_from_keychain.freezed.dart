@@ -39,28 +39,28 @@ class _$RPCGetServicesFromKeychainCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCGetAccountsCommandDataCopyWith<$Res> {
-  factory _$$_RPCGetAccountsCommandDataCopyWith(
-          _$_RPCGetAccountsCommandData value,
-          $Res Function(_$_RPCGetAccountsCommandData) then) =
-      __$$_RPCGetAccountsCommandDataCopyWithImpl<$Res>;
+abstract class _$$RPCGetAccountsCommandDataImplCopyWith<$Res> {
+  factory _$$RPCGetAccountsCommandDataImplCopyWith(
+          _$RPCGetAccountsCommandDataImpl value,
+          $Res Function(_$RPCGetAccountsCommandDataImpl) then) =
+      __$$RPCGetAccountsCommandDataImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RPCGetAccountsCommandDataCopyWithImpl<$Res>
+class __$$RPCGetAccountsCommandDataImplCopyWithImpl<$Res>
     extends _$RPCGetServicesFromKeychainCommandDataCopyWithImpl<$Res,
-        _$_RPCGetAccountsCommandData>
-    implements _$$_RPCGetAccountsCommandDataCopyWith<$Res> {
-  __$$_RPCGetAccountsCommandDataCopyWithImpl(
-      _$_RPCGetAccountsCommandData _value,
-      $Res Function(_$_RPCGetAccountsCommandData) _then)
+        _$RPCGetAccountsCommandDataImpl>
+    implements _$$RPCGetAccountsCommandDataImplCopyWith<$Res> {
+  __$$RPCGetAccountsCommandDataImplCopyWithImpl(
+      _$RPCGetAccountsCommandDataImpl _value,
+      $Res Function(_$RPCGetAccountsCommandDataImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_RPCGetAccountsCommandData extends _RPCGetAccountsCommandData {
-  const _$_RPCGetAccountsCommandData() : super._();
+class _$RPCGetAccountsCommandDataImpl extends _RPCGetAccountsCommandData {
+  const _$RPCGetAccountsCommandDataImpl() : super._();
 
   @override
   String toString() {
@@ -71,7 +71,7 @@ class _$_RPCGetAccountsCommandData extends _RPCGetAccountsCommandData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCGetAccountsCommandData);
+            other is _$RPCGetAccountsCommandDataImpl);
   }
 
   @override
@@ -80,7 +80,7 @@ class _$_RPCGetAccountsCommandData extends _RPCGetAccountsCommandData {
 
 abstract class _RPCGetAccountsCommandData
     extends RPCGetServicesFromKeychainCommandData {
-  const factory _RPCGetAccountsCommandData() = _$_RPCGetAccountsCommandData;
+  const factory _RPCGetAccountsCommandData() = _$RPCGetAccountsCommandDataImpl;
   const _RPCGetAccountsCommandData._() : super._();
 }
 
@@ -131,25 +131,25 @@ class _$RPCGetServicesFromKeychainResultDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCGetServicesFromKeychainResultDataCopyWith<$Res>
+abstract class _$$RPCGetServicesFromKeychainResultDataImplCopyWith<$Res>
     implements $RPCGetServicesFromKeychainResultDataCopyWith<$Res> {
-  factory _$$_RPCGetServicesFromKeychainResultDataCopyWith(
-          _$_RPCGetServicesFromKeychainResultData value,
-          $Res Function(_$_RPCGetServicesFromKeychainResultData) then) =
-      __$$_RPCGetServicesFromKeychainResultDataCopyWithImpl<$Res>;
+  factory _$$RPCGetServicesFromKeychainResultDataImplCopyWith(
+          _$RPCGetServicesFromKeychainResultDataImpl value,
+          $Res Function(_$RPCGetServicesFromKeychainResultDataImpl) then) =
+      __$$RPCGetServicesFromKeychainResultDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Service> services});
 }
 
 /// @nodoc
-class __$$_RPCGetServicesFromKeychainResultDataCopyWithImpl<$Res>
+class __$$RPCGetServicesFromKeychainResultDataImplCopyWithImpl<$Res>
     extends _$RPCGetServicesFromKeychainResultDataCopyWithImpl<$Res,
-        _$_RPCGetServicesFromKeychainResultData>
-    implements _$$_RPCGetServicesFromKeychainResultDataCopyWith<$Res> {
-  __$$_RPCGetServicesFromKeychainResultDataCopyWithImpl(
-      _$_RPCGetServicesFromKeychainResultData _value,
-      $Res Function(_$_RPCGetServicesFromKeychainResultData) _then)
+        _$RPCGetServicesFromKeychainResultDataImpl>
+    implements _$$RPCGetServicesFromKeychainResultDataImplCopyWith<$Res> {
+  __$$RPCGetServicesFromKeychainResultDataImplCopyWithImpl(
+      _$RPCGetServicesFromKeychainResultDataImpl _value,
+      $Res Function(_$RPCGetServicesFromKeychainResultDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -157,7 +157,7 @@ class __$$_RPCGetServicesFromKeychainResultDataCopyWithImpl<$Res>
   $Res call({
     Object? services = null,
   }) {
-    return _then(_$_RPCGetServicesFromKeychainResultData(
+    return _then(_$RPCGetServicesFromKeychainResultDataImpl(
       services: null == services
           ? _value._services
           : services // ignore: cast_nullable_to_non_nullable
@@ -168,9 +168,9 @@ class __$$_RPCGetServicesFromKeychainResultDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCGetServicesFromKeychainResultData
+class _$RPCGetServicesFromKeychainResultDataImpl
     extends _RPCGetServicesFromKeychainResultData {
-  const _$_RPCGetServicesFromKeychainResultData(
+  const _$RPCGetServicesFromKeychainResultDataImpl(
       {required final List<Service> services})
       : _services = services,
         super._();
@@ -192,7 +192,7 @@ class _$_RPCGetServicesFromKeychainResultData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCGetServicesFromKeychainResultData &&
+            other is _$RPCGetServicesFromKeychainResultDataImpl &&
             const DeepCollectionEquality().equals(other._services, _services));
   }
 
@@ -203,24 +203,24 @@ class _$_RPCGetServicesFromKeychainResultData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCGetServicesFromKeychainResultDataCopyWith<
-          _$_RPCGetServicesFromKeychainResultData>
-      get copyWith => __$$_RPCGetServicesFromKeychainResultDataCopyWithImpl<
-          _$_RPCGetServicesFromKeychainResultData>(this, _$identity);
+  _$$RPCGetServicesFromKeychainResultDataImplCopyWith<
+          _$RPCGetServicesFromKeychainResultDataImpl>
+      get copyWith => __$$RPCGetServicesFromKeychainResultDataImplCopyWithImpl<
+          _$RPCGetServicesFromKeychainResultDataImpl>(this, _$identity);
 }
 
 abstract class _RPCGetServicesFromKeychainResultData
     extends RPCGetServicesFromKeychainResultData {
   const factory _RPCGetServicesFromKeychainResultData(
           {required final List<Service> services}) =
-      _$_RPCGetServicesFromKeychainResultData;
+      _$RPCGetServicesFromKeychainResultDataImpl;
   const _RPCGetServicesFromKeychainResultData._() : super._();
 
   @override
   List<Service> get services;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCGetServicesFromKeychainResultDataCopyWith<
-          _$_RPCGetServicesFromKeychainResultData>
+  _$$RPCGetServicesFromKeychainResultDataImplCopyWith<
+          _$RPCGetServicesFromKeychainResultDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

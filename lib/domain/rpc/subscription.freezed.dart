@@ -63,22 +63,22 @@ class _$RPCSubscriptionCopyWithImpl<R, $Res, $Val extends RPCSubscription<R>>
 }
 
 /// @nodoc
-abstract class _$$_RPCSubscriptionCopyWith<R, $Res>
+abstract class _$$RPCSubscriptionImplCopyWith<R, $Res>
     implements $RPCSubscriptionCopyWith<R, $Res> {
-  factory _$$_RPCSubscriptionCopyWith(_$_RPCSubscription<R> value,
-          $Res Function(_$_RPCSubscription<R>) then) =
-      __$$_RPCSubscriptionCopyWithImpl<R, $Res>;
+  factory _$$RPCSubscriptionImplCopyWith(_$RPCSubscriptionImpl<R> value,
+          $Res Function(_$RPCSubscriptionImpl<R>) then) =
+      __$$RPCSubscriptionImplCopyWithImpl<R, $Res>;
   @override
   @useResult
   $Res call({String id, Stream<R> updates});
 }
 
 /// @nodoc
-class __$$_RPCSubscriptionCopyWithImpl<R, $Res>
-    extends _$RPCSubscriptionCopyWithImpl<R, $Res, _$_RPCSubscription<R>>
-    implements _$$_RPCSubscriptionCopyWith<R, $Res> {
-  __$$_RPCSubscriptionCopyWithImpl(
-      _$_RPCSubscription<R> _value, $Res Function(_$_RPCSubscription<R>) _then)
+class __$$RPCSubscriptionImplCopyWithImpl<R, $Res>
+    extends _$RPCSubscriptionCopyWithImpl<R, $Res, _$RPCSubscriptionImpl<R>>
+    implements _$$RPCSubscriptionImplCopyWith<R, $Res> {
+  __$$RPCSubscriptionImplCopyWithImpl(_$RPCSubscriptionImpl<R> _value,
+      $Res Function(_$RPCSubscriptionImpl<R>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_RPCSubscriptionCopyWithImpl<R, $Res>
     Object? id = null,
     Object? updates = null,
   }) {
-    return _then(_$_RPCSubscription<R>(
+    return _then(_$RPCSubscriptionImpl<R>(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_RPCSubscriptionCopyWithImpl<R, $Res>
 
 /// @nodoc
 
-class _$_RPCSubscription<R> extends _RPCSubscription<R> {
-  const _$_RPCSubscription({required this.id, required this.updates})
+class _$RPCSubscriptionImpl<R> extends _RPCSubscription<R> {
+  const _$RPCSubscriptionImpl({required this.id, required this.updates})
       : super._();
 
   @override
@@ -120,7 +120,7 @@ class _$_RPCSubscription<R> extends _RPCSubscription<R> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSubscription<R> &&
+            other is _$RPCSubscriptionImpl<R> &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.updates, updates) || other.updates == updates));
   }
@@ -131,15 +131,15 @@ class _$_RPCSubscription<R> extends _RPCSubscription<R> {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSubscriptionCopyWith<R, _$_RPCSubscription<R>> get copyWith =>
-      __$$_RPCSubscriptionCopyWithImpl<R, _$_RPCSubscription<R>>(
+  _$$RPCSubscriptionImplCopyWith<R, _$RPCSubscriptionImpl<R>> get copyWith =>
+      __$$RPCSubscriptionImplCopyWithImpl<R, _$RPCSubscriptionImpl<R>>(
           this, _$identity);
 }
 
 abstract class _RPCSubscription<R> extends RPCSubscription<R> {
   const factory _RPCSubscription(
       {required final String id,
-      required final Stream<R> updates}) = _$_RPCSubscription<R>;
+      required final Stream<R> updates}) = _$RPCSubscriptionImpl<R>;
   const _RPCSubscription._() : super._();
 
   @override
@@ -148,6 +148,6 @@ abstract class _RPCSubscription<R> extends RPCSubscription<R> {
   Stream<R> get updates;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSubscriptionCopyWith<R, _$_RPCSubscription<R>> get copyWith =>
+  _$$RPCSubscriptionImplCopyWith<R, _$RPCSubscriptionImpl<R>> get copyWith =>
       throw _privateConstructorUsedError;
 }

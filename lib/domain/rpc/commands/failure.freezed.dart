@@ -69,22 +69,22 @@ class _$RPCFailureCopyWithImpl<$Res, $Val extends RPCFailure>
 }
 
 /// @nodoc
-abstract class _$$_RPCFailureCopyWith<$Res>
+abstract class _$$RPCFailureImplCopyWith<$Res>
     implements $RPCFailureCopyWith<$Res> {
-  factory _$$_RPCFailureCopyWith(
-          _$_RPCFailure value, $Res Function(_$_RPCFailure) then) =
-      __$$_RPCFailureCopyWithImpl<$Res>;
+  factory _$$RPCFailureImplCopyWith(
+          _$RPCFailureImpl value, $Res Function(_$RPCFailureImpl) then) =
+      __$$RPCFailureImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int code, String? message, Map<String, dynamic>? data});
 }
 
 /// @nodoc
-class __$$_RPCFailureCopyWithImpl<$Res>
-    extends _$RPCFailureCopyWithImpl<$Res, _$_RPCFailure>
-    implements _$$_RPCFailureCopyWith<$Res> {
-  __$$_RPCFailureCopyWithImpl(
-      _$_RPCFailure _value, $Res Function(_$_RPCFailure) _then)
+class __$$RPCFailureImplCopyWithImpl<$Res>
+    extends _$RPCFailureCopyWithImpl<$Res, _$RPCFailureImpl>
+    implements _$$RPCFailureImplCopyWith<$Res> {
+  __$$RPCFailureImplCopyWithImpl(
+      _$RPCFailureImpl _value, $Res Function(_$RPCFailureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_RPCFailureCopyWithImpl<$Res>
     Object? message = freezed,
     Object? data = freezed,
   }) {
-    return _then(_$_RPCFailure(
+    return _then(_$RPCFailureImpl(
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_RPCFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCFailure extends _RPCFailure {
-  const _$_RPCFailure(
+class _$RPCFailureImpl extends _RPCFailure {
+  const _$RPCFailureImpl(
       {required this.code, this.message, final Map<String, dynamic>? data})
       : _data = data,
         super._();
@@ -142,7 +142,7 @@ class _$_RPCFailure extends _RPCFailure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCFailure &&
+            other is _$RPCFailureImpl &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other._data, _data));
@@ -155,15 +155,15 @@ class _$_RPCFailure extends _RPCFailure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCFailureCopyWith<_$_RPCFailure> get copyWith =>
-      __$$_RPCFailureCopyWithImpl<_$_RPCFailure>(this, _$identity);
+  _$$RPCFailureImplCopyWith<_$RPCFailureImpl> get copyWith =>
+      __$$RPCFailureImplCopyWithImpl<_$RPCFailureImpl>(this, _$identity);
 }
 
 abstract class _RPCFailure extends RPCFailure {
   const factory _RPCFailure(
       {required final int code,
       final String? message,
-      final Map<String, dynamic>? data}) = _$_RPCFailure;
+      final Map<String, dynamic>? data}) = _$RPCFailureImpl;
   const _RPCFailure._() : super._();
 
   @override
@@ -174,6 +174,6 @@ abstract class _RPCFailure extends RPCFailure {
   Map<String, dynamic>? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCFailureCopyWith<_$_RPCFailure> get copyWith =>
+  _$$RPCFailureImplCopyWith<_$RPCFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

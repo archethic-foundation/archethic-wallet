@@ -6,9 +6,9 @@ part of 'keychain_secured_infos_service.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_KeychainSecuredInfosService _$$_KeychainSecuredInfosServiceFromJson(
+_$KeychainSecuredInfosServiceImpl _$$KeychainSecuredInfosServiceImplFromJson(
         Map<String, dynamic> json) =>
-    _$_KeychainSecuredInfosService(
+    _$KeychainSecuredInfosServiceImpl(
       derivationPath: json['derivationPath'] as String,
       name: json['name'] as String,
       keyPair: json['keyPair'] == null
@@ -19,8 +19,8 @@ _$_KeychainSecuredInfosService _$$_KeychainSecuredInfosServiceFromJson(
       hashAlgo: json['hashAlgo'] as String,
     );
 
-Map<String, dynamic> _$$_KeychainSecuredInfosServiceToJson(
-        _$_KeychainSecuredInfosService instance) =>
+Map<String, dynamic> _$$KeychainSecuredInfosServiceImplToJson(
+        _$KeychainSecuredInfosServiceImpl instance) =>
     <String, dynamic>{
       'derivationPath': instance.derivationPath,
       'name': instance.name,

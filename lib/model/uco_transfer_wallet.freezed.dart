@@ -74,22 +74,22 @@ class _$UCOTransferWalletCopyWithImpl<$Res, $Val extends UCOTransferWallet>
 }
 
 /// @nodoc
-abstract class _$$_UCOTransferWalletCopyWith<$Res>
+abstract class _$$UCOTransferWalletImplCopyWith<$Res>
     implements $UCOTransferWalletCopyWith<$Res> {
-  factory _$$_UCOTransferWalletCopyWith(_$_UCOTransferWallet value,
-          $Res Function(_$_UCOTransferWallet) then) =
-      __$$_UCOTransferWalletCopyWithImpl<$Res>;
+  factory _$$UCOTransferWalletImplCopyWith(_$UCOTransferWalletImpl value,
+          $Res Function(_$UCOTransferWalletImpl) then) =
+      __$$UCOTransferWalletImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? amount, String? to, String? toContactName});
 }
 
 /// @nodoc
-class __$$_UCOTransferWalletCopyWithImpl<$Res>
-    extends _$UCOTransferWalletCopyWithImpl<$Res, _$_UCOTransferWallet>
-    implements _$$_UCOTransferWalletCopyWith<$Res> {
-  __$$_UCOTransferWalletCopyWithImpl(
-      _$_UCOTransferWallet _value, $Res Function(_$_UCOTransferWallet) _then)
+class __$$UCOTransferWalletImplCopyWithImpl<$Res>
+    extends _$UCOTransferWalletCopyWithImpl<$Res, _$UCOTransferWalletImpl>
+    implements _$$UCOTransferWalletImplCopyWith<$Res> {
+  __$$UCOTransferWalletImplCopyWithImpl(_$UCOTransferWalletImpl _value,
+      $Res Function(_$UCOTransferWalletImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_UCOTransferWalletCopyWithImpl<$Res>
     Object? to = freezed,
     Object? toContactName = freezed,
   }) {
-    return _then(_$_UCOTransferWallet(
+    return _then(_$UCOTransferWalletImpl(
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -118,12 +118,12 @@ class __$$_UCOTransferWalletCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UCOTransferWallet extends _UCOTransferWallet {
-  const _$_UCOTransferWallet({this.amount, this.to, this.toContactName})
+class _$UCOTransferWalletImpl extends _UCOTransferWallet {
+  const _$UCOTransferWalletImpl({this.amount, this.to, this.toContactName})
       : super._();
 
-  factory _$_UCOTransferWallet.fromJson(Map<String, dynamic> json) =>
-      _$$_UCOTransferWalletFromJson(json);
+  factory _$UCOTransferWalletImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UCOTransferWalletImplFromJson(json);
 
   @override
   final int? amount;
@@ -141,7 +141,7 @@ class _$_UCOTransferWallet extends _UCOTransferWallet {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UCOTransferWallet &&
+            other is _$UCOTransferWalletImpl &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.to, to) || other.to == to) &&
             (identical(other.toContactName, toContactName) ||
@@ -155,13 +155,13 @@ class _$_UCOTransferWallet extends _UCOTransferWallet {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UCOTransferWalletCopyWith<_$_UCOTransferWallet> get copyWith =>
-      __$$_UCOTransferWalletCopyWithImpl<_$_UCOTransferWallet>(
+  _$$UCOTransferWalletImplCopyWith<_$UCOTransferWalletImpl> get copyWith =>
+      __$$UCOTransferWalletImplCopyWithImpl<_$UCOTransferWalletImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UCOTransferWalletToJson(
+    return _$$UCOTransferWalletImplToJson(
       this,
     );
   }
@@ -171,11 +171,11 @@ abstract class _UCOTransferWallet extends UCOTransferWallet {
   const factory _UCOTransferWallet(
       {final int? amount,
       final String? to,
-      final String? toContactName}) = _$_UCOTransferWallet;
+      final String? toContactName}) = _$UCOTransferWalletImpl;
   const _UCOTransferWallet._() : super._();
 
   factory _UCOTransferWallet.fromJson(Map<String, dynamic> json) =
-      _$_UCOTransferWallet.fromJson;
+      _$UCOTransferWalletImpl.fromJson;
 
   @override
   int? get amount;
@@ -185,6 +185,6 @@ abstract class _UCOTransferWallet extends UCOTransferWallet {
   String? get toContactName;
   @override
   @JsonKey(ignore: true)
-  _$$_UCOTransferWalletCopyWith<_$_UCOTransferWallet> get copyWith =>
+  _$$UCOTransferWalletImplCopyWith<_$UCOTransferWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

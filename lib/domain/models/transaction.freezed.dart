@@ -81,10 +81,10 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
 }
 
 /// @nodoc
-abstract class _$$_TransactionTransferCopyWith<$Res> {
-  factory _$$_TransactionTransferCopyWith(_$_TransactionTransfer value,
-          $Res Function(_$_TransactionTransfer) then) =
-      __$$_TransactionTransferCopyWithImpl<$Res>;
+abstract class _$$TransactionTransferImplCopyWith<$Res> {
+  factory _$$TransactionTransferImplCopyWith(_$TransactionTransferImpl value,
+          $Res Function(_$TransactionTransferImpl) then) =
+      __$$TransactionTransferImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Transfer transfer});
 
@@ -92,11 +92,11 @@ abstract class _$$_TransactionTransferCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TransactionTransferCopyWithImpl<$Res>
-    extends _$TransactionCopyWithImpl<$Res, _$_TransactionTransfer>
-    implements _$$_TransactionTransferCopyWith<$Res> {
-  __$$_TransactionTransferCopyWithImpl(_$_TransactionTransfer _value,
-      $Res Function(_$_TransactionTransfer) _then)
+class __$$TransactionTransferImplCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$TransactionTransferImpl>
+    implements _$$TransactionTransferImplCopyWith<$Res> {
+  __$$TransactionTransferImplCopyWithImpl(_$TransactionTransferImpl _value,
+      $Res Function(_$TransactionTransferImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -104,7 +104,7 @@ class __$$_TransactionTransferCopyWithImpl<$Res>
   $Res call({
     Object? transfer = null,
   }) {
-    return _then(_$_TransactionTransfer(
+    return _then(_$TransactionTransferImpl(
       transfer: null == transfer
           ? _value.transfer
           : transfer // ignore: cast_nullable_to_non_nullable
@@ -123,8 +123,8 @@ class __$$_TransactionTransferCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransactionTransfer extends _TransactionTransfer {
-  const _$_TransactionTransfer({required this.transfer}) : super._();
+class _$TransactionTransferImpl extends _TransactionTransfer {
+  const _$TransactionTransferImpl({required this.transfer}) : super._();
 
   @override
   final Transfer transfer;
@@ -138,7 +138,7 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransactionTransfer &&
+            other is _$TransactionTransferImpl &&
             (identical(other.transfer, transfer) ||
                 other.transfer == transfer));
   }
@@ -149,8 +149,8 @@ class _$_TransactionTransfer extends _TransactionTransfer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransactionTransferCopyWith<_$_TransactionTransfer> get copyWith =>
-      __$$_TransactionTransferCopyWithImpl<_$_TransactionTransfer>(
+  _$$TransactionTransferImplCopyWith<_$TransactionTransferImpl> get copyWith =>
+      __$$TransactionTransferImplCopyWithImpl<_$TransactionTransferImpl>(
           this, _$identity);
 
   @override
@@ -224,20 +224,20 @@ class _$_TransactionTransfer extends _TransactionTransfer {
 
 abstract class _TransactionTransfer extends Transaction {
   const factory _TransactionTransfer({required final Transfer transfer}) =
-      _$_TransactionTransfer;
+      _$TransactionTransferImpl;
   const _TransactionTransfer._() : super._();
 
   Transfer get transfer;
   @JsonKey(ignore: true)
-  _$$_TransactionTransferCopyWith<_$_TransactionTransfer> get copyWith =>
+  _$$TransactionTransferImplCopyWith<_$TransactionTransferImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TransactionTokenCopyWith<$Res> {
-  factory _$$_TransactionTokenCopyWith(
-          _$_TransactionToken value, $Res Function(_$_TransactionToken) then) =
-      __$$_TransactionTokenCopyWithImpl<$Res>;
+abstract class _$$TransactionTokenImplCopyWith<$Res> {
+  factory _$$TransactionTokenImplCopyWith(_$TransactionTokenImpl value,
+          $Res Function(_$TransactionTokenImpl) then) =
+      __$$TransactionTokenImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Token token});
 
@@ -245,11 +245,11 @@ abstract class _$$_TransactionTokenCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TransactionTokenCopyWithImpl<$Res>
-    extends _$TransactionCopyWithImpl<$Res, _$_TransactionToken>
-    implements _$$_TransactionTokenCopyWith<$Res> {
-  __$$_TransactionTokenCopyWithImpl(
-      _$_TransactionToken _value, $Res Function(_$_TransactionToken) _then)
+class __$$TransactionTokenImplCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$TransactionTokenImpl>
+    implements _$$TransactionTokenImplCopyWith<$Res> {
+  __$$TransactionTokenImplCopyWithImpl(_$TransactionTokenImpl _value,
+      $Res Function(_$TransactionTokenImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -257,7 +257,7 @@ class __$$_TransactionTokenCopyWithImpl<$Res>
   $Res call({
     Object? token = null,
   }) {
-    return _then(_$_TransactionToken(
+    return _then(_$TransactionTokenImpl(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -276,8 +276,8 @@ class __$$_TransactionTokenCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransactionToken extends _TransactionToken {
-  const _$_TransactionToken({required this.token}) : super._();
+class _$TransactionTokenImpl extends _TransactionToken {
+  const _$TransactionTokenImpl({required this.token}) : super._();
 
   @override
   final Token token;
@@ -291,7 +291,7 @@ class _$_TransactionToken extends _TransactionToken {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransactionToken &&
+            other is _$TransactionTokenImpl &&
             (identical(other.token, token) || other.token == token));
   }
 
@@ -301,8 +301,9 @@ class _$_TransactionToken extends _TransactionToken {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransactionTokenCopyWith<_$_TransactionToken> get copyWith =>
-      __$$_TransactionTokenCopyWithImpl<_$_TransactionToken>(this, _$identity);
+  _$$TransactionTokenImplCopyWith<_$TransactionTokenImpl> get copyWith =>
+      __$$TransactionTokenImplCopyWithImpl<_$TransactionTokenImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -375,30 +376,30 @@ class _$_TransactionToken extends _TransactionToken {
 
 abstract class _TransactionToken extends Transaction {
   const factory _TransactionToken({required final Token token}) =
-      _$_TransactionToken;
+      _$TransactionTokenImpl;
   const _TransactionToken._() : super._();
 
   Token get token;
   @JsonKey(ignore: true)
-  _$$_TransactionTokenCopyWith<_$_TransactionToken> get copyWith =>
+  _$$TransactionTokenImplCopyWith<_$TransactionTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TransactionKeychainCopyWith<$Res> {
-  factory _$$_TransactionKeychainCopyWith(_$_TransactionKeychain value,
-          $Res Function(_$_TransactionKeychain) then) =
-      __$$_TransactionKeychainCopyWithImpl<$Res>;
+abstract class _$$TransactionKeychainImplCopyWith<$Res> {
+  factory _$$TransactionKeychainImplCopyWith(_$TransactionKeychainImpl value,
+          $Res Function(_$TransactionKeychainImpl) then) =
+      __$$TransactionKeychainImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String seed, String name});
 }
 
 /// @nodoc
-class __$$_TransactionKeychainCopyWithImpl<$Res>
-    extends _$TransactionCopyWithImpl<$Res, _$_TransactionKeychain>
-    implements _$$_TransactionKeychainCopyWith<$Res> {
-  __$$_TransactionKeychainCopyWithImpl(_$_TransactionKeychain _value,
-      $Res Function(_$_TransactionKeychain) _then)
+class __$$TransactionKeychainImplCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$TransactionKeychainImpl>
+    implements _$$TransactionKeychainImplCopyWith<$Res> {
+  __$$TransactionKeychainImplCopyWithImpl(_$TransactionKeychainImpl _value,
+      $Res Function(_$TransactionKeychainImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -407,7 +408,7 @@ class __$$_TransactionKeychainCopyWithImpl<$Res>
     Object? seed = null,
     Object? name = null,
   }) {
-    return _then(_$_TransactionKeychain(
+    return _then(_$TransactionKeychainImpl(
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -422,8 +423,8 @@ class __$$_TransactionKeychainCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransactionKeychain extends _TransactionKeychain {
-  const _$_TransactionKeychain({required this.seed, required this.name})
+class _$TransactionKeychainImpl extends _TransactionKeychain {
+  const _$TransactionKeychainImpl({required this.seed, required this.name})
       : super._();
 
   @override
@@ -440,7 +441,7 @@ class _$_TransactionKeychain extends _TransactionKeychain {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransactionKeychain &&
+            other is _$TransactionKeychainImpl &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -451,8 +452,8 @@ class _$_TransactionKeychain extends _TransactionKeychain {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransactionKeychainCopyWith<_$_TransactionKeychain> get copyWith =>
-      __$$_TransactionKeychainCopyWithImpl<_$_TransactionKeychain>(
+  _$$TransactionKeychainImplCopyWith<_$TransactionKeychainImpl> get copyWith =>
+      __$$TransactionKeychainImplCopyWithImpl<_$TransactionKeychainImpl>(
           this, _$identity);
 
   @override
@@ -527,12 +528,12 @@ class _$_TransactionKeychain extends _TransactionKeychain {
 abstract class _TransactionKeychain extends Transaction {
   const factory _TransactionKeychain(
       {required final String seed,
-      required final String name}) = _$_TransactionKeychain;
+      required final String name}) = _$TransactionKeychainImpl;
   const _TransactionKeychain._() : super._();
 
   String get seed;
   String get name;
   @JsonKey(ignore: true)
-  _$$_TransactionKeychainCopyWith<_$_TransactionKeychain> get copyWith =>
+  _$$TransactionKeychainImplCopyWith<_$TransactionKeychainImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

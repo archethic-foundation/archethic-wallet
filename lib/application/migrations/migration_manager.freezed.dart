@@ -58,23 +58,25 @@ class _$LocalDataMigrationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_LocalDataMigrationStateCopyWith<$Res>
+abstract class _$$LocalDataMigrationStateImplCopyWith<$Res>
     implements $LocalDataMigrationStateCopyWith<$Res> {
-  factory _$$_LocalDataMigrationStateCopyWith(_$_LocalDataMigrationState value,
-          $Res Function(_$_LocalDataMigrationState) then) =
-      __$$_LocalDataMigrationStateCopyWithImpl<$Res>;
+  factory _$$LocalDataMigrationStateImplCopyWith(
+          _$LocalDataMigrationStateImpl value,
+          $Res Function(_$LocalDataMigrationStateImpl) then) =
+      __$$LocalDataMigrationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool migrationInProgress});
 }
 
 /// @nodoc
-class __$$_LocalDataMigrationStateCopyWithImpl<$Res>
+class __$$LocalDataMigrationStateImplCopyWithImpl<$Res>
     extends _$LocalDataMigrationStateCopyWithImpl<$Res,
-        _$_LocalDataMigrationState>
-    implements _$$_LocalDataMigrationStateCopyWith<$Res> {
-  __$$_LocalDataMigrationStateCopyWithImpl(_$_LocalDataMigrationState _value,
-      $Res Function(_$_LocalDataMigrationState) _then)
+        _$LocalDataMigrationStateImpl>
+    implements _$$LocalDataMigrationStateImplCopyWith<$Res> {
+  __$$LocalDataMigrationStateImplCopyWithImpl(
+      _$LocalDataMigrationStateImpl _value,
+      $Res Function(_$LocalDataMigrationStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -82,7 +84,7 @@ class __$$_LocalDataMigrationStateCopyWithImpl<$Res>
   $Res call({
     Object? migrationInProgress = null,
   }) {
-    return _then(_$_LocalDataMigrationState(
+    return _then(_$LocalDataMigrationStateImpl(
       migrationInProgress: null == migrationInProgress
           ? _value.migrationInProgress
           : migrationInProgress // ignore: cast_nullable_to_non_nullable
@@ -93,8 +95,8 @@ class __$$_LocalDataMigrationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LocalDataMigrationState extends _LocalDataMigrationState {
-  const _$_LocalDataMigrationState({this.migrationInProgress = false})
+class _$LocalDataMigrationStateImpl extends _LocalDataMigrationState {
+  const _$LocalDataMigrationStateImpl({this.migrationInProgress = false})
       : super._();
 
   @override
@@ -110,7 +112,7 @@ class _$_LocalDataMigrationState extends _LocalDataMigrationState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LocalDataMigrationState &&
+            other is _$LocalDataMigrationStateImpl &&
             (identical(other.migrationInProgress, migrationInProgress) ||
                 other.migrationInProgress == migrationInProgress));
   }
@@ -121,21 +123,20 @@ class _$_LocalDataMigrationState extends _LocalDataMigrationState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LocalDataMigrationStateCopyWith<_$_LocalDataMigrationState>
-      get copyWith =>
-          __$$_LocalDataMigrationStateCopyWithImpl<_$_LocalDataMigrationState>(
-              this, _$identity);
+  _$$LocalDataMigrationStateImplCopyWith<_$LocalDataMigrationStateImpl>
+      get copyWith => __$$LocalDataMigrationStateImplCopyWithImpl<
+          _$LocalDataMigrationStateImpl>(this, _$identity);
 }
 
 abstract class _LocalDataMigrationState extends LocalDataMigrationState {
   const factory _LocalDataMigrationState({final bool migrationInProgress}) =
-      _$_LocalDataMigrationState;
+      _$LocalDataMigrationStateImpl;
   const _LocalDataMigrationState._() : super._();
 
   @override
   bool get migrationInProgress;
   @override
   @JsonKey(ignore: true)
-  _$$_LocalDataMigrationStateCopyWith<_$_LocalDataMigrationState>
+  _$$LocalDataMigrationStateImplCopyWith<_$LocalDataMigrationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

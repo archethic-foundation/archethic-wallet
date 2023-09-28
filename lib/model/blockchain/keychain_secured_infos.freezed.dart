@@ -79,11 +79,11 @@ class _$KeychainSecuredInfosCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_KeychainSecuredInfosCopyWith<$Res>
+abstract class _$$KeychainSecuredInfosImplCopyWith<$Res>
     implements $KeychainSecuredInfosCopyWith<$Res> {
-  factory _$$_KeychainSecuredInfosCopyWith(_$_KeychainSecuredInfos value,
-          $Res Function(_$_KeychainSecuredInfos) then) =
-      __$$_KeychainSecuredInfosCopyWithImpl<$Res>;
+  factory _$$KeychainSecuredInfosImplCopyWith(_$KeychainSecuredInfosImpl value,
+          $Res Function(_$KeychainSecuredInfosImpl) then) =
+      __$$KeychainSecuredInfosImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +93,11 @@ abstract class _$$_KeychainSecuredInfosCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_KeychainSecuredInfosCopyWithImpl<$Res>
-    extends _$KeychainSecuredInfosCopyWithImpl<$Res, _$_KeychainSecuredInfos>
-    implements _$$_KeychainSecuredInfosCopyWith<$Res> {
-  __$$_KeychainSecuredInfosCopyWithImpl(_$_KeychainSecuredInfos _value,
-      $Res Function(_$_KeychainSecuredInfos) _then)
+class __$$KeychainSecuredInfosImplCopyWithImpl<$Res>
+    extends _$KeychainSecuredInfosCopyWithImpl<$Res, _$KeychainSecuredInfosImpl>
+    implements _$$KeychainSecuredInfosImplCopyWith<$Res> {
+  __$$KeychainSecuredInfosImplCopyWithImpl(_$KeychainSecuredInfosImpl _value,
+      $Res Function(_$KeychainSecuredInfosImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +107,7 @@ class __$$_KeychainSecuredInfosCopyWithImpl<$Res>
     Object? version = null,
     Object? services = null,
   }) {
-    return _then(_$_KeychainSecuredInfos(
+    return _then(_$KeychainSecuredInfosImpl(
       seed: null == seed
           ? _value._seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -126,8 +126,8 @@ class __$$_KeychainSecuredInfosCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_KeychainSecuredInfos extends _KeychainSecuredInfos {
-  const _$_KeychainSecuredInfos(
+class _$KeychainSecuredInfosImpl extends _KeychainSecuredInfos {
+  const _$KeychainSecuredInfosImpl(
       {required final List<int> seed,
       required this.version,
       final Map<String, KeychainSecuredInfosService> services = const {}})
@@ -135,8 +135,8 @@ class _$_KeychainSecuredInfos extends _KeychainSecuredInfos {
         _services = services,
         super._();
 
-  factory _$_KeychainSecuredInfos.fromJson(Map<String, dynamic> json) =>
-      _$$_KeychainSecuredInfosFromJson(json);
+  factory _$KeychainSecuredInfosImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KeychainSecuredInfosImplFromJson(json);
 
   final List<int> _seed;
   @override
@@ -166,7 +166,7 @@ class _$_KeychainSecuredInfos extends _KeychainSecuredInfos {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_KeychainSecuredInfos &&
+            other is _$KeychainSecuredInfosImpl &&
             const DeepCollectionEquality().equals(other._seed, _seed) &&
             (identical(other.version, version) || other.version == version) &&
             const DeepCollectionEquality().equals(other._services, _services));
@@ -183,13 +183,14 @@ class _$_KeychainSecuredInfos extends _KeychainSecuredInfos {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KeychainSecuredInfosCopyWith<_$_KeychainSecuredInfos> get copyWith =>
-      __$$_KeychainSecuredInfosCopyWithImpl<_$_KeychainSecuredInfos>(
-          this, _$identity);
+  _$$KeychainSecuredInfosImplCopyWith<_$KeychainSecuredInfosImpl>
+      get copyWith =>
+          __$$KeychainSecuredInfosImplCopyWithImpl<_$KeychainSecuredInfosImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KeychainSecuredInfosToJson(
+    return _$$KeychainSecuredInfosImplToJson(
       this,
     );
   }
@@ -200,11 +201,11 @@ abstract class _KeychainSecuredInfos extends KeychainSecuredInfos {
           {required final List<int> seed,
           required final int version,
           final Map<String, KeychainSecuredInfosService> services}) =
-      _$_KeychainSecuredInfos;
+      _$KeychainSecuredInfosImpl;
   const _KeychainSecuredInfos._() : super._();
 
   factory _KeychainSecuredInfos.fromJson(Map<String, dynamic> json) =
-      _$_KeychainSecuredInfos.fromJson;
+      _$KeychainSecuredInfosImpl.fromJson;
 
   @override
   List<int> get seed;
@@ -214,6 +215,6 @@ abstract class _KeychainSecuredInfos extends KeychainSecuredInfos {
   Map<String, KeychainSecuredInfosService> get services;
   @override
   @JsonKey(ignore: true)
-  _$$_KeychainSecuredInfosCopyWith<_$_KeychainSecuredInfos> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$KeychainSecuredInfosImplCopyWith<_$KeychainSecuredInfosImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

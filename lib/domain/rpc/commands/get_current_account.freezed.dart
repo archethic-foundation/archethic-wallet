@@ -39,29 +39,29 @@ class _$RPCGetCurrentAccountCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCGetCurrentAccountCommandDataCopyWith<$Res> {
-  factory _$$_RPCGetCurrentAccountCommandDataCopyWith(
-          _$_RPCGetCurrentAccountCommandData value,
-          $Res Function(_$_RPCGetCurrentAccountCommandData) then) =
-      __$$_RPCGetCurrentAccountCommandDataCopyWithImpl<$Res>;
+abstract class _$$RPCGetCurrentAccountCommandDataImplCopyWith<$Res> {
+  factory _$$RPCGetCurrentAccountCommandDataImplCopyWith(
+          _$RPCGetCurrentAccountCommandDataImpl value,
+          $Res Function(_$RPCGetCurrentAccountCommandDataImpl) then) =
+      __$$RPCGetCurrentAccountCommandDataImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RPCGetCurrentAccountCommandDataCopyWithImpl<$Res>
+class __$$RPCGetCurrentAccountCommandDataImplCopyWithImpl<$Res>
     extends _$RPCGetCurrentAccountCommandDataCopyWithImpl<$Res,
-        _$_RPCGetCurrentAccountCommandData>
-    implements _$$_RPCGetCurrentAccountCommandDataCopyWith<$Res> {
-  __$$_RPCGetCurrentAccountCommandDataCopyWithImpl(
-      _$_RPCGetCurrentAccountCommandData _value,
-      $Res Function(_$_RPCGetCurrentAccountCommandData) _then)
+        _$RPCGetCurrentAccountCommandDataImpl>
+    implements _$$RPCGetCurrentAccountCommandDataImplCopyWith<$Res> {
+  __$$RPCGetCurrentAccountCommandDataImplCopyWithImpl(
+      _$RPCGetCurrentAccountCommandDataImpl _value,
+      $Res Function(_$RPCGetCurrentAccountCommandDataImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_RPCGetCurrentAccountCommandData
+class _$RPCGetCurrentAccountCommandDataImpl
     extends _RPCGetCurrentAccountCommandData {
-  const _$_RPCGetCurrentAccountCommandData() : super._();
+  const _$RPCGetCurrentAccountCommandDataImpl() : super._();
 
   @override
   String toString() {
@@ -72,7 +72,7 @@ class _$_RPCGetCurrentAccountCommandData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCGetCurrentAccountCommandData);
+            other is _$RPCGetCurrentAccountCommandDataImpl);
   }
 
   @override
@@ -82,7 +82,7 @@ class _$_RPCGetCurrentAccountCommandData
 abstract class _RPCGetCurrentAccountCommandData
     extends RPCGetCurrentAccountCommandData {
   const factory _RPCGetCurrentAccountCommandData() =
-      _$_RPCGetCurrentAccountCommandData;
+      _$RPCGetCurrentAccountCommandDataImpl;
   const _RPCGetCurrentAccountCommandData._() : super._();
 }
 
@@ -142,12 +142,12 @@ class _$RPCGetCurrentAccountResultDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCGetCurrentAccountResultDataCopyWith<$Res>
+abstract class _$$RPCGetCurrentAccountResultDataImplCopyWith<$Res>
     implements $RPCGetCurrentAccountResultDataCopyWith<$Res> {
-  factory _$$_RPCGetCurrentAccountResultDataCopyWith(
-          _$_RPCGetCurrentAccountResultData value,
-          $Res Function(_$_RPCGetCurrentAccountResultData) then) =
-      __$$_RPCGetCurrentAccountResultDataCopyWithImpl<$Res>;
+  factory _$$RPCGetCurrentAccountResultDataImplCopyWith(
+          _$RPCGetCurrentAccountResultDataImpl value,
+          $Res Function(_$RPCGetCurrentAccountResultDataImpl) then) =
+      __$$RPCGetCurrentAccountResultDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({AppAccount account});
@@ -157,13 +157,13 @@ abstract class _$$_RPCGetCurrentAccountResultDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RPCGetCurrentAccountResultDataCopyWithImpl<$Res>
+class __$$RPCGetCurrentAccountResultDataImplCopyWithImpl<$Res>
     extends _$RPCGetCurrentAccountResultDataCopyWithImpl<$Res,
-        _$_RPCGetCurrentAccountResultData>
-    implements _$$_RPCGetCurrentAccountResultDataCopyWith<$Res> {
-  __$$_RPCGetCurrentAccountResultDataCopyWithImpl(
-      _$_RPCGetCurrentAccountResultData _value,
-      $Res Function(_$_RPCGetCurrentAccountResultData) _then)
+        _$RPCGetCurrentAccountResultDataImpl>
+    implements _$$RPCGetCurrentAccountResultDataImplCopyWith<$Res> {
+  __$$RPCGetCurrentAccountResultDataImplCopyWithImpl(
+      _$RPCGetCurrentAccountResultDataImpl _value,
+      $Res Function(_$RPCGetCurrentAccountResultDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -171,7 +171,7 @@ class __$$_RPCGetCurrentAccountResultDataCopyWithImpl<$Res>
   $Res call({
     Object? account = null,
   }) {
-    return _then(_$_RPCGetCurrentAccountResultData(
+    return _then(_$RPCGetCurrentAccountResultDataImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -182,9 +182,10 @@ class __$$_RPCGetCurrentAccountResultDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCGetCurrentAccountResultData
+class _$RPCGetCurrentAccountResultDataImpl
     extends _RPCGetCurrentAccountResultData {
-  const _$_RPCGetCurrentAccountResultData({required this.account}) : super._();
+  const _$RPCGetCurrentAccountResultDataImpl({required this.account})
+      : super._();
 
   @override
   final AppAccount account;
@@ -198,7 +199,7 @@ class _$_RPCGetCurrentAccountResultData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCGetCurrentAccountResultData &&
+            other is _$RPCGetCurrentAccountResultDataImpl &&
             (identical(other.account, account) || other.account == account));
   }
 
@@ -208,21 +209,24 @@ class _$_RPCGetCurrentAccountResultData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCGetCurrentAccountResultDataCopyWith<_$_RPCGetCurrentAccountResultData>
-      get copyWith => __$$_RPCGetCurrentAccountResultDataCopyWithImpl<
-          _$_RPCGetCurrentAccountResultData>(this, _$identity);
+  _$$RPCGetCurrentAccountResultDataImplCopyWith<
+          _$RPCGetCurrentAccountResultDataImpl>
+      get copyWith => __$$RPCGetCurrentAccountResultDataImplCopyWithImpl<
+          _$RPCGetCurrentAccountResultDataImpl>(this, _$identity);
 }
 
 abstract class _RPCGetCurrentAccountResultData
     extends RPCGetCurrentAccountResultData {
   const factory _RPCGetCurrentAccountResultData(
-      {required final AppAccount account}) = _$_RPCGetCurrentAccountResultData;
+          {required final AppAccount account}) =
+      _$RPCGetCurrentAccountResultDataImpl;
   const _RPCGetCurrentAccountResultData._() : super._();
 
   @override
   AppAccount get account;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCGetCurrentAccountResultDataCopyWith<_$_RPCGetCurrentAccountResultData>
+  _$$RPCGetCurrentAccountResultDataImplCopyWith<
+          _$RPCGetCurrentAccountResultDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

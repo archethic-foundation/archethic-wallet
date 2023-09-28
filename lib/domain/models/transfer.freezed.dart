@@ -208,11 +208,11 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
 }
 
 /// @nodoc
-abstract class _$$_TransferUcoCopyWith<$Res>
+abstract class _$$TransferUcoImplCopyWith<$Res>
     implements $TransferCopyWith<$Res> {
-  factory _$$_TransferUcoCopyWith(
-          _$_TransferUco value, $Res Function(_$_TransferUco) then) =
-      __$$_TransferUcoCopyWithImpl<$Res>;
+  factory _$$TransferUcoImplCopyWith(
+          _$TransferUcoImpl value, $Res Function(_$TransferUcoImpl) then) =
+      __$$TransferUcoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -230,11 +230,11 @@ abstract class _$$_TransferUcoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransferUcoCopyWithImpl<$Res>
-    extends _$TransferCopyWithImpl<$Res, _$_TransferUco>
-    implements _$$_TransferUcoCopyWith<$Res> {
-  __$$_TransferUcoCopyWithImpl(
-      _$_TransferUco _value, $Res Function(_$_TransferUco) _then)
+class __$$TransferUcoImplCopyWithImpl<$Res>
+    extends _$TransferCopyWithImpl<$Res, _$TransferUcoImpl>
+    implements _$$TransferUcoImplCopyWith<$Res> {
+  __$$TransferUcoImplCopyWithImpl(
+      _$TransferUcoImpl _value, $Res Function(_$TransferUcoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -247,7 +247,7 @@ class __$$_TransferUcoCopyWithImpl<$Res>
     Object? amount = null,
     Object? recipientAddress = null,
   }) {
-    return _then(_$_TransferUco(
+    return _then(_$TransferUcoImpl(
       keychainSecuredInfos: null == keychainSecuredInfos
           ? _value.keychainSecuredInfos
           : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
@@ -278,8 +278,8 @@ class __$$_TransferUcoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferUco extends _TransferUco {
-  const _$_TransferUco(
+class _$TransferUcoImpl extends _TransferUco {
+  const _$TransferUcoImpl(
       {required this.keychainSecuredInfos,
       required this.transactionLastAddress,
       required this.accountSelectedName,
@@ -311,7 +311,7 @@ class _$_TransferUco extends _TransferUco {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferUco &&
+            other is _$TransferUcoImpl &&
             (identical(other.keychainSecuredInfos, keychainSecuredInfos) ||
                 other.keychainSecuredInfos == keychainSecuredInfos) &&
             (identical(other.transactionLastAddress, transactionLastAddress) ||
@@ -337,8 +337,8 @@ class _$_TransferUco extends _TransferUco {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferUcoCopyWith<_$_TransferUco> get copyWith =>
-      __$$_TransferUcoCopyWithImpl<_$_TransferUco>(this, _$identity);
+  _$$TransferUcoImplCopyWith<_$TransferUcoImpl> get copyWith =>
+      __$$TransferUcoImplCopyWithImpl<_$TransferUcoImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -470,7 +470,7 @@ abstract class _TransferUco extends Transfer {
       required final String accountSelectedName,
       required final String message,
       required final double amount,
-      required final Address recipientAddress}) = _$_TransferUco;
+      required final Address recipientAddress}) = _$TransferUcoImpl;
   const _TransferUco._() : super._();
 
   @override
@@ -487,16 +487,16 @@ abstract class _TransferUco extends Transfer {
   Address get recipientAddress;
   @override
   @JsonKey(ignore: true)
-  _$$_TransferUcoCopyWith<_$_TransferUco> get copyWith =>
+  _$$TransferUcoImplCopyWith<_$TransferUcoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TransferTokenCopyWith<$Res>
+abstract class _$$TransferTokenImplCopyWith<$Res>
     implements $TransferCopyWith<$Res> {
-  factory _$$_TransferTokenCopyWith(
-          _$_TransferToken value, $Res Function(_$_TransferToken) then) =
-      __$$_TransferTokenCopyWithImpl<$Res>;
+  factory _$$TransferTokenImplCopyWith(
+          _$TransferTokenImpl value, $Res Function(_$TransferTokenImpl) then) =
+      __$$TransferTokenImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -519,11 +519,11 @@ abstract class _$$_TransferTokenCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransferTokenCopyWithImpl<$Res>
-    extends _$TransferCopyWithImpl<$Res, _$_TransferToken>
-    implements _$$_TransferTokenCopyWith<$Res> {
-  __$$_TransferTokenCopyWithImpl(
-      _$_TransferToken _value, $Res Function(_$_TransferToken) _then)
+class __$$TransferTokenImplCopyWithImpl<$Res>
+    extends _$TransferCopyWithImpl<$Res, _$TransferTokenImpl>
+    implements _$$TransferTokenImplCopyWith<$Res> {
+  __$$TransferTokenImplCopyWithImpl(
+      _$TransferTokenImpl _value, $Res Function(_$TransferTokenImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -541,7 +541,7 @@ class __$$_TransferTokenCopyWithImpl<$Res>
     Object? properties = null,
     Object? aeip = null,
   }) {
-    return _then(_$_TransferToken(
+    return _then(_$TransferTokenImpl(
       keychainSecuredInfos: null == keychainSecuredInfos
           ? _value.keychainSecuredInfos
           : keychainSecuredInfos // ignore: cast_nullable_to_non_nullable
@@ -592,8 +592,8 @@ class __$$_TransferTokenCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TransferToken extends _TransferToken {
-  const _$_TransferToken(
+class _$TransferTokenImpl extends _TransferToken {
+  const _$TransferTokenImpl(
       {required this.keychainSecuredInfos,
       required this.transactionLastAddress,
       required this.accountSelectedName,
@@ -653,7 +653,7 @@ class _$_TransferToken extends _TransferToken {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransferToken &&
+            other is _$TransferTokenImpl &&
             (identical(other.keychainSecuredInfos, keychainSecuredInfos) ||
                 other.keychainSecuredInfos == keychainSecuredInfos) &&
             (identical(other.transactionLastAddress, transactionLastAddress) ||
@@ -691,8 +691,8 @@ class _$_TransferToken extends _TransferToken {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransferTokenCopyWith<_$_TransferToken> get copyWith =>
-      __$$_TransferTokenCopyWithImpl<_$_TransferToken>(this, _$identity);
+  _$$TransferTokenImplCopyWith<_$TransferTokenImpl> get copyWith =>
+      __$$TransferTokenImplCopyWithImpl<_$TransferTokenImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -859,7 +859,7 @@ abstract class _TransferToken extends Transfer {
       required final String? tokenAddress,
       required final int? tokenId,
       required final Map<String, dynamic> properties,
-      required final List<int> aeip}) = _$_TransferToken;
+      required final List<int> aeip}) = _$TransferTokenImpl;
   const _TransferToken._() : super._();
 
   @override
@@ -881,6 +881,6 @@ abstract class _TransferToken extends Transfer {
   List<int> get aeip;
   @override
   @JsonKey(ignore: true)
-  _$$_TransferTokenCopyWith<_$_TransferToken> get copyWith =>
+  _$$TransferTokenImplCopyWith<_$TransferTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

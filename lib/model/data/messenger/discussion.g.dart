@@ -6,17 +6,17 @@ part of 'discussion.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DiscussionAdapter extends TypeAdapter<_$_Discussion> {
+class DiscussionImplAdapter extends TypeAdapter<_$DiscussionImpl> {
   @override
   final int typeId = 12;
 
   @override
-  _$_Discussion read(BinaryReader reader) {
+  _$DiscussionImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_Discussion(
+    return _$DiscussionImpl(
       address: fields[0] as String,
       name: fields[1] as String?,
       membersPubKeys: (fields[2] as List).cast<String>(),
@@ -27,7 +27,7 @@ class DiscussionAdapter extends TypeAdapter<_$_Discussion> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_Discussion obj) {
+  void write(BinaryWriter writer, _$DiscussionImpl obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -50,7 +50,7 @@ class DiscussionAdapter extends TypeAdapter<_$_Discussion> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DiscussionAdapter &&
+      other is DiscussionImplAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

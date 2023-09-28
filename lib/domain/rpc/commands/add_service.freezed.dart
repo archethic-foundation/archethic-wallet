@@ -59,24 +59,25 @@ class _$RPCAddServiceCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCAddServiceCommandDataCopyWith<$Res>
+abstract class _$$RPCAddServiceCommandDataImplCopyWith<$Res>
     implements $RPCAddServiceCommandDataCopyWith<$Res> {
-  factory _$$_RPCAddServiceCommandDataCopyWith(
-          _$_RPCAddServiceCommandData value,
-          $Res Function(_$_RPCAddServiceCommandData) then) =
-      __$$_RPCAddServiceCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCAddServiceCommandDataImplCopyWith(
+          _$RPCAddServiceCommandDataImpl value,
+          $Res Function(_$RPCAddServiceCommandDataImpl) then) =
+      __$$RPCAddServiceCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class __$$_RPCAddServiceCommandDataCopyWithImpl<$Res>
+class __$$RPCAddServiceCommandDataImplCopyWithImpl<$Res>
     extends _$RPCAddServiceCommandDataCopyWithImpl<$Res,
-        _$_RPCAddServiceCommandData>
-    implements _$$_RPCAddServiceCommandDataCopyWith<$Res> {
-  __$$_RPCAddServiceCommandDataCopyWithImpl(_$_RPCAddServiceCommandData _value,
-      $Res Function(_$_RPCAddServiceCommandData) _then)
+        _$RPCAddServiceCommandDataImpl>
+    implements _$$RPCAddServiceCommandDataImplCopyWith<$Res> {
+  __$$RPCAddServiceCommandDataImplCopyWithImpl(
+      _$RPCAddServiceCommandDataImpl _value,
+      $Res Function(_$RPCAddServiceCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -84,7 +85,7 @@ class __$$_RPCAddServiceCommandDataCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
   }) {
-    return _then(_$_RPCAddServiceCommandData(
+    return _then(_$RPCAddServiceCommandDataImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -95,8 +96,8 @@ class __$$_RPCAddServiceCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCAddServiceCommandData extends _RPCAddServiceCommandData {
-  const _$_RPCAddServiceCommandData({required this.name}) : super._();
+class _$RPCAddServiceCommandDataImpl extends _RPCAddServiceCommandData {
+  const _$RPCAddServiceCommandDataImpl({required this.name}) : super._();
 
   /// - Name: service's name
   @override
@@ -111,7 +112,7 @@ class _$_RPCAddServiceCommandData extends _RPCAddServiceCommandData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCAddServiceCommandData &&
+            other is _$RPCAddServiceCommandDataImpl &&
             (identical(other.name, name) || other.name == name));
   }
 
@@ -121,14 +122,14 @@ class _$_RPCAddServiceCommandData extends _RPCAddServiceCommandData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCAddServiceCommandDataCopyWith<_$_RPCAddServiceCommandData>
-      get copyWith => __$$_RPCAddServiceCommandDataCopyWithImpl<
-          _$_RPCAddServiceCommandData>(this, _$identity);
+  _$$RPCAddServiceCommandDataImplCopyWith<_$RPCAddServiceCommandDataImpl>
+      get copyWith => __$$RPCAddServiceCommandDataImplCopyWithImpl<
+          _$RPCAddServiceCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCAddServiceCommandData extends RPCAddServiceCommandData {
   const factory _RPCAddServiceCommandData({required final String name}) =
-      _$_RPCAddServiceCommandData;
+      _$RPCAddServiceCommandDataImpl;
   const _RPCAddServiceCommandData._() : super._();
 
   @override
@@ -137,6 +138,6 @@ abstract class _RPCAddServiceCommandData extends RPCAddServiceCommandData {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCAddServiceCommandDataCopyWith<_$_RPCAddServiceCommandData>
+  _$$RPCAddServiceCommandDataImplCopyWith<_$RPCAddServiceCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

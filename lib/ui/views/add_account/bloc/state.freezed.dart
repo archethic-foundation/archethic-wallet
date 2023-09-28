@@ -80,11 +80,11 @@ class _$AddAccountFormStateCopyWithImpl<$Res, $Val extends AddAccountFormState>
 }
 
 /// @nodoc
-abstract class _$$_AddAccountFormStateCopyWith<$Res>
+abstract class _$$AddAccountFormStateImplCopyWith<$Res>
     implements $AddAccountFormStateCopyWith<$Res> {
-  factory _$$_AddAccountFormStateCopyWith(_$_AddAccountFormState value,
-          $Res Function(_$_AddAccountFormState) then) =
-      __$$_AddAccountFormStateCopyWithImpl<$Res>;
+  factory _$$AddAccountFormStateImplCopyWith(_$AddAccountFormStateImpl value,
+          $Res Function(_$AddAccountFormStateImpl) then) =
+      __$$AddAccountFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -95,11 +95,11 @@ abstract class _$$_AddAccountFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AddAccountFormStateCopyWithImpl<$Res>
-    extends _$AddAccountFormStateCopyWithImpl<$Res, _$_AddAccountFormState>
-    implements _$$_AddAccountFormStateCopyWith<$Res> {
-  __$$_AddAccountFormStateCopyWithImpl(_$_AddAccountFormState _value,
-      $Res Function(_$_AddAccountFormState) _then)
+class __$$AddAccountFormStateImplCopyWithImpl<$Res>
+    extends _$AddAccountFormStateCopyWithImpl<$Res, _$AddAccountFormStateImpl>
+    implements _$$AddAccountFormStateImplCopyWith<$Res> {
+  __$$AddAccountFormStateImplCopyWithImpl(_$AddAccountFormStateImpl _value,
+      $Res Function(_$AddAccountFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -110,7 +110,7 @@ class __$$_AddAccountFormStateCopyWithImpl<$Res>
     Object? name = null,
     Object? errorText = null,
   }) {
-    return _then(_$_AddAccountFormState(
+    return _then(_$AddAccountFormStateImpl(
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -133,8 +133,8 @@ class __$$_AddAccountFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddAccountFormState extends _AddAccountFormState {
-  const _$_AddAccountFormState(
+class _$AddAccountFormStateImpl extends _AddAccountFormState {
+  const _$AddAccountFormStateImpl(
       {required this.seed,
       this.addAccountProcessStep = AddAccountProcessStep.form,
       this.name = '',
@@ -162,7 +162,7 @@ class _$_AddAccountFormState extends _AddAccountFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddAccountFormState &&
+            other is _$AddAccountFormStateImpl &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.addAccountProcessStep, addAccountProcessStep) ||
                 other.addAccountProcessStep == addAccountProcessStep) &&
@@ -178,8 +178,8 @@ class _$_AddAccountFormState extends _AddAccountFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddAccountFormStateCopyWith<_$_AddAccountFormState> get copyWith =>
-      __$$_AddAccountFormStateCopyWithImpl<_$_AddAccountFormState>(
+  _$$AddAccountFormStateImplCopyWith<_$AddAccountFormStateImpl> get copyWith =>
+      __$$AddAccountFormStateImplCopyWithImpl<_$AddAccountFormStateImpl>(
           this, _$identity);
 }
 
@@ -188,7 +188,7 @@ abstract class _AddAccountFormState extends AddAccountFormState {
       {required final String seed,
       final AddAccountProcessStep addAccountProcessStep,
       final String name,
-      final String errorText}) = _$_AddAccountFormState;
+      final String errorText}) = _$AddAccountFormStateImpl;
   const _AddAccountFormState._() : super._();
 
   @override
@@ -201,6 +201,6 @@ abstract class _AddAccountFormState extends AddAccountFormState {
   String get errorText;
   @override
   @JsonKey(ignore: true)
-  _$$_AddAccountFormStateCopyWith<_$_AddAccountFormState> get copyWith =>
+  _$$AddAccountFormStateImplCopyWith<_$AddAccountFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
