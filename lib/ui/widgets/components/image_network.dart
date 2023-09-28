@@ -41,10 +41,11 @@ class ImageNetwork extends ConsumerWidget {
         fit: fit,
         errorWidget: (context, url, error) {
           return Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            padding: const EdgeInsets.all(20),
             child: Text(
               localizations.imageNotAvailable,
               style: theme.textStyleSize12W400Primary,
+              textAlign: TextAlign.center,
             ),
           );
         },
