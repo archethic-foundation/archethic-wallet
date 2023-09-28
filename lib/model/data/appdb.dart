@@ -68,11 +68,11 @@ class DBHelper {
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
-      ..registerAdapter(DiscussionAdapter())
-      ..registerAdapter(DiscussionMessageAdapter())
+      ..registerAdapter(DiscussionImplAdapter())
+      ..registerAdapter(DiscussionMessageImplAdapter())
       ..registerAdapter(PubKeyAccessRecipientAdapter())
       ..registerAdapter(ContactAccessRecipientAdapter())
-      ..registerAdapter(NotificationsSetupAdapter())
+      ..registerAdapter(NotificationsSetupImplAdapter())
       ..registerAdapter(CacheItemHiveAdapter());
   }
 
